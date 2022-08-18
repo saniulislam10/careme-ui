@@ -1,0 +1,102 @@
+<!---campaign-header-->
+<div class="campaign-header">
+    <div class="campaign-header-top">
+        <div class="title"><h3>Campaign</h3></div>
+        <div class="create">
+            <button (click)="showCampaign()">Create</button>
+        </div>
+    </div>
+    <!---campaign-header-bottom-->
+    <div class="campaign-header-bottom">
+        <div class="showing">
+            <mat-checkbox class="mat-check">Showing 5 Out of 25</mat-checkbox>
+        </div>
+        <!---campaign-header-bottom-right-->
+        <div class="campaign-header-bottom-right">
+            <div class="campaign-header-search">
+                <button><i class="fa fa-search"></i></button>
+                <input type="text" placeholder="Search">
+            </div>
+            <!--campaign-header-btn-->
+            <div class="campaign-header-btn">
+                <ul>
+                    <li>
+                        <mat-form-field appearance="outline" class="filter form-field">
+                            <mat-label>Select</mat-label>
+                            <mat-select >
+                                <mat-option value="">Filter</mat-option>
+                                <mat-option value="">Filter1</mat-option>
+                                <mat-option value="">Filter2</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </li>
+                    <li><button><i class="fa fa-edit"></i></button></li>
+                    <li><button><i class="fa fa-trash"></i></button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!---table-area-->
+<div class="campaign-table-area">
+    <div class="campaign-table-main">
+        <!---table-->
+        <div class="table">
+            <!---table-head-->
+            <div class="table-head">
+                <!---table-row-->
+                <div class="table-row">
+                    <div class="table-heading check">
+                        <mat-checkbox class="mat-check"></mat-checkbox>
+                    </div>
+                    <div class="table-heading serial">
+                        <h3>ID</h3>
+                    </div>
+                    <div class="table-heading id">
+                        <h3>Campaign Name</h3>
+                    </div>
+                    <div class="table-heading number">
+                        <h3>Number Of Product</h3>
+                    </div>
+                    <div class="table-heading date">
+                        <h3>Launch Date</h3>
+                    </div>
+                </div>
+            </div>
+            <!----table-body-->
+            <div class="table-body">
+                <div class="table-row" *ngFor="let data of [1,2,3,5,6]">
+                    <div class="table-data check">
+                        <mat-checkbox class="mat-check"></mat-checkbox>
+                    </div>
+                    <div class="table-data serial">
+                        <h3>01</h3>
+                    </div>
+                    <div class="table-data item">
+                        <h3>Eid Campaign</h3>
+                    </div>
+                    <div class="table-data number">
+                        <h3>500</h3>
+                    </div>
+                    <div class="table-data date">
+                        <h3>23 November 2020</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+    <div class="indicator">
+        <ul>
+            <li><button><i class="fa fa-angle-left"></i></button></li>
+            <li><button><i class="fa fa-angle-right"></i></button></li>
+        </ul>
+    </div>
+     
+</div>
+
+<!---component-->
+<div class="component">
+    <app-create-campaign #createCampaign></app-create-campaign>
+</div>

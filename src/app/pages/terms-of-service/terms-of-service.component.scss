@@ -1,0 +1,109 @@
+@import'./../../../theme/variables';
+.collection-menu{
+    display: block;
+    padding: 15px 0px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+.collection-menu ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+.collection-menu ul li{
+    display: inline-block;
+    margin-right: 10px;
+}
+.collection-menu ul li:last-child{
+    margin: 0px;
+}
+.collection-menu ul li i{
+    margin-left: 10px;
+}
+.collection-menu ul li a{
+    color: #a5a5a5;
+    font-family: $font-en-primary;
+    font-style: normal;
+    font-weight: 500;
+    display: block;
+    font-size: 15px;
+    transition: all 0.3s linear;
+}
+.collection-menu ul li a:hover{
+    color: #DB5791;
+}
+.terms-condition{
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    margin-bottom: 40px;
+}
+.title{
+    display: block;
+    margin-bottom: 30px;
+}
+.title h3{
+    color: #191818;
+    font-family: $font-en-primary-2;
+    font-style: normal;
+    display: block;
+    line-height: 35px;
+    font-size: 30px;
+    font-weight: 500;
+}
+.terms-title{
+    display: block;
+    width: 100%;
+}
+.terms-title h3{
+    color: #323232;
+    font-family: $font-en-primary;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    display: block;
+}
+.terms-description{
+    display: block;
+}
+.terms-description p{
+    color: #323232;
+    font-family: $font-en-primary;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 20px!important;
+}
+@media(max-width:450px){
+    .terms-description p{
+        font-size: 14px;
+        line-height: 22px;
+    }
+    .terms-title h3{
+        font-size: 15px;
+    }
+}
+::ng-deep.main .mat-accordion .mat-expansion-panel:first-of-type{
+    border-top-right-radius:0px!important;
+    border-top-left-radius:0px!important;
+}
+::ng-deep.main .mat-accordion .mat-expansion-panel:last-of-type{
+    border-bottom-right-radius:0px!important;
+    border-bottom-left-radius:0px!important;
+}
+::ng-deep.main .mat-expansion-panel:not([class*=mat-elevation-z]){
+    box-shadow: none!important;
+    border-radius: 0px;
+}
+::ng-deep.main .mat-expansion-panel{
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border-radius: 0px;
+    border-left: 5px solid #DB5791;
+}
+::ng-deep.main .mat-expansion-panel-header{
+    padding: 5px 15px;
+}

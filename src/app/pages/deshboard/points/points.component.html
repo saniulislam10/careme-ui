@@ -1,0 +1,54 @@
+<!---points-area-->
+<div class="points-area">
+    <!---point-->
+    <div class="point" *ngFor="let data of [1]">
+        <!--point-top-area-->
+        <div class="point-top-area">
+            <h3>Balance</h3>
+        </div>
+        <!--point-main-->
+        <div class="point-main">
+            <!---point-left-->
+            <div class="point-left">
+                <div class="point-left-info">
+                    <div>
+                        <img src="./assets/svg/coin.svg" alt="">
+                    </div>
+                    <div>
+                        <h3>1000 Points</h3>
+                    </div>
+                </div>
+            </div>
+            <!---point-right-->
+            <div class="point-right">
+                <span>Pending</span>
+                <h4>(500)</h4>
+            </div>
+        </div>
+    </div>    <!---point-end-->
+
+
+</div>
+<!---timeline-area-->
+<div class="time-line-area">
+    <!---time-line-top-->
+    <div class="time-line-top">
+        <h3>Time Line</h3>
+    </div>  <!---time-line-top-end-->
+    <!---time-line-status-->
+    <div class="time-line-status">
+        <ul>
+            <li *ngFor="let data of [1,2,3,4]">
+                <div class="check">
+                    <span><i class="fa fa-check"></i></span>
+                </div>
+                <div class="time-status-info">
+                    <h3>+1000 Points</h3>
+                    <h4>#366456 <span>(Delivered)</span></h4>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+</div>

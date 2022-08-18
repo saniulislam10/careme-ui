@@ -1,0 +1,103 @@
+<!---header-area-->
+<div class="header-area">
+    <div class="header-top">
+        <div class="title">
+            <h3>Coupon Performance</h3>
+            <h4>From 1 august 2021 to 5 august</h4>
+        </div>
+    </div>
+    <!---search-filter-->
+      <!---coupon-header-bottom-->
+      <div class="coupon-header-bottom">
+        <!---coupon-header-bottom-right-->
+        <div class="coupon-header-bottom-right">
+             <!--coupon-header-btn-->
+             <div class="coupon-header-btn">
+                <ul>
+                    <li>
+                        <mat-form-field appearance="outline" class="filter form-field">
+                            <mat-label>Select Custom</mat-label>
+                            <mat-select >
+                                <mat-option value="">Filter</mat-option>
+                                <mat-option value="">Filter1</mat-option>
+                                <mat-option value="">Filter2</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </li>
+                </ul>
+            </div>
+            <div class="coupon-header-search">
+                <button><i class="fa fa-search"></i></button>
+                <input type="text" placeholder="Search">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!---table-area-->
+<div class="coupon-table-area">
+    <div class="coupon-table-main">
+        <!---table-->
+        <div class="table">
+            <!---table-head-->
+            <div class="table-head">
+                <!---table-row-->
+                <div class="table-row">
+                    <div class="table-heading code">
+                        <h3>Coupon Code</h3>
+                    </div>
+                    <div class="table-heading">
+                        <h3>Total Usage</h3>
+                    </div>
+                    <div class="table-heading">
+                        <h3>Number Of Account</h3>
+                    </div>
+                    <div class="table-heading">
+                        <h3>Discount</h3>
+                    </div>
+                </div>
+            </div>
+            <!----table-body-->
+            <div class="table-body">
+                <div class="table-row" *ngFor="let data of [1,2,3,5,6]">
+                    <div class="table-data code">
+                       <span>#034645</span>
+                    </div>
+                    <div class="table-data">
+                      <h3>1004</h3>
+                    </div>
+                    <div class="table-data">
+                      <span style="text-decoration: none;">500</span>
+                    </div>
+                    <div class="table-data">
+                        <h3>2000</h3>
+                    </div>
+                </div>
+                <!-- no repeat this row-->
+                <div class="table-row">
+                    <div class="table-heading total">
+                        <h3>Total</h3>
+                    </div>
+                    <div class="table-data"></div>
+                    <div class="table-data">
+                     <h3>3700</h3>
+                    </div>
+                    <div class="table-data">
+                        <h3>1000</h3>
+                    </div>
+                </div>             <!-- no repeat this row-->
+            </div>
+
+        </div>
+        
+    </div>
+    <div class="indicator">
+        <ul>
+            <li><button><i class="fa fa-angle-left"></i></button></li>
+            <li><button><i class="fa fa-angle-right"></i></button></li>
+        </ul>
+    </div>
+     
+</div>
+

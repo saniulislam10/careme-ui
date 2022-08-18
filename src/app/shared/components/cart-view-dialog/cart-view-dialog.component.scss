@@ -1,0 +1,21 @@
+@import "src/theme/variables";
+@import "src/theme/cart";
+img{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.main-container {
+  height: auto;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+
+@media only screen and (max-width: 599px) {
+  .main-container {
+    height: 100vh;
+    overflow-y: auto;
+  }
+}

@@ -1,0 +1,186 @@
+@import'./../../../../../theme/client-side-varriables';
+.account-area{
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+.account-title{
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+}
+.account-title h3{
+    color: #000;
+    font-family: $font-en-primary-2;
+    font-weight: 700;
+    font-size: 25px;
+    font-style: normal;
+    display: block;
+    letter-spacing: 1px;
+}
+.user-profile-area{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px 20px;
+    padding-bottom: 25px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ececec;
+    margin-bottom: 20px;
+}
+.profile-img{
+    display: block;
+    max-width: 100px;
+    width: 100%;
+    text-align: center;
+    height: auto;
+    box-sizing: border-box;
+}
+.profile-img h3{
+    color: #000000;
+    font-family: $font-en-primary-2;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 17px;
+    display: block;
+    margin-bottom: 15px!important;
+}
+.img{
+    display: block;
+}
+.img img{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin: auto;
+}
+.img-upload-btn{
+    display: block;
+}
+.img-upload-btn ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    margin-top: 40px;
+}
+.img-upload-btn ul li{
+    display: inline-block;
+    margin-right: 15px;
+}
+.img-upload-btn ul li:last-child{
+    margin: 0px;
+}
+.img-upload-btn ul li button{
+    display: block;
+    background-color: #fff;
+    color: #2d2d2d;
+    font-family: $font-en-primary-2;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 9px 17px;
+    box-sizing: border-box;
+    outline: none;
+    border: 1px solid #ececec;
+    border-radius: 5px;
+    transition: all 0.3s linear;
+}
+.img-upload-btn ul li button:hover{
+    color: #db5791;
+}
+.upload-active{
+    color: #db5791!important;
+}
+.form-field-area{
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0px 20px;
+    grid-template-rows: auto;
+}
+.form-input{
+    display: block;
+}
+.form-input label{
+    color: #2d2d2d;
+    font-family: $font-en-primary-2;
+    font-weight: 600;
+    font-size: 16px;
+    font-style: normal;
+    display: block;
+    margin-bottom: 15px!important;
+}
+.account-btn{
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+}
+.account-btn ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+}
+.account-btn ul li{
+    display: inline-block;
+    margin-right: 10px;
+}
+.account-btn ul li button{
+    background-color: #fff;
+    color: #db5791;
+    font-family: $font-en-primary-2;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    box-sizing: border-box;
+    padding: 6px 15px;
+    outline: none;
+    border: 1px solid #db5791;
+    border-radius: 4px;
+    transition: all 0.3s linear;
+}
+.account-btn ul li button:hover{
+    background-color: #db5791;
+    color: #fff;
+}
+.save-active{
+    background-color: #db5791!important;
+    color: #fff!important;
+}
+@media(max-width:764px){
+    .form-field-area{
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 5px;
+    }
+}
+@media(max-width:400px){
+    .user-profile-area{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+/**** form-field ****/
+.form-field{
+    display: block;
+    width: 100%;
+}
+.form-field mat-form-field{
+    display: block;
+    width: 100%;
+}
+.form-field mat-form-field input{
+    display: block;
+    font-family: $font-en-primary-2;
+    font-size: 15px;
+    font-weight: 500;
+}
+::ng-deep.field .mat-form-field-infix{
+    padding: 0.5em 0 0.6em 0!important;
+    box-sizing: border-box;
+    min-width: 0px;
+    width: auto;
+}
+::ng-deep.field.mat-form-field-appearance-outline .mat-form-field-outline-thick{
+    color: #db5791;
+}

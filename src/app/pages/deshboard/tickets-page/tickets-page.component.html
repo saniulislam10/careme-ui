@@ -1,0 +1,72 @@
+<div class="tickets">
+    <div class="tickets_button">
+        <button (click)="showPop()">Create Ticket</button>
+    </div>
+
+    <div class="tickets_content">
+        <ul>
+            <li routerLink="./../../ticket-details">
+                <h1>#TICKETID23466</h1>
+                <div class="tickets_main_content">
+                    <div class="tickets_left">
+                        
+                        <div class="tickets_left_column">
+                            <div class="tickets_image">
+                                <img src="./assets/images/image/DAEDRIC-red-07.png" alt="Image">
+                            </div>
+                            <div class="tickets_image_content">
+                                <h3>#OERGVNGH4</h3>
+                                <div class="image_para">
+                                    <P>25/10/2021</P>
+                                    <P>4.50 PM</P>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="vertical"></div>
+
+                        <div class="tickets_middle_column">
+                            <h3>Complain</h3>
+                        </div>
+
+                        <div class="vertical"></div>
+
+                        <div class="tickets_right_column">
+                            <p>Short message</p>
+                        </div>
+                        <div class="vertical"></div>
+                    </div>
+
+                    
+                    <div class="tickets_right">
+                        <i class="fas fa-circle tickets_icon"></i>
+                        <div class="sub_icon_text">
+                            <P><strong>Working</strong></P>
+                            <span>17 OCT 2022</span>
+                        </div>
+                    </div>
+                    <div class="tickets_right display_hide" style="display: none;" >
+                        <i class="fas fa-circle tickets_icon"></i>
+                        <div class="sub_icon_text">
+                            <P><strong>Resolved</strong></P>
+                            <span>17 OCT 2022</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    
+</div>
+<!---create-ticket-component-->
+<div class="create-ticket-component">
+    <app-create-tickets #createTicket></app-create-tickets>
+</div>
+
+
+
+
+
+

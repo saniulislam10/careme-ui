@@ -1,0 +1,31 @@
+<div class="image-view-container">
+
+<div class="title">
+  <h2>Prescription Order Details (#{{order?.orderId}})</h2>
+</div>
+
+  <div class="images">
+    <div matTooltip="Click to Preview" class="img-thumb" *ngFor="let data of albums; let i = index" (click)="openLightBox(i)">
+      <img [src]="data.thumb" alt="Image {{i + 1}}">
+    </div>
+  </div>
+
+  <div class="order-info">
+    <h2>Name: {{order?.name}}</h2>
+    <p>Checkout Date: {{order?.checkoutDate | date: 'short'}}</p>
+    <p>Phone No: {{order?.phoneNo}}</p>
+    <p>Email: {{order?.email ? order?.email : 'N/A'}}</p>
+    <p>City: {{order?.city}}</p>
+    <p>Delivery Address: {{order?.shippingAddress}}</p>
+    <p>Order Notes: {{order?.orderNotes ? order?.orderNotes : 'N/A'}}</p>
+  </div>
+
+  <div class="action">
+    <button mat-raised-button color="warn" (click)="openConfirmDialog()">
+      <mat-icon>delete</mat-icon> Cancel Order
+    </button>
+  </div>
+
+</div>
+
+

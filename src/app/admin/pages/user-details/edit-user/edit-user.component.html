@@ -1,0 +1,66 @@
+<!--edit-area-->
+<mat-dialog-content>
+    <div class="edit-area" >
+        <div class="edit-main">
+            <!---header-area-->
+            <div class="header-area">
+                <div>
+                    <h3>Edit User</h3>
+                </div>
+                <div>
+                    <span mat-dialog-close><i class="fa fa-xmark"></i></span>
+                </div>
+            </div>
+            <!--edit-body-->
+            <div class="edit-body">
+                <form action="#">
+                  <div class="form-input-area">
+                    <!---form-input-->
+                    <div class="form-input">
+                        <h3>Email Address *</h3>
+                        <div>
+                            <mat-form-field appearance="outline" class="form-field">
+                               <input type="email" value="" matInput placeholder="Enter your email address">
+                            </mat-form-field>
+                        </div>
+                    </div><!--end-->
+                          <!---form-input-->
+                          <div class="form-input">
+                            <h3>Name *</h3>
+                            <div>
+                                <mat-form-field appearance="outline" class="form-field">
+                                   <input type="text" value="" matInput placeholder="Enter your name">
+                                </mat-form-field>
+                            </div>
+                        </div><!--end-->
+                        <!---form-input-->
+                        <div class="form-input">
+                            <h3>Role</h3>
+                            <div>
+                                <mat-form-field appearance="outline" class="form-field">
+                                    <mat-label>Select Dropdown</mat-label>
+                                    <mat-select>
+                                    <mat-option value="option">Admin</mat-option>
+                                    <mat-option value="option">Creator</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div><!--end-->
+        
+    
+                  </div>
+                  <!---form-btn-->
+                  <div class="edit-btn">
+                      <ul>
+                          <li><button class="save" type="button"><i>Save</i></button></li>
+                          <li><button  mat-dialog-close><i>Cancel</i></button></li>
+                      </ul>
+                  </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+  </mat-dialog-content>
+
+

@@ -1,0 +1,212 @@
+<!--order-process-system-->
+<div class="order-process-system">
+    <div class="container">
+        <div class="order-process-main">
+            <!---order-process-system-info-->
+            <div class="order-process-system-info complate-process"  >
+                <span><i class="fa fa-shopping-cart"></i></span>
+                <h3>My Cart</h3>
+            </div>
+             <!---order-process-system-info-->
+             <div class="order-process-system-info complate-process">
+                <span><i class="fa fa-map"></i></span>
+                <h3>Shipping Info</h3>
+            </div>
+             <!---order-process-system-info-->
+             <div class="order-process-system-info complate-process">
+                <span><i class="fa fa-truck"></i></span>
+                <h3>Delivery Info</h3>
+            </div>
+             <!---order-process-system-info-->
+             <div class="order-process-system-info active-process" >
+                <span><i class="fa fa-credit-card"></i></span>
+                <h3>Payment</h3>
+            </div>
+             <!---order-process-system-info-->
+             <div class="order-process-system-info " >
+                <span><i class="fa fa-check-circle"></i></span>
+                <h3>Confirmation</h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!------ PAYMENT-AREA ------>
+<div class="payment-area">
+    <div class="container">
+        <div class="payment-area-main">
+            <div>
+                <div class="payment-left">
+                    <!---step3-title-->
+                    <div class="step2-title">
+                        <h3>Select a Payment Option</h3>
+                    </div>
+                        <!---online-payment-->
+                    <div class="online-payment">
+                        <!--method-info-->
+                        <div class="method-info">
+                        <img src="./assets/images/payments/amex-icon.png" alt="">
+                        <span>Paypal</span>
+                        </div>
+                        <!--method-info-->
+                        <div class="method-info">
+                        <img src="./assets/images/payments/bkash-icon.png" alt="">
+                        <span>Bkash</span>
+                    </div>
+                    <!--method-info-->
+                    <div class="method-info">
+                        <img src="./assets/images/payments/mastercard-icon.png" alt="">
+                        <span>Stripe</span>
+                    </div>
+                    <!--method-info-->
+                    <div class="method-info">
+                        <img src="./assets/images/payments/rocket-icon.png" alt="">
+                        <span>Rocket</span>
+                    </div>
+                    <!--method-info-->
+                    <div class="method-info">
+                        <img src="./assets/images/payments/visa-icon.png" alt="">
+                        <span>Visa Card</span>
+                    </div>
+                    <!--method-info-->
+                    <div class="method-info">
+                    <img src="./assets/images/payments/cash-on-delivery.png" alt="">
+                    <span>Cash on Delivery</span>
+                    </div>
+                </div>
+                <!---payment-check-->
+                <div [class]="agreeConditions ? 'payment-check' : 'payment-check-error'" >
+                    <mat-checkbox (click)="changeAgreeConditions()" class="mat-check">I agree to the <a href="#">Terms and conditions</a>, <a href="#">Return policy</a> & <a href="#">Privacy Policy</a>.</mat-checkbox>
+                </div>
+            </div>
+              <!---cart-btn-area-->
+              <div class="cart-btn-area pc">
+                <div class="cart-btn-info">
+                    <div class="cart-btn-left">
+                        <button><i class="fa fa-arrow-left"></i> Return to shop</button>
+                    </div>
+                    <div class="cart-btn-right">
+                        <button (click)="onSubmitOrder()">Complete Order</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+            </div>
+
+            <!---payment-summary-->
+            <div class="payment-summary">
+            <!--summary-title-->
+            <div class="summary-title">
+                <h3>Summary</h3>
+                <span>{{carts.length}} Items</span>
+            </div>
+            <!---summary-point-->
+            <div class="summary-point">
+                <div class="point-info">
+                <span> Redeem point:</span>
+                <span>{{redeemPointsTotal()}}</span>
+                </div>
+            </div>
+            <!--product-total-->
+            <div class="product-total">
+
+                <!--product-total-title-->
+                <div class="product-total-title">
+                <span>Product</span>
+                <span>Total</span>
+                </div>
+
+            <div class="product-total-info-main" >
+                <!--product-total-info-->
+                <div class="product-total-info" *ngFor="let data of carts; let index= i">
+                    <div>
+                        <span *ngIf="!data?.requestProduct">{{data.product.name}}</span>
+                        <span *ngIf="data?.requestProduct">{{data.name}}</span>
+                    </div>
+                    <div style="text-align: right;">
+                        <span *ngIf="!data?.requestProduct">{{data?.product | price: 'variant' : data?.selectedQty: data?.variant[0]?.variantPrice}} TK</span>
+                        <span *ngIf="data?.requestProduct">{{getRoundValue(data?.price,data.selectedQty)}}TK</span>
+                        <small *ngIf="!data?.requestProduct && data?.product?.canPartialPayment && data?.product?.partialPaymentType === 0">({{data?.product.partialPayment}}Tk advance)</small>
+                        <small *ngIf="!data?.requestProduct && data?.product?.canPartialPayment && data?.product?.partialPaymentType === 1 && data?.product.partialPayment !== 100">({{data?.product.partialPayment}}% advance)</small>
+                        <small *ngIf="!data?.requestProduct && data?.product?.canPartialPayment && data?.product?.partialPaymentType === 1 && data?.product.partialPayment === 100">(Full Pay)</small>
+                        <small *ngIf="!data?.requestProduct && !data?.product?.canPartialPayment">(COD)</small>
+                      </div>
+                </div>
+                <!---subtotal-->
+                <div class="subtotal">
+                    <!--product-total-info-->
+                    <div class="product-total-info">
+                        <span>Subtotal</span>
+                        <span *ngIf="!carts[0]?.requestProduct" style="color:#e62e04;">{{cartSubTotal()}}</span>
+                        <span *ngIf="carts[0]?.requestProduct" style="color:#e62e04;">{{cartSubTotalForRequest() }}</span>
+                    </div>
+                      <!--product-total-info-->
+                      <div class="product-total-info">
+                        <span>Coupon (CARE50)</span>
+                        <span>(-) 0</span>
+                    </div>
+                    <!--product-total-info-->
+                    <div *ngIf="this.selectedPointsType === '1'" class="product-total-info">
+                        <span>Points</span>
+                        <span>(-) {{redeemPointsTotal()}}</span>
+                    </div>
+                    <!--product-total-info-->
+                    <div class="product-total-info">
+                    <span >Tax</span>
+                    <span *ngIf="!carts[0]?.requestProduct">{{calculateTotalTax()}}</span>
+                    <span *ngIf="carts[0]?.requestProduct">0</span>
+                    </div>
+                    <!--product-total-info-->
+                    <div class="product-total-info">
+                        <span>Total Shipping</span>
+                        <span>0</span>
+                    </div>
+                      <!--product-total-info-->
+                      <div class="product-total-info">
+                        <span>Advance</span>
+                        <span>{{advanceTotal() ? advanceTotal() : "0"}}</span>
+                    </div>
+                    <!--product-total-info-->
+                    <div class="product-total-info">
+                        <span>Due</span>
+                        <span *ngIf="!carts[0]?.requestProduct">{{cartTotal() - advanceTotal()}} TK</span>
+                        <span *ngIf="carts[0]?.requestProduct">{{cartSubTotalForRequest() - advanceTotal()}} TK</span>
+                    </div>
+                </div><!--subtotal-end-->
+
+
+            </div>
+
+            </div><!---product-total-end-->
+            <!---cuppon-area-->
+            <div class="cuppon-area">
+            <div class="cupon-input">
+                <input type="text" name="" id="" placeholder="Have coupon code ? Enter Here..">
+            </div>
+            <!---apply-btn-->
+            <div class="apply-btn">
+                <button>Apply</button>
+            </div>
+            </div>
+        </div>
+
+          <!-- -cart-btn-area -->
+          <div class="cart-btn-area mbl">
+            <div class="cart-btn-info">
+                <div class="cart-btn-left">
+                    <button routerLink="/all-products"><i class="fa fa-arrow-left"></i> Return to shop</button>
+                </div>
+                <div class="cart-btn-right">
+                    <button (click)="onSubmitOrder()">Complete Order</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    </div>
+  </div>
+

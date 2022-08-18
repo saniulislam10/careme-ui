@@ -1,0 +1,38 @@
+<!---collection-menu-->
+<div class="collection-menu">
+    <div class="container">
+      <ul>
+          <li><a href="#">Home <i class="fa fa-angle-right"></i></a></li>
+          <li><a href="#">Refund & Return Policy</a></li>
+      </ul>
+    </div>
+  </div>
+<!---terms-condition-->
+<div class="terms-condition">
+    <div class="container">
+        <div class="title">
+            <h3>Terms Of Service</h3>
+        </div>
+        <div class="main">
+            <mat-accordion>
+                <mat-expansion-panel class="toggle" (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false" *ngFor="let data of [1,2,3,4,5,6]">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="terms-title">
+                            <h3>
+                                কেন কেয়ার মি গ্লোবাল থেকে প্রোডাক্ট কিনবো ?
+                              </h3>
+                        </div>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                 <div class="terms-description">
+                     <p>আলি এক্সপ্রেস, আলিবাবা ইত্যাদি চাইনিজ বিভিন্ন সাইটে প্রোডাক্ট পছন্দ হলেও দেরিতে শিপিং কিংবা পেমেন্ট জটিলতায় অনেকের কাছে সেসব পণ্য অর্ডার করা সম্ভব হয় না। কিংবা উচ্চ শিপিং খরচ থাকার কারণেও অনেকের অনীহা হয়। </p>
+                     <p>এই প্রথম বিখ্যাত এসব ওয়েবসাইটের যেকোনো প্রোডাক্ট একদামে ক্রয়ের সুবিধা নিয়ে এলো দেশের অন্যতম অনলাইন প্লাটফর্ম কেয়ার মি গ্লোবাল। কেননা, আমরা দিচ্ছি সবচেয়ে কম সময়ে ও কম শিপিং খরচে বিশ্বখ্যাত এসব সাইটের যেকোনো প্রোডাক্ট।</p>
+                     <p>পেমেন্টও নেই জটিলতা। প্রোডাক্টভেদে ২৫-৫০% ক্যাশ অন ডেলিভারি, মোবাইল পেমেন্ট (DBBL মোবাইল ব্যাংকিং রকেট / বিকাশ), ডেবিট কার্ড/ ক্রেডিট কার্ড (ভিসা/ মাস্টারকার্ড/ নেক্সাসকার্ড ) ইত্যাদি সুবিধা দিচ্ছি আমরা।</p>
+                </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+        </div>
+    </div>
+</div>

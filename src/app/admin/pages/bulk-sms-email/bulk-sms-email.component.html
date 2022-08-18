@@ -1,0 +1,53 @@
+<div class="bulk-sms-email">
+    <h2>Bulk sms/Email</h2>
+    <div class="sms-email">
+      <div class="sms">SMS</div>
+      <div class="email">Email</div>
+    </div><br>
+  
+  <div class="contact-sms">
+   <div class="contact-sms1">
+     <div class="sms1">Contact Customer by sms</div>
+    <div class="contact-export">
+      <div class="sms2">Export</div>
+      <button (click)="popUpShow()">Create</button>
+    </div>
+  </div>
+  <div class="send">
+    <h4>Send to</h4>
+    <mat-form-field  appearance="outline" class="form-field">
+      <mat-label>Select type</mat-label>
+      <mat-select disableRipple>
+        <mat-option value="1">Option 1</mat-option>
+        <mat-option value="2">Option 2</mat-option>
+        <mat-option value="3">Option 3</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+  </div>
+  
+  <div class="message">
+    <h3>Customer message</h3>
+    <textarea name="" id="" cols="10" rows="5" placeholder="Write a Message"></textarea>
+  </div>
+  <div class="template" style="width:100%">
+    <mat-form-field  appearance="outline" class="form-field">
+      <mat-label>Template</mat-label>
+      <mat-select disableRipple>
+        <mat-option value="1">Option 1</mat-option>
+        <mat-option value="2">Option 2</mat-option>
+        <mat-option value="3">Option 3</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="btn">
+    <button class="button1">Send</button>
+    <button class="button2">Cancel</button>
+  </div>
+  
+  </div>
+  </div>
+  <!--component-area-->
+  <div class="component">
+    <app-create-sms-group #smsgroup></app-create-sms-group>
+  </div>

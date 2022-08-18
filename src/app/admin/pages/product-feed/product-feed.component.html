@@ -1,0 +1,18 @@
+<!--header-area-->
+<div class="header-area">
+    <div class="title">
+        <h3>Product Feed</h3>
+    </div>
+</div>
+<!---product-feed-menu-->
+<div class="product-fedd-menu">
+    <ul>
+        <li><a routerLink="./" routerLinkActive="active"  [routerLinkActiveOptions]="{exact:true}">Product Feed</a></li>
+        <li><a routerLink="settings" routerLinkActive="active">Settings</a></li>
+    </ul>
+</div>
+
+<!---product-feed-render-->
+<div class="product-feed-render">
+    <router-outlet></router-outlet>
+</div>

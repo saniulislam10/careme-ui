@@ -1,0 +1,96 @@
+<!----create-return-area-->
+<div class="create-return-area" *ngIf="createReturn == true">
+    <div class="create-return-main">
+        <!--create-return-headeer-->
+        <div class="create-return-header">
+            <h3>Create Return</h3>
+        </div> <!--create-return-headeer-end-->
+        <!--create-return-body-->
+        <div class="create-return-body">
+            <!--return-form-->
+            <div class="return-form">
+                <form action="#">
+                    <!---form-input-area-->
+                    <div class="form-input">
+                        <h3>Order ID :</h3>
+                        <mat-form-field appearance="outline" class="form-field">
+                            <input type="text"  matInput placeholder="Order Id.." >
+                            <mat-error *ngIf="">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </form>
+            </div><!--return-form-end-->
+            <!---create-return-table-area-->
+            <div class="create-return-table-area">
+                <!---table-->
+                <div class="table">
+                    <!---table-head-->
+                    <div class="table-head">
+                        <!---table-row-->
+                        <div class="table-row">
+                            <div class="table-heading serial">
+                                <h3>SI</h3>
+                            </div>
+                            <div class="table-heading item">
+                                <h3>Item</h3>
+                            </div>
+                            <div class="table-heading sku">
+                                <h3>SKU</h3>
+                            </div>
+                            <div class="table-heading quantity">
+                                <h3>Quantity</h3>
+                            </div>
+                            <div class="table-heading amount">
+                                <h3>Amount</h3>
+                            </div>
+                            <div class="table-heading vendor">
+                                <h3>Vendor</h3>
+                            </div>
+                            
+                        </div><!---table-row-end-->
+                    </div><!---table-head-end-->
+                    <!----table-body-->
+                    <div class="table-body">
+                        <div class="table-row" *ngFor="let data of [1,2]">
+                            <div class="table-data serial">
+                                <h3>01</h3>
+                            </div>
+                            <div class="table-data item">
+                                <h3>Bluetooth Keyboard</h3>
+                            </div>
+                            <div class="table-data sku">
+                                <h3>SKU1234</h3>
+                            </div>
+                            <div class="table-data quantity">
+                                <span>01</span>
+                            </div>
+                            <div class="table-data amount">
+                                <h3>5,830 TK</h3>
+                            </div>
+                            <div class="table-data vendor">
+                                <mat-form-field appearance="outline" class="form-field">
+                                    <mat-label>Select</mat-label>
+                                    <mat-select>
+                                      <mat-option value="one">First option</mat-option>
+                                      <mat-option value="two">Second option</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!----return-btn-area-->
+            <div class="return-btn-area">
+                <ul>
+                    <li><button (click)="createReturnHide()">Cancel</button></li>
+                    <li><button class="active-btn">Save</button></li>
+                </ul>
+            </div>
+
+
+        </div>   <!--create-return-body-end-->
+    </div>
+</div>

@@ -1,0 +1,250 @@
+<!---view-product-top-->
+<div class="view-product-header-area">
+  <div class="view-product-header-main">
+    <!--view-product-left-->
+    <div class="view-product-header-left">
+      <h2>All Products </h2>
+    </div>
+    <!---header-right-->
+    <div class="view-product-header-right">
+      <ul>
+        <li (click)="exportPopUpShow()">Export</li>
+        <li><button [routerLink]="['../../', 'add-by-link']">Add By link</button></li>
+        <li><button class="active-btn" [routerLink]="['../../', 'add-product']">Add Product</button></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!---all-products-main-area-->
+<div class="all-products-main-area">
+  <!--products-menu-->
+  <div class="all-products-menu">
+    <ul>
+      <!-- <li><button class="active-tab" (click)="onFilterSelectChange(0)">All</button></li> -->
+      <li><button [class]="status == 0 ?'active-tab':'inactive'" (click)="onFilterSelectChange(0)">All</button></li>
+      <li><button [class]="status == 1 ?'active-tab':'inactive'" (click)="onFilterSelectChange(1)">Draft</button></li>
+      <li><button [class]="status == 2 ?'active-tab':'inactive'" (click)="onFilterSelectChange(2)">Active</button></li>
+      <li><button [class]="status == 5 ?'active-tab':'inactive'" (click)="onFilterSelectChange(5)">Stock Out</button></li>
+      <li><button [class]="status == 3 ?'active-tab':'inactive'" (click)="onFilterSelectChange(3)">Pre-Order</button></li>
+      <li><button [class]="status == 6 ?'active-tab':'inactive'" (click)="onFilterSelectChange(6)">Re Order</button></li>
+      <li><button [class]="status == 4 ?'active-tab':'inactive'" (click)="getAllArchivedProducts(4)">Archived</button></li>
+    </ul>
+  </div>
+  <!--products-menu-end-->
+  <!---products-search-area-->
+  <div class="products-search-area">
+    <!---search-->
+    <div class="search" (click)="onClickSearchArea($event)">
+      <button><i class="fa fa-search"></i></button>
+      <form #searchForm=ngForm style="width: 100%;">
+        <input #searchInput id="searchInput" class="tw" type="text" placeholder="Filter Products"
+          (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel required>
+      </form>
+    </div>
+    <!--products-search-area-btn--->
+    <div class="products-search-area-btn">
+      <ul>
+        <li><button [matMenuTriggerFor]="changeProductStatus">Bulk Action <i class="fa fa-caret-down"></i></button></li>
+        <mat-menu #changeProductStatus="matMenu">
+          <button mat-menu-item (click)="deleteBulkProducts()">Delete</button>
+          <button mat-menu-item (click)="changeStatus(1)">Draft</button>
+          <button mat-menu-item (click)="changeStatus(2)">Active</button>
+        </mat-menu>
+        <li><button [matMenuTriggerFor]="productSort">Sort <i class="fa fa-caret-down"></i></button></li>
+        <mat-menu #productSort="matMenu">
+          <button mat-menu-item (click)="sortData({name: 1}, 1)" [class.dropdown-active]="activeSort === 1">Product
+            Title (A-Z)</button>
+          <button mat-menu-item (click)="sortData({createdAt: 1}, 2)" [class.dropdown-active]="activeSort === 2">Created
+            (Oldest First)</button>
+          <button mat-menu-item (click)="sortData({quantity: -1}, 3)" [class.dropdown-active]="activeSort === 3">High
+            Inventory</button>
+          <!-- need to change -->
+          <button mat-menu-item (click)="sortData({categoryName: -1}, 4)"
+            [class.dropdown-active]="activeSort === 4">Product Type (A-Z)</button>
+          <button mat-menu-item (click)="sortData({vendor: 1}, 5)" [class.dropdown-active]="activeSort === 5">Vendor
+            (A-Z)</button>
+        </mat-menu>
+        <li><button>More</button></li>
+      </ul>
+    </div>
+  </div>
+  <!---table-area-->
+  <div class="table-area">
+    <!---main-table-->
+    <div class="main-table">
+      <!---main-table-head-->
+      <div class="main-table-head">
+        <div class="main-table-row">
+          <div class="down-arrow main-table-heading"></div>
+          <div class="check  main-table-heading">
+            <mat-checkbox #matCheckbox class="mat-check" (change)="onAllSelectChange($event)">
+
+            </mat-checkbox>
+          </div>
+          <div class="product  main-table-heading">Product</div>
+          <div class="price  main-table-heading">Price</div>
+          <div class="stock-hand  main-table-heading">Stock on Hand</div>
+          <div class="status  main-table-heading">Status</div>
+          <div class="category  main-table-heading">Category</div>
+          <div class="earn-point  main-table-heading">Earn Points</div>
+          <div class="redeem-points  main-table-heading">Redeem Points</div>
+          <div class="vendor  main-table-heading">Vendor</div>
+        </div>
+      </div>
+      <div class="main-table-body">
+        <!---table-row-->
+        <div class="loop"
+          *ngFor="let data of products | paginate: { itemsPerPage: productsPerPage, currentPage: currentPage, totalItems: totalProducts }; let i = index">
+          <!---main-table-row-->
+          <div class="main-table-row">
+            <div class="down-arrow main-table-data"><i (click)="variantDropDown(i)" class="fa fa-caret-down"></i></div>
+            <div class="check main-table-data">
+              <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data._id)"
+                [(ngModel)]="data.select"></mat-checkbox>
+            </div>
+            <div class="product main-table-data">
+              <div class="product-info ">
+                <!---product-img-->
+                <div class="product-img">
+                  <img [src]="setThumbnailImage(data) ? setThumbnailImage(data) : '/assets/images/placeholder/test.png'"
+                    alt="">
+                </div>
+                <!---product-text-info-->
+                <div class="product-text-info">
+                  <a>{{data.name}}</a>
+                  <a *ngIf="!data.link" target="_blank" [routerLink]="['../../../', 'product-details', data.slug]">
+                    <i  class="eyeButton"  class="fa fa-eye"></i>
+                  </a>
+                  <a *ngIf="data.link" target="_blank" [routerLink]="['../../../', 'product-details-search', data.slug]">
+                    <i class="eyeButton"  class="fa fa-eye"></i>
+                  </a>
+                  <i [routerLink]="['../../', 'add-product', data._id]" class="fas fa-edit"></i>
+                  <span>{{data.sku}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="price main-table-data">
+              <span>{{data.sellingPrice}} BDT</span>
+            </div>
+            <div class="stock-hand main-table-data">
+              <span>{{data.quantity}} for</span>
+              <span>{{data.variantFormArray.length}} of variants</span>
+            </div>
+            <div class="main-table-data">
+
+              <mat-select class="temp-class" [ngClass]="getStatusColor(data.status)" [(value)]="data.status">
+                <mat-option *ngFor="let c of productStatus" [value]="c.value"
+                  (click)="onStatusChange(c.value, data, data._id)">{{c.viewValue}}</mat-option>
+              </mat-select>
+            </div>
+            <div class="category main-table-data">
+              <span>{{data?.parentCategory?.name}}</span>
+            </div>
+            <div class="earn-point main-table-data">
+              <span>{{data.canEarnPoints === true ? 'Yes' : 'No'}}</span>
+              <span>{{data.earnPoints}} {{data.earnPointsType | amountType}}</span>
+            </div>
+            <div class="redeem-points main-table-data">
+              <span>{{data.canRedeemPoints === true ? 'Yes' : 'No'}}</span>
+              <span>{{data.redeemPoints}} {{data.redeemPointsType | amountType}}</span>
+            </div>
+            <div class="vendor main-table-data">
+              <span>{{data.vendor}}</span>
+            </div>
+          </div>
+          <div class="sub-table-start" *ngIf="data.variantFormArray.length && showVariant[i]=== true > 0">
+            <div class="sub-table-area">
+              <div class="sub-table">
+                <div class="sub-table-head">
+                  <div class="sub-table-row">
+                    <div class="sku table-heading">SKU</div>
+                    <div class="name table-heading" *ngFor="let variantType of data.variants; let i=index">
+                      {{variantType}}</div>
+                    <div class="stock table-heading">Stock</div>
+                    <div class="sub-status table-heading">Status</div>
+                    <div class="sub-status table-heading">Continue selling</div>
+                    <div class="sub-price table-heading">Price</div>
+                    <div class="sub-vendor table-heading">Vendor</div>
+                    <div class="sub-record table-heading">Re-order</div>
+                  </div>
+                </div>
+                <!-- <form [formGroup]="variantForm" (ngSubmit)="onSubmitVariant()"> -->
+                <div class="sub-table-body">
+                  <div class="sub-table-row" *ngFor="let variant of data.variantFormArray; let i=index">
+                    <div class="sku table-data">
+                      <span>{{variant.variantSku}}</span>
+                    </div>
+                    <div class="name table-data" *ngFor="let type of data.variants; let x=index">
+                      <span>{{this.getVariantName(i, type, data)}}</span>
+                    </div>
+                    <div class="stock table-data">
+                      <!-- <input type="text" [value]="variant.variantQuantity"> -->
+                      <span>{{variant.variantQuantity}}</span>
+                    </div>
+                    <div class="main-table-data">
+                      <!-- <mat-select class="temp-class" style="width: 100px; padding-left: 15px;"
+                        [ngClass]="getStatusColor(variant.variantStatus)" [(value)]="variant.variantStatus">
+                        <mat-option *ngFor="let c of productStatus" [value]="c.value"
+                          (click)="onVariantStatusChange(c.value, i, data.variantFormArray, data._id)">{{c.viewValue}}
+                        </mat-option>
+                      </mat-select> -->
+                      <button [class]="getVariantStatusColor(variant)">{{getVariantStatus(variant)}}</button>
+                    </div>
+                    <div class="sub-price table-data">
+                      <mat-checkbox [checked]="variant?.variantContinueSelling ? true: false" class="example-margin"></mat-checkbox>
+                    </div>
+                    <div class="sub-price table-data">
+                      <span>{{variant.variantPrice}}</span>
+                    </div>
+                    <div class="sub-price table-data">
+                      <span>{{variant.variantVendorName}}</span>
+                    </div>
+                    <div class="sub-record table-data">
+                      <!-- <input type="text" name="" id="" [value]="variant.variantReOrder"> -->
+                      <span>{{variant.variantReOrder}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="sub-save">
+                  <button type="submit">Save</button>
+                </div>
+                <!-- </form> -->
+              </div>
+            </div>
+            <!-------- sub-table-area ------->
+
+            <!-- </div> -->
+
+
+          </div>
+
+        </div>
+        <!---tbody-end-->
+      </div>
+      <!---main-table-end-->
+
+    </div>
+    <!---indicator-area-->
+    <div class="indicator-area">
+      <div class="pagination-container">
+        <pagination-controls class="product-pagination" [autoHide]="true" [maxSize]="15"
+          (pageChange)="onPageChanged($event)">
+        </pagination-controls>
+      </div>
+
+      <div class="indicator-right">
+        <span>Showing {{currentPage*productsPerPage-productsPerPage+1}} to {{currentPage*productsPerPage <=
+            totalProducts ? currentPage*productsPerPage : totalProducts}} of {{totalProducts}} entries</span>
+      </div>
+    </div>
+  </div>
+  <div class="export-popup-area">
+    <app-export-popup (valueChange)='exportToExcel($event)' #export></app-export-popup>
+  </div>
+  <!-- NO DATA TEMPLATE -->
+  <ng-template #noData>
+    <div style="margin-top: 50px; text-align: center">
+      <h2>No Product Found</h2>
+    </div>
+  </ng-template>

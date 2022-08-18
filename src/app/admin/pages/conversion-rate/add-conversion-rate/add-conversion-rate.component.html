@@ -1,0 +1,87 @@
+<div class="create-vendor">
+    <div class="create-vendor-main">
+      <form  [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+        <!---create-vendor-header-->
+        <div class="create-vendor-header">
+            <h2>Add Conversion Rate</h2>
+        </div>
+        <!---create-vendor-body-->
+        <div class="create-vendor-body">
+            <div class="input-area">
+                <!---input-infoo-->
+                <div class="input-info">
+                    <!--input-info-left--->
+                    <div class="input-info-left">
+                        <h3>Website Name:</h3>
+                    </div>
+                    <!---input-info-right-->
+                    <div class="input-info-right">
+                        <div class="form-input">
+                            <div class="field">
+                            <!-- <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>Website Name</mat-label>
+                                <input type="text" formControlName="websiteName"  matInput placeholder="Enter Website name">
+                                <mat-error *ngIf="">This field is required</mat-error>
+                            </mat-form-field> -->
+
+                          <mat-form-field appearance="outline" class="form-field">
+                              <mat-select formControlName="websiteName" placeholder="Vendor">
+                                  <mat-option value={{data.websiteName}} *ngFor="let data of demoData">{{data.websiteName}}</mat-option>
+                                  <!-- <mat-option value={{data.websiteName}} >Care me Global</mat-option> -->
+                              </mat-select>
+                              <mat-error *ngIf="">This field is required</mat-error>
+                          </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+               <!---input-infoo-->
+               <div class="input-info">
+                <!--input-info-left--->
+                <div class="input-info-left">
+                    <h3>Website Url:</h3>
+                </div>
+                <!---input-info-right-->
+                <div class="input-info-right">
+                    <div class="form-input">
+                        <div class="field">
+                          <mat-form-field appearance="outline" class="form-field">
+                              <mat-label>Website Url</mat-label>
+                              <input type="text" formControlName="url"  matInput placeholder="Enter your Website Url">
+                              <mat-error *ngIf="">This field is required</mat-error>
+                          </mat-form-field>
+                        </div>
+                </div>
+            </div>
+              </div>
+            </div>
+               <!---input-infoo-->
+               <div class="input-info">
+                <!--input-info-left--->
+                <div class="input-info-left">
+                    <h3>Rate:</h3>
+                </div>
+                <!---input-info-right-->
+                <div class="input-info-right">
+                    <div class="form-input">
+                        <div class="field">
+                        <mat-form-field appearance="outline" class="form-field">
+                            <mat-label>Rate</mat-label>
+                            <input type="text" formControlName="rate"  matInput placeholder="Enter your Website Url">
+                            <mat-error *ngIf="">This field is required</mat-error>
+                        </mat-form-field>
+                        </div>
+                </div>
+            </div>
+               </div>
+
+        </div><!---input-area-end-->
+        <div class="create-vendor-btn">
+            <ul>
+                <li><button [routerLink]="['/','admin/conversion-rate']" type="button" >Cancel</button></li>
+                <li><button class="save-active">Save</button></li>
+            </ul>
+        </div>
+      </form>
+    </div>
+</div>

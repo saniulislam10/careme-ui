@@ -1,0 +1,136 @@
+@import'./../../../../../theme/client-side-varriables';
+.payment-area{
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+.payment-title{
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+}
+.payment-title h3{
+    color: #000;
+    font-family: $font-en-primary-2;
+    font-weight: 700;
+    font-size: 25px;
+    font-style: normal;
+    display: block;
+    letter-spacing: 1px;
+}
+.banking-details{
+    display: block;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #b6b6b6;
+    border-radius: 13px;
+    margin-bottom: 20px;
+}
+.banking-title{
+    display: block;
+    padding-bottom: 15px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #b6b6b6;
+}
+.banking-title h3{
+    color: #2d2d2d;
+    font-family: $font-en-primary-2;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.7px;
+    font-style: normal;
+    display: block;
+}
+.form-field-area{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0px 20px;
+    grid-template-rows: auto;
+}
+// .bank{
+//     grid-template-columns: repeat(4, 1fr);
+// }
+.form-input{
+    display: block;
+}
+.form-input label{
+    color: #2d2d2d;
+    font-family: $font-en-primary-2;
+    font-weight: 600;
+    font-size: 16px;
+    font-style: normal;
+    display: block;
+    margin-bottom: 15px!important;
+}
+
+.payment-btn{
+    display: block;
+    width: 100%;
+    margin-top: 40px;
+}
+.payment-btn ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+}
+.payment-btn ul li{
+    display: inline-block;
+    margin-right: 10px;
+}
+.payment-btn ul li button{
+    background-color: #fff;
+    color: #db5791;
+    font-family: $font-en-primary-2;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    box-sizing: border-box;
+    padding: 6px 15px;
+    outline: none;
+    border: 1px solid #db5791;
+    border-radius: 4px;
+    transition: all 0.3s linear;
+}
+.payment-btn ul li button:hover{
+    background-color: #db5791;
+    color: #fff;
+}
+.save-active{
+    background-color: #db5791!important;
+    color: #fff!important;
+}
+@media(max-width:764px){
+    .form-field-area{
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 5px;
+    }
+}
+
+/**** form-field ****/
+.form-field{
+    display: block;
+    width: 100%;
+}
+.form-field mat-form-field{
+    display: block;
+    width: 100%;
+}
+.form-field mat-form-field input{
+    display: block;
+    font-family: $font-en-primary-2;
+    font-size: 15px;
+    font-weight: 500;
+}
+::ng-deep.field .mat-form-field-infix{
+    padding: 0.5em 0 0.6em 0!important;
+    box-sizing: border-box;
+    min-width: 0px;
+    width: auto;
+}
+::ng-deep.field.mat-form-field-appearance-outline .mat-form-field-outline-thick{
+    color: #db5791;
+}

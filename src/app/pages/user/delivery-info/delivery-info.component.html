@@ -1,0 +1,98 @@
+<!--order-process-system-->
+<div class="order-process-system">
+    <div class="container">
+        <div class="order-process-main">
+            <!---order-process-system-info-->
+            <div class="order-process-system-info complate-process"  >
+                <span><i class="fa fa-shopping-cart"></i></span>
+                <h3>My Cart</h3>
+            </div>
+             <!---order-process-system-info-->
+             <div class="order-process-system-info complate-process" >
+                <span><i class="fa fa-map"></i></span>
+                <h3>Shipping Info</h3>
+            </div>
+             <!---order-process-system-info-->
+             <div class="order-process-system-info active-process">
+                <span><i class="fa fa-truck"></i></span>
+                <h3>Delivery Info</h3>
+            </div>
+             <!---order-process-system-info-->
+             <div class="order-process-system-info" >
+                <span><i class="fa fa-credit-card"></i></span>
+                <h3>Payment</h3>
+            </div>
+             <!---order-process-system-info-->
+             <div class="order-process-system-info" >
+                <span><i class="fa fa-check-circle"></i></span>
+                <h3>Confirmation</h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!---delivery-info-area-->
+<div class="delivery-info-area">
+    <div class="container">
+        <div class="delivery-info-main">
+            <!---delivery-table--->
+            <div class="delivery-table-area">
+                <!---delivery-table-->
+                <div class="delivery-table">
+                    <!---table-head-->
+                    <div class="table-head">
+                        <div class="table-row">
+                            <div class="table-heading check"></div>
+                            <div class="table-heading delivery-by">
+                                <h3>Delivery By</h3>
+                            </div>
+                            <div class="table-heading weight">
+                                <h3>Weight</h3>
+                            </div>
+                            <div class="table-heading cost">
+                                <h3>Cost</h3>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!---table-body-->
+                    <div class="table-body">
+                        <div class="table-row" *ngFor="let data of [1,2,3,4]">
+                            <div class="table-data check">
+                                <mat-checkbox class="mat-check"></mat-checkbox>
+                            </div>
+                            <div class="table-data delivery-by">
+                                <h3>Pathao</h3>
+                            </div>
+                            <div class="table-data weight">
+                                <h3>1-3 kg</h3>
+                            </div>
+                            <div class="table-data cost">
+                                <h3>150Tk</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+              <!---cart-btn-area-->
+              <div class="cart-btn-area">
+                <div class="cart-btn-info">
+                    <div class="cart-btn-left">
+                        <button routerLink="/all-products"><i class="fa fa-arrow-left"></i> Return to shop</button>
+                    </div>
+                    <div class="cart-btn-right">
+                        <button routerLink="/payment">Continue to Payment </button>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

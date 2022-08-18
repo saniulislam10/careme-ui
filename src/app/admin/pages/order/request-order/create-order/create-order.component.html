@@ -1,0 +1,379 @@
+<!--------------------------create-order-area---------------------->
+<div class="create-order-area" [class]="createOrder?'active-create-order-area':'in-active'">
+    <div class="create-order-main">
+       <form action="#">
+            
+        <!--create-order-header-->
+        <div class="create-order-header">
+            <div class="create-order-header-left">
+                <h3>Create/Edit Order</h3>
+            </div>
+            <div class="create-order-header-right">
+                <span (click)="createOrderHide()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+        </div>
+        <!----create-order-body-->
+        <div class="create-order-body">
+            <!---create-order-body-top-->
+            <div class="create-order-body-top">
+                <!---Create-order-top-left-->
+                <div class="create-order-top-left">
+                    <!---create-order-top-form-input-->
+                <div class="create-order-top-form-input">
+                    <div class="create-order-top-form-input-left">
+                        <h3>Customer Name:</h3>
+                    </div>
+                    <div class="create-order-top-form-input-right">
+                     <div class="form-input order-flex">
+                         <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                             <mat-label> Select or add customer</mat-label>
+                             <mat-select>
+                               <mat-option value="option">Option1</mat-option>
+                               <mat-option value="option">Option2</mat-option>
+                             </mat-select>
+                             <mat-error *ngIf="">This field is required</mat-error>
+                           </mat-form-field>
+                           <div class="order-search">
+                               <button><i class="fa fa-search"></i></button>
+                           </div>
+                     </div>
+                    </div>
+                 </div> <!---create-order-top-form-input-end-->
+                 <!---create-order-top-form-input-->
+                 <div class="create-order-top-form-input">
+                     <div class="create-order-top-form-input-left">
+                         <h3>Email</h3>
+                     </div>
+                     <div class="create-order-top-form-input-right">
+                         <div class="form-input">
+                             <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                                 <mat-label>Email</mat-label>
+                                 <input type="email" matInput placeholder="Enter your email id" value="">
+                                 <mat-error *ngIf="">This field is required</mat-error>
+                             </mat-form-field>
+                         </div>
+                     
+                     </div>
+                  </div> <!---create-order-top-form-input-end-->
+                 <!---create-order-top-form-input-->
+                 <div class="create-order-top-form-input">
+                     <div class="create-order-top-form-input-left">
+                         <h3>Phone</h3>
+                     </div>
+                     <div class="create-order-top-form-input-right">
+                         <div class="form-input">
+                             <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                                 <mat-label>Phone no</mat-label>
+                                 <input type="text" matInput placeholder="Enter your phone no" value="">
+                                 <mat-error *ngIf="">This field is required</mat-error>
+                             </mat-form-field>
+                         </div>
+                     
+                     </div>
+                  </div> <!---create-order-top-form-input-end-->
+                    <!---create-order-top-form-input-->
+                 <div class="create-order-top-form-input">
+                     <div class="create-order-top-form-input-left">
+                         <h3>Address</h3>
+                     </div>
+                     <div class="create-order-top-form-input-right">
+                         <div class="form-input">
+                             <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                                 <mat-label>Address</mat-label>
+                                 <input type="text" matInput placeholder="Enter your address" value="">
+                                 <mat-error *ngIf="">This field is required</mat-error>
+                             </mat-form-field>
+                         </div>
+                     
+                     </div>
+                  </div> <!---create-order-top-form-input-end-->
+                         <!---create-order-top-form-input-->
+                 <div class="create-order-top-form-input">
+                     <div class="create-order-top-form-input-left">
+                         <h3>Delivery Method:</h3>
+                     </div>
+                     <div class="create-order-top-form-input-right">
+                      <div class="form-input ">
+                          <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                              <mat-label> Select delivery method</mat-label>
+                              <mat-select>
+                                <mat-option value="option">Option1</mat-option>
+                                <mat-option value="option">Option2</mat-option>
+                              </mat-select>
+                              <mat-hint>Outside Dhaka, Pathao Sa Paribahan Sundarban Dropdown</mat-hint>
+                              <mat-error *ngIf="">This field is required</mat-error>
+                            </mat-form-field>
+ 
+                      </div>
+                     </div>
+                  </div> <!---create-order-top-form-input-end-->
+                </div><!---left-end-->
+                <!---create-order-top-right-->
+                <div class="create-order-top-right">
+                    <!---create-order-top-right-top-->
+                    <div class="create-order-top-right-top">
+                        <div>
+                            <button>Add Customer</button>
+                        </div>
+                        <div>
+                            <h3>Date</h3>
+                            <h5>25/12/2021</h5>
+                        </div>
+                    </div>       <!---create-order-top-right-top-end-->
+                    <div class="right-form">
+                    <!---create-order-top-form-input-->
+                    <div class="create-order-top-form-input">
+                        <div class="create-order-top-form-input-left">
+                            <h3>Reference</h3>
+                        </div>
+                        <div class="create-order-top-form-input-right">
+                            <div class="form-input">
+                                <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                                    <!-- <mat-label>Email</mat-label> -->
+                                    <input type="email" matInput placeholder="Exchange.." value="">
+                                    <mat-error *ngIf="">This field is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        
+                        </div>
+                    </div> <!---create-order-top-form-input-end-->
+                    </div>
+                </div><!---right-end-->
+            
+            </div><!---create-order-body-top-end-->
+            <!---create-order-body-main-->
+            <div class="create-order-body-main">
+                <!---item-details-->
+                <div class="item-details">
+                    <!---item-details-header-->
+                    <div class="item-details-header">
+                        <h3>Item Details</h3>
+                    </div>
+                    <!--product-info-->
+                    <div class="product-info">
+                        <!---product-img-->
+                        <div class="product-img">
+                            <img src="./assets/images/junk/1218NP_economicoutlook_img1.jpg" alt="">
+                        </div>
+                        <!---product-text-details-->
+                        <div class="product-text-details">
+                            <!--product-header-->
+                            <div class="product-header">
+                                <div>
+                                    <a href="#">Toothbrush & Paste Holder</a>
+                                </div>
+                                <div>
+                                    <span><i class="fa fa-trash"></i></span>
+                                </div>
+                            </div>
+                            <!---product-point-->
+                            <div class="product-point">
+                                <h3>Earn <span class="earn">+50</span> or redeem <span class="redeem-pts">-50</span> pts</h3>
+                            </div>
+                            <!---product-sku-->
+                            <div class="product-sku">
+                                <h3>SKU: 23456</h3>
+                            </div>
+                            <!---product-bottom-->
+                            <div class="product-bottom">
+                                <div>
+                                    <h3>Delivery within 30 Days</h3>
+                                </div>
+                                <div>
+                                    <span>( 10% advance )</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!---product-end-->
+                    <!----add-product-img-->
+                    <div class="add-product">
+                        <!---add-btn-->
+                        <div class="add-btn">
+                            <button><i class="fa fa-images"></i></button>
+                        </div>
+                        <div class="add-form-input">
+                            <div class="form-input">
+                                <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                                    <mat-label>Type Item Name Or SKU </mat-label>
+                                    <input type="text" matInput placeholder="Enter your address" value="">
+                                    <mat-error *ngIf="">This field is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div><!--item-details-end-->
+                <!---table-area-->
+                <div class="product-table-area">
+
+                    <div class="product-table-area-main">
+                        <!----table-->
+                        <div class="table">
+
+                            <div class="table-head">
+                                <div class="table-row">
+                                    <div class="table-heading">
+                                        <h3>Vendor</h3>
+                                    </div>
+                                    <div class="table-heading">
+                                        <h3>Quantity</h3>
+                                    </div>
+                                    <div class="table-heading">
+                                        <h3>Price</h3>
+                                    </div>
+                                    <div class="table-heading">
+                                        <h3>Discount</h3>
+                                    </div>
+                                    <div class="table-heading amount">
+                                        <h3>Amount</h3>
+                                    </div>
+                                
+                                </div>
+                            </div>
+                            <!---table-body-area-->
+                            <div class="table-body">
+                                <div class="table-row">
+                                    <!---table-data-->
+                                    <div class="table-data">
+                                        <div class="table-input">
+                                           <select name="#" id="">
+                                               <option value="#">Global</option>
+                                               <option value="#">Local</option>
+                                           </select>
+                                        </div>
+                                    </div>
+                                  <!---table-data-->
+                                  <div class="table-data">
+                                    <div class="table-input">
+                                       <input type="text" value="01">
+                                    </div>
+                                </div>
+                                  <!---table-data-->
+                                  <div class="table-data">
+                                    <div class="table-input">
+                                       <input type="text" value="200">
+                                    </div>
+                                </div>
+                                 <!---table-data-->
+                                 <div class="table-data">
+                                    <div class="table-input">
+                                       <input type="text" value="0">
+                                    </div>
+                                </div>
+                                  <!---table-data-->
+                                  <div class="table-data amount">
+                                      <!---price-->
+                                      <div class="price">
+                                          <del>2000</del>
+                                          <h3>200</h3>
+                                      </div>
+                                </div>
+                            </div>
+
+                            </div>
+
+                            <!---discount-area-->
+                            <div class="discount-area">
+                                <!--discount-info--->
+                                <div class="discount-info">
+                                    <!---discount-left-->
+                                    <div class="discount-left">
+                                        <div>
+                                            <h3>Total Discount:</h3>
+                                        </div>
+                                        <div>
+                                            <input type="text" value="">
+                                        </div>
+                                    </div>
+                                    <!---discount-right-->
+                                    <div class="discount-right">
+                                        <span>0.00</span>
+                                    </div>
+                                </div>
+                                <!--discount-info--->
+                                <div class="discount-info">
+                                    <!---discount-left-->
+                                    <div class="discount-left">
+                                        <div>
+                                            <h3>Delivery fees:</h3>
+                                        </div>
+                                        <div>
+                                            <input type="text" value="">
+                                        </div>
+                                    </div>
+                                    <!---discount-right-->
+                                    <div class="discount-right">
+                                        <span>0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!----table-end-->
+                    </div><!----table-area-main-end-->
+                </div>
+            </div><!---create-order-body-main-end-->
+
+              <!---summery-area-->
+              <div class="summery-area">
+                <!---summery-info-->
+                <div class="summery-info">
+                    <div class="summery-info-left">
+                        <h3>Total:</h3>
+                    </div>
+                    <!--summery-info-right-->
+                    <div class="summery-info-right">
+                        <h3>2000 BDT</h3>
+                    </div>
+                </div>
+                <!---summery-info-->
+                <div class="summery-info">
+                    <div class="summery-info-left">
+                        <h3>Need to pay:</h3>
+                    </div>
+                    <!--summery-info-right-->
+                    <div class="summery-info-right">
+                        <h3 style="color: #e62e04;">200 BDT</h3>
+                    </div>
+                </div>
+                <!---pts-->
+                <div class="point">
+                    <span class="point-50"><small>(1000 Available)</small><mat-checkbox class="mat-check">Pts (-)</mat-checkbox> <strong>50</strong></span>
+                    
+                    <span class="point-100"><mat-checkbox class="mat-check">Pts (+)</mat-checkbox> <strong>100</strong></span>
+                </div>
+                  <!---summery-info-->
+                  <div class="summery-info due">
+                    <div class="summery-info-left">
+                        <h3>Due:</h3>
+                    </div>
+                    <!--summery-info-right-->
+                    <div class="summery-info-right">
+                        <h3>2000 BDT</h3>
+                    </div>
+                </div>
+            </div>
+            <!--message-area-->
+            <div class="messsage-area">
+                <div class="form-input">
+                    <h3>Message form customer:</h3>
+                    <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                        <mat-label>Your Message...</mat-label>
+                        <textarea matInput rows="7" cols="10" placeholder="write your message.."></textarea>
+                      </mat-form-field>
+
+                </div>
+            </div>
+        </div><!----create-order-body-end-->
+        <div class="create-order-btn">
+            <ul>
+                <li><button type="button" (click)="createOrderHide()">Cancel</button></li>
+                <li><button class="save-active">Create</button></li>
+            </ul>
+        </div>
+
+       </form>
+    </div>
+</div>
+

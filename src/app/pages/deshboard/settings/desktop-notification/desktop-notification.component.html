@@ -1,0 +1,50 @@
+<!---notification-area-->
+<div class="notification-area">
+    <!---notification-title-area-->
+    <div class="notification-title-area">
+        <h3>Desktop Notifications</h3>
+    </div>
+    <!---notification-main-->
+    <div class="notification-main">
+        <!---notification-left-->
+        <div class="notification-left">
+            <mat-accordion class="drop-down-area">
+                <!---notification-->
+                <mat-expansion-panel (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false" *ngFor="let data of [1,2,3,4]" class="drop">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="notification-top">
+                            <!---check-->
+                            <div class="check">
+                                <mat-checkbox></mat-checkbox>
+                            </div>
+                            <div class="notification-top-info">
+                                <h3>My Orders</h3>
+                                <p>Latest Update on your Orders</p>
+                            </div>
+                        </div>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <!---notification-description-->
+                  <mat-panel-description>
+                      <div class="notification-description">
+                          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis, quae nemo neque doloremque pariatur corporis.</p>
+                      </div>
+                  </mat-panel-description>
+
+                </mat-expansion-panel><!---notification-end-->
+
+            </mat-accordion>
+        </div>
+        <!---notification-right-->
+        <div class="notification-right">
+            <img src="./assets/images/image/Group 901.png" alt="">
+        </div>
+    </div>
+</div>
+
+
+
+
+

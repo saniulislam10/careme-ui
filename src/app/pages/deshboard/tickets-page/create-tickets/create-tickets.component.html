@@ -1,0 +1,37 @@
+<div class="creat_tickets" *ngIf="popUp == true">
+    <mat-card >
+        <form class="form" >
+           <!---form-input-->
+           <div class="form-input">
+                <h3 class="form_content">Write Your Order Number</h3>
+                <mat-form-field appearance="outline" class="form-field">
+                    <!-- <mat-label></mat-label> -->
+                    <input type="number" matInput class="form_input" placeholder="Enter your order...">
+                </mat-form-field>
+           </div>
+           <div class="form-input">
+                <h3 class="form_content">Type Your Message</h3>
+                <mat-form-field appearance="outline" class="form-field">
+                    <textarea matInput #message maxlength="256" placeholder="Write your Message" class="message_box form_input"></textarea>
+                </mat-form-field>
+           </div>
+
+            <button mat-stroked-button color="primary" type="submit" class="form_button">Attachment</button>
+            <div class="form-input">
+                <h3 class="form_content">Select Your Issue Type</h3>
+                <mat-form-field appearance="outline" class="select_box">
+                    <mat-label class="form_label">Select</mat-label>
+                    <mat-select class="form_input">
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="form_buttons">
+                <button mat-stroked-button color="primary" class="form_button" type="button" (click)="hidePopUp()">Cancel</button>
+                <button mat-stroked-button type="submit" class="button_ok">OK</button>
+            </div>
+            
+        </form>
+    </mat-card>
+</div>

@@ -1,0 +1,89 @@
+<!--order-process-system-->
+<div class="order-process-system">
+    <div class="container">
+        <div class="order-process-main">
+            <!---order-process-system-info-->
+            <div class="order-process-system-info complate-process"  >
+                <span><i class="fa fa-shopping-cart"></i></span>
+                <h3>My Cart</h3>
+            </div>
+             <!---order-process-system-info-->
+             <div class="order-process-system-info complate-process" >
+                <span><i class="fa fa-map"></i></span>
+                <h3>Shipping Info</h3>
+            </div>
+             <!---order-process-system-info-->
+             <div class="order-process-system-info complate-process" >
+                <span><i class="fa fa-check-circle"></i></span>
+                <h3>Payment</h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!------ PAYMENT-AREA ------>
+<div class="payment-area">
+    <div class="container">
+        <div class="payment-area-main">
+
+                <div class="payment-left">
+                    <!---step3-title-->
+                    <div class="step2-title">
+                        <h3>Select a Payment Option</h3>
+                    </div>
+                        <!---online-payment-->
+                    <div class="online-payment">
+                        <!--method-info-->
+                        <div class="method-info" (click)="payPayment()">
+                        <img src="../../../../assets/images/new-payment/608c845cd64b974006e58b3c_paypal2.png" alt="">
+                        <span>Paypal</span>
+                        </div>
+                        <!--method-info-->
+                        <div class="method-info" (click)="payPayment()">
+                        <img src="../../../../assets/images/new-payment/stripe-product-image.png" alt="">
+                        <span>Stripe</span>
+                    </div>
+                    <!--method-info-->
+                    <div class="method-info" (click)="payPayment()" >
+                        <img src="../../../../assets/images/new-payment/images.jpg" alt="">
+                        <span>sslcommerz</span>
+                    </div>
+                    <!--method-info-->
+                    <div class="method-info" (click)="payPayment()">
+                        <img class="nagad" src="../../../../assets/images/new-payment/Nagad-Logo.wine.png" alt="">
+                        <span>Nagad</span>
+                    </div>
+                    <!--method-info-->
+                    <div class="method-info" (click)="payPayment()">
+                        <img class="bkash" src="../../../../assets/images/new-payment/bkash-logo-FBB258B90F-seeklogo.com.png" alt="">
+                        <span>Bkash</span>
+                    </div>
+                </div>
+                <!---note-->
+                <div class="note">
+                    <p><span>Note: </span>Now pay advance to confirm the order</p>
+                </div>
+            </div>
+
+                <div class="payment-right">
+                    <div class="order-summary">
+                        <h3>Order Summary</h3>
+                    </div>
+                    <div class="order-info">
+                        <p class="order">Order <span>{{orderId}}</span></p>
+                        <p class="place">Placed on <span>19 jul 2022 12:33:14</span></p>
+                    </div>
+                    <div class="total-amount">
+                        <h2>Total Amount</h2>
+                        <h1>{{amount}}TK</h1>
+                    </div>
+                </div>
+
+
+
+    </div>
+    </div>
+  </div>
+

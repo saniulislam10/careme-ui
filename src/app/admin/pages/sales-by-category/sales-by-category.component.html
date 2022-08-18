@@ -1,0 +1,67 @@
+<!---view-Points-top-->
+<div class="view-product-header-area">
+    <div class="view-product-header-main">
+        <div class="view-product-header-left">
+            <h2>Sales by Catagory </h2>
+            <p><strong>From 1 august 2021 to 1 august 2021</strong></p>
+        </div>
+        <div class="head">
+          <div class='left'>
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Custom</mat-label>
+              <mat-select>
+                <mat-option value="option">Option</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+  
+          <div class='right'>
+            <div class="search">
+              <button><i class="fa fa-search"></i></button>
+              <input type="text" name="" value="" placeholder="Search">
+          </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  
+  <div class="catagory-table">
+      <div class="table-area">
+        <table>
+            <thead>
+                <tr class="thead">
+                    <th class="product">Catagory</th>
+                    <th>Quantity Sold</th>
+                    <th>Amount</th>
+                  </tr>
+            </thead>
+          <!---table-body-->
+          <tbody>
+            <tr *ngFor="let data of [1,2,3,4,5]">
+                <td class="product">
+                    <h3>Men's Casual Shoe</h3>
+                </td>
+                <td>
+                    <span>305</span>
+                </td>
+                <td>
+                    <span>BDT 3,00400</span>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+  <div class='total'>
+    <div class='page'>
+        <h3>Total Count: <span>30</span></h3>
+    </div>
+    <div class= 'pagination'>
+        <ul>
+            <li><button><i class="fa fa-angle-left"></i></button></li>
+            <li><h3>1-500</h3></li>
+            <li><button><i class="fa fa-angle-right"></i></button></li>
+        </ul>
+    </div>
+  </div>
+  

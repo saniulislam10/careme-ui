@@ -1,0 +1,77 @@
+<!---user-roles-header-->
+<div class="user-roles-header">
+    <h3>User & Roles</h3>
+</div>
+<!---user-roles--area-->
+<div class="user-roles-area">
+    <div class="user-roles-main">
+        <!---header--->
+        <div class="user-roles-header-data">
+            <div class="user-roles-header-left">
+                <ul>
+                    <li><button>All Users</button></li>
+                    <li><button>Roles</button></li>
+                </ul>
+            </div>
+            <div class="user-roles-header-right">
+                <ul>
+                    <li><button class="active-user-right-btn" (click)="invitePOpUpShow()">Invite User</button></li>
+                    <li><button>More <i class="fa fa-caret-down"></i></button></li>
+                </ul>
+            </div>
+        </div><!---end-->
+        <!---user-table-area-->
+        <div class="user-table-area">
+            <div class="table">
+                <!---table-head-->
+                <div class="table-head">
+                    <div class="table-row">
+                        
+                        <div class="table-heading-checkbox ">
+                            <mat-checkbox class="example-margin"></mat-checkbox>
+                        </div>
+                        <div class="table-heading user-info">
+                            <h3>User Details</h3>
+                        </div>
+                        <div class="table-heading roles">
+                            <h3>Roles</h3>
+                        </div>
+                        <div class="table-heading setting"></div>
+                    </div>
+                </div>
+                <!---table-body-->
+                <div class="table-body">
+                    <div class="table-row" *ngFor="let data of [1,2,3,4]">
+                        <div class="table_checkbox">
+                            <mat-checkbox class="example-margin"></mat-checkbox>
+                        </div>
+                        <div class="table-data user-info">
+                            <div class="user-info-main">
+                                <!--user-img-->
+                                <div class="user-img">
+                                    <img src="./assets/images/avatar/user-young.jpg" alt="">
+                                </div>
+                                <div class="user-text-info">
+                                    <h3>Shamim <span>(active)</span></h3>
+                                    <a href="mailto:autanber111@gmail.com">autanber111@gmail.com</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-data roles">
+                            <h3>Admin</h3>
+                        </div>
+                        <div class="table-data setting">
+                            <small><i class="fa-solid fa-gear"></i></small>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!---component-->
+<div class="component">
+    <app-invite-user #inviteUser></app-invite-user>
+</div>

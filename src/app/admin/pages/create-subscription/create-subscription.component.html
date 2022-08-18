@@ -1,0 +1,196 @@
+<!--header-area-->
+<div class="header-area">
+    <h3>Create Subscription</h3>
+</div>
+
+<!---create-subscription-area-->
+<div class="create-subscription-area">
+<form action="">
+     <!--section1-->
+     <div class="section1">
+        <div class="section1-main">
+            <!--section1-left-->
+            <div class="section1-left">
+                <!---forrm-input-->
+                <div class="form-input">
+                    <div class="title">
+                        <h3>Subscription ID:</h3>
+                    </div>
+                    <div>
+                        <mat-form-field class="form-field" appearance="outline">
+                            <input type="text" value="" matInput placeholder="">
+                        </mat-form-field>
+                    </div>
+                </div> <!---forrm-input-end-->
+                <!---forrm-input-->
+                <div class="form-input">
+                    <div class="title">
+                        <h3>Name:</h3>
+                    </div>
+                    <div>
+                        <mat-form-field class="form-field" appearance="outline">
+                            <input type="text" value="" matInput placeholder="">
+                        </mat-form-field>
+                    </div>
+                </div><!---forrm-input-end-->
+                <!---forrm-input-->
+                <div class="form-input frequency">
+                    <div class="title">
+                        <h3>Frequency:</h3>
+                    </div>
+                    <div>
+                        <mat-checkbox class="mat-check">Daily</mat-checkbox>
+                        <mat-checkbox class="mat-check">Weekly</mat-checkbox>
+                        <mat-checkbox class="mat-check">Monthly</mat-checkbox>
+                        <mat-checkbox class="mat-check">Custom</mat-checkbox>
+                    </div>
+                </div><!---forrm-input-end-->
+
+                  <!---forrm-input-->
+                  <div class="form-input">
+                    <div class="title">
+                        <h3>Quantity:</h3>
+                    </div>
+                    <div class="quantity">
+                       <div>
+                             <mat-form-field class="form-field" appearance="outline">
+                                <input type="text" value="" matInput placeholder="">
+                             </mat-form-field>
+                       </div>
+                       <div>
+                        <mat-form-field appearance="outline" class="form-field">
+                            <mat-label>Unit</mat-label>
+                            <mat-select>
+                              <mat-option value="option">Option</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div>
+                            <button>Add</button>
+                        </div>
+                        
+                       </div>
+                </div><!---form-input-end-->
+                <div class="more-option">
+                    <span>More Option <i class="fa fa-caret-down"></i></span>
+                </div>
+            </div><!--section1-left-end-->
+            <!--section1-right-->
+            <div class="section1-right">
+                <!--drag-drop-area-->
+                <div class="drag-drop-area">
+                    <!--drag-drop-header-->
+                    <div class="drag-drop-header">
+                        <div>
+                            <h3>Media</h3>
+                        </div>
+                        <div>
+                            <span>Add media from URL <i class="fa fa-caret-down"></i></span>
+                        </div>
+                    </div>  <!--drag-drop-header-end-->
+                    <div class="drag-drop-body">
+                        <h3>Drag and Drop file upload system</h3>
+                    </div>
+                </div>
+            </div><!--section1-right-end-->
+        </div>
+    </div>
+    <!---section2-->
+    <div class="section2">
+        <div class="section2-main">
+            <div class="section2-left">
+            <!---forrm-input-->
+                <div class="form-input details">
+                    <div class="title">
+                        <h3>Details:</h3>
+                    </div>
+                    <div style="width: 100%;">
+                        <mat-form-field class="form-field" appearance="outline" style="width: 100%;max-width: 100%;">
+                           <textarea type="text" value="" matInput placeholder="" cols="10" rows="7"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div> <!---forrm-input-end-->
+            </div><!---left-end-->
+            <div class="section2-right">
+                   <!---forrm-input-->
+                   <div class="form-input frequency">
+                    <div class="title">
+                        <h3>Attachment:</h3>
+                    </div>
+                    <div>
+                        <mat-checkbox class="mat-check">Yes</mat-checkbox>
+                        <mat-checkbox class="mat-check">No</mat-checkbox>
+                    </div>
+                </div><!---forrm-input-end-->
+            </div>
+        </div>
+    </div>
+
+
+    <!---launch-date-->
+    <div class="section3">
+        <div class="title">
+            <h3>Lanuch Date:</h3>
+        </div>
+        <div class="date-area">
+            <h4>Active Dates</h4>
+            <div class="grid">
+                <div class="form-input">
+                    <h3>Start Date</h3>
+                    <div>
+                        <mat-form-field appearance="outline" class="form-field">
+                            <input matInput [matDatepicker]="datepicker" placeholder="Select your start date">
+                            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datepicker></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-input">
+                    <h3>Start time</h3>
+                    <div>
+                        <mat-form-field appearance="outline" class="form-field">
+                            <input matInput placeholder="Enter start time..">
+                          </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="check" style="margin-bottom:15px;">
+                <mat-checkbox class="mat-check">Set end date</mat-checkbox>
+            </div>
+
+            <div class="grid">
+                <div class="form-input">
+                    <h3>End Date</h3>
+                    <div>
+                        <mat-form-field appearance="outline" class="form-field">
+                            <input matInput [matDatepicker]="datepicker1" placeholder="Select your end date">
+                            <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+                            <mat-datepicker #datepicker1></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-input">
+                    <h3>End Time</h3>
+                    <div>
+                        <mat-form-field appearance="outline" class="form-field">
+                            <input matInput placeholder="Enter end time">
+                          </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+             <!---form-btn-->
+            <div class="edit-btn">
+                <ul>
+                    <li><button><i>Discard</i></button></li>
+                    <li><button type="button" class="save" (click)="editPOpUpShow()"><i>Save</i></button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+<!---component-area-->
+<div class="component">
+    <app-edit-option #edit></app-edit-option>
+</div>

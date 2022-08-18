@@ -1,0 +1,471 @@
+
+
+<div class="coupon_type">
+  <!-- coupon header  -->
+  <div class="coupon_black50 ">
+      <h1><i class="fa-solid fa-arrow-left-long"></i>Black 50</h1>
+      <h2>Enable</h2>
+  </div>
+
+  <!-- coupon body  -->
+  <div class="coupon_type_body">
+    <!-- coupon left side -->
+    <div class="coupon_type_body_left">
+
+      <!-- coupon code  -->
+      <div class="coupone_code white_bg_color inside_padding all_margin box-shadow">
+        <div class="coupone_code_content">
+          <h2>Coupone code</h2>
+          <p><a class="generate_content" href="#">Generate code</a></p>
+        </div>
+        <div class="coupone_code_input">
+          <div class="coupon_code_input_div">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>BLACK50</mat-label>
+                <input matInput >
+              </mat-form-field>
+          </div>
+          <p>Customers will enter this discount code at checkout </p>
+        </div>
+      </div>
+
+      <!-- coupon types  -->
+      <div class="coupon_types white_bg_color inside_padding all_margin box-shadow">
+          <h1>Types</h1>
+          <div class="types_radio_input_field">
+              <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group">
+                  <mat-radio-button value="1" class="example-radio-button">Percentage</mat-radio-button>
+                  <mat-radio-button value="2" class="example-radio-button">Fixed Amount</mat-radio-button>
+                  <mat-radio-button value="3" class="example-radio-button">Free Shipping</mat-radio-button>
+                  <mat-radio-button value="4" class="example-radio-button">Buy X Get Y</mat-radio-button>
+              </mat-radio-group>
+          </div>
+      </div>
+
+      <!-- coupon Customer buys -->
+      <div class="customer_buys white_bg_color all_margin box-shadow inside_padding">
+        <div class="coupon_types">
+          <h1>Customer buys</h1>
+          <div class="types_radio_input_field">
+              <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group">
+                  <mat-radio-button value="1" class="example-radio-button">Minimum quantity of items</mat-radio-button>
+                  <mat-radio-button value="2" class="example-radio-button">Minimum purchase amount</mat-radio-button>
+              </mat-radio-group>
+          </div>
+        </div>
+        <!---queantity-->
+        <div class="quantity-area">
+          <div class="form-input quantity">
+            <h3>Quantity</h3>
+            <mat-form-field appearance="outline" class="form-field">
+              <input matInput placeholder="">
+            </mat-form-field>
+          </div>
+          <div class="form-input items">
+            <h3>Any Items form</h3>
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Select Items</mat-label>
+              <mat-select>
+                <mat-option value="option">Option1</mat-option>
+                <mat-option value="option2">Option2</mat-option>
+                <mat-option value="option3">Option3</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>  <!---queantity-end-->
+
+        <div class="specific_search_field" >
+          <div class="specific_search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search products">
+          </div>
+          <button class="specific_browser_button">Browser</button>
+        </div>
+
+        <div class="horizontal_line"></div>
+
+        <div class="customer_gets coupon_types">
+          <h1>Customer Gets</h1>
+          <p>Customers must add the quantity of items specified below to thier cart.</p>
+         <!---queantity-->
+        <div class="quantity-area">
+          <div class="form-input quantity">
+            <h3>Quantity</h3>
+            <mat-form-field appearance="outline" class="form-field">
+              <input matInput placeholder="">
+            </mat-form-field>
+          </div>
+          <div class="form-input items">
+            <h3>Any Items form</h3>
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Select Items</mat-label>
+              <mat-select>
+                <mat-option value="option">Option1</mat-option>
+                <mat-option value="option2">Option2</mat-option>
+                <mat-option value="option3">Option3</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>  <!---queantity-end-->
+
+          <div class="specific_search_field " >
+            <div class="specific_search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" placeholder="Search products">
+            </div>
+            <button class="specific_browser_button">Browser</button>
+          </div>
+
+          <div class="coupon_types discount" style="margin-top: 20px;">
+            <h1>AT A DISCOUNTED VALUE</h1>
+            <div class="types_radio_input_field">
+                <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group">
+                    <mat-radio-button value="1" class="example-radio-button">Percentage</mat-radio-button>
+                    <mat-radio-button value="2" class="example-radio-button">Free</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="minimum_currancy_input" style="margin-top:20px">
+              <input type="number">
+              <div><button>%</button></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="horizontal_line"></div>
+        <div class="coupon_value_checkbox shipping_checkbox">
+          <mat-checkbox class="example-margin">Exclude shipping rates over a certain amount</mat-checkbox>
+        </div>
+
+      </div>
+
+
+
+      <!-- coupon select area -->
+      <div class="coupon_types white_bg_color inside_padding  all_margin box-shadow" >
+        <div class="coupon_select_content">
+          <h1>Select Area</h1>
+        <div class="types_radio_input_field">
+            <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group">
+                <mat-radio-button value="1" class="example-radio-button">All Division</mat-radio-button>
+                <mat-radio-button value="2" class="example-radio-button">Select Division</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        </div>
+        <div class="select_shipping_content ">
+          <h3>Shipping Rates</h3>
+          <div class="coupon_value_checkbox shipping_checkbox">
+            <mat-checkbox class="example-margin">Exclude shipping rates over a certain amount</mat-checkbox>
+          </div>
+        </div>
+    </div>
+
+      <!-- coupon value  -->
+      <div class="coupon_value white_bg_color inside_padding  all_margin box-shadow">
+        <div class="coupon_value_top_content">
+          <h2>Value</h2>
+          <div class="coupon_value_content">
+              <p>Discount value</p>
+              <div class="minimum_currancy_input" style="display: none;">
+                <p>BDT</p>
+                <input type="number" placeholder="500.00">
+              </div>
+              <div class="minimum_currancy_input" style="margin-top:20px">
+                <input type="number">
+                <div>
+                  <button>%</button>
+                </div>
+              </div>
+          </div>
+        </div>
+
+
+
+        <div class="coupon_value_middle_content">
+          <h2>Applies to</h2>
+          <div class="types_radio_input_field">
+              <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group">
+                  <mat-radio-button value="1" class="example-radio-button">All products</mat-radio-button>
+                  <mat-radio-button value="2" class="example-radio-button">Specific collections</mat-radio-button>
+                  <mat-radio-button value="2" class="example-radio-button">Specific products</mat-radio-button>
+              </mat-radio-group>
+              
+            <div class="specific_search_field" >
+              <div class="specific_search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search products">
+              </div>
+              <button class="specific_browser_button">Browser</button>
+            </div>
+          </div>
+
+  
+        <div class="coupon_value_checkbox">
+            <mat-checkbox class="example-margin">Only apply discount once per order</mat-checkbox>
+            <p>If unchecked, BDT 60.00 will be taken off each eligible product in an order</p>
+        </div>
+      </div>
+    </div>
+
+
+      <!-- coupon minimum requirements -->
+      <div class="coupon_requirements white_bg_color inside_padding all_margin box-shadow coupon_types">
+        <h1>Minimum requirements</h1>
+          <div class="types_radio_input_field">
+              <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group">
+                  <mat-radio-button value="1" class="example-radio-button">None</mat-radio-button>
+                  <mat-radio-button value="2" class="example-radio-button">Minimum purchase (BDT)</mat-radio-button>
+                  <div class="minimum_purchase_below_div">
+                    <div class="minimum_currancy_input" style="margin:10px 0px 10px 0px">
+                        <div>
+                          <button>BDT</button>
+                        </div>
+                        <input type="text">
+                    </div>
+                      <p>Applies to all products</p>
+                  </div>
+                  <mat-radio-button value="2" class="example-radio-button">Minimum quentity of items</mat-radio-button>
+              </mat-radio-group>
+          </div>
+
+      </div>
+
+      <!-- // Customer eligibility  -->
+
+      <div class="coupon_value_middle_content white_bg_color inside_padding all_margin box-shadow coupon_types" >
+        <h2>Customer eligibility </h2>
+        <div class="types_radio_input_field">
+            <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group">
+                <mat-radio-button value="1" class="example-radio-button">Everyone</mat-radio-button>
+                <mat-radio-button value="2" class="example-radio-button">Specific group of customers</mat-radio-button>
+                <mat-radio-button value="2" class="example-radio-button">Specific customers</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <div class="specific_search_field">
+          <div class="specific_search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search products">
+          </div>
+          <button class="specific_browser_button">Browser</button>
+        </div>
+        <p class="select_group_content" style="margin-top: 5px;">Select groups of cutomers that can use this dicount. <span><a class="learn_more_link" href="#">Learn more</a></span></p>
+      </div>
+
+      <!-- //usage limits -->
+      <div class="usage_limits white_bg_color inside_padding all_margin coupon_types box-shadow">
+        <h2>Usage limits</h2>
+        <div class="coupon_value_checkbox usage_limits_content" style="margin-top: 10px;">
+            <mat-checkbox class="example-margin">Only apply discount once per order</mat-checkbox>
+            <div class="checkbox_content">
+              <input class="usage_blank_input" type="text">
+            </div>
+            <mat-checkbox class="example-margin">Only apply discount once per order</mat-checkbox>
+        </div>
+      </div>
+      
+      <!-- // Active dates  -->
+      <div class="active_dates coupon_types white_bg_color inside_padding all_margin box-shadow">
+        <h1>Active dates</h1>
+        <div class="active_start_date_time">
+          <div class="active_start_date">
+            <p>Start date</p>
+            <div class="coupon_mat_field">
+              <mat-form-field appearance="outline">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate placeholder="Start date">
+                  <input matEndDate placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="active_start_time">
+            <p>Start time</p>
+
+            <div class="coupon_mat_field">
+              <mat-form-field appearance="outline">
+                <mat-label>Outline form field</mat-label>
+                <input matInput placeholder="Placeholder">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                <mat-hint>Hint</mat-hint>
+              </mat-form-field>
+            </div>
+            
+          </div>
+        </div>
+
+
+      </div>
+      </div>
+
+
+
+
+    <!-- coupon right side  -->
+    <div class="coupon_type_body_right">
+
+      <div class="coupon_right_fixed">
+        <!-- coupon summary  -->
+        <div class="main_summery white_bg_color box-shadow">
+          <div class="coupon_summary inside_padding">
+            <h1>Summary</h1>
+            <div class="black60_content">
+              <h1>Black60</h1>
+              <button class="expired_button">Expired</button>
+            </div>
+            <div class="summary_ul_list">
+                <p>Available on online sales channels</p>
+                <p>BDT 60.00 of all products</p>
+                <p>Minimum purchase of BDT 500.00</p>
+                <p>For everyone</p>
+                <p>Active Nov 28, 2020</p>
+            </div>
+          </div>
+          <div class="horizontal_line"></div>
+          <div class="coupon_combain inside_padding">
+            <h1>Performance</h1>
+            <p>0 userd</p>
+          </div>
+        </div>
+  
+        <!-- coupon can't combain  -->
+        <div class="combain_content white_bg_color all_margin box-shadow">
+          <div class="cannot_combain_content inside_padding">
+            <h1>CAN'T COMBAINE WITH OTHE AUTOMIC DISCOUNTS</h1>
+            <P>Customers won't be able to enter a code if an automatic discount is allready applied at checkout.</P>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- coupon timeline  -->
+    <div class="coupon_timeline coupon_types">
+      <h1>Timeline</h1>
+      <div class="horizontal_line_timeline"></div>
+
+      <div class="coupon_comment_section">
+        <div class="circle_comment">
+          <div class="coupon_blue_circle">
+            <p class="plus_icon"><i class="fa fa-check"></i></p>
+            <span></span>
+          </div>
+          <div class="comment_section">
+            <input type="text" placeholder="Leave a comment">
+            <div class="comment_icons">
+              <i class="fa-solid fa-face-smile"></i>
+              <i class="fa-solid fa-at"></i>
+              <i class="fa-solid fa-hashtag"></i>
+              <i class="fa-solid fa-paperclip"></i>
+              <button class="comment_post_button">Post</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="circle_month">
+          <div class="coupon_blue_circle coupon_blue_circle_right">
+            <p class="plus_icon"><i class="fa fa-check"></i></p>
+            <span></span>
+          </div>
+          <div class="month_content">
+            <h2>November 20</h2>
+            <div class="bottom_paragraph">
+              <p>Rizvi deleted this coupon</p>
+              <p>10:30 PM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- coupon code buttons -->
+  <div class="coupon_code_buttons">
+    <button class="delet_coupon">Delete coupon code</button>
+    <div class="discard_save_buttons">
+      <button class="discard_coupon">Discard</button>
+      <button class="save_coupon">Save</button>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+<!----search-products-->
+<div *ngIf="searchProduct === true" class="search-product-area">
+<div class="search-product-main">
+     <!---search-product-header-area-->
+     <div class="search-product-header-area">
+         <!---search-product-header-top-->
+         <div class="search-product-header-top">
+             <div>
+                 <h3>Products</h3>
+             </div>
+             <div>
+                 <span (click)="searchProductInactive()">X</span>
+             </div>
+         </div>
+         <!--search-product-search-box-->
+         <div class="search-product-search-box">
+             <div class="search-input">
+                 <button><i class="fa fa-search"></i></button>
+                 <input type="text" name="" id="" placeholder="Search Products..">
+             </div>
+         </div>
+     </div><!---search-product-header-top-end-->
+     <!---search-product-body-->
+     <div class="search-product-body">
+         <!---product-info-->
+         <div class="product-info" *ngFor="let data of [1,2,3,4,5,6]">
+             <div class="product-info-left">
+                 <div class="check">
+                     <mat-checkbox class="mat-check"></mat-checkbox>
+                 </div>
+                 <div class="product-img">
+                     <img src="./assets/images/junk/252-2523504_sneakers-running-shoes-mockup-sport-shoes-png.png" alt="">
+                 </div>
+                 <div class="product-name">
+                     <a href="#">1.3L Lunch Box</a>
+                 </div>
+             </div>
+             <div class="product-info-right">
+                 <div class="product-available">
+                     <span>-3 Available</span>
+                 </div>
+                 <div class="product-sku">
+                     <span>SKU: 201764JK</span>
+                 </div>
+             </div>
+         </div><!---product-info-end-->
+
+     </div><!---search-product-body-end-->
+     <div class="search-product-bottom">
+         <ul>
+             <li><button (click)="searchProductInactive()">Cancel</button></li>
+             <li><button class="active">Done</button></li>
+         </ul>
+     </div>
+
+</div>
+</div>

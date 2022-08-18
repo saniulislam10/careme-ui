@@ -1,0 +1,44 @@
+@import "src/theme/variables";
+@import "../../../../../theme/exports/table-one";
+img{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.header {
+  h2 {
+    text-align: center;
+    font-family: $font-en-primary;
+  }
+}
+
+.pagination-container {
+  text-align: center;
+}
+
+.tags {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+
+  .tag {
+    width: auto;
+    padding: 8px 24px;
+    border-radius: 50px;
+    cursor: pointer;
+    &.pending {
+      background: $table-sm-color;
+    }
+    &.done {
+      background: #00a700;
+    }
+    p {
+      font-family: $font-en-primary;
+      font-size: 15px;
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+  }
+
+}

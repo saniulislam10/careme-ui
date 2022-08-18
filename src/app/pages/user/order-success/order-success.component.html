@@ -1,0 +1,147 @@
+<!--order-process-system-->
+<div class="order-process-system">
+  <div class="container">
+    <div class="order-process-main">
+      <!---order-process-system-info-->
+      <div class="order-process-system-info">
+        <span><i class="fa fa-shopping-cart"></i></span>
+        <h3>My Cart</h3>
+      </div>
+      <!---order-process-system-info-->
+      <div class="order-process-system-info ">
+        <span><i class="fa fa-map"></i></span>
+        <h3>Shipping Info</h3>
+      </div>
+      <!---order-process-system-info-->
+      <div class="order-process-system-info complate-process">
+        <span><i class="fa fa-check-circle"></i></span>
+        <h3>Payment</h3>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="order-success">
+  <div class="container">
+    <div class="order-success-main">
+      <div class="order-confirm-logo not-confirmed" *ngIf="isAdvancePayment">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <h3>Your order is not confirmed yet.</h3>
+        <h3>Please pay the advance amount to confirm the order</h3>
+      </div>
+      <div class="order-confirm-logo confirmed" *ngIf="isAdvancePayment==false">
+        <i class="fa-solid fa-circle-check"></i>
+        <h3>Your Order Placed Successfully!</h3>
+      </div>
+
+      <div class="order-info-main">
+        <div class="order-elm-top">
+          <div class="left">
+            <span>
+              <mat-checkbox [checked]="allComplete" class="mat-check" color="primary" (change)="onAllSelectChange($event)">Pay All Items</mat-checkbox>
+            </span>
+          </div>
+          <div class="right">
+            <p class="order-number">Order Number <span>{{orderData?.orderId}}</span></p>
+            <p class="order-place">Placed on {{orderData?.checkoutDate | date}} at {{orderData?.checkoutDate | date : 'shortTime'}}</p>
+          </div>
+
+
+        </div>
+
+        <div class="order-elm" *ngFor="let orderItem of orderData?.orderedItems; let i=index">
+          <div class="price-calculation">
+            <mat-checkbox
+            class="mat-check"
+            [checked]= "allComplete"
+            (change)="onCheckChange($event, i, orderItem?._id)"
+            [(ngModel)]="orderItem.select" >
+          </mat-checkbox>
+          </div>
+          <div class="product-info">
+            <div class="img">
+              <img src="{{orderItem?.image || '/assets/images/flag/bangladesh-flag.png'}}" alt="">
+            </div>
+            <div class="order-elm-desc">
+              <p class="desc-top">{{orderItem?.product?.name}}</p>
+              <p class="desc-invoice"><span>{{orderItem?.sku}}</span><span>{{orderItem?.variant}}</span></p>
+              <p class="des-time">Estimated Delivery By <span>{{orderItem?.deliveryDateFrom | date}} - {{orderItem.deliveryDateTo | date}}</span></p>
+            </div>
+          </div>
+          <div class="price-calculation">
+            <p>
+              <span>
+                {{orderItem?.price + (orderItem?.tax ? orderItem.tax : 0)}}
+                <i class="fa-solid fa-xmark"></i>
+                {{orderItem.quantity}}
+              </span>
+                =
+              <span>
+                {{(orderItem.price + (orderItem.tax ? orderItem.tax : 0)) * orderItem.quantity}}
+              </span>
+            </p>
+          </div>
+          <div class="pay-condition" *ngIf="orderItem?.advance>0">
+            <!-- <small>({{ orderItem?.advance}} TK)</small> -->
+            <h3 style="color:rgb(255, 0, 0);font-weight: 500;"> {{ orderItem?.advance }} TK Advance</h3>
+
+          </div>
+          <div class="pay-cash" *ngIf="orderItem?.advance<=0 || orderItem?.advance==null">
+            <p>Cash On Delivery</p>
+            <!-- <h3 style="color:rgb(255, 0, 0);font-weight: 500;"> 0.00 TK</h3> -->
+          </div>
+
+          <div class="pay-status">
+            <p>Unpaid</p>
+          </div>
+
+        </div>
+
+
+        <div class="procced-payment-container">
+          <div class="procced-payment">
+
+            <s *ngIf="isAdvancePayment==false">
+              <div class="payment-elm">
+                <div class="payment-elm-left">
+                  <mat-checkbox  class="example-margin" disabled="true"></mat-checkbox>
+                  <p>Advance Pay</p>
+                </div>
+                <div class="payment-elm-right">
+                  <p>0 TK</p>
+                </div>
+
+              </div>
+            </s>
+
+            <div class="payment-elm" *ngIf="isAdvancePayment">
+              <div class="payment-elm-left">
+                <mat-checkbox class="example-margin" #matCheckboxAdvancePay checked="true" (change)="onSelectAdvancePay($event)"></mat-checkbox>
+                <p>Advance Pay</p>
+              </div>
+              <div class="payment-elm-right">
+                <p>{{totalAdvancePayment || 0}} TK</p>
+              </div>
+            </div>
+
+            <div class="payment-elm">
+              <div class="payment-elm-left">
+                <mat-checkbox class="example-margin"  #matCheckboxFullPay (change)="onSelectFullPay($event)"></mat-checkbox>
+                <p>Full Pay</p>
+              </div>
+              <div class="payment-elm-right">
+                <p>{{totalFullPayment}} TK</p>
+              </div>
+
+            </div>
+
+            <div class="payment-bottom">
+              <a (click)="onSubmit()">Proceed to Payment</a>
+              <p *ngIf="isAdvancePayment"><span>Note: </span>Now pay Advance to confirm your order</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

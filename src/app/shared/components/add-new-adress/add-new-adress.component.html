@@ -1,0 +1,77 @@
+<!---add-address-area--->
+<div class="add-address-area"  *ngIf="pupUp == true">
+  <div class="add-address-main">
+  <form [formGroup]="dataForm!!" (ngSubmit)="onSubmit()" #formTemplate="ngForm">
+    <div class="form-input">
+      <h3>Add New Address</h3>
+      <!---form-field-->
+      <div class="select_address">
+        <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        formControlName="addressType">
+        <mat-radio-button class="example-radio-button" *ngFor="let type of addressType" [value]="type">
+          {{type}}
+        </mat-radio-button>
+      </mat-radio-group>
+      </div>
+      <div class="form-field-area">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Select City</mat-label>
+          <mat-select formControlName="city">
+            <mat-option *ngFor="let data of city" [value]="data.name">
+              {{data.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Select Zila</mat-label>
+          <mat-select formControlName="zilla">
+            <mat-option  [value]="data.name" *ngFor="let data of zilla">
+              {{data.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Select Thana</mat-label>
+          <mat-select formControlName="thana">
+            <mat-option  [value]="data.name" *ngFor="let data of thana">
+              {{data.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-input">
+      <h3>Phone Number</h3>
+      <!---form-field-->
+      <div class="form-field-area">
+        <mat-form-field appearance="outline" class="form-field">
+          <input  matInput placeholder="Enter your phone number.." formControlName="phone">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-input">
+      <h3>Address</h3>
+      <!---form-field-->
+      <div class="form-field-area">
+        <mat-form-field appearance="outline" class="form-field">
+          <!-- <mat-label>Textarea</mat-label> -->
+          <textarea formControlName="address" matInput rows="5" cols="10" placeholder="Write Your Address.."></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!---btn-->
+    <div class="add-btn">
+      <ul>
+        <li (click)='hidePopUp()'><button>Cancel</button></li>
+        <li><button class="save-active">Save</button></li>
+      </ul>
+    </div>
+
+  </form>
+
+
+    </div>
+</div>

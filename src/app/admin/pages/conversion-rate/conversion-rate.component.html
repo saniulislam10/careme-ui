@@ -1,0 +1,73 @@
+<!--vendor-header-->
+<div class="vendor-header">
+    <!---vendor-header-main-->
+    <div class="vendor-header-main">
+        <!---title-->
+        <div class="title">
+            <h2>Conversion Rate</h2>
+        </div>
+        <!---vendor-search-->
+        <div class="vendor-search">
+            <button><i class="fa fa-search"></i></button>
+            <input type="text" placeholder="Search">
+        </div>
+        <div class="vendor-create-btn">
+            <button [routerLink]="['add-conversion-rate']">Add Conversion Rate</button>
+        </div>
+    </div>
+</div>
+
+
+<!---vendor-main-->
+<div class="vendor-main">
+    <!---vendor-table-area-->
+    <div class="vendor-table-area">
+        <!---vendor-table-->
+        <div class="vendor-table">
+            <!---table-head-->
+            <div class="table-head">
+                <div class="table-row">
+                    <div class="table-heading serial">
+                        <h3>SI</h3>
+                    </div>
+                    <div class="table-heading name">
+                        <h3>Website Name</h3>
+                    </div>
+                    <div class="table-heading contact">
+                        <h3>Website Domain</h3>
+                    </div>
+                    <div class="table-heading allow">
+                        <h3>Rate</h3>
+                    </div>
+                    <div class="table-heading edit">
+                        <h3>Actions</h3>
+                    </div>
+                </div>
+
+            </div> <!---table-head-end-->
+            <!---table-body-area-->
+            <div class="table-body">
+                <div class="table-row" *ngFor="let data of conversionRate">
+                  <!-- {{data | json}} -->
+                    <div class="table-data serial">
+                        <h3>01</h3>
+                    </div>
+                    <div class="table-data name">
+                        <button>{{data?.websiteName}}</button>
+                    </div>
+                    <div class="table-data contact">
+                        <h3>{{data?.url}}</h3>
+                    </div>
+                    <div class="table-data allow">
+                        <button>{{data?.rate}} BDT</button>
+                    </div>
+                    <div class="table-data edit">
+                        <button  [routerLink]="['add-conversion-rate', data._id]" ><i class="fa fa-edit"></i></button>
+                        <button type="button" (click)="onDelete(data?._id)"><i class="fa fa-trash"></i></button>
+                    </div>
+
+                </div>
+            </div><!---table-body-area-end-->
+        </div>
+    </div>
+</div>

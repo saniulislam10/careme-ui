@@ -1,0 +1,112 @@
+<!--edit-area-->
+<div class="edit-area" *ngIf="edit == true">
+    <div class="edit-main">
+        <!---header-area-->
+        <div class="header-area">
+            <div>
+                <h3>Edit</h3>
+            </div>
+            <div>
+                <span (click)="editPopUpHide()"><i class="fa fa-xmark"></i></span>
+            </div>
+        </div>
+        <!--edit-body-->
+        <div class="edit-body">
+            <form action="#">
+              <div class="form-input-area">
+                    <!---form-input-->
+                <div class="form-input">
+                    <h3>Next Delivery Date</h3>
+                    <div>
+                    <mat-form-field  appearance="outline" class="form-field">
+                        <input matInput [matDatepicker]="picker2" placeholder="Next Delivery Date">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                    </mat-form-field>
+                    </div>
+                </div><!--end-->
+                <!---form-input-->
+                <div class="form-input">
+                    <h3>Frequency</h3>
+                    <div>
+                        <mat-form-field appearance="outline" class="form-field">
+                            <mat-label>Select Dropdown</mat-label>
+                            <mat-select>
+                              <mat-option value="option">Option</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                </div><!--end-->
+                <!---form-input-->
+                <div class="form-input">
+                    <h3>Brand</h3>
+                    <div>
+                        <mat-form-field appearance="outline" class="form-field">
+                            <mat-label>Select Dropdown</mat-label>
+                            <mat-select>
+                              <mat-option value="option">Option</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                </div><!--end-->
+                <div class="form-grid">
+                    <!---form-input-->
+                    <div class="form-input">
+                        <h3>Quantity</h3>
+                        <div>
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>Select Dropdown</mat-label>
+                                <mat-select>
+                                <mat-option value="option">Option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div><!--end-->
+                     <!---form-input-->
+                    <div class="form-input">
+                        <h3>Unit</h3>
+                        <div>
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>Select Dropdown</mat-label>
+                                <mat-select>
+                                <mat-option value="option">Option</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div><!--end-->
+                </div><!--end-->
+                <!---form-input-->
+                <div class="form-input">
+                    <h3>Size</h3>
+                    <div>
+                        <mat-form-field appearance="outline" class="form-field">
+                            <mat-label>Select Dropdown</mat-label>
+                            <mat-select>
+                              <mat-option value="option">Option</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                </div><!--end-->
+
+                <!---form-input-->
+                <div class="form-input">
+                    <h3>Price</h3>
+                    <div>
+                        <mat-form-field appearance="outline" class="form-field">
+                           <input type="text" value="" matInput placeholder="Set Price">
+                        </mat-form-field>
+                    </div>
+                </div><!--end-->
+              </div>
+              <!---form-btn-->
+              <div class="edit-btn">
+                  <ul>
+                      <li><button class="save"><i>Save</i></button></li>
+                      <li><button (click)="editPopUpHide()"><i>Cancel</i></button></li>
+                  </ul>
+              </div>
+                
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+<!---header-area-->
+<div class="header-area">
+    <div class="header-main">
+        <!--title-->
+        <div class="title">
+            <h3>Request Overview</h3>
+        </div>
+        <!---header--right-->
+        <div class="header-right">
+            <div class="search">
+                <button><i class="fa fa-search"></i></button>
+                <input type="text" value="" placeholder="Search">
+            </div>
+            <!--header-btn-->
+            <div class="header-btn">
+                <ul>
+                    <li><button>Date <i class="fa fa-caret-down"></i></button></li>
+                    <li><button>More <i class="fa fa-caret-down"></i></button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!---header-tab-->
+<div class="header-tab">
+    <ul>
+        <li><button class="active">Complain </button></li>
+        <li><button>Return</button></li>
+        <li><button>Refund</button></li>
+    </ul>
+</div>
+<!---table-area-->
+<div class="table-area">
+    <div class="table-area-main">
+        <div class="table">
+            <!---table-head-->
+            <div class="table-head">
+                <div class="table-row">
+                    <div class="table-heading">
+                        <h3>Issue ID</h3>
+                    </div>
+                    <div class="table-heading">
+                        <h3>Date & Time</h3>
+                    </div>
+                    <div class="table-heading">
+                        <h3>Customer Name</h3>
+                    </div>
+                    <div class="table-heading">
+                        <h3>Order Number </h3>
+                    </div>
+                    <div class="table-heading">
+                        <h3>Issue Type</h3>
+                    </div>
+                    <div class="table-heading">
+                        <h3>Status</h3>
+                    </div>
+                    <div class="table-heading">
+                        <h3>Assign To</h3>
+                    </div>
+                </div>
+            </div><!---end-->
+            <!---table-body-->
+            <div class="table-body">
+                <div class="table-row" *ngFor="let data of [1,2,3,4,5]">
+                    <div class="table-data">
+                        <span>RT6874</span>
+                    </div>
+                    <div class="table-data">
+                        <h3>Today</h3>
+                        <h3>12.20 PM</h3>
+                    </div>
+                    <div class="table-data">
+                        <span>
+                            Henay
+                            <small class="badge">2</small>
+                        </span>
+                    </div>
+                    <div class="table-data">
+                        <h3>#35645</h3>
+                    </div>
+                    <div class="table-data btn">
+                        <button>Complain</button>
+                    </div>
+                    <div class="table-data status">
+                        <h3>Working</h3>
+                    </div>
+                    <div class="table-data">
+                        <h3>Rayna Koly</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="indicator">
+        <ul>
+            <li><button><i class="fa fa-angle-left"></i></button></li>
+            <li><button><i class="fa fa-angle-right"></i></button></li>
+        </ul>
+    </div>
+</div>

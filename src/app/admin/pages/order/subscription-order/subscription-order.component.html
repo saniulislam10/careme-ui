@@ -1,0 +1,100 @@
+<!---review-header-area-->
+<div class="review-header-area">
+    <div class="review-header-main">
+        <!---review-header-top-->
+        <div class="review-header-top">
+            <!---review-title-->
+            <div class="review-title">
+                <h3>Subscription Order</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<!---table-area-->
+<div class="order-table-area">
+    <div class="order-table-main">
+        <!---table-->
+        <div class="table">
+            <!---table-head-->
+            <div class="table-head">
+                <!---table-row-->
+                <div class="table-row">
+                    <div class="table-heading date">
+                        <h3>Date & Time</h3>
+                    </div>
+                    <div class="table-heading reviews">
+                        <h3>Reviews</h3>
+                    </div>
+                    <div class="table-heading id">
+                        <h3>Order No</h3>
+                    </div>
+                    <div class="table-heading item">
+                        <h3>Product</h3>
+                    </div>
+                    <div class="table-heading item">
+                        <h3>Customer Name</h3>
+                    </div>
+                    <div class="table-heading order-status">
+                        <h3>Status</h3>
+                    </div>
+                </div>
+            </div>
+            <!----table-body-->
+            <div class="table-body">
+                <div class="table-row" *ngFor="let data of [1,2,3,5,6,7,8,9,10]">
+                    <div class="table-data date">
+                        <h3>Today</h3>
+                        <h3>12:20 PM</h3>
+                    </div>
+                    <div class="table-data reviews">
+                        <div class="review-data">
+                            <h3>Product ta Khubi Premium, Jemonta picture dekhcilam thik temon</h3>
+                            <!---review-rating-->
+                            <div class="review-rating">
+                                <ul>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-data id">
+                        <span>789346</span>
+                    </div>
+                    <div class="table-data item">
+                        <h3>Men's Casual Shoe</h3>
+                    </div>
+                    <div class="table-data item">
+                        <span>Henoy <i class="fa fa-check-circle"></i></span>
+                    </div>
+                    <div class="table-data order-status">
+                        <mat-form-field appearance="outline" class="form-field">
+                            <mat-label>Select</mat-label>
+                            <mat-select>
+                              <mat-option value="01">Pending</mat-option>
+                              <mat-option value="02">Recovered</mat-option>
+                              <mat-option value="03">Follow Up Send</mat-option>
+                              <mat-option value="04">Cancel</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!---indicator-->
+    <div class="indicator">
+        <ul>
+            <li><button><i class="fa fa-angle-left"></i></button></li>
+            <li><button><i class="fa fa-angle-right"></i></button></li>
+        </ul>
+    </div>
+</div>
+
+
+
+

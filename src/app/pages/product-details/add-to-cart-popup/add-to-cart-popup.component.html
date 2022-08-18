@@ -1,0 +1,44 @@
+<!-- <mat-dialog-content> -->
+  <!---add-cart-pup-up-->
+  <div class="add-cart-pup">
+    <div class="add-cart-pup-main">
+      <!--add-cart-pup-title-->
+      <div class="add-cart-pup-title">
+        <span><i class="fa fa-check-circle"></i></span>
+        <h3>Item added to your cart</h3>
+      </div>
+      <!---cart-product-->
+      <div class="cart-product-area">
+        <!--product-img-->
+        <div class="product-img">
+          <img [src]="data.image" alt="">
+        </div>
+        <!---product-text-->
+        <div class="product-text">
+          <div class="product-title">
+            <a href="#">{{data.name}}</a>
+          </div>
+          <div class="product-price">
+            <h3>Price: <span>{{getRoundValue(data.price,data.selectedQty)}} TK</span></h3>
+          </div>
+        </div>
+      </div>
+      <!---cart-product-end-->
+
+      <!---cart-pup-btn-->
+      <div class="cart-pup-btn">
+        <ul>
+          <li><button routerLink="/" (click)="onClose()">Back to Shopping</button></li>
+          <li><button class="cart-pup-btn-active" routerLink="/cart" (click)="onClose()">Proceed to Checkout</button></li>
+        </ul>
+      </div>
+
+      <!--cross-->
+      <div class="cross">
+        <span (click)="onClose()">X</span>
+      </div>
+
+    </div>
+
+  </div>
+<!-- </mat-dialog-content> -->

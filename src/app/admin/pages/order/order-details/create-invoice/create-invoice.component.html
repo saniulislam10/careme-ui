@@ -1,0 +1,374 @@
+<mat-dialog-content>
+
+  <div class="main_create_invoice" [class]="createInvoice ?'active-create-invoice-area':'in-active'">
+  <!-- form-field -->
+  <form [formGroup]="dataForm" (ngSubmit)="onSubmitInvoice()">
+    <div class="inside_create_invoice">
+
+         <!---header-area-->
+         <div class="header-area">
+          <!--header-top-->
+          <div class="header-top">
+
+            <div class="header-top-left">
+               <h3>New Invoice</h3>
+            </div>
+            <div class="header-top-right">
+                <!-- create invoice header  -->
+                  <div class="create-invoice-icon">
+                    <button mat-dialog-close type="button"><i class="fa-solid fa-xmark" (click)="close()"></i></button>
+                  </div>
+            </div>
+          </div><!---end-top-->
+          <!--header-main-->
+          <div class="header-main">
+            <!--user-side-->
+            <div class="user-side">
+              <!---user-search-->
+              <div class="user-search">
+                  <div class="ship-title">
+                    <h3>Shipping Address</h3>
+                  </div>
+                  <div class="search">
+                     <div style="width:100%">
+                      <input type="text" value="" placeholder="Add Customer">
+                     </div>
+                      <div>
+                        <button><i class="fa fa-search"></i></button>
+                      </div>
+                  </div>
+              </div>
+              <!--user-info-->
+              <div class="user-info">
+                 <ul>
+                      <li>
+                         <div class="user-title">
+                            <h4>Name :</h4>
+                         </div>
+                         <div class="user-title-info">
+                            <h3>{{order?.name ? order.name : order?.user?.fullName}}</h3>
+                         </div>
+                      </li>
+                      <li>
+                        <div class="user-title">
+                           <h4>Phone :</h4>
+                        </div>
+                        <div class="user-title-info">
+                           <h3>{{order?.phoneNo ? order.phoneNo : order?.user?.phoneNo}}</h3>
+                        </div>
+                     </li>
+                     <li>
+                      <div class="user-title">
+                         <h4>Email :</h4>
+                      </div>
+                      <div class="user-title-info">
+                         <h3>{{order?.email ? order.email : order?.user?.email}}</h3>
+                      </div>
+                   </li>
+                   <li>
+                    <div class="user-title">
+                       <h4>Address :</h4>
+                    </div>
+                    <div class="user-title-info">
+                       <h3>{{order?.shippingAddress ? order.shippingAddress : order?.user?.shippingAddress}}</h3>
+                    </div>
+                 </li>
+                 </ul>
+              </div>
+
+
+
+            </div><!---end-->
+            <!---user-invoice-->
+            <div class="user-invoice">
+                <div class="user-invoice-main">
+
+                  <div class="inovice-details">
+                    <ul>
+                        <li>
+                            <div class="invoice-title">
+                                <h4>Invoice ID :</h4>
+                            </div>
+                            <div class="invoice-value">
+                                <p>INV-5{{order?.orderId ? order.orderId : '-'}}</p>
+                            </div>
+                        </li>
+                        <li>
+                          <div class="invoice-title">
+                              <h4>Order Number :</h4>
+                          </div>
+                          <div class="invoice-value">
+                              <p>{{order?.orderId ? order.orderId : '-'}}</p>
+                          </div>
+                      </li>
+                      <li>
+                        <div class="invoice-title">
+                            <h4>Invoice Date :</h4>
+                        </div>
+                        <div class="invoice-value">
+                            <p>{{DateToday | date}}</p>
+                        </div>
+                    </li>
+                    </ul>
+              </div>
+              <div class="invoice-field">
+                  <div class="invoice_date_field">
+                    <h3>Shipping Carrier</h3>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Pathao</mat-label>
+                      <mat-select formControlName="shippingCarrier">
+                        <mat-option value="Pathao">Pathao</mat-option>
+                        <mat-option value="REDX">REDX</mat-option>
+                        <mat-option value="SA Paribahan">SA Paribahan</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                   <div class="invoice_date_field">
+                      <h3>Tracking Number</h3>
+                      <mat-form-field appearance="outline">
+                        <mat-label>#REG55376587</mat-label>
+                        <input matInput value="" placeholder="">
+                      </mat-form-field>
+                   </div>
+              </div>
+               <!-- <div class="sale-person">
+                  <h3>Sales Person : <span>Shamim</span></h3>
+               </div> -->
+                </div>
+            </div><!---end-->
+
+          </div><!---end-->
+
+
+         </div><!---end-->
+
+
+         <!-- invoice table  -->
+        <div class="order-table">
+          <table>
+
+            <thead>
+              <tr>
+                <th class="si">SI</th>
+                <th class="item">Item Name</th>
+                <th class="vendor">Vendor</th>
+                <th class="quantity">Quantity</th>
+                <th class="price">Unit Price</th>
+                <th class="discount">Discount</th>
+                <th class="discount">Tax</th>
+                <th class="amount">Amount</th>
+                <th class="order-status">Delete</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let data of invoiceProducts; let i=index">
+                <td class="si">
+                  <span>{{i+1}}</span>
+                </td>
+                <td class="item">
+                  <div class="product">
+                    <div class="product-img">
+                      <img [src]="data.product.medias ? data.product.medias[0] : '/assets/images/placeholder/test.png'"
+                        alt="data.product.name">
+                    </div>
+                    <div class="product-info">
+                      <h3>{{data?.product.name}}</h3>
+                      <h5>Earn <span>+50</span> or redeem <span>-50</span> <img src="./assets/svg/coin.svg" alt=""></h5>
+                      <p>SKU: {{data?.product.sku}}</p>
+                      <p>Delivery: 10 to 15 days</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="vendor">
+                  <span>{{data?.product.vendor}}</span>
+                </td>
+                <td class="quantity">
+                  <div class="invoice_total_main">
+                    <button type="button" id="mine" (click)="decrementQty(data,i)">-</button>
+                    <mat-form-field appearance="outline">
+                      <input matInput formControlName="quantity" [(ngModel)]="data.quantity" (change)="quantity(i)" readonly>
+                    </mat-form-field>
+                    <button type="button" id="decre" (click)="incrementQuty(data,i)">+</button>
+                  </div>
+                </td>
+                <td class="price">
+                  <span>{{data?.price}}</span>
+                </td>
+                <td class="discount">
+                  <span>0</span>
+                </td>
+                <td class="tax">
+                  <span>{{data.tax ? data.tax : '0'}}</span>
+                </td>
+                <td class="amount">
+                  <span>{{(data?.price + data.tax) * data?.quantity}}</span>
+                </td>
+                <td class="order-delete">
+                  <mat-icon (click)="deleteFromInvoice(i)">delete_sweep</mat-icon>
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <!-- invoice custom notes -->
+        <div class="custom_notes_field">
+
+
+          <!-- <div class="invoice_total">
+            <div class="invoice_total_main subtotal">
+              <p>Subtotal:</p>
+              <p>{{calculateSubTotal()}}</p>
+            </div>
+            <div class="invoice_total_main">
+              <p>Delivery Fee:</p>
+              <mat-form-field appearance="outline">
+                <input matInput type="number" formControlName="deliveryFee">
+              </mat-form-field>
+            </div>
+            <div class="invoice_total_main">
+              <p>Adjustment:</p>
+              <mat-form-field appearance="outline">
+                <input matInput type="number" formControlName="adjustment">
+              </mat-form-field>
+            </div>
+            <div class="total_horizontal_line"></div>
+            <div class="total">
+              <p>Total(BDT):</p>
+              <p>{{calculateSubTotal() + this.dataForm.value.deliveryFee - this.dataForm.value.adjustment}}</p>
+            </div>
+            <div class="shipped_checkbox">
+              <mat-checkbox [value]="true" formControlName="deliveryStatus">Mark as shipped</mat-checkbox>
+            </div>
+          </div> -->
+
+
+          <div class="total-area">
+              <ul>
+                  <li>
+                     <div class="total-title">
+                        <h3>Sub Total</h3>
+                     </div>
+                     <div class="total-price">
+                        <h4>{{calculateSubTotal()}} TK</h4>
+                     </div>
+                  </li>
+                  <li>
+                    <div class="total-title">
+                       <h3>Coupon Code</h3>
+                    </div>
+                    <div class="total-price">
+                       <h4 class="color-red">(-) 0 TK</h4>
+                    </div>
+                 </li>
+                 <li>
+                  <div class="total-title">
+                     <h3>Points Redeem</h3>
+                  </div>
+                  <div class="total-price">
+                     <h4 class="color-red">(-) 0 PTS</h4>
+                  </div>
+               </li>
+                <li>
+                  <div class="total-title">
+                    <h3>Shipping Charge</h3>
+                  </div>
+                  <div class="total-price">
+                    <h4>120 TK</h4>
+                  </div>
+              </li>
+               <hr>
+<!--              <li>-->
+<!--                <div class="total-title">-->
+<!--                   <h3>Amount to pay</h3>-->
+<!--                </div>-->
+<!--                <div class="total-price">-->
+<!--                   <h4>{{calculateSubTotal() + 120}} TK</h4>-->
+<!--                </div>-->
+<!--             </li>-->
+                <li>
+                  <div class="total-title">
+                    <h3>Paid</h3>
+                  </div>
+                  <div class="total-price">
+                    <h4 class="color-red">(-) {{paidAmmount()}} TK</h4>
+                  </div>
+              </li>
+                <li>
+                  <div class="total-title">
+                    <h3>Adjustment</h3>
+                  </div>
+                  <div class="total-price">
+                    <h4 class="color-red">(-) 0 TK</h4>
+                  </div>
+              </li>
+               <hr>
+               <li>
+                <div class="total-title">
+                   <h3>Due Amount</h3>
+                </div>
+                <div class="total-price">
+                   <h4>{{(calculateSubTotal() + 120) - paidAmmount()}} TK</h4>
+                </div>
+             </li>
+                <li>
+                  <div class="total-title">
+                    <h3>Cancelled(SKU:{{canceledOrderSku}})</h3>
+                  </div>
+                  <div class="total-price">
+                    <h4 class="color-red">(-) {{canceledOrderAmount}} TK</h4>
+                  </div>
+              </li>
+                  <hr>
+                  <li>
+                    <div class="total-title">
+                      <h3>Refundable Amount</h3>
+                    </div>
+                    <div class="total-price">
+                      <h4 class="color-red">-0 TK</h4>
+                    </div>
+                </li>
+                  <li>
+                    <div class="total-title">
+                      <h3>Refund(SKU:)</h3>
+                    </div>
+                    <div class="total-price">
+                      <h4>(-) 0 TK</h4>
+                    </div>
+                </li>
+                <hr>
+                <li>
+                  <div class="total-title">
+                    <h3>Total Due =</h3>
+                  </div>
+                  <div class="total-price">
+                    <h4>{{((calculateSubTotal() + 120) - paidAmmount()) - (canceledOrderAmount ? (canceledOrderAmount + 120) : 0)}} TK</h4>
+                  </div>
+              </li>
+              </ul>
+          </div>
+
+
+        </div><!---total-->
+
+        <div class="invoice_buttons">
+          <button mat-stroked-button type="submit">Save</button>
+          <div class="save_print_button">
+            <button mat-stroked-button type="submit">Save & Print</button>
+          </div>
+
+        </div>
+
+    </div>
+
+
+
+  </form>
+  </div>
+
+</mat-dialog-content>

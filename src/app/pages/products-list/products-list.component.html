@@ -1,0 +1,60 @@
+<!---banner-area-->
+<div class="banner-area">
+    <div class="container">
+        <!---banner-main-->
+        <div class="banner-main">
+            <!---category-menu-->
+            <div class="category-menu">
+                <!--category-top-->
+                    <div class="categories-top">
+                        <!---categories-top-left-->
+                        <div class="categories-top-left">
+                            <h3 #title>Categories</h3>
+                        </div>
+                        <!---categories-top-right-->
+                        <div class="categories-top-right">
+                            <span>View..</span>
+                        </div>
+                    </div>
+                    <!-- <ul> -->
+                        <!-- <img src="./assets/images/svg/001-cocker-spaniel 1.svg" alt=""> -->
+                        <!-- <li *ngFor="let data of categoryMenu;let i=index"><a [routerLink]="['/products-list', data?.slug]"
+                            [skipLocationChange]="false"> <span></span> {{data.name}}</a> <span><i class="fa fa-angle-right"></i></span> -->
+                            <!-- <div class="sub-mega-menu" *ngIf="data.hasChild.length > 0">
+                              <app-menu-hover-content [parentCategory]="data" [data]="data.hasChild"></app-menu-hover-content>
+                            </div> -->
+                            <!-- <h1>hi</h1> -->
+                         <!-- </li>
+                    </ul> -->
+                    <ul>
+                      <li *ngFor="let data of categoryMenu; let i = index">
+                        <a [routerLink]="['/products-list', data?.slug]" [skipLocationChange]="false">
+                          <span></span> {{ data.name }}</a>
+                        <span><i class="fa fa-angle-right"></i></span>
+                        <!-- <span>{{data.hasChild }}</span> -->
+                        <div class="sub-mega-menu" *ngIf="data.hasChild.length > 0">
+                          <app-menu-hover-content [parentCategory]="data" [data]="data.hasChild"></app-menu-hover-content>
+                        </div>
+                      </li>
+                    </ul>
+            </div>
+            <!--------------search-all-result--------------->
+            <div class="search-result-area">
+                <!---search-result-title-area-->
+                <div class="search-result-title">
+                    <!-- <h3>Search Result for : {{searchQuery}}</h3> -->
+                </div>
+                <!---search-result-main-->
+                <div class="search-result-main">
+                    <ng-container *ngFor="let data of products">
+                        <app-product-card-one [data]="data"></app-product-card-one>
+                    </ng-container>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

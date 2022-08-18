@@ -1,0 +1,79 @@
+<!--edit-area-->
+<div class="edit-area" *ngIf="edit == true">
+    <div class="edit-main">
+        <!---header-area-->
+        <div class="header-area">
+            <div>
+                <h3>Edit Options</h3>
+            </div>
+            <div>
+                <span (click)="editPopUpHide()"><i class="fa fa-xmark"></i></span>
+            </div>
+        </div>
+        <!--edit-body-->
+        <div class="edit-body">
+            <form action="#">
+              <div class="form-input-area">
+                  <!--grid-->
+                  <div class="grid">   
+                    <!---form-input-->
+                    <div class="form-input">
+                        <div>
+                            <mat-form-field appearance="outline" class="form-field">
+                            <input type="text" value="" matInput placeholder="Brand Name">
+                            </mat-form-field>
+                        </div>
+                    </div><!--end-->
+                    <!--search-tag-->
+                    <div class="search-tag">
+                        <button>Huggis <i class="fa fa-xmark"></i></button>
+                    </div>
+                    <!--search-tag-->
+                    <div class="search-tag">
+                        <button>Pampers <i class="fa fa-xmark"></i></button>
+                    </div>
+                  </div>
+                    <!--grid-->
+                    <div class="grid">   
+                        <!---form-input-->
+                        <div class="form-input">
+                            <div>
+                                <mat-form-field appearance="outline" class="form-field">
+                                <input type="text" value="" matInput placeholder="Size">
+                                </mat-form-field>
+                            </div>
+                        </div><!--end-->
+                        <!--search-tag-->
+                        <div class="search-tag">
+                            <button>M <i class="fa fa-xmark"></i></button>
+                        </div>
+                        <!--search-tag-->
+                        <div class="search-tag">
+                            <button>L <i class="fa fa-xmark"></i></button>
+                        </div>
+                          <!--search-tag-->
+                          <div class="search-tag">
+                            <button>XL <i class="fa fa-xmark"></i></button>
+                        </div>
+                          <!--search-tag-->
+                          <div class="search-tag">
+                            <button>12 month <i class="fa fa-xmark"></i></button>
+                        </div>
+                      </div>
+                    <!---btn-->
+                    <div class="add-btn">
+                        <button>Add another option</button>
+                    </div>
+              </div>
+             
+            </form>
+        </div>
+          <!---form-btn-->
+          <div class="edit-btn">
+            <ul>
+                <li><button (click)="editPopUpHide()"><i>Cancel</i></button></li>
+                <li><button class="save"><i>Done</i></button></li>
+            </ul>
+        </div>
+    </div>
+</div>

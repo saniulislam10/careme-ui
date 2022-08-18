@@ -1,0 +1,439 @@
+<!--------------------------create-order-area---------------------->
+<mat-dialog-content>
+    <!--------------------------create-order-area---------------------->
+    <div class="create-order-area">
+        <div class="create-order-main">
+            <form action="#">
+                <!--create-order-header-->
+                <div class="create-order-header">
+                    <div class="create-order-header-left">
+                        <h3>New Order</h3>
+                    </div>
+                    <div class="create-order-header-right">
+                        <span mat-dialog-close><i class="fa-solid fa-xmark"></i></span>
+                    </div>
+                </div>
+
+                <!----create-order-body-->
+                <div class="create-order-body">
+
+                    <div class="create-order-body-top">
+
+                        <div class="create-top">
+                            <!--search-->
+                            <div class="top-search-area" (click)="onClickSearchAreaUser($event)">
+                                <div>
+                                    <button><i class="fa fa-search"></i></button>
+                                </div>
+                                <div class="search-input">
+                                    <form class="search-form" #searchFormUser=ngForm>
+                                        <input id="searchUserInput" class="tw" type="text"
+                                            placeholder="Search in customers..." (focus)=handleUserFocus($event)
+                                            name="searchUserTerm" autocomplete="off" ngModel required>
+                                        <div *ngIf="isLoading" class="sk-fading-circle">
+                                            <div class="sk-circle1 sk-circle"></div>
+                                            <div class="sk-circle2 sk-circle"></div>
+                                            <div class="sk-circle3 sk-circle"></div>
+                                            <div class="sk-circle4 sk-circle"></div>
+                                            <div class="sk-circle5 sk-circle"></div>
+                                            <div class="sk-circle6 sk-circle"></div>
+                                            <div class="sk-circle7 sk-circle"></div>
+                                            <div class="sk-circle8 sk-circle"></div>
+                                            <div class="sk-circle9 sk-circle"></div>
+                                            <div class="sk-circle10 sk-circle"></div>
+                                            <div class="sk-circle11 sk-circle"></div>
+                                            <div class="sk-circle12 sk-circle"></div>
+                                        </div>
+                                    </form>
+                                    <ul id="auto-suggestion-user" class="auto-complete-box"
+                                        [ngClass]="searchUsers.length > 0 && isUserOpen ? 'active' : ''">
+                                        <li class="list-view" *ngFor="let data of searchUsers"
+                                            (click)="onSelectUser(data)">
+                                            <!-- <img class="img-thumb" [src]="data.images && data.images.length > 0 ? data.images[0] : '/assets/images/placeholder/test.png'" [alt]="data?.productName"> -->
+                                            <div class="desc">
+                                                <h3>{{data?.fullName}}</h3>
+                                            </div>
+                                            <div class="price">
+                                                <h5>{{data?.username}}</h5>
+                                                <p class="discount">
+                                                    <!-- {{data?.username}} -->
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!---create-user-area-->
+                            <div class="create-top-user-area">
+                                <div class="form-input">
+                                    <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                                        <mat-label>Name</mat-label>
+                                        <input type="text" matInput placeholder="Enter your name" value="">
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-input">
+                                    <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                                        <mat-label>Phone</mat-label>
+                                        <input type="text" matInput placeholder="Enter your phone" value="">
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-input">
+                                    <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                                        <mat-label>Phone</mat-label>
+                                        <input type="email" matInput placeholder="Enter your email" value="">
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-input">
+                                    <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                                        <mat-label>Address</mat-label>
+                                        <textarea cols="20" rows="5" matInput
+                                            placeholder="Write your address"></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <!---end-->
+                            <div class="user-img-area">
+                                <div class="img-pick">
+                                    <span><i class="fa fa-user"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!---end-->
+
+                        <div class="create-top-bottom">
+                            <div class="form-input">
+                                <h3>Delivery Method:</h3>
+                                <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                                    <mat-label> Select Method</mat-label>
+                                    <mat-select>
+                                        <mat-option value="option">Option1</mat-option>
+                                        <mat-option value="option">Option2</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="">This field is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <!--search-->
+                            <div class="top-search-area">
+                                <!-- <div>
+                                    <button><i class="fa fa-search"></i></button>
+                                </div>
+                                <div class="search-input">
+                                    <input type="text" value=""
+                                        placeholder="Search here to add a product using title/sku ">
+                                    
+                                </div>
+                                <div class="add-btn">
+                                    <button>Add</button>
+                                </div> -->
+                                <div class="serarch_left ">
+                                    <div class="search_inside_div top-search-area" (click)="onClickSearchArea($event)">
+                                        <div>
+                                            <button><i class="fa fa-search"></i></button>
+                                        </div>
+                                        <div>
+                                            <form class="form-field search-input" #searchForm=ngForm>
+                                                <input #searchInput id="searchInput" class="form-inp" type="text"
+                                                    placeholder="Search in caremebd..." (focus)=handleFocus($event)
+                                                    name="searchTerm" autocomplete="off" ngModel required>
+                                                <div *ngIf="isLoading" class="sk-fading-circle">
+                                                    <div class="sk-circle1 sk-circle"></div>
+                                                    <div class="sk-circle2 sk-circle"></div>
+                                                    <div class="sk-circle3 sk-circle"></div>
+                                                    <div class="sk-circle4 sk-circle"></div>
+                                                    <div class="sk-circle5 sk-circle"></div>
+                                                    <div class="sk-circle6 sk-circle"></div>
+                                                    <div class="sk-circle7 sk-circle"></div>
+                                                    <div class="sk-circle8 sk-circle"></div>
+                                                    <div class="sk-circle9 sk-circle"></div>
+                                                    <div class="sk-circle10 sk-circle"></div>
+                                                    <div class="sk-circle11 sk-circle"></div>
+                                                    <div class="sk-circle12 sk-circle"></div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                        <div class="search_add_button add-btn">
+                                            <button>Add</button>
+                                        </div>
+                                    </div>
+                                    <ul style="width: 400px;" class="auto-complete-box"
+                                        [ngClass]="searchProducts.length > 0 && isOpen ? 'auto-complete-box' : 'auto-complete-box_inactive'">
+                                        <li class="list-view" *ngFor="let data of searchProducts"
+                                            (click)="onSelectItem(data)">
+                                            <img class="img-thumb"
+                                                [src]="data.images && data.images.length > 0 ? data.images[0] : '/assets/images/placeholder/test.png'"
+                                                [alt]="data?.productName">
+                                            <div class="desc">
+                                                <h3>{{data?.name}}</h3>
+                                            </div>
+                                            <div class="price">
+                                                <h5>৳{{data.sellingPrice}}</h5>
+                                                <p class="discount">
+                                                    <!-- {{(data | price: 'discountPercentage') > 0 ? '(' + (data | price: 'discountPercentage') + '% OFF)' : ''}} -->
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!---create-order-body-main-->
+                    <div class="create-order-body-main">
+                        <!---table-area-->
+                        <div class="product-table-area">
+
+                            <div class="product-table-area-main">
+                                <!----table-->
+                                <div class="table">
+
+                                    <div class="table-head">
+                                        <div class="table-row">
+                                            <div class="table-heading item">
+                                                <h3>Item Name</h3>
+                                            </div>
+                                            <!-- <div class="table-heading">
+                                                <h3>Color</h3>
+                                            </div>
+                                            <div class="table-heading">
+                                                <h3>Size</h3>
+                                            </div> -->
+                                            <div class="table-heading date"
+                                                *ngFor="let variant of products[0]?.product?.variants; let i=index">
+                                                <h3 *ngIf="variant">{{variant}}</h3>
+                                            </div>
+                                            <div class="table-heading">
+                                                <h3>Vendor</h3>
+                                            </div>
+                                            <div class="table-heading">
+                                                <h3>Quantity</h3>
+                                            </div>
+                                            <div class="table-heading">
+                                                <h3>Price</h3>
+                                            </div>
+                                            <div class="table-heading">
+                                                <h3>Tax</h3>
+                                            </div>
+                                            <div class="table-heading">
+                                                <h3>Total Price</h3>
+                                            </div>
+                                            <div class="table-heading">
+                                                <h3>Payable Price</h3>
+                                            </div>
+                                            <div class="table-heading del">
+                                                &nbsp;
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <!---table-body-area-->
+                                    <div class="table-body">
+                                        <div class="table-row" *ngFor="let data of products; let a=index">
+                                            <div class="table-data item">
+                                                <!--product-info-->
+                                                <div class="product-info">
+                                                    <!---product-img-->
+                                                    <div class="product-img">
+                                                        <img src="./assets/images/junk/1218NP_economicoutlook_img1.jpg"
+                                                            alt="">
+                                                    </div>
+                                                    <!---product-text-details-->
+                                                    <div class="product-text-details">
+                                                        <!--product-header-->
+                                                        <div class="product-header">
+                                                            <div>
+                                                                <a href="#">{{data?.product?.name}}</a>
+                                                            </div>
+                                                        </div>
+                                                        <!---product-point-->
+                                                        <div class="product-point">
+                                                            <h3>Earn <span class="earn">+50</span> or redeem <span
+                                                                    class="redeem-pts">-50</span> pts</h3>
+                                                        </div>
+                                                        <!---product-sku-->
+                                                        <div class="product-sku">
+                                                            <h3>SKU: {{data?.product?.sku}}</h3>
+                                                        </div>
+                                                        <!---product-bottom-->
+                                                        <div class="product-bottom">
+                                                            <div>
+                                                                <h3>Delivery within 30 Days</h3>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <!---product-end-->
+                                            </div>
+                                            <!---table-data-->
+                                            <!-- <div class="table-data">
+                                                <div class="table-input">
+                                                    <select name="#" id="">
+                                                        <option value="#">Red</option>
+                                                        <option value="#">Green</option>
+                                                    </select>
+                                                </div>
+                                            </div> -->
+                                            <!---table-data-->
+                                            <!-- <div class="table-data"> -->
+                                            <div class="table-input table-data"
+                                                *ngFor="let variant of data?.product?.variants; let i=index">
+                                                <!-- <select name="#" id="">
+                                                        <option value="#">XL</option>
+                                                        <option value="#">XXL</option>
+                                                    </select> -->
+                                                <div class="small_widht_select">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Select </mat-label>
+                                                        <mat-select [value]="this.clickActive[a][i]">
+                                                            <mat-option
+                                                                *ngFor="let option of getOptions(data?.product?.options[i]); let x=index"
+                                                                [value]="x"
+                                                                (click)="onSelectVariant(data.sku,data?.product?.variants[i],a,i, x)">
+                                                                {{option}}</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <!-- </div> -->
+                                            <!---table-data-->
+                                            <div class="table-data">
+                                                <!-- <div class="table-input">
+                                                    <select name="#" id="">
+                                                        <option value="#">Global</option>
+                                                        <option value="#">Local</option>
+                                                    </select>
+                                                </div> -->
+                                                <span>{{data?.product?.vendor}}</span>
+                                            </div>
+                                            <!---table-data-->
+                                            <div class="table-data">
+                                                <div class="table-input qty-input">
+                                                    <button type="button" class="inc" (click)="decrementQty(a)">-</button>
+                                                    <h2>{{data.quantity}}</h2>
+                                                    <button type="button" class="inc" (click)="incrementQty(a)">+</button>
+                                                </div>
+                                            </div>
+                                            <div class="table-data">
+                                                <h3>0 TK</h3>
+                                            </div>
+                                            <div class="table-data">
+                                                <h3>{{data?.tax}} TK</h3>
+                                            </div>
+                                            <!---table-data-->
+                                            <div class="table-data">
+                                                <h3>{{getAmount(data)}} TK</h3>
+                                            </div>
+                                            <!---table-data-->
+                                            <div class="table-data">
+                                                <div class="table-data-2 remove"  *ngIf="data?.maxQuantity == 0 || data?.maxQuantity == null">
+                                                    <!-- <div class="stock-badge" *ngIf="data?.canPartialPayment">
+                                                      <span *ngIf="data?.partialPaymentType === 0">({{data?.partialPayment}}Tk
+                                                        advance )</span>
+                                                      <span *ngIf="data?.partialPaymentType === 1">( {{data?.partialPayment}}%
+                                                        advance )</span>
+                                                    </div> -->
+                                                    <h3>{{data?.partialPayment}}TK</h3>
+                                                  </div>
+                                                  <div class="table-data-2 remove" *ngIf="data?.maxQuantity">
+                                                    <!-- <div class="stock-badge" >
+                                                      <span >( COD)</span>
+                                                    </div> -->
+                                                    <h3>0TK</h3>
+                                                  </div>
+                                            </div>
+                                            <div class="table-data">
+                                                <mat-icon style="color: rgb(247, 3, 3); cursor: pointer;" >delete</mat-icon>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!----table-end-->
+                            </div>
+                            <!----table-area-main-end-->
+                        </div>
+                    </div>
+                    <!---create-order-body-main-end-->
+
+                    <!--body--bottom-->
+                    <div class="create-order-body-bottom">
+                        <div class="form-input" style="margin: 0px;">
+                            <h3>Reason For Create:</h3>
+                            <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                                <textarea cols="20" rows="12" matInput placeholder="Write your address"></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="total-area">
+                            <ul>
+                                <li>
+                                    <div class="total-title">
+                                        <h3>Sub Total</h3>
+                                    </div>
+                                    <div class="total-price">
+                                        <!-- <h4>{{cartSubTotal()}} TK</h4> -->
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="total-title">
+                                        <h3>Delivery Fee:</h3>
+                                    </div>
+                                    <div class="total-price">
+                                        <h4>150 TK</h4>
+                                    </div>
+                                </li>
+                                <hr>
+                                <li>
+                                    <div class="total-title">
+                                        <h3>Total: </h3>
+                                    </div>
+                                    <div class="total-price">
+                                        <!-- <h4>{{cartSubTotal() + 120}} TK</h4> -->
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="total-title">
+                                        <h3>Payable Price</h3>
+                                    </div>
+                                    <div class="total-price">
+                                        <h4 class="color-red">651 TK</h4>
+                                    </div>
+                                </li>
+                                <hr>
+                                <li>
+                                    <div class="total-title">
+                                        <h3>Due Amount</h3>
+                                    </div>
+                                    <div class="total-price">
+                                        <h4>1057 TK</h4>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!---end-->
+
+
+
+
+                </div>
+                <!----create-order-body-end-->
+                <div class="create-order-btn">
+                    <ul>
+                        <li><button class="save-active">Create Order</button></li>
+                    </ul>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</mat-dialog-content>

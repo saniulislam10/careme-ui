@@ -1,0 +1,63 @@
+<!---new-user-login-->
+<div class="new-user-login" *ngIf="newUser == true">
+    <!---new-user-login-main-->
+    <div class="new-user-login-main">
+        <!--login-title-->
+        <div class="login-title">
+            <div>
+                <h3>Login</h3>
+            </div>
+            <div>
+                <span (click)="newUserPopUpHide()">X</span>
+            </div>
+        </div>  <!--login-title-end-->
+        <!---login-form-body-->
+        <div class="login-form-body">
+         <!---login-form-->
+        <div class="login-form">
+            <form action="#">
+                <!---form-input-->
+                <div class="form-input">
+                    <input type="text" value="" placeholder="Email Or Phone..">
+                    <span class="hint">Use Country code before number</span>
+                </div>
+                <!---form-input-->
+                <div class="form-input">
+                    <input type="password" value="" placeholder="Password">
+                </div>
+                <!--forgott-area-->
+                <div class="forgot">
+                    <!---forgot-left-->
+                    <div class="forgot-left">
+                        <mat-checkbox class="mat-check">Rember Me</mat-checkbox>
+                    </div>
+                    <!---forgot-right-->
+                    <div class="forgot-right">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                </div>
+                <!---form-btn-->
+                <div class="form-btn">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+        </div> <!---login-form-end-->
+        <!--have-account-->
+        <div class="have-account">
+            <span>Dont have an account?</span>
+            <a href="#">Register Now</a>
+        </div>
+        <!--or-login-->
+        <div class="or-login">
+            <span>Or Login With</span>
+            <!---social-->
+            <div class="login-social">
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#"><i class="fab fa-google"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

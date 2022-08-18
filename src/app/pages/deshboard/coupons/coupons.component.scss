@@ -1,0 +1,106 @@
+@import'./../../../../theme/client-side-varriables';
+
+.coupons{
+  min-height: 600px;
+  background-color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 7%),0 -2px 3px 0 rgb(0 0 0 / 7%);
+  border-radius: 10px;
+  margin-bottom: 30px;
+
+}
+.coupon{
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 7%),0 -2px 3px 0 rgb(0 0 0 / 7%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 30px;
+
+}
+.coupon-left{
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+    gap: 15px;
+
+}
+.coupon-info{
+    display: block;
+}
+.coupon-info h3{
+    color: #000000;
+    font-family: $font-en-primary-2;
+    font-weight: 700;
+    font-size: 18px;
+    font-style: normal;
+    display: block;
+    margin-bottom: 7px!important;
+}
+
+.coupon-info h4{
+    color: #000000;
+    font-family: $font-en-primary-2;
+    font-weight: 600;
+    font-size: 16px;
+    font-style: normal;
+    display: block;
+    margin-top: 7px!important;
+}
+.coupon-right{
+    display: block;
+  }
+
+.deadline{
+    display: block;
+
+}
+.deadline p{
+  font-family: $font-en-primary-2;
+}
+
+.coupon-middle{
+  display: block;
+  margin: auto;
+  padding: auto;
+
+
+}
+.coupon-status-active button{
+  background-color:rgb(69, 238, 69);
+  font-family: $font-en-primary-2;
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+  padding: 3px 15px;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid rgb(69, 238, 69);
+}
+
+.coupon-status-expired button{
+  background-color:rgb(236, 57, 57);
+  border: 1px solid rgb(236, 57, 57);
+  color: white;
+  font-family: $font-en-primary-2;
+  border-radius: 20px;
+  padding: 3px 15px;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 14px;
+}
+
+
+@media(max-width:500px) {
+  .coupon{
+    flex-direction: column;
+    align-items:center;
+    justify-content:center;
+    text-align: center;
+  }
+}

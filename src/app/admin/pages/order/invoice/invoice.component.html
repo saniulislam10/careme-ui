@@ -1,0 +1,236 @@
+<div class="invoice">
+  <div class="invoice_header">
+    <mat-icon [routerLink]="['../../', 'all-invoice']">keyboard_backspace</mat-icon>
+    <div class="invoice_header_content">
+      <h1>INV-{{invoice?.invoiceId}}</h1>
+      <p>{{invoice?.invoiceDate | date}}</p>
+    </div>
+  </div>
+
+  <!-- invoice body html  -->
+  <div class="inovice_body">
+      <div class="invoice_buttons">
+        <ul>
+            <li><button >Edit</button></li>
+            <li><button >Send Mail</button></li>
+            <li><button>Pdf/Print</button></li>
+            <li><button>Record Payment</button></li>
+            <li><button>Delete</button></li>
+        </ul>
+    </div>
+
+    <div class="invoice_horizontal_line"></div>
+
+    <div class="invoice_chackout_table">
+      <div class="invoice_dropdown"  >
+        <div class="invoice_item">
+            <h3 class="IVN_code_content">INV-{{invoice?.invoiceId}}</h3>
+            <p>25 Dec 2021</p>
+        </div>
+        <div class="invoice_item">
+            <h3 class="paid_content" *ngIf="invoice?.shippingStatus">Paid</h3>
+        </div>
+        <div class="invoice_item">
+            <h3>Balance</h3>
+            <p><span>BDT 00</span>{{invoice?.invoiceDate | date}}</p>
+        </div>
+        <div class="invoice_item">
+            <h3>Amount</h3>
+            <p><span>BDT {{invoice.total}}</span></p>
+        </div>
+        <div class="invoice_item">
+            <span><i class="fa-solid fa-bars"></i></span>
+        </div>
+      </div>
+
+      <div class="main_invoice_checkout_table">
+        <div class="invoice_logo_header">
+          <div class="invoice_logo_header_left">
+            <div class="invoice_careme_logo">
+              <img src="../../../../../assets/images/logo/logo.png" alt="Care Me Logo">
+            </div>
+            <div class="invoice_careme_logo_content">
+              <h4>Care Me Global</h4>
+              <p>Suit#1402 (Lift #14)</p>
+              <p>Navana D.H Tower, Karwan Bazar</p>
+              <p>Dhaka 1215</p>
+              <p>Support: 0118375298954</p>
+            </div>
+          </div>
+          <div class="invoice_logo_header_right">
+            <h1>Invoice</h1>
+            <p class="invoice_code">#INV-{{invoice.invoiceId}}</p>
+            <p class="invoice_balance">Balance Due</p>
+            <p class="invoie_bdt">BDT{{(invoice.subTotal + 120) - paidAmmount()}}</p>
+          </div>
+        </div>
+
+        <!-- bill to field  -->
+        <div class="invoice_bill_to_field">
+          <div class="bill_to_left">
+            <p>Bill to</p>
+            <p>{{invoice.customerName}}</p>
+            <p>{{invoice.shippingAddress}}</p>
+            <!-- <p>Savar 1340</p> -->
+            <!-- <p>Bangladesh</p> -->
+            <p>{{invoice.phoneNo}}</p>
+          </div>
+          <div class="bill_to_right">
+            <div class="invoice_date_field">
+              <h4>Invoice date:</h4>
+              <p>{{invoice.invoiceDate | date}}</p>
+            </div>
+            <div class="invoice_date_field">
+              <h4>Terms:</h4>
+              <p>Due on Receipt</p>
+            </div>
+            <div class="invoice_date_field">
+              <h4>Due Date:</h4>
+              <p>19 jan 2022</p>
+            </div>
+            <div class="invoice_date_field">
+              <h4>P.O.#:</h4>
+              <p>SO-2312</p>
+            </div>
+            <div class="invoice_date_field">
+              <h4>Shipping Carrier</h4>
+              <p>{{invoice.shippingCarrier}}</p>
+            </div>
+          </div>
+        </div>
+        <!--below Shipped by pathao field  -->
+
+        <div class="shipped_header">
+          <h1>Shipped By: {{invoice.shippingCarrier}}</h1>
+        </div>
+        <div class="shipped_table">
+          <table>
+            <thead>
+              <tr>
+                <th class="items_middle">#</th>
+                <th class="items_left">Items & Description</th>
+                <th class="items_right">Qty</th>
+                <th class="items_right">Rate</th>
+                <th class="items_right">Tax</th>
+                <!-- <th class="items_right">Discount</th> -->
+                <th class="items_right">Amount</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let data of invoice.products; let i=index">
+                <!-- {{data | json}} -->
+                <td class="items_middle">{{i+1}}</td>
+                <td class="items_left">{{data?.product.name}} <br> <span>SKU: {{data?.product.sku}}</span></td>
+                <td class="items_right">{{data?.quantity}} <br> <span>Pcs</span></td>
+                <td class="items_right">{{data?.price}}</td>
+                <td class="items_right">{{data?.tax}}</td>
+                <!-- <td class="items_right">{{data.discount}}</td> -->
+                <td class="items_right">{{(data?.price+data?.tax) * data?.quantity}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table_horizontal_line"></div>
+
+        <div class="sub_total_right">
+          <div class="main_sub_total_content">
+
+              <div class="sub_total_content">
+                <h5>Sub Total</h5>
+                <p>{{invoice?.subTotal}}</p>
+              </div>
+              <div class="sub_total_content">
+                <h5>Advance pay</h5>
+                <p>{{paidAmmount()}}</p>
+              </div>
+              <div class="sub_total_content">
+                <h5>Shipping Charge</h5>
+                <p>120TK</p>
+              </div>
+              <div class="sub_total_content">
+                <h5>Adjustments</h5>
+                <p>0</p>
+              </div>
+              <div class="total_content">
+                <h5>Total</h5>
+                <p>BDT{{(invoice?.subTotal + 120) - paidAmmount()}}</p>
+              </div>
+              <div class="sub_total_content">
+                <h5>Payment Made</h5>
+                <p class="payment_red">(-) 0</p>
+              </div>
+              <div class="sub_total_content">
+                <h5>Credits Applied</h5>
+                <p class="payment_red">(-) 0</p>
+              </div>
+            </div>
+          <div class="balance_due_content">
+           <h5>Balance Due</h5>
+           <p >BDT{{(invoice?.subTotal + 120) - paidAmmount()}}</p>
+          </div>
+        </div>
+
+        <div class="invoice_notes">
+          <h4>Notes</h4>
+          <p>Thanks for your business</p>
+        </div>
+
+        <div class="invoice_more_info">
+          <h1>More Information</h1>
+          <div class="sales_person_content">
+            <p>Salesperson</p>
+            <p>:{{invoice.salesPerson}}</p>
+          </div>
+          <h1>CUSTOM FIELDS</h1>
+          <div class="sales_person_content">
+            <p>Shipping Carrier</p>
+            <p>:{{invoice?.shippingCarrier}}</p>
+          </div>
+        </div>
+
+        <!-- invoice sales orders  -->
+        <div class="invoice_sales_orders">
+          <div class="sales_oreders_header">
+            <h2>Associated Sales Orders (1)</h2>
+            <div class="sales_order_horizontal_line"></div>
+          </div>
+          <div class="sales_order_line"></div>
+
+
+
+         <div class="sales_table">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Sales Order#</th>
+                <th>Status</th>
+                <th>Shipment Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{today | date}}</td>
+                <td class="table_content">SO-{{invoice?.orderNumber}}</td>
+                <td class="table_content">CONFIRMED</td>
+                <td class="table_content">{{invoice?.invoiceDate | date}}</td>
+              </tr>
+            </tbody>
+          </table>
+         </div>
+
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+</div>

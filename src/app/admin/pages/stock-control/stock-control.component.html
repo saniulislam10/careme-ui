@@ -1,0 +1,144 @@
+<div class="stock-control-header-area">
+  <div class="stock-control-header-main">
+    <h2>Stock Control Settings </h2>
+  </div>
+</div>
+<!----stock-area-->
+<form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+  <div class="stock-area">
+    <div class="stock-area-main">
+      <!---stock-info-area-main-->
+      <div class="stock-info-area-main">
+        <!---stock-info-header-->
+        <div class="stock-info-header">
+          <h3>Stock Control</h3>
+        </div>
+        <!--stock-info-body-->
+        <div class="stock-info-body">
+          <!--stock-info-->
+          <!-- *ngFor="let data of [1,2,3]" -->
+          <div class="stock-info">
+            <div class="stock-info-left">
+              <div style="width: 100%;">
+                <h4>Stock in when SKU Quantity is</h4>
+              </div>
+              <div class="stock-input-area">
+                <span>=</span>
+                <input type="text" value="-1">
+              </div>
+            </div>
+            <div class="stock-info-right">
+              <div style="max-width: 110px; width: 100%;">
+                <h4>Message</h4>
+              </div>
+              <div class="stock-input-area">
+                <input type="text" formControlName="lessThanZero" placeholder="Enter your message..">
+              </div>
+            </div>
+          </div>
+          <div class="stock-info">
+            <div class="stock-info-left">
+              <div style="width: 100%;">
+                <h4>Stock in when SKU Quantity is</h4>
+              </div>
+              <div class="stock-input-area">
+                <span>=</span>
+                <input type="text" value="0">
+              </div>
+            </div>
+            <div class="stock-info-right">
+              <div style="max-width: 110px; width: 100%;">
+                <h4>Message</h4>
+              </div>
+              <div class="stock-input-area">
+                <input type="text" formControlName="zero" placeholder="Enter your message..">
+              </div>
+            </div>
+          </div>
+          <div class="stock-info">
+            <div class="stock-info-left">
+              <div style="width: 100%;">
+                <h4>Stock in when SKU Quantity is</h4>
+              </div>
+              <div class="stock-input-area">
+                <span>=</span>
+                <input type="text" value="1">
+              </div>
+            </div>
+            <div class="stock-info-right">
+              <div style="max-width: 110px; width: 100%;">
+                <h4>Message</h4>
+              </div>
+              <div class="stock-input-area">
+                <input type="text" formControlName="greaterThanZero" placeholder="Enter your message..">
+              </div>
+            </div>
+          </div>
+          <!--stock-info-end-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- (click)="searchProductActive()" -->
+  <button type="submit" class="stock-input-area-button">Save</button>
+</form>
+<!----search-products-->
+<div *ngIf="searchProduct === true" class="search-product-area">
+  <div class="search-product-main">
+    <!---search-product-header-area-->
+    <div class="search-product-header-area">
+      <!---search-product-header-top-->
+      <div class="search-product-header-top">
+        <div>
+          <h3>Products</h3>
+        </div>
+        <div>
+          <span (click)="searchProductInactive()">X</span>
+        </div>
+      </div>
+      <!--search-product-search-box-->
+      <div class="search-product-search-box">
+        <div class="search-input">
+          <button><i class="fa fa-search"></i></button>
+          <input type="text" name="" id="" placeholder="Search Products..">
+        </div>
+      </div>
+    </div>
+    <!---search-product-header-top-end-->
+    <!---search-product-body-->
+    <div class="search-product-body">
+      <!---product-info-->
+      <div class="product-info" *ngFor="let data of [1,2,3,4,5,6]">
+        <div class="product-info-left">
+          <div class="check">
+            <mat-checkbox class="mat-check"></mat-checkbox>
+          </div>
+          <div class="product-img">
+            <img src="./assets/images/junk/252-2523504_sneakers-running-shoes-mockup-sport-shoes-png.png" alt="">
+          </div>
+          <div class="product-name">
+            <a href="#">1.3L Lunch Box</a>
+          </div>
+        </div>
+        <div class="product-info-right">
+          <div class="product-available">
+            <span>-3 Available</span>
+          </div>
+          <div class="product-sku">
+            <span>SKU: 201764JK</span>
+          </div>
+        </div>
+      </div>
+      <!---product-info-end-->
+
+    </div>
+    <!---search-product-body-end-->
+    <div class="search-product-bottom">
+      <ul>
+        <li><button (click)="searchProductInactive()">Cancel</button></li>
+        <li><button class="active">Done</button></li>
+      </ul>
+    </div>
+
+  </div>
+</div>

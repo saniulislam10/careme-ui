@@ -1,0 +1,88 @@
+<div class="curier-area" *ngIf="curierPopUp == true">
+    <div class="curier-area-main">
+        <!---title-->
+        <div class="curier-head">
+            <div>
+                <h3>Add Courier</h3>
+            </div>
+            <div>
+                <span (click)="popUpHide()"><i class="fa fa-xmark"></i></span>
+            </div>
+        </div>
+        <!---curier-body-->
+        <div class="curier-body">
+            <!---grid-->
+            <div class="form-grid">
+                <!---form-input-->
+                <div class="form-input">
+                    <h3>Rate Name</h3>
+                    <div class="form-field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Name</mat-label>
+                            <mat-select disableRipple>
+                              <mat-option value="1">Option 1</mat-option>
+                              <mat-option value="2">Option 2</mat-option>
+                              <mat-option value="3">Option 3</mat-option>
+                            </mat-select>
+                            <mat-hint>Customer Will See this at checkout</mat-hint>
+                          </mat-form-field>
+                    </div>
+                </div>
+                    <!---form-input-->
+                    <div class="form-input">
+                        <h3>Price</h3>
+                        <div class="form-field">
+                            <mat-form-field appearance="outline">
+                                <!-- <mat-label>#IN654767</mat-label> -->
+                                <input matInput placeholder="Enter your curier price (BDT)">
+                              </mat-form-field>
+                        </div>
+                    </div>
+            </div><!---grid-end-->
+            <!---remove-condition-->
+            <div class="remove-condition">
+                <h3>Remove Condition</h3>
+                <mat-radio-group >
+                    <mat-radio-button value="1">Based on item weight</mat-radio-button>
+                    <mat-radio-button value="2">Based on order price</mat-radio-button>
+                </mat-radio-group>
+            </div>
+                   <!---grid-->
+                   <div class="form-grid" style="margin: 0px;">
+                        <!---form-input-->
+                        <div class="form-input">
+                            <h3>Minimum Weight</h3>
+                            <div class="form-field">
+                                <mat-form-field appearance="outline">
+                                    <!-- <mat-label>#IN654767</mat-label> -->
+                                    <input matInput value="0" placeholder="Minimun weight(kg)">
+                                  </mat-form-field>
+                            </div>
+                        </div>
+                          <!---form-input-->
+                          <div class="form-input">
+                            <h3>Maximum Weight</h3>
+                            <div class="form-field">
+                                <mat-form-field appearance="outline">
+                                    <!-- <mat-label>#IN654767</mat-label> -->
+                                    <input matInput value="0" placeholder="Maximum weight(kg)">
+                                  </mat-form-field>
+                            </div>
+                        </div>
+                </div><!---grid-end-->
+        </div><!---curier-body-end-->
+
+        <!---curier-bottom-area-->
+        <div class="curier-bottom-area">
+            <div class="bottom-left">
+                <a href="#">Add Another</a>
+            </div>
+            <div class="bottom-right">
+                <ul>
+                    <li><button (click)="popUpHide()">Cancel</button></li>
+                    <li><button class="active">Save</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

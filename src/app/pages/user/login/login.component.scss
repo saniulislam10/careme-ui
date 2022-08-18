@@ -1,0 +1,302 @@
+@import "src/theme/variables";
+img{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+#login {
+  width: 100%;
+  height: 85vh;
+  display: grid;
+  place-items: center;
+}
+
+.container-view {
+  width: 95%;
+  max-width: 1080px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  padding: 52px 16px;
+}
+
+.top {
+  width: 100%;
+  text-align: end;
+}
+.head {
+  width: 100%;
+  margin: 36px 0;
+  text-align: center;
+  h2 {
+    font-family: $font-en-primary;
+    color: #474747;
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  p {
+    font-family: $font-en-primary;
+    color: #AAAAAA;
+    font-size: 18px;
+    padding: 8px 0;
+  }
+}
+
+.static-prefix {
+  top: -3px !important;
+}
+
+.input-area {
+  width: 100%;
+  margin: 10px 0;
+  text-align: center;
+
+  .input-field {
+    width: 100%;
+    .c-mat-field {
+      width: 90%;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+  }
+
+  .action {
+    button {
+      background: $color-primary;
+      color: #FFFFFF;
+      font-family: $font-en-primary;
+      font-weight: 600;
+      padding: 3px 50px;
+      border-radius: 30px;
+    }
+  }
+}
+
+.bottom {
+  width: 100%;
+  margin: 36px 0;
+  text-align: center;
+
+  h4 {
+    font-family: $font-en-primary;
+    color: #EA8F90;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  p {
+    font-family: $font-en-primary;
+    color: #494949;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 6px 0;
+  }
+
+}
+
+/* 1st solution - causes weird thing at the left side of input */
+::ng-deep .c-mat-field .mat-form-field-outline-start {
+  border-radius: 28px 0 0 28px !important;
+  min-width: 28px !important;
+}
+
+::ng-deep .c-mat-field .mat-form-field-outline-end {
+  border-radius: 0 28px 28px 0 !important;
+}
+
+
+::ng-deep .c-mat-field .mat-form-field-prefix {
+  top: -1px !important;
+  padding: 0 8px;
+  font-family: $font-en-primary;
+  color: #494949;
+  font-weight: 600;
+}
+
+
+//@import "src/theme/exports/other-signup";
+//
+//
+///*start-coding*/
+//.login-area {
+//  display: block;
+//  width: 100%;
+//  box-sizing: border-box;
+//  //background-color: #fff;
+//  padding-top: 50px;
+//  margin-bottom: 10vh;
+//}
+//
+//
+//.login-details-start {
+//  display: block;
+//  width: 85%;
+//  margin: auto;
+//}
+//
+//.login-title {
+//  margin-bottom: 50px;
+//  box-sizing: border-box;
+//}
+//
+//.login-title-left {
+//  float: left;
+//  width: 60%;
+//}
+//
+//.login-title-left h2 {
+//  font-weight: 500;
+//  font-size: 24px;
+//  display: block;
+//  color: #747475;
+//  font-family: $font-en-primary;
+//  font-style: normal;
+//  line-height: 22px;
+//  margin-bottom: 5px;
+//  letter-spacing: 0.5px;
+//}
+//
+//.login-title-right {
+//  float: right;
+//  width: 40%;
+//  text-align: right;
+//}
+//
+//.login-title-right h3 {
+//  font-style: normal;
+//  font-weight: 400;
+//  font-size: 16px;
+//  color: black;
+//  font-family: $font-en-primary;
+//  display: block;
+//  line-height: 20px;
+//}
+//
+//.login-title-right h3 a {
+//  color: #06b487;
+//  font-weight: 400;
+//  font-size: 15px;
+//  display: inline-block;
+//  font-family: $font-en-primary;
+//}
+//
+//.login-details {
+//  display: grid;
+//  grid-template-columns: repeat(2, 1fr);
+//  width: 100%;
+//  margin: 0 auto;
+//  background: #FFFFFF;
+//  padding: 45px 24px;
+//  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+//
+//}
+//
+//.login-form {
+//  display: block;
+//  width: 95%;
+//}
+//
+//.login-form form {
+//  display: block;
+//  width: 100%;
+//  height: auto;
+//  box-sizing: border-box;
+//}
+//
+//.login-field {
+//  margin-bottom: 12px;
+//  width: 100%;
+//}
+//
+//
+//.login-btn {
+//  text-align: center;
+//}
+//
+//.login-btn button {
+//  max-width: 140px;
+//  width: 100%;
+//  color: #fff;
+//  font-weight: 400;
+//  font-family: $font-en-primary;
+//  background-color: $color-primary-2;
+//  text-align: center;
+//  padding: 12px 5px;
+//  box-sizing: border-box;
+//  outline: none;
+//  border: 1px solid $color-primary;
+//  text-transform: uppercase;
+//  margin: auto;
+//  font-style: normal;
+//  font-size: 16px;
+//  cursor: pointer;
+//  transition: 0.3s all linear;
+//
+//  &:hover {
+//    background-color: $color-primary;
+//  }
+//}
+//
+//.forget {
+//  text-align: right;
+//  margin-top: -12px;
+//  margin-bottom: 8px;
+//
+//  a  {
+//    font-family: $font-en-primary;
+//    color: #1d488e;
+//  }
+//}
+//
+//
+//
+//@media(max-width: 998px) {
+//  .login-details {
+//    width: 100%;
+//  }
+//
+//}
+//
+//@media(max-width: 925px) {
+//  .login-details-start {
+//    width: 95%;
+//  }
+//}
+//
+//@media(max-width: 850px) {
+//  .login-form {
+//    margin-bottom: 30px;
+//    width: 90%;
+//  }
+//  .login-details {
+//    grid-template-columns: repeat(1, 1fr);
+//    margin-bottom: 30vh;
+//  }
+//  .other-login ul li {
+//    margin-right: 10px;
+//  }
+//}
+//
+//@media(max-width: 450px) {
+//  .login-title-left {
+//    float: none;
+//    width: 100%;
+//    margin-bottom: 20px;
+//  }
+//  .login-title-right {
+//    float: none;
+//    width: 100%;
+//    margin-bottom: 20px;
+//    text-align: left;
+//  }
+//  .login-form {
+//    width: 100%;
+//  }
+//  .login-area {
+//    margin-bottom: 0;
+//  }
+//  .login-details {
+//    grid-template-columns: repeat(1, 1fr);
+//    margin-bottom: 20vh;
+//  }
+//}

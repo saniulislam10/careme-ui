@@ -1,0 +1,108 @@
+<!---header-area-->
+<div class="header-area">
+    <div class="header-top">
+        <div class="title">
+            <h3>Subscription Overview</h3>
+        </div>
+        <div class="create-export">
+            <ul>
+                <li><button>Export</button></li>
+                <li><button routerLink="../../create-subscription" type="button" class="create-btn">Create</button></li>
+            </ul>
+        </div>
+    </div>
+    <!---search-filter-->
+      <!---campaign-header-bottom-->
+      <div class="campaign-header-bottom">
+        <!---campaign-header-bottom-right-->
+        <div class="campaign-header-bottom-right">
+            <div class="campaign-header-search">
+                <button><i class="fa fa-search"></i></button>
+                <input type="text" placeholder="Search">
+            </div>
+            <!--campaign-header-btn-->
+            <div class="campaign-header-btn">
+                <ul>
+                    <li>
+                        <mat-form-field appearance="outline" class="filter form-field">
+                            <mat-label>Select</mat-label>
+                            <mat-select >
+                                <mat-option value="">Filter</mat-option>
+                                <mat-option value="">Filter1</mat-option>
+                                <mat-option value="">Filter2</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!---table-area-->
+<div class="campaign-table-area">
+    <div class="campaign-table-main">
+        <!---table-->
+        <div class="table">
+            <!---table-head-->
+            <div class="table-head">
+                <!---table-row-->
+                <div class="table-row">
+                    <div class="table-heading check">
+                        <mat-checkbox class="mat-check"></mat-checkbox>
+                    </div>
+                    <div class="table-heading id">
+                        <h3>Subscription ID</h3>
+                    </div>
+                    <div class="table-heading name">
+                        <h3>Subscription Name</h3>
+                    </div>
+                    <div class="table-heading date">
+                        <h3>Lunch Date</h3>
+                    </div>
+                    <div class="table-heading subscriber">
+                        <h3>Number of Subscriber</h3>
+                    </div>
+                    <div class="table-heading status">
+                        <h3>Status</h3>
+                    </div>
+                </div>
+            </div>
+            <!----table-body-->
+            <div class="table-body">
+                <div class="table-row" *ngFor="let data of [1,2,3,5,6]">
+                    <div class="table-data check">
+                        <mat-checkbox class="mat-check"></mat-checkbox>
+                    </div>
+                    <div class="table-data id">
+                       <span>#034645</span>
+                    </div>
+                    <div class="table-data name">
+                       <span>Daliy Milk Supply</span>
+                    </div>
+                    <div class="table-data date">
+                        <h3>25 August 2021</h3>
+                        <h3>12.20 PM</h3>
+                    </div>
+                    <div class="table-data subscriber">
+                        <h3>500</h3>
+                        <h3>(Active 400 Cancel 100)</h3>
+                    </div>
+                    <div class="table-data status">
+                        <mat-slide-toggle></mat-slide-toggle>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+    <div class="indicator">
+        <ul>
+            <li><button><i class="fa fa-angle-left"></i></button></li>
+            <li><button><i class="fa fa-angle-right"></i></button></li>
+        </ul>
+    </div>
+     
+</div>

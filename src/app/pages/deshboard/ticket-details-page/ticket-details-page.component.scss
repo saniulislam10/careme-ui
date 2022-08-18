@@ -1,0 +1,495 @@
+@import'./../../../../theme/client-side-varriables';
+
+.ticket_details{
+    display: block;
+    width: 100%;
+    margin-bottom: 50px;
+    
+}
+.ticket_details .ticket_details_icon{
+    font-size: 25px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 20px;
+    margin-top: 0px;
+
+}
+.ticket_details .ticket_details_main{
+    display: grid;
+    grid-template-columns: 3fr 1.3fr;
+    grid-gap: 15px;
+    font-family: $font-en-primary-2;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 3px 5px 0 rgb(0 0 0 / 10%),0 -2px 3px 0 rgb(0 0 0 / 10%);
+    border-radius: 10px;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+.ticket_details_main .ticket_details_left{
+    flex: 9;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+.ticket_details_main .ticket_details_left h1{
+    font-size: 16px;
+    font-weight: 600;
+    font-family: $font-en-primary-2;
+}
+.ticket_details_main .ticket_details_left .ticket_details_left_main{
+    // padding: 20px 20px 60px;
+    box-sizing: border-box;
+}
+
+
+.status_message_div .status_div .status_div_main{
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+
+.status_div_main .status_div_left_column{
+    flex: 4;
+    display: flex;
+    align-items: center;
+    padding-right: 40px;
+    box-sizing: border-box;
+}
+.status_div_main .status_div_middle_column{
+    flex: 4;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+.status_div_main .status_div_middle_column h3{
+    font-size: 14px;
+    font-weight: 600;
+    font-family: $font-en-primary-2;
+}
+.status_div_main .status_div_middle_column h3::before{
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 85px;
+    background-color: #E5E5E5;
+    left: 0;
+    bottom: -36px;
+    z-index: -1;
+}
+.status_div_main .status_div_middle_column h3::after{
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 85px;
+    background-color: #E5E5E5;
+    right: 0;
+    bottom: -36px;
+    z-index: -1;
+}
+.status_div_main .status_div_right_column{
+    flex: 4;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 14px;
+    padding-left: 40px;
+    box-sizing: border-box;
+    font-family: $font-en-primary-2;
+
+}
+.status_div_left_column .status_image_content{
+    padding-left: 10px;
+    font-size: 12px;
+    font-family: $font-en-primary-2;
+}
+.status_div_left_column .status_image img{
+    width: 90px;
+    height: 90px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+.status_div_left_column .status_image_content h3{
+    font-size: 14px;
+    font-weight: 600;
+    font-family: $font-en-primary-2;
+}
+.status_div_left_column .status_image_content .image_para{
+    padding-top: 5px;
+    box-sizing: border-box;
+    line-height: 15px;
+    font-size: 12px;
+    font-family: $font-en-primary-2;
+}
+.status_div_right_column .stutas_icon{
+    margin-top: -22px;
+    color: #F57224;
+    font-size: 10px;
+    text-align: center;
+    padding: 5px 8px 5px 0px;
+    box-sizing: border-box;
+}
+.status_div_main .status_div_right_column span{
+    font-size: 12px;
+    font-family: $font-en-primary-2;
+}
+.status_message_div .message_div{
+    padding-top: 40px;
+}
+.status_message_div .message_div .your_message{
+    padding: 25px 20px;
+    box-sizing: border-box;
+    background-color: #F9FAFC;
+    border-radius: 5px;
+}
+.status_message_div .message_div .main_message_div h4{
+    font-size: 14px;
+    font-weight: 600;
+    font-family: $font-en-primary-2;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+}
+.status_message_div .message_div .your_message p{
+    font-size: 14px;
+    font-family: $font-en-primary-2;
+}
+.ticket_details_left_main .message_box_main{
+    padding: 10px 0;
+}
+
+.ticket_details_left_main .message_box_main .message_box{
+    width: 100%;
+    height: auto;
+    border: 1px solid #e2e2e2;
+    background-color: #F9FAFC;
+    border-radius: 5px;
+}
+.ticket_details_left_main .message_box_main .message_box .message_box_header{
+    padding: 20px 30px;
+    box-sizing: border-box;
+}
+.ticket_details_left_main .message_box_main .message_box .message_box_header h5{
+    font-size: 16px;
+    font-weight: 600;
+    font-family: $font-en-primary-2;
+    line-height: 12px;
+}
+.ticket_details_left_main .message_box_main .message_box .horizontal_line{
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+
+// Chat box css
+.message_box_body {
+    height: 330px;
+    overflow-y: auto;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.message_content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: end;
+}
+.receive_box,
+.send_box {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+}
+.receive_box {
+    justify-content: end;
+    margin-bottom: 20px;
+}
+.send_thumb,
+.receive_thumb {
+    display: block;
+}
+.send_thumb img,
+.receive_thumb img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.receive_message {
+    text-align: right;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+.send_message{
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.receive_box .chat_content {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+}
+.send_box .chat_content {
+    width: 100%;
+    margin-inline-end: auto;
+    
+}
+.chat_content p{
+    margin-bottom: 10px!important;
+    padding: 13px 13px;
+    box-sizing: border-box;
+    line-height: 12px;
+    border-radius: 12px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+}
+.receive_box .chat_content p{
+    background-color: #5A5A5A;
+}
+.send_box .chat_content p{
+    background-color: #25C820;
+}
+.chat_content:last-child {
+    margin-bottom: 0;
+}
+.receive_box .chat_content:first-child p {
+    border-bottom-right-radius: 0;
+}
+.receive_box .chat_content:last-child p {
+    border-top-right-radius: 0;
+}
+.send_box .chat_content:first-child p {
+    border-bottom-left-radius: 0;
+}
+.send_box .chat_content:last-child p {
+    border-top-left-radius: 0;
+}
+
+
+// Comment type message 
+.input-area{
+    padding: 15px 0px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.text_type_box {
+    width: 90%;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    padding: 5px 6px 5px 0px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    background-color: #FFFFFF;
+}
+.text_type_box input {
+    border: none;
+    display: block;
+    width: 100%;
+    padding: 5px 5px 5px 20px;
+    box-sizing: border-box;
+    font-family: $font-en-primary-2;
+    font-weight: 500;
+    font-size: 14px;
+    font-style: normal;
+    border-radius: 30px 0px 0px 30px;
+}
+.text_type_box input:focus {
+    outline: none;
+}
+.text_send_box {
+    display: flex;
+    justify-content:flex-end;
+    align-items: center;
+    max-width: 110px;
+    width: 100%;
+}
+.text_send_box span{
+    font-size: 18px;
+    padding-right: 10px;
+    color: #434953;
+}
+.text_send_box span:last-child{
+    background-color: #25C820;
+    padding: 8px 10px;
+    border-radius: 50%;
+    font-size: 16px;
+}
+
+.ticket_details_main .ticket_details_right{
+    display: block;
+    width: 100%;
+}
+.ticket_details_main .ticket_details_right > h2{
+    font-size: 14px;
+    font-weight: 600;
+    font-family: $font-en-primary-2;
+    padding-bottom: 15px;
+    box-sizing: border-box;
+}
+.ticket_details_right .image_galery{
+    width: 100%;
+}
+.gallery{
+    padding: 0px;
+    margin: 0px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    list-style: none;
+    width: 100%;
+}
+.ticket_details_right .image_galery .gallery li img{
+    width: 100%;
+    min-height: 120px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+@media(max-width:1150px){
+    .gallery{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+@media(max-width:800px){
+    .ticket_details .ticket_details_main{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .gallery{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media(max-width:546px){
+    .status_div_main{
+        flex-direction: column;
+        align-items: center!important;
+        text-align: center;
+    }
+    .status_div_main .status_div_middle_column h3::before{
+        display: none;
+    }
+    .status_div_main .status_div_middle_column h3::after{
+        display: none;
+    }
+    .status_div_left_column{
+        display: block!important;
+        padding: 0px!important;
+        width:100%;
+    }
+    .status_div_right_column{
+        padding: 0px!important;
+    }
+    .status_image{
+        margin-bottom: 10px!important;
+    }
+    .status_image img{
+        width:110px!important;
+        height: 100px!important;
+        display: block;
+        margin: auto;
+    }
+    .status_image_content h3,.status_div_middle_column h3,.sub_icon_text strong{
+        font-size: 17px!important;
+        display: block;
+        font-style: normal;
+        font-weight: 600;
+    }
+    .status_div_left_column .status_image_content{
+        padding: 0px!important;
+        margin: 0px!important;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .image_para p,.sub_icon_text span{
+        font-size: 15px!important;
+        font-style: normal;
+        font-weight: 400;
+        display: block;
+        margin-bottom: 10px!important;
+    }
+    .sub_icon_text span{
+        display: block;
+        margin-top: 7px!important;
+    }
+    .status_div_right_column{
+        padding: 0px!important;
+        margin-top: 5px;
+    }
+    .status_div_right_column i{
+        display: none!important;
+    }
+    .status_div{
+        padding: 15px!important;
+        box-sizing: border-box;
+        box-shadow: 0 3px 5px 0 rgb(0 0 0 / 10%),0 -2px 3px 0 rgb(0 0 0 / 10%);
+        border-radius: 10px;
+    }
+    .ticket_details_main{
+        box-shadow: none!important;
+        padding: 0px!important;
+    }
+    .ticket_details_left{
+        padding: 0px!important;
+    }
+    .message_box_body{
+        padding: 15px!important;
+    }
+    .status_div{
+        display: block;
+        text-align: center;
+    }
+    .status_div h1{
+        margin-bottom: 10px!important;
+        font-size: 18px!important;
+    }
+    .your_message{
+        padding: 0px!important;
+        background-color: #fff!important;
+    }
+    .main_message_div{
+        display: block;
+        margin-bottom: 20px!important;
+    } 
+}
+@media(max-width:450px){
+    .chat_content p{
+        font-size: 13px!important;
+        padding: 10px!important; 
+    }
+}
+
+
+
+
+
+
+// @media(max-width:1235px){
+//     .ticket_details_main{
+//         display: flex;
+//         flex-direction: column;
+//     }
+//     .ticket_details_right{
+//         padding: 30px;
+//     }
+//     .ticket_details_right .image_galery .gallery > li{
+//         height: 250px;
+//     }
+//     .ticket_details_right .image_galery .gallery li  img {
+//         height: 250px;
+//         object-fit: cover;
+//     }
+//     .ticket_details_main .ticket_details_left .ticket_details_left_main {
+//         padding: 20px 20px 0px;
+//     }
+
+// }

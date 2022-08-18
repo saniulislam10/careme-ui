@@ -1,0 +1,648 @@
+<!--order-process-system-->
+<!-- <div class="order-process-system">
+  <div class="container">
+    <div class="order-process-main">
+      <div class="order-process-system-info active-process">
+        <span><i class="fa fa-shopping-cart"></i></span>
+        <h3>My Cart</h3>
+      </div>
+      <div class="order-process-system-info">
+        <span><i class="fa fa-map"></i></span>
+        <h3>Shipping Info</h3>
+      </div>
+      <div class="order-process-system-info">
+        <span><i class="fa fa-truck"></i></span>
+        <h3>Delivery Info</h3>
+      </div>
+      <div class="order-process-system-info">
+        <span><i class="fa fa-credit-card"></i></span>
+        <h3>Payment</h3>
+      </div>
+      <div class="order-process-system-info">
+        <span><i class="fa fa-check-circle"></i></span>
+        <h3>Confirmation</h3>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="order-process-system">
+  <div class="container">
+    <div class="order-process-main">
+      <!---order-process-system-info-->
+      <div class="order-process-system-info active-process">
+        <span><i class="fa fa-shopping-cart"></i></span>
+        <h3>My Cart</h3>
+      </div>
+      <!---order-process-system-info-->
+      <div class="order-process-system-info">
+        <span><i class="fa fa-map"></i></span>
+        <h3>Shipping Info</h3>
+      </div>
+      <!---order-process-system-info-->
+      <div class="order-process-system-info s">
+        <span><i class="fa fa-check-circle"></i></span>
+        <h3>Payment</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---cart-area-->
+<div class="cart-area">
+  <div class="container">
+    <div class="cart-area-main">
+      <div class="cart_clear">
+        <button (click)="deleteUserCartList()">Clear all</button>
+      </div>
+      <!---cart-table--->
+      <div class="cart-table-area">
+        <!--cart-table-->
+        <div class="cart-table">
+          <!---table-head-->
+          <div class="table-head">
+            <div class="table-row">
+              <!---table-heading-->
+              <div class="table-heading product">
+                <h3>Vendor</h3>
+              </div>
+              <!---table-heading-->
+              <div class="table-heading quantity">
+                <h3>Price</h3>
+              </div>
+              <!---table-heading-->
+              <div class="table-heading tax">
+                <h3>Tax</h3>
+              </div>
+              <!---table-heading-->
+
+              <div class="table-heading price">
+                <h3>Quantity</h3>
+              </div>
+              <!---table-heading-->
+              <div class="table-heading total">
+                <h3>Total</h3>
+              </div>
+              <!---table-heading-->
+              <div class="table-heading-2 remove">
+                <h3>Advance Pay</h3>
+              </div>
+              <div class="table-heading remove">
+                <h3>Remove</h3>
+              </div>
+            </div>
+          </div>
+          <!---table-head-end-->
+          <!---table-body-->
+          <div class="table-body" *ngFor="let group of vCarts; let gi = index">
+            <!---table-row-->
+            <div class="table_header">
+              <div style="padding-right: 5px">
+                <mat-checkbox [(ngModel)]="group.select" (ngModelChange)="onCheckVendorGroup($event, gi)">
+                </mat-checkbox>
+              </div>
+              <p *ngIf="group._id === 'careme'">Care Me</p>
+              <p *ngIf="group._id === 'global'">Care Me Global</p>
+              <div class="horizontal_line"></div>
+            </div>
+            <div class="table-row" *ngFor="let data of group.data; let di=index">
+              <!--table-data-->
+              <div style="padding-left: 20px; padding-right: 5px">
+                <mat-checkbox [(ngModel)]="data.isSelected" (ngModelChange)="onCheckChange($event, data._id, data._id)">
+                </mat-checkbox>
+              </div>
+              <div class="table-data product">
+                <!---product-ara-->
+                <div class="product-area">
+                  <!---product-img-->
+                  <div class="product-img">
+                    <img *ngIf="!data?.requestProduct" [src]="data ? getThumbImage(data) : '/assets/images/placeholder/test.png'" [alt]="data.product?.name" />
+                    <img *ngIf="data?.requestProduct" [src]="data? data.image: '/assets/images/placeholder/test.png'" [alt]="data.name" />
+                  </div>
+                  <!---product-info-->
+                  <div class="product-info">
+                    <!--product-title-->
+                    <div class="product-title">
+                      <a *ngIf="!data?.requestProduct" href="#">{{ data?.product.name }}
+                      </a>
+                      <a *ngIf="data?.requestProduct" href="#">{{ data?.name }}
+                      </a>
+                    </div>
+                    <!---product-stock-badge-point-->
+                    <div *ngIf="data.variant[0]">
+                      SKU : {{ data.variant[0].variantSku }}
+                    </div>
+                    <div *ngIf="!data?.requestProduct" class="product-stock-badge-point">
+                      <!---point-->
+                      <div class="point">
+                        <h3 style="display: flex">
+                          <div class="variant_name" style="padding-right: 5px">
+                            <h3>{{ data.variant[0].variant }}</h3>
+                            <mat-icon (click)="showModal(gi,di,data.variant[0])">edit</mat-icon>
+                          </div>
+
+                          <nz-modal  [(nzVisible)]="isVisible"  nzTitle="Edit Option" okText="ok" cancelText="cancel"
+                            (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzWidth]="1000">
+                            <ng-container *nzModalContent>
+                              <nz-table [nzFrontPagination]="false"  #basicTable [nzData]="vCarts[sGI].data">
+                                <thead>
+                                  <tr>
+                                    <th>Name</th>
+                                    <th *ngFor="let item of basicTable.data[sPI]?.product.variants" >{{item}}</th>
+                                    <th>Price</th>
+                                    <th>Tax</th>
+                                    <th>Total</th>
+                                    <th>Advance</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>{{ basicTable.data[sPI]?.product.name }}</td>
+                                    <td *ngFor="let variant of basicTable.data[sPI]?.product?.variants; let i=index">
+                                      <nz-select  [ngModel]="this.clickActive[i]" (ngModelChange)="onSelectVariant(basicTable.data[sPI].product, basicTable.data[sPI].product.sku,basicTable.data[sPI]?.product?.variants[i],sPI,i, $event)">
+                                        <nz-option  [nzValue]="x" [nzLabel]="option" *ngFor="let option of getOptions(basicTable.data[sPI]?.product?.options[i]); let x=index"></nz-option>
+                                      </nz-select>
+                                    </td>
+                                    <td>{{ selectedVariant?.variantPrice }}</td>
+                                    <td>{{ basicTable.data[sPI]?.product.tax }}</td>
+                                    <td>{{ basicTable.data[sPI]?.product.tax + selectedVariant?.variantPrice }}</td>
+                                    <td>{{ selectedVariant?.variantQuantity === 0 ? basicTable.data[sPI]?.product.partialPayment : '0' }}</td>
+                                    <!-- <td>{{data.address}}</td> -->
+                                    <!-- <td>
+                                      <a>Action 一 {{data.name}}</a>
+                                      <nz-divider nzType="vertical"></nz-divider>
+                                      <a>Delete</a>
+                                    </td> -->
+                                  </tr>
+                                </tbody>
+                              </nz-table>
+                            </ng-container>
+                            <div *nzModalFooter>
+                              <span></span>
+                              <button nz-button nzType="default" (click)="handleCancel()">
+                                Cancel
+                              </button>
+                              <button [disabled]="disableApplyButton" nz-button nzType="primary" (click)="handleOk(data)" [nzLoading]="isConfirmLoading">
+                                {{disableApplyButton ? "Out of Stock" : "Apply"}}
+                              </button>
+                            </div>
+                          </nz-modal>
+                          <div *ngIf="data?.product?.canEarnPoints">
+                            Earn
+                            <span style="color: #15d100">+{{
+                              data?.product
+                              | coin
+                              : "earn"
+                              : data?.selectedQty
+                              : data.variant[0].variantPrice
+                              }}
+                            </span>
+                          </div>
+                          <div *ngIf="data.product.canRedeemPoints" style="padding-left: 6px">
+                            or redeem
+                            <span style="color: #e62e04">-{{
+                              data?.product
+                              | coin
+                              : "redeem"
+                              : data?.selectedQty
+                              : data.variant[0].variantPrice
+                              }}</span>
+                          </div>
+                        </h3>
+                      </div>
+                      <!---stock-->
+                    </div>
+                    <!---product-delivery-->
+                    <div class="product-delivery">
+                      <h3>
+                        Delivery withing
+                        {{ data?.deliveryDateFrom | date: "EEE, MMM d" }} -
+                        {{ data?.deliveryDateTo | date: "EEE, MMM d" }} Days
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                <!---product-ara-end-->
+              </div>
+              <!--table-data-->
+              <div class="table-data price">
+                <h3 *ngIf="!data?.requestProduct">
+                  {{
+                  data?.product
+                  | price
+                  : "variant"
+                  : data?.selectedQty
+                  : data?.variant[0]?.variantPrice
+                  }}
+                  TK
+                </h3>
+                <h3 *ngIf="data?.requestProduct">
+                  {{ roundPrice(data?.price) }} TK
+                </h3>
+              </div>
+              <!--table-data-->
+              <div class="table-data tax">
+                <h3>
+                  {{
+                  data?.product?.hasTax
+                  ? getTax(data?.product?.tax, data, data?.selectedQty)
+                  : "0"
+                  }}TK
+                </h3>
+              </div>
+              <!--table-data-->
+              <div class="table-data quantity">
+                <div class="quantity-info">
+                  <div>
+                    <button (click)="decrementQty(data?._id, i, data.selectedQty)">
+                      -
+                    </button>
+                  </div>
+                  <div>
+                    <input type="text" [value]="data.selectedQty" placeholder="" />
+                  </div>
+                  <div>
+                    <button (click)="incrementQty(data._id, i)">+</button>
+                  </div>
+                </div>
+              </div>
+
+              <!--table-data-->
+              <div class="table-data tax">
+                <h4 *ngIf="!data?.requestProduct">
+                  {{ cartSubTotal(data) }}TK
+                </h4>
+                <h4 *ngIf="data?.requestProduct">
+                  {{ cartSubTotalForRequest(data?.price, data.selectedQty) }}TK
+                </h4>
+              </div>
+              <!--table-data-->
+              <div class="table-data-2 remove" *ngIf="
+                  data?.variant[0].variantQuantity == 0 ||
+                  data?.variant[0].variantQuantity == null
+                ">
+                <div class="stock-badge" *ngIf="data?.product?.canPartialPayment">
+                  <span *ngIf="data?.product?.partialPaymentType === 0">( {{ data?.product.partialPayment }}Tk advance
+                    )</span>
+                  <span *ngIf="data?.product?.partialPaymentType === 1">( {{ data?.product.partialPayment }}% advance
+                    )</span>
+                </div>
+                <h3 *ngIf="data?.product?.partialPaymentType === 0">
+                  {{ data?.product?.partialPayment * data?.selectedQty }}TK
+                </h3>
+                <h3 *ngIf="data?.product?.partialPaymentType === 1">
+                  {{
+                  advanceForSingle(
+                  data.product,
+                  data.selectedQty,
+                  data.variant[0].variantPrice
+                  )
+                  }}TK
+                </h3>
+              </div>
+              <div class="table-data-2 remove" *ngIf="data?.variant[0].variantQuantity">
+                <div class="stock-badge">
+                  <span>( COD)</span>
+                </div>
+                <h3>0TK</h3>
+              </div>
+              <!--table-data-->
+              <div class="table-data remove">
+                <div class="remove-icon">
+                  <span *ngIf="!data?.requestProduct" (click)="
+                      onDeleteCartItem(data?._id, data, data?.product._id)
+                    "><i class="fa fa-trash"></i></span>
+                  <span *ngIf="data?.requestProduct" (click)="onDeleteCartItem(data?._id, data)"><i
+                      class="fa fa-trash"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="table-body">
+            <div class="table_header">
+              <div style="padding-right: 5px;">
+                <mat-checkbox></mat-checkbox>
+              </div>
+              <p>Care me </p>
+              <div class="horizontal_line"></div>
+            </div>
+            <div class="table-row" *ngFor="let data of carts">
+              <div style="padding-left: 20px;padding-right: 5px">
+                <mat-checkbox></mat-checkbox>
+              </div>
+              <div class="table-data product">
+                <div class="product-area">
+                  <div class="product-img">
+                    <img *ngIf="!data?.requestProduct"
+                      [src]="data ? getThumbImage(data) : '/assets/images/placeholder/test.png'"
+                      [alt]="data.product?.name">
+                    <img *ngIf="data?.requestProduct" [src]="data ? data.image : '/assets/images/placeholder/test.png'"
+                      [alt]="data.name">
+                  </div>
+                  <div class="product-info">
+                    <div class="product-title">
+                      <a *ngIf="!data?.requestProduct" href="#">{{data?.product.name}} </a>
+                      <a *ngIf="data?.requestProduct" href="#">{{data?.name}} </a>
+                    </div>
+                    <div *ngIf="data.variant[0]">SKU : {{data.variant[0].variantSku}}</div>
+                    <div *ngIf="!data?.requestProduct" class="product-stock-badge-point">
+                      <div class="point">
+
+                        <h3 style="display: flex;">
+                          <div class="variant_name" style="padding-right:5px;">
+                            <h3>black / X</h3>
+                            <mat-icon>edit</mat-icon>
+                          </div>
+                          <div *ngIf="data.product.canEarnPoints">
+                            Earn <span style="color:#15d100;">+{{data?.product | coin: 'earn':data?.selectedQty:
+                              data.variant[0].variantPrice }} </span>
+                          </div>
+                          <div *ngIf="data.product.canRedeemPoints" style="padding-left: 6px;">
+                            or redeem <span style="color:#e62e04;">-{{data?.product | coin: 'redeem':data?.selectedQty:
+                              data.variant[0].variantPrice }}</span>
+                          </div>
+                        </h3>
+                      </div>
+                    </div>
+                    <div class="product-delivery">
+                      <h3>Estimated Delivery By {{data?.deliveryDateFrom | date: 'EEE, MMM d'}} -
+                        {{data?.deliveryDateTo | date: 'EEE, MMM d'}} </h3>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="table-data price">
+                <h3 *ngIf="!data?.requestProduct">{{data?.product | price: 'variant' : data?.selectedQty:
+                  data?.variant[0]?.variantPrice}} TK</h3>
+                <h3 *ngIf="data?.requestProduct">{{roundPrice(data?.price)}} TK</h3>
+              </div>
+              <div class="table-data tax">
+
+                <h3>{{data?.product?.hasTax ? getTax(data?.product.tax, data, data?.selectedQty) : "0" }}TK</h3>
+              </div>
+              <div class="table-data quantity">
+                <div class="quantity-info">
+                  <div>
+                    <button (click)="decrementQty(data?._id, i, data.selectedQty)">-</button>
+                  </div>
+                  <div>
+                    <input type="text" [value]="data.selectedQty" placeholder="">
+                  </div>
+                  <div>
+                    <button (click)="incrementQty(data._id, i)">+</button>
+                  </div>
+                </div>
+              </div>
+              <div class="table-data tax">
+                <h4 *ngIf="!data?.requestProduct">{{cartSubTotal(data)}}TK</h4>
+                <h4 *ngIf="data?.requestProduct">{{cartSubTotalForRequest(data?.price, data.selectedQty)}}TK</h4>
+              </div>
+              <div class="table-data-2 remove">
+                <div class="stock-badge" *ngIf="data?.product?.canPartialPayment">
+                  <span *ngIf="data?.product?.partialPaymentType === 0">( {{data?.product.partialPayment}}Tk
+                    advance )</span>
+                  <span *ngIf="data?.product?.partialPaymentType === 1">( {{data?.product.partialPayment}}%
+                    advance )</span>
+                </div>
+                <h3>{{data?.product?.partialPayment}}TK</h3>
+              </div>
+              <div class="table-data remove ">
+                <div class="remove-icon">
+                  <span *ngIf="!data?.requestProduct" (click)="onDeleteCartItem(data?._id, data, data?.product._id)"><i
+                      class="fa fa-trash"></i></span>
+                  <span *ngIf="data?.requestProduct" (click)="onDeleteCartItem(data?._id, data)"><i
+                      class="fa fa-trash"></i></span>
+                </div>
+              </div>
+
+
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <!---cart-responsive-product-area-->
+      <div class="cart-responsive-product-area">
+        <!--responsive-cart-product-->
+        <div class="responsive-cart-product">
+          <!--responsive-product-remove-->
+          <div class="resposnvie-product-remove">
+            <div class="remove-icon">
+              <span><i class="fa fa-trash"></i></span>
+            </div>
+          </div>
+          <!--responsive-cart-product-img-->
+          <div class="responsive-product-img">
+            <img src="./assets/images/image/Rectangle 966.png" alt="" />
+          </div>
+          <!---res-product-title-->
+          <div class="res-product-title">
+            <a href="#">Waterproof wireless Headphone </a>
+          </div>
+          <!---responsive-product-info-area-->
+          <div class="responsive-product-info-area">
+            <!--responsive-product-info-->
+            <div class="responsive-product-info">
+              <div class="responsive-product-info-left">
+                <h3>Price:</h3>
+              </div>
+              <div class="responsive-product-info-right">
+                <h3>200 Tk</h3>
+              </div>
+            </div>
+            <!--responsive-product-info-->
+            <div class="responsive-product-info">
+              <div class="responsive-product-info-left">
+                <h3>Tax:</h3>
+              </div>
+              <div class="responsive-product-info-right">
+                <h3>0.00</h3>
+              </div>
+            </div>
+            <!--responsive-product-info-->
+            <div class="responsive-product-info">
+              <div class="responsive-product-info-left">
+                <h3>Quantity:</h3>
+              </div>
+              <div class="responsive-product-info-right">
+                <div class="quantity-info">
+                  <div>
+                    <button>-</button>
+                  </div>
+                  <div>
+                    <input type="text" value="1" placeholder="" />
+                  </div>
+                  <div>
+                    <button>+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--responsive-product-info-->
+            <div class="responsive-product-info">
+              <div class="responsive-product-info-left">
+                <h3>Total:</h3>
+              </div>
+              <div class="responsive-product-info-right">
+                <h3>200.00</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--responsive-cart-product-end-->
+      </div>
+      <!---cart-responsive-product-area-end-->
+
+      <!---cart-summery-area-->
+      <!-- <div class="cart-summery-area" *ngIf="carts?.length > 0">
+        <div class="cart-summery-main">
+          <div class="cart-summery-info" style="border: none;">
+            <div class="cart-summery-info-left">
+              <h3>Subtotal</h3>
+            </div>
+            <div class="cart-summery-right">
+              <h3 *ngIf="!carts[0]?.requestProduct">{{cartTotal()}} TK</h3>
+              <h3 *ngIf="carts[0]?.requestProduct">{{cartTotalForRequest()}}TK</h3>
+            </div>
+          </div>
+          <div *ngIf="!data?.link" class="summery-point-area">
+
+
+            <div class="summery-point">
+              <p class="user_points">(Available: {{this.user.points}} Pts)</p>
+              <mat-radio-group [(ngModel)]="pointsType" class="example-radio-group" aria-label="Select an option">
+                <mat-radio-button class="example-radio-button mat-check" value="1"
+                  [disabled]="this.user?.points < this.redeemPointsTotal() ? true: false">{{redeemPointsTotal()}} Pts
+                  (-)</mat-radio-button>
+                <mat-radio-button class="example-radio-button mat-check" value="2">{{earnPointsTotal()}} Pts (+)
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+
+          <div *ngIf="carts[0]?.requestProduct !== true " class="cart-summery-info">
+            <div class="cart-summery-info-left">
+              <h3>Advance</h3>
+            </div>
+            <div class="cart-summery-right">
+              <h3>{{advanceTotal()}} TK</h3>
+            </div>
+          </div>
+
+          <div *ngIf="carts[0]?.requestProduct !== true" class="cart-summery-info">
+            <div class="cart-summery-info-left">
+              <h3>Due</h3>
+            </div>
+            <div class="cart-summery-right">
+              <h3 style="color: #000;">{{cartTotal() - advanceTotal()}} TK</h3>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div> -->
+      <!---summery-area-end-->
+      <!--message-area-->
+      <div class="messsage-area">
+        <form [formGroup]="dataForm" (ngSubmit)="setUserOrderText()">
+          <div class="form-input">
+            <h3>Add Notes:</h3>
+
+            <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+              <mat-label>Your Message...</mat-label>
+              <textarea matInput rows="7" formControlName="message" cols="10"
+                placeholder="write your message.."></textarea>
+            </mat-form-field>
+          </div>
+        </form>
+        <!-- <div class="subtotal_area">
+            <div class="subtotal_area_content">
+              <h3 class="sub_content">Subtotal</h3>
+              <p class="sub_content">2000k</p>
+            </div>
+            <div class="subtotal_area_content">
+              <div class="earn_points sub_content">
+                <mat-checkbox></mat-checkbox>
+                <h3>Earn Point (+)</h3>
+              </div>
+              <p class="sub_content">2000k</p>
+            </div>
+            <div class="subtotal_area_content">
+              <div class="earn_points sub_content">
+                <mat-checkbox></mat-checkbox>
+                <h3>Redeem Point (-)</h3>
+              </div>
+              <p class="sub_content">2000k</p>
+              <h4 class="available ">(1000 Available)</h4>
+            </div>
+
+          </div> -->
+        <div class="invoice_total">
+          <div class="all_invoice_field">
+            <div class="invoice_total_main subtotal">
+              <p>Subtotal</p>
+              <p *ngIf="!carts[0]?.requestProduct">{{ cartNewTotal() }} TK</p>
+              <p *ngIf="carts[0]?.requestProduct">
+                {{ cartTotalForRequest() }}TK
+              </p>
+            </div>
+            <div class="summery-point">
+              <mat-radio-group [(ngModel)]="pointsType" class="example-radio-group" aria-label="Select an option">
+                <mat-radio-button class="example-radio-button mat-check" value="2">
+                  <div class="invoice_total_main">
+                    <p>Earn Point (+)</p>
+                    <p>{{ earnPointsTotal() }}</p>
+                  </div>
+                </mat-radio-button>
+                <!--                [checked]="pointsType "-->
+                <mat-radio-button class="example-radio-button mat-check" value="1"
+                  [disabled]="user?.points < redeemPointsTotal() ? true : false">
+                  <div class="invoice_total_main">
+                    <p [class]="
+                        user?.points < redeemPointsTotal()
+                          ? 'check_box2'
+                          : 'check_box'
+                      ">
+                      Redeem Point (-)
+                      <span>({{ user?.points }} Available)</span>
+                    </p>
+                    <p>{{ redeemPointsTotal() }}</p>
+                  </div>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="total_horizontal_line"></div>
+            <div class="total_bal">
+              <p>Total Price</p>
+              <p>{{ cartTotal() }}TK</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="dataForm" (ngSubmit)="setUserOrderText()">
+        <!---cart-btn-area-->
+        <div class="cart-btn-area">
+          <div class="cart-btn-info">
+            <div class="cart-btn-left">
+              <button routerLink="/all-products">
+                <i class="fa fa-arrow-left"></i> Return to shop
+              </button>
+            </div>
+            <div class="cart-btn-right invoice_total">
+              <div class="due">
+                <p>Advance Pay</p>
+                <p class="due_taka">{{ advanceTotal() }}tk</p>
+              </div>
+              <button *ngIf="this.carts?.length > 0" type="submit" (click)="onContinueToShipping()">
+                Continue to shipping
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!---cart--main-area-end-->
+  </div>
+</div>

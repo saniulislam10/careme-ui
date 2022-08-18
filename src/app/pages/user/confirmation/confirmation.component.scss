@@ -1,0 +1,236 @@
+@import'./../../../../theme/client-side-varriables';
+img{
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .order-process-system{
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    margin: 50px 0px;
+}
+.order-process-main{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    max-width: 800px;
+    flex-direction: row;
+    width:100%;
+    margin: auto;
+    flex-basis: 20%;
+}
+.order-process-system-info{
+    display: block;
+    text-align: center;
+    width: 100%;
+    position: relative;
+}
+.order-process-system-info::after{
+    content: "\f105";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: bold;
+    color: #c7c7c7;
+    font-size: 20px;
+    position: absolute;
+    top: 5%;
+    right: -5px;
+}
+.order-process-system-info:last-child::after{
+    display: none;
+}
+@media(max-width:550px){
+    .order-process-system-info::after{
+        display: none;
+    }
+}
+.order-process-system-info span{
+    color: #adadad;
+    font-size:27px;
+    font-weight: 700;
+    font-style: normal;
+    margin-bottom: 20px!important;
+    transition: all 0.3s linear;
+}
+.order-process-system-info h3{
+    color: #adadad;
+    font-family: $font-en-primary-2;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    display: blockb;
+    width: 100%;
+    line-height: 25px;
+    transition: all 0.3s linear;
+}
+.order-process-system-info:hover h3{
+    color: #db5791;
+}
+.order-process-system-info:hover span{
+    color: #db5791;
+}
+.active-process span{
+    color: #db5791;
+}
+.active-process h3{
+    color: #db5791;
+}
+.complate-process span{
+    color: #25c820!important;
+}
+.complate-process h3{
+    color: #25c820!important;
+}
+@media(max-width:550px){
+    .order-process-main{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px 10px;
+        flex-basis: 100%;
+    }
+    .order-process-system{
+        margin: 10px 0px 30px 0px;
+    }
+}
+/*** confirm-area ****/
+
+.confirm-area{
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    margin-bottom: 60px;
+}
+.confirm-main{
+    display: block;
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 3px 8px 0 rgb(0 0 0 / 15%), 0 -1px 3px 0 rgb(0 0 0 / 3%);
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
+    border-radius: 10px;
+}
+.confirm-info{
+    display: block;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    background-color: #fff;
+    box-shadow: 0 3px 8px 0 rgb(0 0 0 / 15%), 0 -1px 3px 0 rgb(0 0 0 / 3%);
+    border-radius: 10px;
+    padding: 30px 0;
+}
+.confirm-check{
+    display: block;
+    margin-bottom: 30px;
+}
+.confirm-check span{
+    width: 140px;
+    height: 140px;
+    background-color: #25c820;
+    color: #fff;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: auto;
+
+    i{
+        font-size: 50px;
+    }
+}
+.confirm-text{
+    display: block;
+    text-align: center;
+}
+.confirm-text h3{
+    color: #2d2d2d;
+    font-family: $font-en-primary-2;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 13px!important;
+}
+.confirm-text p{
+    color: #2d2d2d;
+    font-family: $font-en-primary-2;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 22px;
+    display: block;
+    margin-bottom: 5px!important;
+}
+.confirm-text p span{
+    color: #db5791;
+}
+.confirm-btn-area{
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+.confirm-btn-area ul{
+    list-style: none;
+    padding: 0px;
+    margin: auto;
+    text-align: center;
+}
+.confirm-btn-area ul li{
+    display: inline-block;
+    margin-right: 20px;
+}
+.confirm-btn-area ul li:last-child{
+    margin: 0px;
+}
+.confirm-btn-area ul li button{
+    background-color: #fff;
+    border: 1px solid #db5791;
+    color: #db5791;
+    font-family: $font-en-primary-2;
+    font-weight: 600;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s linear;
+}
+.confirm-btn-area ul li button:hover{
+    color: #fff;
+    background-color: #db5791;
+}
+.active-track{
+    background-color: #db5791!important;
+    color: #fff!important;
+}
+@media(max-width:470px){
+    .confirm-btn-area ul li{
+        display: block;
+        margin: 0px;
+        margin-bottom: 15px;
+    }
+    .confirm-btn-area ul li button{
+        display: inline-block;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 15px;
+    }
+    .confirm-text p{
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+    .confirm-check span{
+        width: 140px;
+        height: 140px;
+        font-size: 20px;
+    }
+}

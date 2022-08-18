@@ -1,0 +1,233 @@
+@import'./../../../../../theme/variables';
+
+.table_checkbox,
+.table-heading-checkbox {
+    padding: 0 25px;
+}
+.user-roles-header{
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    margin: 25px 0px 30px 0px;
+}
+.user-roles-header h3{
+    color: #131523;
+    font-family: $font-en-primary-2;
+    font-style: normal;
+    font-size: 20px;
+    font-weight: 700;
+    display: block;
+    line-height: 30px;
+    margin: 0px;
+}
+.user-roles-area{
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+.user-roles-main{
+    display: block;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%),0 -2px 4px rgb(0 0 0 / 10%);
+    border-radius:7px;
+    display: block;
+    width: 100%;
+}
+.user-roles-header-data{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 18px 20px;
+    box-sizing: border-box;
+    border-bottom: 2px solid #7fabff;
+}
+.user-roles-header-left{
+    display: block;
+    flex-basis: 50%;
+    width: 100%;
+}
+.user-roles-header-left ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+.user-roles-header-left ul li{
+    display: block;
+}
+.user-roles-header-left ul li button{
+    outline: none;
+    border: none;
+    color: #000;
+    font-family: $font-en-primary-2;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 16px;
+    display: block;
+    background-color: transparent;
+}
+.user-roles-header-right{
+    flex-basis: 50%;
+    width: 100%;
+}
+.user-roles-header-right ul{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+}
+.user-roles-header-right ul li{
+    display: block;
+}
+.user-roles-header-right ul li button{
+    background-color: #fff;
+    color:#0058ff;
+    font-family: $font-en-primary-2;
+    font-style: normal;
+    font-weight: 500;
+    display: block;
+    border: 1px solid #0058ff;
+    font-size: 16px;
+    outline: none;
+    padding: 5px 15px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    transition: all 0.3s linear;
+}
+.user-roles-header-right ul li button:hover{
+    background-color: #0058ff!important;
+    color: #fff!important;
+}
+.active-user-right-btn{
+    background-color: #0058ff!important;
+    color: #fff!important;
+}
+.user-table-area{
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+}
+.table{
+    display: block;
+    width: 100%;
+}
+.table-head{
+    display: block;
+    width: 100%;
+}
+.table-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    min-width: 560px;
+    gap: 10px;
+    border-bottom: 2px solid #d9e6ff;
+    padding: 15px 20px;
+    box-sizing: border-box; 
+}
+.table-body .table-row:last-child{
+    border: none;
+}
+.table-heading{
+    display: block;
+    width: 100%;
+    min-width: 120px;
+}
+.table-heading h3{
+    color: #000;
+    font-family: $font-en-primary-2;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 16px;
+    display: block;
+}
+.table-data{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 120px;
+    width: 100%;
+    text-align: left;
+    width: 100%;
+}
+.table-data h3{
+    color: #4f4f4f;
+    font-family: $font-en-primary-2;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 17px;
+    display: block;
+    width: 100%;
+}
+.table-data  small{
+    color: #7f7f7f;
+    font-size: 25px;
+}
+.user-info-main{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+}
+.user-img img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+.roles{
+    max-width: 200px;
+    min-width: 120px;
+    width: 100%;
+}
+.setting{
+    max-width: 200px;
+    min-width: 100px;
+    width:100%;
+}
+.user-text-info h3{
+    color: #000;
+    display: block;
+    margin-bottom: 3px!important;
+    line-height: 22px;
+    font-weight: 600;
+}
+.user-text-info h3 span{
+    color: #3c9700;
+}
+.user-text-info a{
+    color: #4f4f4f;
+    font-family: $font-en-primary-2;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 500;
+    display: block;
+    line-height: 22px;
+}
+.user-info{
+    min-width: 300px!important;
+}
+@media(max-width:545px){
+    .user-roles-header-data{
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 15px;
+    }
+    .user-roles-header-right ul{
+        justify-content: flex-start;
+    }
+}

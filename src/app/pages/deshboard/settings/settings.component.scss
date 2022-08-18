@@ -1,0 +1,95 @@
+@import'./../../../../theme/client-side-varriables';
+.setting-area{
+    display: block;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 5px 0 rgb(0 0 0 / 10%),0 -2px 4px 0 rgb(0 0 0 / 10%);
+    min-height: 85vh;
+}
+.setting-main{
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: auto;
+    grid-gap: 15px;
+    width: 100%;
+}
+.setting-menu{
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 10px 5px;
+    box-sizing: border-box;
+}
+.setting-menu ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    display: block;
+}
+.setting-menu ul li{
+    display: block;
+}
+.setting-menu ul li a{
+    display: block;
+    color: #000000;
+    font-family: $font-en-primary-2;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 17px;
+    display: block;
+    padding: 11px 10px 11px 15px;
+    box-sizing: border-box;
+    letter-spacing: 0.6px;
+    transition: all 0.3s linear;
+    user-select: none;
+}
+.setting-menu ul ul{
+    margin-left: 10px;
+}
+.setting-menu ul ul li a{
+    font-size: 15px;
+    padding: 8px 10px 8px 12px;
+}
+.setting-menu ul li .menu-active{
+    background-color: #db5791;
+    color: #fff!important;
+}
+.setting-menu ul li a:hover{
+    color: #db5791;  
+}
+.setting-page-render{
+    display: block;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 0px 10px 10px 10px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
+    padding: 20px 30px;
+    box-sizing: border-box;
+}
+@media(max-width:650px){
+    .setting-main{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .setting-page-render{
+        padding: 0px 10px 10px 10px;
+        box-shadow: none;
+    }
+    .setting-area{
+        box-shadow: none;
+        border-radius: 0px;
+    }
+    .setting-menu ul li a{
+        display: block;
+        color: #000000;
+        font-family: $font-en-primary-2;
+        font-weight: 600;
+        font-style: normal;
+        font-size: 17px;
+        display: block;
+        padding: 11px 10px 11px 10px;
+        box-sizing: border-box;
+        letter-spacing: 0.6px;
+        transition: all 0.3s linear;
+    }
+}

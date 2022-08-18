@@ -1,0 +1,812 @@
+<!---product-detals-area-start-->
+
+<div class="product-details">
+  <div class="container">
+    <!---product-details-main-->
+    <div class="product-details-main">
+      <!--product-img-area-->
+      <div class="product-img-area">
+        <!--product-big-img-->
+        <div class="product-big-img">
+          <img *ngIf="image" [src]="image ? image : '/assets/images/placeholder/test.png'" [alt]="data?.title" />
+        </div>
+        <!---product-img-slide-area-->
+        <div class="product-img-slide-area carousel">
+          <swiper [slidesPerView]="4" [spaceBetween]="10" [breakpoints]="{
+              '400': {
+                slidesPerView: 4.5
+              },
+              '500': {
+                slidesPerView: 6
+              },
+              '700': {
+                slidesPerView: 7
+              },
+              '800': {
+                slidesPerView: 4
+              },
+              '900': {
+                slidesPerView: 3.5
+              },
+              '1000': {
+                slidesPerView: 5
+              }
+            }" [autoplay]="true" [navigation]="true" class="mySwiper">
+            <ng-template swiperSlide *ngFor="let data of data?.images">
+              <div class="slide-img" (click)="selectImage(data)">
+                <img [src]="data ? data : '/assets/images/placeholder/test.png'" alt="product" />
+              </div>
+            </ng-template>
+          </swiper>
+        </div>
+      </div>
+      <!--product-img-area-end-->
+      <!---product-details-midle-->
+      <div class="product-details-midle">
+        <!---product-title-area-->
+        <div class="product-title-area">
+          <!---product-name-->
+          <div *ngIf="data?.name" class="product-name">
+            <a>{{ data?.name }}</a>
+          </div>
+          <!---product-rating-area-->
+          <div class="product-rating-area">
+            <div class="rating">
+              <app-product-rating-view [ratingValue]="getRating(data?.ratings?.averageStar)"></app-product-rating-view>
+            </div>
+            <!-- {{data?.variants| json}} -->
+            <!---rating-text-->
+            <div class="rating-text">
+              <h3 *ngIf="data?.ratings?.averageStar">
+                <a href="#">{{
+                  data?.ratings?.averageStar ? data?.ratings?.averageStar : 0
+                  }}
+                  Ratings</a>
+                <span> | </span>
+                <a href="#">{{
+                  data?.ratingReviewsCount ? data?.ratingReviewsCount : 0
+                  }}
+                  answered questions</a>
+              </h3>
+            </div>
+          </div>
+          <!--product-rating-area-->
+          <!---product-brand-->
+          <div class="product-brand">
+            <ul>
+              <li>
+                <div>
+                  <h3>Brand:</h3>
+                </div>
+                <div>
+                  <a>{{ data?.brand }}</a>
+                </div>
+              </li>
+              <li *ngIf="product?.sku">
+                <div>
+                  <h3>SKU:</h3>
+                </div>
+                <div>
+                  <a>{{ product?.sku }}</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!---product-title-area-end-->
+        <!---product-price-info-->
+        <div class="product-price-info">
+          <!---price-->
+          <div class="price-area">
+            <!--main-price-->
+            <div class="main-price">
+              <h3>{{globalPrice | requestPrice: selectedQty: product : globalRate}} TK</h3>
+            </div>
+            <!---discount-->
+            <!-- <div class="discount">
+              <span *ngIf="data?.sellingPrice">{{getRoundValue(data?.sellingPrice, selectedQty, globalRate)}}</span>
+            </div> -->
+            <!---discount-parcent-->
+            <div class="discount-parcent">
+              <span *ngIf="data?.discount">{{ data?.discount }} </span>
+            </div>
+          </div>
+          <!--stock-area-->
+          <div class="size-chart">
+            <span>Size Chart</span>
+          </div>
+        </div>
+        <!---price-end-->
+        <!---pts-area-->
+        <div class="product-pts-area">
+          <ul>
+            <li *ngIf="product?.canEarnPoints">
+              Pay <span> {{globalPrice | requestPrice: selectedQty: product : globalRate}} </span> TK
+              <span>and earn {{ product | requestCoin: "request": selectedQty: globalPrice: globalRate }} </span>
+              <span><img class="coin" alt="coin" src="/assets/svg/coin.svg" /></span>
+            </li>
+          </ul>
+          <!-- <div class="product-stock-badge" *ngIf="product?.quantity">
+            <span>In stock: {{product?.quantity ? product.quantity : '0'}} Pcs</span>
+          </div> -->
+        </div>
+
+        <div *ngIf="data?.variants" class="product-varriant-info-main">
+          <div *ngFor="let variant of data?.variants?.options; let i = index" class="product-quantity-size-info">
+            <!-- {{i}} -->
+            <div *ngIf="variant?.values?.length">
+              <div class="product-quantity-size-info-left">
+                <span>{{ variant?.name }}</span>
+              </div>
+              <!--right-->
+              <div class="product-info-right">
+                <ul class="quantity" style="padding-left: 0;">
+                  <li>
+                    <div *ngFor="let option of variant?.values; let x = index"
+                      style="display: flex; flex-direction: row;">
+                      <button [class]="clickActive[i][x] ? 'active' : 'inactive'" type="button"
+                        value="{{option?.displayName}}" *ngIf="option?.status !== 0"
+                        (click)="setValue(option,i, x)">{{option?.displayName}}</button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---end-->
+        <!---quantity-info-->
+        <div class="product-quantity-size-info">
+          <!--left-->
+          <div class="product-quantity-size-info-left">
+            <span>Quantity:</span>
+          </div>
+          <!--right-->
+          <div class="product-quantity-size-info-right">
+            <ul class="quantity">
+              <li>
+                <button type="button" id="mine" (click)="decrementQty()">
+                  -
+                </button>
+              </li>
+              <li>
+                <input type="button" type="number" [value]="selectedQty" />
+              </li>
+              <li>
+                <button type="button" id="plus" (click)="incrementQty()">
+                  +
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!---end-->
+        <!---in-stock-->
+        <div class="in-stock">
+          <h3>{{ stockMessage }}</h3>
+        </div>
+        <!---product-cart-btn-->
+        <div class="product-btn">
+          <button [class]="btnActive ? 'inactive-btn' : 'active-btn'" (click)="activeBookBtn()" type="button">
+            Buy Now
+          </button>
+          <button [class]="btnActive ? 'active-btn' : 'inactive-btn'" (click)="activeCartBtn()" type="button">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+      <!---product-details-midle-end-->
+      <!---product-details-right-->
+      <div class="product-details-right">
+        <!---product-delivery-area-->
+        <div class="product-delivery-area">
+          <!--product-delivery-info-->
+          <div class="product-delivery-info">
+            <!---product-delivery-icon-->
+            <div class="product-delivery-icon">
+              <img src="./assets/images/image/delivery-man.svg" alt="" />
+            </div>
+            <div class="product-details-text">
+              <h3>Delivery: <span>12-14 January</span></h3>
+            </div>
+          </div>
+          <!--product-delivery-info-end-->
+          <!--product-delivery-info-->
+          <div class="product-delivery-info">
+            <!---product-delivery-icon-->
+            <div class="product-delivery-icon">
+              <img src="./assets/images/image/fast-delivery.svg" alt="" />
+            </div>
+            <div class="product-details-text">
+              <h3>Shipping: <span>Free</span></h3>
+            </div>
+          </div>
+          <!--product-delivery-info-end-->
+          <!--product-delivery-info-->
+          <div class="product-delivery-info">
+            <!---product-delivery-icon-->
+            <div class="product-delivery-icon">
+              <img src="./assets/images/image/cash-on-delivery (1).svg" alt="" />
+            </div>
+            <div class="product-details-text">
+              <h3>Cash on Delivery: <span>Yes</span></h3>
+            </div>
+          </div>
+          <!--product-delivery-info-end-->
+          <!--product-delivery-info-->
+          <div class="product-delivery-info">
+            <!---product-delivery-icon-->
+            <div class="product-delivery-icon">
+              <img src="./assets/images/image/return-box.svg" alt="" />
+            </div>
+            <div class="product-details-text">
+              <h3>Return: <span>7 day replacement</span></h3>
+            </div>
+          </div>
+          <!--product-delivery-info-end-->
+          <!--product-delivery-info-->
+          <div class="product-delivery-info">
+            <!---product-delivery-icon-->
+            <div class="product-delivery-icon">
+              <img style="width: 30px; height: 30px" src="./assets/images/image/vendor.svg" alt="" />
+            </div>
+            <div class="product-details-text">
+              <h3>
+                Vendor:
+                <span *ngIf="product?.hasVariant">{{ selectedVariantData?.variantVendorName }}</span>
+                <span *ngIf="!product?.hasVariant">{{ product?.vendor }}</span>
+              </h3>
+            </div>
+          </div>
+          <!--product-delivery-info-end-->
+        </div>
+        <!---product-delivery-area-end-->
+        <!---quetions-area-->
+        <div class="question-area">
+          <h3>Have questions about this product?</h3>
+          <ul>
+            <li><i class="fa fa-phone-alt"></i></li>
+            <li><a href="tel:09606998800">09606-998800</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---product-details-bottom-area-->
+<div class="product-details-bottom-area">
+  <div class="container">
+    <!--product-details-bottom-main-->
+    <div class="product-details-bottom-main">
+      <!---product-details-bottom-left-->
+      <div class="product-details-bottom-left">
+        <!---related-product-area-->
+        <div class="related-product-area">
+          <!---section-title-area-->
+          <div class="section-title-area">
+            <!---title-left-->
+            <div class="title-left">
+              <h3>Related Products</h3>
+            </div>
+          </div>
+          <!---related-product-main-->
+          <div class="related-product-main carousel">
+            <swiper [slidesPerView]="1.5" [spaceBetween]="14" [breakpoints]="{
+                '400': {
+                  slidesPerView: 1.5
+                },
+                '500': {
+                  slidesPerView: 2
+                },
+                '600': {
+                  slidesPerView: 2.5
+                },
+                '750': {
+                  slidesPerView: 3
+                },
+                '900': {
+                  slidesPerView: 2.5
+                },
+                '1100': {
+                  slidesPerView: 3
+                },
+                '1350': {
+                  slidesPerView: 3.5
+                },
+                '1600': {
+                  slidesPerView: 4
+                }
+              }" [autoplay]="true" [navigation]="true" class="mySwiper">
+              <ng-template swiperSlide *ngFor="let data of cardOneData">
+                <app-product-card-one [data]="data"></app-product-card-one>
+              </ng-template>
+            </swiper>
+          </div>
+        </div>
+        <!---related-product-area-end-->
+
+        <!--product--toggle-area-->
+        <div class="product-toggle-tab-area">
+          <!---toggle-tab-header-->
+          <div class="toggle-tab-header">
+            <ul>
+              <li>
+                <button (click)="detailsToggle()" [class]="details ? 'toggle-tab-btn-active' : 'inactive'">
+                  Details
+                </button>
+              </li>
+              <li>
+                <button (click)="reviewToggle()" [class]="review ? 'toggle-tab-btn-active' : 'inactive'">
+                  Reviews
+                </button>
+              </li>
+              <li>
+                <button (click)="shippingToggle()" [class]="shipping ? 'toggle-tab-btn-active' : 'inactive'">
+                  Shipping
+                </button>
+              </li>
+            </ul>
+          </div>
+          <!---toggle-tab-header-->
+          <!----toggle-tab-body-->
+          <div class="toggle-tab-content-body">
+            <!---product-description-area-->
+            <div class="product-description-area" *ngIf="details">
+              <!---product-description-info-->
+              <div class="product-description-info">
+                <div *ngIf="data?.specifications" class="specification-area">
+                  <div *ngFor="let spec of data?.specifications" class="single-specification">
+                    <h4>{{ spec?.header }}</h4>
+                    <table>
+                      <tbody>
+                        <!-- {{spec?.details}} -->
+                        <tr *ngFor="let det of spec?.details">
+                          <td>{{ det?.topic }}</td>
+                          <td>
+                            <ul>
+                              <li *ngFor="let ct of det?.content">
+                                {{ ct.content }}
+                              </li>
+                            </ul>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <br />
+                </div>
+                <!-- {{data?.description}} -->
+                <!-- <div [innerHTML]="data?.description | safeHtmlCustom"></div> -->
+              </div>
+              <!---product-size-chart-area-->
+              <div class="description">
+                <h3 style="font-weight: 600;">Description</h3>
+                <div [innerHTML]="product?.description | safeHtmlCustom"></div>
+              </div>
+              <div class="product-size-chart">
+                <h3>Size Chart:</h3>
+                <!---size-chart-img-->
+                <div class="size-chart-img">
+                  <img [src]="
+                      sizeChart[0]?.images
+                        ? sizeChart[0]?.images
+                        : '/assets/images/placeholder/test.png'
+                    " [alt]="sizeChart[0]?.name" />
+                </div>
+              </div>
+            </div>
+            <!---product-description-area-->
+            <!---reviews-->
+            <div class="review-area" *ngIf="review">
+              <!---rating-review-->
+              <div class="rating-review">
+                <div class="review-title">
+                  <h3>Ratings & Reviews of Parma Men's Sports Shoe</h3>
+                </div>
+                <div class="rating-review-main">
+                  <!--total-rating-->
+                  <div class="total-rating">
+                    <h3>4.9 <span>/ 5</span></h3>
+                    <ul>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                    </ul>
+                    <h4>12 Ratings</h4>
+                  </div>
+                  <!--start-->
+                  <div class="rating-progress-area">
+                    <!---progress-->
+                    <div class="rating-progress">
+                      <div class="star">
+                        <ul>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                        </ul>
+                      </div>
+                      <div class="progress-bar">
+                        <span class="bar1"></span>
+                        <span style="width: 90%" class="bar2"></span>
+                      </div>
+
+                      <div class="count-rating">
+                        <h3>11</h3>
+                      </div>
+                    </div>
+                    <!--progress-end-->
+
+                    <!---progress-->
+                    <div class="rating-progress">
+                      <div class="star">
+                        <ul>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="progress-bar">
+                        <span class="bar1"></span>
+                        <span style="width: 30%" class="bar2"></span>
+                      </div>
+
+                      <div class="count-rating">
+                        <h3>1</h3>
+                      </div>
+                    </div>
+                    <!--progress-end-->
+
+                    <!---progress-->
+                    <div class="rating-progress">
+                      <div class="star">
+                        <ul>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="progress-bar">
+                        <span class="bar1"></span>
+                        <span style="width: 0px" class="bar2"></span>
+                      </div>
+
+                      <div class="count-rating">
+                        <h3>0</h3>
+                      </div>
+                    </div>
+                    <!--progress-end-->
+
+                    <!---progress-->
+                    <div class="rating-progress">
+                      <div class="star">
+                        <ul>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="progress-bar">
+                        <span class="bar1"></span>
+                        <span style="width: 0px" class="bar2"></span>
+                      </div>
+
+                      <div class="count-rating">
+                        <h3>0</h3>
+                      </div>
+                    </div>
+                    <!--progress-end-->
+
+                    <!---progress-->
+                    <div class="rating-progress">
+                      <div class="star">
+                        <ul>
+                          <li><i class="fa fa-star"></i></li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="progress-bar">
+                        <span class="bar1"></span>
+                        <span style="width: 0px" class="bar2"></span>
+                      </div>
+
+                      <div class="count-rating">
+                        <h3>0</h3>
+                      </div>
+                    </div>
+                    <!--progress-end-->
+                  </div>
+                  <!---end-->
+                </div>
+              </div>
+              <!--end-->
+              <!---user-review-->
+              <div class="user-review">
+                <div class="user-review-title">
+                  <h3>Reivews of Parma Men's sport's shoe</h3>
+                </div>
+                <div class="add-review">
+                  <div class="add-left">
+                    <ul>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                    </ul>
+                    <h3>
+                      by Ataur R.
+                      <span><i class="fa-solid fa-badge-check"></i> Verified
+                        Purchase</span>
+                    </h3>
+                  </div>
+                  <!---add-left-->
+                  <div class="add-right">
+                    <div class="add-btn">
+                      <button>Add Reviews</button>
+                    </div>
+                  </div>
+                </div>
+                <!--review-->
+                <div class="review">
+                  <h3>
+                    Best quality product, Thank you care me for give exchellent
+                    experience with shopping
+                  </h3>
+                  <div class="review-img">
+                    <div>
+                      <img src="./assets/images/image/Rectangle 966.png" alt="" />
+                    </div>
+                    <div>
+                      <img src="./assets/images/image/Rectangle 966.png" alt="" />
+                    </div>
+                  </div>
+                  <h4>Color Family: Black and Yellow, Size:EU:40</h4>
+                </div>
+              </div>
+            </div>
+            <!---end-->
+
+            <!---shipping-->
+            <div class="shipping" *ngIf="shipping">
+              <div class="shipping-description">
+                <h3>Shipping Policy</h3>
+                <p>
+                  We offer Countrywide shipping at a very reasonable cost
+                  through our trusted delivery service.Because we know how
+                  important it if for you to receive the product as fast as
+                  possible and undamaged.Our delivery team starts working to
+                  deliver your product as soon as you leave the last click on
+                  our website without any    .
+                </p>
+              </div>
+              <div class="shipping-description">
+                <h3>100% Cash On Delivery (COD)</h3>
+                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic magni aut velit exercitationem. Maxime ad amet facilis laboriosam possimus, ullam veniam sequi ratione. Quae dolorum soluta ipsam necessitatibus qui. Natus!</p> -->
+              </div>
+
+              <div class="shipping-description">
+                <h3>Fast Delivery</h3>
+                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic magni aut velit exercitationem. Maxime ad amet facilis laboriosam possimus, ullam veniam sequi ratione. Quae dolorum soluta ipsam necessitatibus qui. Natus!</p> -->
+              </div>
+              <div class="shipping-description">
+                <h3>Reasonable Delivery Charges</h3>
+                <p>
+                  We are giving the fastest delivery service with minimal charge
+                  in any corner of Bangladesh
+                </p>
+              </div>
+              <div class="shipping-description">
+                <h3>Return Policy</h3>
+                <p>
+                  প্রোডাক্ট নষ্ট কিংবা ভাঙা হলে<br /><br />
+                  প্রোডাক্ট ডেলিভারি করার সময় যদি ভাঙা কিংবা ড্যামেজ অবস্থায়
+                  পেয়ে থাকেন তাহলে অবশ্যই ডেলিভারিম্যান সামনে থাকা অবস্থায়
+                  আমাদেরকে কল করে জানাতে হবে। আমাদেরকে কল করতে পারেন
+                  09606-998800 এই নাম্বারে। তখন আপনি প্রোডাক্টটি ফেরত দিতে
+                  পারবেন কোন খরচ ছাড়া। অবশ্যই ফেরতের সময় প্যাকেজ ও এক্সেসরিজ
+                  সাথে দিতে হবে। কোন কারণে আপনি নিজে প্রোডাক্ট রিসিভ না করতে
+                  পারলে যিনি আপনার পরিবর্তে প্রোডাক্ট টি বুঝে নিবেন তাকে অবশ্যই
+                  এই ব্যাপারে অবহিত করবেন । ২৪ ঘণ্টার মধ্যে আমাদের না জানানো
+                  হলে, ড্যামেজ প্রোডাক্টের ক্ষেত্রে এই শর্ত প্রযোজ্য হবে না।
+                  <br />
+
+                  আমাদের জানানোর ২ কার্যদিবসের মধ্যে আপনাকে রিফান্ড করা হবে।
+                  আবার যদি রিপ্লেস করে প্রোডাক্ট নিতে চান, তাহলে আপনাকে ২-৩ দিন
+                  (রেগুলার আইটেমের জন্য), ৭-২৫ দিন (গ্লোবাল আইটেমের জন্য)
+                  অপেক্ষা করতে হবে (স্টক থাকা সাপেক্ষে)। যদি প্রোডাক্ট
+                  ত্রুটিপূর্ণ হয়<br /><br />
+                  যদি প্রোডাক্ট ত্রুটিপূর্ণ হয়, সে ক্ষেত্রে ২ দিনের মধ্যে আমাদের
+                  জানাতে হবে। তবে এই ক্ষেত্রে আপনাকে কিছু প্রমাণাদি সংযুক্ত করে
+                  আমাদের পাঠাতে হবে। আপনাকে যা যা করতে হবে ------ ত্রুটিপূর্ণ
+                  প্যাকেজের পেছনে ও সামনের ছবি<br />
+                  ইনভয়েস নাম্বার<br />
+                  ত্রুটিপূর্ণ প্রোডাক্টের ক্লিয়ার ভিডিও<br />
+                  এই ক্ষেত্রে ভিডিওটি অবশ্যই দিতে হবে। শুধুমাত্র স্ক্রিনশট কিংবা
+                  ছবি গ্রহণযোগ্য নয়। <br />
+
+                  যদি প্রোডাক্ট ত্রুটিপূর্ণ প্রমানিত হয়, তাহলে ২ দিনের মধ্যে
+                  প্রোডাক্টের সাথে প্রয়োজনীয় এক্সেসরিজ সংযুক্ত করে ফেরত পাঠাতে
+                  পারবেন। ফেরতের ২ কার্যদিবসের মধ্যে আপনার অর্ডার রিফান্ড হিসেবে
+                  গণ্য হবে। নতুবা আপনি ইচ্ছে করলে প্রোডাক্ট রিপ্লেসমেন্টও করতে
+                  পারবেন (স্টক থাকা সাপেক্ষে)। যদি প্রোডাক্ট কোয়ালিটি আশানুরূপ
+                  না হয়<br /><br />
+                  যেহেতু পণ্যগুলি সরাসরি বিভিন্ন দেশের প্রস্তুতকারক বা
+                  সরবরাহকারীর কাছ থেকে আসে, তাই আমাদের পক্ষে পণ্যটির গুণগতমান
+                  আগেই পরীক্ষা করা সম্ভব নয়।
+
+                  <br />তবে আমরা আপনাকে গুণগতমান বোঝার জন্য নিম্নলিখিত বিষয়গুলি
+                  বিবেচনা করার পরামর্শ দিচ্ছি – পণ্যের মূল্য<br />
+                  পণ্যের ছবি বা ভিডিও<br />
+                  পণ্যের রিভিউ<br />
+                  প্রোডাক্ট রিসিভের পর কোয়ালিটি যদি আপনার আশানুরূপ না হয়,
+                  সেক্ষেত্রেও আমাদের জানাতে পারেন। তবে ৪৮ ঘণ্টার মধ্যে আমাদের
+                  ইনফর্ম করুন। অতঃপর আমাদের কমপ্লেইন ডিপার্টমেন্ট আপনার অভিযোগের
+                  সত্যতা যাচাই করে রিপ্লেস কিংবা রিফান্ড সম্পর্কে অবহিত করবে।
+
+                  <br />যদি অর্ডার করা প্রোডাক্ট পরিমাণে অমিল বা ভুল থাকে,
+
+                  <br />রিসিভের সময় যদি দেখেন প্রোডাক্টটি আপনার অর্ডারের সাথে
+                  সামঞ্জস্য নয় কিংবা পরিমাণে কম হয়, তাহলে ডেলিভারি ম্যানকে সামনে
+                  রেখেই আমাদের সাথে যোগাযোগ করুন। জানানোর ৩ কার্যদিবসের মধ্যে
+                  রিফান্ড করা হবে।
+
+                  <br />আবার যদি রিপ্লেস করে প্রোডাক্ট নিতে চান, তাহলে আপনাকে
+                  ২-৩ দিন (রেগুলার আইটেমের জন্য), ৭-২৫ দিন (গ্লোবাল আইটেমের
+                  জন্য) অপেক্ষা করতে হবে (স্টক থাকা সাপেক্ষে)। তবে এর জন্য
+                  আপনাকে অতিরিক্ত কোন ও ডেলিভারি চার্জ দিতে হবে না ।
+
+                  <br />
+                  শুধুমাত্র গ্লোবাল আইটেমের জন্য ডেলিভারি ম্যান চলে যাবার পর এই
+                  ধরনের কোন অভিযোগ গ্রহণযোগ্য হবে না । যদি পণ্যটির আর ‘’প্রয়োজন
+                  না হয়’’ <br /><br />
+                  অর্ডার করার পর যদি এমন হয় যে আপনার আর পণ্যটির এখন প্রয়োজন নেই,
+                  তবে সেই ক্ষেত্রে ফেরত গ্রহণ যোগ্য নয়।
+
+                  <br />একবার ওয়েবসাইট কিংবা ফোনের মাধ্যমে অর্ডার নিশ্চিত করলে,
+                  এটি "চূড়ান্ত" হিসাবে বিবেচিত হবে এবং অবিলম্বে শিপিং
+                  প্রক্রিয়া শুরু হয়ে যাবে।
+
+                  <br />এই ক্ষেত্রে, অর্ডার বাতিল কিংবা রিফান্ড কোনটিই বিবেচিত
+                  হবে না। যদি প্রোডাক্টের কালার ছবি কিংবা ভিডিওর সাথে না মিলে<br /><br />
+                  আমাদের প্রোডাক্টগুলো ওভারসিজ আইটেম। তাই প্রোডাক্টের ছবি কিংবা
+                  ভিডিও এডিট করে ওয়েবসাইটে আপলোড করা হয়। সে ক্ষেত্রে
+                  প্রোডাক্টের ছবি কিংবা ভিডিও ১০০ ভাগ মিল নাও হতে পারে।
+
+                  <br />তবে আমরা প্রোডাক্টের ছবি ও ভিডিওর সাথে ৯০-৯৫ ভাগ মিল
+                  রাখার জন্য সর্বাত্মক চেষ্টা করবো।।
+
+                  <br />
+                  তারপরও যদি আপনার অর্ডারকৃত প্রোডাক্টটির কালার অর্ডারের সাথে না
+                  মেলে, তাহলে ২৪ ঘণ্টার মধ্যে আমাদের জানাতে হবে। আমাদের কমপ্লেইন
+                  ডিপার্টমেন্ট আপনার অভিযোগ রিভিউ করবে এবং পরবর্তী ৩ কার্যদিবসের
+                  মধ্যে এই সমস্যা সমাধানের চেষ্টা করা হবে। শিপমেন্ট দেরি হলে,<br /><br />
+                  প্রোডাক্টের সাইজ, ওজন, স্টক ও কাস্টমারের লোকেশন অনুযায়ী
+                  শিপমেন্টের সময়ে ভিন্নতা রয়েছে। শিপমেন্টের নির্ধারিত সময় আমাদের
+                  প্রোডাক্ট পেজে উল্লেখ রয়েছে।
+
+                  <br />তারপরও অপ্রত্যাশিত কোন কারণ যেমন; প্রাকৃতিক দুর্যোগ,
+                  মহামারী, রাজনৈতিক ইস্যু ইত্যাদির কারণে যদি ৭-২৫ দিনের মধ্যে
+                  ডেলিভারি না হয়, তাহলে আমরা কাস্টমারের সাথে দেরি হওয়ার যথার্থ
+                  কারণ ব্যাখ্যা করে এই সমস্যা সমাধান করার চেষ্টা করবো।
+
+                  <br />তবে আমাদের ঢাকা ওয়্যারহাউজ থেকে অর্ডার করা প্রোডাক্ট
+                  বের হয়ে হাওয়ার পর যদি পণ্য হাতে পেতে বিলম্ব হয় , সেক্ষেত্রে
+                  রিফান্ডের শর্ত প্রযোজ্য নয়। ট্রানজিটের সময় যদি প্রোডাক্ট আটকে
+                  যায়,<br /><br />
+                  যেহেতু পণ্যগুলো কাস্টমস ক্লিয়ারেন্স এর মাধ্যমে দেশে আনতে হয় সে
+                  ক্ষেত্রে মাঝে মধ্যে এই প্রক্রিয়ায় কিছু প্রোডাক্ট সরাসরি ছাড়
+                  নাও হতে পারে কিংবা পুনরায় যাচাই করার জন্য কাস্টমস কর্তৃপক্ষ
+                  রাখতে পারেন।
+
+                  <br />
+                  এই বিষয়টি আগে থেকে জানা আমাদের পক্ষে সম্ভব নয়। এক্ষেত্রে যদি
+                  আপনার প্রোডাক্ট রিলিজ না করা যায়, সেটি আমাদের অফিস থেকে আপনাকে
+                  অবহিত করা হবে এবং আপনার পণ্যের প্রদেয় মূল্য ২-৩ কার্যদিবসের
+                  মধ্যে ক্যাশ ব্যাক করা হবে।
+                </p>
+                <p>
+                  আমাদের ঠিকানা<br /><br />
+                  কেয়ার মি বিডি<br />
+                  স্যুটঃ ১৩০৮-৯, লেভেল ১২, ট্রপিক্যাল সেন্টার<br />
+                  এলিফ্যান্ট রোড, বাটা সিগনাল, ঢাকা-১২০৫<br />
+                  ফোন- ০৯৬০৬-৯৯৮৮০০<br />
+                  ই-মেইলঃ info@caremebd.com
+                </p>
+              </div>
+            </div>
+            <!---end-->
+
+            <!----toggle-tab-body-end-->
+          </div>
+          <!--product--toggle-area-->
+        </div>
+        <!---product-details-bottom-left-end-->
+      </div>
+      <!---product-details-bottom-right-->
+      <div class="product-details-bottom-right">
+        <!---also-like-product-->
+        <div class="also-like-product-area">
+          <!---section-title-area-->
+          <div class="section-title-area">
+            <!---title-left-->
+            <div class="title-left">
+              <h3>You May Also Like</h3>
+            </div>
+          </div>
+          <!---also-like-main-->
+          <div class="also-like-main">
+            <!---also-like-product-card-->
+            <div class="also-like-product-card" *ngFor="let data of alsoLikeProductCard" [id]="data?._id">
+              <!---also-like-product-img-->
+              <div class="also-like-card-img">
+                <img [src]="data?.image" [alt]="data?.title" />
+              </div>
+              <div class="also-like-card-body">
+                <!---also-like-card-title-->
+                <div class="also-like-card-title">
+                  <a [routerLink]="[data?.routerLink]">{{ data?.title }}</a>
+                </div>
+                <div class="also-like-card-price">
+                  <h3>{{ data?.price }}Tk</h3>
+                </div>
+              </div>
+            </div>
+            <!---also-like-product-card-end-->
+          </div>
+        </div>
+        <!---also-like-product-end-->
+      </div>
+      <!---product-details-bottom-right-end-->
+    </div>
+  </div>
+</div>
+
+<!---pup-area-->
+<div class="pup-area">
+  <!-- <div class="add-to-cart-pup-up">
+          <app-add-to-cart-popup #addToCartPup></app-add-to-cart-popup>
+      </div> -->
+  <!-- <div class="buy-now-for-new-user-popup">
+          <app-buy-now-for-new-user #newUser></app-buy-now-for-new-user>
+      </div> -->
+</div>
+
+<!-- TEMPLATE NGX SPINNER-->
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="pacman" [fullScreen]="true">
+  <!-- <p style="color: white" > Loading... </p> -->
+  <p style="color: white">We are testing your patience...</p>
+</ngx-spinner>

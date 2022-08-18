@@ -1,0 +1,25 @@
+ <!---product-card-three-->
+ <div class="product-card-three" [id]="data?._id" [routerLink]="[data?.routerLink]">
+    <!---product-img-->
+    <div class="card-img">
+        <img [src]="data?.image" [alt]="data?.title">
+    </div>
+    <!---card-body-->
+    <div class="card-body">
+        <!---card-title-->
+        <div class="card-title">
+            <a [routerLink]="[data?.routerLink]" routerLinkActive="router-link-active" >{{data?.title}}</a>
+        </div><!---card-title-end-->
+        <!--card-price-and-rating-->
+        <div class="price-rating">
+            <!--price-->
+            <div class="price">
+                <h3>{{data?.price}}TK</h3>
+                <h4><del>{{data?.discount}}</del>-12%</h4>
+            </div>
+  
+        </div>
+
+    </div>
+</div><!---product-card-one-end-->
+

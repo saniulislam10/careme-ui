@@ -1,0 +1,64 @@
+<!--pop-up--area-->
+<div class="pop-up-area" *ngIf="popup">
+    <div class="popup-main">
+        <div class="header-area">
+            <div>
+                <h3>Create sms group</h3>
+            </div>
+            <div>
+                <span (click)="popUpHide()"><i class="fa fa-xmark"></i></span>
+            </div>
+        </div>
+        <!---popup-->
+        <div class="popup-body">
+           <!---form-input-->
+           <div class="form-input">
+            <h3>Group Name</h3>
+            <div>
+                <mat-form-field appearance="outline" class="form-field">
+                   <input type="text" value="" matInput>
+                </mat-form-field>
+            </div>
+        </div><!--end-->
+         <!---form-input-->
+         <div class="form-input">
+            <h3>Group ID</h3>
+            <div>
+                <mat-form-field appearance="outline" class="form-field">
+                   <input type="text" value="" matInput >
+                </mat-form-field>
+            </div>
+        </div><!--end-->
+        <!---selection-->
+        <div class="form-input">
+            <h3>Selection</h3>
+            <div class="select-area">
+                <mat-checkbox class="mat-check">Buyers of item X</mat-checkbox>
+                <mat-checkbox class="mat-check">Buyers of category X</mat-checkbox>
+                <mat-checkbox class="mat-check">Custom</mat-checkbox>
+            </div>
+        </div>
+        <!---browse-->
+        <div class="browse">
+            <div>
+                <mat-form-field appearance="outline" class="form-field">
+                    <input type="text" matInput value="" placeholder="">
+                </mat-form-field>
+            </div>
+            <div>
+                <button>Browse</button>
+            </div>
+        </div>
+
+
+         <!---form-btn-->
+         <div class="popup-btn">
+            <ul>
+                <li><button (click)="popUpHide()"><i>Cancel</i></button></li>
+                <li><button class="save"><i>Create</i></button></li>
+            </ul>
+        </div>
+
+        </div>
+    </div>
+</div>

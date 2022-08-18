@@ -1,0 +1,933 @@
+<!---product-detals-area-start-->
+
+<!-- <div class="container">
+  <div class="A">A</div>
+  <div class="B">B</div>
+  <div class="C">C</div>
+</div> -->
+
+<div class="product-details">
+  <div class="container">
+    <!---product-details-main-->
+    <div class="product-details-main">
+      <!--product-img-area-->
+      <div class="product-img-area">
+        <!--product-big-img-->
+        <div class="product-big-img">
+          <img
+            *ngIf="image"
+            [src]="image ? image : '/assets/images/placeholder/test.png'"
+            [alt]="product?.name"
+          />
+        </div>
+        <!---product-img-slide-area-->
+        <div class="product-img-slide-area carousel">
+          <swiper
+            *ngIf="images"
+            [slidesPerView]="4"
+            [spaceBetween]="10"
+            [breakpoints]="{
+              '400': {
+                slidesPerView: 4.5
+              },
+              '500': {
+                slidesPerView: 6
+              },
+              '700': {
+                slidesPerView: 7
+              },
+              '800': {
+                slidesPerView: 4
+              },
+              '900': {
+                slidesPerView: 3.5
+              },
+              '1000': {
+                slidesPerView: 5
+              }
+            }"
+            [autoplay]="true"
+            [navigation]="true"
+            class="mySwiper"
+          >
+            <ng-template swiperSlide *ngFor="let data of images">
+              <div class="slide-img" (click)="selectImage(data)">
+                <img
+                  [src]="data ? data : '/assets/images/placeholder/test.png'"
+                  alt="product"
+                />
+              </div>
+            </ng-template>
+          </swiper>
+          <!-- <div [innerHtml]="iframe_html"></div> -->
+
+          <!-- <iframe width="420" height="345" src="https://www.youtube.com/embed/RjVkuS8yd2s"></iframe> -->
+        </div>
+      </div>
+      <!--product-img-area-end-->
+      <!---product-details-midle-->
+      <div class="product-details-midle">
+        <!---product-title-area-->
+        <div class="product-title-area">
+          <!---product-name-->
+          <div class="product-name">
+            <a>{{ product?.name }}</a>
+          </div>
+          <!---product-rating-area-->
+          <div class="product-rating-area">
+            <div class="rating">
+              <ul>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+              </ul>
+            </div>
+            <!---rating-text-->
+            <div class="rating-text">
+              <h3 *ngIf="product?.totalRatings">
+                <a href="#"
+                  >{{
+                    product?.totalRatings ? product?.totalRatings : 0
+                  }}
+                  Ratings</a
+                >
+                <span> | </span>
+                <a href="#"
+                  >{{
+                    product?.totalAnsweredQuestions
+                      ? product?.totalAnsweredQuestions
+                      : 0
+                  }}
+                  answered questions</a
+                >
+              </h3>
+              <h3 *ngIf="data?.ratings?.averageStar">
+                <a href="#"
+                  >{{
+                    data?.ratings?.averageStar ? data?.ratings?.averageStar : 0
+                  }}
+                  Ratings</a
+                >
+                <span> | </span>
+                <a href="#"
+                  >{{
+                    data?.ratingReviewsCount ? data?.ratingReviewsCount : 0
+                  }}
+                  answered questions</a
+                >
+              </h3>
+            </div>
+          </div>
+          <!--product-rating-area-->
+
+          <!---product-brand-->
+          <div class="product-brand">
+            <ul>
+              <li>
+                <div>
+                  <h3>Brand:</h3>
+                </div>
+                <div>
+                  <a>{{ product?.brand }}</a>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <h3>SKU:</h3>
+                </div>
+                <div>
+                  <a>{{ product?.sku }}</a>
+                </div>
+              </li>
+              <!-- <li>
+                                <div>
+                                    <h3>Variant SKU:</h3>
+                                </div>
+                                <div>
+                                    <a>{{variantSku}}</a>
+                                </div>
+                            </li> -->
+            </ul>
+          </div>
+        </div>
+
+        <!---product-title-area-end-->
+        <!---product-price-info-->
+        <div class="product-price-info">
+          <!---price-->
+          <div class="price-area">
+            <!--main-price-->
+            <div class="main-price">
+              <h3 *ngIf="data">
+                {{ data | price: "variant":selectedQty:globalPrice }} TK
+              </h3>
+            </div>
+            <!---discount-->
+            <div class="discount">
+              <span *ngIf="product?.discountAmount">{{
+                product?.discountAmount
+              }}</span>
+            </div>
+            <!---discount-parcent-->
+            <div class="discount-parcent">
+              <span *ngIf="product?.discountAmount">{{
+                product?.discountAmount
+              }}</span>
+            </div>
+          </div>
+          <!--stock-area-->
+          <div class="size-chart">
+            <span>Size Chart</span>
+          </div>
+        </div>
+        <!---price-end-->
+
+        <!---pts-area-->
+        <div class="product-pts-area">
+          <ul>
+            <li *ngIf="product?.canRedeemPoints">
+              Pay<span>{{
+                product | price: "redeem":selectedQty:globalPrice
+              }}</span
+              >TK<span
+                >and redeem
+                {{ product | coin: "redeem":selectedQty:globalPrice }}</span
+              >
+              <span
+                ><img class="coin" alt="coin" src="/assets/svg/coin.svg"
+              /></span>
+            </li>
+            <li *ngIf="product?.canEarnPoints">
+              Pay<span>{{
+                product | price: "earn":selectedQty:globalPrice
+              }}</span
+              >TK<span
+                >and earn
+                {{ product | coin: "earn":selectedQty:globalPrice }}</span
+              >
+              <span
+                ><img class="coin" alt="coin" src="/assets/svg/coin.svg"
+              /></span>
+            </li>
+          </ul>
+          <div class="product-stock-badge">
+            <!-- <span>In stock: {{product?.quantity ? product.quantity : '0'}} Pcs</span> -->
+            <span
+              >In stock:
+              {{
+                product?.quantity | variantQuantity: product:globalQuantity
+              }}
+              Pcs</span
+            >
+          </div>
+        </div>
+        <!---product-quntity-size-info-->
+        <div
+          class="product-quantity-size-info-main"
+          *ngFor="let varName of product?.variants; let i = index"
+        >
+          <!---size-info-->
+          <div class="product-quantity-size-info">
+            <!-- size/ color-->
+            <div
+              *ngIf="product.hasVariant === true"
+              class="product-quantity-size-info-left"
+            >
+              <span>{{ varName }}:</span>
+            </div>
+            <div
+              *ngIf="varName && varName.options"
+              class="product-quantity-size-info-left"
+            >
+              <span>{{ varName.options[i] }}:</span>
+            </div>
+            <!--right-->
+            <div class="product-quantity-size-info-right">
+              <ul class="size">
+                <li *ngFor="let option of variantOptions[i]; let x = index">
+                  <button
+                    type="button"
+                    [class]="clickActive[i][x] ? 'active' : 'inactive'"
+                    (click)="selectedVariant(i, x)"
+                  >
+                    {{ this.variantOptions[i][x] }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!---end-->
+        </div>
+        <!---quantity-info-->
+        <div class="product-quantity-size-info">
+          <!--left-->
+          <div class="product-quantity-size-info-left">
+            <span>Quantity:</span>
+          </div>
+          <!--right-->
+          <div class="product-quantity-size-info-right">
+            <ul class="quantity">
+              <li>
+                <button type="button" id="mine" (click)="decrementQty()">
+                  -
+                </button>
+              </li>
+              <li>
+                <!-- <input type="button" type="number" [value]="selectedQty" /> -->
+                <p style="font-size: 17px">{{selectedQty}}</p>
+              </li>
+              <li>
+                <button type="button" id="plus" (click)="incrementQty()">
+                  +
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!---end-->
+        <!---in-stock-->
+        <div class="in-stock" *ngIf="globalQuantity !== 0">
+          <h3 *ngIf="globalQuantity > 0 && globalQuantity >= selectedQty">
+            In Stock, Delivery Within
+            {{ dateCalculationFrom(2) | date: "EEE, MMM d, yyyy" }} -
+            {{ dateCalculationTo(3) | date: "EEE, MMM d, yyyy" }} days
+          </h3>
+          <h3 *ngIf="globalQuantity > 0 && globalQuantity < selectedQty">
+            Global Stock, Delivery Within
+            {{ dateCalculationFrom(15) | date: "EEE, MMM d, yyyy" }} -
+            {{
+              dateCalculationTo(25) | date: "EEE, MMM d,
+            yyyy"
+            }}
+            days
+          </h3>
+          <h3 *ngIf="globalQuantity < 0">
+            Global Stock, Delivery Within
+            {{
+              dateCalculationFrom(15) | date: "EEE, MMM d,
+            yyyy"
+            }}
+            - {{ dateCalculationTo(25) | date: "EEE, MMM d, yyyy" }} days
+          </h3>
+        </div>
+        <div
+          class="out-stock"
+          *ngIf="globalQuantity === 0 && globalContinue !== true"
+        >
+          <h3>Out of Stock</h3>
+        </div>
+        <div
+          class="in-stock"
+          *ngIf="globalQuantity === 0 && globalContinue === true"
+        >
+          <h3>
+            Global Stock, Delivery Within
+            {{ dateCalculationFrom(15) | date: "EEE, MMM d, yyyy" }} -
+            {{ dateCalculationTo(25) | date: "EEE, MMM d, yyyy" }} days
+          </h3>
+        </div>
+        <!---product-cart-btn-->
+        <div class="product-btn">
+          <!-- <button [class]="btnActive?'inactive-btn':'active-btn'" (click)="activeBookBtn()" type="button">Buy Now</button> -->
+          <button
+            *ngIf="globalQuantity !== 0 && addToCartButton === true && existInCart !== true"
+            [class]="btnActive ? 'inactive-btn' : 'active-btn'"
+            (click)="activeCartBtn()"
+            type="button"
+          >
+            Add to Cart
+          </button>
+          <button
+            *ngIf="globalQuantity === 0 && globalContinue === true && addToCartButton === true && existInCart !== true"
+            [class]="btnActive ? 'inactive-btn' : 'active-btn'"
+            (click)="activeCartBtn()"
+            type="button"
+          >
+            Add to Cart
+          </button>
+          <button
+            *ngIf="existInCart === true"
+            [class]="btnActive ? 'active-btn' : 'inactive-btn'"
+            routerLink="/cart"
+            type="button"
+          >
+            Go to Cart
+          </button>
+          <button
+            *ngIf="globalQuantity === 0 && globalContinue !== true"
+            [class]="btnActive ? 'active-btn' : 'inactive-btn'"
+            type="button"
+            disabled
+          >
+            Out of Stock
+          </button>
+        </div>
+      </div>
+      <!---product-details-midle-end-->
+      <!---product-details-right-->
+      <div class="product-details-right">
+        <!---product-delivery-area-->
+        <div class="product-delivery-area">
+          <!--product-delivery-info-->
+          <div class="product-delivery-info">
+            <!---product-delivery-icon-->
+            <div class="product-delivery-icon">
+              <img src="./assets/images/image/delivery-man.svg" alt="" />
+            </div>
+            <div class="product-details-text">
+              <h3>
+                Delivery:
+                <span *ngIf="globalQuantity > 0"
+                  >{{ dateCalculationFrom(2) | date: "d MMMM" }} -
+                  {{ dateCalculationTo(3) | date: "d MMMM" }}</span
+                >
+                <span *ngIf="globalQuantity === 0 && globalContinue === true"
+                  >{{ dateCalculationFrom(15) | date: "d MMMM" }} -
+                  {{ dateCalculationTo(25) | date: "d MMMM" }}</span
+                >
+                <span *ngIf="globalQuantity === 0 && globalContinue !== true"
+                  >Out of Stock</span
+                >
+              </h3>
+            </div>
+          </div>
+          <!--product-delivery-info-end-->
+          <!--product-delivery-info-->
+          <!-- <div class="product-delivery-info">
+            <div class="product-delivery-icon">
+              <img src="./assets/images/image/fast-delivery.svg" alt="">
+            </div>
+            <div class="product-details-text">
+              <h3>Shipping: <span>Free</span></h3>
+            </div>
+          </div> -->
+          <!--product-delivery-info-end-->
+          <!--product-delivery-info-->
+          <div class="product-delivery-info">
+            <!---product-delivery-icon-->
+            <div class="product-delivery-icon">
+              <img
+                src="./assets/images/image/cash-on-delivery (1).svg"
+                alt=""
+              />
+            </div>
+            <div class="product-details-text">
+              <h3>
+                Cash on Delivery:
+                <span>{{ this.canCOD }}</span>
+              </h3>
+            </div>
+          </div>
+          <!--product-delivery-info-end-->
+          <!--product-delivery-info-->
+          <div class="product-delivery-info">
+            <!---product-delivery-icon-->
+            <div class="product-delivery-icon">
+              <img src="./assets/images/image/return-box.svg" alt="" />
+            </div>
+            <div class="product-details-text" *ngIf="product?.canReturn">
+              <h3>
+                Return: <span>{{ product?.returnPeriod }} day replacement</span>
+              </h3>
+            </div>
+          </div>
+          <!--product-delivery-info-end-->
+          <!--product-delivery-info-->
+          <div class="product-delivery-info">
+            <!---product-delivery-icon-->
+            <div class="product-delivery-icon">
+              <img
+                style="width: 30px; height: 30px"
+                src="./assets/images/image/vendor.svg"
+                alt=""
+              />
+            </div>
+            <div class="product-details-text">
+              <h3>
+                Vendor:
+                <span *ngIf="product?.hasVariant">{{
+                  selectedVariantData
+                    ? selectedVariantData?.variantVendorName
+                    : product?.vendor
+                }}</span>
+                <span *ngIf="!product?.hasVariant">{{ product?.vendor }}</span>
+              </h3>
+            </div>
+          </div>
+          <!--product-delivery-info-end-->
+        </div>
+        <!---product-delivery-area-end-->
+        <!---quetions-area-->
+        <div class="question-area">
+          <h3>Have questions about this product?</h3>
+          <ul>
+            <li><i class="fa fa-phone-alt"></i></li>
+            <li><a href="tel:09606998800">09606-998800</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---product-details-bottom-area-->
+<div class="product-details-bottom-area">
+  <div class="container">
+    <!--product-details-bottom-main-->
+    <div class="product-details-bottom-main">
+      <!---product-details-bottom-left-->
+      <div class="product-details-bottom-left">
+        <!---related-product-area-->
+        <div class="related-product-area">
+          <!---section-title-area-->
+          <div class="section-title-area">
+            <!---title-left-->
+            <div class="title-left">
+              <h3>Related Products</h3>
+            </div>
+          </div>
+          <!---related-product-main-->
+          <div class="related-product-main carousel">
+            <swiper
+              [slidesPerView]="1.7"
+              [spaceBetween]="11"
+              [breakpoints]="{
+                '400': {
+                  slidesPerView: 1.7
+                },
+                '500': {
+                  slidesPerView: 2
+                },
+                '600': {
+                  slidesPerView: 2.5
+                },
+                '750': {
+                  slidesPerView: 3
+                },
+                '900': {
+                  slidesPerView: 2.5
+                },
+                '1100': {
+                  slidesPerView: 3
+                },
+                '1350': {
+                  slidesPerView: 3.5
+                },
+                '1600': {
+                  slidesPerView: 4
+                }
+              }"
+              [autoplay]="true"
+              [navigation]="true"
+              class="mySwiper"
+            >
+              <ng-template swiperSlide *ngFor="let data of cardOneData">
+                <app-product-card-one [data]="data"></app-product-card-one>
+              </ng-template>
+            </swiper>
+          </div>
+        </div>
+        <!---related-product-area-end-->
+
+        <!--product--toggle-area-->
+        <div class="product-toggle-tab-area">
+          <!---toggle-tab-header-->
+          <div class="toggle-tab-header">
+            <ul>
+              <li>
+                <button
+                  (click)="detailsToggle()"
+                  [class]="details ? 'toggle-tab-btn-active' : 'inactive'"
+                >
+                  Details
+                </button>
+              </li>
+              <li>
+                <button
+                  (click)="reviewToggle()"
+                  [class]="review ? 'toggle-tab-btn-active' : 'inactive'"
+                >
+                  Reviews
+                </button>
+              </li>
+              <li>
+                <button
+                  (click)="shippingToggle()"
+                  [class]="shipping ? 'toggle-tab-btn-active' : 'inactive'"
+                >
+                  Shipping
+                </button>
+              </li>
+            </ul>
+          </div>
+          <!---toggle-tab-header-->
+          <!----toggle-tab-body-->
+          <div class="toggle-tab-content-body">
+            <!---product-description-area-->
+            <div class="product-description-area" *ngIf="details">
+              <!---product-description-info-->
+              <div
+                *ngIf="product?.description"
+                class="product-description-info"
+              >
+                <h3>Product Details</h3>
+                <div [innerHTML]="product?.description | safeHtmlCustom"></div>
+              </div>
+              <!---product-size-chart-area-->
+              <div class="product-size-chart">
+                <h3>Size Chart:</h3>
+                <!---size-chart-img-->
+                <div class="size-chart-img">
+                  <img
+                    [src]="
+                      sizeChart[0]?.images
+                        ? sizeChart[0]?.images
+                        : '/assets/images/placeholder/test.png'
+                    "
+                    [alt]="sizeChart[0]?.name"
+                  />
+                </div>
+              </div>
+            </div>
+            <!---product-description-area-end-->
+
+            <!---reviews-->
+            <div class="review-area" *ngIf="review">
+              <!---rating-review-->
+              <div class="rating-review">
+                <div class="review-title">
+                  <h3>Ratings & Reviews of Parma Men's Sports Shoe</h3>
+                </div>
+                <div class="rating-review-main">
+                  <!--total-rating-->
+                  <div class="total-rating">
+                    <h3>4.9 <span>/ 5</span></h3>
+                    <ul>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                    </ul>
+                    <h4>12 Ratings</h4>
+                  </div>
+                  <!--start-->
+                  <div class="rating-progress-area">
+                    <!---progress-->
+                    <div class="rating-progress">
+                      <div class="star">
+                        <ul>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                        </ul>
+                      </div>
+                      <div class="progress-bar">
+                        <span class="bar1"></span>
+                        <span style="width: 90%" class="bar2"></span>
+                      </div>
+
+                      <div class="count-rating">
+                        <h3>11</h3>
+                      </div>
+                    </div>
+                    <!--progress-end-->
+
+                    <!---progress-->
+                    <div class="rating-progress">
+                      <div class="star">
+                        <ul>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="progress-bar">
+                        <span class="bar1"></span>
+                        <span style="width: 30%" class="bar2"></span>
+                      </div>
+
+                      <div class="count-rating">
+                        <h3>1</h3>
+                      </div>
+                    </div>
+                    <!--progress-end-->
+
+                    <!---progress-->
+                    <div class="rating-progress">
+                      <div class="star">
+                        <ul>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="progress-bar">
+                        <span class="bar1"></span>
+                        <span style="width: 0px" class="bar2"></span>
+                      </div>
+
+                      <div class="count-rating">
+                        <h3>0</h3>
+                      </div>
+                    </div>
+                    <!--progress-end-->
+
+                    <!---progress-->
+                    <div class="rating-progress">
+                      <div class="star">
+                        <ul>
+                          <li><i class="fa fa-star"></i></li>
+                          <li><i class="fa fa-star"></i></li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="progress-bar">
+                        <span class="bar1"></span>
+                        <span style="width: 0px" class="bar2"></span>
+                      </div>
+
+                      <div class="count-rating">
+                        <h3>0</h3>
+                      </div>
+                    </div>
+                    <!--progress-end-->
+
+                    <!---progress-->
+                    <div class="rating-progress">
+                      <div class="star">
+                        <ul>
+                          <li><i class="fa fa-star"></i></li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                          <li style="color: #ecf2f0">
+                            <i class="fa fa-star"></i>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="progress-bar">
+                        <span class="bar1"></span>
+                        <span style="width: 0px" class="bar2"></span>
+                      </div>
+
+                      <div class="count-rating">
+                        <h3>0</h3>
+                      </div>
+                    </div>
+                    <!--progress-end-->
+                  </div>
+                  <!---end-->
+                </div>
+              </div>
+              <!--end-->
+              <!---user-review-->
+              <div class="user-review">
+                <div class="user-review-title">
+                  <h3>Reivews of Parma Men's sport's shoe</h3>
+                </div>
+                <div class="add-review">
+                  <div class="add-left">
+                    <ul>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                    </ul>
+                    <h3>
+                      by Ataur R.
+                      <span
+                        ><i class="fa-solid fa-badge-check"></i> Verified
+                        Purchase</span
+                      >
+                    </h3>
+                  </div>
+                  <!---add-left-->
+                  <div class="add-right">
+                    <div class="add-btn">
+                      <button>Add Reviews</button>
+                    </div>
+                  </div>
+                </div>
+                <!--review-->
+                <div class="review">
+                  <h3>
+                    Best quality product, Thank you care me for give exchellent
+                    experience with shopping
+                  </h3>
+                  <div class="review-img">
+                    <div>
+                      <img
+                        src="./assets/images/image/Rectangle 966.png"
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <img
+                        src="./assets/images/image/Rectangle 966.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <h4>Color Family: Black and Yellow, Size:EU:40</h4>
+                </div>
+              </div>
+            </div>
+            <!---end-->
+
+            <!---shipping-->
+            <div class="shipping" *ngIf="shipping">
+              <div class="shipping-description">
+                <h3>Shipping Policy</h3>
+                <p>
+                  We offer Countrywide shipping at a very reasonable cost
+                  through our trusted delivery service.Because we know how
+                  important it if for you to receive the product as fast as
+                  possible and undamaged.Our delivery team starts working to
+                  deliver your product as soon as you leave the last click on
+                  our website without any delay.
+                </p>
+              </div>
+              <div class="shipping-description">
+                <h3>100% Cash On Delivery (COD)</h3>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
+                  magni aut velit exercitationem. Maxime ad amet facilis
+                  laboriosam possimus, ullam veniam sequi ratione. Quae dolorum
+                  soluta ipsam necessitatibus qui. Natus!
+                </p>
+              </div>
+
+              <div class="shipping-description">
+                <h3>Fast Delivery</h3>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
+                  magni aut velit exercitationem. Maxime ad amet facilis
+                  laboriosam possimus, ullam veniam sequi ratione. Quae dolorum
+                  soluta ipsam necessitatibus qui. Natus!
+                </p>
+              </div>
+              <div class="shipping-description">
+                <h3>Reasonable Delivery Charges</h3>
+                <p>
+                  We are giving the fastest delivery service with minimal charge
+                  in any corner of Bangladesh
+                </p>
+              </div>
+              <div class="shipping-description">
+                <h3>Return Policy</h3>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
+                  magni aut velit exercitationem. Maxime ad amet facilis
+                  laboriosam possimus, ullam veniam sequi ratione. Quae dolorum
+                  soluta ipsam necessitatibus qui. Natus!
+                </p>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
+                  magni aut velit exercitationem. Maxime ad amet facilis
+                  laboriosam possimus, ullam veniam sequi ratione. Quae dolorum
+                  soluta ipsam necessitatibus qui. Natus!
+                </p>
+              </div>
+            </div>
+            <!---end-->
+          </div>
+          <!----toggle-tab-body-end-->
+        </div>
+        <!--product--toggle-area-->
+      </div>
+      <!---product-details-bottom-left-end-->
+
+      <!---product-details-bottom-right-->
+      <div class="product-details-bottom-right">
+        <!---also-like-product-->
+        <div class="also-like-product-area">
+          <!---section-title-area-->
+          <div class="section-title-area">
+            <!---title-left-->
+            <div class="title-left">
+              <h3>You May Also Like</h3>
+            </div>
+          </div>
+          <!---also-like-main-->
+          <div class="also-like-main">
+            <!---also-like-product-card-->
+            <div
+              class="also-like-product-card"
+              *ngFor="let data of alsoLikeProductCard"
+              [id]="data?._id"
+            >
+              <!---also-like-product-img-->
+              <div class="also-like-card-img">
+                <img [src]="data?.image" [alt]="data?.title" />
+              </div>
+              <div class="also-like-card-body">
+                <!---also-like-card-title-->
+                <div class="also-like-card-title">
+                  <a [routerLink]="[data?.routerLink]">{{ data?.title }}</a>
+                </div>
+                <div class="also-like-card-price">
+                  <h3>{{ data?.price }}Tk</h3>
+                </div>
+              </div>
+            </div>
+            <!---also-like-product-card-end-->
+          </div>
+        </div>
+        <!---also-like-product-end-->
+      </div>
+      <!---product-details-bottom-right-end-->
+    </div>
+  </div>
+</div>
+
+<!---pup-area-->
+<div class="pup-area">
+  <!-- <div class="add-to-cart-pup-up">
+        <app-add-to-cart-popup #addToCartPup></app-add-to-cart-popup>
+    </div> -->
+  <!-- <div class="buy-now-for-new-user-popup">
+        <app-buy-now-for-new-user #newUser></app-buy-now-for-new-user>
+    </div> -->
+</div>
+
+<!-- TEMPLATE NGX SPINNER-->
+<ngx-spinner
+  style="width: 100vw; height: 100vh"
+  bdColor="rgba(0,0,0,0.25)"
+  size="medium"
+  color="#fff"
+  type="ball-clip-rotate"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

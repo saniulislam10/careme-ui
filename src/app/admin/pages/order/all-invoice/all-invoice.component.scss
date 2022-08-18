@@ -1,0 +1,378 @@
+@import'./../../../../../theme/variables';
+
+.datePicker{
+  display: block;
+  position: absolute;
+  // padding-top: 5px;
+  right: 100px;
+}
+.order-header-area{
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+.order-header-main{
+    display: block;
+}
+.order-header-top{
+    display: grid;
+    grid-template-columns: 200px 1fr 240px;
+    width: 100%;
+    grid-gap: 20px;
+}
+.order-title{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+.order-title h3{
+    color: #131523;
+    font-family: $font-en-primary-2;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 30px;
+    margin: 0px;
+}
+.order-search{
+    max-width: 450px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+.order-search button{
+    background-color: #d3dff8;
+    width: 45px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border: 1px solid #d3dff8;
+    color: #6672fb;
+    border-radius: 5px 5px 5px 5px;
+}
+.order-search input{
+    display: block;
+    width: 100%;
+    outline: none;
+    border: 1px solid #eff3fb;
+    background-color: #eff3fb;
+    height: 40px;
+    padding: 0px 10px;
+    box-sizing: border-box;
+    font-family: $font-en-primary-2;
+    font-size: 15px;
+    border-radius: 0px 5px 5px 0px;
+}
+::placeholder{
+    color:#989eaf;
+}
+.order-btn-area{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.order-btn-area ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    text-align: right;
+}
+.order-btn-area ul li{
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.order-btn-area ul li:last-child{
+    margin: 0px;
+}
+.order-btn-area ul li button{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    color: #fff;
+    font-family: $font-en-primary-2;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 6px 12px;
+    box-sizing: border-box;
+    background-color: #0058ff;
+    border: 1px solid #0058ff;
+    border-radius: 5px;
+}
+.header-bottom-area{
+    margin-top: 20px;
+}
+@media(max-width:800px){
+    .order-header-top{
+        grid-template-columns:200px 1fr;
+    }
+    .order-header-top .order-search{
+        grid-column-start: 1;
+        grid-column-end: -1;
+    }
+    .order-header-top .order-btn-area{
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+    }
+    .header-bottom-area{
+        margin-top: 10px;
+    }
+}
+@media(max-width:590px){
+    .order-header-top{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .order-btn-area{
+        justify-content: flex-start;
+    }
+    .order-btn-area ul{
+        text-align: left;
+    }
+    .header-bottom-area{
+        margin-top: 13px;
+    }
+    .order-header-top .order-btn-area{
+        grid-column-start: auto;
+        grid-column-end: auto;
+        grid-row-start: auto;
+    }
+
+    .order-search{
+        margin: 0px;
+        margin-right: auto;
+    }
+    .order-btn-area ul li button{
+        font-size: 13px;
+        padding: 5px 10px;
+        box-sizing: border-box;
+    }
+}
+/****return-table-area ***/
+.order-table-area{
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    padding: 20px 0px 10px 0px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%),0 -1px 2px rgb(0 0 0 / 10%);
+    background-color: #fff;
+    margin-bottom: 30px;
+    // min-height: 65vh;
+}
+.order-table-area-header{
+    padding: 10px 20px 20px 20px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #0058ff;
+}
+.order-table-main{
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+.table{
+    display: block;
+    width: 100%;
+}
+.table-head{
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+.table-head .table-row{
+    box-shadow: none;
+    margin-bottom: 5px;
+}
+.table-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0px 15px;
+    box-sizing: border-box;
+    min-width: 995px;
+    margin-bottom: 10px;
+    box-shadow: 0 3px 5px 0 rgb(0 0 0 / 10%);
+}
+.table-row:last-child{
+    margin: 0px;
+}
+.table-heading{
+    display: block;
+    width: 100%;
+    min-width: 105px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15px 0px 15px 0px;
+    box-sizing: border-box;
+}
+.table-heading h3{
+    color: #131523;
+    font-family: $font-en-primary-2;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    font-style: normal;
+    display: block;
+}
+.table-data{
+    width: 100%;
+    min-width: 105px;
+    text-align: center;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 10px 0px;
+    box-sizing: border-box;
+}
+.table-data h3{
+    color: #000;
+    font-family: $font-en-primary-2;
+    font-size: 14px;
+    font-weight: 600;
+    font-style: normal;
+    display: block;
+    margin: 0px!important;
+    line-height: 20px;
+}
+.table-data span{
+    display: block;
+    color: #0058ff;
+    font-family: $font-en-primary-2;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.table-data.status button{
+    outline: none;
+    border: none;
+    background-color: #22d500;
+    padding: 3px 15px;
+    color: #fff;
+    font-family: $font-en-primary-2;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 13px;
+    border-radius: 20px;
+}
+.table-data.vendor button{
+    background-color: #ff9292;
+    color: #131523;
+    font-family: $font-en-primary-2;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 3px 13px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+}
+.table-data.item span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+}
+.table-data.item span i{
+    color: #4fb908;
+    font-size: 18px;
+}
+.table-data.pay-status button{
+    background-color: #a9ff8f;
+    color: #131523;
+    font-family: $font-en-primary-2;
+    font-weight: 500;
+    font-size: 14px;
+    display: block;
+    min-width: 90px;
+    padding: 3px 13px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+}
+.table-data.note span{
+    display: block;
+    color: #000000;
+    font-size: 17px;
+    font-style: normal;
+}
+.pay-status,.order-status,.date,.item{
+    min-width: 130px;
+}
+.fa-circle{
+    font-size: 20px;
+    color: #0058ff;
+}
+.fa-moon{
+    font-size: 20px;
+    color: #0058ff;
+    transform: rotate(15deg);
+}
+
+.check{
+    min-width: 40px;
+    width: 40px;
+    max-width: 40px;
+}
+.indicator{
+    display: block;
+    width: 100%;
+    margin: 40px 0px 30px 0px;
+}
+.indicator ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+.indicator ul li button{
+    background-color: #0058ff;
+    color:#fff;
+    width: 35px;
+    height: 35px;
+    outline: none;
+    border: 1px solid #0058ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 17px;
+}
+
+::ng-deep.mat-check .mat-checkbox-inner-container-no-side-margin{
+    background-color: #d7e7ff;
+}
+::ng-deep.mat-check .mat-checkbox-frame{
+    border-color: #b0ceff;
+}
+::ng-deep.mat-check.mat-checkbox-checked.mat-accent .mat-checkbox-background{
+    background-color: #0058ff;
+}
+::ng-deep.mat-check.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element{
+    background-color: #0058ff;
+}

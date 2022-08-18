@@ -1,0 +1,68 @@
+<!---popup-area-->
+<div class="popup-area" *ngIf="popUp">
+    <div class="popup-main">
+        <form action="">
+                   <!---select-dates-->
+        <div class="select-dates">
+            <!--form-input-area-->
+            <div class="form-input">
+                <h3>Select Dates</h3>
+                <div>
+                    <h4>Start Date</h4>
+                    <mat-form-field  appearance="outline" class="form-field">
+                        <input matInput [matDatepicker]="picker2" placeholder="Select start date.">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="check">
+                    <mat-checkbox class="mat-check">Set end date</mat-checkbox>
+                </div>
+                <div>
+                    <h4>End Date</h4>
+                    <mat-form-field  appearance="outline" class="form-field">
+                        <input matInput [matDatepicker]="picker3" placeholder="Select end date.">
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3 color="primary"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div><!---end-->
+        <!---select-address-->
+        <div class="form-input">
+            <h3>Select Address</h3>
+            <mat-checkbox class="mat-check">Use Default address</mat-checkbox>
+            <mat-checkbox class="mat-check">Add anather address</mat-checkbox>
+        </div>
+        <!--form-input-->
+        <div class="form-input">
+            <h3>Notes</h3>
+            <div>
+                <mat-form-field appearance="outline" class="form-field">
+                    <textarea cols="20" rows="5" matInput></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+        <!--form-input-->
+        <div class="form-input">
+            <h3>Media</h3>
+            <input type="file" (change)="changeFile(file)" value="" class="file" style="display: none;" #file>
+            <div class="media">
+                <div>
+                    <p>Add your attachment</p>
+                </div>
+                <div>
+                    <button (click)="attachmentFile()">Add Attachment</button>
+                </div>
+            </div>
+        </div>
+            <!---form-btn-->
+            <div class="edit-btn">
+                <ul>
+                    <li><button (click)="hidePopUp()"><i>Cancel</i></button></li>
+                    <li><button class="save"><i>Save</i></button></li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>

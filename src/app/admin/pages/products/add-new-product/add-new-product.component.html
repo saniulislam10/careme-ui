@@ -1,0 +1,968 @@
+<!---add-product-area-->
+<div class="add-product-area">
+  <!---add-product-main--->
+  <div>
+    <form [formGroup]="dataForm" (ngSubmit)="onSubmit()" #templateForm="ngForm" autocomplete="off">
+      <div class="add-header">
+        <div class="header-left">
+          <span><i routerLink="../../products" class="fa fa-arrow-left"></i></span>
+          <h2>Add Products</h2>
+        </div>
+        <div class="form-btn" class="saveArea">
+          <ul class="btn">
+            <li><mat-icon *ngIf="product" target="_blank" (click)="preview()">remove_red_eye</mat-icon></li>
+            <li><button type="button" [routerLink]="['../../../', 'products']">Discard</button></li>
+            <li><button class="btn-active" type="submit">Save</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="product-description-area">
+        <div class="description-title-input">
+          <h3>Import Product Information</h3>
+          <div class="import">
+            <mat-form-field  appearance="outline" class="form-field importSearch">
+              <input type="text" matInput placeholder="Import By Link"  formControlName="link">
+            </mat-form-field>
+            <button type="button" (click)="importProductInfo()"> <i class="fa-solid fa-cloud-arrow-down"></i>Import</button>
+          </div>
+        </div>
+      </div>
+      <div class="add-product-main">
+        <div class="add-product-left">
+
+          <div class="product-description-area">
+            <div class="description-title-input">
+              <h3>Title</h3>
+              <mat-form-field appearance="outline" class="form-field">
+                <input type="text" formControlName="name" (change)="autoGenerateSlug()" matInput
+                  placeholder="Product Name">
+                <mat-error *ngIf="">This field is required</mat-error>
+              </mat-form-field>
+
+            </div>
+            <!---description-->
+            <div class="description">
+              <h3>Description</h3>
+
+              <!----description-plugins-->
+              <div class="description-plugins">
+                <quill-editor *ngIf="modules" [styles]="{height: '400px'}" [modules]="modules" (onFocus)="focus($event)"
+                  (onEditorChanged)="changedEditor($event)" formControlName="description" formControlName="description">
+                </quill-editor>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!---product-description-area-end-->
+
+          <!------media-------->
+          <div class="media-area">
+            <!---media-top-->
+            <div class="media-top-area">
+              <div>
+                <h3>Media</h3>
+              </div>
+              <div>
+                <div>
+                  <a (click)="toggleLink()">Add media form URL <i class="fa fa-caret-down"></i></a>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="hasLink === true">
+              <div class="media-link-array" *ngFor="let f of mediaArray?.controls;let i=index">
+                <mat-form-field formArrayName="medias" appearance="outline" class="form-field">
+                  <mat-label>Link</mat-label>
+                  <input type="text" [formControlName]="i" matInput placeholder="paste image/video link">
+                  <mat-error *ngIf="">This field is required</mat-error>
+                </mat-form-field>
+                <button class="button" type="button" (click)="addMediaLinkButton()">
+                  <mat-icon style="align-items: center;">add</mat-icon>
+                </button>
+                <button class="button deleteButton" type="button" (click)="deleteMediaFormControl(i)">
+                  <mat-icon style="align-items: center;">remove</mat-icon>
+                </button>
+              </div>
+            </div>
+            <!---meadia-drag-drop-area-->
+            <div class="meadia-drag-drap-area">
+
+              <div class="plus-box" (click)="openComponentDialog()">
+                <span>Upload Images from Gallery</span>
+              </div>
+
+              <div *ngIf="chooseImage && chooseImage.length > 0" class="img-container" cdkDropList
+                cdkDropListOrientation="vertical" (cdkDropListDropped)="drop($event)">
+                <div class="preview" *ngFor="let data of chooseImage" cdkDrag>
+                  <img [src]="data" [alt]="data">
+                  <div class="overlay-ac">
+                    <button mat-icon-button color="warn" (click)="removeSelectImage(data)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!---meadia-drag-drop-area-end-->
+          </div>
+          <!------media------end-------->
+          <!--pricing-area-->
+          <div class="pricing-area">
+            <!--pricing-area-title-->
+            <div class="title">
+              <h2>Pricing</h2>
+            </div>
+            <!--pricing-main-->
+            <div class="grid-main">
+              <!---pricing-info-->
+              <div class="form-input">
+                <h3>Cost Price</h3>
+                <mat-form-field appearance="outline" class="form-field">
+                  <input type="number" formControlName="costPrice" matInput placeholder="BDT 0.00" digitOnly>
+                  <mat-error *ngIf="">This field is required</mat-error>
+                </mat-form-field>
+              </div>
+              <!---pricing-info-->
+              <div class="form-input">
+                <h3>Wholesale Price</h3>
+                <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
+                  <!-- <mat-label>Wholesale Price</mat-label> -->
+                  <input type="number" formControlName="wholeSalePrice" matInput placeholder="BDT 0.00" digitOnly>
+                  <mat-error *ngIf="">This field is required</mat-error>
+                </mat-form-field>
+              </div>
+              <!---pricing-info-->
+              <!-- *ngIf="hasVariant === false" -->
+              <div class="form-input" >
+                <h3>Selling Price</h3>
+                <mat-form-field appearance="outline" class="form-field">
+                  <!-- <mat-label>Selling Price</mat-label> -->
+                  <input type="number" formControlName="sellingPrice" matInput placeholder="BDT 0.00" digitOnly>
+                  <mat-hint>Customers won't see this</mat-hint>
+                  <mat-error *ngIf="">This field is required</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <!---check-box-->
+            <div class="check-box">
+              <mat-checkbox [(ngModel)]="hasTax" value="true" formControlName="hasTax" class="example-margin">Charge tax
+                on this product</mat-checkbox>
+              <mat-form-field *ngIf="hasTax === true" appearance="outline" class="form-field">
+                <!-- <mat-label>Selling Price</mat-label> -->
+                <input type="number" formControlName="tax" matInput placeholder="BDT 0.00 (in amount)" digitOnly>
+                <mat-hint>Customers won't see this</mat-hint>
+                <mat-error *ngIf="">This field is required</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--pricing-area-end-->
+          <!--inventory-area-->
+          <div class="inventory-area">
+            <!---title--->
+            <div class="title">
+              <h2>Inventory</h2>
+            </div>
+            <!---inventory-main-->
+            <div class="grid-main">
+              <!---form-input-->
+              <div class="form-input">
+                <h3>SKU(Stock Keeping Unit)</h3>
+                <mat-form-field appearance="outline" class="form-field">
+                  <!-- <mat-label>SKU</mat-label> -->
+                  <input type="text" formControlName="sku" matInput placeholder="Enter SKU Code..">
+                  <mat-error *ngIf="">This field is required</mat-error>
+                </mat-form-field>
+              </div>
+              <!---form-input-->
+              <div class="form-input">
+                <h3>Barcode(ISBN,UPC,GTIN,etc.)</h3>
+                <mat-form-field appearance="outline" class="form-field">
+                  <!-- <mat-label>Barcode</mat-label> -->
+                  <input type="text" formControlName="barcode" matInput placeholder="Enter Barcode..">
+                  <mat-error *ngIf="">This field is required</mat-error>
+                </mat-form-field>
+              </div>
+
+            </div>
+            <!---check-box-->
+            <div class="check-box">
+              <mat-checkbox (change)="makeQuantityRequired()" formControlName="trackQuantity" class="example-margin">
+                Track quantity</mat-checkbox>
+              <mat-checkbox formControlName="continueSelling" class="example-margin">Continue selling when out of stack
+              </mat-checkbox>
+            </div>
+          </div>
+          <!---quantity-->
+          <div class="quantity-area">
+            <!--title-->
+            <div class="title">
+              <h2>QUANTITY</h2>
+            </div>
+            <!---grid-main-->
+            <div class="grid-main">
+              <!---form-input-->
+              <div class="form-input">
+                <h3>Available</h3>
+                <mat-form-field appearance="outline" class="form-field">
+                  <!-- <mat-label>Available</mat-label> -->
+                  <input *ngIf="this.trackQuantity === false " type="number" value="0" formControlName="quantity" digitOnly
+                    matInput>
+                  <input *ngIf="this.trackQuantity === true" type="number" value="0" formControlName="quantity"
+                    digitOnly matInput>
+                  <mat-error *ngIf="">This field is required</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-input">
+                <h3>Re Order</h3>
+                <mat-form-field appearance="outline" class="form-field">
+                  <!-- <mat-label>Available</mat-label> -->
+                  <input type="number" formControlName="reOrder" digitOnly matInput >
+                  <mat-error *ngIf="">This field is required</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <!---quantity-end-->
+          <!---shipping-area-->
+          <div class="shipping-area">
+            <!---shipping-top-->
+            <div class="shipping-top">
+              <!---title--->
+              <div class="title">
+                <h2>Shipping</h2>
+              </div>
+              <!--check-box-->
+              <div class="check-box">
+                <mat-checkbox class="example-margin" formControlName="isPhysicalProduct" [(ngModel)]="checked">This a
+                  physical product</mat-checkbox>
+              </div>
+            </div>
+            <!--weight-area-->
+            <div class="shipping-info">
+              <!---shipping-info-top-->
+              <div class="shipping-info-top">
+                <h3>WEIGHT</h3>
+                <p>Used to calculate shipping rates at checkout and label prices during fulfillment.</p>
+              </div>
+              <!---form-input-->
+              <div class="form-input">
+                <!-- <h3>Weight</h3> -->
+                <div class="weight-input-main">
+                  <div>
+                    <mat-form-field appearance="outline" class="form-field">
+                      <!-- <mat-label>Weight</mat-label> -->
+                      <input matInput type="number" formControlName="weight" placeholder="0.0" digitOnly decimal="true"
+                        decimalSeparator="." pattern="[0-9]+([.][0-9]+)?">
+                      <mat-error *ngIf="">This field is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div>
+                    <mat-form-field appearance="outline" class="form-field">
+
+                      <mat-label>Select</mat-label>
+                      <mat-select formControlName="weightType">
+                        <mat-option *ngFor="let c of weightType" [value]="c.value">{{c.viewValue}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!--weight-area-end-->
+            <!--customs-area-->
+            <div class="shipping-info" style="border-radius: 0px 0px 10px 10px;">
+              <!---shipping-info-top-->
+              <div class="shipping-info-top">
+                <h3>Customs Information</h3>
+                <p>Customs authorities use this information to calculate duties when shipping internationally Shown on
+                  printed customs forms.</p>
+              </div>
+              <!---form-input-->
+              <div class="form-input" style="margin-bottom: 40px;">
+                <h3>Country/Region of origin</h3>
+                <mat-form-field appearance="outline" class="form-field">
+                  <!-- <mat-label>Select country/region</mat-label> -->
+                  <mat-select formControlName="country" placeholder="Select Country">
+
+                    <mat-option value="Bangladesh">Bangladesh</mat-option>
+                    <mat-option value="China">China</mat-option>
+                    <mat-option value="India">India</mat-option>
+                    <mat-option value="Malaysia">Malaysia</mat-option>
+                  </mat-select>
+
+
+                  <mat-hint>In most cases, where the product is manufactured.</mat-hint>
+                </mat-form-field>
+              </div>
+              <!---form-input-->
+              <div class="form-input">
+                <h3>HS(Harmonized System ) Code</h3>
+                <!---search-input-box-->
+                <div class="search-input-box">
+                  <!-- <button><i class="fa fa-search"></i></button> -->
+                  <input type="text" formControlName="hscode" value="" placeholder="Search or enter a HS Code.">
+                </div>
+                <div class="hint">
+                  <span>Manually enter code codes that are longer than 6 numbers.</span>
+                </div>
+
+              </div>
+
+            </div>
+            <!--weight-area-end-->
+          </div>
+
+
+        </div>
+        <!---add-product-left-end-->
+
+
+
+        <!---add-product-right-->
+        <div class="add-product-right">
+          <!---product-status-->
+          <div class="product-status">
+            <!---product-status-top-->
+            <div class="product-status-top">
+              <!---title-->
+              <div class="title">
+                <h2>Product Status</h2>
+              </div>
+              <div class="form-input">
+                <mat-form-field appearance="outline" class="form-field">
+                  <mat-select [(ngModel)]="selectedOption" formControlName="status" placeholder="Please select product status">
+                    <mat-option *ngFor="let c of productStatus" [value]="c.value">{{c.viewValue}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="product-status-info">
+                <!-- <p >This product will be hidden from all sales channels.</p> -->
+              </div>
+            </div>
+            <!---product-status-top-end-->
+            <!---sales-manage-->
+            <div class="sales-manage">
+              <!---sales-manage-top-->
+              <div class="sales-manage-top">
+                <div>
+                  <h3>Sales Channels And Apps</h3>
+                </div>
+
+              </div>
+              <!---sales-manage-content-->
+              <div class="sales-manage-content">
+                <ul>
+                  <li>
+                    <mat-checkbox class="example-margin">Website</mat-checkbox>
+                  </li>
+                  <li>
+                    <mat-checkbox class="example-margin">Facebook</mat-checkbox>
+                  </li>
+                  <li>
+                    <mat-checkbox class="example-margin">Mobile App</mat-checkbox>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!---end-->
+            <!--show-more-btn-->
+            <!-- <div class="show-more-btn">
+                 <button>Show More <i class="fa fa-angle-down"></i></button>
+             </div> -->
+
+          </div>
+          <!---product-status--end-->
+          <!----insights-->
+          <!-- <div class="insights">
+                <h3>Insights</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, molestias!</p>
+            </div> -->
+
+          <!--Return Eligibility-->
+          <div class="payment-status-other-info">
+            <!--other-status-title-->
+            <div class="other-status-title">
+              <h3>Return Period</h3>
+            </div>
+            <div class="other-status-body">
+              <!--other-check-->
+              <div class="other-check check-box">
+                <ul>
+                  <li>
+                    <mat-checkbox class="example-margin" value="true" [(ngModel)]="canReturn"
+                      formControlName="canReturn">Allow Return</mat-checkbox>
+                  </li>
+                </ul>
+              </div>
+              <!--other-status--input-main-->
+              <div *ngIf="canReturn === true" class="other-status-input-main">
+                <h3>Return period (days)</h3>
+                <!--input-box-->
+                <div class="input-box">
+                  <div style="width: 100%;">
+                    <mat-form-field appearance="outline" class="form-field">
+                      <!-- <mat-label>Percent/Amount</mat-label> -->
+                      <input type="number" matInput formControlName="returnPeriod">
+                      <mat-error *ngIf="">This field is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!---end-->
+          <!--Partial Payment-->
+          <div class="payment-status-other-info">
+            <!--other-status-title-->
+            <div class="other-status-title">
+              <h3>Partial Payment</h3>
+            </div>
+            <div class="other-status-body">
+              <!--other-check-->
+              <div class="other-check check-box">
+                <ul>
+                  <li>
+                    <mat-checkbox class="example-margin" value="true" [(ngModel)]="canPartialPayment"
+                      formControlName="canPartialPayment">Allow Partial Payment</mat-checkbox>
+                  </li>
+                </ul>
+              </div>
+              <!--other-status--input-main-->
+              <div *ngIf="canPartialPayment === true" class="other-status-input-main">
+                <h3>Percent/Amount</h3>
+                <!--input-box-->
+                <div class="input-box">
+                  <div style="width: 100%;">
+                    <mat-form-field appearance="outline" class="form-field">
+                      <!-- <mat-label>Percent/Amount</mat-label> -->
+                      <input type="number" matInput formControlName="partialPayment">
+                      <mat-error *ngIf="">This field is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="select-btn">
+
+                    <mat-form-field appearance="outline" class="form-field">
+
+                      <mat-label>Select</mat-label>
+                      <mat-select formControlName="partialPaymentType">
+                        <mat-option *ngFor="let c of amountType" [value]="c.value">{{c.viewValue}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!---end-->
+          <!--Earn Points-->
+          <div class="payment-status-other-info" style="margin: 0px;">
+            <!--other-status-title-->
+            <div class="other-status-title">
+              <h3>Earn Points</h3>
+            </div>
+            <div class="other-status-body" style="border-radius: 0px;">
+              <!--other-check-->
+              <div class="other-check check-box">
+                <ul>
+                  <li>
+                    <mat-checkbox class="example-margin" value="true" [(ngModel)]="canEarnPoints"
+                      formControlName="canEarnPoints">Allow Earn points</mat-checkbox>
+                  </li>
+                </ul>
+              </div>
+              <!--other-status--input-main-->
+              <div *ngIf="canEarnPoints" class="other-status-input-main">
+                <h3>Amount</h3>
+                <!--input-box-->
+                <div class="input-box">
+                  <div style="width: 100%;">
+                    <mat-form-field appearance="outline" class="form-field">
+                      <!-- <mat-label>Amount</mat-label> -->
+                      <input type="number" formControlName="earnPoints" matInput>
+                      <mat-error *ngIf="">This field is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="select-btn">
+                    <mat-form-field appearance="outline" class="form-field">
+
+                      <mat-label>Select</mat-label>
+                      <mat-select formControlName="earnPointsType">
+                        <mat-option *ngFor="let c of amountType" [value]="c.value">{{c.viewValue}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!---end-->
+          <!--Redeem Rule-->
+          <div class="payment-status-other-info">
+            <!--other-status-title-->
+            <div class="other-status-title" style="border-radius: 0px; box-shadow: none;">
+              <h3>Redeem Rule</h3>
+            </div>
+            <div class="other-status-body">
+              <!--other-check-->
+              <div class="other-check check-box">
+                <ul>
+                  <li>
+                    <mat-checkbox class="example-margin" value="true" [checked]="true" [(ngModel)]="canRedeemPoints"
+                      formControlName="canRedeemPoints">Allow redeem points</mat-checkbox>
+                  </li>
+                </ul>
+              </div>
+              <!--other-status--input-main-->
+              <div *ngIf="canRedeemPoints" class="other-status-input-main">
+                <h3>Amount</h3>
+                <!--input-box-->
+                <div class="input-box">
+                  <div style="width: 100%;">
+                    <mat-form-field appearance="outline" class="form-field">
+                      <!-- <mat-label>Amount</mat-label> -->
+                      <input type="number" matInput formControlName="redeemPoints">
+                      <mat-error *ngIf="">This field is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="select-btn">
+                    <mat-form-field appearance="outline" class="form-field">
+
+                      <mat-label>Select</mat-label>
+                      <mat-select formControlName="redeemPointsType">
+                        <mat-option *ngFor="let c of amountType" [value]="c.value">{{c.viewValue}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!----------end------------------>
+          <!----organization-area-->
+          <div class="organization-area">
+            <!---vendor-->
+            <div class="vendor">
+              <!--title-->
+              <div class="title">
+                <h2>Organization</h2>
+              </div>
+              <!---form-input-->
+              <div class="form-input">
+                <h3>Vendor</h3>
+                <!--form-input-main-->
+                <div class="form-input-main">
+                  <div style="width: 100%;">
+                    <mat-form-field appearance="outline" class="form-field">
+                      <!-- <mat-label>Vendor</mat-label> -->
+                      <mat-select formControlName="vendor" placeholder="Vendor">
+                        <mat-option value="careme">Care me</mat-option>
+                        <mat-option value="careme global">Care me Global</mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="">This field is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-input-main" style="padding: 0 20px;">
+              <h3>Brand</h3>
+              <mat-form-field appearance="outline" class="form-field">
+                <input type="text" formControlName="brand" matInput placeholder="Product Brand">
+                <mat-error *ngIf="">This field is required</mat-error>
+              </mat-form-field>
+            </div>
+            <!---product-type-->
+            <div class="product-type">
+              <!--title-->
+              <div class="product-type-title">
+                <h2>product type</h2>
+              </div>
+              <div class="standard-form-input">
+
+              </div>
+
+              <!---form-input-->
+              <div class="standard-form-input">
+                <h3>Select Parent Category</h3>
+                <!--form-input-main-->
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select [disableOptionCentering]="true" #select placeholder="Select parent category *"
+                              formControlName="parentCategory" (selectionChange)="onSelectCategory($event)">
+                    <mat-select-filter [placeholder]="'Filter Category List'"
+                                       *ngIf="select.focused"
+                                       [array]="categories"
+                                       [displayMember]="'name'"
+                                       (filteredReturn)="filteredCatList = $event"></mat-select-filter>
+                    <mat-option *ngFor="let item of filteredCatList" [value]="item._id">
+                      {{item.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="">This field is required</mat-error>
+                </mat-form-field>
+                <!--standard-description-->
+                <!-- <div class="standard-description">
+                  <p>Improve buyer discovery, analytics & workflows. <a href="#">Learn More</a></p>
+                </div> -->
+              </div>
+              <!---Custom-->
+              <div class="vendor custom">
+                <!---form-input-->
+                <div class="form-input">
+                  <h3>Select Child Category</h3>
+                  <!--form-input-main-->
+                  <div class="form-input-main">
+                    <div style="width: 100%;">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-select [disableOptionCentering]="true" #select1 placeholder="Select child category *"
+                                    formControlName="childCategory">
+                          <mat-select-filter [placeholder]="'Filter Child List'"
+                                             *ngIf="select1.focused"
+                                             [array]="subCategories"
+                                             [displayMember]="'name'"
+                                             (filteredReturn)="filteredSubCatList = $event"></mat-select-filter>
+                          <mat-option *ngFor="let item of filteredSubCatList" [value]="item._id">
+                            {{item.name}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="">This field is required</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <!-- <div class="drop-btn">
+                                        <button><i class="fa fa-caret-down"></i></button>
+                                    </div> -->
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!---product-type-end-->
+
+            <!---tags-->
+            <div class="tags-area">
+              <!---tags-top-->
+              <div class="tags-top">
+                <h3>Tags</h3>
+                <a href="#">View all tags</a>
+              </div>
+              <!---form-input-->
+              <div class="form-input">
+
+                <mat-form-field appearance="outline" class="form-field">
+                  <!-- <mat-label>Tags</mat-label> -->
+                  <input type="text" formControlName="tags" matInput placeholder="Ex. Vintage,cotton,summer.">
+                  <mat-error *ngIf="">This field is required</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <!---end-->
+        </div>
+        <!---add-product-right-end-->
+      </div>
+
+      <!---varriant-area-main-->
+      <div class="varriant-area-main">
+        <!---varriant-area-->
+        <div class="varriant-area">
+          <div class="varriant-top">
+            <!---title-->
+            <div class="title">
+              <h2>Variant</h2>
+            </div>
+            <!--check-box-->
+            <div class="check-box">
+              <mat-checkbox [(ngModel)]="hasVariant" value="true" formControlName="hasVariant" class="example-margin">
+                This product has multiple options like different sizes or colors.</mat-checkbox>
+            </div>
+          </div>
+
+          <div class="option-area" *ngIf="hasVariant === true">
+            <div class="option-title">
+              <h3>Options</h3>
+            </div>
+            <!--option-main-->
+            <div class="option-main">
+              <div class="form-input">
+                <div *ngFor="let f of variantArray?.controls;let i=index">
+                  <h3 style="margin-bottom: 10px;">Option-{{i + 1}}</h3>
+                  <div class="option-input">
+                    <mat-form-field formArrayName="variants" appearance="outline" class="form-field">
+                      <mat-label>Variant Name</mat-label>
+                      <input type="text" [formControlName]="i" matInput placeholder="For ex. size">
+                      <mat-error *ngIf="">This field is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="form-input">
+                <div *ngFor="let f of optionsArray?.controls;let i=index">
+
+                  <h3 style="margin-bottom: 10px;">Values for options {{i + 1}}</h3>
+                  <div class="option-input">
+                    <mat-form-field formArrayName="options" appearance="outline" class="form-field">
+                      <mat-label>Separate options with a comma</mat-label>
+                      <input type="text" [formControlName]="i" matInput placeholder="Separate options with a comma">
+                      <mat-error *ngIf="">This field is required</mat-error>
+                    </mat-form-field>
+                    <button class="button deleteButton" type="button" (click)="deleteFormControl(i)">
+                      <mat-icon style="align-items: center;">remove</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!---varriant-btn-->
+            <div class="varriant-btn" style="display: flex;">
+              <button type="button" style="margin-right: 10px;" (click)="onAddNewFormControl()">Add another
+                option</button>
+              <button type="button" (click)="submitVariant()">DONE</button>
+            </div>
+          </div>
+        </div>
+        <!---varriant-area-end-->
+
+
+        <!---varriant-table-area--->
+        <div style="display: block;" class="varriant-table-area" *ngIf="hasVariant === true">
+          <!---varriant-table-top-->
+          <div class="varriant-table-top">
+            <!--add-varriant-->
+            <div class="add-varriant">
+              <!---title-->
+              <div class="title">
+                <h2>Variants</h2>
+              </div>
+              <!---add-varriant-menu-->
+              <!-- <div class="add-varriant-menu">
+                <ul>
+                  <li><button type="button">Add Variant</button></li>
+                  <li><button type="button">More options <i class="fa fa-caret-down"></i></button></li>
+                </ul>
+              </div> -->
+            </div>
+            <!--add-varriant-end-->
+            <!---varriant-select-menu-->
+            <!-- <div class="varriant-select-menu-area">
+              <div class="varriant-select-menu">
+                <ul>
+                  <li class="varriant-select">Select:</li>
+                  <li><a href="#">All</a></li>
+                  <li><a href="#">None</a></li>
+                </ul>
+              </div>
+            </div> -->
+            <!---varriant-select-menu-end-->
+            <!---varriant-no-stock-->
+            <!-- <div class="varriant-no-stock-btn">
+              <button>No Stock control</button>
+            </div> -->
+
+          </div>
+          <!---varriant-table-top-end-->
+
+          <div>
+            <!----category-main-area-->
+            <div class="category-main-area">
+              <!---category-table-area-->
+              <div class="category-table-area">
+                <div class="category-table">
+                  <!--category-table-header-->
+                  <div class="category-table-head">
+                    <!---category-table-row-->
+                    <div class="category-table-row">
+                      <!-- <div class="category-table-heading check">
+                        <mat-checkbox class="mat-check"></mat-checkbox>
+                      </div> -->
+                      <div style="padding-right: 20px;">
+                        <h3>&nbsp;</h3>
+                      </div>
+                      <div class="category-table-heading serial">
+                        <h3>Image</h3>
+                      </div>
+                      <div class="category-table-heading category-type" *ngFor="let data of variantObject; let i=index">
+                        <h3>{{data}}</h3>
+                      </div>
+                      <div class="category-table-heading quality">
+                        <h3>Vendor</h3>
+                      </div>
+                      <div class="category-table-heading quality">
+                        <h3>Price</h3>
+                      </div>
+                      <div class="category-table-heading quality">
+                        <h3>Quantity</h3>
+                      </div>
+                      <div class="category-table-heading quality">
+                        <h3>Low Stock</h3>
+                      </div>
+                      <div class="category-table-heading quality">
+                        <h3>Pre Order</h3>
+                      </div>
+                      <div class="category-table-heading quality">
+                        <h3>SKU</h3>
+                      </div>
+                      <!-- <div class="category-table-heading quality">
+                        <h3>Actions</h3>
+                      </div> -->
+
+
+                    </div>
+                  </div>
+                  <!--category-table-body-->
+                  <div formArrayName="variantFormArray" class="category-body">
+                    <!---category-table-row-->
+                    <div class="category-table-row" *ngFor="let data of variantDataFormArray.controls; let variant of variantDataArray;
+                let i=index" [formGroupName]="i">
+                      <div style="padding-right: 10px;">
+                        <h3> <mat-checkbox [checked]="checkSelectionVariantImg(i)"  (change)="onCheckVariantImage($event, i)"></mat-checkbox> </h3>
+                      </div>
+                      <div class="category-table-data serial">
+                        <div class="variation-img">
+                          <button *ngIf="dataForm.value.variantFormArray[i].image"
+                                  (click)="removeVariationImage(i)"
+                                  mat-icon-button color="warn" type="button" class="btn-img-remove">
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                          <img
+                            (click)="openVariationGalleryDialog(i)"
+                            [src]="dataForm.value.variantFormArray[i].image ? dataForm.value.variantFormArray[i].image : '/assets/images/flag/bangladesh-flag.png'"
+                            alt="">
+                        </div>
+                      </div>
+                      <div class="category-table-data category-type" *ngFor="let name of variantObject">
+                        <h3>{{variant[name]}} </h3>
+                      </div>
+                      <div class="category-table-data quality">
+                        <mat-select formControlName="variantVendorName" class="select-vendor" placeholder="Vendor">
+                          <mat-option value="careme">Care me</mat-option>
+                          <mat-option value="careme global">Care me Global</mat-option>
+                        </mat-select>
+                      </div>
+                      <div class="category-table-data quality" style="padding-top: 20px;">
+                        <mat-form-field appearance="outline" class="form-field" style="width: 100px;">
+                          <input type="number" formControlName="variantPrice" matInput placeholder="Price">
+                        </mat-form-field>
+                      </div>
+                      <div class="category-table-data quality" style="padding-top: 20px;">
+                        <mat-form-field appearance="outline" class="form-field" style="width: 120px;">
+                          <input type="number" matInput formControlName="variantQuantity" placeholder="quantity"
+                            >
+                        </mat-form-field>
+                      </div>
+                      <div class="category-table-data quality" style="padding-top: 20px;">
+                        <mat-form-field appearance="outline" class="form-field" style="width: 120px;">
+                          <input type="number" matInput formControlName="variantReOrder" placeholder="re order"
+                            >
+                        </mat-form-field>
+                      </div>
+                      <div class="category-table-data quality" style="padding-top: 20px;">
+                        <mat-checkbox formControlName="variantContinueSelling" class="example-margin"></mat-checkbox>
+                      </div>
+                      <div class="category-table-data quality" style="padding-top: 20px; margin-right: 20px;">
+                        <mat-form-field appearance="outline" class="form-field" style="width: 220px;">
+                          <input type="text" matInput formControlName="variantSku" placeholder="sku">
+                        </mat-form-field>
+                      </div>
+                      <!-- <div class="category-table-data quality">
+                        <button>Edit</button>
+                        <button>Delete</button>
+                      </div> -->
+                    </div>
+                    <!---category-table-row-end-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!---varriant-table-area-end--->
+
+        <!---search-engine-->
+        <div class="search-engine" style="margin-top: 50px;">
+          <!--search-engine-top-->
+          <div class="search-engine-top">
+            <div class="title">
+              <h2>Search engine listing preview</h2>
+              <p>Add a title and description to see how this product might appear in a search engine listing.</p>
+            </div>
+          </div>
+          <!---search-engine-main-->
+          <div class="search-engine-main">
+            <!---form-input-->
+            <div class="form-input" style="margin-bottom: 25px;">
+              <h3>Page Title</h3>
+              <mat-form-field appearance="outline" class="form-field">
+                <!-- <mat-label>Page Title</mat-label> -->
+                <input type="text" #input [value]="" formControlName="searchPageTitle" matInput
+                  placeholder="Enter your page title" maxlength="70">
+                <mat-hint>{{input.value?.length || 0}} of 70 characters used.</mat-hint>
+                <mat-error *ngIf="">This field is required</mat-error>
+
+              </mat-form-field>
+            </div>
+            <!---form-input-->
+            <div class="form-input" style="margin-bottom: 25px;">
+              <h3>Description</h3>
+              <mat-form-field appearance="outline" class="form-field">
+                <!-- <mat-label>Descrption</mat-label> -->
+                <textarea #textarea matInput rows="7" cols="10" formControlName="searchPageDescription"
+                  placeholder="Write your description" maxlength="320"></textarea>
+                <mat-hint>{{textarea.value?.length || 0}} of 320 characters used.</mat-hint>
+              </mat-form-field>
+            </div>
+            <!---form-input-->
+            <div class="form-input">
+              <h3>URL and Handle</h3>
+              <mat-form-field appearance="outline" class="form-field">
+                <input type="text" value="" formControlName="searchPageUrl" matInput
+                  placeholder="example https://global.caremebd.com">
+                <mat-error *ngIf="">This field is required</mat-error>
+              </mat-form-field>
+            </div>
+
+
+          </div>
+        </div>
+
+        <!----varriant-btn-area-->
+        <div class="varriant-btn-area">
+          <!---archive-btn-area-->
+          <div class="archive-btn-area">
+            <ul>
+              <li><button type="button" *ngIf="product" (click)="archive()">Archive Product</button></li>
+              <li><button type="button" (click)="deleteProduct()" *ngIf="product">Delete Product</button></li>
+            </ul>
+          </div>
+
+          <!---form-btn-->
+          <div class="form-btn" style="margin: 0px;">
+            <ul class="btn">
+              <li><button type="button" [routerLink]="['../../../', 'products']">Discard</button></li>
+              <li><button class="btn-active" type="submit">Save</button></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+      <!---varriant-area-main-end-->
+
+
+
+    </form>
+  </div>
+</div>
+
+<!-- TEMPLATE NGX SPINNER-->
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="pacman" [fullScreen]="true">
+  <!-- <p style="color: white" > Loading... </p> -->
+  <p style="color: white">We are testing your patience...</p>
+</ngx-spinner>

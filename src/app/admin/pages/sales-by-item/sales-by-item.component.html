@@ -1,0 +1,168 @@
+<!---view-Points-top-->
+<div class="view-product-header-area">
+    <div class="view-product-header-main">
+        <div class="view-product-header-left">
+            <h2>Sales by Item</h2>
+            <p><strong>From 1 august 2021 to 1 august 2021</strong></p>
+        </div>
+        <div class="head">
+          <div class='left'>
+              <ul>
+                  <li>
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Calender</mat-label>
+                        <mat-select>
+                          <mat-option value="option">Option</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  </li>
+                  <li>
+                      <button>Compare</button>
+                  </li>
+              </ul>  
+          </div>
+  
+          <div class='right'>
+            <div class="search">
+              <button><i class="fa fa-search"></i></button>
+              <input type="text" name="" value="" placeholder="Search">
+          </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <!---table-area-->
+  <div class="table-area">
+      <div class="table-main">
+          <div class="table">
+              <!---table-head-->
+              <div class="table-head">
+                  <div class="table-row">
+                      <!--table-heading-->
+                      <div class="table-heading product">
+                          <h3>Item Name</h3>
+                      </div>
+                      <div class="table-heading sku">
+                          <h3>SKU</h3>
+                      </div>
+                      <div class="table-heading quantity">
+                          <h3>Quantity</h3>
+                      </div>
+                      <div class="table-heading amount">
+                          <h3>Amount</h3>
+                      </div>
+                      <div class="table-heading aver">
+                          <h3>Average Price</h3>
+                      </div>
+                  </div>
+              </div>
+              <!--table-body-->
+              <div class="table-body">
+                  <!--fixed-row-->
+                  <div class="table-row fixed-row">
+                      <div class="table-data product"></div>
+                      <div class="table-data sku"></div>
+                      <div class="table-data quantity">
+                          <div class="grid">
+                              <div class="border-end">
+                                  <h3>5th October</h3>
+                                  <h3>2021</h3>
+                              </div>
+                              <div>
+                                <h3>7th October</h3>
+                                <h3>2021</h3>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="table-data amount">
+                        <div class="grid">
+                            <div class="border-end">
+                                <h3>5th October</h3>
+                                <h3>2021</h3>
+                            </div>
+                            <div>
+                              <h3>7th October</h3>
+                              <h3>2021</h3>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="table-data aver">
+                        <div class="grid">
+                            <div class="border-end">
+                                <h3>5th October</h3>
+                                <h3>2021</h3>
+                            </div>
+                            <div>
+                              <h3>7th October</h3>
+                              <h3>2021</h3>
+                          </div>
+                        </div>
+                    </div>
+
+                  </div><!--fixed-row-end-->
+                  <!---repeat-row-->
+                  <div class="table-row" *ngFor="let data of [1,2,3,4,5,6]">
+                      <div class="table-data product">
+                          <h3>Men's business Formal Shoe</h3>
+                      </div>
+                      <div class="table-data sku">
+                        <h3>#85345</h3>
+                    </div>
+
+                    <div class="table-data quantity">
+                        <div class="grid">
+                            <div class="border-end">
+                                <h3>02</h3>
+                            </div>
+                            <div>
+                              <h3>02</h3>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="table-data amount">
+                      <div class="grid">
+                          <div class="border-end">
+                              <h3>5000</h3>
+                          </div>
+                          <div>
+                            <h3>7000</h3>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="table-data aver">
+                      <div class="grid">
+                          <div class="border-end">
+                              <h3>2500</h3>
+                          </div>
+                          <div>
+                            <h3>3500</h3>
+                        </div>
+                      </div>
+                  </div>
+                  </div><!---repeat-row-end-->
+    
+              </div>
+          </div>
+      </div>
+
+      <!---indicator-->
+      <div class='total'>
+        <div class='page'>
+            <h3>Total Count: <span>30</span></h3>
+        </div>
+        <div class= 'pagination'>
+            <ul>
+                <li><button><i class="fa fa-angle-left"></i></button></li>
+                <li><h3>1-500</h3></li>
+                <li><button><i class="fa fa-angle-right"></i></button></li>
+            </ul>
+        </div>
+      </div>
+  </div>
+
+
+
+
+
+
+  

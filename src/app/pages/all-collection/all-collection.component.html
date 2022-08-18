@@ -1,0 +1,96 @@
+<!---collection-menu-->
+<div class="collection-menu">
+  <div class="container">
+    <ul>
+        <li><a href="#">Home <i class="fa fa-angle-right"></i></a></li>
+        <li><a href="#">Collections</a></li>
+    </ul>
+  </div>
+</div>
+<div class="collection-area">
+    <div class="container">
+        <div class="collection-title">
+            <h3>Collections</h3>
+        </div>
+
+        
+        <div class="collection-view">
+            <div class="view-left">
+                <div>
+                    <h3>View as</h3>
+                </div>
+             <div class="bar">
+                <div class="bar-box-x">
+                    <span class="bar-x"></span>
+                    <span class="bar-x"></span>
+                    <span class="bar-x"></span>
+                </div>
+                <div class="bar-box-y">
+                    <span class="bar-y"></span>
+                    <span class="bar-y"></span>
+                </div>
+                <div class="bar-box-y bar-box-active">
+                    <span class="bar-y"></span>
+                    <span class="bar-y"></span>
+                    <span class="bar-y"></span>
+                </div>
+                <div class="bar-box-y">
+                    <span class="bar-y"></span>
+                    <span class="bar-y"></span>
+                    <span class="bar-y"></span>
+                    <span class="bar-y"></span>
+                </div>
+                <div class="bar-box-y">
+                    <span class="bar-y"></span>
+                    <span class="bar-y"></span>
+                    <span class="bar-y"></span>
+                    <span class="bar-y"></span>
+                    <span class="bar-y"></span>
+                </div>
+             </div>
+                
+            </div>
+            <div class="view-right">
+                <ul>
+                    <li>
+                        <div><h3>Items per page </h3></div>
+                        <div>
+                            <select name="" id="">
+                                <option value="#">24</option>
+                                <option value="#">25</option>
+                                <option value="#">26</option>
+                                <option value="#">27</option>
+                                <option value="#">28</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li>
+                        <div><h3>Sort By</h3></div>
+                        <div>
+                            <select name="" id="">
+                                <option value="#">Featured</option>
+                                <option value="#">Featured</option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!---main-box-->
+        <div class="collection-main">
+            <div class="card" *ngFor="let data of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">
+                <div class="card-img">
+                    <img src="./assets/images/image/egts.png" alt="">
+                </div>
+                <div class="card-body">
+                    <h3>Men's Sneakers</h3>
+                    <h4>231 PRODUCTS</h4>
+                </div>
+            </div>
+        </div>
+        <div class="more-btn">
+            <button>Show More</button>
+        </div>
+    </div>
+</div>

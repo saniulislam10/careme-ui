@@ -1,0 +1,43 @@
+@import "src/theme/variables";
+
+.dialog-container {
+  width: 100%;
+  margin: 16px auto;
+  max-width: 480px;
+}
+
+.header {
+  padding: 12px 10px;
+}
+
+.form-radio {
+  margin: 8px 0;
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.action-area {
+  width: 85%;
+  margin: 0 auto;
+
+  button {
+    padding: 10px;
+    margin: 10px 10px 10px 0;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    border: 1px solid #db5791;
+    background-color: #db5791;
+    color: #fff;
+    outline: none;
+    font-family: $font-en-primary;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s linear;  
+  }
+}

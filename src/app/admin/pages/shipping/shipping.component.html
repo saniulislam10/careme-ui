@@ -1,0 +1,103 @@
+<div class="shipping-title">
+    <h3>Shipping</h3>
+</div>
+<!---shipping-area-->
+<div class="shpping-area">
+    <div class="shipping-area-main">
+        <!--shipping-top-->
+        <div class="shipping-from">
+            <div class="shipping-from-title">
+                <h3>Shipping From</h3>
+            </div>
+            <div class="shipping-form-main">
+                <!---location-->
+                <div class="shipping-location">
+                    <div class="location-icon">
+                        <button><i class="fa fa-map-marker-alt"></i></button>
+                    </div>
+                    <div class="location-text-area">
+                        <h4>Suite #1402 (Life #14), Navana D.H. Tower </h4>
+                        <p>Suite #1402 (Life #14), Navana D.H. Tower, 6 Panthapath Karwan Bazar,Dhaka 1215, banglandesh</p>
+                    </div>
+                </div>
+                <div class="shipping-manage">
+                    <a href="#">Manage</a>
+                </div>
+            </div>
+        </div><!--end-->
+        <!---shipping-to-->
+        <div class="shipping-to">
+            <div class="shipping-to-top">
+                <div class="shipping-to-top-left">
+                    <h3>Shipping To</h3>
+                </div>
+                <div class="shipping-to-top-right">
+                    <a  (click)="showZone()">Create Shipping Zone</a>
+                </div>
+            </div>
+            <div class="shipping-to-bottom">
+                <div class="country">
+                    <div>
+                        <img src="./assets/images/flag/bangladesh-flag.png" alt="">
+                    </div>
+                    <div>
+                        <span>Inside Dhaka</span>
+                    </div>
+                </div>
+                <div class="dotted">
+                    <span><i class="fa-solid fa-ellipsis"></i></span>
+                </div>
+            </div>
+        </div><!---end-->
+
+        <!---shipping-form-area-->
+        <div class="shipping-table-area">
+            <div class="table">
+                <!---table-head-->
+                <div class="table-head">
+                    <div class="row">
+                        <div class="table-heading name">
+                            <h3>Curier Name</h3>
+                        </div>
+                        <div class="table-heading condition">
+                            <h3>Condition</h3>
+                        </div>
+                        <div class="table-heading price">
+                            <h3>Price</h3>
+                        </div>
+                        <div class="table-heading dot">
+                        </div>
+                    </div>
+                </div>
+                <!---table-body-->
+                <div class="table-body">
+                    <div class="row" *ngFor="let data of [1,2,3,4,5,6]">
+                        <div class="table-data name">
+                            <h3>Paper Fly</h3>
+                        </div>
+                        <div class="table-data condition">
+                            <h3>0-2kg</h3>
+                        </div>
+                        <div class="table-data price">
+                            <h3>BDT 5000</h3>
+                        </div>
+                        <div class="table-data dot">
+                            <span><i class="fa-solid fa-ellipsis"></i></span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div><!--table-end-->
+        <div class="add-btn">
+            <button (click)="showCurier()">Add Curier</button>
+        </div>
+
+    </div>
+</div>
+
+<!---add-curier-->
+<div class="component">
+    <app-add-courier #addCourier></app-add-courier>
+    <app-create-shipping-zone #createZone></app-create-shipping-zone>
+</div>

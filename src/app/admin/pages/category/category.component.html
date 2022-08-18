@@ -1,0 +1,216 @@
+<!---category-header-->
+<div class="category-header">
+  <div class="category-header-main">
+    <!--category-header-left-->
+    <div class="category-header-left">
+      <h2>Category</h2>
+    </div>
+    <!----category-header-right-->
+    <div class="category-header-right">
+      <button class="" (click)="openAddCategoryDialog()" [routerLink]="['add-category']">Add Category</button>
+    </div>
+  </div>
+</div>
+
+<!---products-search-area-->
+<div class="products-search-area">
+  <!---search-->
+  <div class="search">
+    <button><i class="fa fa-search"></i></button>
+    <form class="search-form" #searchForm=ngForm>
+      <input #searchInput
+             id="searchInput"
+             class="tw"
+             type="text"
+             placeholder="Search"
+             (focus)=handleFocus($event)
+             name="searchTerm"
+             autocomplete="off"
+             ngModel
+             required>
+    </form>
+  </div>
+  <!--products-search-area-btn--->
+  <div class="products-search-area-btn">
+    <ul>
+      <li><button [matMenuTriggerFor]="vendor">Product Vendor <i class="fa fa-caret-down"></i></button></li>
+      <mat-menu #vendor="matMenu">
+        <button mat-menu-item>Careme</button>
+        <button mat-menu-item>Careme Global</button>
+      </mat-menu>
+      <li><button [matMenuTriggerFor]="categorySort">Sort <i class="fa fa-caret-down"></i></button></li>
+      <mat-menu #categorySort="matMenu">
+        <button mat-menu-item (click)="sortData({name: 1}, 1)" [class.dropdown-active]="activeSort === 1">Category Title
+          (A-Z)</button>
+        <button mat-menu-item (click)="sortData({createdAt: 1}, 2)" [class.dropdown-active]="activeSort === 2">Created
+          (Oldest First)</button>
+      </mat-menu>
+      <li><button>More</button></li>
+    </ul>
+  </div>
+</div>
+
+<!----category-main-area-->
+<div class="category-main-area">
+  <!---category-table-area-->
+  <div class="category-table-area">
+    <div class="category-table">
+      <!--category-table-header-->
+      <div class="category-table-head">
+        <!---category-table-row-->
+        <div class="category-table-row">
+          <!-- <div class="category-table-heading check">
+            <mat-checkbox class="mat-check"></mat-checkbox>
+          </div> -->
+          <div class="category-table-heading serial">
+            <h3>SI</h3>
+          </div>
+          <div class="category-table-heading category-type">
+            <h3>Category Name</h3>
+          </div>
+          <div class="category-table-heading quality">
+            <h3>Product Quantity</h3>
+          </div>
+          <div class="category-table-heading quality">
+            <h3>Actions</h3>
+          </div>
+        </div>
+      </div>
+      <!--category-table-body-->
+      <div class="category-body">
+        <!---category-table-row-->
+        <div class="category-table-row" *ngFor="let data of categories; let i=index">
+          <!-- <div class="category-table-data check">
+            <mat-checkbox class="mat-check"></mat-checkbox>
+          </div> -->
+          <div class="category-table-data serial">
+            <span>{{i+1}}</span>
+          </div>
+          <div class="category-table-data category-type">
+            <h3>{{data.name}}</h3>
+          </div>
+          <div class="category-table-data quality">
+            <a>{{data.count}}</a>
+          </div>
+          <div class="category-table-data">
+            <button [disabled]="data.readOnly" style="margin-right: 5px;" mat-mini-fab color="warn"
+              (click)="openConfirmDialog(data._id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button [disabled]="data.readOnly" (click)="openEditCategoryDialog(data)" mat-mini-fab>
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </div>
+        <!---category-table-row-end-->
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!---category-header-->
+<div class="category-header">
+  <div class="category-header-main">
+    <!--category-header-left-->
+    <div class="category-header-left">
+      <h2>Sub Category</h2>
+    </div>
+  </div>
+</div>
+
+<!---products-search-area-->
+<div class="products-search-area">
+  <!---search-->
+  <div class="search">
+    <button><i class="fa fa-search"></i></button>
+    <input type="text" name="" value="" placeholder="Filter Sub Categories">
+  </div>
+  <!--products-search-area-btn--->
+  <div class="products-search-area-btn">
+    <ul>
+      <li><button [matMenuTriggerFor]="vendor">Product Vendor <i class="fa fa-caret-down"></i></button></li>
+      <mat-menu #vendor="matMenu">
+        <button mat-menu-item>Careme</button>
+        <button mat-menu-item>Careme Global</button>
+      </mat-menu>
+      <li><button [matMenuTriggerFor]="subCategorySort">Sort <i class="fa fa-caret-down"></i></button></li>
+      <mat-menu #subCategorySort="matMenu">
+        <button mat-menu-item (click)="sortSubData({name: 1}, 1)" [class.dropdown-active]="activeSort === 1">Product Title
+          (A-Z)</button>
+        <button mat-menu-item (click)="sortSubData({createdAt: 1}, 2)" [class.dropdown-active]="activeSort === 2">Created
+          (Oldest First)</button>
+      </mat-menu>
+      <li><button>More</button></li>
+    </ul>
+  </div>
+</div>
+
+<!----category-main-area-->
+<div class="category-main-area">
+  <!---category-table-area-->
+  <div class="category-table-area">
+    <div class="category-table">
+      <!--category-table-header-->
+      <div class="category-table-head">
+        <!---category-table-row-->
+        <div class="category-table-row">
+          <!-- <div class="category-table-heading check">
+            <mat-checkbox class="mat-check"></mat-checkbox>
+          </div> -->
+          <div class="category-table-heading serial">
+            <h3>SI</h3>
+          </div>
+          <div class="category-table-heading category-type">
+            <h3>Sub Category Name</h3>
+          </div>
+          <div class="category-table-heading category-type">
+            <h3>Parent Category Name</h3>
+          </div>
+          <div class="category-table-heading quality">
+            <h3>Product Quantity</h3>
+          </div>
+          <div class="category-table-heading quality">
+            <h3>Actions</h3>
+          </div>
+        </div>
+      </div>
+      <!--category-table-body-->
+      <div class="category-body">
+        <!---category-table-row-->
+        <div class="category-table-row" *ngFor="let data of subCategories; let i=index">
+          <!-- <div class="category-table-data check">
+            <mat-checkbox class="mat-check"></mat-checkbox>
+          </div> -->
+          <div class="category-table-data serial">
+            <span>{{i+1}}</span>
+          </div>
+          <div class="category-table-data category-type">
+            <h3>{{data.name}}</h3>
+          </div>
+          <div class="category-table-data category-type">
+            <h3>{{data?.parent?.name}}</h3>
+          </div>
+          <div class="category-table-data quality">
+            <a>{{data.count}}</a>
+          </div>
+          <div class="category-table-data">
+            <button [disabled]="data.readOnly" style="margin-right: 5px;" mat-mini-fab color="warn"
+              (click)="openConfirmSubDialog(data._id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button [disabled]="data.readOnly" (click)="openEditCategoryDialog(data)" mat-mini-fab>
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </div>
+        <!---category-table-row-end-->
+
+      </div>
+
+    </div>
+  </div>
+</div>

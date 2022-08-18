@@ -1,0 +1,595 @@
+<div class="order-header-top">
+  <!---order-title-->
+  <div class="order-title">
+      <h3>Order Details</h3>
+  </div>
+  <!---order-btn-area-->
+  <div class="order-btn-area">
+      <ul>
+          <li><button>Import</button></li>
+          <li><button>Export</button></li>
+          <li><button class="active-btn" (click)="openDialog2()">Create Order</button></li>
+        </ul>
+  </div>
+</div>
+
+
+<!--order-details-->
+<div class="order_details">
+  <div class="order_details_left-sidebar">
+
+    <!---order-details-right-side-bar-top-->
+    <div class="order-details-left-sidebar-top">
+         <div class="order-details-left-top-dotted">
+             <div>
+                 <button routerLink="/admin/regular-orders">All Order <i class="fa fa-angle-down"></i></button>
+             </div>
+             <div class="dotted">
+                <span><i class="fa-solid fa-ellipsis"></i></span>
+             </div>
+         </div>
+          <!--search-->
+          <div class="top-search-area">
+                <div>
+                    <button><i class="fa fa-search"></i></button>
+                </div>
+                <div class="search-input">
+                    <input type="text" value="" placeholder="Search customer ">
+                </div>
+        </div>
+
+    </div><!---top-end-->
+    <!---order-details-right-side-bar-main-->
+    <div class="order-details-left-side-bar-main">
+        <div class="order-details-sidebar-info">
+             <ul >
+
+                 <li *ngFor="let data of orders | paginate: { itemsPerPage: ordersPerPage, currentPage: currentPage, totalItems: totalOrders }; let i = index"
+                 [class.active]="data?._id === id" [routerLink]="['../../','order-details', data._id ]">
+                     <div class="sidebar-info-left">
+                        <mat-checkbox disabled class="mat-check">{{data?.user?.fullName? data?.user?.fullName : 'No Name'}}</mat-checkbox>
+                        <span [routerLink]="['../../','order-details', data._id ]">SO-{{data?.orderId}} | <small>{{data?.checkoutDate | date}}</small></span>
+                     </div>
+                     <div class="sidebar-info-right">
+                       <h4>{{data?.totalAmount}} TK</h4>
+                       <span>Pending</span>
+                     </div>
+                 </li>
+             </ul>
+        </div>
+
+    </div><!---end-->
+
+
+
+  </div>
+
+
+  <form [formGroup]="dataForm">
+    <div class="order-details-container">
+        <!---order-id-area-->
+          <div class="order-id-area">
+            <!---req-id-title-->
+            <div class="req-id-title">
+              <h4>#{{order?.orderId}}</h4>
+              <span>{{order?.orderTimeline.orderPlacedDate | date}} {{order?.orderTimeline.orderPlacedDate |
+                date:'mediumTime'}}</span>
+            </div>
+            <div class="xmarks">
+               <span><i class="fa fa-xmark"></i></span>
+            </div>
+          </div>
+
+      <!---order-details-main-area-->
+      <div class="order-details-main">
+        <!---order-details-left-->
+        <div class="order-details-left">
+          <!---order-details-table-area-->
+          <!---order-table-->
+          <div class="table-head">
+            <div class="table-head-left">
+                <ul>
+                    <li><span [class]="clickActive[0] ? 'menu-active' : ''" (click)="getOrderDetails()" >Order Details</span></li>
+                    <li><span [class]="clickActive[1] ? 'menu-active' : ''" (click)="getInvoicesByOrderNo()">Invoices(1)</span></li>
+                    <li><span [class]="clickActive[2] ? 'menu-active' : ''" (click)="getReturns()">Return(1)</span></li>
+                </ul>
+            </div>
+            <div class="table-head-right">
+                <div class="edit">
+                 <span><i class="fa fa-edit" [routerLink]="['../../', 'edit-order', order?._id]"></i></span>
+                </div>
+                <div class="status-invoice-btn">
+                  <ul>
+                     <li><button [disabled]="!selectedIds?.length" (click)="openDialog()" type="button"
+                      [class]="selectedIds?.length > 0 ? 'active':'inactive'">Invoice</button></li>
+                     <li>
+                      <mat-form-field appearance="outline" class="status-btn">
+                        <mat-label>Status </mat-label>
+                        <mat-select formControlName="selected" >
+                          <mat-option *ngFor="let data of productOrderStatus" [value]="data.value">
+                            {{data.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      </li>
+                  </ul>
+                </div>
+
+
+
+
+                <div class="send-area">
+                     <div class="send-input">
+                         <input type="text" formControlName="statusNote" placeholder="Write a note ">
+                     </div>
+                     <div class="send-btn">
+                        <button (click)="onOrderStatusChange()">Send</button>
+                     </div>
+                </div>
+            </div>
+       </div>
+
+          <div class="order-table">
+
+            <table>
+              <thead>
+                <tr>
+                  <th class="check">
+                    <mat-checkbox></mat-checkbox>
+                  </th>
+                  <th class="si">SI</th>
+                  <th class="item">Item Name</th>
+                  <th class="vendor">Vendor</th>
+                  <th class="quantity">Quantity</th>
+                  <th class="price">Unit Price</th>
+                  <th class="discount">Discount</th>
+                  <th class="discount">Tax</th>
+                  <th class="amount">Total</th>
+                  <th class="discount">Advance</th>
+                  <th class="order-status">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of products; let i=index">
+                  <td class="check">
+                    <mat-checkbox (change)="onCheckChange($event,i)"></mat-checkbox>
+                  </td>
+                  <td class="si">
+                    <span>{{i+1}}</span>
+                  </td>
+                  <td class="item">
+                    <div class="product">
+                      <div class="product-img">
+                        <img [src]="item.product ? setThumbnailImage(item.product) : '/assets/images/placeholder/test.png'"
+                          alt="item.product.name">
+                      </div>
+                      <div class="product-info">
+                        <h3>{{item?.product.name}}</h3>
+                        <p>SKU: {{item?.sku}}</p>
+                        <p>Delivery: 10 to 15 days</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="vendor">
+                    <span>{{item?.product.vendor}}</span>
+                  </td>
+                  <td class="quantity">
+                    <a href="#">{{item?.quantity}}</a>
+                  </td>
+                  <td class="price">
+                    <span>{{item?.price}}</span>
+                  </td>
+                  <td class="discount">
+                    <span>0</span>
+                  </td>
+                  <td class="tax">
+                    <span>{{item.tax ? item.tax : '0'}}</span>
+                  </td>
+                  <td class="amount">
+                    <span>{{getAmount(item)}}</span>
+                  </td>
+                  <td class="tax">
+                    <span *ngIf="order.paymentStatus!==1" style="color:green">{{item?.advance}}</span>
+                    <span *ngIf="order.paymentStatus==1" style="color:orange">{{item?.advance}}</span>
+                  </td>
+                  <td  class="order-status">
+                    <button [class]="getStatusColor(item?.status)">{{item?.status | productOrderStatus}}</button>
+                  </td>
+
+
+              </tbody>
+
+            </table>
+
+          </div>
+          <!---table-end-->
+
+          <!---order-payment-details-->
+          <div class="order-pay-details">
+            <!--payment-summery-area-->
+            <div class="payment-summery-area">
+              <!-- <div class="invoice_total">
+                <div class="all_invoice_field">
+                  <div class="invoice_total_main subtotal">
+                    <p>Subtotal:</p>
+                    <p>{{orderSubTotal()}}TK</p>
+                  </div>
+                  <div class="invoice_total_main ">
+                    <p>Coupon Code:</p>
+                    <p>(-) &nbsp; 0TK</p>
+                  </div>
+                  <div class="invoice_total_main ">
+                    <p>Points Redeem</p>
+                    <p>(-) &nbsp; {{0}}PTS</p>
+                  </div>
+                  <div class="invoice_total_main ">
+                    <p>Shipping Charge</p>
+                    <p>{{order?.shippingFee ? order?.shippingFee : 0}}Tk</p>
+                  </div>
+                  <div class="total_horizontal_line "></div>
+                  <div class="pay_amount">
+                    <p>Amount to pay &nbsp; &nbsp; &nbsp;<span>{{orderSubTotal() + order?.shippingFee}} TK</span></p>
+                  </div>
+                  <div class="paid">
+                    <p>Paid</p>
+                    <p >{{order?.paidAmount}}TK</p>
+                  </div>
+                  <div class="paid">
+                    <p>Adjustment</p>
+                    <p >(-) &nbsp; 0TK</p>
+                  </div>
+                  <div class="total_horizontal_line"></div>
+                  <div class="due pay_amount">
+                    <p>Due Amount &nbsp; &nbsp; &nbsp;<span>{{(orderSubTotal() + order?.shippingFee) - order?.paidAmount}} TK</span></p>
+                  </div>
+                  <div class="paid">
+                    <p>Cancelled (SKU:{{getCancelSKU()}})</p>
+                    <p >(-) &nbsp;{{calculateCancelTotal()}}TK</p>
+                  </div>
+                  <div class="total_horizontal_line"></div>
+                  <div class="due pay_amount">
+                    <p>Refundable Amount &nbsp; &nbsp; &nbsp;<span>{{((orderSubTotal() + order?.shippingFee) - order?.paidAmount) - calculateCancelTotal()}} TK</span></p>
+                  </div>
+                  <div class="paid">
+                    <p>Refund (SKU:55212)</p>
+                    <p >0TK</p>
+                  </div>
+                  <div class="total_horizontal_line"></div>
+                  <div class=" pay_amount">
+                    <p>Due Amount &nbsp; &nbsp; &nbsp;<span class="due_taka">{{((orderSubTotal() + order?.shippingFee) - order?.paidAmount) - calculateCancelTotal()}} TK</span> </p>
+                  </div>
+                </div>
+              </div> -->
+
+                <div class="total-area">
+                    <ul>
+                        <li>
+                          <div class="total-title">
+                              <h3>Sub Total</h3>
+                          </div>
+                          <div class="total-price">
+                              <h4>{{order?.totalAmount - 120}} TK</h4>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="total-title">
+                            <h3>Coupon Code</h3>
+                          </div>
+                          <div class="total-price">
+                            <h4 class="color-red">(-) 0 TK</h4>
+                          </div>
+                      </li>
+                      <li>
+                        <div class="total-title">
+                          <h3>Points Redeem</h3>
+                        </div>
+                        <div class="total-price">
+                          <h4 class="color-red">(-){{order?.redeemAmount}} PTS</h4>
+                        </div>
+                    </li>
+                      <li>
+                        <div class="total-title">
+                          <h3>Shipping Charge</h3>
+                        </div>
+                        <div class="total-price">
+                          <h4>120 TK</h4>
+                        </div>
+                    </li>
+                    <hr>
+                    <li>
+                      <div class="total-title">
+                        <h3>Amount to pay</h3>
+                      </div>
+                      <div class="total-price">
+                        <h4>{{order?.totalAmount - order?.paidAmount + (order?.paidAmount ?  order?.paidAmount : 0)}} TK</h4>
+                      </div>
+                  </li>
+                      <li>
+                        <div class="total-title">
+                          <h3>Paid</h3>
+                        </div>
+                        <div class="total-price">
+                          <h4 class="color-red">(-) {{order?.paidAmount}}TK</h4>
+                        </div>
+                    </li>
+                      <li>
+                        <div class="total-title">
+                          <h3>Adjustment</h3>
+                        </div>
+                        <div class="total-price">
+                          <h4 class="color-red">(-) 0 TK</h4>
+                        </div>
+                    </li>
+                    <hr>
+                    <li>
+                      <div class="total-title">
+                        <h3>Due Amount</h3>
+                      </div>
+                      <div class="total-price">
+                        <h4>{{order?.totalAmount - order?.paidAmount}} TK</h4>
+                      </div>
+                  </li>
+                      <li>
+                        <div class="total-title">
+<!--                          <p>Cancelled (SKU:{{getCancelSKU()}})</p>-->
+<!--                          <p >(-) &nbsp;{{calculateCancelTotal()}}TK</p>-->
+                          <h3>Cancelled(SKU:{{getCancelSKU()}})</h3>
+                        </div>
+                        <div class="total-price">
+                          <h4 class="color-red">(-) {{calculateCancelTotal()}} TK</h4>
+                        </div>
+                    </li>
+                        <hr>
+                        <li>
+                          <div class="total-title">
+                            <h3>Refundable Amount</h3>
+                          </div>
+                          <div class="total-price">
+                            <h4 class="color-red">- 0 TK</h4>
+                          </div>
+                      </li>
+                        <li>
+                          <div class="total-title">
+                            <h3>Refund(SKU:676ds7)</h3>
+                          </div>
+                          <div class="total-price">
+                            <h4>(-) 0 TK</h4>
+                          </div>
+                      </li>
+                      <hr>
+                      <li>
+                        <div class="total-title">
+                          <h3>Total Due =</h3>
+                        </div>
+                        <div class="total-price">
+                          <h4>{{(order?.totalAmount - order?.paidAmount) - (calculateCancelTotal() ? calculateCancelTotal() + (order?.totalAmount === calculateCancelTotal() ? 120 : 0) : 0)}} TK</h4>
+                        </div>
+                    </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!--payment-summery-area-end-->
+
+
+          </div>
+          <!---order-payment-details-end-->
+
+          <!---customer-msg-->
+          <!-- <div class="customer-msg">
+            <h3>Message From Customer</h3>
+            <p>{{order?.orderNotes}}</p>
+          </div> -->
+
+           <!---time-line--->
+           <div class="time-line-area">
+            <!---timeline-title-->
+            <div class="time-line-title">
+              <h3>Timeline</h3>
+            </div>
+            <!---timeline-title-end-->
+            <!---timeline-main-->
+            <div class="timeline-main">
+              <ng-container *ngIf=" order && order?.orderStatusTimeline && order?.orderStatusTimeline.length">
+                <ul *ngFor="let data of timelineStatus.reverse();let i=index">
+
+                  <li>
+                    <div class="time-check">
+                      <span><i class="fa fa-check"></i></span>
+                    </div>
+                    <div class="timeline-info">
+                      <h3>{{data?.status}}</h3>
+                      <p>Status: {{data?.sku}} product {{data?.status}}</p>
+                      <p  class="date">{{data?.dateTime | date: 'medium'}}</p>
+                      <h4>{{data?.statusNote}}</h4>
+                    </div>
+                  </li>
+                </ul>
+
+                <ul>
+                  <li>
+                    <div class="time-check">
+                      <span><i class="fa fa-check"></i></span>
+                    </div>
+                    <div class="timeline-info">
+                      <h3>{{'Pending'}}</h3>
+                      <p>Thank you for placing for your order at Care me. We will start processing your order after
+                        payment is complete - Care me</p>
+                      <p class="date">{{order?.checkoutDate | date: 'medium'}}</p>
+                      <h4>{{data?.statusNote}}</h4>
+                    </div>
+                  </li>
+
+                </ul>
+              </ng-container>
+              <ng-container *ngIf=" order && order?.orderStatusTimeline.length === 0">
+                <ul>
+                  <li>
+                    <div class="time-check">
+                      <span class="active-check"><i class="fa fa-check"></i></span>
+                    </div>
+                    <div class="timeline-info">
+                      <h3>{{'Pending'}}</h3>
+                      <p>Thank you for placing for your order at Care me. We will start processing your order after
+                        payment is complete - Care me</p>
+                      <p class="date">{{order?.checkoutDate | date: 'medium'}}</p>
+                      <h4>{{data?.statusNote}}</h4>
+                    </div>
+                  </li>
+
+                </ul>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!---order-details-left-end-->
+        <!---order-details-right-->
+        <div class="order-details-right">
+          <!---delivery-info-->
+          <div class="delivery-info">
+            <!--customer-title-->
+            <div class="customer-title">
+              <h3>Delivery Info</h3>
+            </div>
+            <!--customer-title-end-->
+            <!---delivery-data-->
+            <div class="delivery-data">
+              <ul>
+                <li>
+                  <div>
+                    <h3>Shipped By:</h3>
+                  </div>
+                  <div>
+                    <span>Pathao</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h3>Weight:</h3>
+                  </div>
+                  <div>
+                    <span>2kg</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h3>Cost:</h3>
+                  </div>
+                  <div>
+                    <span>700 TK</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!---delivery-info-end-->
+
+          <!---customer-info-->
+          <div class="customer-info-area">
+            <!--customer-title-->
+            <div class="customer-title">
+              <h3>Customer Info</h3>
+            </div>
+            <!--customer-title-end-->
+            <!---customer-info--->
+            <div class="customer-info">
+              <ul>
+                <li>
+                  <div class="customer-info-left">
+                    <h3>Name:</h3>
+                  </div>
+                  <div class="customer-info-right">
+                    <h4>{{order?.name ? order.name : order?.user?.fullName}}</h4>
+                  </div>
+                </li>
+                <li>
+                  <div class="customer-info-left">
+                    <h3>Phone No:</h3>
+                  </div>
+                  <div class="customer-info-right">
+                    <h4>{{order?.phoneNo ? order.phoneNo : order?.user?.phoneNo}}</h4>
+                  </div>
+                </li>
+                <li>
+                  <div class="customer-info-left">
+                    <h3>Email:</h3>
+                  </div>
+                  <div class="customer-info-right">
+                    <a href="#">{{order?.user?.email}}</a>
+                  </div>
+                </li>
+                <li>
+                  <div class="customer-info-left">
+                    <h3>Shipping Address:</h3>
+                  </div>
+                  <div class="customer-info-right">
+                    <h3>{{order?.shippingAddress}}</h3>
+                  </div>
+                </li>
+                <li>
+                  <div class="customer-info-left">
+                    <h3>Total Order:</h3>
+                  </div>
+                  <div class="customer-info-right">
+                    <h4>{{order?.user?.checkouts.length}}</h4>
+                  </div>
+                </li>
+              </ul>
+
+            </div>
+
+          </div>
+          <!---customer-info-end-->
+
+          <!---comment-->
+          <div class="customer-comment">
+            <div class="customer-title">
+              <h3>Comments</h3>
+            </div>
+            <div class="customer-comment-main">
+              <mat-form-field class="form-field" appearance="overlay" >
+                <textarea rows="5" formControlName="comment" [(ngModel)]="commentEmpty" matInput placeholder="..."></textarea>
+              </mat-form-field>
+            </div>
+            <button (click)="addNewComment()">Add</button>
+          </div>
+          <!---comment-end-->
+
+          <!---order-confirm-status-->
+          <div class="order-confirm-status">
+            <!---status-info-->
+            <div class="status-info">
+            </div>
+            <!---status-info-end-->
+            <!---status-info-->
+            <div class="status-info" *ngFor="let c of order?.comments.reverse();let i=index">
+              <!--status-check-->
+              <div class="status-check" *ngIf="i===0">
+                <span class="active-status"><i class="fa fa-check"></i></span>
+              </div>
+              <div class="status-check" *ngIf="i!==0">
+                <span><i class="fa fa-check"></i></span>
+              </div>
+              <!--status-type-->
+              <div class="status-type">
+                <p class="admin_name">{{admin?.name}}</p>
+                <p class="admin_massage">{{c}}</p>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+      <!---order-details-main-area-end-->
+    </div>
+  </form>
+</div>
+
+
+
+

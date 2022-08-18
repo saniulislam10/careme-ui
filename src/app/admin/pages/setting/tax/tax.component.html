@@ -1,0 +1,60 @@
+<!---tax-header-->
+<div class="tax-header">
+    <h3>Tax & Vat</h3>
+</div>
+<!---tax-area-->
+<div class="tax-area">
+    <!---tax-main-->
+    <div class="tax-main">
+        <!--tax-data-header-->
+        <div class="tax-data-header">
+            <div>
+                <h3>Tax Rate</h3>
+            </div>
+            <div>
+                <button>ADD</button>
+            </div>
+        </div>
+          <!--check-box-area-->
+          <div class="checkbox-area">
+            <ul>
+                <li><mat-checkbox class="mat-check">Yes</mat-checkbox></li>
+                <li><mat-checkbox class="mat-check">No</mat-checkbox></li>
+            </ul>
+        </div>
+        <!---table-area-->
+        <div class="table-area">
+            <div class="table">
+                <!---table-head-->
+                <div class="table-head">
+                    <div class="table-row">
+                        <div class="table-heading"><h3>Tax Rate</h3></div>
+                        <div class="table-heading"><h3>Product / Category</h3></div>
+                        <div class="table-heading"><h3>Tax Name</h3></div>
+                    </div>
+                </div>
+                <!---table-body-->
+                <div class="table-body">
+                    <div class="table-row" *ngFor="let data of [1,2,3,4]">
+                        <div class="table-data">
+                            <h3>5%</h3>
+                        </div>
+                        <div class="table-data">
+                            <h3>Gadget</h3>
+                        </div>
+                        <div class="table-data">
+                            <h3>Name</h3>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>

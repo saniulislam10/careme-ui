@@ -1,0 +1,115 @@
+<div class="subcription-main">
+  <div class="subcription-body">
+  
+    <div class="subcription-contain">
+      <div class="subcription-header">
+        <div class="text1"> <h3>Subcription</h3></div>
+      </div>
+      <div class="subcription">
+        <div class="img">
+            <img src="./assets/images/image/bbdaily_SBC_Milk_1024X1024.png" >
+        </div>
+        <div class="subscription-details-area">
+          <div class="subcription-grid">
+            <p>
+              <strong>Subscribtion ID:</strong>
+               <span>#4852</span>
+            </p>
+            <p>
+              <strong>Name:</strong>
+              <span>Diaper Subscription</span>
+            </p>
+            <div>
+              <p>
+                <strong>Subscribtion Price: </strong>
+                 <span>2000 TK</span>
+              </p>
+              <p>
+                  <strong>Regular Price:</strong>
+                  <span>3000 TK</span>
+              </p>
+            </div>
+            <div>
+              <p>
+                <strong>Details:</strong> 
+                <span class="details">Grab the best-quality baby pampas on
+                  Alibaba.com at unrivaled offers.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="select-option">
+            <div class="select">
+              <h4>Select Brand</h4>
+              <mat-form-field appearance="outline">
+                <mat-label>Select </mat-label>
+                <mat-select disableRipple>
+                  <mat-option value="1">Option 1</mat-option>
+                  <mat-option value="2">Option 2</mat-option>
+                  <mat-option value="3">Option 3</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="select">
+              <h4>Select Size</h4>
+              <mat-form-field appearance="outline">
+                <mat-label>Select </mat-label>
+                <mat-select disableRipple>
+                  <mat-option value="1">Option 1</mat-option>
+                  <mat-option value="2">Option 2</mat-option>
+                  <mat-option value="3">Option 3</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+      
+            <div class="select">
+              <h4>Select Quantity</h4>
+              <mat-form-field appearance="outline">
+                <mat-label>Select </mat-label>
+                <mat-select disableRipple>
+                  <mat-option value="1">Option 1</mat-option>
+                  <mat-option value="2">Option 2</mat-option>
+                  <mat-option value="3">Option 3</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <section class="example-section">
+              <div class="frequancy">
+               <div class="frequancy-title"> <h4>Frequancy:</h4></div>
+             <div>
+               <ul>
+                 <li><mat-checkbox class="mat-check">Daily</mat-checkbox></li>
+                 <li><mat-checkbox class="mat-check">Weakly</mat-checkbox></li>
+                 <li> <mat-checkbox class="mat-check">Monthly</mat-checkbox></li>
+                </ul>
+                </div> 
+            </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="btn clearfix">
+        <button class="button1">Discrad</button>
+        <button class="button2" (click)="showPop()">Subscribe</button>
+      </div>
+    </div>
+    <div class="subcription-right">
+      <div class="subcription-header">
+        <div class="text2"><h3>You May also like</h3></div>
+      </div>
+      <div class="subcription-img">
+        <div class="subcription1">
+            <img src="./assets/images/image/bbdaily_SBC_Milk_1024X1024.png" >
+        </div>
+        <div class="subcription1">
+          <img src="./assets/images/image/bbdaily_SBC_Milk_1024X1024.png" >
+        </div>
+      </div>
+  </div>
+  </div>
+  </div>
+  <!---component-->
+  <div class="component">
+    <app-subscription-ui-popup #popUp></app-subscription-ui-popup>
+  </div>
+  

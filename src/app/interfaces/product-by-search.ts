@@ -1,0 +1,28 @@
+export interface ProductBySearch {
+    _id? : any,
+    title : string,
+    brand ?:string,
+    price? : number,
+    discountedPrice ?: number;
+    discount ?:string;
+    images : string,
+    aboutThis ?: any,
+    description ?: string,
+    feedback?: any,
+    totalAvailableQuantity? : number,
+    salePrice ?: any,
+    specs? : any,
+    variants? : any,
+    ratings?: any,
+    link?: String,
+    firstVariant?: String,
+    secondVariant?: String,
+    thirdVariant?: String,
+    fourthVariant?: String,
+    quantity: Number,
+    weight?: number,
+    multyWeight?: number,
+    multyPrice?: number,
+    earnPointsType? : number,
+    earnPoints? : number,
+}

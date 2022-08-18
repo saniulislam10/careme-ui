@@ -1,0 +1,75 @@
+<div class="campaign-area" *ngIf="campaignPopUp == true">
+    <div class="campaign-area-main">
+        <!---title-->
+        <div class="campaign-head">
+            <div>
+                <h3>Create Campaign</h3>
+            </div>
+            <div>
+                <span (click)="popUpHide()"><i class="fa fa-xmark"></i></span>
+            </div>
+        </div>
+        <!---curier-body-->
+        <div class="campaign-body">
+
+            <div class="form-input">
+                <h3>Campaign ID:</h3>
+                <div>
+                    <mat-form-field class="form-field" appearance="outline">
+                        <input matInput value="Enter your campaign id">
+                      </mat-form-field>
+                </div>
+            </div>
+            <div class="form-input">
+                <h3>Name:</h3>
+                <div>
+                    <mat-form-field class="form-field" appearance="outline">
+                        <input matInput value="Enter your name">
+                      </mat-form-field>
+                </div>
+            </div>
+            <div class="form-input">
+                <h3>Select Product:</h3>
+                <div>
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Select</mat-label>
+                        <mat-select >
+                            <mat-option value="">Product</mat-option>
+                            <mat-option value="">Product1</mat-option>
+                            <mat-option value="">Product2</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="form-input">
+                <h3>Select Dates:</h3>
+                <div>
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-date-range-input [rangePicker]="picker">
+                          <input matStartDate placeholder="Start date">
+                          <input matEndDate placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                      </mat-form-field>
+                </div>
+            </div>
+            
+    
+
+
+        </div><!---curier-body-end-->
+
+        <!---curier-bottom-area-->
+        <div class="campaign-bottom-area">
+            <div class="bottom-right">
+                <ul>
+                    <li><button (click)="popUpHide()">Cancel</button></li>
+                    <li><button class="active">Create</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+

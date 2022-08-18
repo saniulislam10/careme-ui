@@ -1,0 +1,25 @@
+<!---setting-area-->
+<div class="setting-area">
+    <div class="setting-main">
+        <!--setting-menu-->
+        <div class="setting-menu">
+            <ul>
+                <li><a routerLink="/dashboard/setting" class="menu-active">Account</a></li>
+                <li (click)=" notificationMenuToggle()"><a>Notification</a></li>
+                <ul *ngIf="notification == true">
+                    <li><a routerLink="/dashboard/setting/desktop-notification">Desktop Notifications</a></li>
+                    <li><a routerLink="/dashboard/setting/app-notification">In-App Notifications</a></li>
+                    <li><a routerLink="/dashboard/setting/sms-notification">SMS</a></li>
+                    <li><a routerLink="/dashboard/setting/email-notification">Email</a></li>
+                </ul>
+                <li><a routerLink="/dashboard/setting/payment">Payment</a></li>
+            </ul>
+        </div>
+        <!---setting-page-render-->
+        <div class="setting-page-render">
+            <router-outlet></router-outlet>
+        </div>
+
+
+    </div>
+</div>

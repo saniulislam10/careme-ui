@@ -1,0 +1,53 @@
+<!--order-area-->
+<div class="order-area">
+    <div class="order-main">
+        <!---order--title-->
+        <div class="order-title">
+            <h3>Orders</h3>
+        </div> <!---order--title-end-->
+        <!--toggle-tab-->
+        <div class="toggle-tab">
+            <ul>
+                <li><button class="toggle-tab-active">All</button></li>
+                <li><button>To Pay</button></li>
+                <li><button>To Ship</button></li>
+                <li><button>To Reacive</button></li>
+            </ul>
+        </div>
+        <!---order-product-area-->
+        <div class="ordered-product-area">
+            <!---order-product-->
+            <div class="order-product" *ngFor="let data of [1,2,3,3]" routerLink="./order-details">
+                <!--order-product-left-->
+                <div class="order-product-left">
+                    <!---product-img-->
+                    <div class="product-img">
+                        <img src="./assets/images/junk/1218NP_economicoutlook_img1.jpg" alt="">
+                    </div>
+                    <!--product-info-->
+                    <div class="product-info">
+                        <h3>REGOrder #1324734</h3>
+                        <p>Placed On 22 Oct 2021 10.28 AM</p>
+                        <p>Paid On 23 Oct 2021 12.12 PM</p>
+                        <h4>Items:04</h4>
+                    </div>
+                </div>
+                <!--order-product-right-->
+                <div class="order-product-right">
+                    <div class="product-price">
+                        <h3>Total: <span>6000 TK</span></h3>
+                    </div>
+                    <div class="product-status">
+                        <span class="status" *ngIf="delivered == true"> <small class="status-circle"></small> Delivered</span>
+                        <span class="status cancel" *ngIf="cancel == true"><small class="status-circle"></small>Cancelled</span>
+                        <span class="status process" *ngIf="process == true"><small class="status-circle"></small>Processing</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

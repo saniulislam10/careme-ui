@@ -1,0 +1,86 @@
+<!---add-category-area-->
+<div class="add-category-area">
+  <!---add-category-main-->
+  <div class="add-category-main">
+      <!---add-category-header-->
+      <div class="add-category-header">
+          <h2>Add Category</h2>
+      </div><!---add-category-header-->
+     <!---add-category-body-->
+     <div class="add-category-body">
+       <form [formGroup]="dataForm" (ngSubmit)="onSubmit()" #templateForm="ngForm" autocomplete="off">
+              <!---category-name-->
+          <div class="category-name">
+              <div class="form-input">
+                  <h3>Category Name</h3>
+                  <div class="field">
+                  <mat-form-field appearance="outline" class="form-field">
+                      <mat-label>Category Name</mat-label>
+                      <input type="text" formControlName="name" (change)="autoGenerateSlug()" matInput placeholder="Enter Category Name">
+                      <mat-error *ngIf="">This field is required</mat-error>
+                  </mat-form-field>
+                  </div>
+              </div>
+          </div>
+
+          <!---options-->
+          <div class="options">
+              <h3>Options</h3>
+              <ul style="padding-top: 20px;">
+                <mat-radio-group  formControlName="selectedType" >
+                <mat-radio-button style="padding-right: 10px;" *ngFor="let categoryType of categoryTypes" [value]="categoryType">
+                  {{categoryType}}
+                </mat-radio-button>
+              </mat-radio-group>
+              </ul>
+          </div>
+          <!---options-end-->
+          <!---select-parent-->
+          <div class="select-parent">
+              <ul *ngIf="hasChild === true || dataForm.value.selectedType === 'Child'">
+                  <li>Select Parent</li>
+                    <!-- <mat-select class="select-parent-dropdown" formControlName="parent" placeholder="Select Parent">
+                      <mat-option  *ngFor="let category of categories" [value]="category">
+                        {{  category.name }}
+                      </mat-option>
+                    </mat-select> -->
+                    <mat-form-field appearance="outline" class="w-60">
+                      <mat-select [disableOptionCentering]="true" #select placeholder="Select parent category *" required
+                                  formControlName="parent" (selectionChange)="onSelectCategory($event)">
+                        <mat-select-filter [placeholder]="'Filter Category List'"
+                                           *ngIf="select.focused"
+                                           [array]="categories"
+                                           [displayMember]="'name'"
+                                           (filteredReturn)="filteredCatList = $event"></mat-select-filter>
+                        <mat-option *ngFor="let item of filteredCatList" [value]="item._id">
+                          {{item.name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="">This field is required</mat-error>
+                    </mat-form-field>
+              </ul>
+          </div>
+          <!---select-parent-end-->
+          <!--criteria-->
+           <div class="form-input">
+              <h3>Tags</h3>
+              <div class="field">
+              <mat-form-field appearance="outline" class="form-field">
+                  <mat-label>Tags</mat-label>
+                  <input type="text" formControlName="tags"  matInput placeholder="Enter Tags Name">
+                  <mat-error *ngIf="">This field is required</mat-error>
+                  </mat-form-field>
+              </div>
+          </div>
+          <!---submit-btn-->
+          <div class="sub-btn">
+              <ul>
+                  <li><button type="submit" class="save-active">{{data? 'Edit Category' : 'Add Category'}}</button></li>
+                  <li><button type="button" (click)="closeDialogBox()">Cancel</button></li>
+              </ul>
+          </div>
+       </form>
+     </div>
+
+  </div>
+</div>
