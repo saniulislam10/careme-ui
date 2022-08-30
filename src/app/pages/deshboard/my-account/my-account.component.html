@@ -10,7 +10,7 @@
       <nz-card nzTitle="Shipping Address" [nzExtra]="orderTemplate">
         <table style="width: 100%">
           <tr>
-            <th >Name</th>
+            <th>Name</th>
             <td>Saniul Islam</td>
           </tr>
           <tr>
@@ -32,7 +32,7 @@
       <nz-card nzTitle="Shipping Address" [nzExtra]="orderTemplate">
         <table style="width: 100%">
           <tr>
-            <th >Name</th>
+            <th>Name</th>
             <td>Saniul Islam</td>
           </tr>
           <tr>
@@ -54,11 +54,22 @@
 </div>
 <div>
   <div class="upload">
-    <button type="button" (click)="profileImagePicker.click()">Attachment <i class="fas fa-paperclip"></i></button>
-    <input [hidden]="true" #profileImagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
+    <button type="button" (click)="profileImagePicker.click()">
+      Attachment <i class="fas fa-paperclip"></i>
+    </button>
+    <input
+      [hidden]="true"
+      #profileImagePicker
+      type="file"
+      (change)="fileChangeEvent($event)"
+      accept="image/*"
+    />
   </div>
-  <img style="width: 100px; height: 100px" [src]="imgPlaceHolder ? imgPlaceHolder : '/assets/images/avatar/user-young.jpg'">
+  <img
+    style="width: 100px; height: 100px"
+    [src]="
+      imgPlaceHolder ? imgPlaceHolder : '/assets/images/avatar/user-young.jpg'
+    "
+  />
 </div>
-<form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
-  
-</form>
+<form [formGroup]="dataForm" (ngSubmit)="onSubmit()">Mamun</form>

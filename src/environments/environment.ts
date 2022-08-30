@@ -8,8 +8,8 @@ export const environment = {
   // ftpBaseLink: 'https://ftp.caremein.softlabit.com',
   // apiBaseLinkAli: 'https://api.careme.softlabit.com',
   apiBaseLinkAli: 'http://localhost:5502',
-  apiBaseLink: 'http://192.168.68.143:5502',
-  ftpBaseLink: 'http://192.168.68.143:5502',
+  apiBaseLink: 'http://192.168.68.131:5502',
+  ftpBaseLink: 'http://192.168.68.131:5502',
   appBaseUrl: '/',
   userBaseUrl: '/',
   userLoginUrl: '/login',
@@ -21,7 +21,7 @@ export const environment = {
   smsUser: 'new sms',
   smsPass: '',
   smsSid: '',
-  VERSION: 1
+  VERSION: 1,
 };
 
 /*
