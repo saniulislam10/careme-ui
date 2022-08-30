@@ -39,15 +39,15 @@
                 nz-submenu
                 [(nzOpen)]="openMap.sub2"
                 (nzOpenChange)="openHandler('sub2')"
-                nzTitle="Navigation Two"
+                nzTitle="Orders"
               >
                 <ul>
-                  <li nz-menu-item>My Orders</li>
+                  <li nz-menu-item routerLink="./orders">My Orders</li>
                   <li nz-menu-item>My Return</li>
                   <li nz-menu-item>Canceled Order</li>
                 </ul>
               </li>
-              <li nz-menu-item>My Reviews</li>
+              <li nz-menu-item routerLink="./reviews">My Reviews</li>
               <li nz-menu-item routerLink="./tickets">Tickets</li>
               <li nz-menu-item routerLink="./setting">Settings</li>
             </ul>

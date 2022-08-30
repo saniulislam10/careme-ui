@@ -11,7 +11,7 @@ const routes: Routes = [
     children:[
       {
         path:"",
-        loadChildren: () => import('./orders/order/order.module').then(m => m.OrderModule)
+        loadChildren: () => import('./summary/summary.module').then(m => m.SummaryModule)
       },
       {
         path:"subscription",
@@ -30,14 +30,6 @@ const routes: Routes = [
         loadChildren: () => import('./ticket-details-page/ticket-details-page.module').then(m => m.TicketDetailsPageModule)
       },
       {
-        path:"order-details",
-        loadChildren: () => import('./orders/order-details/order-details.module').then(m => m.OrderDetailsModule)
-      },
-      {
-        path:"individual-product-status",
-        loadChildren: () => import('./orders/individual-product-order-details/individual-product-order-details.module').then(m => m.IndividualProductOrderDetailsModule)
-      },
-      {
         path:"points",
         loadChildren: () => import('./points/points.module').then(m => m.PointsModule)
       },
@@ -52,6 +44,22 @@ const routes: Routes = [
       {
         path:"account",
         loadChildren: () => import('./my-account/my-account.module').then(m => m.MyAccountModule)
+      },
+      {
+        path:"reviews",
+        loadChildren: () => import('./my-reviews/my-reviews.module').then(m => m.MyReviewsModule)
+      },
+      {
+        path:"orders",
+        loadChildren: () => import('./my-orders/my-orders.module').then(m => m.MyOrdersModule)
+      },
+      {
+        path:"order-details",
+        loadChildren: () => import('./order-details/order-details.module').then(m => m.OrderDetailsModule)
+      },
+      {
+        path:"order-single-product-details",
+        loadChildren: () => import('./order-single-product-details/order-single-product-details.module').then(m => m.OrderSingleProductDetailsModule)
       },
     ]
   }
