@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeshboardComponent implements OnInit {
   deshMenu = false;
+  openMap: { [name: string]: boolean } = {
+    sub1: false,
+    sub2: false,
+    sub3: false
+  };
 
   constructor() { }
 
@@ -19,6 +24,14 @@ export class DeshboardComponent implements OnInit {
   }
   sideMenuInactive(){
     this.deshMenu = false;
+  }
+
+  openHandler(value: string): void {
+    for (const key in this.openMap) {
+      if (key !== value) {
+        this.openMap[key] = false;
+      }
+    }
   }
 
 }

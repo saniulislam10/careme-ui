@@ -22,6 +22,8 @@ import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { ImageGalleryDialogModule } from '../../image-gallery-dialog/image-gallery-dialog.module';
 import { MatSelectFilterModule } from 'mat-select-filter';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { MatSelectFilterModule } from 'mat-select-filter';
     QuillModule.forRoot(),
     NgxDropzoneModule,
     MatSelectCountryModule,
-    PipesModule
+    PipesModule,
+    NzTagModule,
+    MatChipsModule
   ]
 })
 export class AddNewProductModule {

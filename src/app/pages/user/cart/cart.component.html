@@ -1,30 +1,3 @@
-<!--order-process-system-->
-<!-- <div class="order-process-system">
-  <div class="container">
-    <div class="order-process-main">
-      <div class="order-process-system-info active-process">
-        <span><i class="fa fa-shopping-cart"></i></span>
-        <h3>My Cart</h3>
-      </div>
-      <div class="order-process-system-info">
-        <span><i class="fa fa-map"></i></span>
-        <h3>Shipping Info</h3>
-      </div>
-      <div class="order-process-system-info">
-        <span><i class="fa fa-truck"></i></span>
-        <h3>Delivery Info</h3>
-      </div>
-      <div class="order-process-system-info">
-        <span><i class="fa fa-credit-card"></i></span>
-        <h3>Payment</h3>
-      </div>
-      <div class="order-process-system-info">
-        <span><i class="fa fa-check-circle"></i></span>
-        <h3>Confirmation</h3>
-      </div>
-    </div>
-  </div>
-</div> -->
 <div class="order-process-system">
   <div class="container">
     <div class="order-process-main">
@@ -115,8 +88,8 @@
                 <div class="product-area">
                   <!---product-img-->
                   <div class="product-img">
-                    <img *ngIf="!data?.requestProduct" [src]="data ? getThumbImage(data) : '/assets/images/placeholder/test.png'" [alt]="data.product?.name" />
-                    <img *ngIf="data?.requestProduct" [src]="data? data.image: '/assets/images/placeholder/test.png'" [alt]="data.name" />
+                    <img [src]="getThumbImage(data)" [alt]="data.product?.name" />
+
                   </div>
                   <!---product-info-->
                   <div class="product-info">
@@ -135,9 +108,9 @@
                       <!---point-->
                       <div class="point">
                         <h3 style="display: flex">
-                          <div class="variant_name" style="padding-right: 5px">
-                            <h3>{{ data.variant[0].variant }}</h3>
-                            <mat-icon (click)="showModal(gi,di,data.variant[0])">edit</mat-icon>
+                          <div class="variant_name" *ngIf="data.product.hasVariant" style="padding-right: 5px">
+                            <h3>{{ data?.variant[0]?.variant }}</h3>
+                            <mat-icon (click)="showModal(gi,di,data?.variant[0])">edit</mat-icon>
                           </div>
 
                           <nz-modal  [(nzVisible)]="isVisible"  nzTitle="Edit Option" okText="ok" cancelText="cancel"
@@ -163,7 +136,7 @@
                                       </nz-select>
                                     </td>
                                     <td>{{ selectedVariant?.variantPrice }}</td>
-                                    <td>{{ basicTable.data[sPI]?.product.tax }}</td>
+                                    <td>{{ basicTable.data[sPI]?.product.tax ?  basicTable.data[sPI]?.product.tax : 0}}</td>
                                     <td>{{ basicTable.data[sPI]?.product.tax + selectedVariant?.variantPrice }}</td>
                                     <td>{{ selectedVariant?.variantQuantity === 0 ? basicTable.data[sPI]?.product.partialPayment : '0' }}</td>
                                     <!-- <td>{{data.address}}</td> -->
@@ -277,8 +250,8 @@
               </div>
               <!--table-data-->
               <div class="table-data-2 remove" *ngIf="
-                  data?.variant[0].variantQuantity == 0 ||
-                  data?.variant[0].variantQuantity == null
+                  data?.variant[0]?.variantQuantity == 0 ||
+                  data?.variant[0]?.variantQuantity == null
                 ">
                 <div class="stock-badge" *ngIf="data?.product?.canPartialPayment">
                   <span *ngIf="data?.product?.partialPaymentType === 0">( {{ data?.product.partialPayment }}Tk advance
@@ -299,7 +272,7 @@
                   }}TK
                 </h3>
               </div>
-              <div class="table-data-2 remove" *ngIf="data?.variant[0].variantQuantity">
+              <div class="table-data-2 remove" *ngIf="data?.variant[0]?.variantQuantity">
                 <div class="stock-badge">
                   <span>( COD)</span>
                 </div>

@@ -1,0 +1,126 @@
+<ng-template #orderTemplate>
+  <p>4.84.8</p>
+</ng-template>
+<ng-template #pointTemplate>
+  <p>4.84.8 pts</p>
+</ng-template>
+<ng-template #returnTemplate>
+  <p>4.84.8</p>
+</ng-template>
+<ng-template #refundTemplate>
+  <p>4.84.8 Tk</p>
+</ng-template>
+<ng-template #reviewsTemplate>
+  <p>4.84.8</p>
+</ng-template>
+<div>
+  <div nz-row [nzGutter]="8">
+    <div nz-col [nzSpan]="5">
+      <nz-card nzTitle="Orders" [nzExtra]="orderTemplate">
+        <table style="width: 100%">
+          <tr>
+            <th >Order Pending</th>
+            <td>14.8</td>
+          </tr>
+          <tr>
+            <th>Order Delivered</th>
+            <td>34.8</td>
+          </tr>
+          <tr>
+            <th>Canceled Orders</th>
+            <td>4.8</td>
+          </tr>
+        </table>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="5">
+      <nz-card nzTitle="Points" [nzExtra]="orderTemplate">
+        <table style="width: 100%">
+          <tr>
+            <th >Lifetime Points</th>
+            <td>14.8</td>
+          </tr>
+          <tr>
+            <th>Use Points</th>
+            <td>34.8</td>
+          </tr>
+          <tr>
+            <th>Pending Points</th>
+            <td>4.8</td>
+          </tr>
+        </table>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="5">
+      <nz-card nzTitle="Return" [nzExtra]="orderTemplate">
+        <table style="width: 100%">
+          <tr>
+            <th >Return Pending</th>
+            <td>14.8</td>
+          </tr>
+          <tr>
+            <th>Return Accepted</th>
+            <td>34.8</td>
+          </tr>
+          <tr>
+            <th>Return Cancelled</th>
+            <td>4.8</td>
+          </tr>
+        </table>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="5">
+      <nz-card nzTitle="Refund" [nzExtra]="orderTemplate">
+        <table style="width: 100%">
+          <tr>
+            <th >Pending</th>
+            <td>14.8</td>
+          </tr>
+          <tr>
+            <th>Accepted</th>
+            <td>34.8</td>
+          </tr>
+          <tr>
+            <th>Canceled</th>
+            <td>4.8</td>
+          </tr>
+        </table>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="4">
+      <nz-card nzTitle="Reviews" [nzExtra]="orderTemplate">
+        <table style="width: 100%">
+          <tr>
+            <th >Reviews Done</th>
+            <td>14.8</td>
+          </tr>
+          <tr>
+            <th>Reviews Pending</th>
+            <td>34.8</td>
+          </tr>
+        </table>
+      </nz-card>
+    </div>
+  </div>
+</div>
+<nz-table style="margin-top: 50px;" #headerTable [nzData]="listOfData" [nzPageSize]="50" [nzScroll]="{ y: '450px' }">
+  <thead>
+    <tr>
+      <th>Order</th>
+      <th>Placed On</th>
+      <th nzWidth="100px">Items</th>
+      <th >Total</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of headerTable.data">
+      <td>{{ data.orderId }}</td>
+      <td>{{ data.date | date : 'short'}}</td>
+      <td>{{ data.items }}</td>
+      <td>{{ data.total }}</td>
+      <td>{{ data.status }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+

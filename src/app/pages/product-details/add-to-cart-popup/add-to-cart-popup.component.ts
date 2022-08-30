@@ -9,6 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class AddToCartPopupComponent implements OnInit {
 
   // addToCartPop = false;
+  image: any;
 
   constructor(
     public dialogRef: MatDialogRef<AddToCartPopupComponent>,

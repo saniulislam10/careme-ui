@@ -38,6 +38,9 @@ export class ProductDetailsComponent implements OnInit {
   @ViewChild('vid') vid!: ElementRef;
 
   // button active
+  defaultVariantSku: string;
+  variantSelected = false;
+  allTypeVariantSelected = false;
 
   clickActive: boolean[][] = [[]];
   star = 4.3;
@@ -77,10 +80,13 @@ export class ProductDetailsComponent implements OnInit {
   existInCart: boolean = false;
   globalContinue: boolean;
 
-  selectedRow:number
-  selectedColumn:number
+  selectedRow: number
+  selectedColumn: number
   selectedVarientName: string
   isUserAuth: boolean;
+  globalDisplay: any;
+  defaultVariantSelected: boolean;
+  display: boolean;
 
 
 
@@ -100,8 +106,8 @@ export class ProductDetailsComponent implements OnInit {
     private dialog: MatDialog,
     private searchService: SearchService,
     private embedService: AngularEmbedVideoService,
-    private utilsService : UtilsService
-  ) {}
+    private utilsService: UtilsService
+  ) { }
 
   ngOnInit(): void {
     // GET ID FORM PARAM
@@ -113,35 +119,35 @@ export class ProductDetailsComponent implements OnInit {
       } else {
         this.data = this.searchService.getSearchProduct();
         this.product = this.data;
-        console.log("product", this.product);
+        // console.log("product", this.product);
 
       }
     });
 
     // this.getStockControl();
     this.reloadService.refreshUser$
-    .subscribe(()=>{
-      this.isUserAuth = this.userService.getUserStatus();
-      // this.checkCartItems();
-      this.getUser();
-      this.getCartItemList();
-    })
+      .subscribe(() => {
+        this.isUserAuth = this.userService.getUserStatus();
+        // this.checkCartItems();
+        this.getUser();
+        this.getCartItemList();
+      })
     this.reloadService.refreshCart$
-    .subscribe(()=>{
-      this.getCartItemList();
-    })
+      .subscribe(() => {
+        this.getCartItemList();
+      })
     this.isUserAuth = this.userService.getUserStatus();
     this.getUser();
     this.getCartItemList();
 
   }
 
-  dateCalculationFrom(data: any){
+  dateCalculationFrom(data: any) {
     const d = new Date();
     this.deliveryDateFrom = new Date(d.setDate(d.getDate() + data));
     return this.deliveryDateFrom
   }
-  dateCalculationTo(data: any){
+  dateCalculationTo(data: any) {
     const d = new Date();
     this.deliveryDateTo = new Date(d.setDate(d.getDate() + data));
     return this.deliveryDateTo
@@ -153,7 +159,7 @@ export class ProductDetailsComponent implements OnInit {
   private getUser() {
     this.userDataService.getLoggedInUserInfo().subscribe(
       (res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.user = res.data;
       },
       (err) => {
@@ -186,7 +192,7 @@ export class ProductDetailsComponent implements OnInit {
   // get single product by slug
   private getSingleProductBySlug() {
     this.spinner.show();
-    console.log(this.slug);
+    // console.log(this.slug);
 
     this.subDataOne = this.productService
       .getSingleProductBySlug(this.slug)
@@ -203,7 +209,6 @@ export class ProductDetailsComponent implements OnInit {
             this.product = res.data;
             this.globalContinue = this.product.continueSelling;
             this.globalQuantity = this.product.quantity;
-            console.log("this.globalContinue",this.globalContinue);
 
             // if(this.product.link){
             //   this.searchByWebsite(this.product.link);;
@@ -262,7 +267,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   checkCartItems(selectedvarient?) {
-    if(this.isUserAuth){
+    if (this.isUserAuth) {
       for (const data of this.carts) {
 
         if (this.product._id === data.product?._id) {
@@ -271,11 +276,11 @@ export class ProductDetailsComponent implements OnInit {
               return true;
             }
           } else {
-            return  true;
+            return true;
           }
         }
       }
-    }else{
+    } else {
       return false;
     }
   }
@@ -315,14 +320,44 @@ export class ProductDetailsComponent implements OnInit {
       if (this.product.hasVariant === true) {
         this.variantSplit();
         this.variantSku = this.product.sku;
-        // let skuId = this.product.variantFormArray[0].variantSku;
-        // this.getVariantInfo(skuId);
+        // console.log(this.variantSku);
+        let variantInfo = this.product.variantFormArray;
+        for (let i=0; i< variantInfo.length; i++){
+          if(variantInfo[i].variantQuantity > 0 || variantInfo[i].variantContinueSelling){
+            console.log("loop", i);
+
+            break
+          }
+        }
+        // console.log(this.product.variantFormArray[0]);
+
       }
       this.getSizeChart();
       this.initializeArrays();
+      if(this.product.hasVariant){
+        let variantInfo = this.product.variantFormArray;
+        for (let i=0; i< variantInfo.length; i++){
+          if(variantInfo[i].variantQuantity > 0 || variantInfo[i].variantContinueSelling){
+            console.log("loop", i);
+            this.selectDefaultVariant(variantInfo[i].variantSku);
+
+            break
+          }
+        }
+      }
       if (this.images.length > 0) {
         this.image = this.images[0];
       }
+    }
+  }
+
+  selectDefaultVariant(variantSku){
+    console.log("partial sku : ",variantSku);
+    let sku = variantSku.split('-')[1];
+    for(let i=0; i< sku.length; i++){
+      console.log(i,Number(sku[i]))
+      this.defaultVariantSelected = true;
+      this.selectedVariant(i,Number(sku[i]));
     }
   }
 
@@ -331,7 +366,6 @@ export class ProductDetailsComponent implements OnInit {
    */
 
   addToCarts() {
-    console.log(this.selectedVariantData);
 
     const data: Cart = {
       product: this.product?._id,
@@ -339,7 +373,7 @@ export class ProductDetailsComponent implements OnInit {
       variant: this.selectedVariantData,
       selectedGlobalVariants: this.globalQuantity ? this.globalQuantity : null,
       deliveryDateFrom: this.deliveryDateFrom,
-      deliveryDateTo : this.deliveryDateTo,
+      deliveryDateTo: this.deliveryDateTo,
     };
     console.log("add to cart----------", data);
 
@@ -367,36 +401,35 @@ export class ProductDetailsComponent implements OnInit {
   activeCartBtn() {
 
     if (!this.isUserAuth) {
-      console.log("login first", this.isUserAuth);
       this.openRegistrationDialog();
       return
     }
     this.cartService.getCartItemType()
-    .subscribe(res => {
-      let type = res.data;
-      if(type === 'request'){
-        this.uiService.warn("Cannot add both regular and request product together in cart");
-        return
-      }else{
-        if (this.product?.hasVariant === true) {
-          if (this.clickVariant === true) {
+      .subscribe(res => {
+        let type = res.data;
+        if (type === 'request') {
+          this.uiService.warn("Cannot add both regular and request product together in cart");
+          return
+        } else {
+          if (this.product?.hasVariant === true) {
+            if (this.clickVariant === true) {
               this.addToCarts();
               this.openCartDialog();
+            } else {
+              this.uiService.warn('Please choose a variant first');
+            }
           } else {
-            this.uiService.warn('Please choose a variant first');
-          }
-        } else {
-          if (this.isUserAuth) {
-            // this.btnActive = true;
-            this.addToCarts();
-            this.openCartDialog();
-          } else {
-            this.openRegistrationDialog();
+            if (this.isUserAuth) {
+              // this.btnActive = true;
+              this.addToCarts();
+              this.openCartDialog();
+            } else {
+              this.openRegistrationDialog();
+            }
           }
         }
       }
-    }
-    )
+      )
 
     // this.addToCart.showPopUp();
   }
@@ -405,18 +438,18 @@ export class ProductDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(AddToCartPopupComponent, {
       data: {
         name: this.product.name,
+        image: this.image,
         selectedQty: this.selectedQty,
         price: this.selectedVariantData
           ? this.selectedVariantData.variantPrice
-          : this.product.sellingPrice,
-        image: this.product.images[0],
+          : this.product.sellingPrice
       },
       // width: '100%',
       // height: '100%',
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      this.selectedVariant(this.selectedRow,this.selectedColumn)
+      this.selectedVariant(this.selectedRow, this.selectedColumn)
 
       // console.clear()
       // console.log("relaoadd")
@@ -442,26 +475,26 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
 
-  selectedVariant(row, col) {
+  selectedVariant(row: number, col: number) {
 
+    console.log(this.defaultVariantSelected, this.clickActive)
     this.selectedRow = row;
     this.selectedColumn = col;
-
-
-
+    this.variantSelected = true;
     this.clickActive[row] = [];
     this.clickActive[row][col] = !this.clickActive[row][col];
+    console.log(this.defaultVariantSelected, this.clickActive)
 
     // this.sku[i] = variantName.charAt(0) + index;
     this.sku[row] = col;
 
     this.variantSku = this.product.sku + '-';
     for (let y = 0; y < this.product.variants.length; y++) {
-      this.variantSku += this.sku[y];
+      if (this.sku[y] !== undefined) {
+        this.variantSku += this.sku[y];
+      }
     }
     this.getVariantInfo(this.variantSku);
-
-    console.log(this.globalQuantity);
 
     if (this.selectedQty > this.globalQuantity && this.globalQuantity !== 0) {
       this.addToCartButton = false;
@@ -471,6 +504,7 @@ export class ProductDetailsComponent implements OnInit {
     } else {
       this.addToCartButton = true;
     }
+    console.log(this.defaultVariantSelected);
   }
 
   getVariantInfo(skuId) {
@@ -488,15 +522,18 @@ export class ProductDetailsComponent implements OnInit {
       this.clickVariant = false;
       this.globalPrice = this.product.sellingPrice;
       this.globalContinue = this.product.continueSelling;
+      this.globalDisplay = this.selectedVariantData.variantContinueSelling;
     } else {
+      this.allTypeVariantSelected = true;
       this.clickVariant = true;
       this.globalQuantity = this.selectedVariantData.variantQuantity;
       this.globalPrice = this.selectedVariantData.variantPrice;
       this.globalContinue = this.selectedVariantData.variantContinueSelling;
     }
-    console.log("exist in cart",this.existInCart);
 
   }
+
+
 
   initializeArrays() {
     //  for making buttons clickable
@@ -513,14 +550,14 @@ export class ProductDetailsComponent implements OnInit {
     if (this.globalQuantity) {
       // If you have global quantity depends on product variants have or not
       if (this.globalContinue === true) {
-        if( this.globalQuantity > 0 && this.globalQuantity <= this.selectedQty){
+        if (this.globalQuantity > 0 && this.globalQuantity <= this.selectedQty) {
           this.uiService.warn('Cannot add more than stock quantity');
         } else {
-        this.selectedQty += 1;
+          this.selectedQty += 1;
         }
       } else if (this.globalQuantity > this.selectedQty) {
         this.selectedQty += 1;
-      }  else {
+      } else {
         this.uiService.warn('Cannot add more than stock quantity');
       }
     } else {
@@ -529,7 +566,7 @@ export class ProductDetailsComponent implements OnInit {
         this.selectedQty += 1;
       } else if (this.product?.quantity > this.selectedQty) {
         this.selectedQty += 1;
-      }else {
+      } else {
         this.uiService.warn('Cannot add more that stock quantity');
       }
     }
@@ -574,7 +611,7 @@ export class ProductDetailsComponent implements OnInit {
       // } else {
       //   console.log('OTP not matched or closed dialog');
       // }
-      if(this.isUserAuth){
+      if (this.isUserAuth) {
         this.addToCarts();
         this.openCartDialog();
       }
@@ -608,15 +645,91 @@ export class ProductDetailsComponent implements OnInit {
     this.shipping = true;
   }
 
-  get canCOD(){
-    if(this.product?.canPartialPayment !== true){
+  get canCOD() {
+    if (this.product?.canPartialPayment !== true) {
       return "Yes";
-    }else if(this.globalQuantity !== 0){
+    } else if (this.globalQuantity !== 0) {
       return "Yes";
-    }else if (this.globalContinue !== true){
+    } else if (this.globalContinue !== true) {
       return "Yes";
-    }else{
+    } else {
       return "No";
+    }
+  }
+
+  getDisplay(row, col) {
+    let length = this.product.variants.length;
+    let displaySku;
+
+    if (length === 1) {
+      displaySku = this.product.sku + "-" + col;
+    } else {
+      if (this.allTypeVariantSelected) {
+        displaySku = this.product.sku + '-';
+
+        for (let i = 0; i < this.sku.length; i++) {
+          if(i !== row){
+            displaySku += this.sku[i];
+          }else{
+            displaySku += col;
+          }
+        }
+      }
+      else if (this.variantSelected) {
+        if (this.sku[row] !== undefined) {
+        } else {
+          displaySku = this.product.sku + '-';
+          for (let y = 0; y < this.product.variants.length; y++) {
+            if (this.sku[y] >= 0) {
+              displaySku += this.sku[y];
+            } else {
+              displaySku += col;
+            }
+          }
+        }
+
+      }
+      else {
+        // console.log("variant is not selected");
+
+      }
+    }
+    let selectedVariantData;
+    if (displaySku) {
+      let array = this.product.variantFormArray;
+      selectedVariantData = array.find(
+        ({ variantSku }) => variantSku === displaySku
+      );
+    }
+
+
+    if (selectedVariantData.variantDisplay) {
+      if (selectedVariantData?.variantQuantity === 0 && selectedVariantData?.variantContinueSelling !== true ) {
+        this.display = false;
+        return false
+      } else {
+        this.display = true;
+        return true;
+      }
+    } else {
+      this.display = false;
+      return false
+    }
+  }
+
+  getButtonStatus(row,col){
+    if(this.clickActive[row][col]){
+      return true
+    }else{
+      return false
+    }
+  }
+
+  getStockStatus(qty){
+    if(qty <= 0 && this.display !== true){
+      return false;
+    }else{
+      return true
     }
   }
 

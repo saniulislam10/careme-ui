@@ -1,0 +1,158 @@
+<!---view-product-top-->
+<div class="view-product-header-area">
+  <div class="view-product-header-main">
+    <!--view-product-left-->
+    <div class="view-product-header-left">
+      <h2>Inventory Adjustment </h2>
+    </div>
+    <!---header-right-->
+    <div class="view-product-header-right">
+      <ul>
+        <li (click)="exportPopUpShow()">Export</li>
+        <li (click)="exportPopUpShow()">Import</li>
+        <li ><button mat-button (click)="openDialog()">+ New</button></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!---all-products-main-area-->
+<div class="all-products-main-area">
+  <!--products-menu-->
+  <div class="all-products-menu">
+    <ul>
+      <!-- <li><button class="active-tab" (click)="onFilterSelectChange(0)">All</button></li> -->
+      <li><button [class]="status == 0 ?'active-tab':'inactive'" (click)="onFilterSelectChange(0)">All</button></li>
+      <li><button [class]="status == 1 ?'active-tab':'inactive'" (click)="onFilterSelectChange(1)">Draft</button></li>
+      <li><button [class]="status == 2 ?'active-tab':'inactive'" (click)="onFilterSelectChange(2)">Closed</button>
+      </li>
+      <li><button [class]="status == 3 ?'active-tab':'inactive'" (click)="onFilterSelectChange(3)">Issued</button>
+      </li>
+      <li><button [class]="status == 4 ?'active-tab':'inactive'" (click)="onFilterSelectChange(4)">Recieved</button>
+      </li>
+      <li><button [class]="status == 5 ?'active-tab':'inactive'" (click)="onFilterSelectChange(5)">Billed</button>
+      </li>
+    </ul>
+  </div>
+  <!--products-menu-end-->
+  <!---products-search-area-->
+  <div class="products-search-area">
+    <!---search-->
+    <div class="search" (click)="onClickSearchArea($event)">
+      <button><i class="fa fa-search"></i></button>
+      <form #searchForm=ngForm style="width: 100%;">
+        <input #searchInput id="searchInput" class="tw" type="text" placeholder="Filter Products"
+          (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel required>
+      </form>
+    </div>
+    <!--products-search-area-btn--->
+    <div class="products-search-area-btn">
+      <ul>
+        <li><button [matMenuTriggerFor]="changeProductStatus">Bulk Action <i class="fa fa-caret-down"></i></button></li>
+        <mat-menu #changeProductStatus="matMenu">
+          <button mat-menu-item>Action 1</button>
+          <button mat-menu-item>Action 2</button>
+          <button mat-menu-item>Action 3</button>
+        </mat-menu>
+        <li><button [matMenuTriggerFor]="productSort">Sort <i class="fa fa-caret-down"></i></button></li>
+        <mat-menu #productSort="matMenu">
+          <button mat-menu-item (click)="sortData({name: 1}, 1)" [class.dropdown-active]="activeSort === 1">Product
+            Title (A-Z)</button>
+          <button mat-menu-item (click)="sortData({createdAt: 1}, 2)" [class.dropdown-active]="activeSort === 2">Created
+            (Oldest First)</button>
+          <button mat-menu-item (click)="sortData({quantity: -1}, 3)" [class.dropdown-active]="activeSort === 3">High
+            Inventory</button>
+          <!-- need to change -->
+          <button mat-menu-item (click)="sortData({categoryName: -1}, 4)"
+            [class.dropdown-active]="activeSort === 4">Product Type (A-Z)</button>
+          <button mat-menu-item (click)="sortData({vendor: 1}, 5)" [class.dropdown-active]="activeSort === 5">Vendor
+            (A-Z)</button>
+        </mat-menu>
+        <li><button>More</button></li>
+      </ul>
+    </div>
+  </div>
+  <!---table-area-->
+  <div class="table-area">
+    <!---main-table-->
+    <div class="main-table">
+      <!---main-table-head-->
+      <div class="main-table-head">
+        <div class="main-table-row">
+          <div class="check  main-table-heading">
+            <mat-checkbox #matCheckbox class="mat-check" (change)="onAllSelectChange($event)"></mat-checkbox>
+          </div>
+          <div class="product  main-table-heading">Id</div>
+          <div class="price  main-table-heading">Date and Time</div>
+          <div class="stock-hand  main-table-heading">Items</div>
+          <div class="status  main-table-heading">Status</div>
+          <div class="earn-point  main-table-heading">Total Amount</div>
+          <div class="category  main-table-heading">Reason</div>
+        </div>
+      </div>
+      <div class="main-table-body">
+        <!---table-row-->
+        <div class="loop" *ngFor="let data of dataSet | paginate: { itemsPerPage: productsPerPage, currentPage: currentPage, totalItems: totalProducts }; let i = index">
+          <!---main-table-row-->
+          <div class="without-variant" *ngIf="!data.hasVariant">
+            <div class="main-table-row divHover" [routerLink]="['details',data._id]">
+            <div class="check main-table-data">
+              <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data?._id)"
+                [(ngModel)]="data.select">
+              </mat-checkbox>
+            </div>
+            <div class="product main-table-data">
+              <div class="product-info ">
+                <!---product-item-name-->
+                <a>{{data?.adjustmentId}}</a>
+              </div>
+            </div>
+            <div class="price main-table-data">
+              <span>{{data?.dateTime | date : 'short'}}</span>
+            </div>
+            <div class="stock-hand main-table-data">
+              <span>{{data?.products?.length }}</span>
+            </div>
+            <div class="main-table-data">
+              <span>{{data?.status? "Closed":"Draft" }}</span>
+            </div>
+            <div class="category main-table-data">
+              <span>{{data?.total }}</span>
+            </div>
+            <div class="earn-point main-table-data">
+              <span>{{data?.reason}}</span>
+            </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!---tbody-end-->
+    </div>
+    <!---main-table-end-->
+
+  </div>
+  <!---indicator-area-->
+  <div class="indicator-area">
+    <div class="pagination-container">
+      <pagination-controls class="product-pagination" [autoHide]="true" [maxSize]="15"
+        (pageChange)="onPageChanged($event)">
+      </pagination-controls>
+    </div>
+
+    <div class="indicator-right">
+      <span>Showing {{currentPage*productsPerPage-productsPerPage+1}} to {{currentPage*productsPerPage <= totalProducts
+          ? currentPage*productsPerPage : totalProducts}} of {{totalProducts}} entries</span>
+    </div>
+  </div>
+</div>
+<div class="export-popup-area">
+  <app-export-popup (valueChange)='exportToExcel($event)' #export></app-export-popup>
+</div>
+<!-- NO DATA TEMPLATE -->
+<ng-template #noData>
+  <div style="margin-top: 50px; text-align: center">
+    <h2>No Product Found</h2>
+  </div>
+</ng-template>
+

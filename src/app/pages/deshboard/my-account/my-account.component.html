@@ -1,0 +1,64 @@
+<ng-template #orderTemplate>
+  <p>4.84.8</p>
+</ng-template>
+<ng-template #pointTemplate>
+  <p>4.84.8 pts</p>
+</ng-template>
+<div>
+  <div nz-row [nzGutter]="12">
+    <div nz-col [nzSpan]="12">
+      <nz-card nzTitle="Shipping Address" [nzExtra]="orderTemplate">
+        <table style="width: 100%">
+          <tr>
+            <th >Name</th>
+            <td>Saniul Islam</td>
+          </tr>
+          <tr>
+            <th>Phone</th>
+            <td>01687248923</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>saniul.cliet@gmail.com</td>
+          </tr>
+          <tr>
+            <th>Address</th>
+            <td>House 186, Lane 2, Dohs Baridhara, Dhaka</td>
+          </tr>
+        </table>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-card nzTitle="Shipping Address" [nzExtra]="orderTemplate">
+        <table style="width: 100%">
+          <tr>
+            <th >Name</th>
+            <td>Saniul Islam</td>
+          </tr>
+          <tr>
+            <th>Phone</th>
+            <td>01687248923</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>saniul.cliet@gmail.com</td>
+          </tr>
+          <tr>
+            <th>Address</th>
+            <td>House 186, Lane 2, Dohs Baridhara, Dhaka</td>
+          </tr>
+        </table>
+      </nz-card>
+    </div>
+  </div>
+</div>
+<div>
+  <div class="upload">
+    <button type="button" (click)="profileImagePicker.click()">Attachment <i class="fas fa-paperclip"></i></button>
+    <input [hidden]="true" #profileImagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
+  </div>
+  <img style="width: 100px; height: 100px" [src]="imgPlaceHolder ? imgPlaceHolder : '/assets/images/avatar/user-young.jpg'">
+</div>
+<form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+  
+</form>

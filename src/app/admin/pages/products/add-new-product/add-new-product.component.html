@@ -11,7 +11,7 @@
         <div class="form-btn" class="saveArea">
           <ul class="btn">
             <li><mat-icon *ngIf="product" target="_blank" (click)="preview()">remove_red_eye</mat-icon></li>
-            <li><button type="button" [routerLink]="['../../../', 'products']">Discard</button></li>
+            <li><button type="button" [routerLink]="['../../', 'products']">Discard</button></li>
             <li><button class="btn-active" type="submit">Save</button></li>
           </ul>
         </div>
@@ -695,10 +695,29 @@
                 <div *ngFor="let f of variantArray?.controls;let i=index">
                   <h3 style="margin-bottom: 10px;">Option-{{i + 1}}</h3>
                   <div class="option-input">
-                    <mat-form-field formArrayName="variants" appearance="outline" class="form-field">
+                    <!-- <mat-form-field formArrayName="variants" appearance="outline" class="form-field">
                       <mat-label>Variant Name</mat-label>
-                      <input type="text" [formControlName]="i" matInput placeholder="For ex. size">
+                      <input type="text" [formControlName]="i" [formControl]="myControl" matInput placeholder="For ex. size" [matAutocomplete]="auto">
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                          {{option}}
+                        </mat-option>
+                      </mat-autocomplete>
                       <mat-error *ngIf="">This field is required</mat-error>
+                    </mat-form-field> -->
+                    <mat-form-field formArrayName="variants" class="example-full-width" appearance="fill">
+                      <mat-label>Variant Name</mat-label>
+                      <input type="text"
+                             placeholder="Pick one"
+                             aria-label="Number"
+                             matInput
+                             [formControlName]="i"
+                             [matAutocomplete]="auto">
+                      <mat-autocomplete #auto="matAutocomplete" [selected]="i">
+                        <mat-option value="size">size</mat-option>
+                        <mat-option value="color">color</mat-option>
+                        <mat-option value="material">material</mat-option>
+                      </mat-autocomplete>
                     </mat-form-field>
                   </div>
                 </div>
@@ -708,13 +727,33 @@
 
                   <h3 style="margin-bottom: 10px;">Values for options {{i + 1}}</h3>
                   <div class="option-input">
-                    <mat-form-field formArrayName="options" appearance="outline" class="form-field">
+                    <!-- <mat-form-field formArrayName="options" appearance="outline" class="form-field">
                       <mat-label>Separate options with a comma</mat-label>
                       <input type="text" [formControlName]="i" matInput placeholder="Separate options with a comma">
                       <mat-error *ngIf="">This field is required</mat-error>
+                    </mat-form-field> -->
+                    <mat-form-field  class="example-chip-list" appearance="fill">
+                      <mat-label>Separate options with a comma</mat-label>
+                      <mat-chip-list formArrayName="options" #chipList aria-label="Fruit selection">
+                        <mat-chip  *ngFor="let fruit of fruits[i]" (removed)="remove(fruit)">
+                          {{fruit}}
+                          <button *ngIf="this.dataForm.value?.status === 1" matChipRemove>
+                            <mat-icon  (click)="remove(fruit, i)">cancel</mat-icon>
+                          </button>
+                          <button *ngIf="this.dataForm.value?.status === 2" matChipRemove>
+                            <mat-icon  (click)="edit(fruit, i)">edit</mat-icon>
+                          </button>
+                        </mat-chip>
+                        <input placeholder="New value"
+                               [matChipInputFor]="chipList"
+                               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                               [matChipInputAddOnBlur]="addOnBlur"
+                               (matChipInputTokenEnd)="add($event, i)">
+                      </mat-chip-list>
                     </mat-form-field>
-                    <button class="button deleteButton" type="button" (click)="deleteFormControl(i)">
-                      <mat-icon style="align-items: center;">remove</mat-icon>
+
+                    <button *ngIf="this.dataForm.value?.status === 1" class="button deleteButton" type="button" (click)="deleteFormControl(i)">
+                      <mat-icon style="align-items: center;" >remove</mat-icon>
                     </button>
                   </div>
                 </div>
@@ -741,31 +780,7 @@
               <div class="title">
                 <h2>Variants</h2>
               </div>
-              <!---add-varriant-menu-->
-              <!-- <div class="add-varriant-menu">
-                <ul>
-                  <li><button type="button">Add Variant</button></li>
-                  <li><button type="button">More options <i class="fa fa-caret-down"></i></button></li>
-                </ul>
-              </div> -->
             </div>
-            <!--add-varriant-end-->
-            <!---varriant-select-menu-->
-            <!-- <div class="varriant-select-menu-area">
-              <div class="varriant-select-menu">
-                <ul>
-                  <li class="varriant-select">Select:</li>
-                  <li><a href="#">All</a></li>
-                  <li><a href="#">None</a></li>
-                </ul>
-              </div>
-            </div> -->
-            <!---varriant-select-menu-end-->
-            <!---varriant-no-stock-->
-            <!-- <div class="varriant-no-stock-btn">
-              <button>No Stock control</button>
-            </div> -->
-
           </div>
           <!---varriant-table-top-end-->
 
@@ -788,14 +803,17 @@
                       <div class="category-table-heading serial">
                         <h3>Image</h3>
                       </div>
-                      <div class="category-table-heading category-type" *ngFor="let data of variantObject; let i=index">
+                      <div class="category-table-heading category-type" >
+                        <h3>Variants</h3>
+                      </div>
+                      <!-- <div class="category-table-heading category-type" *ngFor="let data of variantObject; let i=index">
                         <h3>{{data}}</h3>
+                      </div> -->
+                      <div class="category-table-heading quality">
+                        <h3>Sku</h3>
                       </div>
                       <div class="category-table-heading quality">
-                        <h3>Vendor</h3>
-                      </div>
-                      <div class="category-table-heading quality">
-                        <h3>Price</h3>
+                        <h3>Price(TK)</h3>
                       </div>
                       <div class="category-table-heading quality">
                         <h3>Quantity</h3>
@@ -804,14 +822,14 @@
                         <h3>Low Stock</h3>
                       </div>
                       <div class="category-table-heading quality">
+                        <h3>Vendor</h3>
+                      </div>
+                      <div class="category-table-heading quality">
                         <h3>Pre Order</h3>
                       </div>
                       <div class="category-table-heading quality">
-                        <h3>SKU</h3>
+                        <h3>Display</h3>
                       </div>
-                      <!-- <div class="category-table-heading quality">
-                        <h3>Actions</h3>
-                      </div> -->
 
 
                     </div>
@@ -837,8 +855,25 @@
                             alt="">
                         </div>
                       </div>
-                      <div class="category-table-data category-type" *ngFor="let name of variantObject">
-                        <h3>{{variant[name]}} </h3>
+                      <div class="category-table-data quality" style="width:auto; margin-right:50px;">
+                        <h3 style="display: flex; width:auto" *ngFor="let name of variantObject; let n=index">
+                          <p style="display: flex; width:auto" *ngIf="n!==0">/</p>{{variant[name]}}
+                        </h3>
+                      </div>
+                      <div class="category-table-data quality">
+                        <!-- <input type="text" matInput formControlName="variantSku" placeholder="sku" readonly> -->
+                        <p type="text" matInput placeholder="sku" readonly>{{dataForm.value.variantFormArray[i].variantSku}}</p>
+                      </div>
+                      <div class="category-table-data quality" style="padding-top: 20px;">
+                        <mat-form-field appearance="outline" class="form-field" style="width: 80px;">
+                          <input type="number" formControlName="variantPrice" matInput placeholder="Price">
+                        </mat-form-field>
+                      </div>
+                      <div class="category-table-data quality" style="padding-top: 20px;">
+                        <mat-form-field appearance="outline" class="form-field" style="width: 80px;">
+                          <input type="number" matInput formControlName="variantQuantity" placeholder="qty"
+                            >
+                        </mat-form-field>
                       </div>
                       <div class="category-table-data quality">
                         <mat-select formControlName="variantVendorName" class="select-vendor" placeholder="Vendor">
@@ -847,34 +882,16 @@
                         </mat-select>
                       </div>
                       <div class="category-table-data quality" style="padding-top: 20px;">
-                        <mat-form-field appearance="outline" class="form-field" style="width: 100px;">
-                          <input type="number" formControlName="variantPrice" matInput placeholder="Price">
-                        </mat-form-field>
-                      </div>
-                      <div class="category-table-data quality" style="padding-top: 20px;">
-                        <mat-form-field appearance="outline" class="form-field" style="width: 120px;">
-                          <input type="number" matInput formControlName="variantQuantity" placeholder="quantity"
-                            >
-                        </mat-form-field>
-                      </div>
-                      <div class="category-table-data quality" style="padding-top: 20px;">
-                        <mat-form-field appearance="outline" class="form-field" style="width: 120px;">
-                          <input type="number" matInput formControlName="variantReOrder" placeholder="re order"
-                            >
+                        <mat-form-field appearance="outline" class="form-field" style="width: 80px;">
+                          <input type="number" matInput formControlName="variantReOrder" placeholder="re order">
                         </mat-form-field>
                       </div>
                       <div class="category-table-data quality" style="padding-top: 20px;">
                         <mat-checkbox formControlName="variantContinueSelling" class="example-margin"></mat-checkbox>
                       </div>
-                      <div class="category-table-data quality" style="padding-top: 20px; margin-right: 20px;">
-                        <mat-form-field appearance="outline" class="form-field" style="width: 220px;">
-                          <input type="text" matInput formControlName="variantSku" placeholder="sku">
-                        </mat-form-field>
+                      <div class="category-table-data quality" style="padding-top: 20px;">
+                        <mat-checkbox formControlName="variantDisplay" class="example-margin"></mat-checkbox>
                       </div>
-                      <!-- <div class="category-table-data quality">
-                        <button>Edit</button>
-                        <button>Delete</button>
-                      </div> -->
                     </div>
                     <!---category-table-row-end-->
                   </div>
@@ -946,7 +963,7 @@
           <!---form-btn-->
           <div class="form-btn" style="margin: 0px;">
             <ul class="btn">
-              <li><button type="button" [routerLink]="['../../../', 'products']">Discard</button></li>
+              <li><button type="button" [routerLink]="['../../', 'products']">Discard</button></li>
               <li><button class="btn-active" type="submit">Save</button></li>
             </ul>
           </div>

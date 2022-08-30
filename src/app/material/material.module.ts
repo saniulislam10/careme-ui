@@ -27,6 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { SharedModule } from '../shared/shared.module';
 
 const materials = [
@@ -60,6 +61,7 @@ const materials = [
   MatSidenavModule,
   MatSlideToggleModule,
   MatSliderModule,
+  MatAutocompleteModule
   // SharedModule
 ];
 

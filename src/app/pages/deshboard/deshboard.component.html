@@ -3,7 +3,7 @@
     <div class="container">
         <div class="deshboard-main">
             <!---side-nav-->
-            <div class="side-bar">
+            <!-- <div class="side-bar">
                <div class="side-bar-menu" [class]="deshMenu?'side-bar-menu-active':'inactive'">
                 <ul>
                     <li><a routerLink="./"><span><i class="fa fa-file-invoice-dollar"></i></span> Order</a></li>
@@ -15,7 +15,42 @@
                 </ul>
                </div>
                <div class="over-lay" *ngIf="deshMenu == true" (click)="sideMenuInactive()"></div>
-            </div>
+            </div> -->
+            <ul nz-menu nzMode="inline" style="width: 240px;">
+              <li
+                nz-menu-item
+                nzTitle="Dashboard"
+                routerLink="./summary"
+              >Dashboard</li>
+              <li
+                nz-submenu
+                [(nzOpen)]="openMap.sub1"
+                (nzOpenChange)="openHandler('sub1')"
+                nzTitle="My Account"
+              >
+                <ul>
+                    <li nz-menu-item routerLink="./account">My Account</li>
+                    <li nz-menu-item>Notifications</li>
+                    <li nz-menu-item>Payment Options</li>
+                    <li nz-menu-item>Vouchers</li>
+                </ul>
+              </li>
+              <li
+                nz-submenu
+                [(nzOpen)]="openMap.sub2"
+                (nzOpenChange)="openHandler('sub2')"
+                nzTitle="Navigation Two"
+              >
+                <ul>
+                  <li nz-menu-item>My Orders</li>
+                  <li nz-menu-item>My Return</li>
+                  <li nz-menu-item>Canceled Order</li>
+                </ul>
+              </li>
+              <li nz-menu-item>My Reviews</li>
+              <li nz-menu-item routerLink="./tickets">Tickets</li>
+              <li nz-menu-item routerLink="./setting">Settings</li>
+            </ul>
             <!---deshboard-page-render-->
             <div class="deshboard-page-render">
                 <!---menu-bar-->

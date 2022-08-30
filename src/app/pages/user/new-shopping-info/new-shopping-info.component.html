@@ -137,8 +137,8 @@
             <div class="left">
               <p>{{data?.product?.name}}</p>
               <span>SKU {{data?.variant[0]?.variantSku}}.
-                <small *ngIf="data?.variant[0].variantQuantity">(COD)</small>
-                <small *ngIf="data?.variant[0].variantQuantity == 0 || data?.variant[0].variantQuantity == null">
+                <small *ngIf="data?.variant[0]?.variantQuantity">(COD)</small>
+                <small *ngIf="data?.variant[0]?.variantQuantity == 0 || data?.variant[0]?.variantQuantity == null">
                   <span *ngIf="data?.product?.partialPaymentType === 0">({{data?.product.partialPayment}}TK Pay)</span>
                   <span *ngIf="data?.product?.partialPaymentType === 1">({{data?.product.partialPayment}}% Pay)</span>
                 </small>

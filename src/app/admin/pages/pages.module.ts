@@ -1,3 +1,4 @@
+import { StockModule } from './stock/stock.module';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PagesComponent} from './pages.component';
@@ -406,6 +407,18 @@ const routes: Routes = [
       {
         path: 'brand',
           loadChildren: () => import('./brand/brand.module').then(m => m.BrandModule)
+      },
+      {
+        path: 'stock',
+          loadChildren: () => import('./stock/stock.module').then(m => m.StockModule)
+      },
+      {
+        path: 'purchase',
+          loadChildren: () => import('./purchase/purchase.module').then(m => m.PurchaseModule)
+      },
+      {
+        path: 'adjustment',
+          loadChildren: () => import('./adjustment/adjustment.module').then(m => m.AdjustmentModule)
       },
     ],
   },

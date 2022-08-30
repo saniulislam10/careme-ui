@@ -1,6 +1,5 @@
 import {User} from './user';
 import {Product} from './product';
-import { OrderTimelineComponent } from '../pages/user/account/order-timeline/order-timeline.component';
 import { ProductOrderStatus } from '../enum/product-order-status';
 
 export interface OrderItem {

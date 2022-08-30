@@ -61,6 +61,7 @@ export class ReloadService {
   private refreshZila = new Subject<void>();
   private refreshThana = new Subject<void>();
   private refreshDetails = new Subject<void>();
+  private refreshPurchase = new Subject<void>();
   /**
    * refresh details
    */
@@ -68,6 +69,16 @@ export class ReloadService {
     return this.refreshDetails;
   }
   needRefreshDetails$() {
+    this.refreshDetails.next();
+  }
+
+  /**
+   * Puchase
+   */
+   get refreshPurchase$() {
+    return this.refreshDetails;
+  }
+  needRefreshPurchase$() {
     this.refreshDetails.next();
   }
   /**

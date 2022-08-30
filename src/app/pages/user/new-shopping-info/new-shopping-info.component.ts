@@ -38,6 +38,7 @@ import { filter, map } from 'rxjs/operators';
 export class NewShoppingInfoComponent implements OnInit {
   couponApplied: boolean;
   couponCode: any;
+  v: string;
   constructor(
     private userDataService: UserDataService,
     private reloadService: ReloadService,
@@ -620,16 +621,23 @@ export class NewShoppingInfoComponent implements OnInit {
       const product = m.product as Product;
       let image: any;
 
-      product.variantFormArray.map((q,index)=>{
-            if(q.variantSku ==m.variant[0].variantSku){
-              return(
-                this.Vindex = index,
-                image = m.variant[0].image
-                )
-            }
-      })
 
-      let v = (Object.values(product?.variantDataArray[this.Vindex]).toString()).replace(',','/')
+
+      if (product.hasVariant === true) {
+        product.variantFormArray.map((q,index)=>{
+          if(q.variantSku ==m.variant[0].variantSku){
+            return(
+              this.Vindex = index,
+              image = m.variant[0].image
+              )
+            }
+          })
+
+          this.v = (Object.values(product?.variantDataArray[this.Vindex]).toString()).replace(',','/')
+        }else{
+          this.v= "";
+        }
+
 
       let orderPrice = 0;
       let sku = '';
@@ -669,12 +677,12 @@ export class NewShoppingInfoComponent implements OnInit {
         discountType: product.discountType,
         discountAmount: product.discountAmount,
         quantity: m.selectedQty,
-        variant:v,
+        variant: this.v,
         image: image,
         tax: product.hasTax ? Math.round((product.tax * orderPrice) / 100): 0,
         status: ProductOrderStatus.PENDING,
-        orderType: m.variant[0].variantQuantity>0 ? 'regular' : 'preorder',
-        advance: m.variant[0].variantQuantity>0 ? 0 : advance,
+        orderType: m.variant[0]?.variantQuantity>0 ? 'regular' : 'preorder',
+        advance: m.variant[0]?.variantQuantity>0 ? 0 : advance,
         deliveryDateFrom: m.deliveryDateFrom,
         deliveryDateTo: m.deliveryDateTo,
       } as OrderItem;

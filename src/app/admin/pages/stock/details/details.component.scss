@@ -1,0 +1,21 @@
+table, th, td {
+  // border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px 20px;
+  text-align: left;
+}
+.title{
+  width: max-content;
+  padding: 20px;
+  color: white;
+  background-color: rgb(108, 108, 108);
+  margin-bottom: 40px;
+}
+.table{
+  margin: 40px;
+  table{
+    margin-top: 40px;
+  }
+}

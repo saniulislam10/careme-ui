@@ -116,6 +116,7 @@ export class ProductService {
   }
 
   editProductById(data: any) {
+    console.log(data);
     return this.http.put<{ message: string }>(
       API_PRODUCT + 'edit-product-by-id',
       data

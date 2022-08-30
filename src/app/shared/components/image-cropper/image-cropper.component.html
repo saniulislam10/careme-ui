@@ -1,0 +1,15 @@
+<image-cropper
+class="image-cropper"
+[imageChangedEvent]="imageChangedEvent"
+[maintainAspectRatio]="true"
+format="jpeg"
+[imageQuality]="95"
+(imageCropped)="imageCropped($event)"
+(cropperReady)="cropperReady()"
+(loadImageFailed)="loadImageFailed()"
+></image-cropper>
+
+<div class="upload-dialog-action" *ngIf="isLoaded">
+  <button mat-raised-button color="warn" class="btn btn-cancel" (click)="onCloseDialogue()">Close</button>
+  <button mat-raised-button color="primary" class="btn btn-save" (click)="onSaveImage()">Save</button>
+</div>

@@ -11,7 +11,7 @@
       <div class="cart-product-area">
         <!--product-img-->
         <div class="product-img">
-          <img [src]="data.image" alt="">
+          <img [src]="data.image ? data.image : '/assets/images/placeholder/test.png'" alt="">
         </div>
         <!---product-text-->
         <div class="product-text">

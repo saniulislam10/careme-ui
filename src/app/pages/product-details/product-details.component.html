@@ -212,7 +212,7 @@
               /></span>
             </li>
           </ul>
-          <div class="product-stock-badge">
+          <div [class]="getStockStatus(globalQuantity) ? 'product-stock-badge' : 'none'">
             <!-- <span>In stock: {{product?.quantity ? product.quantity : '0'}} Pcs</span> -->
             <span
               >In stock:
@@ -246,10 +246,10 @@
             <!--right-->
             <div class="product-quantity-size-info-right">
               <ul class="size">
-                <li *ngFor="let option of variantOptions[i]; let x = index">
+                <li [class]="getDisplay(i,x) ? '' : 'none'" *ngFor="let option of variantOptions[i]; let x = index">
                   <button
                     type="button"
-                    [class]="clickActive[i][x] ? 'active' : 'inactive'"
+                    [class]="defaultVariantSelected ? (getButtonStatus(i,x) ? 'active' : 'inactive') : ''"
                     (click)="selectedVariant(i, x)"
                   >
                     {{ this.variantOptions[i][x] }}
@@ -422,12 +422,12 @@
           </div>
           <!--product-delivery-info-end-->
           <!--product-delivery-info-->
-          <div class="product-delivery-info">
+          <div class="product-delivery-info" *ngIf="product?.canReturn">
             <!---product-delivery-icon-->
             <div class="product-delivery-icon">
               <img src="./assets/images/image/return-box.svg" alt="" />
             </div>
-            <div class="product-details-text" *ngIf="product?.canReturn">
+            <div class="product-details-text" >
               <h3>
                 Return: <span>{{ product?.returnPeriod }} day replacement</span>
               </h3>

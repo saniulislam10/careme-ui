@@ -20,6 +20,10 @@
 //   grid-area: c;
 // }
 
+.none{
+  display: none;
+}
+
 img{
   display: block;
   width: 100%;
@@ -387,6 +391,20 @@ img{
   .inactive{
     background-color: #fff;
     border: 2px solid black;
+  }
+  .none{
+    opacity: 0.3;
+    color: #000 !important;
+    background-color: unset !important;
+  }
+  // .none button{
+  //   color: #000 !important;
+  //   background-color: unset !important;
+  // }
+  .none button:hover{
+    color: #000 !important;
+    cursor: not-allowed;
+    background-color: unset !important;
   }
   .size li button{
     // width: 37px;

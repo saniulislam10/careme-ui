@@ -167,12 +167,12 @@ export class CartComponent implements OnInit {
 
         this.mCarts = res.data;
         this.carts = this.mCarts.filter((m)=>m.isSelected);
-
+        console.log(this.mCarts);
         const fCarts = this.mCarts.map(m => {
           return {
             ...m,
             // variant: m.variant[0],
-            vendorName: m.variant[0].variantVendorName,
+            vendorName: m.product.hasVariant ? m.variant[0].variantVendorName : m.product.vendor,
           }
         });
 
@@ -213,7 +213,7 @@ export class CartComponent implements OnInit {
       data.product.medias,
       data.product.images
     );
-    return images[0];
+    return images.length ? images[0] : "/assets/images/placeholder/test.png";
   }
 
   private incrementCartQtyDB(cartId: string) {

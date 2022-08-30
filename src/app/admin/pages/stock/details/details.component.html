@@ -1,0 +1,107 @@
+<nz-tabset
+style="height: 150vh;"
+
+nzTabPosition="left"
+(nzSelectChange)="log([$event])">
+  <nz-tab  *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
+    <ng-template #titleTemplate>
+      <div style="padding-right: 10px;">{{ tab.sku }} </div>
+      <div> Qty : {{tab.quantity}}</div>
+    </ng-template>
+    <div>
+      <div class="table">
+        <h3 class="title">Product Information</h3>
+        <table>
+          <tr>
+            <th>Product Name</th>
+            <td>{{tab.name}}</td>
+          </tr>
+          <tr>
+            <th>Product Sku</th>
+            <td>{{tab.sku}}</td>
+          </tr>
+          <tr>
+            <th>Vendor</th>
+            <td>{{tab.vendor}}</td>
+          </tr>
+          <tr>
+            <th>Manufacturer</th>
+            <td>{{tab.vendor}}</td>
+          </tr>
+          <tr>
+            <th>Brand</th>
+            <td>{{tab.brand}}</td>
+          </tr>
+          <tr>
+            <th>Products Type</th>
+            <td>{{tab.parentCategory.name}}</td>
+          </tr>
+          <tr>
+            <th>Pre Order</th>
+            <td>{{tab.continueSelling ? "Yes" : "No"}}</td>
+          </tr>
+        </table>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr;">
+        <div class="table">
+          <h3 class="title">Product Information</h3>
+          <table>
+            <tr>
+              <th>Product Sku</th>
+              <td>{{tab.sku}}</td>
+            </tr>
+            <tr>
+              <th>Vendor</th>
+              <td>{{tab.vendor}}</td>
+            </tr>
+            <tr>
+              <th>Manufacturer</th>
+              <td>{{tab.vendor}}</td>
+            </tr>
+            <tr>
+              <th>Brand</th>
+              <td>{{tab.brand}}</td>
+            </tr>
+            <tr>
+              <th>Products Type</th>
+              <td>{{tab.parentCategory.name}}</td>
+            </tr>
+            <tr>
+              <th>Pre Order</th>
+              <td>{{tab.continueSelling ? "Yes" : "No"}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="table">
+          <h3 class="title">Product Information</h3>
+          <table>
+            <tr>
+              <th>Product Sku</th>
+              <td>{{tab.sku}}</td>
+            </tr>
+            <tr>
+              <th>Vendor</th>
+              <td>{{tab.vendor}}</td>
+            </tr>
+            <tr>
+              <th>Manufacturer</th>
+              <td>{{tab.vendor}}</td>
+            </tr>
+            <tr>
+              <th>Brand</th>
+              <td>{{tab.brand}}</td>
+            </tr>
+            <tr>
+              <th>Products Type</th>
+              <td>{{tab.parentCategory.name}}</td>
+            </tr>
+            <tr>
+              <th>Pre Order</th>
+              <td>{{tab.continueSelling ? "Yes" : "No"}}</td>
+            </tr>
+          </table>
+        </div>
+    </div>
+    </div>
+  </nz-tab>
+</nz-tabset>

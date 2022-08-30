@@ -1,0 +1,228 @@
+<div class="order-header-top">
+  <!---order-title-->
+  <div class="order-title">
+    <h3>Purchase Order Details</h3>
+  </div>
+  <!---order-btn-area-->
+  <div class="order-btn-area">
+    <ul>
+      <li><button>Import</button></li>
+      <li><button>Export</button></li>
+      <li><button class="active-btn" (click)="openDialog2()">+ New</button></li>
+    </ul>
+  </div>
+</div>
+
+<!--order-details-->
+<div class="order_details">
+  <div class="order_details_left-sidebar">
+    <!---order-details-right-side-bar-top-->
+    <div class="order-details-left-sidebar-top">
+      <div class="order-details-left-top-dotted">
+        <div>
+          <button routerLink="/admin/regular-orders">
+            All Purchase <i class="fa fa-angle-down"></i>
+          </button>
+        </div>
+        <div class="dotted">
+          <span><i class="fa-solid fa-ellipsis"></i></span>
+        </div>
+      </div>
+      <!--search-->
+      <div class="top-search-area">
+        <div>
+          <button><i class="fa fa-search"></i></button>
+        </div>
+        <div class="search-input">
+          <input type="text" value="" placeholder="Search purchase" />
+        </div>
+      </div>
+    </div>
+    <!---top-end-->
+    <!---order-details-right-side-bar-main-->
+    <div class="order-details-left-side-bar-main">
+      <div class="order-details-sidebar-info">
+        <ul>
+          <li *ngFor="
+              let data of purchases
+                | paginate
+                  : {
+                      itemsPerPage: ordersPerPage,
+                      currentPage: currentPage,
+                      totalItems: totalOrders
+                    };
+              let i = index
+            " [class.active]="data?._id === id" [routerLink]="['../../', 'details', data._id]">
+            <div class="sidebar-info-left">
+              <span [routerLink]="['../../', 'details', data._id]">PO-{{ data?.purchaseId }} |
+                <small>{{ data?.dateTime | date }}</small></span>
+            </div>
+            <div class="sidebar-info-right">
+              <h4>{{ data?.totalAmount }} TK</h4>
+              <span>{{data?.reference}}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!---end-->
+  </div>
+
+  <form [formGroup]="dataForm">
+    <div class="order-details-container">
+      <!---order-id-area-->
+      <div class="order-id-area">
+        <!---req-id-title-->
+        <div class="req-id-title">
+          <h4>PO-{{ purchase?.purchaseId }}</h4>
+          <span>{{ purchase?.timeline?.purchasePlacedDate | date }}
+            {{
+            purchase?.timeline?.purchasePlacedDate | date: "mediumTime"
+            }}</span>
+        </div>
+      </div>
+
+      <!---order-details-main-area-->
+      <div class="order-details-main">
+        <!---order-details-left-->
+        <div class="order-details-left">
+          <!---order-details-table-area-->
+          <!---order-table-->
+          <div class="table-head">
+            <div class="table-head-left">
+              <ul>
+                <li>
+                  <span [class]="clickActive[0] ? 'menu-active' : ''" (click)="getPurchaseDetails()">Overview</span>
+                </li>
+                <li>
+                  <span [class]="clickActive[1] ? 'menu-active' : ''" [routerLink]="['../../', 'edit', purchase?._id]">
+                    <button class="edit-button" mat-button>Edit <i class="fa fa-edit" ></i></button>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="info">
+            <div class="title">
+              <h3>Product Information</h3>
+            </div>
+            <div class="details">
+                <div class="items">Vendor : <span>{{purchase?.supplier}}</span></div>
+                <div class="items">Manufacturer : <span>{{purchase?.manufacturer}}</span></div>
+                <div class="items">Supplier Link : <span>{{purchase?.supplier_link}}</span></div>
+            </div>
+          </div>
+
+          <div class="order-table">
+            <table>
+              <thead>
+                <tr>
+                  <th class="check">
+                    <mat-checkbox></mat-checkbox>
+                  </th>
+                  <th class="si">SI</th>
+                  <th class="item">Item Details</th>
+                  <th class="quantity">PO Quantity</th>
+                  <th class="quantity">Unit Price</th>
+                  <th class="quantity">Tax</th>
+                  <th class="quantity">Amount</th>
+                  <th class="price">Recieved Quantity</th>
+                  <th class="quantity">Recieved Amount</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of products; let i = index">
+                  <td class="check">
+                    <mat-checkbox (change)="onCheckChange($event, i)"></mat-checkbox>
+                  </td>
+                  <td class="si">
+                    <span>{{ i + 1 }}</span>
+                  </td>
+                  <td class="item">
+                    <div class="product">
+                      <div class="product-img">
+                        <img [src]="
+                            item.image
+                              ? item.image
+                              : '/assets/images/placeholder/test.png'
+                          " alt="item.product.name" />
+                      </div>
+                      <div class="product-info">
+                        <h3>{{ item?.productData?.name }}</h3>
+                        <p>SKU: {{ item?.productData?.sku }}</p>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td class="quantity">
+                    <span>{{ item?.purchaseQuantity }}</span>
+                  </td>
+                  <td class="quantity">
+                    <a href="#">{{ item?.purchasePrice }}</a>
+                  </td>
+                  <td class="tax">
+                    <span>{{ item.purchaseTax }}%</span>
+                  </td>
+                  <td class="amount">
+                    <span>{{ getAmount(item) }}</span>
+                  </td>
+                  <td class="price ">
+                    <span>{{item.recieved ? item.recieved : 0}}<a (click)="openRecieved(item?.recieved, i, item?.purchaseQuantity)">+</a></span>
+
+                  </td>
+                  <td class="tax">
+                    <span>0 TK</span>
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!---table-end-->
+          <div class="order-pay-details">
+            <div class="payment-summery-area">
+              <div class="total-area">
+                <ul>
+                  <li>
+                    <div class="total-title">
+                      <h3>Sub Total</h3>
+                    </div>
+                    <div class="total-price">
+                      <h4>{{ purchase?.subTotal }} TK</h4>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="total-title">
+                      <h3>Shipping Charge</h3>
+                    </div>
+                    <div class="total-price">
+                      <h4>{{ purchase?.purchaseShippingCharge }} TK</h4>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="total-title">
+                      <h3>Adjustment</h3>
+                    </div>
+                    <div class="total-price">
+                      <h4>{{ purchase?.adjustmentPrice }} TK</h4>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="total-title">
+                      <h3>Total</h3>
+                    </div>
+                    <div class="total-price">
+                      <h4>{{ purchase?.totalAmount }} TK</h4>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,95 @@
+<div class="order-header-top">
+  <!---order-title-->
+  <div class="order-title">
+    <h3>Inventory Adjustment Details</h3>
+  </div>
+  <!---order-btn-area-->
+  <div class="order-btn-area">
+    <ul>
+      <li><button>Import</button></li>
+      <li><button>Export</button></li>
+      <li><button class="active-btn" (click)="openDialog2()">+ New</button></li>
+    </ul>
+  </div>
+</div>
+
+<!--order-details-->
+<div class="order_details">
+  <div class="order_details_left-sidebar">
+    <!---order-details-right-side-bar-top-->
+    <div class="order-details-left-sidebar-top">
+      <div class="order-details-left-top-dotted">
+        <div>
+          <button routerLink="/admin/regular-orders">
+            All Adjustments <i class="fa fa-angle-down"></i>
+          </button>
+        </div>
+        <div class="dotted">
+          <span><i class="fa-solid fa-ellipsis"></i></span>
+        </div>
+      </div>
+      <!--search-->
+      <div class="top-search-area">
+        <div>
+          <button><i class="fa fa-search"></i></button>
+        </div>
+        <div class="search-input">
+          <input type="text" value="" placeholder="Search purchase" />
+        </div>
+      </div>
+    </div>
+    <!---top-end-->
+    <!---order-details-right-side-bar-main-->
+    <div class="order-details-left-side-bar-main">
+      <div class="order-details-sidebar-info">
+        <ul>
+          <li *ngFor="
+              let data of dataSet
+                | paginate
+                  : {
+                      itemsPerPage: itemsPerPage,
+                      currentPage: currentPage,
+                      totalItems: totalItems
+                    };
+              let i = index
+            " [class.active]="data?._id === id" [routerLink]="['../../', 'details', data._id]">
+            <div class="sidebar-info-left">
+              <span [routerLink]="['../../', 'details', data._id]">AD-{{ data?.adjustmentId }} |
+                <small>{{ data?.dateTime | date }}</small></span>
+            </div>
+            <div class="sidebar-info-right">
+              <h4>{{ data?.totalAmount }} TK</h4>
+              <span>{{data?.reference}}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!---end-->
+  </div>
+  <div class="product-info">
+    <h3 class="id">AD-{{adjustment?.adjustmentId}}</h3>
+    <h3 class="title">Product Information</h3>
+    <nz-table #headerTable [nzData]="listOfData" nzTableLayout="fixed">
+      <thead>
+        <tr >
+          <th *ngFor="let column of listOfColumn" [nzSortFn]="column.compare" [nzSortPriority]="column.priority">
+            {{column.title}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tableData of headerTable.data">
+          <td>{{ tableData?.productData?.name }}</td>
+          <td>{{ tableData?.productData?.sku }}</td>
+          <td>{{ tableData?.productData?.quantity}}</td>
+          <td>{{ tableData?.productData?.costPrice}}</td>
+          <td>{{ tableData?.damageQuantity }}</td>
+          <td>{{ tableData?.damageAmount }}</td>
+          <td>Image</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+

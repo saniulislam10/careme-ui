@@ -1,3 +1,4 @@
+import { AccountModule } from './deshboard/settings/account/account.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserAuthStateGuard } from '../auth-guard/user-auth-state.guard';

@@ -1,3 +1,5 @@
+import { MyAccountModule } from './my-account/my-account.module';
+import { SummaryModule } from './summary/summary.module';
 import { DeshboardComponent } from './deshboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -42,6 +44,14 @@ const routes: Routes = [
       {
         path:"coupons",
         loadChildren: () => import('./coupons/coupons.module').then(m => m.CouponsModule)
+      },
+      {
+        path:"summary",
+        loadChildren: () => import('./summary/summary.module').then(m => m.SummaryModule)
+      },
+      {
+        path:"account",
+        loadChildren: () => import('./my-account/my-account.module').then(m => m.MyAccountModule)
       },
     ]
   }

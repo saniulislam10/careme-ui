@@ -1,0 +1,231 @@
+<mat-dialog-content>
+
+  <div class="main_create_invoice" [class]="createInvoice ?'active-create-invoice-area':'in-active'">
+  <!-- form-field -->
+  <form [formGroup]="dataForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="inside_create_invoice">
+
+        <!---header-area-->
+        <div class="header-area">
+          <div class="header-top">
+            <div class="header-top-left">
+               <h3>New Purchase Order</h3>
+            </div>
+            <div class="header-top-right">
+                  <div class="create-invoice-icon">
+                    <button mat-dialog-close type="button"><i class="fa-solid fa-xmark"></i></button>
+                  </div>
+            </div>
+          </div>
+          <div class="header-main">
+              <div class="user-search">
+                  <div class="ship-title">
+                    <h3  class="items">PO ID #</h3>
+                    <h3 class="items">Reference #</h3>
+                    <h3 class="items">Date and Time</h3>
+                    <h3 class="items">Vendor Name</h3>
+                  </div>
+                  <div class="ship-title">
+                    <h3 class="items">: 1234</h3>
+                    <mat-form-field  class="items" appearance="outline" class="form-field">
+                      <input matInput formControlName="reference" type="text" placeholder="PK-131 india">
+                    </mat-form-field>
+                    <input mat-input type="datetime-local" formControlName="dateTime" class="items">
+                    <mat-select style="border: 2px solid black; padding-left: 10px" class="items" formControlName="supplier" placeholder="Vendor">
+                      <mat-option value="alibaba">Alibaba</mat-option>
+                      <mat-option value="torygroup">ToryGroup</mat-option>
+                    </mat-select>
+                  </div>
+              </div>
+              <div class="supplier-search">
+                  <div class="block">
+                    <span>Supplier Link</span>
+                    <mat-form-field appearance="outline" class="form-field">
+                      <input matInput formControlName="supplier_link" type="text" >
+                    </mat-form-field>
+                  </div>
+                  <div class="block">
+                    <span>Manufacturer</span>
+                    <mat-form-field appearance="outline" class="form-field">
+                      <input matInput formControlName="manufacturer" type="text" >
+                    </mat-form-field>
+                  </div>
+                  <div class="block">
+                    <span>Shipment Reference</span>
+                    <mat-form-field appearance="outline" class="form-field">
+                      <input matInput formControlName="supplier_reference" type="text" >
+                    </mat-form-field>
+                  </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="edit_order_search">
+          <div class="serarch_left">
+            <div class="search_inside_div" (click)="onClickSearchArea($event)">
+              <mat-icon>search</mat-icon>
+              <div>
+                <form class="form-field" #searchForm=ngForm>
+                  <input #searchInput id="searchInput" class="form-inp" type="text" placeholder="Search in caremebd..."
+                    (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel required>
+                  <div *ngIf="isLoading" class="sk-fading-circle">
+                    <div class="sk-circle1 sk-circle"></div>
+                    <div class="sk-circle2 sk-circle"></div>
+                    <div class="sk-circle3 sk-circle"></div>
+                    <div class="sk-circle4 sk-circle"></div>
+                    <div class="sk-circle5 sk-circle"></div>
+                    <div class="sk-circle6 sk-circle"></div>
+                    <div class="sk-circle7 sk-circle"></div>
+                    <div class="sk-circle8 sk-circle"></div>
+                    <div class="sk-circle9 sk-circle"></div>
+                    <div class="sk-circle10 sk-circle"></div>
+                    <div class="sk-circle11 sk-circle"></div>
+                    <div class="sk-circle12 sk-circle"></div>
+                  </div>
+                </form>
+
+              </div>
+              <div class="search_add_button">
+                <button><span>+</span>Add</button>
+              </div>
+            </div>
+            <ul style="width: 400px;" id="auto-suggestion" class="auto-complete-box"
+              [ngClass]="searchProducts.length > 0 && isOpen ? 'active' : ''">
+              <li class="list-view" *ngFor="let data of searchProducts" (click)="onSelectItem(data)">
+                <img class="img-thumb"
+                  [src]="data.images && data.images.length > 0 ? data.images[0] : '/assets/images/placeholder/test.png'"
+                  [alt]="data?.productName">
+                <div class="desc">
+                  <h3>{{data?.name}}</h3>
+                </div>
+                <div class="price">
+                  <h5>৳{{data.sellingPrice}}</h5>
+                  <p class="discount">
+                    <!-- {{(data | price: 'discountPercentage') > 0 ? '(' + (data | price: 'discountPercentage') + '% OFF)' : ''}} -->
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="order-table">
+          <table>
+
+            <thead>
+              <tr>
+                <th class="item">Item Details</th>
+                <th class="price">Unit Cost Price</th>
+                <th class="quantity">PO Quantity</th>
+                <th class="discount">Tax</th>
+                <th class="amount">Amount</th>
+                <th class="order-status">Remove</th>
+              </tr>
+            </thead>
+
+            <tbody formArrayName="products">
+              <div *ngFor="let data of products.controls; let a=index">
+
+
+              <tr [formGroupName]="a">
+                <td class="item">
+                  <div class="product">
+                    <div class="product-img">
+                      <img [src]="'/assets/images/placeholder/test.png'"
+                        alt="data.product.name">
+                      </div>
+                    <div class="product-info">
+                      <h3>{{data.value.productData.name}}</h3>
+                      <p>SKU: {{data.value.productData.sku}}</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="quantity">
+                  <mat-form-field appearance="outline" class="form-field">
+                    <input matInput type="number" (change)="calculateAmount(a)" formControlName="purchasePrice" >
+                  </mat-form-field>
+                </td>
+                <td class="price">
+                  <mat-form-field appearance="outline" class="form-field">
+                    <input matInput type="number" (change)="calculateAmount(a)" formControlName="purchaseQuantity" >
+                  </mat-form-field>
+                </td>
+                <td class="tax">
+                  <mat-form-field appearance="outline" class="form-field">
+                    <input matInput type="number" (change)="calculateAmount(a)" formControlName="purchaseTax" placeholder="percent(%)">
+                  </mat-form-field>
+                </td>
+                <td class="amount">
+                  <span>{{data?.value?.amount}} Tk</span>
+                </td>
+                <td class="order-delete">
+                  <mat-icon (click)="delete(i)"><i class="fa-solid fa-circle-minus"></i></mat-icon>
+                </td>
+              </tr>
+            </div>
+
+          </tbody>
+
+        </table>
+
+      </div>
+      <button type="button" mat-button class="addProductButton"> + Add Product</button>
+
+        <!-- invoice custom notes -->
+        <div class="custom_notes_field">
+          <div class="total-area">
+              <ul>
+                  <li>
+                     <div class="total-title">
+                        <h3>Sub Total</h3>
+                     </div>
+                     <div class="total-price">
+                        <h4>{{calculateSubTotal()}} TK</h4>
+                     </div>
+                  </li>
+                  <li>
+                    <div class="total-title">
+                       <h3>Shipping</h3>
+                    </div>
+                    <div class="total-price">
+                      <mat-form-field appearance="outline" class="form-field">
+                        <input matInput type="number" formControlName="purchaseShippingCharge" digitOnly>
+                      </mat-form-field>
+                    </div>
+                 </li>
+                 <li>
+                  <div class="total-title">
+                     <h3>Adjustment</h3>
+                  </div>
+                  <div class="total-price">
+                    <mat-form-field appearance="outline" class="form-field">
+                      <input matInput type="number" formControlName="adjustmentPrice" >
+                    </mat-form-field>
+                  </div>
+               </li>
+               <li>
+                <div class="total-title">
+                   <h3>Total Amount = </h3>
+                </div>
+                <div class="total-price">
+                   <h4>{{calculateTotal()}} TK</h4>
+                </div>
+             </li>
+              </ul>
+          </div>
+
+
+        </div><!---total-->
+
+        <div class="invoice_buttons">
+          <button mat-stroked-button type="submit">Done</button>
+        </div>
+
+    </div>
+
+
+
+  </form>
+  </div>
+
+</mat-dialog-content>

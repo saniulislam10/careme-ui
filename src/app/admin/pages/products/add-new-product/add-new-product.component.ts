@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -22,7 +22,7 @@ import { Country } from '@angular-material-extensions/select-country';
 import { Product } from 'src/app/interfaces/product';
 import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
 import { AmountType } from 'src/app/enum/amount-type';
-import { Subscription, Subject } from 'rxjs';
+import { Subscription, Subject, Observable } from 'rxjs';
 import { Weight } from 'src/app/enum/weight';
 import { ProductService } from 'src/app/services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -41,6 +41,10 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Category } from 'src/app/interfaces/category';
 import { SubCategory } from 'src/app/interfaces/sub-category';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { colorSets } from '@swimlane/ngx-charts';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-new-product',
@@ -99,6 +103,16 @@ export class AddNewProductComponent implements OnInit {
   mediaArray: FormArray;
   variantArray: FormArray;
   optionsArray: FormArray;
+  inputVisible = false;
+  inputValue = '';
+  @ViewChild('inputElement', { static: false }) inputElement?: ElementRef;
+
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  fruits: any[][] = [[]];
+  myControl = new FormControl('');
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions: Observable<string[]>;
 
 
   productStatus: Select[] = [
@@ -148,6 +162,7 @@ export class AddNewProductComponent implements OnInit {
     // INIT FORM
     this.initFormGroup();
     this.initModule();
+    // this.initOptions();
 
     // Category
 
@@ -210,7 +225,8 @@ export class AddNewProductComponent implements OnInit {
       sku: [null, Validators.required],
       barcode: [null],
       quantity: [null],
-      reOrder: [null],
+      committedQuantity: [0],
+      reOrder: [null, Validators.required],
       trackQuantity: this.trackQuantity,
       continueSelling: [null],
       isPhysicalProduct: [null],
@@ -219,7 +235,7 @@ export class AddNewProductComponent implements OnInit {
       country: [null, Validators.required],
       hscode: [null],
       hasVariant: [null],
-      variants: new FormArray([new FormControl(null)]),
+      variants: new FormArray([new FormControl('')]),
       options: new FormArray([new FormControl(null)]),
       variantFormArray: this.fb.array([]),
       variantDataArray: [null],
@@ -279,6 +295,20 @@ export class AddNewProductComponent implements OnInit {
       },
     };
   }
+
+  // private initOptions(){
+  //   for(let i=0; i<this.variantArray.length; i++){
+  //       this.filteredOptions = this.variantArray[i].valueChanges.pipe(
+  //         startWith(''),
+  //         map(value => this._filter(value || '')),
+  //       );
+  //     }
+  // }
+  // private _filter(value): string[] {
+  //   const filterValue = value.toLowerCase();
+
+  //   return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  // }
 
   /**
    * Http Req
@@ -410,6 +440,7 @@ export class AddNewProductComponent implements OnInit {
     for (let i = 0; i < options.length; i++) {
       let key = Object.keys(options[i]);
       let values = Object.values(options[i]);
+      console.log(options[i])
 
       keyArr.push(key[0]);
       valueArr.push(values[0]);
@@ -462,6 +493,7 @@ export class AddNewProductComponent implements OnInit {
           variantQuantity: this.product.variantFormArray[i].quantity,
           variantReOrder: this.product.variantFormArray[i].reOrder,
           variantContinueSelling: this.product.variantFormArray[i].continueSelling,
+          variantDisplay: this.product.variantFormArray[i].variantDisplay,
           variantStatus: this.product.variantFormArray.status,
           variantPrice: this.product.variantFormArray[i].price,
           image: this.product.variantFormArray[i].image,
@@ -478,20 +510,21 @@ export class AddNewProductComponent implements OnInit {
   }
 
   //for variant add
-  variantFormArrayFunctionForAdd() {
+  variantFormArrayFunctionForAdd(options? : any) {
     for (let i = 0; i < this.variantDataArray.length; i++) {
       const f = this.fb.group({
         variantVendorName: this.dataForm.value.vendor,
-        variantQuantity: [null, Validators.required],
-        variantReOrder: [null],
-        variantContinueSelling: [null],
+        variantQuantity: [0, Validators.required],
+        variantReOrder: [0],
+        variantContinueSelling: [true],
+        variantDisplay: [true],
         variantPrice: this.dataForm.value.sellingPrice,
         variantStatus: this.dataForm.value.status,
         image:[null],
         variantSku: this.generateSubSku(
           this.dataForm.value.sku,
           this.dataForm.value.variants,
-          this.dataForm.value.options,
+          options ? options : this.dataForm.value.options,
           this.variantDataArray[i]
           ),
         });
@@ -603,13 +636,34 @@ export class AddNewProductComponent implements OnInit {
       for(let i=0; i< length; i++){
         this.removeVariantFormArray(0);
       }
-      this.addVariants(this.dataForm.value.options,this.dataForm.value.variants);
-      this.variantFormArrayFunctionForAdd();
+      let options = this.separateOptions();
+      this.addVariants(options,this.dataForm.value.variants);
+      this.variantFormArrayFunctionForAdd(options);
     } else{
+
+      let options = this.separateOptions();
       this.addVariants(this.dataForm.value.options,this.dataForm.value.variants);
-      this.variantFormArrayFunctionForAdd();
+      this.variantFormArrayFunctionForAdd(options);
 
     }
+  }
+  separateOptions() {
+    let options : string[] = [];
+      console.log(this.fruits);
+      for(let i = 0; i< this.fruits.length; i++){
+        let optionName : string;
+        for(let j=0; j < this.fruits[i].length; j++){
+          console.log(this.fruits[j])
+          if(j===0){
+            optionName = this.fruits[i][j];
+          }else{
+            optionName += ','+ this.fruits[i][j];
+          }
+        }
+        options.push(optionName);
+        this.dataForm.value.options[i]=optionName;
+      }
+      return options;
   }
 
 
@@ -627,6 +681,7 @@ export class AddNewProductComponent implements OnInit {
     const form2 = new FormControl('');
     (this.dataForm.controls['variants'] as FormArray).push(form);
     (this.dataForm.controls['options'] as FormArray).push(form2);
+    this.fruits.push([]);
   }
 
   deleteFormControl(index) {
@@ -664,13 +719,19 @@ export class AddNewProductComponent implements OnInit {
 
     //for variants
     if(this.product.hasVariant === true){
-      for (let i = 0; i < this.product.options.length - 1; i++) {
-        this.onAddNewFormControl();
-      }
 
       this.addVariants(this.product.options, this.product.variants);
       this.variantFormArrayFunctionForEdit();
       this.dataForm.value.variantDataArray = this.product.variantDataArray;
+
+      for (let i = 0; i < this.product.options.length; i++) {
+        if((i+1) !== this.product.options.length){
+          this.onAddNewFormControl();
+        }
+        this.dataForm.value.options[i] = null;
+
+        this.fruits[i]= this.product.options[i].split(',')
+      }
       this.dataForm.patchValue(this.product);
     }
     else{
@@ -773,6 +834,7 @@ export class AddNewProductComponent implements OnInit {
       };
       this.editProductData(finalData);
     } else {
+      console.log(rawData);
       this.addProduct(rawData);
     }
   }
@@ -1057,6 +1119,28 @@ export class AddNewProductComponent implements OnInit {
           }
         )
       }
+
+
+  }
+
+  add(event: MatChipInputEvent, index:number): void {
+    const value = (event.value || '').trim();
+    // Add our fruit
+    console.log(index);
+    if (value) {
+      this.fruits[index].push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  remove(fruit: any, i): void {
+    const index = this.fruits[i].indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits[i].splice(index, 1);
+    }
   }
 
 

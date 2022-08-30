@@ -844,6 +844,47 @@ export const menuItemsSuperAdmin: MenuAdmin[] = [
     href: null,
     target: null,
   },
+  {
+    id: 'I100',
+    title: 'Inventory',
+    icon: 'view_list',
+    hasSubMenu: true,
+    parentId: null,
+    routerLink: null,
+    href: null,
+    target: null
+  },
+  {
+    id: '1212Il',
+    title: 'Stock',
+    icon: 'follow_the_signs',
+    hasSubMenu: false,
+    parentId: 'I100',
+    routerLink: 'stock',
+    href: null,
+    target: null
+  },
+  {
+    id: 'll11I1',
+    title: 'Purchase',
+    icon: 'follow_the_signs',
+    hasSubMenu: false,
+    parentId: 'I100',
+    routerLink: 'purchase',
+    href: null,
+    target: null
+  },
+
+  {
+    id: '1212ll',
+    title: 'Adjustment',
+    icon: 'follow_the_signs',
+    hasSubMenu: false,
+    parentId: 'I100',
+    routerLink: 'adjustment',
+    href: null,
+    target: null
+  },
 
   {
     id: '9',
