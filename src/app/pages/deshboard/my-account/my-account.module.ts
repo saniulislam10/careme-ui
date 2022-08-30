@@ -13,11 +13,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 
-
 @NgModule({
-  declarations: [
-    MyAccountComponent
-  ],
+  declarations: [MyAccountComponent],
   imports: [
     CommonModule,
     MyAccountRoutingModule,
@@ -30,7 +27,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     ReactiveFormsModule,
     FormsModule,
     MaterialModule,
-    ImageCropperModule
-  ]
+    ImageCropperModule,
+  ],
 })
-export class MyAccountModule { }
+export class MyAccountModule {}
