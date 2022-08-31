@@ -1,12 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-interface ParentItemData {
-  key: number;
-  orderId: string;
-  date: Date;
-  expand?: boolean;
-}
-
 interface ChildrenItemData {
   name: string;
   sku: string;
@@ -28,19 +21,20 @@ interface ChildrenItemData {
 })
 export class OrderDetailsComponent implements OnInit {
 
-  listOfParentData: ParentItemData[] = [];
+  list = [
+    'Shipped',
+    'Japanese princess to wed commoner.',
+    'Australian walks 100km after outback crash.',
+    'Man charged over missing wedding girl.',
+    'Los Angeles battles huge wildfires.'
+  ];
+
   listOfChildrenData: ChildrenItemData[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
     for (let i = 0; i < 1; ++i) {
-      this.listOfParentData.push({
-        key: i,
-        orderId: '12314' + Number(i),
-        date: new Date(),
-        expand: i === 0 ? true : false
-      });
       for (let j = 0; j < 3; ++j) {
         this.listOfChildrenData.push({
           name: "Nike Hypervenom viper ultra rare edition 20.3",

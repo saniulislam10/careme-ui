@@ -1,68 +1,107 @@
+<div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 256 }">
+  <div nz-col nzSpan="12">
+    <nz-divider nzText="Delivery Info" nzOrientation="left"></nz-divider>
+    <ul nz-list [nzDataSource]="list" [nzSplit]="false" nzSize="small">
+      <li nz-list-item nzNoFlex>
+        <ul nz-list-item-actions>
+          <nz-list-item-action>
+            <a>: Pathao</a>
+          </nz-list-item-action>
+        </ul>
+        Shipped By
+      </li>
+      <li nz-list-item nzNoFlex>
+        <ul nz-list-item-actions>
+          <nz-list-item-action>
+            <a>: 1KG</a>
+          </nz-list-item-action>
+        </ul>
+        Weight
+      </li>
+      <li nz-list-item nzNoFlex>
+        <ul nz-list-item-actions>
+          <nz-list-item-action>
+            <a>: 120TK</a>
+          </nz-list-item-action>
+        </ul>
+        Shipping Cost
+      </li>
+    </ul>
+  </div>
 
-    <nz-table #nestedTable [nzData]="listOfParentData" [nzPageSize]="10">
-      <thead >
-        <tr style="display: none">
-          <th></th>
-          <th>Name</th>
-          <th>Platform</th>
-          <th>Version</th>
-          <th>Upgraded</th>
-          <th>Creator</th>
-          <th>Date</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-template ngFor let-data [ngForOf]="nestedTable.data">
-          <tr>
-            <td [(nzExpand)]="data.expand"></td>
-            <td ><a class="order-id" matTooltip="Click to view product details" [routerLink]="['../../order-details']">SO - {{ data.orderId }}</a> </td>
-            <td>{{ data.date | date : 'short' }}</td>
-            <td>
-              <a class="pay-order">Pay now</a>
-            </td>
-          </tr>
-          <tr [nzExpand]="data.expand">
-            <nz-table #innerTable [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
-              <!-- <thead *ngIf="false">
-                <tr >
-                  <th>Date</th>
-                  <th>Name</th>
-                  <th>Status</th>
-                  <th>Upgrade Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead> -->
-              <!-- name: "Viper",
-          sku: "viper001",
-          variantName: "L/XL",
-          qty: 2,
-          total: 123,
-          advance: 15,
-          advanceType: 1,
-          advanceInTaka: 123,
-          paymentStatus: 'Payment Status',
-          orderStatus: 'pending',
-          deliveryDate: new Date() -->
-              <tbody>
-                <tr *ngFor="let data of innerTable.data">
-                  <td>
-                    <span matTooltip="Click to view ordered product details" [routerLink]="['../../order-details']">{{data.name}}</span>
-                    <br>{{data.sku}}
-                  </td>
-                  <td>Qty : {{ data.qty }}</td>
-                  <td>Total : {{ data.total }}</td>
-                  <td>Advance : {{ data.advance }}TK</td>
-                  <td><a class="status">{{ data.paymentStatus }}</a></td>
-                  <td class="instock">Estimated Delivery by <br><span>{{ data.deliveryDate | date : 'short'}}</span></td>
-                  <td>
-                    <a class="order-status">{{ data.orderStatus }}</a>
-                  </td>
-                </tr>
-              </tbody>
-            </nz-table>
-          </tr>
-        </ng-template>
-      </tbody>
-    </nz-table>
+  <div nz-col nzSpan="12">
+    <nz-divider nzText="Shipping Info" nzOrientation="left"></nz-divider>
+    <ul nz-list [nzDataSource]="list" [nzSplit]="false" nzSize="small">
+      <li nz-list-item nzNoFlex>
+        <ul nz-list-item-actions>
+          <nz-list-item-action>
+            <span>Saniul Islam</span>
+          </nz-list-item-action>
+        </ul>
+        Name
+      </li>
+      <li nz-list-item nzNoFlex>
+        <ul nz-list-item-actions>
+          <nz-list-item-action>
+            <span>01687248923</span>
+          </nz-list-item-action>
+        </ul>
+        Phone No
+      </li>
+      <li nz-list-item nzNoFlex>
+        <ul nz-list-item-actions>
+          <nz-list-item-action>
+            <span>rahim.fortunetech@gmail.com</span>
+          </nz-list-item-action>
+        </ul>
+        Email
+      </li>
+      <li nz-list-item nzNoFlex>
+        <ul nz-list-item-actions>
+          <nz-list-item-action>
+            <span>rahim fortunetech, dhaka, Bangladesh</span>
+          </nz-list-item-action>
+        </ul>
+        Address
+      </li>
+    </ul>
+  </div>
+</div>
 
+
+<nz-table style="margin: 30px 0px" #innerTable [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
+  <thead>
+    <tr>
+      <th>
+        <a style="font-size: 20px">SO - 1234</a>
+        <br>
+        <span style="font-size: 15px">
+          Date : 8/12/2020
+        </span>
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th><a class="pay-order">Pay now</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of innerTable.data">
+      <td>
+        <a matTooltip="Click to view ordered product details"
+          [routerLink]="['../../order-single-product-details']">{{data.name}}</a>
+        <br>{{data.sku}}
+      </td>
+      <td>Qty : {{ data.qty }}</td>
+      <td>Total : {{ data.total }}</td>
+      <td>Advance : {{ data.advance }}TK</td>
+      <td><a class="status">{{ data.paymentStatus }}</a></td>
+      <td class="instock">Estimated Delivery by <br><span>{{ data.deliveryDate | date : 'short'}}</span></td>
+      <td>
+        <a class="order-status">{{ data.orderStatus }}</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

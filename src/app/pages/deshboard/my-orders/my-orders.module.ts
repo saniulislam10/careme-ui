@@ -20,7 +20,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     NzTableModule,
     NzDropDownModule,
     MatTooltipModule,
-    NzToolTipModule,
     MyOrdersRoutingModule,
   ]
 })
