@@ -1,21 +1,21 @@
 <div nz-row [nzGutter]="16">
   <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
-    <nz-card nzTitle="Shipping Address" [nzExtra]="extraTemplate">
+    <nz-card nzSize="small" nzTitle="Office Address" [nzExtra]="extraTemplate">
       <table style="margin: 0">
         <tr>
-          <th>Name</th>
+          <th style="width: 15%">Name</th>
           <td>Saniul Islam</td>
         </tr>
         <tr>
-          <th>Phone</th>
+          <th style="width: 15%">Phone</th>
           <td>01687248923</td>
         </tr>
         <tr>
-          <th>Email</th>
+          <th style="width: 15%">Email</th>
           <td>saniul.cliet@gmail.com</td>
         </tr>
         <tr>
-          <th>Address</th>
+          <th style="width: 15%">Address</th>
           <td>House 186, Lane 2, Dohs Baridhara, Dhaka</td>
         </tr>
       </table>
@@ -24,15 +24,127 @@
       <a>Edit</a>
     </ng-template>
   </div>
-  <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">ok</div>
+  <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+    <nz-card nzSize="small" nzTitle="Home Address" [nzExtra]="extraTemplate">
+      <table style="margin: 0">
+        <tr>
+          <th style="width: 15%">Name</th>
+          <td>Saniul Islam</td>
+        </tr>
+        <tr>
+          <th style="width: 15%">Phone</th>
+          <td>01687248923</td>
+        </tr>
+        <tr>
+          <th style="width: 15%">Email</th>
+          <td>saniul.cliet@gmail.com</td>
+        </tr>
+        <tr>
+          <th style="width: 15%">Address</th>
+          <td>House 186, Lane 2, Dohs Baridhara, Dhaka</td>
+        </tr>
+      </table>
+    </nz-card>
+    <ng-template #extraTemplate>
+      <a>Edit</a>
+    </ng-template>
+  </div>
 </div>
 
 <br />
 
 <div nz-row [nzGutter]="16">
   <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-    <nz-card nzTitle="Shipping Address">
-      <div>
+    <nz-card nzSize="small">
+      <div nz-row>
+        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+          <h2>Manage Profile</h2>
+        </div>
+        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+          <form nz-form>
+            <nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">First Name</nz-form-label>
+                <nz-form-control [nzSpan]="22" nzValidatingTip="Validating...">
+                  <input
+                    nz-input
+                    formControlName="firstname"
+                    placeholder="First Name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">Last Name</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                  <input
+                    nz-input
+                    formControlName="lastname"
+                    placeholder="Lasr Name"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">Contact Number</nz-form-label>
+                <nz-form-control [nzSpan]="22" nzValidatingTip="Validating...">
+                  <input
+                    nz-input
+                    formControlName="contactnumber"
+                    placeholder="01XXXXXXXXX"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">E-mail</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                  <input
+                    nz-input
+                    formControlName="useremail"
+                    placeholder="user@email.com"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">Contact Number</nz-form-label>
+                <nz-form-control [nzSpan]="8" nzValidatingTip="Validating...">
+                  <input
+                    nz-input
+                    formControlName="contactnumber"
+                    placeholder="01XXXXXXXXX"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">E-mail</nz-form-label>
+                <nz-form-control [nzSpan]="8">
+                  <input
+                    nz-input
+                    formControlName="useremail"
+                    placeholder="user@email.com"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">E-mail</nz-form-label>
+                <nz-form-control [nzSpan]="8">
+                  <input
+                    nz-input
+                    formControlName="useremail"
+                    placeholder="user@email.com"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </nz-form-item>
+          </form>
+        </div>
+      </div>
+
+      <!-- <div>
         <div class="upload">
           <button type="button" (click)="profileImagePicker.click()">
             Attachment <i class="fas fa-paperclip"></i>
@@ -53,7 +165,7 @@
               : '/assets/images/avatar/user-young.jpg'
           "
         />
-      </div>
+      </div> -->
     </nz-card>
   </div>
 </div>
