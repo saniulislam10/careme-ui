@@ -90,6 +90,9 @@
   <tbody>
     <tr *ngFor="let data of innerTable.data">
       <td>
+        <img style="width: 100px" src="/assets/images/placeholder/test.png" alt="">
+      </td>
+      <td>
         <a>{{data.name}}</a>
         <br>{{data.sku}}
       </td>
@@ -119,10 +122,10 @@
     </span>
   </ng-template>
 </div>
-<div style="margin-top: 40px;">
-  <h3>Order Timeline</h3>
+<div class="timeline-items">
+  <h3 >Order Timeline</h3>
   <nz-timeline [nzMode]="mode" nzReverse="true">
-    <nz-timeline-item *ngFor="let data of [1,2,3,4]; let i=index" nzLabel="2/2/3">
+    <nz-timeline-item class="timeline-item" *ngFor="let data of [1,2,3,4]; let i=index" [nzLabel]="currentDate | date : 'short'">
       <span style="font-size: 20px">
         Pending
       </span>

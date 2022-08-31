@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { MyReviewsRoutingModule } from './my-reviews-routing.module';
 import { MyReviewsComponent } from './my-reviews.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 
 @NgModule({
@@ -11,6 +15,10 @@ import { MyReviewsComponent } from './my-reviews.component';
   ],
   imports: [
     CommonModule,
+    NzTabsModule,
+    NzTableModule,
+    NzDropDownModule,
+    MatTooltipModule,
     MyReviewsRoutingModule
   ]
 })

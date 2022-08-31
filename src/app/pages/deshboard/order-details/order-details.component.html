@@ -90,6 +90,9 @@
   <tbody>
     <tr *ngFor="let data of innerTable.data">
       <td>
+        <img style="width: 100px" src="/assets/images/placeholder/test.png" alt="">
+      </td>
+      <td>
         <a matTooltip="Click to view ordered product details"
           [routerLink]="['../../order-single-product-details']">{{data.name}}</a>
         <br>{{data.sku}}

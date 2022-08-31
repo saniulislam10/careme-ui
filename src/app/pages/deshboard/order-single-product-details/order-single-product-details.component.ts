@@ -25,12 +25,11 @@ interface ChildrenItemData {
 export class OrderSingleProductDetailsComponent implements OnInit {
 
   listOfChildrenData: ChildrenItemData[] = [];
-  date : Date;
+  currentDate : Date = new Date();
   constructor() { }
   mode : NzTimelineMode = 'left';
 
   ngOnInit(): void {
-    this.date = new Date();
     this.listOfChildrenData.push({
       name: "Nike Hypervenom viper ultra rare edition 20.3",
       sku: "viper001",

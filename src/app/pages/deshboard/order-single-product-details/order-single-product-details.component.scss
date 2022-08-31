@@ -50,3 +50,14 @@ form nz-form-item {
   padding: 10px;
   background-color: $table-sm-color;
 }
+.timeline-items{
+  position: relative;
+  height: auto;
+  justify-content: start;
+  width: 40%;
+  h3{
+    padding: 30px;
+    margin-bottom: 20px;
+    font-size: 25px;
+  }
+}

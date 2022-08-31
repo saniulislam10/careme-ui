@@ -32,6 +32,9 @@
 
               <tbody>
                 <tr *ngFor="let data of innerTable.data">
+                  <td>
+                    <img style="width: 100px" src="/assets/images/placeholder/test.png" alt="">
+                  </td>
                   <td>{{data.name}}<br>{{data.sku}}</td>
                   <td>Qty : {{ data.qty }}</td>
                   <td>Total : {{ data.total }}</td>
