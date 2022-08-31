@@ -1,0 +1,40 @@
+form nz-form-item {
+  margin-right: 16px;
+  margin-bottom: 8px;
+}
+
+.instock{
+  color : rgb(252, 173, 47);
+  span{
+    color : green;
+  }
+}
+.status{
+  color : red;
+  border: 1px solid rgb(56, 56, 56);
+  border-radius: 25px;
+  text-align: center;
+  padding: 5px;
+}
+.order-status{
+  color : black;
+  text-align: center;
+  background-color: rgb(208, 208, 208);
+  height: 100%;
+  width: 100%;
+}
+.pay-order{
+  color : white;
+  text-align: center;
+  padding: 10px;
+  background-color: green;
+  cursor: pointer;
+}
+.pay-order:hover{
+  color : green;
+  text-align: center;
+  padding: 10px;
+  background: none;
+  border: 2px solid green;
+  cursor: pointer;
+}

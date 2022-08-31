@@ -1,1 +1,72 @@
-<p>my-orders works!</p>
+<nz-tabset [nzTabBarExtraContent]="extraTemplate">
+  <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab" (nzClick)="onTabSelect(tab)">
+    <nz-table #nestedTable [nzData]="listOfParentData" [nzPageSize]="10">
+      <thead >
+        <tr style="display: none">
+          <th></th>
+          <th>Name</th>
+          <th>Platform</th>
+          <th>Version</th>
+          <th>Upgraded</th>
+          <th>Creator</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+          <tr>
+            <td [(nzExpand)]="data.expand"></td>
+            <td ><a class="order-id" matTooltip="Click to view order details" [routerLink]="['../../order-single-product-details']">SO - {{ data.orderId }}</a> </td>
+            <td>{{ data.date | date : 'short' }}</td>
+            <td>
+              <a class="pay-order">Pay now</a>
+            </td>
+          </tr>
+          <tr [nzExpand]="data.expand">
+            <nz-table #innerTable [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
+              <!-- <thead *ngIf="false">
+                <tr >
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Upgrade Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead> -->
+              <!-- name: "Viper",
+          sku: "viper001",
+          variantName: "L/XL",
+          qty: 2,
+          total: 123,
+          advance: 15,
+          advanceType: 1,
+          advanceInTaka: 123,
+          paymentStatus: 'Payment Status',
+          orderStatus: 'pending',
+          deliveryDate: new Date() -->
+              <tbody>
+                <tr *ngFor="let data of innerTable.data">
+                  <td>{{data.name}}<br>{{data.sku}}</td>
+                  <td>Qty : {{ data.qty }}</td>
+                  <td>Total : {{ data.total }}</td>
+                  <td>Advance : {{ data.advance }}TK</td>
+                  <td><a class="status">{{ data.paymentStatus }}</a></td>
+                  <td class="instock">Estimated Delivery by <br><span>{{ data.deliveryDate | date : 'short'}}</span></td>
+                  <td>
+                    <a class="order-status">{{ data.orderStatus }}</a>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </tr>
+        </ng-template>
+      </tbody>
+    </nz-table>
+
+  </nz-tab>
+
+</nz-tabset>
+<ng-template #extraTemplate>
+  <input nz-search placeholder="Search by id">
+</ng-template>
