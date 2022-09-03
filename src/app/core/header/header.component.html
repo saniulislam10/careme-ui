@@ -12,12 +12,11 @@
       <div class="res-header-top-content">
         <marquee behavior="smooth">
           <!-- <p> -->
-            সম্মানিত গ্রাহকদের অবগতির জন্য জানানো যাচ্ছে যে, ঈদের প্রি-অর্ডার
-            নেয়া হবে ১০ এপ্রিল পর্যন্ত, ১০ এপ্রিলের মধ্যে অর্ডারকৃত সব পণ্য
-            পর্যায়ক্রমে ২৭ রোজার মধ্যে ডেলিভারি সম্পন্ন করা হবে।
+          সম্মানিত গ্রাহকদের অবগতির জন্য জানানো যাচ্ছে যে, ঈদের প্রি-অর্ডার নেয়া
+          হবে ১০ এপ্রিল পর্যন্ত, ১০ এপ্রিলের মধ্যে অর্ডারকৃত সব পণ্য পর্যায়ক্রমে
+          ২৭ রোজার মধ্যে ডেলিভারি সম্পন্ন করা হবে।
           <!-- </p> -->
-          </marquee
-        >
+        </marquee>
       </div>
     </div>
   </div>
@@ -43,32 +42,33 @@
         <!---search-box-->
         <div class="search">
           <form [formGroup]="dataForm" (ngSubmit)="onSearch()">
-            <!--search-btn-->
-            <div class="search-btn">
-              <button type="submit"><i class="las la-search"></i></button>
-            </div>
-            <!---input-box-->
-            <div class="input-box">
-              <input
-                formControlName="url"
-                type="text"
-                name="url"
-                id="url"
-                value=""
-                placeholder="Search..."
-              />
-            </div>
-            <!---camera-->
-            <div class="camera">
-              <button type="button"><i class="las la-camera"></i></button>
-            </div>
+            <input
+              formControlName="url"
+              type="text"
+              name="url"
+              id="url"
+              value=""
+              placeholder="Search..."
+            />
+            <button class="text_search" type="submit">
+              <i class="las la-search"></i>
+            </button>
+            <button class="image_search" type="submit">
+              <i class="las la-camera"></i>
+            </button>
           </form>
         </div>
         <!--header-midle-menu-->
         <div class="header-midle-menu">
           <ul>
             <li>
-              <h4 class="user_name" *ngIf="!isUserAuth" (click)="openRegistrationDialog()">Login</h4>
+              <h4
+                class="user_name"
+                *ngIf="!isUserAuth"
+                (click)="openRegistrationDialog()"
+              >
+                Login
+              </h4>
             </li>
             <li *ngIf="isUserAuth">
               <a [mat-menu-trigger-for]="profile">
@@ -88,14 +88,19 @@
               </button>
               <button mat-menu-item>
                 <mat-icon>stop</mat-icon>
-                <span>(Login as {{user?.fullName ? user?.fullName : user?.username}})</span>
+                <span
+                  >(Login as
+                  {{ user?.fullName ? user?.fullName : user?.username }})</span
+                >
               </button>
             </mat-menu>
             <li>
               <a routerLink="/cart"
                 ><span><i class="las la-shopping-cart"></i></span>
               </a>
-              <small *ngIf="carts?.length"  class="total-cart">{{carts?.length}}</small>
+              <small *ngIf="carts?.length" class="total-cart">{{
+                carts?.length
+              }}</small>
             </li>
             <li class="bar">
               <button (click)="slideMenuActive()">
@@ -116,7 +121,10 @@
               <a [routerLink]="['/products-list', c?.slug]">{{ c.name }}</a>
               <span><i class="fa fa-angle-right"></i></span>
               <div class="sub-mega-menu" *ngIf="c.hasChild.length > 0">
-                <app-menu-hover-content [parentCategory]="c" [data]="c.hasChild"></app-menu-hover-content>
+                <app-menu-hover-content
+                  [parentCategory]="c"
+                  [data]="c.hasChild"
+                ></app-menu-hover-content>
               </div>
             </li>
           </ul>
@@ -130,8 +138,6 @@
               </div>
             </li>
           </ul> -->
-
-
         </div>
         <!----category-menu-end-->
       </div>
@@ -308,5 +314,8 @@
   </div>
 </div>
 
-
-<div class="overlay1" *ngIf="categoryMenu == true" (click)="categoryMenuHide()"></div>
+<div
+  class="overlay1"
+  *ngIf="categoryMenu == true"
+  (click)="categoryMenuHide()"
+></div>

@@ -61,8 +61,8 @@ export class HeaderComponent implements OnInit {
     private cartService: CartService,
     private reloadService: ReloadService,
     public userDataService: UserDataService,
-    public userService: UserService,
-  ) { }
+    public userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.dataForm = this.fb.group({
@@ -87,18 +87,15 @@ export class HeaderComponent implements OnInit {
     });
     this.getCartItemList();
 
-
-
     // this.userService.getUserStatusListener().subscribe(() => {
     //   this.isUserAuth = this.userService.getUserStatus();
     //   if (this.isUserAuth) {
     //     this.getLoggedInUserInfo();
     //   }
     // });
-    this.reloadService.refreshUser$
-    .subscribe( () => {
+    this.reloadService.refreshUser$.subscribe(() => {
       this.isUserAuth = this.userService.getUserStatus();
-    })
+    });
     this.isUserAuth = this.userService.getUserStatus();
     console.log(this.isUserAuth);
 
@@ -230,8 +227,7 @@ export class HeaderComponent implements OnInit {
       this.websiteBaseLink = 'https://www.walmart.com';
       this.searchService.setProductType('walmart');
       await this.getWalmartProduct(link);
-    }
-    else {
+    } else {
       this.uiService.warn('Url Not Supported');
     }
   }
@@ -392,26 +388,25 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-
   /**
- * HTTP REQ HANDLE
- */
+   * HTTP REQ HANDLE
+   */
 
   private getLoggedInUserInfo() {
     // const select = 'fullName';
-    this.userDataService.getLoggedInUserInfo()
-      .subscribe(res => {
+    this.userDataService.getLoggedInUserInfo().subscribe(
+      (res) => {
         this.user = res.data;
-        console.log("user", this.user);
-
-      }, error => {
+        console.log('user', this.user);
+      },
+      (error) => {
         console.log(error);
-      });
+      }
+    );
   }
 
-  userLogOut(){
+  userLogOut() {
     this.userService.userLogOut();
     this.reloadService.needRefreshUser$();
   }
-
 }
