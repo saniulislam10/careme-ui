@@ -71,4 +71,12 @@ button {
     display: flex;
     flex-direction: column-reverse;
   }
+  .manage_account {
+    .account_form {
+      width: 100%;
+    }
+    .account_image {
+      width: 100%;
+    }
+  }
 }
