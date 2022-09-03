@@ -12,6 +12,9 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @NgModule({
   declarations: [MyAccountComponent],
@@ -28,6 +31,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     FormsModule,
     MaterialModule,
     ImageCropperModule,
+    NzSpaceModule,
+    NzSelectModule,
+    NzButtonModule,
   ],
 })
 export class MyAccountModule {}

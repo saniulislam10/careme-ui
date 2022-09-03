@@ -1,12 +1,15 @@
-table, th, td {
+table,
+th,
+td {
   border-collapse: collapse;
   width: 100%;
 }
-th, td {
+th,
+td {
   padding: 5px;
   text-align: left;
 }
-table{
+table {
   margin-bottom: 50px;
 }
 .login-form {
@@ -30,4 +33,50 @@ table{
 
 button {
   margin-left: 8px;
+}
+.manage_account {
+  display: flex;
+  width: 100%;
+  margin-bottom: 50px;
+  .account_form {
+    width: 60%;
+  }
+  .account_image {
+    width: 40%;
+  }
+}
+.form_group {
+  input {
+    margin-bottom: 20px;
+  }
+  nz-select {
+    width: 100%;
+  }
+}
+.account_image {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  .entry-thumb {
+    text-align: center;
+  }
+}
+.link {
+  cursor: pointer;
+  padding: 10px;
+}
+// Responcive
+@media (max-width: 500px) {
+  .manage_account {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .manage_account {
+    .account_form {
+      width: 100%;
+    }
+    .account_image {
+      width: 100%;
+    }
+  }
 }
