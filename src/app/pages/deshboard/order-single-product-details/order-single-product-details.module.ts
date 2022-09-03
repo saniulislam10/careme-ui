@@ -10,6 +10,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { NzTimelineModule } from 'ng-zorro-antd/timeline';
     NzDividerModule,
     NzStepsModule,
     NzTimelineModule,
+    PipesModule,
     OrderSingleProductDetailsRoutingModule
   ]
 })

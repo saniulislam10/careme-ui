@@ -1,3 +1,4 @@
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -21,6 +22,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
     NzListModule,
     NzGridModule,
     NzDividerModule,
+    PipesModule,
     OrderDetailsRoutingModule
   ]
 })

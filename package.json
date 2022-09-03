@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0 --disable-host-check --open",
+    "start": "ng serve --host 192.168.68.10 --disable-host-check --open",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -43,6 +43,7 @@
     "encrypt-storage": "^2.2.6",
     "express": "^4.15.2",
     "firebase": "^8.5.0",
+    "html5-qrcode": "^2.2.1",
     "mat-select-filter": "^2.4.1",
     "moment": "^2.29.1",
     "ng-lazyload-image": "^9.1.2",

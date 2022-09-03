@@ -17,7 +17,7 @@
         <ng-template ngFor let-data [ngForOf]="nestedTable.data">
           <tr>
             <td [(nzExpand)]="data.expand"></td>
-            <td ><a class="order-id" matTooltip="Click to view order details" [routerLink]="['../../order-details']">SO - {{ data.orderId }}</a> </td>
+            <td ><a class="order-id" matTooltip="Click to view order details" [routerLink]="['../../order-details', data._id]">SO - {{ data.orderId }}</a> </td>
             <td>{{ data.date | date : 'short' }}</td>
             <td></td>
             <td></td>

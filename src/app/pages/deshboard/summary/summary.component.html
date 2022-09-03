@@ -1,17 +1,17 @@
 <ng-template #orderTemplate>
-  <p>4.84.8</p>
+  <p>{{orders?.length}}</p>
 </ng-template>
 <ng-template #pointTemplate>
-  <p>4.84.8 pts</p>
+  <p>{{user?.points}} pts</p>
 </ng-template>
 <ng-template #returnTemplate>
-  <p>4.84.8</p>
+  <p>0</p>
 </ng-template>
 <ng-template #refundTemplate>
-  <p>4.84.8 Tk</p>
+  <p>0 Tk</p>
 </ng-template>
 <ng-template #reviewsTemplate>
-  <p>4.84.8</p>
+  <p>0</p>
 </ng-template>
 <div>
   <div nz-row [nzGutter]="8">
@@ -20,90 +20,90 @@
         <table style="width: 100%">
           <tr>
             <th >Order Pending</th>
-            <td>14.8</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Order Delivered</th>
-            <td>34.8</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Canceled Orders</th>
-            <td>4.8</td>
+            <td>0</td>
           </tr>
         </table>
       </nz-card>
     </div>
     <div nz-col [nzSpan]="5">
-      <nz-card nzTitle="Points" [nzExtra]="orderTemplate">
+      <nz-card nzTitle="Points" [nzExtra]="pointTemplate">
         <table style="width: 100%">
           <tr>
             <th >Lifetime Points</th>
-            <td>14.8</td>
+            <td>{{user?.earnedPoints}}</td>
           </tr>
           <tr>
             <th>Use Points</th>
-            <td>34.8</td>
+            <td>{{user?.redeemedPoints}}</td>
           </tr>
           <tr>
             <th>Pending Points</th>
-            <td>4.8</td>
+            <td>0</td>
           </tr>
         </table>
       </nz-card>
     </div>
     <div nz-col [nzSpan]="5">
-      <nz-card nzTitle="Return" [nzExtra]="orderTemplate">
+      <nz-card nzTitle="Return" [nzExtra]="returnTemplate">
         <table style="width: 100%">
           <tr>
             <th >Return Pending</th>
-            <td>14.8</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Return Accepted</th>
-            <td>34.8</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Return Cancelled</th>
-            <td>4.8</td>
+            <td>0</td>
           </tr>
         </table>
       </nz-card>
     </div>
     <div nz-col [nzSpan]="5">
-      <nz-card nzTitle="Refund" [nzExtra]="orderTemplate">
+      <nz-card nzTitle="Refund" [nzExtra]="refundTemplate">
         <table style="width: 100%">
           <tr>
             <th >Pending</th>
-            <td>14.8</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Accepted</th>
-            <td>34.8</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Canceled</th>
-            <td>4.8</td>
+            <td>0</td>
           </tr>
         </table>
       </nz-card>
     </div>
     <div nz-col [nzSpan]="4">
-      <nz-card nzTitle="Reviews" [nzExtra]="orderTemplate">
+      <nz-card nzTitle="Reviews" [nzExtra]="reviewsTemplate">
         <table style="width: 100%">
           <tr>
             <th >Reviews Done</th>
-            <td>14.8</td>
+            <td>0</td>
           </tr>
           <tr>
             <th>Reviews Pending</th>
-            <td>34.8</td>
+            <td>0</td>
           </tr>
         </table>
       </nz-card>
     </div>
   </div>
 </div>
-<nz-table style="margin-top: 50px;" #headerTable [nzData]="listOfData" [nzPageSize]="50" [nzScroll]="{ y: '450px' }">
+<nz-table style="margin-top: 50px;" #headerTable [nzSimple]="true"  [nzData]="orders" [nzPageSize]="50" [nzScroll]="{ y: '450px' }">
   <thead>
     <tr>
       <th>Order</th>
@@ -115,11 +115,11 @@
   </thead>
   <tbody>
     <tr *ngFor="let data of headerTable.data">
-      <td>{{ data.orderId }}</td>
-      <td>{{ data.date | date : 'short'}}</td>
-      <td>{{ data.items }}</td>
-      <td>{{ data.total }}</td>
-      <td>{{ data.status }}</td>
+      <td class="routerLink" [routerLink] = "['../../order-details', data._id]">{{ data.orderId }}</td>
+      <td>{{ data.createdAt | date : 'short'}}</td>
+      <td>{{ data.orderedItems?.length }}</td>
+      <td>{{ data.totalAmount }}</td>
+      <td>{{ data.deliveryStatus | orderStatus }}</td>
     </tr>
   </tbody>
 </nz-table>

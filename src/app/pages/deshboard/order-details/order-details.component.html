@@ -35,7 +35,7 @@
       <li nz-list-item nzNoFlex>
         <ul nz-list-item-actions>
           <nz-list-item-action>
-            <span>Saniul Islam</span>
+            <span>{{order?.name ? order.name : order?.user?.fullName}}</span>
           </nz-list-item-action>
         </ul>
         Name
@@ -43,7 +43,7 @@
       <li nz-list-item nzNoFlex>
         <ul nz-list-item-actions>
           <nz-list-item-action>
-            <span>01687248923</span>
+            <span>{{order?.phoneNo ? order.phoneNo : order?.user?.phoneNo}}</span>
           </nz-list-item-action>
         </ul>
         Phone No
@@ -51,7 +51,7 @@
       <li nz-list-item nzNoFlex>
         <ul nz-list-item-actions>
           <nz-list-item-action>
-            <span>rahim.fortunetech@gmail.com</span>
+            <span>{{order?.user?.email}}</span>
           </nz-list-item-action>
         </ul>
         Email
@@ -59,7 +59,7 @@
       <li nz-list-item nzNoFlex>
         <ul nz-list-item-actions>
           <nz-list-item-action>
-            <span>rahim fortunetech, dhaka, Bangladesh</span>
+            <span>{{order?.shippingAddress}}</span>
           </nz-list-item-action>
         </ul>
         Address
@@ -73,12 +73,13 @@
   <thead>
     <tr>
       <th>
-        <a style="font-size: 20px">SO - 1234</a>
+        <a style="font-size: 20px">SO - {{order?.orderId}}</a>
         <br>
         <span style="font-size: 15px">
-          Date : 8/12/2020
+          Date : {{order?.createdAt | date : 'short'}}
         </span>
       </th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -88,22 +89,21 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of innerTable.data">
+    <tr *ngFor="let data of innerTable.data; let i =index">
       <td>
-        <img style="width: 100px" src="/assets/images/placeholder/test.png" alt="">
+        <img style="width: 100px" [src]="setThumbnailImage(data.product) ? setThumbnailImage(data.product) : '/assets/images/placeholder/test.png'" alt="">
       </td>
       <td>
-        <a matTooltip="Click to view ordered product details"
-          [routerLink]="['../../order-single-product-details']">{{data.name}}</a>
+        <a [routerLink]="['../../order-single-product-details', order._id, i]">{{data.product.name}}</a>
         <br>{{data.sku}}
       </td>
-      <td>Qty : {{ data.qty }}</td>
-      <td>Total : {{ data.total }}</td>
+      <td>Qty : {{ data.quantity }}</td>
+      <td>Total : {{ data.price }}</td>
       <td>Advance : {{ data.advance }}TK</td>
-      <td><a class="status">{{ data.paymentStatus }}</a></td>
+      <td><a class="status">{{ data.status | orderStatus }}</a></td>
       <td class="instock">Estimated Delivery by <br><span>{{ data.deliveryDate | date : 'short'}}</span></td>
       <td>
-        <a class="order-status">{{ data.orderStatus }}</a>
+        <a class="order-status">{{ data.product.status | productOrderStatus}}</a>
       </td>
     </tr>
   </tbody>

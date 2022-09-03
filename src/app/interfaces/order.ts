@@ -58,6 +58,7 @@ export interface Order {
   statusNote?: string;
   vendors?:string[];
   images?: string[];
+  createdAt? : Date;
 }
 
 export interface OrderTimeline {

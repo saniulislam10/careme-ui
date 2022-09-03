@@ -1,5 +1,9 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NzTimelineMode } from 'ng-zorro-antd/timeline';
+import { OrderService } from 'src/app/services/order.service';
+import { Order } from 'src/app/interfaces/order';
+import { Subscription } from 'rxjs';
 
 
 interface ChildrenItemData {
@@ -24,25 +28,63 @@ interface ChildrenItemData {
 })
 export class OrderSingleProductDetailsComponent implements OnInit {
 
-  listOfChildrenData: ChildrenItemData[] = [];
+  listOfChildrenData: any[] = [];
   currentDate : Date = new Date();
-  constructor() { }
+  subRouteOne: Subscription;
+  id: string;
+  order: Order;
+  index: string;
+  data: any;
   mode : NzTimelineMode = 'left';
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private orderService: OrderService,
+  ) { }
+
 
   ngOnInit(): void {
-    this.listOfChildrenData.push({
-      name: "Nike Hypervenom viper ultra rare edition 20.3",
-      sku: "viper001",
-      variantName: "L/XL",
-      qty: 2,
-      total: 123,
-      advance: 15,
-      advanceType: 1,
-      advanceInTaka: 123,
-      paymentStatus: 'Payment Status',
-      orderStatus: 'Pending',
-      deliveryDate: new Date()
+    this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
+      this.id = param.get('id');
+      this.index = param.get('index');
+      console.log(this.id);
+      console.log(this.index);
+      if (this.id) {
+        this.getOrderById(this.id, this.index);
+      }
     });
+  }
+
+  getOrderById(id, index){
+    this.orderService.getOrderDetails(id)
+    .subscribe( res => {
+      this.order = res.data;
+      console.log(this.order);
+      this.listOfChildrenData.push(this.order.orderedItems[index]);
+      console.log(this.listOfChildrenData);
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  setThumbnailImage(data) {
+    let images = this.getImages(data?.medias, data?.images);
+    return images[0];
+  }
+
+  getImages(medias, images) {
+    let allMedias = [];
+    if (medias && medias.length > 0) {
+      for (let i = 0, x = 0; i < medias.length; i++) {
+        if (medias[i] !== null && medias[i] !== '') {
+          allMedias.push(medias[i]);
+          x++;
+        }
+      }
+      allMedias = [...allMedias, ...images];
+    } else {
+      allMedias = images;
+    }
+    return allMedias;
   }
 
 }

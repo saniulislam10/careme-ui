@@ -1,4 +1,8 @@
+import { Router } from '@angular/router';
+import { OrderedItems } from './../../../interfaces/order';
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { OrderService } from 'src/app/services/order.service';
 
 interface ChildrenItemData {
   name: string;
@@ -30,27 +34,57 @@ export class OrderDetailsComponent implements OnInit {
   ];
 
   listOfChildrenData: ChildrenItemData[] = [];
+  order: any;
+  id: any;
+  subRouteOne: any;
+  index: string;
 
-  constructor() { }
+  constructor(
+    private orderService: OrderService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
-    for (let i = 0; i < 1; ++i) {
-      for (let j = 0; j < 3; ++j) {
-        this.listOfChildrenData.push({
-          name: "Nike Hypervenom viper ultra rare edition 20.3",
-          sku: "viper001",
-          variantName: "L/XL",
-          qty: 2,
-          total: 123,
-          advance: 15,
-          advanceType: 1,
-          advanceInTaka: 123,
-          paymentStatus: 'Payment Status',
-          orderStatus: 'Pending',
-          deliveryDate: new Date()
-        });
+    this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
+      this.id = param.get('id');
+
+      if (this.id) {
+        this.getOrderById(this.id);
       }
+    });
+  }
+
+  getOrderById(id){
+    this.orderService.getOrderDetails(id)
+    .subscribe( res => {
+      this.order = res.data;
+      this.listOfChildrenData = this.order.orderedItems;
+      console.log(this.listOfChildrenData);
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  setThumbnailImage(data) {
+    let images = this.getImages(data.medias, data.images);
+    return images[0];
+  }
+
+  getImages(medias, images) {
+    let allMedias = [];
+    if (medias && medias.length > 0) {
+      for (let i = 0, x = 0; i < medias.length; i++) {
+        if (medias[i] !== null && medias[i] !== '') {
+          allMedias.push(medias[i]);
+          x++;
+        }
+      }
+      allMedias = [...allMedias, ...images];
+    } else {
+      allMedias = images;
     }
+    return allMedias;
   }
 
 }
