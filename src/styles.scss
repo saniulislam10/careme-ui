@@ -1,6 +1,6 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '~@angular/material' as mat;
+@use "~@angular/material" as mat;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -19,13 +19,15 @@ $angular-ui-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$angular-ui-theme: mat.define-light-theme((
-  color: (
-    primary: $angular-ui-primary,
-    accent: $angular-ui-accent,
-    warn: $angular-ui-warn,
+$angular-ui-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $angular-ui-primary,
+      accent: $angular-ui-accent,
+      warn: $angular-ui-warn,
+    ),
   )
-));
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -34,11 +36,33 @@ $angular-ui-theme: mat.define-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: "Roboto", "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+}
+.ant-btn-primary {
+  color: #fff !important;
+  background: #e26ca3 !important;
+  border: 1px solid #e26ca3 !important;
+}
+.ant-btn-primary:hover {
+  color: #fff !important;
+  background: #ce337b !important;
+  border: 1px solid #ce337b !important;
+}
+.ant-input-focused,
+.ant-input:focus {
+  box-shadow: 0 0 0 2px #e26ca3;
+  border-right-width: 1px;
+  outline: 0;
+}
 
-.mat-drawer.mat-drawer-side{
-  z-index: -2!important;
+.mat-drawer.mat-drawer-side {
+  z-index: -2 !important;
 }
 
 @import "theme/theme";
@@ -57,16 +81,18 @@ body { margin: 0; font-family: "Roboto", "Helvetica Neue", sans-serif; }
 @import "~@fortawesome/fontawesome-free/css/all.css";
 /** additional-page-problem-solve-code****/
 
-.page-content,.wpb_column{
-    float: none!important;
+.page-content,
+.wpb_column {
+  float: none !important;
 }
-#post-5193,.entry-content,article{
-    float: none!important;
-
+#post-5193,
+.entry-content,
+article {
+  float: none !important;
 }
 
-::ng-deep.section1-description h3{
-    background: transparent;
+::ng-deep.section1-description h3 {
+  background: transparent;
 }
 /*** swipper-slider ****/
 // @import "~swiper/swiper-bundle.min.css";
