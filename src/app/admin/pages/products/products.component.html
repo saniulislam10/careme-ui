@@ -107,7 +107,7 @@
               <div class="product-info ">
                 <!---product-img-->
                 <div class="product-img">
-                  <img [src]="setThumbnailImage(data) ? setThumbnailImage(data) : '/assets/images/placeholder/test.png'"
+                  <img nz-image [nzSrc]="setThumbnailImage(data) ? setThumbnailImage(data) : '/assets/images/placeholder/test.png'"
                     alt="">
                 </div>
                 <!---product-text-info-->
@@ -150,7 +150,7 @@
               <span>{{data.redeemPoints}} {{data.redeemPointsType | amountType}}</span>
             </div>
             <div class="vendor main-table-data">
-              <span>{{data.vendor}}</span>
+              <span>{{data.vendor.name}}</span>
             </div>
           </div>
           <div class="sub-table-start" *ngIf="data.variantFormArray.length && showVariant[i]=== true > 0">

@@ -12,6 +12,7 @@ import {PipesModule} from '../../../shared/pipes/pipes.module';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
 import { ExportPopupComponent } from './export-popup/export-popup.component';
+import { NzImageModule } from 'ng-zorro-antd/image';
 
 
 @NgModule({
@@ -28,8 +29,10 @@ import { ExportPopupComponent } from './export-popup/export-popup.component';
     ProductCardAdminModule,
     FormsModule,
     PipesModule,
-    NgxSpinnerModule,
-  ]
+    NzImageModule,
+    NgxSpinnerModule
+  ],
+  providers: []
 })
 export class ProductsModule {
 }

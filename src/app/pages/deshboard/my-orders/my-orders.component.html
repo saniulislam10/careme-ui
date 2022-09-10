@@ -14,10 +14,10 @@
         </tr>
       </thead>
       <tbody>
-        <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+        <ng-template ngFor let-data [ngForOf]="listOfParentData">
           <tr>
             <td [(nzExpand)]="data.expand"></td>
-            <td ><a class="order-id" matTooltip="Click to view order details" [routerLink]="['../../order-details', data._id]">SO - {{ data.orderId }}</a> </td>
+            <td ><a class="order-id" matTooltip="Click to view order details" [routerLink]="['../../order-details', data.id]">SO - {{ data.orderId }}</a> </td>
             <td>{{ data.date | date : 'short' }}</td>
             <td></td>
             <td></td>
@@ -35,14 +35,14 @@
                   <td>
                     <img style="width: 100px" src="/assets/images/placeholder/test.png" alt="">
                   </td>
-                  <td>{{data.name}}<br>{{data.sku}}</td>
-                  <td>Qty : {{ data.qty }}</td>
-                  <td>Total : {{ data.total }}</td>
-                  <td>Advance : {{ data.advance }}TK</td>
-                  <td><a class="status">{{ data.paymentStatus }}</a></td>
-                  <td class="instock">Estimated Delivery by <br><span>{{ data.deliveryDate | date : 'short'}}</span></td>
+                  <td>{{data?.name}}<br>{{data?.sku}}</td>
+                  <td>Qty : {{ data?.qty }}</td>
+                  <td>Total : {{ data?.total }}</td>
+                  <td>Advance : {{ data?.advance }}TK</td>
+                  <td><a class="status">{{ data?.paymentStatus }}</a></td>
+                  <td class="instock">Estimated Delivery by <br><span>{{ data?.deliveryDate | date : 'short'}}</span></td>
                   <td>
-                    <a class="order-status">{{ data.orderStatus }}</a>
+                    <a class="order-status">{{ data?.orderStatus }}</a>
                   </td>
                 </tr>
               </tbody>

@@ -1,3 +1,4 @@
+import { NzMessageModule } from 'ng-zorro-antd/message';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
@@ -15,7 +16,6 @@ import { AddNewProductComponent } from './add-new-product.component';
 // import {MatSelectFilterModule} from 'mat-select-filter';
 import { QuillModule } from 'ngx-quill'
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
 import {HttpClientModule} from '@angular/common/http';
 import { SafeHtmlPipe } from 'ngx-spinner/lib/safe-html.pipe';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
@@ -24,6 +24,9 @@ import { ImageGalleryDialogModule } from '../../image-gallery-dialog/image-galle
 import { MatSelectFilterModule } from 'mat-select-filter';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import {MatChipsModule} from '@angular/material/chips';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
   declarations: [
@@ -46,10 +49,13 @@ import {MatChipsModule} from '@angular/material/chips';
     HttpClientModule,
     QuillModule.forRoot(),
     NgxDropzoneModule,
-    MatSelectCountryModule,
     PipesModule,
     NzTagModule,
-    MatChipsModule
+    NzSelectModule,
+    MatChipsModule,
+    NzUploadModule,
+    NzMessageModule,
+    NzModalModule
   ]
 })
 export class AddNewProductModule {

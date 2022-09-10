@@ -17,10 +17,10 @@ import {AuthUserInterceptor} from './auth-interceptor/auth-user.interceptor';
 import {CookieService} from 'ngx-cookie-service';
 import {FacebookModule} from 'ngx-facebook';
 import {QuillModule} from 'ngx-quill';
-import {MatSelectCountryModule} from '@angular-material-extensions/select-country';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 // import {AngularFireModule} from "@angular/fire";
 import {environment} from "../environments/environment";
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -34,13 +34,13 @@ import {environment} from "../environments/environment";
     LoadingBarRouterModule,
     HttpClientModule,
     SharedModule,
+    NzMessageModule,
     // Angular Firebase Config
     // AngularFireModule.initializeApp(environment.firebaseConfig),
     // Ngx Facebook
     FacebookModule.forRoot(),
     NgxDropzoneModule,
     QuillModule.forRoot(),
-    MatSelectCountryModule.forRoot('de')
   ],
   providers: [
     Title,

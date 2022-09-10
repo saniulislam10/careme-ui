@@ -143,6 +143,7 @@ export class ProductsComponent implements OnInit {
             pageSize: this.productsPerPage.toString(),
           };
           this.searchQuery = data.trim();
+          console.log(this.searchQuery);
           if (this.searchQuery) {
             if (this.status === 0) {
               this.query = { hasLink: false };

@@ -1,3 +1,4 @@
+import { ProductType } from 'src/app/interfaces/product-type';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormArray,
@@ -11,16 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UiService } from 'src/app/services/ui.service';
 import { ProductStatus } from 'src/app/enum/product-status';
 import { Select } from 'src/app/interfaces/select';
-
-
-//for quill
-import Quill from 'quill';
-import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter';
-Quill.register('modules/blotFormatter', BlotFormatter);
-
-import { Country } from '@angular-material-extensions/select-country';
 import { Product } from 'src/app/interfaces/product';
-import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
 import { AmountType } from 'src/app/enum/amount-type';
 import { Subscription, Subject, Observable } from 'rxjs';
 import { Weight } from 'src/app/enum/weight';
@@ -30,21 +22,36 @@ import { StorageService } from 'src/app/services/storage.service';
 import { ReloadService } from 'src/app/services/reload.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { SubCategoryService } from 'src/app/services/sub-category.service';
-import { MatSelectChange } from '@angular/material/select';
-import { SizeChartComponent } from '../../size-chart/size-chart.component';
 import { FileUploadService } from 'src/app/services/file-upload.service';
-import { ImageGalleryDialogComponent } from '../../image-gallery-dialog/image-gallery-dialog.component';
 import { ImageGallery } from 'src/app/interfaces/image-gallery';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilsService } from 'src/app/services/utils.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Category } from 'src/app/interfaces/category';
 import { SubCategory } from 'src/app/interfaces/sub-category';
-import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { colorSets } from '@swimlane/ngx-charts';
-import {map, startWith} from 'rxjs/operators';
+import { Brand } from 'src/app/interfaces/brand';
+import { BrandService } from 'src/app/services/brand.service';
+import { Vendor } from 'src/app/interfaces/vendor';
+import { VendorService } from 'src/app/services/vendor.service';
+import { CountryService } from 'src/app/services/country.service';
+import { Country } from 'src/app/interfaces/country';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
+
+
+//for quill
+import Quill from 'quill';
+import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter';
+Quill.register(
+  'modules/blotFormatter', BlotFormatter
+);
+import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
+import { ProductTypeService } from 'src/app/services/product-type.service';
+import { ImageCropperComponent } from 'src/app/shared/components/image-cropper/image-crop.component';
+import { FileData } from 'src/app/interfaces/file-data';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-add-new-product',
@@ -52,6 +59,7 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./add-new-product.component.scss'],
 })
 export class AddNewProductComponent implements OnInit {
+
   // Form Template Ref
   @ViewChild('templateForm') templateForm: NgForm;
   //param
@@ -87,13 +95,16 @@ export class AddNewProductComponent implements OnInit {
 
   trackQuantity = false;
 
-  downloadUrls: any;
+  downloadUrls: string[] = [];
   // Destroy Session
   needSessionDestroy = true;
 
   // category
   categories = null;
   subCategories = null;
+  public filteredCountryList: Country[];
+  public filteredVendorList: Vendor[];
+  public filteredBrandList: Brand[];
   public filteredCatList: Category[];
   public filteredSubCatList: SubCategory[];
   //variants
@@ -110,6 +121,7 @@ export class AddNewProductComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   fruits: any[][] = [[]];
+  tags: any[] = [];
   myControl = new FormControl('');
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<string[]>;
@@ -118,10 +130,6 @@ export class AddNewProductComponent implements OnInit {
   productStatus: Select[] = [
     { value: ProductStatus.DRAFT, viewValue: 'Draft' },
     { value: ProductStatus.ACTIVE, viewValue: 'Active' },
-    // { value: ProductStatus.INACTIVE, viewValue: 'Inactive' },
-    // { value: ProductStatus.ARCHIVED, viewValue: 'Archived' },
-    // { value: ProductStatus.STOCKOUT, viewValue: 'Stock Out' },
-    // { value: ProductStatus.REORDER, viewValue: 'Re-Order' },
   ];
 
   selectedOption: ProductStatus = 1;
@@ -137,6 +145,24 @@ export class AddNewProductComponent implements OnInit {
     { value: Weight.LB, viewValue: 'lb' },
     { value: Weight.OZ, viewValue: 'oz' },
   ];
+  brands: Brand[] = [];
+  vendors: Vendor[] = [];
+  countrys: Country[] = [];
+  htmlData: any;
+  editHtmlData: any;
+  showHtmlEditor: boolean = false;
+
+  listOfOption: Array<{ label: string; value: string }> = [];
+  listOfTagOptions = [];
+
+  listOfTypes: ProductType[] = [];
+  listOfSelectedValue = [];
+  compareFn = (o1: any, o2: any) => (o1 && o2 ? o1._id === o2._id : o1 === o2);
+  imgBlob: any;
+  newFileName: string;
+  imageChangedEvent: any;
+  url: string;
+  selectedFolder: any = 'products';
 
 
   constructor(
@@ -145,28 +171,36 @@ export class AddNewProductComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
     private productService: ProductService,
+    private countryService: CountryService,
+    private brandService: BrandService,
+    private vendorService: VendorService,
     private activatedRoute: ActivatedRoute,
     private storageService: StorageService,
     private reloadService: ReloadService,
     private categoryService: CategoryService,
+    private productTypeService: ProductTypeService,
     private subCategoryService: SubCategoryService,
     private fileUploadService: FileUploadService,
     private dialog: MatDialog,
     private utilsService: UtilsService,
     private router: Router,
+    private message: NzMessageService,
   ) {
     // angulartics2GoogleAnalytics.startTracking();
   }
 
   ngOnInit(): void {
     // INIT FORM
-    this.initFormGroup();
     this.initModule();
+    this.initFormGroup();
     // this.initOptions();
 
     // Category
 
-    this.getAllCategories();
+    this.getAllProductTypes();
+    this.getCountrys();
+    this.getBrands();
+    this.getVendors();
 
     // GET ID FORM PARAM
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
@@ -186,6 +220,7 @@ export class AddNewProductComponent implements OnInit {
       this.getSingleProductById();
     });
   }
+
   /**
    * INIT FORM
    */
@@ -214,27 +249,24 @@ export class AddNewProductComponent implements OnInit {
       redeemPointsType: [null],
       redeemPoints: [null],
       vendor: [null, Validators.required],
-      parentCategory: [null, Validators.required], // object ***
-      childCategory: [null, Validators.required], // object ***
-      tags: [null],
-      costPrice: [null, Validators.required],
-      wholeSalePrice: [null],
-      sellingPrice: [null, Validators.required],
-      hasTax: [null, Validators.required],
-      tax: [null],
+      productType: [null, Validators.required],
+      tags: [null, Validators.required],
+      costPrice: [0],
+      wholeSalePrice: [0],
+      sellingPrice: [0],
+      hasTax: [false, Validators.required],
+      tax: [0],
       sku: [null, Validators.required],
       barcode: [null],
-      quantity: [null],
+      quantity: [0],
       committedQuantity: [0],
-      reOrder: [null, Validators.required],
+      reOrder: [ 5, Validators.required],
       trackQuantity: this.trackQuantity,
-      continueSelling: [null],
-      isPhysicalProduct: [null],
-      weight: [null, Validators.required],
-      weightType: [null, Validators.required],
+      continueSelling: [false],
+      isPhysicalProduct: [false],
+      weight: [1, Validators.required],
       country: [null, Validators.required],
-      hscode: [null],
-      hasVariant: [null],
+      hasVariant: [false],
       variants: new FormArray([new FormControl('')]),
       options: new FormArray([new FormControl(null)]),
       variantFormArray: this.fb.array([]),
@@ -260,7 +292,7 @@ export class AddNewProductComponent implements OnInit {
    * INIT Quill
    */
 
-  private async initModule() {
+   private async initModule() {
     this.modules = {
       // 'emoji-shortname': true,
       // 'emoji-textarea': false,
@@ -296,20 +328,6 @@ export class AddNewProductComponent implements OnInit {
     };
   }
 
-  // private initOptions(){
-  //   for(let i=0; i<this.variantArray.length; i++){
-  //       this.filteredOptions = this.variantArray[i].valueChanges.pipe(
-  //         startWith(''),
-  //         map(value => this._filter(value || '')),
-  //       );
-  //     }
-  // }
-  // private _filter(value): string[] {
-  //   const filterValue = value.toLowerCase();
-
-  //   return this.options.filter(option => option.toLowerCase().includes(filterValue));
-  // }
-
   /**
    * Http Req
    */
@@ -323,7 +341,6 @@ export class AddNewProductComponent implements OnInit {
           this.product = res.data;
           if (this.product) {
             this.patchFormData();
-            this.getAllSubCategoryByCategoryId(this.product.parentCategory);
           }
         },
         (error) => {
@@ -383,12 +400,9 @@ export class AddNewProductComponent implements OnInit {
     );
   }
 
-  // Get categories
-
-  getAllCategories() {
-    this.categoryService.getAllCategory().subscribe((res) => {
-      this.categories = res.data;
-      this.filteredCatList = this.categories.slice();
+  getAllProductTypes() {
+    this.productTypeService.getAll().subscribe((res) => {
+      this.listOfTypes = res.data;
       this.spinner.hide();
     }, error => {
       console.log(error);
@@ -396,22 +410,42 @@ export class AddNewProductComponent implements OnInit {
     });
   }
 
-  // get sub category
 
-  private getAllSubCategoryByCategoryId(id) {
-    console.log("paretn id", id);
-    this.spinner.show();
-    this.subCategoryService.getSubCategoryByCategoryId(id).subscribe(
-      (res) => {
-        this.subCategories = res.data;
-        this.filteredSubCatList = this.subCategories.slice();
-        this.spinner.hide();
-      },
-      (error) => {
-        this.spinner.hide();
-        console.log(error);
-      }
-    );
+  // Get brands
+
+  getBrands() {
+    this.brandService.getAll().subscribe((res) => {
+      this.brands = res.data;
+      this.filteredBrandList = this.brands.slice();
+      this.spinner.hide();
+    }, error => {
+      console.log(error);
+      this.spinner.hide();
+    });
+  }
+
+  // get vendors
+  getVendors() {
+    this.vendorService.getAll().subscribe((res) => {
+      this.vendors = res.data;
+      this.filteredVendorList = this.vendors.slice();
+      this.spinner.hide();
+    }, error => {
+      console.log(error);
+      this.spinner.hide();
+    });
+  }
+
+  // get countrys
+  getCountrys() {
+    this.countryService.getAll().subscribe((res) => {
+      this.countrys = res.data;
+      this.filteredCountryList = this.countrys.slice();
+      this.spinner.hide();
+    }, error => {
+      console.log(error);
+      this.spinner.hide();
+    });
   }
 
 
@@ -706,6 +740,10 @@ export class AddNewProductComponent implements OnInit {
   // for editing product
   private patchFormData() {
 
+    // for (let i = 0; i < this.product.productType.length; i++) {
+    //   this.listOfSelectedValue.push(this.product.productType[i]);
+    // }
+    // console.log(this.listOfSelectedValue);
     this.chooseImage = this.product.images;
     //for medias
     for (let i = 0; i < this.product.medias.length - 1; i++) {
@@ -780,17 +818,18 @@ export class AddNewProductComponent implements OnInit {
   onSubmit() {
     this.spinner.show();
     if (this.dataForm.invalid) {
-      console.log(this.dataForm.value);
       this.uiService.warn('Please complete all the required fields');
       this.spinner.hide();
       return;
     }
     this.description = this.dataForm.value.description;
     this.dataForm.value.variantDataArray = this.variantDataArray;
-    const rawData = this.dataForm.value;
-    rawData.images = this.chooseImage;
-    rawData.hasLink = false;
+    this.dataForm.value.images = this.chooseImage;
     this.dataForm.value.isStockOut = false;
+    this.dataForm.value.hasLink = false;
+    const rawData = this.dataForm.value;
+    console.log(this.downloadUrls)
+    console.log(rawData)
     if(this.dataForm.value.quantity === 0){
       this.dataForm.value.isStockOut = true;
     }
@@ -881,9 +920,6 @@ export class AddNewProductComponent implements OnInit {
    * selection change
    */
 
-  onSelectCategory(event: MatSelectChange) {
-    this.getAllSubCategoryByCategoryId(event.value);
-  }
 
   /**
    * Product Archive Button
@@ -932,6 +968,23 @@ export class AddNewProductComponent implements OnInit {
     this.editorData = event;
   }
 
+  onEditHtmlEditor(){
+    this.htmlData = this.dataForm.value.description;
+    console.log(this.dataForm.value.description);
+    this.showHtmlEditor = !this.showHtmlEditor;
+  }
+
+  onInput(event: Event){
+    const data = (event.target as HTMLInputElement).value;
+    console.log("Data for edit",data);
+    this.dataForm.patchValue(
+      {
+        name : 'Saniul',
+        description : data
+      }
+    )
+  }
+
   focus($event: any) {
     // tslint:disable-next-line:no-console
     this.focused = true;
@@ -951,46 +1004,45 @@ export class AddNewProductComponent implements OnInit {
    * OPEN COMPONENT DIALOG
    */
 
-   public openComponentDialog() {
-    const dialogRef = this.dialog.open(ImageGalleryDialogComponent, {
-      panelClass: ['theme-dialog', 'full-screen-modal-lg'],
-      width: '100%',
-      minHeight: '100%',
+   public openComponentDialog(data?: any) {
+    const dialogRef = this.dialog.open(ImageCropperComponent, {
+      data,
+      panelClass: ['theme-dialog'],
       autoFocus: false,
-      disableClose: true
+      disableClose: true,
+      width: '600px',
+      minHeight: '400px',
+      maxHeight: '600px'
     });
+
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
-        if (dialogResult.data && dialogResult.data.length > 0) {
-          this.getPickedImages(dialogResult.data);
+        if (dialogResult.imgBlob) {
+          this.imgBlob = dialogResult.imgBlob;
+        }
+        if (dialogResult.croppedImage) {
+          // this.pickedImage = dialogResult.croppedImage;
+          // this.imgPlaceHolder = this.pickedImage;
+          this.imageUploadOnServer();
         }
       }
     });
   }
 
-  public openVariationGalleryDialog(index: number) {
-    const dialogRef = this.dialog.open(ImageGalleryDialogComponent, {
-      panelClass: ['theme-dialog', 'full-screen-modal-lg'],
-      width: '100%',
-      minHeight: '100%',
-      autoFocus: false,
-      disableClose: true
-    });
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      if (dialogResult) {
-        if (dialogResult.data && dialogResult.data.length > 0) {
+  imageUploadOnServer() {
 
-          if(this.checkedVariantImgIndex.length){
-            this.checkedVariantImgIndex.forEach((f)=>{
-              this.variantDataFormArray.at(f).patchValue({image: dialogResult.data[0].url});
-            });
-            this.checkedVariantImgIndex = []
-          } else{
-            this.variantDataFormArray.at(index).patchValue({image: dialogResult.data[0].url});
-          }
-        }
-      }
-    });
+    const data: FileData = {
+      fileName: this.newFileName,
+      file: this.imgBlob,
+      folderPath: 'products'
+    };
+    this.fileUploadService.uploadSingleImage(data)
+      .subscribe(res => {
+        this.url = res.downloadUrl;
+        console.log(this.url);
+      }, error => {
+        console.log(error);
+      });
   }
 
   removeVariationImage(i: number) {
@@ -1143,8 +1195,57 @@ export class AddNewProductComponent implements OnInit {
     }
   }
 
+  addTag(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.tags.push({name: value});
+      this.dataForm.value.tags.push({name: value});
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  removeTag(tag: any): void {
+    const index = this.tags.indexOf(tag);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+      this.dataForm.value.tags.splice(index, 1);
+    }
+  }
+
+  onSelect(event: { addedFiles: any; }) {
+    this.files.push(...event.addedFiles);
+    console.log(this.files);
+  }
+
+  onRemove(event: File) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  onUploadImages() {
+    if (!this.files || this.files.length <= 0) {
+      this.uiService.warn('No Image selected!');
+      return;
+    }
+    console.log(this.files);
+    this.fileUploadService.uploadMultiImageOriginal(this.files)
+      .subscribe(res => {
+        this.downloadUrls = res.downloadUrls;
+        this.downloadUrls.forEach( m => {
+          this.chooseImage.push(m)
+        })
+        this.files = [];
+        console.log(this.chooseImage);
+        this.message.create('success', res.message);
+      }, error => {
+        console.log(error);
+      });
+  }
 
 
 }
-
-

@@ -7,6 +7,7 @@ import {Cart} from '../interfaces/cart';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {Router} from '@angular/router';
 import { BottomSheetViewComponent } from '../shared/components/ui/bottom-sheet-view/bottom-sheet-view.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class UiService {
     public dialog: MatDialog,
     private bottomSheet: MatBottomSheet,
     private router: Router,
+    private message: NzMessageService
   ) {
   }
 
@@ -87,6 +89,10 @@ export class UiService {
         this.router.navigate([comData.routerLink]);
       }
     });
+  }
+
+  createMessage(type: string, text: string): void {
+    this.message.create(type, `${text}`);
   }
 
 

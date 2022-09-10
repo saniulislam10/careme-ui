@@ -11,7 +11,6 @@ import { AddToCartPopupComponent } from './add-to-cart-popup/add-to-cart-popup.c
 import { BuyNowForNewUserComponent } from './buy-now-for-new-user/buy-now-for-new-user.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AngularEmbedVideoModule } from 'angular-embed-video';
 import {RegistrationDialogModule} from "../../shared/dialog-view/registration-dialog/registration-dialog.module";
 
 
@@ -30,7 +29,6 @@ import {RegistrationDialogModule} from "../../shared/dialog-view/registration-di
     ProductCardOneModule,
     PipesModule,
     NgxSpinnerModule,
-    AngularEmbedVideoModule,
     RegistrationDialogModule
 
   ]

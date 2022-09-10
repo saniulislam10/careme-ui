@@ -21,7 +21,6 @@ import { ProductStatusPipe } from 'src/app/shared/pipes/product-status.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchService } from 'src/app/services/search.service';
 import { User } from 'src/app/interfaces/user';
-import { AngularEmbedVideoService } from 'angular-embed-video';
 import { RegistrationDialogComponent } from '../../shared/dialog-view/registration-dialog/registration-dialog.component';
 import { UserStatus } from '../../enum/user-status';
 import { UtilsService } from '../../services/utils.service';
@@ -30,7 +29,7 @@ import { UtilsService } from '../../services/utils.service';
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
-  providers: [ProductStatusPipe],
+  providers: [ProductStatusPipe]
 })
 export class ProductDetailsComponent implements OnInit {
   @ViewChild('addToCartPup') addToCart: AddToCartPopupComponent;
@@ -105,7 +104,6 @@ export class ProductDetailsComponent implements OnInit {
     private productStatusPipe: ProductStatusPipe,
     private dialog: MatDialog,
     private searchService: SearchService,
-    private embedService: AngularEmbedVideoService,
     private utilsService: UtilsService
   ) { }
 
@@ -233,11 +231,6 @@ export class ProductDetailsComponent implements OnInit {
           console.log(error);
         }
       );
-  }
-
-  setVideos() {
-    this.iframe_html = this.embedService.embed(this.product.medias[2]);
-    return this.video;
   }
 
   getImages(medias, images) {
@@ -399,7 +392,7 @@ export class ProductDetailsComponent implements OnInit {
 
   // add to cart button
   activeCartBtn() {
-
+    console.log("USer Auth", this.isUserAuth)
     if (!this.isUserAuth) {
       this.openRegistrationDialog();
       return

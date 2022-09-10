@@ -1,0 +1,91 @@
+<!--vendor-header-->
+<div class="vendor-header">
+  <!---vendor-header-main-->
+  <div class="vendor-header-main">
+    <!---title-->
+    <div class="title">
+      <h2>Country</h2>
+    </div>
+    <!---vendor-search-->
+    <div class="vendor-search" (click)="onClickSearchArea($event)">
+      <button><i class="fa fa-search"></i></button>
+      <form #searchForm=ngForm  style="width: 100%;">
+        <input #searchInput id="searchInput" (focus)=handleFocus($event) name="searchTerm"
+        autocomplete="off" ngModel type="text" placeholder="Search">
+      </form>
+    </div>
+    <div class="vendor-create-btn">
+      <button (click)="showCreate()">+ Add Country</button>
+    </div>
+  </div>
+</div>
+
+<nz-table #basicTable [nzData]="countrys">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Flag</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.name}}</td>
+      <td> <img style="width: 50px" [src]="data.logo ? data.logo : '/assets/images/placeholder/test.png'" [alt]="data.name"></td>
+      <td class="edit">
+        <button><i class="fa fa-edit" (click)="edit(data)"></i></button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+
+
+<!----create-vendor-area-->
+<div class="create-vendor" *ngIf="createCountry == true">
+  <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+
+    <div class="create-vendor-main">
+      <!---create-vendor-header-->
+      <div class="create-vendor-header">
+        <h2>Create Country</h2>
+      </div>
+      <!---create-vendor-body-->
+      <div class="create-vendor-body">
+        <div class="input-area">
+          <!---input-infoo-->
+          <div class="input-info">
+            <!--input-info-left--->
+            <div class="input-info-left">
+              <h3>Country Name:</h3>
+            </div>
+            <!---input-info-right-->
+            <div class="input-info-right">
+              <div class="form-input">
+                <div class="field">
+                  <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Country Name</mat-label>
+                    <input type="text" formControlName="name" matInput placeholder="Enter country name" required>
+                    <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+        <!----check-box-end-->
+        <div class="create-vendor-btn">
+          <ul>
+            <li><button (click)="hideCreate()">Cancel</button></li>
+            <li><button type="submit" class="save-active">Save Country</button></li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+</div>

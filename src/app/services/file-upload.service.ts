@@ -41,7 +41,7 @@ export class FileUploadService {
       const fileName = this.utilsService.getImageName(f.name) + this.utilsService.getRandomInt(100, 5000) + '.' + f.name.split('.').pop();
       data.append('imageMulti', f, fileName);
     });
-    return this.httpClient.post<{ downloadUrls: string[] }>(API_UPLOAD + 'multi-image-original', data);
+    return this.httpClient.post<{ downloadUrls: string[], message: string }>(API_UPLOAD + 'multi-image-original', data);
 
   }
 

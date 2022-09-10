@@ -1,5 +1,31 @@
 @import'./../../../../../theme/variables';
 
+nz-select {
+  width: 100%;
+}
+
+.upload-button{
+  width: 100%;
+  margin-top: 10px;
+  background-color: #0058ff;
+  color: white;
+  border: none;
+}
+.upload-button:hover{
+  background-color: white;
+  color: #0058ff;
+  border: 2px solid #0058ff;
+}
+
+.shipping-block{
+  margin-right: 20px;
+}
+
+.quill-editor iframe {
+  pointer-events: none;
+}
+
+
 .example-form {
   min-width: 150px;
   max-width: 500px;

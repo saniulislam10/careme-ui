@@ -44,6 +44,7 @@ export class UploadImageComponent implements OnInit {
    */
   onSelect(event: { addedFiles: any; }) {
     this.files.push(...event.addedFiles);
+    console.log(this.files);
   }
 
   onRemove(event: File) {
@@ -64,6 +65,7 @@ export class UploadImageComponent implements OnInit {
       this.uiService.warn('No Image selected!');
       return;
     }
+    console.log(this.files);
     this.fileUploadService.uploadMultiImageOriginal(this.files)
       .subscribe(res => {
         const downloadUrls = res.downloadUrls;

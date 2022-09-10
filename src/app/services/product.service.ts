@@ -62,7 +62,7 @@ export class ProductService {
   }
   getAllArchivedProducts(paginate: Pagination, filter?: ProductFilter) {
     return this.http.post<{
-      data: Archived[];
+      data: Product[];
       priceRange: any;
       count: number;
       message: string;

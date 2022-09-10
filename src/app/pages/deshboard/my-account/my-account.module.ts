@@ -8,7 +8,6 @@ import { MyAccountComponent } from './my-account.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzMessageModule } from 'ng-zorro-antd/message';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -24,7 +23,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     NzCardModule,
     NzGridModule,
     NzTableModule,
-    NzMessageModule,
     NzFormModule,
     NzInputModule,
     ReactiveFormsModule,

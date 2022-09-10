@@ -1,5 +1,4 @@
-import { Category } from "./category";
-
+import { ProductType } from 'src/app/interfaces/product-type';
 export interface Product {
   _id: string;
   name?: string;
@@ -41,7 +40,6 @@ export interface Product {
   hasTax?: number;
   hasVariant?: boolean;
   variantFormArray?: any;
-  parentCategory?:string|Category,
   variantDataArray?: any;
   ratings?: any;
   discountedPrice?: number;
@@ -52,4 +50,5 @@ export interface Product {
   orderType?: string;
   maxQuantity?:number;
   advance?: number;
+  productType?: ProductType[];
 }

@@ -6,8 +6,12 @@ import { MyOrdersComponent } from './my-orders.component';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 
 
 @NgModule({
@@ -20,6 +24,11 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     NzTableModule,
     NzDropDownModule,
     MatTooltipModule,
+    NzCardModule,
+    NzGridModule,
+    NzMessageModule,
+    NzEmptyModule,
+    PipesModule,
     MyOrdersRoutingModule,
   ]
 })

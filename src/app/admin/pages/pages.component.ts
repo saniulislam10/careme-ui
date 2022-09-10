@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
 import {Meta} from '@angular/platform-browser';
-import {menuItemsAdmin, menuItemsEditor, menuItemsSuperAdmin} from '../../core/utils/admin-menu';
+import {menuItemsAdmin, menuItemsEditor, menuItemsSuperAdmin, menuItemsVendor} from '../../core/utils/admin-menu';
 import {MenuCtrService} from '../../services/menu-ctr.service';
 import {NavigationEnd, Router} from '@angular/router';
 import {AdminService} from '../../services/admin.service';
@@ -66,6 +66,10 @@ export class PagesComponent implements OnInit, AfterViewInit {
       }
       case AdminRoleEnum.EDITOR: {
         this.menuList = menuItemsEditor;
+        break;
+      }
+      case AdminRoleEnum.VENDOR: {
+        this.menuList = menuItemsVendor;
         break;
       }
       default: {

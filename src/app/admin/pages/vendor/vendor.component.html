@@ -1,204 +1,334 @@
 <!--vendor-header-->
 <div class="vendor-header">
-    <!---vendor-header-main-->
-    <div class="vendor-header-main">
-        <!---title-->
-        <div class="title">
-            <h2>Vendor Settings</h2>
-        </div>
-        <!---vendor-search-->
-        <div class="vendor-search">
-            <button><i class="fa fa-search"></i></button>
-            <input type="text" placeholder="Search">
-        </div>
-        <div class="vendor-create-btn">
-            <button (click)="showCreateVendor()">Create Vendor</button>
-        </div>
+  <!---vendor-header-main-->
+  <div class="vendor-header-main">
+    <!---title-->
+    <div class="title">
+      <h2>Vendor Settings</h2>
     </div>
+    <!---vendor-search-->
+    <div class="vendor-search" (click)="onClickSearchArea($event)">
+      <button><i class="fa fa-search"></i></button>
+      <form #searchForm=ngForm  style="width: 100%;">
+        <input #searchInput id="searchInput" (focus)=handleFocus($event) name="searchTerm"
+        autocomplete="off" ngModel type="text" placeholder="Search">
+      </form>
+    </div>
+    <div class="vendor-create-btn">
+      <button (click)="showCreateVendor()">Create Vendor</button>
+    </div>
+  </div>
 </div>
 
 <!---vendor-main-->
 <div class="vendor-main">
-    <!---vendor-table-area-->
-    <div class="vendor-table-area">
-        <!---vendor-table-->
-        <div class="vendor-table">
-            <!---table-head-->
-            <div class="table-head">
-                <div class="table-row">
-                    <div class="table-heading serial">
-                        <h3>SI</h3>
-                    </div>
-                    <div class="table-heading name">
-                        <h3>Vendor Name</h3>
-                    </div>
-                    <div class="table-heading contact">
-                        <h3>Contact</h3>
-                    </div>
-                    <div class="table-heading address">
-                        <h3>Address</h3>
-                    </div>
-                    <div class="table-heading payment">
-                        <h3>Partial Payment</h3>
-                    </div>
-                    <div class="table-heading stock">
-                        <h3>Stock Control</h3>
-                    </div>
-                    <div class="table-heading allow">
-                        <h3>Allow Points</h3>
-                    </div>
-                    <div class="table-heading edit">
-                    </div>
-                </div>
-
-            </div> <!---table-head-end-->
-            <!---table-body-area-->
-            <div class="table-body">
-                <div class="table-row" *ngFor="let data of [1,2,3,4,5,6,7,8]">
-                    <div class="table-data serial">
-                        <h3>01</h3>
-                    </div>
-                    <div class="table-data name">
-                        <button>Care Me</button>
-                    </div>
-                    <div class="table-data contact">
-                        <h3>01881325037</h3>
-                    </div>
-                    <div class="table-data address">
-                        <p>Suite #1402 (Lift #14), Navana D.H.Tower, 6 Panthapath,Kawran Bazar,Dhaka-1215</p>
-                    </div>
-                    <div class="table-data payment">
-                        <button>Yes</button>
-                    </div>
-                    <div class="table-data stock">
-                        <button>Yes</button>
-                    </div>
-                    <div class="table-data allow">
-                        <button>Yes</button>
-                    </div>
-                    <div class="table-data edit">
-                        <button><i class="fa fa-edit"></i></button>
-                    </div>
-
-                </div>
-            </div><!---table-body-area-end-->
+  <!---vendor-table-area-->
+  <div class="vendor-table-area">
+    <!---vendor-table-->
+    <div class="vendor-table">
+      <!---table-head-->
+      <div class="table-head">
+        <div class="table-row">
+          <div class="table-heading serial">
+            <h3>SI</h3>
+          </div>
+          <div class="table-heading name">
+            <h3>Vendor Name</h3>
+          </div>
+          <div class="table-heading contact">
+            <h3>Contact</h3>
+          </div>
+          <div class="table-heading address">
+            <h3>Address</h3>
+          </div>
+          <div class="table-heading payment">
+            <h3>Partial Payment</h3>
+          </div>
+          <div class="table-heading stock">
+            <h3>Stock Control</h3>
+          </div>
+          <div class="table-heading allow">
+            <h3>Allow Points</h3>
+          </div>
+          <div class="table-heading edit">
+          </div>
         </div>
+
+      </div>
+      <!---table-head-end-->
+      <!---table-body-area-->
+      <div class="table-body">
+        <div class="table-row" *ngFor="let data of vendors; let i =index">
+          <div class="table-data serial">
+            <h3>{{i + 1}}</h3>
+          </div>
+          <div class="table-data name">
+            <button>{{data?.name}}</button>
+          </div>
+          <div class="table-data contact">
+            <h3>{{data?.phoneNo}}</h3>
+          </div>
+          <div class="table-data address">
+            <p>{{data?.address}}</p>
+          </div>
+          <div class="table-data payment">
+            <button>Yes</button>
+          </div>
+          <div class="table-data stock">
+            <button>Yes</button>
+          </div>
+          <div class="table-data allow">
+            <button>Yes</button>
+          </div>
+          <div class="table-data edit">
+            <button><i class="fa fa-edit" (click)="edit(data)"></i></button>
+          </div>
+
+        </div>
+      </div>
+      <!---table-body-area-end-->
     </div>
+  </div>
 </div>
+
+
+
 <!----create-vendor-area-->
 <div class="create-vendor" *ngIf="createVendor == true">
+  <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+
     <div class="create-vendor-main">
-        <!---create-vendor-header-->
-        <div class="create-vendor-header">
-            <h2>Create Vendor</h2>
-        </div>
-        <!---create-vendor-body-->
-        <div class="create-vendor-body">
-            <div class="input-area">
-                <!---input-infoo-->
-                <div class="input-info">
-                    <!--input-info-left--->
-                    <div class="input-info-left">
-                        <h3>Vendor Name:</h3>
-                    </div>
-                    <!---input-info-right-->
-                    <div class="input-info-right">
-                        <div class="form-input">
-                            <div class="field">
-                            <mat-form-field appearance="outline" class="form-field">
-                                <mat-label>Vendor Name</mat-label>
-                                <input type="text"  matInput placeholder="Enter vendor name">
-                                <mat-error *ngIf="">This field is required</mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
+      <!---create-vendor-header-->
+      <div class="create-vendor-header">
+        <h2>Create Vendor</h2>
+      </div>
+      <!---create-vendor-body-->
+      <div class="create-vendor-body">
+        <div class="input-area">
+          <!---input-infoo-->
+          <div class="input-info">
+            <!--input-info-left--->
+            <div class="input-info-left">
+              <h3>Vendor Name:</h3>
             </div>
-               <!---input-infoo-->
-               <div class="input-info">
-                <!--input-info-left--->
-                <div class="input-info-left">
-                    <h3>Contact:</h3>
+            <!---input-info-right-->
+            <div class="input-info-right">
+              <div class="form-input">
+                <div class="field">
+                  <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Vendor Name</mat-label>
+                    <input type="text" formControlName="name" matInput placeholder="Enter vendor name" required>
+                    <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
+                  </mat-form-field>
                 </div>
-                <!---input-info-right-->
-                <div class="input-info-right">
-                    <div class="form-input">
-                        <div class="field">
-                        <mat-form-field appearance="outline" class="form-field">
-                            <mat-label>Contact</mat-label>
-                            <input type="text"  matInput placeholder="Enter your contact number">
-                            <mat-error *ngIf="">This field is required</mat-error>
-                        </mat-form-field>
-                        </div>
-                </div>
+              </div>
             </div>
-        </div>
+          </div>
+          <!---input-infoo-->
+          <div class="input-info">
+            <!--input-info-left--->
+            <div class="input-info-left">
+              <h3>Email:</h3>
+            </div>
+            <!---input-info-right-->
+            <div class="input-info-right">
+              <div class="form-input">
+                <div class="field">
+                  <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Email</mat-label>
+                    <input type="email" formControlName="email" matInput placeholder="Enter your contact number">
+                    <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!---input-infoo-->
-            <div class="input-info">
-                <!--input-info-left--->
-                <div class="input-info-left">
-                    <h3>address:</h3>
-                </div>
-                <!---input-info-right-->
-                <div class="input-info-right">
-                    <div class="form-input">
-                        <div class="field">
-                            <mat-form-field appearance="outline" class="form-field">
-                                <mat-label>address</mat-label>
-                                <textarea rows="3" cols="10" matInput></textarea>
-                              </mat-form-field>
-                        </div>
-                </div>
+          <!---input-infoo-->
+          <div class="input-info">
+            <!--input-info-left--->
+            <div class="input-info-left">
+              <h3>Username:</h3>
             </div>
-        </div>
+            <!---input-info-right-->
+            <div class="input-info-right">
+              <div class="form-input">
+                <div class="field">
+                  <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Username</mat-label>
+                    <input type="text" formControlName="username" matInput placeholder="Enter your contact number">
+                    <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        </div><!---input-area-end-->
+          <!---input-infoo-->
+          <div class="input-info" *ngIf="editVendorData !== true">
+            <!--input-info-left--->
+            <div class="input-info-left">
+              <h3>Password:</h3>
+            </div>
+            <!---input-info-right-->
+            <div class="input-info-right">
+              <div class="form-input">
+                <div class="field">
+                  <nz-input-group [nzSuffix]="suffixTemplate">
+                    <input
+                      [type]="passwordVisible ? 'text' : 'password'"
+                      nz-input
+                      placeholder="input password"
+                      formControlName="password"
+                      required
+                    />
+                  </nz-input-group>
+                  <ng-template #suffixTemplate>
+                    <span
+                      nz-icon
+                      [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                      (click)="passwordVisible = !passwordVisible"
+                    ></span>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!---input-infoo-->
+          <div class="input-info" *ngIf="editVendorData !== true">
+            <!--input-info-left--->
+            <div class="input-info-left">
+              <h3>Confirm Password:</h3>
+            </div>
+            <!---input-info-right-->
+            <div class="input-info-right">
+              <div class="form-input">
+                <div class="field">
+                  <nz-input-group [nzSuffix]="suffixTemplate2">
+                    <input
+                    required
+                      [type]="confirmPasswordVisible ? 'text' : 'password'"
+                      nz-input
+                      placeholder="input password"
+                      formControlName="confirmPassword"
+                    />
+                  </nz-input-group>
+                  <ng-template #suffixTemplate2>
+                    <span
+                      nz-icon
+                      [nzType]="confirmPasswordVisible ? 'eye-invisible' : 'eye'"
+                      (click)="confirmPasswordVisible = !confirmPasswordVisible"
+                    ></span>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!---input-infoo-->
+          <div class="input-info">
+            <!--input-info-left--->
+            <div class="input-info-left">
+              <h3>Contact:</h3>
+            </div>
+            <!---input-info-right-->
+            <div class="input-info-right">
+              <div class="form-input">
+                <div class="field">
+                  <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Contact</mat-label>
+                    <input type="text" formControlName="phoneNo" matInput placeholder="Enter your contact number">
+                    <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!---input-infoo-->
+          <div class="input-info">
+            <!--input-info-left--->
+            <div class="input-info-left">
+              <h3>address:</h3>
+            </div>
+            <!---input-info-right-->
+            <div class="input-info-right">
+              <div class="form-input">
+                <div class="field">
+                  <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>address</mat-label>
+                    <textarea rows="3" formControlName="address" cols="10" matInput></textarea>
+                    <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!---input-area-end-->
         <div class="check-box-area">
-            <!---checkbox-info-->
-            <div class="check-box-info">
-                <div class="check-box-info-left">
-                    <h3>Partial Payment:</h3>
-                </div>
-                <div class="check-box-info-right">
-                    <ul>
-                        <li><mat-checkbox class="mat-check">Yes</mat-checkbox></li>
-                        <li><mat-checkbox class="mat-check">No</mat-checkbox></li>
-                    </ul>
-                </div>
+          <!---checkbox-info-->
+          <div class="check-box-info">
+            <div class="check-box-info-left">
+              <h3>Partial Payment:</h3>
             </div>
-            <!---checkbox-info-->
-            <div class="check-box-info">
-                <div class="check-box-info-left">
-                    <h3>Stock Control:</h3>
-                </div>
-                <div class="check-box-info-right">
-                    <ul>
-                        <li><mat-checkbox class="mat-check">Yes</mat-checkbox></li>
-                        <li><mat-checkbox class="mat-check">No</mat-checkbox></li>
-                    </ul>
-                </div>
+            <div class="check-box-info-right">
+              <ul>
+                <li>
+                  <mat-checkbox class="mat-check">Yes</mat-checkbox>
+                </li>
+                <li>
+                  <mat-checkbox class="mat-check">No</mat-checkbox>
+                </li>
+              </ul>
             </div>
-            <!---checkbox-info-->
-            <div class="check-box-info">
-                <div class="check-box-info-left">
-                    <h3>Allow Points:</h3>
-                </div>
-                <div class="check-box-info-right">
-                    <ul>
-                        <li><mat-checkbox class="mat-check">Yes</mat-checkbox></li>
-                        <li><mat-checkbox class="mat-check">No</mat-checkbox></li>
-                    </ul>
-                </div>
+          </div>
+          <!---checkbox-info-->
+          <div class="check-box-info">
+            <div class="check-box-info-left">
+              <h3>Stock Control:</h3>
             </div>
+            <div class="check-box-info-right">
+              <ul>
+                <li>
+                  <mat-checkbox class="mat-check">Yes</mat-checkbox>
+                </li>
+                <li>
+                  <mat-checkbox class="mat-check">No</mat-checkbox>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!---checkbox-info-->
+          <div class="check-box-info">
+            <div class="check-box-info-left">
+              <h3>Allow Points:</h3>
+            </div>
+            <div class="check-box-info-right">
+              <ul>
+                <li>
+                  <mat-checkbox class="mat-check">Yes</mat-checkbox>
+                </li>
+                <li>
+                  <mat-checkbox class="mat-check">No</mat-checkbox>
+                </li>
+              </ul>
+            </div>
+          </div>
 
-        </div><!----check-box-end-->
-        <div class="create-vendor-btn">
-            <ul>
-                <li><button (click)="hideCreateVendor()">Cancel</button></li>
-                <li><button class="save-active">Save Vendor</button></li>
-            </ul>
         </div>
+        <!----check-box-end-->
+        <div class="create-vendor-btn">
+          <ul>
+            <li><button (click)="hideCreateVendor()">Cancel</button></li>
+            <li><button type="submit" class="save-active">Save Vendor</button></li>
+          </ul>
+        </div>
+
+      </div>
 
     </div>
+  </form>
 </div>

@@ -84,7 +84,6 @@ export class CreateNewPurchaseComponent implements OnInit {
         this.dataForm.patchValue(res.data);
         let products = res.data.products;
         for(let i=0; i < products.length; i++){
-          console.log(products[i]);
           this.onSelectItem(products[i].productData, products[i]);
         }
 
@@ -101,7 +100,6 @@ export class CreateNewPurchaseComponent implements OnInit {
 
   newProduct(data, purchaseData?:any): FormGroup {
     if(purchaseData){
-      console.log(purchaseData);
       return this.fb.group({
         productData: data,
         purchaseQuantity: [purchaseData.purchaseQuantity, Validators.required],
@@ -159,7 +157,6 @@ export class CreateNewPurchaseComponent implements OnInit {
       subTotal : this.calculateSubTotal() ? this.calculateSubTotal() : 0,
       totalAmount : this.calculateTotal() ? this.calculateTotal() : 0,
     };
-    console.log(data);
 
     if(this.id){
       const finalData = {
@@ -196,10 +193,10 @@ export class CreateNewPurchaseComponent implements OnInit {
 
   //close dialog box
   close(){
-    console.log("close");
+    // console.log("close");
   }
   delete(){
-    console.log("delete");
+    // console.log("delete");
   }
 
   calculateAmount(i){
@@ -278,6 +275,7 @@ export class CreateNewPurchaseComponent implements OnInit {
         (res) => {
           this.isLoading = false;
           this.searchProducts = res.data;
+          console.log(this.searchProducts);
           if (this.searchProducts.length > 0) {
             this.isOpen = true;
             this.overlay = true;
@@ -316,7 +314,7 @@ export class CreateNewPurchaseComponent implements OnInit {
   }
 
   onSelectVariant(option) {
-    console.log(option);
+    // console.log(option);
   }
 
   setSku() {
@@ -330,7 +328,7 @@ export class CreateNewPurchaseComponent implements OnInit {
   }
 
   selectOption(data){
-    console.log(data);
+    // console.log(data);
   }
 
   calculateSubTotal(){

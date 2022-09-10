@@ -95,13 +95,6 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'add-by-link',
-        loadChildren: () =>
-          import('./add-by-link/add-by-link.module').then(
-            (m) => m.AddByLinkModule
-          ),
-      },
-      {
         path: 'all-customers',
         loadChildren: () =>
           import('./customer/all-customers/all-customers.module').then(
@@ -409,6 +402,18 @@ const routes: Routes = [
           loadChildren: () => import('./brand/brand.module').then(m => m.BrandModule)
       },
       {
+        path: 'product-type',
+          loadChildren: () => import('./product-type/product-type.module').then(m => m.ProductTypeModule)
+      },
+      {
+        path: 'country',
+          loadChildren: () => import('./country/country.module').then(m => m.CountryModule)
+      },
+      {
+        path: 'supplier',
+          loadChildren: () => import('./supplier/supplier.module').then(m => m.SupplierModule)
+      },
+      {
         path: 'stock',
           loadChildren: () => import('./stock/stock.module').then(m => m.StockModule)
       },
@@ -419,6 +424,10 @@ const routes: Routes = [
       {
         path: 'adjustment',
           loadChildren: () => import('./adjustment/adjustment.module').then(m => m.AdjustmentModule)
+      },
+      {
+        path: 'collections',
+          loadChildren: () => import('./collections/collections.module').then(m => m.CollectionsModule)
       },
     ],
   },

@@ -10,7 +10,9 @@
         </div>
         <div class="form-btn" class="saveArea">
           <ul class="btn">
-            <li><mat-icon *ngIf="product" target="_blank" (click)="preview()">remove_red_eye</mat-icon></li>
+            <li>
+              <mat-icon *ngIf="product" target="_blank" (click)="preview()">remove_red_eye</mat-icon>
+            </li>
             <li><button type="button" [routerLink]="['../../', 'products']">Discard</button></li>
             <li><button class="btn-active" type="submit">Save</button></li>
           </ul>
@@ -20,10 +22,11 @@
         <div class="description-title-input">
           <h3>Import Product Information</h3>
           <div class="import">
-            <mat-form-field  appearance="outline" class="form-field importSearch">
-              <input type="text" matInput placeholder="Import By Link"  formControlName="link">
+            <mat-form-field appearance="outline" class="form-field importSearch">
+              <input type="text" matInput placeholder="Import By Link" formControlName="link">
             </mat-form-field>
-            <button type="button" (click)="importProductInfo()"> <i class="fa-solid fa-cloud-arrow-down"></i>Import</button>
+            <button type="button" (click)="importProductInfo()"> <i
+                class="fa-solid fa-cloud-arrow-down"></i>Import</button>
           </div>
         </div>
       </div>
@@ -36,20 +39,23 @@
               <mat-form-field appearance="outline" class="form-field">
                 <input type="text" formControlName="name" (change)="autoGenerateSlug()" matInput
                   placeholder="Product Name">
-                <mat-error *ngIf="">This field is required</mat-error>
+                <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
               </mat-form-field>
 
             </div>
             <!---description-->
             <div class="description">
-              <h3>Description</h3>
+              <h3 >Description <button mat-button type="button" style="margin-bottom: 10px; background: none; border: 1px solid black"> <mat-icon (click)="onEditHtmlEditor()">code</mat-icon></button></h3>
 
+              <div *ngIf="showHtmlEditor">
+                <textarea rows="15" style="width:100%" type="text" nz-input
+                  (input)="onInput($event)" [value]="htmlData"></textarea>
+              </div>
               <!----description-plugins-->
-              <div class="description-plugins">
+              <div *ngIf="!showHtmlEditor" class="description-plugins">
                 <quill-editor *ngIf="modules" [styles]="{height: '400px'}" [modules]="modules" (onFocus)="focus($event)"
-                  (onEditorChanged)="changedEditor($event)" formControlName="description" formControlName="description">
+                  (onEditorChanged)="changedEditor($event)" formControlName="description">
                 </quill-editor>
-
               </div>
             </div>
 
@@ -88,9 +94,19 @@
             <!---meadia-drag-drop-area-->
             <div class="meadia-drag-drap-area">
 
-              <div class="plus-box" (click)="openComponentDialog()">
-                <span>Upload Images from Gallery</span>
+              <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                <ngx-dropzone-label>
+                  <div class="label">
+                    <h2>Upload or Drag and Drop Here</h2>
+                  </div>
+                </ngx-dropzone-label>
+
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+          <!--        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>-->
+                  <ngx-dropzone-label>{{ f.type }}</ngx-dropzone-label>
+                </ngx-dropzone-image-preview>
               </div>
+              <button *ngIf="files.length" mat-button class="upload-button" type="button" (click)="onUploadImages()">Upload <span >{{files.length}} {{files.length > 1 ? 'images':'image'}}</span> </button>
 
               <div *ngIf="chooseImage && chooseImage.length > 0" class="img-container" cdkDropList
                 cdkDropListOrientation="vertical" (cdkDropListDropped)="drop($event)">
@@ -127,20 +143,16 @@
               <div class="form-input">
                 <h3>Wholesale Price</h3>
                 <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
-                  <!-- <mat-label>Wholesale Price</mat-label> -->
                   <input type="number" formControlName="wholeSalePrice" matInput placeholder="BDT 0.00" digitOnly>
-                  <mat-error *ngIf="">This field is required</mat-error>
                 </mat-form-field>
               </div>
               <!---pricing-info-->
-              <!-- *ngIf="hasVariant === false" -->
-              <div class="form-input" >
+              <div class="form-input">
                 <h3>Selling Price</h3>
                 <mat-form-field appearance="outline" class="form-field">
                   <!-- <mat-label>Selling Price</mat-label> -->
                   <input type="number" formControlName="sellingPrice" matInput placeholder="BDT 0.00" digitOnly>
-                  <mat-hint>Customers won't see this</mat-hint>
-                  <mat-error *ngIf="">This field is required</mat-error>
+                  <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -149,10 +161,7 @@
               <mat-checkbox [(ngModel)]="hasTax" value="true" formControlName="hasTax" class="example-margin">Charge tax
                 on this product</mat-checkbox>
               <mat-form-field *ngIf="hasTax === true" appearance="outline" class="form-field">
-                <!-- <mat-label>Selling Price</mat-label> -->
                 <input type="number" formControlName="tax" matInput placeholder="BDT 0.00 (in amount)" digitOnly>
-                <mat-hint>Customers won't see this</mat-hint>
-                <mat-error *ngIf="">This field is required</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -171,7 +180,7 @@
                 <mat-form-field appearance="outline" class="form-field">
                   <!-- <mat-label>SKU</mat-label> -->
                   <input type="text" formControlName="sku" matInput placeholder="Enter SKU Code..">
-                  <mat-error *ngIf="">This field is required</mat-error>
+                  <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
                 </mat-form-field>
               </div>
               <!---form-input-->
@@ -206,8 +215,8 @@
                 <h3>Available</h3>
                 <mat-form-field appearance="outline" class="form-field">
                   <!-- <mat-label>Available</mat-label> -->
-                  <input *ngIf="this.trackQuantity === false " type="number" value="0" formControlName="quantity" digitOnly
-                    matInput>
+                  <input *ngIf="this.trackQuantity === false " type="number" value="0" formControlName="quantity"
+                    digitOnly matInput>
                   <input *ngIf="this.trackQuantity === true" type="number" value="0" formControlName="quantity"
                     digitOnly matInput>
                   <mat-error *ngIf="">This field is required</mat-error>
@@ -217,8 +226,8 @@
                 <h3>Re Order</h3>
                 <mat-form-field appearance="outline" class="form-field">
                   <!-- <mat-label>Available</mat-label> -->
-                  <input type="number" formControlName="reOrder" digitOnly matInput >
-                  <mat-error *ngIf="">This field is required</mat-error>
+                  <input type="number" formControlName="reOrder" digitOnly matInput>
+                  <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -240,78 +249,34 @@
             </div>
             <!--weight-area-->
             <div class="shipping-info">
-              <!---shipping-info-top-->
-              <div class="shipping-info-top">
-                <h3>WEIGHT</h3>
-                <p>Used to calculate shipping rates at checkout and label prices during fulfillment.</p>
-              </div>
-              <!---form-input-->
-              <div class="form-input">
-                <!-- <h3>Weight</h3> -->
-                <div class="weight-input-main">
+              <div style="display: flex">
+                <div class="shipping-block">
                   <div>
+                    <h3>Weight</h3>
                     <mat-form-field appearance="outline" class="form-field">
-                      <!-- <mat-label>Weight</mat-label> -->
                       <input matInput type="number" formControlName="weight" placeholder="0.0" digitOnly decimal="true"
                         decimalSeparator="." pattern="[0-9]+([.][0-9]+)?">
-                      <mat-error *ngIf="">This field is required</mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div>
-                    <mat-form-field appearance="outline" class="form-field">
-
-                      <mat-label>Select</mat-label>
-                      <mat-select formControlName="weightType">
-                        <mat-option *ngFor="let c of weightType" [value]="c.value">{{c.viewValue}}</mat-option>
-                      </mat-select>
+                      <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
                     </mat-form-field>
                   </div>
                 </div>
-              </div>
+                <div class="shipping-block">
 
-            </div>
-            <!--weight-area-end-->
-            <!--customs-area-->
-            <div class="shipping-info" style="border-radius: 0px 0px 10px 10px;">
-              <!---shipping-info-top-->
-              <div class="shipping-info-top">
-                <h3>Customs Information</h3>
-                <p>Customs authorities use this information to calculate duties when shipping internationally Shown on
-                  printed customs forms.</p>
-              </div>
-              <!---form-input-->
-              <div class="form-input" style="margin-bottom: 40px;">
-                <h3>Country/Region of origin</h3>
-                <mat-form-field appearance="outline" class="form-field">
-                  <!-- <mat-label>Select country/region</mat-label> -->
-                  <mat-select formControlName="country" placeholder="Select Country">
-
-                    <mat-option value="Bangladesh">Bangladesh</mat-option>
-                    <mat-option value="China">China</mat-option>
-                    <mat-option value="India">India</mat-option>
-                    <mat-option value="Malaysia">Malaysia</mat-option>
-                  </mat-select>
-
-
-                  <mat-hint>In most cases, where the product is manufactured.</mat-hint>
-                </mat-form-field>
-              </div>
-              <!---form-input-->
-              <div class="form-input">
-                <h3>HS(Harmonized System ) Code</h3>
-                <!---search-input-box-->
-                <div class="search-input-box">
-                  <!-- <button><i class="fa fa-search"></i></button> -->
-                  <input type="text" formControlName="hscode" value="" placeholder="Search or enter a HS Code.">
+                  <h3>Select Country</h3>
+                  <mat-form-field appearance="outline" class="form-field">
+                    <mat-select [disableOptionCentering]="true" #selectCountry placeholder="Select Country"
+                      formControlName="country">
+                      <mat-select-filter [placeholder]="'Filter Country List'" *ngIf="selectCountry.focused"
+                        [array]="countrys" [displayMember]="'name'" (filteredReturn)="filteredCountryList = $event">
+                      </mat-select-filter>
+                      <mat-option *ngFor="let item of filteredCountryList" [value]="item._id">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </div>
-                <div class="hint">
-                  <span>Manually enter code codes that are longer than 6 numbers.</span>
-                </div>
-
               </div>
-
             </div>
-            <!--weight-area-end-->
           </div>
 
 
@@ -332,7 +297,8 @@
               </div>
               <div class="form-input">
                 <mat-form-field appearance="outline" class="form-field">
-                  <mat-select [(ngModel)]="selectedOption" formControlName="status" placeholder="Please select product status">
+                  <mat-select [(ngModel)]="selectedOption" formControlName="status"
+                    placeholder="Please select product status">
                     <mat-option *ngFor="let c of productStatus" [value]="c.value">{{c.viewValue}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -560,9 +526,14 @@
                   <div style="width: 100%;">
                     <mat-form-field appearance="outline" class="form-field">
                       <!-- <mat-label>Vendor</mat-label> -->
-                      <mat-select formControlName="vendor" placeholder="Vendor">
-                        <mat-option value="careme">Care me</mat-option>
-                        <mat-option value="careme global">Care me Global</mat-option>
+                      <mat-select [disableOptionCentering]="true" #selectVendor placeholder="Select Vendor"
+                        formControlName="vendor">
+                        <mat-select-filter [placeholder]="'Filter Vendor List'" *ngIf="selectVendor.focused"
+                          [array]="vendors" [displayMember]="'name'" (filteredReturn)="filteredVendorList = $event">
+                        </mat-select-filter>
+                        <mat-option *ngFor="let item of filteredVendorList" [value]="item._id">
+                          {{item.name}}
+                        </mat-option>
                       </mat-select>
                       <mat-error *ngIf="">This field is required</mat-error>
                     </mat-form-field>
@@ -574,8 +545,14 @@
             <div class="form-input-main" style="padding: 0 20px;">
               <h3>Brand</h3>
               <mat-form-field appearance="outline" class="form-field">
-                <input type="text" formControlName="brand" matInput placeholder="Product Brand">
-                <mat-error *ngIf="">This field is required</mat-error>
+                <mat-select [disableOptionCentering]="true" #selectBrand placeholder="Select Brand"
+                  formControlName="brand">
+                  <mat-select-filter [placeholder]="'Filter Brand List'" *ngIf="selectBrand.focused" [array]="brands"
+                    [displayMember]="'name'" (filteredReturn)="filteredBrandList = $event"></mat-select-filter>
+                  <mat-option *ngFor="let item of filteredBrandList" [value]="item._id">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
             <!---product-type-->
@@ -585,62 +562,11 @@
                 <h2>product type</h2>
               </div>
               <div class="standard-form-input">
-
-              </div>
-
-              <!---form-input-->
-              <div class="standard-form-input">
-                <h3>Select Parent Category</h3>
-                <!--form-input-main-->
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-select [disableOptionCentering]="true" #select placeholder="Select parent category *"
-                              formControlName="parentCategory" (selectionChange)="onSelectCategory($event)">
-                    <mat-select-filter [placeholder]="'Filter Category List'"
-                                       *ngIf="select.focused"
-                                       [array]="categories"
-                                       [displayMember]="'name'"
-                                       (filteredReturn)="filteredCatList = $event"></mat-select-filter>
-                    <mat-option *ngFor="let item of filteredCatList" [value]="item._id">
-                      {{item.name}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="">This field is required</mat-error>
-                </mat-form-field>
-                <!--standard-description-->
-                <!-- <div class="standard-description">
-                  <p>Improve buyer discovery, analytics & workflows. <a href="#">Learn More</a></p>
-                </div> -->
-              </div>
-              <!---Custom-->
-              <div class="vendor custom">
-                <!---form-input-->
-                <div class="form-input">
-                  <h3>Select Child Category</h3>
-                  <!--form-input-main-->
-                  <div class="form-input-main">
-                    <div style="width: 100%;">
-                      <mat-form-field appearance="outline" class="w-100">
-                        <mat-select [disableOptionCentering]="true" #select1 placeholder="Select child category *"
-                                    formControlName="childCategory">
-                          <mat-select-filter [placeholder]="'Filter Child List'"
-                                             *ngIf="select1.focused"
-                                             [array]="subCategories"
-                                             [displayMember]="'name'"
-                                             (filteredReturn)="filteredSubCatList = $event"></mat-select-filter>
-                          <mat-option *ngFor="let item of filteredSubCatList" [value]="item._id">
-                            {{item.name}}
-                          </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="">This field is required</mat-error>
-                      </mat-form-field>
-                    </div>
-                    <!-- <div class="drop-btn">
-                                        <button><i class="fa fa-caret-down"></i></button>
-                                    </div> -->
-
-                  </div>
-                </div>
-
+                <nz-select [compareWith]="compareFn" formControlName="productType" [nzMaxTagCount]="3" nzMode="multiple"
+                  nzPlaceHolder="Please select">
+                  <nz-option *ngFor="let item of listOfTypes" [nzLabel]="item.name" [nzValue]="item"></nz-option>
+                </nz-select>
+                <!-- <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template> -->
               </div>
 
             </div>
@@ -648,25 +574,18 @@
 
             <!---tags-->
             <div class="tags-area">
-              <!---tags-top-->
               <div class="tags-top">
                 <h3>Tags</h3>
                 <a href="#">View all tags</a>
               </div>
-              <!---form-input-->
-              <div class="form-input">
-
-                <mat-form-field appearance="outline" class="form-field">
-                  <!-- <mat-label>Tags</mat-label> -->
-                  <input type="text" formControlName="tags" matInput placeholder="Ex. Vintage,cotton,summer.">
-                  <mat-error *ngIf="">This field is required</mat-error>
-                </mat-form-field>
+              <div class="form -input">
+                <nz-select formControlName="tags" nzMode="tags" nzPlaceHolder="Tag Mode" [(ngModel)]="listOfTagOptions">
+                  <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+                </nz-select>
               </div>
             </div>
           </div>
-          <!---end-->
         </div>
-        <!---add-product-right-end-->
       </div>
 
       <!---varriant-area-main-->
@@ -707,12 +626,8 @@
                     </mat-form-field> -->
                     <mat-form-field formArrayName="variants" class="example-full-width" appearance="fill">
                       <mat-label>Variant Name</mat-label>
-                      <input type="text"
-                             placeholder="Pick one"
-                             aria-label="Number"
-                             matInput
-                             [formControlName]="i"
-                             [matAutocomplete]="auto">
+                      <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControlName]="i"
+                        [matAutocomplete]="auto">
                       <mat-autocomplete #auto="matAutocomplete" [selected]="i">
                         <mat-option value="size">size</mat-option>
                         <mat-option value="color">color</mat-option>
@@ -727,33 +642,27 @@
 
                   <h3 style="margin-bottom: 10px;">Values for options {{i + 1}}</h3>
                   <div class="option-input">
-                    <!-- <mat-form-field formArrayName="options" appearance="outline" class="form-field">
-                      <mat-label>Separate options with a comma</mat-label>
-                      <input type="text" [formControlName]="i" matInput placeholder="Separate options with a comma">
-                      <mat-error *ngIf="">This field is required</mat-error>
-                    </mat-form-field> -->
-                    <mat-form-field  class="example-chip-list" appearance="fill">
+                    <mat-form-field class="example-chip-list" appearance="fill">
                       <mat-label>Separate options with a comma</mat-label>
                       <mat-chip-list formArrayName="options" #chipList aria-label="Fruit selection">
-                        <mat-chip  *ngFor="let fruit of fruits[i]" (removed)="remove(fruit)">
+                        <mat-chip *ngFor="let fruit of fruits[i]" (removed)="remove(fruit)">
                           {{fruit}}
                           <button *ngIf="this.dataForm.value?.status === 1" matChipRemove>
-                            <mat-icon  (click)="remove(fruit, i)">cancel</mat-icon>
+                            <mat-icon (click)="remove(fruit, i)">cancel</mat-icon>
                           </button>
                           <button *ngIf="this.dataForm.value?.status === 2" matChipRemove>
-                            <mat-icon  (click)="edit(fruit, i)">edit</mat-icon>
+                            <mat-icon (click)="edit(fruit, i)">edit</mat-icon>
                           </button>
                         </mat-chip>
-                        <input placeholder="New value"
-                               [matChipInputFor]="chipList"
-                               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                               [matChipInputAddOnBlur]="addOnBlur"
-                               (matChipInputTokenEnd)="add($event, i)">
+                        <input placeholder="New value" [matChipInputFor]="chipList"
+                          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                          (matChipInputTokenEnd)="add($event, i)">
                       </mat-chip-list>
                     </mat-form-field>
 
-                    <button *ngIf="this.dataForm.value?.status === 1" class="button deleteButton" type="button" (click)="deleteFormControl(i)">
-                      <mat-icon style="align-items: center;" >remove</mat-icon>
+                    <button *ngIf="this.dataForm.value?.status === 1" class="button deleteButton" type="button"
+                      (click)="deleteFormControl(i)">
+                      <mat-icon style="align-items: center;">remove</mat-icon>
                     </button>
                   </div>
                 </div>
@@ -803,7 +712,7 @@
                       <div class="category-table-heading serial">
                         <h3>Image</h3>
                       </div>
-                      <div class="category-table-heading category-type" >
+                      <div class="category-table-heading category-type">
                         <h3>Variants</h3>
                       </div>
                       <!-- <div class="category-table-heading category-type" *ngFor="let data of variantObject; let i=index">
@@ -840,17 +749,18 @@
                     <div class="category-table-row" *ngFor="let data of variantDataFormArray.controls; let variant of variantDataArray;
                 let i=index" [formGroupName]="i">
                       <div style="padding-right: 10px;">
-                        <h3> <mat-checkbox [checked]="checkSelectionVariantImg(i)"  (change)="onCheckVariantImage($event, i)"></mat-checkbox> </h3>
+                        <h3>
+                          <mat-checkbox [checked]="checkSelectionVariantImg(i)"
+                            (change)="onCheckVariantImage($event, i)"></mat-checkbox>
+                        </h3>
                       </div>
                       <div class="category-table-data serial">
                         <div class="variation-img">
-                          <button *ngIf="dataForm.value.variantFormArray[i].image"
-                                  (click)="removeVariationImage(i)"
-                                  mat-icon-button color="warn" type="button" class="btn-img-remove">
+                          <button *ngIf="dataForm.value.variantFormArray[i].image" (click)="removeVariationImage(i)"
+                            mat-icon-button color="warn" type="button" class="btn-img-remove">
                             <mat-icon>delete</mat-icon>
                           </button>
-                          <img
-                            (click)="openVariationGalleryDialog(i)"
+                          <img (click)="openVariationGalleryDialog(i)"
                             [src]="dataForm.value.variantFormArray[i].image ? dataForm.value.variantFormArray[i].image : '/assets/images/flag/bangladesh-flag.png'"
                             alt="">
                         </div>
@@ -862,7 +772,8 @@
                       </div>
                       <div class="category-table-data quality">
                         <!-- <input type="text" matInput formControlName="variantSku" placeholder="sku" readonly> -->
-                        <p type="text" matInput placeholder="sku" readonly>{{dataForm.value.variantFormArray[i].variantSku}}</p>
+                        <p type="text" matInput placeholder="sku" readonly>
+                          {{dataForm.value.variantFormArray[i].variantSku}}</p>
                       </div>
                       <div class="category-table-data quality" style="padding-top: 20px;">
                         <mat-form-field appearance="outline" class="form-field" style="width: 80px;">
@@ -871,8 +782,7 @@
                       </div>
                       <div class="category-table-data quality" style="padding-top: 20px;">
                         <mat-form-field appearance="outline" class="form-field" style="width: 80px;">
-                          <input type="number" matInput formControlName="variantQuantity" placeholder="qty"
-                            >
+                          <input type="number" matInput formControlName="variantQuantity" placeholder="qty">
                         </mat-form-field>
                       </div>
                       <div class="category-table-data quality">

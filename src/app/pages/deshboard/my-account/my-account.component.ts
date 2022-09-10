@@ -1,3 +1,6 @@
+import { UiService } from 'src/app/services/ui.service';
+import { UserDataService } from 'src/app/services/user-data.service';
+import { UserService } from 'src/app/services/user.service';
 import { FileUploadService } from './../../../services/file-upload.service';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -9,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FileData } from 'src/app/interfaces/file-data';
 import { ImageCropperComponent } from 'src/app/shared/components/image-cropper/image-crop.component';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { User } from 'c:/Users/HP/Desktop/Projects/Careme/Care-Me-UI-main/careme-ui/src/app/interfaces/user';
 
 @Component({
   selector: 'app-my-account',
@@ -30,6 +34,8 @@ export class MyAccountComponent implements OnInit {
   url: any;
 
   dataForm: FormGroup;
+  userStatus: boolean;
+  user: User;
 
 
 
@@ -38,20 +44,57 @@ export class MyAccountComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private dialog: MatDialog,
     private fileUploadService: FileUploadService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private userService: UserService,
+    private userDataService: UserDataService,
+    private uiService: UiService
     ) {
 
     }
   ngOnInit(): void {
     this.dataForm = this.fb.group({
-      userName: ['', [Validators.required]],
-      email: ['', [Validators.email, Validators.required]],
+      fullName: [''],
+      username: ['', [Validators.required]],
+      phoneNo: ['', [Validators.required]],
+      gender: [''],
+      age: [''],
+      zilla: [''],
+      city: [''],
+      thana: [''],
+      zipcode: [''],
+      email: ['', [Validators.email]],
+      address: [''],
       password: ['', [Validators.required]],
     });
+
+    this.userStatus = this.userService.getUserStatus();
+
+    if(this.userStatus){
+      this.userDataService.getLoggedInUserInfo()
+      .subscribe(res => {
+        console.log(res.data);
+        this.user = res.data;
+        this.dataForm.patchValue(this.user);
+      }, err=> {
+        this.uiService.createMessage('error', err);
+      })
+    }else{
+      this.uiService.createMessage('error', 'Please Login First');
+    }
+
+
   }
 
+
+
   onSubmit(): void {
-    console.log('submit', this.dataForm.value);
+    const finalData = {...this.dataForm.value, ...{_id: this.user._id}}
+    this.userDataService.editLoginUserInfo(finalData)
+    .subscribe( res => {
+      this.uiService.createMessage('success', 'Profile Updated Successfully');
+    }, err => {
+      this.uiService.createMessage('error', err);
+    })
   }
 
 

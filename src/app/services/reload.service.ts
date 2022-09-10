@@ -62,6 +62,10 @@ export class ReloadService {
   private refreshThana = new Subject<void>();
   private refreshDetails = new Subject<void>();
   private refreshPurchase = new Subject<void>();
+  private refreshVendors = new Subject<void>();
+  private refreshSuppliers = new Subject<void>();
+  private refreshCountrys = new Subject<void>();
+  private refreshProductTypes = new Subject<void>();
   /**
    * refresh details
    */
@@ -70,6 +74,51 @@ export class ReloadService {
   }
   needRefreshDetails$() {
     this.refreshDetails.next();
+  }
+  /**
+   * refresh product type
+   */
+   get refreshProductTypes$() {
+    return this.refreshVendors;
+  }
+  needRefreshProductTypes$() {
+    this.refreshVendors.next();
+  }
+  /**
+   * refresh product type
+   */
+   get refreshCollections$() {
+    return this.refreshVendors;
+  }
+  needRefreshCollections$() {
+    this.refreshVendors.next();
+  }
+  /**
+   * refresh supplier
+   */
+   get refreshSuppliers$() {
+    return this.refreshVendors;
+  }
+  needRefreshSuppliers$() {
+    this.refreshVendors.next();
+  }
+  /**
+   * refresh country
+   */
+   get refreshCountrys$() {
+    return this.refreshVendors;
+  }
+  needRefreshCountrys$() {
+    this.refreshVendors.next();
+  }
+  /**
+   * refresh vendor
+   */
+   get refreshVendors$() {
+    return this.refreshVendors;
+  }
+  needRefreshVendors$() {
+    this.refreshVendors.next();
   }
 
   /**

@@ -4,9 +4,11 @@ import {Wishlist} from './wishlist';
 
 export interface User {
   zilla?:string;
+  zipcode?: number;
   _id?: string;
   select?:boolean,
   fullName: string;
+  age?: number;
   username?: string;
   status?: number;
   gender?: string;

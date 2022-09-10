@@ -3,17 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { BrandRoutingModule } from './brand-routing.module';
 import { BrandComponent } from './brand.component';
-import { AddBrandComponent } from './add-brand/add-brand.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MaterialModule } from 'src/app/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 
 @NgModule({
   declarations: [
-    BrandComponent,
-    AddBrandComponent
+    BrandComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +21,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
     MatProgressSpinnerModule,
     FormsModule,
+    NzTableModule,
     ReactiveFormsModule
   ]
 })

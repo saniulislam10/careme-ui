@@ -56,142 +56,120 @@
 <div nz-row [nzGutter]="16">
   <div nz-col [nzXs]="{ span: 24 }">
     <nz-card nzSize="default">
-      <div nz-row>
-        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-          <h2>Manage Profile</h2>
-          <br />
-        </div>
+      <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+        <div nz-row>
+          <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+            <h2>Manage Profile</h2>
+            <br />
+          </div>
 
-        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-          <div class="manage_account">
-            <div class="account_form">
-              <form>
+          <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+            <div class="manage_account">
+              <div class="account_form">
+
                 <div class="form_group">
                   <div nz-row [nzGutter]="16">
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
                       <label>Full Name</label>
                       <br />
-                      <input nz-input placeholder="Full Name" />
+                      <input nz-input placeholder="Full Name" formControlName='fullName' />
                     </div>
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
                       <label>Phone Number</label>
                       <br />
-                      <input nz-input placeholder="01XXXXXXXXX" />
+                      <input nz-input placeholder="01XXXXXXXXX" formControlName='phoneNo' />
                     </div>
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
                       <label>E-mail</label>
                       <br />
-                      <input nz-input placeholder="you@mail.com" />
+                      <input nz-input placeholder="you@mail.com" formControlName='email' />
                     </div>
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
                       <label>Gender</label>
                       <br />
-                      <nz-select ngModel="male">
+                      <nz-select ngModel="male" formControlName="gender">
                         <nz-option nzValue="male" nzLabel="Male"></nz-option>
-                        <nz-option
-                          nzValue="female"
-                          nzLabel="Female"
-                        ></nz-option>
+                        <nz-option nzValue="female" nzLabel="Female"></nz-option>
                       </nz-select>
                     </div>
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
                       <label>Age</label>
                       <br />
-                      <input nz-input placeholder="age" />
-                    </div>
-                    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 6 }">
-                      <label>Country</label>
-                      <br />
-                      <nz-select ngModel="male">
-                        <nz-option
-                          nzValue="bangladesh"
-                          nzLabel="Bangladesh"
-                        ></nz-option>
-                      </nz-select>
+                      <input nz-input placeholder="age" formControlName='age' digitOnly />
                     </div>
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 6 }">
                       <label>Zilla</label>
                       <br />
-                      <nz-select ngModel="dhaka">
-                        <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
-                        <nz-option
-                          nzValue="khulna"
-                          nzLabel="Khulna"
-                        ></nz-option>
+                      <nz-select ngModel="zilla" formControlName='zilla'>
+                        <nz-option nzValue="dhaka" nzLabel="dhaka"></nz-option>
+                        <nz-option nzValue="chittagong" nzLabel="chittagong"></nz-option>
                       </nz-select>
                     </div>
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 6 }">
                       <label>Thana</label>
                       <br />
-                      <nz-select ngModel="dhaka">
-                        <nz-option nzValue="Dhaka" nzLabel="Dhaka"></nz-option>
-                        <nz-option
-                          nzValue="khulna"
-                          nzLabel="Khulna"
-                        ></nz-option>
+                      <nz-select ngModel="city" formControlName='city'>
+                        <nz-option nzValue="dhaka" nzLabel="dhaka"></nz-option>
+                        <nz-option nzValue="gajipur" nzLabel="gajipur"></nz-option>
+                      </nz-select>
+                    </div>
+                    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 6 }">
+                      <label>City</label>
+                      <br />
+                      <nz-select ngModel="thana" formControlName='thana'>
+                        <nz-option nzValue="cantonment" nzLabel="cantonment"></nz-option>
+                        <nz-option nzValue="gulshan" nzLabel="gulshan"></nz-option>
                       </nz-select>
                     </div>
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 6 }">
                       <label for="firstname">Zip Code</label>
                       <br />
-                      <input nz-input placeholder="Zip Code" />
+                      <input nz-input placeholder="Zip Code" formControlName='zipcode' />
                     </div>
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
                       <label for="firstname">Address</label>
                       <br />
                       <nz-textarea-count [nzMaxCharacterCount]="100">
-                        <textarea
-                          rows="1"
-                          formControlName="comment"
-                          placeholder="Address"
-                          nz-input
-                        ></textarea>
+                        <textarea rows="1" formControlName="address" placeholder="Address" nz-input></textarea>
                       </nz-textarea-count>
                     </div>
                   </div>
                 </div>
-              </form>
-            </div>
-            <div class="account_image">
-              <nz-card style="width: 80%">
-                <div class="entry-thumb">
-                  <div nz-row [nzGutter]="16">
-                    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-                      <img
-                        style="width: 200px; height: 200px; border-radius: 100%"
-                        [src]="
-                          imgPlaceHolder
-                            ? imgPlaceHolder
-                            : '/assets/images/avatar/user-young.jpg'
-                        "
-                      />
-                    </div>
-                    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-                      <div class="upload">
-                        <div class="link" (click)="profileImagePicker.click()">
-                          Upload Image
+
+              </div>
+              <div class="account_image">
+                <nz-card style="width: 80%">
+                  <div class="entry-thumb">
+                    <div nz-row [nzGutter]="16">
+                      <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+                        <img style="width: 200px; height: 200px; border-radius: 100%" [src]="
+                            imgPlaceHolder
+                              ? imgPlaceHolder
+                              : '/assets/images/avatar/user-young.jpg'
+                          " />
+                      </div>
+                      <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+                        <div class="upload">
+                          <div class="link" (click)="profileImagePicker.click()">
+                            Upload Image
+                          </div>
+                          <input [hidden]="true" #profileImagePicker type="file" (change)="fileChangeEvent($event)"
+                            accept="image/*" />
                         </div>
-                        <input
-                          [hidden]="true"
-                          #profileImagePicker
-                          type="file"
-                          (change)="fileChangeEvent($event)"
-                          accept="image/*"
-                        />
                       </div>
                     </div>
                   </div>
-                </div>
-              </nz-card>
+                </nz-card>
+              </div>
             </div>
           </div>
+          <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+            <button type="submit" class="caremebtn" nz-button nzType="primary" nzSize="large">
+              Update Profile
+            </button>
+          </div>
         </div>
-        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-          <button class="caremebtn" nz-button nzType="primary" nzSize="large">
-            Primary Button
-          </button>
-        </div>
-      </div>
+      </form>
     </nz-card>
   </div>
 </div>
