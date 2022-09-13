@@ -134,11 +134,12 @@ export class DetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
 }
 
-openRecieved(recieved, index, poQty){
+openRecieved(id, recieved, index, poQty){
   const dialogRef = this.dialog.open(RecievedComponent, {
     restoreFocus: false,
     data: {
       id: this.id,
+      productId: id,
       index: index,
       purchaseQuantity: poQty,
       recieved: recieved,
@@ -380,6 +381,13 @@ openRecieved(recieved, index, poQty){
     let purchasePrice = item?.purchasePrice;
     let tax = Math.round((purchasePrice * item?.purchaseTax)/100);
     let quantity = item?.purchaseQuantity;
+    return Math.round((purchasePrice+tax)*quantity);
+  }
+
+  getRecievedAmount(item){
+    let purchasePrice = item?.purchasePrice;
+    let tax = Math.round((purchasePrice * item?.purchaseTax)/100);
+    let quantity = item?.recieved ? item?.recieved : 0;
     return Math.round((purchasePrice+tax)*quantity);
   }
 

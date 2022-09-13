@@ -91,7 +91,7 @@
   <tbody>
     <tr *ngFor="let data of innerTable.data; let i =index">
       <td>
-        <img style="width: 100px" [src]="setThumbnailImage(data.product) ? setThumbnailImage(data.product) : '/assets/images/placeholder/test.png'" alt="">
+        <img nz-image style="width: 100px" [nzSrc]="setThumbnailImage(data.product) ? setThumbnailImage(data.product) : '/assets/images/placeholder/test.png'" alt="">
       </td>
       <td>
         <a [routerLink]="['../../order-single-product-details', order._id, i]">{{data.product.name}}</a>

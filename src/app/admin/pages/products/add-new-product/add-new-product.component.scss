@@ -3,6 +3,20 @@
 nz-select {
   width: 100%;
 }
+tbody {
+  input{
+    text-align: center;
+    border: none;
+    max-width: 60px;
+  }
+  ::ng-deep.form-field{
+    text-align: center;
+    border: 1px dotted black;
+    width: 90px;
+    max-width: 150px;
+  }
+
+}
 
 .upload-button{
   width: 100%;

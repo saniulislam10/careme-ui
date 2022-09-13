@@ -215,9 +215,9 @@
                 <h3>Available</h3>
                 <mat-form-field appearance="outline" class="form-field">
                   <!-- <mat-label>Available</mat-label> -->
-                  <input *ngIf="this.trackQuantity === false " type="number" value="0" formControlName="quantity"
+                  <input *ngIf="this.trackQuantity === false " type="number" formControlName="quantity"
                     digitOnly matInput>
-                  <input *ngIf="this.trackQuantity === true" type="number" value="0" formControlName="quantity"
+                  <input *ngIf="this.trackQuantity === true" type="number" formControlName="quantity"
                     digitOnly matInput>
                   <mat-error *ngIf="">This field is required</mat-error>
                 </mat-form-field>
@@ -243,7 +243,7 @@
               </div>
               <!--check-box-->
               <div class="check-box">
-                <mat-checkbox class="example-margin" formControlName="isPhysicalProduct" [(ngModel)]="checked">This a
+                <mat-checkbox class="example-margin" formControlName="isPhysicalProduct" [(ngModel)]="checkedPhysical">This a
                   physical product</mat-checkbox>
               </div>
             </div>
@@ -252,7 +252,7 @@
               <div style="display: flex">
                 <div class="shipping-block">
                   <div>
-                    <h3>Weight</h3>
+                    <h3>Weight (Kg)</h3>
                     <mat-form-field appearance="outline" class="form-field">
                       <input matInput type="number" formControlName="weight" placeholder="0.0" digitOnly decimal="true"
                         decimalSeparator="." pattern="[0-9]+([.][0-9]+)?">
@@ -614,16 +614,6 @@
                 <div *ngFor="let f of variantArray?.controls;let i=index">
                   <h3 style="margin-bottom: 10px;">Option-{{i + 1}}</h3>
                   <div class="option-input">
-                    <!-- <mat-form-field formArrayName="variants" appearance="outline" class="form-field">
-                      <mat-label>Variant Name</mat-label>
-                      <input type="text" [formControlName]="i" [formControl]="myControl" matInput placeholder="For ex. size" [matAutocomplete]="auto">
-                      <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                          {{option}}
-                        </mat-option>
-                      </mat-autocomplete>
-                      <mat-error *ngIf="">This field is required</mat-error>
-                    </mat-form-field> -->
                     <mat-form-field formArrayName="variants" class="example-full-width" appearance="fill">
                       <mat-label>Variant Name</mat-label>
                       <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControlName]="i"
@@ -677,141 +667,83 @@
           </div>
         </div>
         <!---varriant-area-end-->
-
-
-        <!---varriant-table-area--->
-        <div style="display: block;" class="varriant-table-area" *ngIf="hasVariant === true">
-          <!---varriant-table-top-->
-          <div class="varriant-table-top">
-            <!--add-varriant-->
-            <div class="add-varriant">
-              <!---title-->
-              <div class="title">
-                <h2>Variants</h2>
+        <!-- New Table For Variant -->
+        <nz-table [nzData]="variantDataFormArray" *ngIf="hasVariant === true">
+        <thead>
+          <tr>
+            <th [nzChecked]="false" [nzIndeterminate]="true" (nzCheckedChange)="onAllChecked($event)"></th>
+            <th>Image</th>
+            <th>Variants</th>
+            <th>Sku</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Vendor</th>
+            <th>Low Stock</th>
+            <th>Pre Order</th>
+            <th>Display</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="variantFormArray">
+          <!-- <td
+              [nzChecked]="setOfCheckedId.has(data.id)"
+              [nzDisabled]="data.disabled"
+              (nzCheckedChange)="onItemChecked(data.id, $event)"
+            ></td> -->
+          <tr *ngFor="let data of variantDataFormArray.controls; let variant of variantDataArray;
+      let i=index" [formGroupName]="i">
+            <td>
+              <h3>
+                <mat-checkbox [checked]="checkSelectionVariantImg(i)"
+                  (change)="onCheckVariantImage($event, i)"></mat-checkbox>
+              </h3>
+            </td>
+            <td>
+              <div >
+                <button *ngIf="dataForm.value.variantFormArray[i].image" (click)="removeVariationImage(i)"
+                  mat-icon-button color="warn" type="button">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <img (click)="openVariationGalleryDialog(i)"
+                  [src]="dataForm.value.variantFormArray[i].image ? dataForm.value.variantFormArray[i].image : '/assets/images/flag/bangladesh-flag.png'"
+                  alt="">
               </div>
-            </div>
-          </div>
-          <!---varriant-table-top-end-->
+            </td>
+            <td display="flex"><span *ngFor="let name of variantObject; let n=index">{{variant[name]}}<span style="color: blue;" *ngIf="n !== variantObject.length-1">/</span></span></td>
+            <td >
+              <p type="text" matInput placeholder="sku" readonly>
+                {{dataForm.value.variantFormArray[i].variantSku}}</p>
+            </td>
+            <td >
+              <input type="number" nz-input  formControlName="variantPrice" placeholder="Price">
+            </td>
+            <td>
+              <input type="number" nz-input formControlName="variantQuantity" placeholder="qty">
+            </td>
+            <td>
+                <mat-select appearance="outline" class="form-field" [disableOptionCentering]="true" #selectVendor placeholder="Select Vendor"
+                  formControlName="variantVendorName">
+                  <mat-select-filter [placeholder]="'Filter Vendor List'" *ngIf="selectVendor.focused"
+                    [array]="vendors" [displayMember]="'name'" (filteredReturn)="filteredVendorList = $event">
+                  </mat-select-filter>
+                  <mat-option *ngFor="let item of filteredVendorList" [value]="item._id">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+            </td>
+            <td>
+              <input type="number" nz-input formControlName="variantReOrder" placeholder="re order">
+            </td>
+            <td>
+              <mat-checkbox formControlName="variantContinueSelling" class="example-margin"></mat-checkbox>
+            </td>
+            <td>
+              <mat-checkbox formControlName="variantDisplay" class="example-margin"></mat-checkbox>
+            </td>
+          </tr>
+        </tbody>
 
-          <div>
-            <!----category-main-area-->
-            <div class="category-main-area">
-              <!---category-table-area-->
-              <div class="category-table-area">
-                <div class="category-table">
-                  <!--category-table-header-->
-                  <div class="category-table-head">
-                    <!---category-table-row-->
-                    <div class="category-table-row">
-                      <!-- <div class="category-table-heading check">
-                        <mat-checkbox class="mat-check"></mat-checkbox>
-                      </div> -->
-                      <div style="padding-right: 20px;">
-                        <h3>&nbsp;</h3>
-                      </div>
-                      <div class="category-table-heading serial">
-                        <h3>Image</h3>
-                      </div>
-                      <div class="category-table-heading category-type">
-                        <h3>Variants</h3>
-                      </div>
-                      <!-- <div class="category-table-heading category-type" *ngFor="let data of variantObject; let i=index">
-                        <h3>{{data}}</h3>
-                      </div> -->
-                      <div class="category-table-heading quality">
-                        <h3>Sku</h3>
-                      </div>
-                      <div class="category-table-heading quality">
-                        <h3>Price(TK)</h3>
-                      </div>
-                      <div class="category-table-heading quality">
-                        <h3>Quantity</h3>
-                      </div>
-                      <div class="category-table-heading quality">
-                        <h3>Low Stock</h3>
-                      </div>
-                      <div class="category-table-heading quality">
-                        <h3>Vendor</h3>
-                      </div>
-                      <div class="category-table-heading quality">
-                        <h3>Pre Order</h3>
-                      </div>
-                      <div class="category-table-heading quality">
-                        <h3>Display</h3>
-                      </div>
-
-
-                    </div>
-                  </div>
-                  <!--category-table-body-->
-                  <div formArrayName="variantFormArray" class="category-body">
-                    <!---category-table-row-->
-                    <div class="category-table-row" *ngFor="let data of variantDataFormArray.controls; let variant of variantDataArray;
-                let i=index" [formGroupName]="i">
-                      <div style="padding-right: 10px;">
-                        <h3>
-                          <mat-checkbox [checked]="checkSelectionVariantImg(i)"
-                            (change)="onCheckVariantImage($event, i)"></mat-checkbox>
-                        </h3>
-                      </div>
-                      <div class="category-table-data serial">
-                        <div class="variation-img">
-                          <button *ngIf="dataForm.value.variantFormArray[i].image" (click)="removeVariationImage(i)"
-                            mat-icon-button color="warn" type="button" class="btn-img-remove">
-                            <mat-icon>delete</mat-icon>
-                          </button>
-                          <img (click)="openVariationGalleryDialog(i)"
-                            [src]="dataForm.value.variantFormArray[i].image ? dataForm.value.variantFormArray[i].image : '/assets/images/flag/bangladesh-flag.png'"
-                            alt="">
-                        </div>
-                      </div>
-                      <div class="category-table-data quality" style="width:auto; margin-right:50px;">
-                        <h3 style="display: flex; width:auto" *ngFor="let name of variantObject; let n=index">
-                          <p style="display: flex; width:auto" *ngIf="n!==0">/</p>{{variant[name]}}
-                        </h3>
-                      </div>
-                      <div class="category-table-data quality">
-                        <!-- <input type="text" matInput formControlName="variantSku" placeholder="sku" readonly> -->
-                        <p type="text" matInput placeholder="sku" readonly>
-                          {{dataForm.value.variantFormArray[i].variantSku}}</p>
-                      </div>
-                      <div class="category-table-data quality" style="padding-top: 20px;">
-                        <mat-form-field appearance="outline" class="form-field" style="width: 80px;">
-                          <input type="number" formControlName="variantPrice" matInput placeholder="Price">
-                        </mat-form-field>
-                      </div>
-                      <div class="category-table-data quality" style="padding-top: 20px;">
-                        <mat-form-field appearance="outline" class="form-field" style="width: 80px;">
-                          <input type="number" matInput formControlName="variantQuantity" placeholder="qty">
-                        </mat-form-field>
-                      </div>
-                      <div class="category-table-data quality">
-                        <mat-select formControlName="variantVendorName" class="select-vendor" placeholder="Vendor">
-                          <mat-option value="careme">Care me</mat-option>
-                          <mat-option value="careme global">Care me Global</mat-option>
-                        </mat-select>
-                      </div>
-                      <div class="category-table-data quality" style="padding-top: 20px;">
-                        <mat-form-field appearance="outline" class="form-field" style="width: 80px;">
-                          <input type="number" matInput formControlName="variantReOrder" placeholder="re order">
-                        </mat-form-field>
-                      </div>
-                      <div class="category-table-data quality" style="padding-top: 20px;">
-                        <mat-checkbox formControlName="variantContinueSelling" class="example-margin"></mat-checkbox>
-                      </div>
-                      <div class="category-table-data quality" style="padding-top: 20px;">
-                        <mat-checkbox formControlName="variantDisplay" class="example-margin"></mat-checkbox>
-                      </div>
-                    </div>
-                    <!---category-table-row-end-->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <!---varriant-table-area-end--->
+      </nz-table>
+        <!-- New Table ends -->
 
         <!---search-engine-->
         <div class="search-engine" style="margin-top: 50px;">

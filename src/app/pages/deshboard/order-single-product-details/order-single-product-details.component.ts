@@ -1,9 +1,14 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { UserDataService } from 'src/app/services/user-data.service';
+import { FormBuilder } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NzTimelineMode } from 'ng-zorro-antd/timeline';
 import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/interfaces/order';
 import { Subscription } from 'rxjs';
+import { ReviewService } from 'src/app/services/review.service';
 
 
 interface ChildrenItemData {
@@ -33,32 +38,57 @@ export class OrderSingleProductDetailsComponent implements OnInit {
   subRouteOne: Subscription;
   id: string;
   order: Order;
-  index: string;
+  index: number;
   data: any;
   mode : NzTimelineMode = 'left';
+  isVisibleTop: boolean = false;
+  reviewMessage : string;
+  reviewForm : FormGroup;
+  userId : any;
+  productId : any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
+    private userDataService: UserDataService,
+    private reviewService: ReviewService,
+    private message: NzMessageService,
+    private fb: FormBuilder
   ) { }
 
 
   ngOnInit(): void {
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
       this.id = param.get('id');
-      this.index = param.get('index');
-      console.log(this.id);
-      console.log(this.index);
-      if (this.id) {
+      this.index = Number(param.get('index'));
+      if (this.index >=0 ) {
         this.getOrderById(this.id, this.index);
       }
     });
+
+    this.initReviewForm();
+    this.getUserInfo();
+
+  }
+
+  getUserInfo(){
+    this.userDataService.getLoggedInUserInfo()
+    .subscribe(res =>{
+      this.userId = res.data._id;
+    }, err => {
+      this.message.create('error', err);
+    })
+  }
+
+  initReviewForm(){
+    this.reviewForm = this.fb.group({
+      reviewMessage : [null, Validators.required]
+    })
   }
 
   getOrderById(id, index){
     this.orderService.getOrderDetails(id)
     .subscribe( res => {
       this.order = res.data;
-      console.log(this.order);
       this.listOfChildrenData.push(this.order.orderedItems[index]);
       console.log(this.listOfChildrenData);
     }, err => {
@@ -85,6 +115,38 @@ export class OrderSingleProductDetailsComponent implements OnInit {
       allMedias = images;
     }
     return allMedias;
+  }
+
+  handleOk() {
+    if(this.reviewForm.invalid){
+      this.message.create('warning', "Provide your review before submitting");
+      return
+    }
+
+    let data = {
+      userId: this.userId,
+      productId: this.productId,
+      message : this.reviewForm.value.reviewMessage
+    }
+    this.reviewService.add(data)
+    .subscribe(res => {
+      this.message.create('success', res.message);
+    }, err=>{
+      this.message.create('error', err);
+    })
+    this.productId = null;
+    this.isVisibleTop = false;
+  }
+
+  handleCancel(): void {
+    this.productId = null;
+    this.isVisibleTop = false;
+
+  }
+
+  openReview(id){
+    this.productId = id;
+    this.isVisibleTop = true;
   }
 
 }

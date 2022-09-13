@@ -86,7 +86,7 @@
           <div class="price  main-table-heading">Purchase Order</div>
           <div class="stock-hand  main-table-heading">Status</div>
           <div class="status  main-table-heading">Reference</div>
-          <div class="category  main-table-heading">Vendor Name</div>
+          <div class="category  main-table-heading">Supplier Name</div>
           <div class="earn-point  main-table-heading">Recieved</div>
         </div>
       </div>
@@ -118,7 +118,7 @@
               <span>{{data?.reference}}</span>
             </div>
             <div class="category main-table-data">
-              <span>{{data?.supplier}}</span>
+              <span>{{data?.supplier?.name}}</span>
             </div>
             <div class="redeem-points main-table-data">
               <span>{{data?.recieved ? "yes":"no"}}</span>

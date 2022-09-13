@@ -1,3 +1,6 @@
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { MaterialModule } from 'src/app/material/material.module';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,6 +14,8 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzImageModule } from 'ng-zorro-antd/image';
 
 
 @NgModule({
@@ -25,8 +30,13 @@ import { PipesModule } from 'src/app/shared/pipes/pipes.module';
     NzGridModule,
     NzDividerModule,
     NzStepsModule,
+    NzModalModule,
+    NzInputModule,
+    NzButtonModule,
     NzTimelineModule,
+    NzImageModule,
     PipesModule,
+    MaterialModule,
     OrderSingleProductDetailsRoutingModule
   ]
 })

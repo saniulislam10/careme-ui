@@ -44,11 +44,12 @@ export class RecievedComponent implements OnInit {
       this.uiService.warn("Cannot recieve more than purchase quantity");
       return
     }
-
+    console.log("Product Info : ", this.data)
     let finalData = {
       _id: this.data.id,
+      productId: this.data.productId,
       index: this.data.index,
-      recieved: totalRecieved,
+      recieved: this.dataForm.value.recieved,
       message: this.dataForm.value.message,
     }
     console.log(finalData);

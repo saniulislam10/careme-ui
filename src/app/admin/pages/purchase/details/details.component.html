@@ -108,7 +108,7 @@
               <h3>Product Information</h3>
             </div>
             <div class="details">
-                <div class="items">Vendor : <span>{{purchase?.supplier}}</span></div>
+                <div class="items">Vendor : <span>{{purchase?.supplier?.name}}</span></div>
                 <div class="items">Manufacturer : <span>{{purchase?.manufacturer}}</span></div>
                 <div class="items">Supplier Link : <span>{{purchase?.supplier_link}}</span></div>
             </div>
@@ -151,7 +151,7 @@
                       </div>
                       <div class="product-info">
                         <h3>{{ item?.productData?.name }}</h3>
-                        <p>SKU: {{ item?.productData?.sku }}</p>
+                        <p>SKU: {{ item?.sku }}</p>
                       </div>
                     </div>
                   </td>
@@ -169,11 +169,11 @@
                     <span>{{ getAmount(item) }}</span>
                   </td>
                   <td class="price ">
-                    <span>{{item.recieved ? item.recieved : 0}}<a (click)="openRecieved(item?.recieved, i, item?.purchaseQuantity)">+</a></span>
+                    <span>{{item.recieved ? item.recieved : 0}}<a (click)="openRecieved(item.productData._id, item?.recieved, i, item?.purchaseQuantity)">+</a></span>
 
                   </td>
-                  <td class="tax">
-                    <span>0 TK</span>
+                  <td class="quantity">
+                    <span>{{getRecievedAmount(item)}} TK</span>
                   </td>
 
                 </tr>

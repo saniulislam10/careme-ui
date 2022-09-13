@@ -164,13 +164,13 @@
                 <span>{{variant?.variantSku}}</span>
               </div>
               <div class="stock-hand main-table-data">
-                <span>{{variant?.variantQuantity}}</span>
+                <span>{{variant?.variantQuantity + variant?.variantCommittedQuantity}}</span>
               </div>
               <div class="main-table-data">
-                <span>0</span>
+                <span>{{variant?.variantCommittedQuantity}}</span>
               </div>
               <div class="category main-table-data">
-                <span>0</span>
+                <span>{{variant?.variantQuantity}}</span>
               </div>
               <div class="earn-point main-table-data">
                 <span>0</span>

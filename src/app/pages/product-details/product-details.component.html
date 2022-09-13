@@ -15,8 +15,9 @@
         <!--product-big-img-->
         <div class="product-big-img">
           <img
+            nz-image
             *ngIf="image"
-            [src]="image ? image : '/assets/images/placeholder/test.png'"
+            [nzSrc]="image ? image : '/assets/images/placeholder/test.png'"
             [alt]="product?.name"
           />
         </div>
@@ -130,7 +131,7 @@
                   <h3>Brand:</h3>
                 </div>
                 <div>
-                  <a>{{ product?.brand }}</a>
+                  <a>{{ product?.brand.name }}</a>
                 </div>
               </li>
               <li>
@@ -246,7 +247,7 @@
             <!--right-->
             <div class="product-quantity-size-info-right">
               <ul class="size">
-                <li [class]="getDisplay(i,x) ? '' : 'none'" *ngFor="let option of variantOptions[i]; let x = index">
+                <li style="margin-bottom: 10px;" [class]="getDisplay(i,x) ? '' : 'none'" *ngFor="let option of variantOptions[i]; let x = index">
                   <button
                     type="button"
                     [class]="defaultVariantSelected ? (getButtonStatus(i,x) ? 'active' : 'inactive') : ''"
@@ -449,10 +450,10 @@
                 Vendor:
                 <span *ngIf="product?.hasVariant">{{
                   selectedVariantData
-                    ? selectedVariantData?.variantVendorName
-                    : product?.vendor
+                    ? selectedVariantData?.variantVendorName.name
+                    : product?.vendor.name
                 }}</span>
-                <span *ngIf="!product?.hasVariant">{{ product?.vendor }}</span>
+                <span *ngIf="!product?.hasVariant">{{ product?.vendor.name }}</span>
               </h3>
             </div>
           </div>

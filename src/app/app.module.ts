@@ -22,6 +22,16 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
 import {environment} from "../environments/environment";
 import { NzMessageModule } from 'ng-zorro-antd/message';
 
+
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+registerLocaleData(en);
+
+/** config ng-zorro-antd i18n **/
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -47,6 +57,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
     Meta,
     CookieService,
     AdminService,
+    { provide: NZ_I18N, useValue: en_US },
     {provide: OverlayContainer, useClass: CustomOverlayContainer},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorHandleInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: AuthUserInterceptor, multi: true},

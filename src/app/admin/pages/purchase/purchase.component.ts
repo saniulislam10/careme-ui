@@ -63,7 +63,8 @@ export class PurchaseComponent implements OnInit {
     private router: Router,
     private utilsService: UtilsService,
     private dialog: MatDialog,
-    private uiService: UiService,) { }
+    private uiService: UiService
+  ) { }
 
   ngOnInit(): void {
 

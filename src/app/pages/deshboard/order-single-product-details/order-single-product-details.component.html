@@ -69,7 +69,7 @@
 </div>
 
 
-<nz-table style="margin: 30px 0px" #table [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
+<nz-table *ngIf="listOfChildrenData.length > 0" style="margin: 30px 0px" [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
   <thead>
     <tr>
       <th>
@@ -89,9 +89,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of table?.data">
+    <tr *ngFor="let data of listOfChildrenData">
       <td>
-        <img style="width: 100px" [src]="data ? setThumbnailImage(data.product) : '/assets/images/placeholder/test.png'" alt="">
+        <img nz-image style="width: 100px" [nzSrc]="data ? setThumbnailImage(data.product) : '/assets/images/placeholder/test.png'" alt="">
       </td>
       <td>
         <a>{{data.product.name}}</a>
@@ -103,11 +103,22 @@
       <td><a class="status">{{ data.status | productOrderStatus }}</a></td>
       <td class="instock">Estimated Delivery by <br><span>{{ data.deliveryDate | date : 'short'}}</span></td>
       <td>
-        <button class="order-status">Write a Review</button>
+        <button class="order-status" (click)="openReview(data.product._id)">Write a Review</button>
       </td>
+
     </tr>
   </tbody>
 </nz-table>
+
+
+        <nz-modal [(nzVisible)]="isVisibleTop" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()" nzTitle="Write a Review" nzMaskClosable>
+          <ng-container  *nzModalContent>
+            <form [formGroup]="reviewForm" (ngSubmit)="handleOk()">
+              <textarea nz-input type="text" placeholder="give your opinion about the product" formControlName="reviewMessage" nzAutosize></textarea>
+            </form>
+          </ng-container>
+
+        </nz-modal>
 
 
 <div style="margin: 40px 0px;">

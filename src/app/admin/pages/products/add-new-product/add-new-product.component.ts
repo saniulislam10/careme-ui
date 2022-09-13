@@ -38,9 +38,6 @@ import { Vendor } from 'src/app/interfaces/vendor';
 import { VendorService } from 'src/app/services/vendor.service';
 import { CountryService } from 'src/app/services/country.service';
 import { Country } from 'src/app/interfaces/country';
-import { NzUploadFile } from 'ng-zorro-antd/upload';
-
-
 //for quill
 import Quill from 'quill';
 import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter';
@@ -53,12 +50,29 @@ import { ImageCropperComponent } from 'src/app/shared/components/image-cropper/i
 import { FileData } from 'src/app/interfaces/file-data';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
+export interface Data {
+  id: number;
+  name: string;
+  age: number;
+  address: string;
+  disabled: boolean;
+}
+
 @Component({
   selector: 'app-add-new-product',
   templateUrl: './add-new-product.component.html',
   styleUrls: ['./add-new-product.component.scss'],
 })
 export class AddNewProductComponent implements OnInit {
+
+  // nz -table variant
+  checked = false;
+  loading = false;
+  indeterminate = false;
+  listOfData: readonly Data[] = [];
+  listOfCurrentPageData: readonly Data[] = [];
+  setOfCheckedId = new Set<number>();
+
 
   // Form Template Ref
   @ViewChild('templateForm') templateForm: NgForm;
@@ -83,7 +97,7 @@ export class AddNewProductComponent implements OnInit {
   editorData: any;
   description: any;
   hasLink = false;
-  checked = true;
+  checkedPhysical = true;
   autoSlug = true;
   hasTax = false;
   canPartialPayment = false;
@@ -190,6 +204,8 @@ export class AddNewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinner.show();
+
     // INIT FORM
     this.initModule();
     this.initFormGroup();
@@ -219,6 +235,8 @@ export class AddNewProductComponent implements OnInit {
     this.reloadService.refreshProduct$.subscribe(() => {
       this.getSingleProductById();
     });
+
+
   }
 
   /**
@@ -525,6 +543,8 @@ export class AddNewProductComponent implements OnInit {
         const f = this.fb.group({
           variantVendorName: this.product.variantFormArray[i].vendor,
           variantQuantity: this.product.variantFormArray[i].quantity,
+          variantCostPrice: this.product.variantFormArray[i].variantCostPrice ? this.product.variantFormArray[i].variantCostPrice : 0,
+          variantCommittedQuantity: this.product.variantFormArray[i].variantCommittedQuantity ? this.product.variantFormArray[i].variantCommittedQuantity : 0,
           variantReOrder: this.product.variantFormArray[i].reOrder,
           variantContinueSelling: this.product.variantFormArray[i].continueSelling,
           variantDisplay: this.product.variantFormArray[i].variantDisplay,
@@ -549,7 +569,7 @@ export class AddNewProductComponent implements OnInit {
       const f = this.fb.group({
         variantVendorName: this.dataForm.value.vendor,
         variantQuantity: [0, Validators.required],
-        variantReOrder: [0],
+        variantReOrder: this.dataForm.value.reOrder,
         variantContinueSelling: [true],
         variantDisplay: [true],
         variantPrice: this.dataForm.value.sellingPrice,
@@ -662,8 +682,8 @@ export class AddNewProductComponent implements OnInit {
   // Submit Variant Form by Done Button
 
   submitVariant() {
-    if (this.dataForm.value.sku === null || this.dataForm.value.vendor === null ) {
-      this.uiService.warn('Please complete the sku and vendor first');
+    if (this.dataForm.value.sku === null ) {
+      this.uiService.warn('Please input the product sku first');
       return
     } else if (this.id){
       let length = this.dataForm.value.variantFormArray.length;
@@ -939,7 +959,9 @@ export class AddNewProductComponent implements OnInit {
 
   onCheckVariantImage(event: MatCheckboxChange, i:number) {
     if (event.checked) {
-     this.checkedVariantImgIndex.push(i)
+     this.checkedVariantImgIndex.push(i);
+     console.log(this.checkedVariantImgIndex);
+
     } else {
       const fIndex = this.checkedVariantImgIndex.findIndex(h => h === i);
       this.checkedVariantImgIndex.splice(fIndex, 1)

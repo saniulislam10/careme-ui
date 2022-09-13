@@ -12,6 +12,7 @@ import { PurchaseService } from 'src/app/services/purchase.service';
 import { UiService } from 'src/app/services/ui.service';
 import { ReloadService } from 'src/app/services/reload.service';
 import { ActivatedRoute } from '@angular/router';
+import { SupplierService } from 'src/app/services/supplier.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class CreateNewPurchaseComponent implements OnInit {
   query = null;
   searchProducts: Product[] = [];
   clickActive: any[] = [[]];
+  today = new Date();
 
   private subRouteOne?: Subscription;
   // purchasedProducts: any[] = [];
@@ -45,6 +47,8 @@ export class CreateNewPurchaseComponent implements OnInit {
   canceledOrderSku: string;
   canceledOrderAmount: number;
   selectedIds: any[] = [];
+  suppliers: import("c:/Users/HP/Desktop/Projects/Careme/Care-Me-UI-main/careme-ui/src/app/interfaces/supplier").Supplier[];
+  filteredSupplierList: import("c:/Users/HP/Desktop/Projects/Careme/Care-Me-UI-main/careme-ui/src/app/interfaces/supplier").Supplier[];
 
   constructor(
     private fb: FormBuilder,
@@ -53,10 +57,12 @@ export class CreateNewPurchaseComponent implements OnInit {
     private uiService: UiService,
     private reloadService: ReloadService,
     private activatedRoute: ActivatedRoute,
+    private supplierService: SupplierService
   ) { }
 
   ngOnInit(): void {
     this.initFormValue();
+    this.getSuppliers();
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
       this.id = param.get('id');
       if (this.id) {
@@ -67,7 +73,7 @@ export class CreateNewPurchaseComponent implements OnInit {
   initFormValue() {
     this.dataForm = this.fb.group({
       reference: [null],
-      dateTime: [null],
+      dateTime: [this.today],
       supplier: [null, Validators.required],
       supplier_link: [null],
       manufacturer: [null],
@@ -84,7 +90,7 @@ export class CreateNewPurchaseComponent implements OnInit {
         this.dataForm.patchValue(res.data);
         let products = res.data.products;
         for(let i=0; i < products.length; i++){
-          this.onSelectItem(products[i].productData, products[i]);
+          this.onSelectItem(products[i].productData,null, products[i]);
         }
 
       },
@@ -98,29 +104,46 @@ export class CreateNewPurchaseComponent implements OnInit {
     return this.dataForm.get("products") as FormArray
   }
 
-  newProduct(data, purchaseData?:any): FormGroup {
+  newProduct(data, index?:number, purchaseData?:any): FormGroup {
     if(purchaseData){
       return this.fb.group({
         productData: data,
+        sku: purchaseData.sku,
         purchaseQuantity: [purchaseData.purchaseQuantity, Validators.required],
         purchasePrice: [purchaseData.purchasePrice, Validators.required],
         purchaseTax: [purchaseData.purchaseTax, Validators.required],
+        recieved: [purchaseData.recieved],
         amount: [purchaseData.amount],
       })
-    }else{
+    }else if (index >= 0){
       return this.fb.group({
         productData: data,
+        sku: data.variantFormArray[index].variantSku,
         purchaseQuantity: [1, Validators.required],
         purchasePrice: [data.costPrice, Validators.required],
         purchaseTax: [0, Validators.required],
+        recieved: [0],
+        amount: [0],
+      })
+    }
+    else{
+      return this.fb.group({
+        productData: data,
+        sku: data.sku,
+        purchaseQuantity: [1, Validators.required],
+        purchasePrice: [data.costPrice, Validators.required],
+        purchaseTax: [0, Validators.required],
+        recieved: [0],
         amount: [0],
       })
     }
   }
 
-  addProduct(data, purchaseData?:any) {
+  addProduct(data, index?:number, purchaseData?:any) {
     if(purchaseData){
-      this.products.push(this.newProduct(data, purchaseData));
+      this.products.push(this.newProduct(data, null, purchaseData));
+    }else if(index >= 0){
+      this.products.push(this.newProduct(data, index));
     }else{
       this.products.push(this.newProduct(data));
     }
@@ -195,8 +218,10 @@ export class CreateNewPurchaseComponent implements OnInit {
   close(){
     // console.log("close");
   }
-  delete(){
+  delete(i){
     // console.log("delete");
+    this.products.removeAt(i);
+
   }
 
   calculateAmount(i){
@@ -252,6 +277,7 @@ export class CreateNewPurchaseComponent implements OnInit {
         distinctUntilChanged(),
         switchMap((data) => {
           this.query = data.trim();
+
           if (this.query === '' || this.query === null) {
             this.overlay = false;
             this.searchProducts = [];
@@ -275,7 +301,6 @@ export class CreateNewPurchaseComponent implements OnInit {
         (res) => {
           this.isLoading = false;
           this.searchProducts = res.data;
-          console.log(this.searchProducts);
           if (this.searchProducts.length > 0) {
             this.isOpen = true;
             this.overlay = true;
@@ -287,10 +312,13 @@ export class CreateNewPurchaseComponent implements OnInit {
       );
   }
 
-  onSelectItem(data: Product, purchaseData?:any): void {
+  onSelectItem(data: Product, index?:number, purchaseData?:any): void {
     this.clickActive.push([]);
+    console.log("Index : ",index)
     if(purchaseData){
-      this.addProduct(data, purchaseData);
+      this.addProduct(data, null, purchaseData);
+    }else if(index >= 0){
+      this.addProduct(data, index);
     }else{
       this.addProduct(data);
     }
@@ -345,6 +373,16 @@ export class CreateNewPurchaseComponent implements OnInit {
     let adjustment = this.dataForm.value.adjustmentPrice;
     let total = subTotal +shipping+ adjustment;
     return total;
+  }
+
+  // get vendors
+  getSuppliers() {
+    this.supplierService.getAll().subscribe((res) => {
+      this.suppliers = res.data;
+      this.filteredSupplierList = this.suppliers.slice();
+    }, error => {
+      console.log(error);
+    });
   }
 
 }

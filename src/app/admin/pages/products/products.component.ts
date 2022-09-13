@@ -16,6 +16,7 @@ import { ProductStatus } from 'src/app/enum/product-status';
 import { Pagination } from 'src/app/interfaces/pagination';
 import { Product } from 'src/app/interfaces/product';
 import { Select } from 'src/app/interfaces/select';
+import { AdminDataService } from 'src/app/services/admin-data.service';
 import { ProductService } from 'src/app/services/product.service';
 import { ReloadService } from 'src/app/services/reload.service';
 import { UiService } from 'src/app/services/ui.service';
@@ -85,6 +86,7 @@ export class ProductsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private reloadService: ReloadService,
+    private vendorService: AdminDataService,
     private productService: ProductService,
     private router: Router,
     private utilsService: UtilsService,

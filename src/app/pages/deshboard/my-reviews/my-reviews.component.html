@@ -1,9 +1,12 @@
+<div style="border: 2px solid red; color: blue">
+  <nz-rate [ngModel]="0"></nz-rate>
+</div>
+
 <nz-tabset [nzTabBarExtraContent]="extraTemplate">
   <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab" (nzClick)="onTabSelect(tab)">
-    <nz-table #nestedTable [nzData]="listOfParentData" [nzPageSize]="10">
+    <nz-table #table [nzData]="listOfParentData" [nzPageSize]="10">
       <thead >
         <tr>
-          <th></th>
           <th>Rating</th>
           <th>Reviews</th>
           <th>Date & Time</th>
@@ -14,11 +17,9 @@
         </tr>
       </thead>
       <tbody>
-        <ng-template ngFor let-data [ngForOf]="nestedTable.data">
-          <tr>
-            <td [(nzExpand)]="data.expand"></td>
-            <td ><a class="order-id" matTooltip="Click to view order details" [routerLink]="['../../order-details']">SO - {{ data.orderId }}</a> </td>
-            <td>{{ data.date | date : 'short' }}</td>
+          <tr *ngFor="let data of table.data">
+            <td></td>
+            <td>{{data.message}}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -27,28 +28,6 @@
               <a class="pay-order">Pay now</a>
             </td>
           </tr>
-          <tr [nzExpand]="data.expand">
-            <nz-table #innerTable [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
-
-              <tbody>
-                <tr *ngFor="let data of innerTable.data">
-                  <td>
-                    <img style="width: 100px" src="/assets/images/placeholder/test.png" alt="">
-                  </td>
-                  <td>{{data.name}}<br>{{data.sku}}</td>
-                  <td>Qty : {{ data.qty }}</td>
-                  <td>Total : {{ data.total }}</td>
-                  <td>Advance : {{ data.advance }}TK</td>
-                  <td><a class="status">{{ data.paymentStatus }}</a></td>
-                  <td class="instock">Estimated Delivery by <br><span>{{ data.deliveryDate | date : 'short'}}</span></td>
-                  <td>
-                    <a class="order-status">{{ data.orderStatus }}</a>
-                  </td>
-                </tr>
-              </tbody>
-            </nz-table>
-          </tr>
-        </ng-template>
       </tbody>
     </nz-table>
 

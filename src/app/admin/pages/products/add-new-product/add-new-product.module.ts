@@ -1,3 +1,4 @@
+import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -55,7 +56,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     MatChipsModule,
     NzUploadModule,
     NzMessageModule,
-    NzModalModule
+    NzModalModule,
+    NzTableModule
   ]
 })
 export class AddNewProductModule {

@@ -1,3 +1,5 @@
+import { Review } from './../../../interfaces/review';
+import { ReviewService } from './../../../services/review.service';
 import { Component, OnInit } from '@angular/core';
 
 interface ParentItemData {
@@ -29,35 +31,21 @@ interface ChildrenItemData {
 export class MyReviewsComponent implements OnInit {
 
   tabs = ['All', 'To Reviews'];
-  listOfParentData: ParentItemData[] = [];
-  listOfChildrenData: ChildrenItemData[] = [];
+  listOfParentData: Review[] = [];
+  value = 3;
 
-  constructor() { }
+  constructor(
+    private reviewService: ReviewService
+  ) { }
 
   ngOnInit(): void {
-    for (let i = 0; i < 3; ++i) {
-      this.listOfParentData.push({
-        key: i,
-        orderId: '12314' + Number(i),
-        date: new Date(),
-        expand: i === 0 ? true : false
-      });
-      for (let j = 0; j < 3; ++j) {
-        this.listOfChildrenData.push({
-          name: "Nike Hypervenom viper ultra rare edition 20.3",
-          sku: "viper001",
-          variantName: "L/XL",
-          qty: 2,
-          total: 123,
-          advance: 15,
-          advanceType: 1,
-          advanceInTaka: 123,
-          paymentStatus: 'Payment Status',
-          orderStatus: 'Pending',
-          deliveryDate: new Date()
-        });
-      }
-    }
+    this.reviewService.getAll()
+    .subscribe( res => {
+      this.listOfParentData = res.data;
+    }, err => {
+      console.log(err);
+
+    })
   }
 
   onTabSelect(tab){

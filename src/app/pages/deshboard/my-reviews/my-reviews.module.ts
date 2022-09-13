@@ -1,3 +1,4 @@
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -7,6 +8,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzRateModule } from 'ng-zorro-antd/rate';
 
 
 @NgModule({
@@ -19,6 +21,8 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
     NzTableModule,
     NzDropDownModule,
     MatTooltipModule,
+    NzIconModule,
+    NzRateModule,
     MyReviewsRoutingModule
   ]
 })
