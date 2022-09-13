@@ -23,12 +23,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { SharedModule } from '../shared/shared.module';
 
 const materials = [
   MatButtonModule,
@@ -61,7 +60,9 @@ const materials = [
   MatSidenavModule,
   MatSlideToggleModule,
   MatSliderModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  FormsModule,
+  ReactiveFormsModule
   // SharedModule
 ];
 

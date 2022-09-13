@@ -1,7 +1,3 @@
-<div style="border: 2px solid red; color: blue">
-  <nz-rate [ngModel]="0"></nz-rate>
-</div>
-
 <nz-tabset [nzTabBarExtraContent]="extraTemplate">
   <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab" (nzClick)="onTabSelect(tab)">
     <nz-table #table [nzData]="listOfParentData" [nzPageSize]="10">
@@ -12,21 +8,15 @@
           <th>Date & Time</th>
           <th>SKU</th>
           <th>Order No</th>
-          <th>Date</th>
-          <th>Action</th>
         </tr>
       </thead>
       <tbody>
           <tr *ngFor="let data of table.data">
-            <td></td>
+            <td>{{data.rating}}</td>
             <td>{{data.message}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-              <a class="pay-order">Pay now</a>
-            </td>
+            <td>{{data.date | date : 'short'}}</td>
+            <td>{{data.sku}}</td>
+            <td>{{data.orderNo}}</td>
           </tr>
       </tbody>
     </nz-table>

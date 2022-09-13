@@ -4,39 +4,40 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  color: #fff;
+  color: #CCCACA;
 }
 
 .list-item-active {
-  background: #fff;
-  color: #17203f;
+  background: #2C3453;
+  color: #edebeb;
   .menu-icon {
-    color: #17203f !important;
+    color: #CCCACA !important;
   }
 }
 
 .menu-expand-icon {
   position: absolute;
+  font-size: 14px;
   right: 10px;
   top: 13px;
 }
 
 .menu-item {
-  padding: 8px 0;
+  padding: 0;
   .mat-button {
-    padding: 6px 16px;
+    padding: 0px 10px;
     width: 100%;
     font-weight: 400;
     border-radius: 0;
-    font-size: 16px;
+    font-size: 14px;
     ::ng-deep {
       span {
         font-family: $font-en-primary;
       }
     }
     .menu-icon {
-      margin-right: 16px;
-      color: #fff;
+      margin-right: 10px;
+      color: #CCCACA;
     }
 
     &.expanded {

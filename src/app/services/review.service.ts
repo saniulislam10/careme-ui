@@ -30,6 +30,9 @@ export class ReviewService {
       return this.httpClient.get<{data: Review[], message?: string}>(API + 'get-all');
     }
   }
+  getAllByUser() {
+    return this.httpClient.get<{data: Review[], message?: string}>(API + 'get-all-by-user' );
+  }
 
   getSearchReviews(searchTerm?: string, pagination?: Pagination, filter?: any) {
     let params = new HttpParams();
@@ -52,5 +55,15 @@ export class ReviewService {
 
   deleteById(id: string) {
     return this.httpClient.delete<{message?: string}>(API + 'delete-by-id/' + id);
+  }
+
+  getSearchData(searchTerm?: string, pagination?: Pagination, filter?: any) {
+    let params = new HttpParams();
+    params = params.append('q', searchTerm);
+    if (pagination) {
+      params = params.append('pageSize', pagination.pageSize);
+      params = params.append('currentPage', pagination.currentPage);
+    }
+    return this.httpClient.post<{ data: Review[] }>(API + 'get-filtered-data',{ filter },{ params });
   }
 }

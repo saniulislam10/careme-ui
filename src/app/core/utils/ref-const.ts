@@ -1,1 +1,1 @@
-export const LOGO_PRIMARY = '/assets/brand/logo-white.png';
+export const LOGO_PRIMARY = '/assets/brand/logo-white.svg';

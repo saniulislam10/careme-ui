@@ -15,7 +15,7 @@
      font-family: $font-en-primary-2;
      font-weight: 600;
      font-style: normal;
-     font-size: 24px;
+     font-size: 16px;
      line-height: 30px;
      margin: 0px;
  }
@@ -47,7 +47,7 @@
      font-family: $font-en-primary-2;
      font-weight: 500;
      font-style: normal;
-     font-size: 16px;
+     font-size: 14px;
      display: block;
      background-color:transparent;
      border: 1px solid transparent;
@@ -86,7 +86,7 @@
     color: #404041;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -98,7 +98,7 @@
     border: 1px solid #eee;
     color: #404041;
     font-family: $font-en-primary-2;
-    font-size: 25px;
+    font-size: 16px;
     width: 50px;
     height: 30px;
     display: flex;
@@ -136,7 +136,7 @@
     align-items: center;
     justify-content: center;
     border-right: none;
-    font-size: 18px;
+    font-size: 14px;
 }
 .search-input{
     display: block;
@@ -149,7 +149,7 @@
     border:1px solid #b2b2b2;
     outline: none;
     font-family: $font-en-primary-2;
-    font-size: 15px;
+    font-size: 14px;
     border-left: none;
     color: #131523;
     font-weight: 400;
@@ -207,7 +207,7 @@
     color: #191818;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 10px;
 }
 .sidebar-info-left span{
@@ -216,7 +216,7 @@
     font-family: $font-en-primary-2;
     font-style: normal;
     font-weight: 400;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 18px;
     margin-left: 21px;
 }
@@ -262,7 +262,7 @@
     color: #404041;
     font-family: $font-en-primary-2;
     font-style: normal;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 400;
     line-height: 30px;
     display: flex;
@@ -359,7 +359,7 @@
     color: #131523;
     font-family: $font-en-primary;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 16px;
     display: block;
     line-height: 25px;
     margin-bottom: 3px!important;
@@ -368,7 +368,7 @@
     color: #5b5757;
     font-family: $font-en-primary;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     display: block;
 }
 .xmarks{
@@ -376,7 +376,7 @@
 }
 .xmarks span{
     color: #000000;
-    font-size: 22px;
+    font-size: 14px;
 }
 
 
@@ -451,7 +451,7 @@
 }
 .edit span{
     color: #b1b7c1;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: 500;
 }
 .status-invoice-btn{
@@ -529,7 +529,7 @@
     outline: none;
     font-family: $font-en-primary-2;
     font-weight: 400;
-    font-size: 13px;
+    font-size: 12px;
 }
 .order-table table{
     width: 100%;
@@ -545,7 +545,7 @@
     padding-top: 30px;
 }
 .order-table table th{
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     font-family: $font-en-primary-2;
     color: #131523;
@@ -575,7 +575,7 @@
     color: #0058ff;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 14px;
     text-decoration: underline;
 }
 .order-table table td span{
@@ -583,7 +583,7 @@
     color: #131523;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 20px;
 }
 .order-table table td button{
@@ -596,11 +596,11 @@
     font-weight: 500;
     outline: none;
     border:none;
-    font-size: 15px;
+    font-size: 14px;
 
 }
 .order-table table td i{
-    font-size: 17px;
+    font-size: 14px;
     color: #131523;
 }
 .order-table table tbody .order-status{
@@ -659,7 +659,7 @@
     font-family: $font-en-primary;
     font-weight: 600;
     font-style: normal;
-    font-size: 18px;
+    font-size: 14px;
     display: block;
     margin-bottom:5px!important;
     display: -webkit-box;
@@ -737,7 +737,7 @@
     color: #fff;
     padding: 7px 15px;
     box-sizing: border-box;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     font-family: "Open Sans", sans-serif;
     border-radius: 5px;
@@ -760,7 +760,7 @@
     font-family: $font-en-primary-2;
     font-style: normal;
     display: block;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 22px;
 }
@@ -774,7 +774,7 @@
     font-family: "Poppins", sans-serif;
     font-style: normal;
     display: block;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     line-height: 30px;
     margin-bottom: 10px!important;
@@ -789,7 +789,7 @@
     font-family: $font-en-primary-2;
     font-style: normal;
     display: block;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     line-height: 24px;
 }
@@ -833,7 +833,7 @@
     font-family: $font-en-primary-2;
     font-style: normal;
     display: block;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
     line-height: 24px;
 }
@@ -842,7 +842,7 @@
     font-family: $font-en-primary-2;
     font-style: normal;
     display: block;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 22px;
     text-align: left;
@@ -862,7 +862,7 @@
     font-family: $font-en-primary-2;
     font-style: normal;
     display: block;
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 25px;
     border-bottom: 1px solid #3b86ff;
@@ -904,7 +904,7 @@
     font-family: $font-en-primary-2;
     font-style: normal;
     display: block;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 24px;
 }
@@ -919,7 +919,7 @@
     font-family: $font-en-primary-2;
     font-style: normal;
     display: block;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 22px;
     text-align: left;
@@ -928,7 +928,7 @@
     color: #0058ff;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 14px;
 }
 .customer-comment{
     display: block;
@@ -939,7 +939,7 @@
     width: 100%;
     background-color: #fff;
     border: 1px solid #dae1f5;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     font-family: $font-en-primary;
     border-radius: 5px;
@@ -951,7 +951,7 @@
 .customer-comment button{
     background-color: #1581ed;
     padding: 7px 10px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     font-family: $font-en-primary;
     border-radius: 5px;
@@ -1001,7 +1001,7 @@
     background-color: #d7e7ff;
     color: #fff;
     border: 1px solid #c3daff;
-    font-size: 15px;
+    font-size: 14px;
     border-radius: 50%;
     width: 26px;
     height: 26px;
@@ -1027,7 +1027,7 @@
     color: #131523;
     font-family: $font-en-primary-2;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
     display: block;
     margin-bottom: 5px!important;
     line-height: 18px;
@@ -1037,7 +1037,7 @@
     color: #131523;
     font-family: $font-en-primary-2;
     font-weight: 600;
-    font-size: 11px;
+    font-size: 10px;
     display: block;
     line-height: 12px;
 }
@@ -1045,7 +1045,7 @@
     color: #131523;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 12px;
     display: block;
     margin-bottom: 5px!important;
     line-height: 18px;
@@ -1070,7 +1070,7 @@
     font-family: $font-en-primary-2;
     font-weight: 700;
     font-style: normal;
-    font-size: 25px;
+    font-size: 14px;
     display: block;
 }
 .timeline-main{
@@ -1140,7 +1140,7 @@
     color: #131523;
     font-family: $font-en-primary-2;
     font-weight: 700;
-    font-size: 17px;
+    font-size: 16px;
     display: block;
     margin-bottom: 5px !important;
     line-height: 18px;
@@ -1268,14 +1268,14 @@
     color: #574d4d;
     font-family: $font-en-primary-2;
     font-weight: 400;
-    font-size: 15px;
+    font-size: 14px;
     display: block;
   }
   .total-price h4{
     color: #574d4d;
     font-family: $font-en-primary-2;
     font-weight: 400;
-    font-size: 15px;
+    font-size: 14px;
     display: block;
   }
   .color-red{
@@ -1324,7 +1324,7 @@
 .form-field input,.form-field textarea{
     color: #74777e;
     font-family: $font-en-primary-2;
-    font-size: 16px;
+    font-size: 14px;
 }
 ::placeholder{
     color:#74777e;

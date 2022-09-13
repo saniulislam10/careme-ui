@@ -17,8 +17,8 @@
      (click)="onClick(menu.id)"
      [attr.href]="menu.href || ''" [attr.target]="menu.target || ''"
      [id]="'menu-item-admin-'+menu.id">
-    <mat-icon *ngIf="menu.icon" class="menu-icon">{{menu.icon}}</mat-icon>
-    <span class="menu-title">{{menu.title}}</span>
+    <!-- <mat-icon *ngIf="menu.icon" class="menu-icon">{{menu.icon}}</mat-icon> -->
+    <span style="padding-left: 14px" class="menu-title">{{menu.title}}</span>
   </a>
   <a *ngIf="menu.hasSubMenu"
      mat-button
@@ -27,7 +27,7 @@
      [id]="'menu-item-admin-'+menu.id">
     <mat-icon *ngIf="menu.icon" class="menu-icon">{{menu.icon}}</mat-icon>
     <span class="menu-title">{{menu.title}}</span>
-    <mat-icon class="menu-expand-icon transition-2">arrow_drop_down</mat-icon>
+    <i class="menu-expand-icon transition-2 fa fa-2xs fa-angle-down" aria-hidden="true"></i>
   </a>
 
   <div *ngIf="menu.hasSubMenu" class="sub-menu" [id]="'sub-menu-admin-'+menu.id">

@@ -103,7 +103,7 @@
       <td><a class="status">{{ data.status | productOrderStatus }}</a></td>
       <td class="instock">Estimated Delivery by <br><span>{{ data.deliveryDate | date : 'short'}}</span></td>
       <td>
-        <button class="order-status" (click)="openReview(data.product._id)">Write a Review</button>
+        <button class="order-status" (click)="openReview(data.sku, data.product._id, order?.orderId)">Write a Review</button>
       </td>
 
     </tr>

@@ -46,6 +46,8 @@ export class OrderSingleProductDetailsComponent implements OnInit {
   reviewForm : FormGroup;
   userId : any;
   productId : any;
+  orderNo: any;
+  sku: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
@@ -124,8 +126,12 @@ export class OrderSingleProductDetailsComponent implements OnInit {
     }
 
     let data = {
-      userId: this.userId,
-      productId: this.productId,
+      user: this.userId,
+      product: this.productId,
+      rating : 5,
+      sku : this.sku,
+      orderNo : this.orderNo,
+      date : new Date(),
       message : this.reviewForm.value.reviewMessage
     }
     this.reviewService.add(data)
@@ -135,17 +141,23 @@ export class OrderSingleProductDetailsComponent implements OnInit {
       this.message.create('error', err);
     })
     this.productId = null;
+    this.orderNo = null;
+    this.sku = null;
     this.isVisibleTop = false;
   }
 
   handleCancel(): void {
     this.productId = null;
+    this.orderNo = null;
+    this.sku = null;
     this.isVisibleTop = false;
 
   }
 
-  openReview(id){
+  openReview(sku, id, orderNo){
     this.productId = id;
+    this.orderNo = orderNo;
+    this.sku = sku;
     this.isVisibleTop = true;
   }
 

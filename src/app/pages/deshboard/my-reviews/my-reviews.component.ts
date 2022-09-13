@@ -1,27 +1,8 @@
+import { UserDataService } from './../../../services/user-data.service';
 import { Review } from './../../../interfaces/review';
 import { ReviewService } from './../../../services/review.service';
 import { Component, OnInit } from '@angular/core';
 
-interface ParentItemData {
-  key: number;
-  orderId: string;
-  date: Date;
-  expand?: boolean;
-}
-
-interface ChildrenItemData {
-  name: string;
-  sku: string;
-  variantName: string;
-  qty: number;
-  total: number;
-  advance: number;
-  advanceType: number;
-  advanceInTaka: number;
-  paymentStatus: string;
-  orderStatus: string;
-  deliveryDate: Date;
-}
 
 @Component({
   selector: 'app-my-reviews',
@@ -33,13 +14,18 @@ export class MyReviewsComponent implements OnInit {
   tabs = ['All', 'To Reviews'];
   listOfParentData: Review[] = [];
   value = 3;
+  id: string;
 
   constructor(
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private userDataService: UserDataService,
   ) { }
 
   ngOnInit(): void {
-    this.reviewService.getAll()
+    this.getUserReviews();
+  }
+  getUserReviews() {
+    this.reviewService.getAllByUser()
     .subscribe( res => {
       this.listOfParentData = res.data;
     }, err => {
