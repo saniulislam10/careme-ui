@@ -1,20 +1,5 @@
 <div class="ticket-create">
   <h2>Ticket</h2>
-  <div>
-    <button nz-button [nzType]="'primary'" (click)="ticketModal()">
-      <span>Create Ticket</span>
-    </button>
-    <nz-modal
-      [(nzVisible)]="isVisible"
-      nzTitle="Create Ticket"
-      (nzOnCancel)="ticketCancle()"
-      nzOkText="Send Now"
-    >
-      <ng-container *nzModalContent>
-        <p>Create Ticket Details</p>
-      </ng-container>
-    </nz-modal>
-  </div>
 </div>
 
 <nz-card class="ticket-main" nzSize="small">
@@ -35,15 +20,19 @@
           <tr *ngFor="let data of fixedTable.data">
             <td>
               <div>
-                <h4>#TICKETID02</h4>
+                <h4>{{ data.ticketid }}</h4>
                 <h5>25/10/2021 | 04:34PM</h5>
               </div>
             </td>
-            <td>SO-2616493</td>
-            <td>5072036</td>
-            <td>Late delivery</td>
-            <td>Product delivery issue message</td>
-            <td><span class="openbtn">Open</span></td>
+            <td>{{ data.orderid }}</td>
+            <td>{{ data.productsku }}</td>
+            <td>{{ data.issuetype }}</td>
+            <td>{{ data.message }}</td>
+            <td>
+              <span [class]="data.status == 1 ? 'openbtn' : 'closebtn'">{{
+                data.status == 1 ? "Open" : "Close"
+              }}</span>
+            </td>
           </tr>
         </tbody>
       </nz-table>

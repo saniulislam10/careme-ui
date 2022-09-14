@@ -3,9 +3,12 @@ import { CreateTicketsComponent } from './create-tickets/create-tickets.componen
 
 interface Person {
   key: string;
-  name: string;
-  age: number;
-  address: string;
+  ticketid: string;
+  orderid: string;
+  productsku: string;
+  issuetype: string;
+  message: string;
+  status: number;
 }
 
 @Component({
@@ -27,21 +30,30 @@ export class TicketsPageComponent implements OnInit {
   listOfData: Person[] = [
     {
       key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
+      ticketid: '#TICKETID02',
+      orderid: 'SO-2616493',
+      productsku: '5072036',
+      issuetype: 'Late delivery',
+      message: 'Product delivery issue message',
+      status: 1,
     },
     {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
+      key: '1',
+      ticketid: '#TICKETID02',
+      orderid: 'SO-2616493',
+      productsku: '5072036',
+      issuetype: 'Late delivery',
+      message: 'Product delivery issue message',
+      status: 0,
     },
     {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
+      key: '1',
+      ticketid: '#TICKETID02',
+      orderid: 'SO-2616493',
+      productsku: '5072036',
+      issuetype: 'Late delivery',
+      message: 'Product delivery issue message',
+      status: 0,
     },
   ];
 
