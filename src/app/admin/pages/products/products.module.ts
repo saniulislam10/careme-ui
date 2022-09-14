@@ -14,6 +14,7 @@ import { AddNewProductComponent } from './add-new-product/add-new-product.compon
 import { ExportPopupComponent } from './export-popup/export-popup.component';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     PipesModule,
     NzImageModule,
     NzTableModule,
+    NzSelectModule,
     NgxSpinnerModule
   ],
   providers: []
