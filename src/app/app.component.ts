@@ -54,19 +54,19 @@ export class AppComponent implements OnInit {
 
   private updateMetaData() {
     // Title
-    this.title.setTitle('Fortune Tech');
+    this.title.setTitle('Careme Global');
 
     // Meta
-    this.meta.addTag({name: 'author', content: 'Fortune Tech'});
-    this.meta.addTag({name: 'author', content: 'Fortune Tech'});
-    this.meta.addTag({name: 'copyright', content: 'Fortune Tech'});
+    this.meta.addTag({name: 'author', content: 'Careme Global'});
+    this.meta.addTag({name: 'author', content: 'Careme Global'});
+    this.meta.addTag({name: 'copyright', content: 'Careme Global'});
     this.meta.addTag({name: 'og:locale', content: 'en_US'});
     // Open Graph
-    this.meta.addTag({name: 'og:site_name', content: 'Fortune Tech'});
+    this.meta.addTag({name: 'og:site_name', content: 'Careme Global'});
     // Twitter
     this.meta.addTag({name: 'twitter:card', content: 'summary_large_image'});
-    this.meta.addTag({name: 'twitter:site', content: '@EsquireElectronics'});
-    this.meta.addTag({name: 'twitter:creator', content: '@EsquireElectronics/'});
+    this.meta.addTag({name: 'twitter:site', content: '@CaremeGlobal'});
+    this.meta.addTag({name: 'twitter:creator', content: '@CaremeGlobal/'});
   }
 
   /**

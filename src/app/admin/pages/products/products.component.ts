@@ -80,6 +80,11 @@ export class ProductsComponent implements OnInit {
   selectedIds: string[] = [];
   @ViewChild('matCheckbox') matCheckbox: MatCheckbox;
 
+  checked: boolean = false;
+  indeterminate: boolean = false;
+  setOfCheckedId = new Set<number>();
+  expandSet = new Set<number>();
+
 
 
   constructor(
@@ -236,6 +241,7 @@ export class ProductsComponent implements OnInit {
   }
 
   onAllSelectChange(event: MatCheckboxChange) {
+    this.checked = !this.checked;
     const currentPageIds = this.products.map((m) => m._id);
     if (event.checked) {
       this.selectedIds = this.utilsService.mergeArrayString(
@@ -262,7 +268,7 @@ export class ProductsComponent implements OnInit {
       }
     });
 
-    this.matCheckbox.checked = isAllSelect;
+    this.checked = isAllSelect;
   }
   /*
     onStatusChange
@@ -524,6 +530,15 @@ export class ProductsComponent implements OnInit {
    */
   variantDropDown(index) {
     this.showVariant[index] = !this.showVariant[index];
+  }
+
+  onExpandChange(id: number, checked: boolean): void {
+    console.log("For Variant :",id);
+    if (checked) {
+      this.expandSet.add(id);
+    } else {
+      this.expandSet.delete(id);
+    }
   }
 
   /**

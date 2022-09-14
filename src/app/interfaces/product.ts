@@ -51,4 +51,5 @@ export interface Product {
   maxQuantity?:number;
   advance?: number;
   productType?: ProductType[];
+  expand?: boolean;
 }

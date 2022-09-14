@@ -13,6 +13,7 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
 import { ExportPopupComponent } from './export-popup/export-popup.component';
 import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { NzImageModule } from 'ng-zorro-antd/image';
     FormsModule,
     PipesModule,
     NzImageModule,
+    NzTableModule,
     NgxSpinnerModule
   ],
   providers: []

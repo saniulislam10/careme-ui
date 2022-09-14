@@ -32,7 +32,7 @@
     color: #131523;
     font-family: $font-en-primary-2;
     font-weight: 600;
-    font-size: 25px;
+    font-size: 16px;
     line-height: 35px;
     margin: 0px;
 }
@@ -51,7 +51,7 @@
     color:#000;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 19px;
+    font-size: 16px;
 }
 .view-product-header-right ul li:last-child{
     margin: 0px;
@@ -62,7 +62,7 @@
     color: #0058ff;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 17px;
+    font-size: 16px;
     padding: 7px 15px;
     box-sizing: border-box;
     border-radius: 5px;
@@ -126,7 +126,7 @@
     color: #000000;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 16px;
     font-style: normal;
     display: block;
     padding: 4px 10px;
@@ -275,7 +275,7 @@
 .main-table-head .main-table-row  .main-table-heading{
     color: #131523;
     font-family: $font-en-primary-2;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     text-align: center;
     font-style: normal;
@@ -312,14 +312,14 @@
     color: #42444f;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 14px;
     display: block;
     line-height: 24px;
 }
 .main-table-body .main-table-data button{
     // background-color: #22d500;
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     border: none;
     outline: none;
     padding: 5px 20px;
@@ -359,7 +359,7 @@
     color: #131523;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 14px;
     text-decoration: none;
     cursor: default;
 }
@@ -367,11 +367,11 @@
     display: inline-block;
     margin-left: 10px;
     color: #999999;
-    font-size: 16px;
+    font-size: 14px;
 }
 .down-arrow i{
     color: #0058ff;
-    font-size: 25px;
+    font-size: 16px;
 }
 
 .down-arrow,.check{
@@ -440,7 +440,7 @@
     color: #2e2e2f;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 17px;
+    font-size: 16px;
     transition: all 0.3s linear;
 }
 .indicator-left ul li button:hover{
@@ -459,7 +459,7 @@
     color: #131523;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 17px;
+    font-size: 16px;
     font-style: normal;
     display: block;
 }
@@ -543,7 +543,7 @@
     color: #42444f;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 16px;
     display: block;
     line-height: 24px;
 }
@@ -603,7 +603,7 @@
     color: #fff;
     font-family: $font-en-primary-2;
     font-weight: 500;
-    font-size: 17px;
+    font-size: 16px;
     padding: 6px 15px;
     box-sizing: border-box;
     border-radius: 5px;
@@ -622,7 +622,7 @@ button{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 16px;
     width: 120px;
 
 }
