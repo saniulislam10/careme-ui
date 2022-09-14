@@ -4,6 +4,7 @@ import { CreateTicketsComponent } from './create-tickets/create-tickets.componen
 interface Person {
   key: string;
   ticketid: string;
+  createAt?: Date;
   orderid: string;
   productsku: string;
   issuetype: string;
