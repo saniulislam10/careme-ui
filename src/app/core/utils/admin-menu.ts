@@ -417,7 +417,7 @@ export const menuItemsSuperAdmin: MenuAdmin[] = [
   {
     id: 'todo',
     title: 'To Do List',
-    icon: 'tune',
+    icon: 'checklist',
     hasSubMenu: true,
     parentId: null,
     routerLink: null,

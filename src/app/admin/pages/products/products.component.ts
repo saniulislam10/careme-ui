@@ -52,8 +52,8 @@ export class ProductsComponent implements OnInit {
 
   //Status
   productStatus: Select[] = [
-    { value: ProductStatus.DRAFT, viewValue: 'Draft' },
-    { value: ProductStatus.ACTIVE, viewValue: 'Active' }
+    { label: 'Draft', value: ProductStatus.DRAFT },
+    { label: 'Active', value: ProductStatus.ACTIVE }
   ];
   // Pagination
   currentPage: number = 1;
@@ -274,6 +274,7 @@ export class ProductsComponent implements OnInit {
     onStatusChange
     */
   onStatusChange(value, product, id: string) {
+    console.log(value);
     let array = product.variantFormArray;
     for (let i = 0; i < product.variantFormArray.length; i++) {
       array[i].variantStatus = value;

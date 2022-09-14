@@ -10,7 +10,7 @@ export class AmountTypePipe implements PipeTransform {
 
     switch (status) {
       case AmountType.AMOUNT : {
-        return 'Pts';
+        return 'points';
       }
       case AmountType.PERCENTAGE : {
         return '%';

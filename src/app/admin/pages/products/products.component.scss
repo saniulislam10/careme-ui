@@ -1,5 +1,16 @@
 @import'./../../../../theme/variables';
 
+.hidePlus{
+  visibility: hidden;
+}
+
+.product-name{
+  cursor: pointer !important;
+}
+.product-name:hover{
+  color: blue !important;
+}
+
 .green{
   background-color: #22D500;
 }

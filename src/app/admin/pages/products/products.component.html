@@ -74,13 +74,15 @@
       <!---main-table-head-->
       <thead>
         <tr>
-          <th nzWidth="60px"></th>
+          <th ></th>
           <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllSelectChange($event)"></th>
+          <th>Image</th>
           <th>Product</th>
           <th>Price</th>
-          <th>Stock on Hand</th>
+          <th>Qty</th>
+          <!-- <th>Variants</th> -->
           <th>Status</th>
-          <th>Category</th>
+          <th>Type</th>
           <th>Earn Points</th>
           <th>Redeem Points</th>
           <th>Vendor</th>
@@ -89,59 +91,41 @@
       <tbody>
         <ng-template ngFor let-data [ngForOf]="nestedTable.data" >
           <tr >
-            <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
-            <td [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onCheckChange($event, i, data._id)"></td>
+            <td [class]="data.hasVariant ? '' : 'hidePlus'" [nzExpand]="expandSet.has(data._id) && data.hasVariant" (nzExpandChange)="onExpandChange(data._id, $event)"></td>
+            <td [nzChecked]="setOfCheckedId.has(data._id)" (nzCheckedChange)="onCheckChange($event, i, data._id)"></td>
+            <td><img style="width: 40px; cursor:pointer" nz-image [nzSrc]="setThumbnailImage(data) ? setThumbnailImage(data) : '/assets/images/placeholder/test.png'" alt=""></td>
             <td>
-              <div class="product-info ">
-                <!---product-img-->
-                <div class="product-img">
-                  <img nz-image [nzSrc]="setThumbnailImage(data) ? setThumbnailImage(data) : '/assets/images/placeholder/test.png'"
-                    alt="">
-                </div>
-                <!---product-text-info-->
-                <div class="product-text-info">
-                  <a>{{data.name}}</a>
-                  <a *ngIf="!data.link" target="_blank" [routerLink]="['../../../', 'product-details', data.slug]">
-                    <i  class="eyeButton"  class="fa fa-eye"></i>
-                  </a>
-                  <a *ngIf="data.link" target="_blank" [routerLink]="['../../../', 'product-details-search', data.slug]">
-                    <i class="eyeButton"  class="fa fa-eye"></i>
-                  </a>
-                  <i [routerLink]="['../../', 'add-product', data._id]" class="fas fa-edit"></i>
-                  <span>{{data.sku}}</span>
-                </div>
-              </div>
+              <a [routerLink]="['../../', 'add-product', data._id]">{{data.name}}</a>
+              <a target="_blank" [routerLink]="['../../../', 'product-details', data.slug]">
+                <i  class="eyeButton"  class="fa fa-eye"></i>
+              </a>
+              <span>{{data.sku}}</span>
+            </td>
+            <td>{{data.sellingPrice}}</td>
+            <td>{{data.quantity}}</td>
+            <!-- <td>{{data.variantFormArray.length}}</td> -->
+            <td>
+              <nz-select
+                [(ngModel)]="data.status"
+                nzPlaceHolder="Choose"
+                [nzOptions]="productStatus"
+                (ngModelChange)="onStatusChange(data.status, data, data._id)"
+              ></nz-select>
+            </td>
+            <td>{{data?.productType?.name}}</td>
+            <td>
+              <span *ngIf = "!data.canEarnPoints">0</span>
+              <span *ngIf = "data.canEarnPoints">{{data.earnPoints}} {{data.earnPointsType | amountType}}</span>
             </td>
             <td>
-              <span>{{data.sellingPrice}} BDT</span>
-            </td>
-            <td>
-              <span>{{data.quantity}} for</span>
-              <span>{{data.variantFormArray.length}} of variants</span>
-            </td>
-            <td>
-
-              <mat-select class="temp-class" [ngClass]="getStatusColor(data.status)" [(value)]="data.status">
-                <mat-option *ngFor="let c of productStatus" [value]="c.value"
-                  (click)="onStatusChange(c.value, data, data._id)">{{c.viewValue}}</mat-option>
-              </mat-select>
-            </td>
-            <td>
-              <span>{{data?.parentCategory?.name}}</span>
-            </td>
-            <td>
-              <span>{{data.canEarnPoints === true ? 'Yes' : 'No'}}</span>
-              <span>{{data.earnPoints}} {{data.earnPointsType | amountType}}</span>
-            </td>
-            <td>
-              <span>{{data.canRedeemPoints === true ? 'Yes' : 'No'}}</span>
-              <span>{{data.redeemPoints}} {{data.redeemPointsType | amountType}}</span>
+              <span *ngIf="!data.canRedeemPoints">0</span>
+              <span *ngIf="data.canRedeemPoints">{{data.redeemPoints}} {{data.redeemPointsType | amountType}}</span>
             </td>
             <td>
               <span>{{data.vendor.name}}</span>
             </td>
           </tr>
-          <tr [nzExpand]="expandSet.has(data.id)" >
+          <tr [nzExpand]="expandSet.has(data._id) && data.hasVariant" >
                 <nz-table [nzData]="nestedTable.data">
                   <thead>
                     <tr>
@@ -150,7 +134,7 @@
                         {{variantType}}</th>
                       <th >Stock</th>
                       <th >Status</th>
-                      <th >Continue selling</th>
+                      <th >Pre Order</th>
                       <th >Price</th>
                       <th >Vendor</th>
                       <th>Re-order</th>
@@ -171,7 +155,7 @@
                         <button [class]="getVariantStatusColor(variant)">{{getVariantStatus(variant)}}</button>
                       </td>
                       <td>
-                        <mat-checkbox [checked]="variant?.variantContinueSelling ? true: false" class="example-margin"></mat-checkbox>
+                        <mat-checkbox [checked]="variant?.variantContinueSelling ? true: false"></mat-checkbox>
                       </td>
                       <td>
                         <span>{{variant.variantPrice}}</span>
