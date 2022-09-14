@@ -13,6 +13,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { ReloadService } from 'src/app/services/reload.service';
 import { ActivatedRoute } from '@angular/router';
 import { SupplierService } from 'src/app/services/supplier.service';
+import { Supplier } from 'src/app/interfaces/supplier';
 
 
 @Component({
@@ -47,8 +48,8 @@ export class CreateNewPurchaseComponent implements OnInit {
   canceledOrderSku: string;
   canceledOrderAmount: number;
   selectedIds: any[] = [];
-  suppliers: import("c:/Users/HP/Desktop/Projects/Careme/Care-Me-UI-main/careme-ui/src/app/interfaces/supplier").Supplier[];
-  filteredSupplierList: import("c:/Users/HP/Desktop/Projects/Careme/Care-Me-UI-main/careme-ui/src/app/interfaces/supplier").Supplier[];
+  suppliers: Supplier[];
+  filteredSupplierList: Supplier[];
 
   constructor(
     private fb: FormBuilder,
