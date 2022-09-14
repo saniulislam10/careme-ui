@@ -12,7 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FileData } from 'src/app/interfaces/file-data';
 import { ImageCropperComponent } from 'src/app/shared/components/image-cropper/image-crop.component';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { User } from 'c:/Users/HP/Desktop/Projects/Careme/Care-Me-UI-main/careme-ui/src/app/interfaces/user';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-my-account',
