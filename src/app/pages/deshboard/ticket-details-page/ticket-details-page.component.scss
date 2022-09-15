@@ -11,20 +11,17 @@
 }
 .att_image {
   h1 {
-    font-size: 30px;
+    font-size: 20px;
   }
   @media (max-width: 500px) {
     margin-top: 30px;
-    h1 {
-      font-size: 20px;
-    }
   }
   .images {
     margin-top: 20px;
     img {
       margin: 0 5px 5px 0;
       display: inline-block;
-      width: 48%;
+      width: 45%;
       cursor: pointer;
     }
   }
