@@ -17,7 +17,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of fixedTable.data">
+          <tr
+            *ngFor="let data of fixedTable.data"
+            [routerLink]="['../../', 'ticket-details']"
+          >
             <td>
               <div>
                 <h4>{{ data.ticketid }}</h4>
