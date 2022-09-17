@@ -1,12 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, NgForm, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subscription, EMPTY } from 'rxjs';
 import { pluck, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { FileData } from 'src/app/interfaces/file-data';
 import { ProductType } from 'src/app/interfaces/product-type';
 import { AdminService } from 'src/app/services/admin.service';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 import { ProductTypeService } from 'src/app/services/product-type.service';
 import { ReloadService } from 'src/app/services/reload.service';
+import { ImageCropperComponent } from 'src/app/shared/components/image-cropper/image-crop.component';
 
 @Component({
   selector: 'app-product-type',
@@ -18,6 +23,13 @@ export class ProductTypeComponent implements OnInit {
 
   createProductType = false;
   editProductTypeData = false;
+  file: any = null;
+  newFileName: string;
+  imgBlob: any = null;
+  pickedImage?: any;
+  imgPlaceHolder = '/assets/svg/user.svg';
+  imageChangedEvent: any = null;
+  url: string;
   dataForm: FormGroup;
   productTypes: ProductType[] = [];
   id: any;
@@ -35,10 +47,13 @@ export class ProductTypeComponent implements OnInit {
 
   constructor(
     private fb : FormBuilder,
-    private message: NzMessageService,
+    private msg: NzMessageService,
     private adminService: AdminService,
     private productTypeService: ProductTypeService,
     private reloadService: ReloadService,
+    private fileUploadService: FileUploadService,
+    private dialog: MatDialog,
+    private modal: NzModalService
   ) { }
 
   ngOnInit(): void {
@@ -61,7 +76,7 @@ export class ProductTypeComponent implements OnInit {
       this.holdPrevData = this.productTypes;
     }, err => {
       console.log(err);
-      this.message.create('error', err.error.message);
+      this.msg.create('error', err.error.message);
     })
   }
   initModule() {
@@ -74,11 +89,15 @@ export class ProductTypeComponent implements OnInit {
    * Control Create Vendor
    */
   hideCreate(){
+    this.url = null;
+    this.file = null;
     this.createProductType = false;
     this.id = null;
     this.editProductTypeData = false;
   }
   showCreate(){
+    this.url = null;
+    this.file = null;
     this.editProductTypeData = false;
     this.createProductType = true;
     this.initModule();
@@ -87,6 +106,7 @@ export class ProductTypeComponent implements OnInit {
   onSubmit(){
     let productType = {
       name: this.dataForm.value.name,
+      logo: this.url ? this.url : this.dataForm.value.logo,
     }
     console.log(this.id);
     if(this.id && this.editProductTypeData){
@@ -95,7 +115,7 @@ export class ProductTypeComponent implements OnInit {
       this.editProductType(finaldata);
     }
     else if(this.dataForm.invalid){
-      this.message.create('warning', 'Please input the required fields');
+      this.msg.create('warning', 'Please input the required fields');
       return
     }
     else{
@@ -108,12 +128,12 @@ export class ProductTypeComponent implements OnInit {
     this.productTypeService.editById(data)
       .subscribe( res => {
         console.log(res.message);
-        this.message.create('success', res.message);
+        this.msg.create('success', res.message);
         this.reloadService.needRefreshProductTypes$();
         this.createProductType = false;
 
       }, err => {
-        this.message.create('error', err.error.message);
+        this.msg.create('error', err.error.message);
       })
   }
 
@@ -121,10 +141,11 @@ export class ProductTypeComponent implements OnInit {
     this.productTypeService.add(data)
       .subscribe( res => {
         console.log(res.message);
-        this.message.create('success', res.message);
+        this.msg.create('success', res.message);
         this.reloadService.needRefreshProductTypes$();
+        this.hideCreate();
       }, err => {
-        this.message.create('error', err.error.messase);
+        this.msg.create('error', err.error.messase);
       })
   }
 
@@ -237,6 +258,92 @@ export class ProductTypeComponent implements OnInit {
 
   onClickSearchArea(event: MouseEvent): void {
     event.stopPropagation();
+  }
+
+  showDeleteConfirm(id): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this task?',
+      nzContent: '<b style="color: red;">All the related datas will be deleted</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => {
+        this.delete(id);
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
+  delete(id){
+    this.productTypeService.deleteById(id)
+    .subscribe(res => {
+      this.msg.create('success', res.message);
+      this.reloadService.needRefreshProductTypes$();
+    }, err=> {
+      this.msg.create('error', err.message)
+    })
+  }
+  async fileChangeEvent(event: any) {
+    this.file = (event.target as HTMLInputElement).files[0];
+    // File Name Modify...
+    const originalNameWithoutExt = this.file.name.toLowerCase().split(' ').join('-').split('.').shift();
+    const fileExtension = this.file.name.split('.').pop();
+    // Generate new File Name..
+    this.newFileName = `${Date.now().toString()}_${originalNameWithoutExt}.${fileExtension}`;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(this.file);
+
+
+    reader.onload = () => {
+      // this.imgPlaceHolder = reader.result as string;
+    };
+
+    // Open Upload Dialog
+    if (event.target.files[0]) {
+      await this.openComponentDialog(event);
+    }
+    // NGX Image Cropper Event..
+    this.imageChangedEvent = event;
+  }
+
+  public openComponentDialog(data?: any) {
+    const dialogRef = this.dialog.open(ImageCropperComponent, {
+      data,
+      panelClass: ['theme-dialog'],
+      autoFocus: false,
+      disableClose: true,
+      width: '600px',
+      minHeight: '400px',
+      maxHeight: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        if (dialogResult.imgBlob) {
+          this.imgBlob = dialogResult.imgBlob;
+        }
+        if (dialogResult.croppedImage) {
+          this.pickedImage = dialogResult.croppedImage;
+          this.imgPlaceHolder = this.pickedImage;
+          this.imageUploadOnServer();
+        }
+      }
+    });
+  }
+  imageUploadOnServer() {
+
+    const data: FileData = {
+      fileName: this.newFileName,
+      file: this.imgBlob,
+      folderPath: 'product-type'
+    };
+    this.fileUploadService.uploadSingleImage(data)
+      .subscribe(res => {
+        this.url = res.downloadUrl;
+      }, error => {
+        console.log(error);
+      });
   }
 
 }

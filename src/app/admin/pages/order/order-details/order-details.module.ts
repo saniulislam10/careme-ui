@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { EditOrderComponent } from './edit-order/edit-order.component';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NzImageModule } from 'ng-zorro-antd/image';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PipesModule,
     MatFormFieldModule,
     FormsModule,
+    NzImageModule,
     NgxPaginationModule,
   ]
 })

@@ -1,3 +1,6 @@
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -8,6 +11,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { MaterialModule } from 'src/app/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
 @NgModule({
@@ -21,7 +26,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
     MatProgressSpinnerModule,
     FormsModule,
+    NzButtonModule,
+    NzDividerModule,
+    NzIconModule,
     NzTableModule,
+    NzImageModule,
+    NzModalModule,
     ReactiveFormsModule
   ]
 })

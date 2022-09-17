@@ -51,6 +51,7 @@ export class BrandService {
   }
 
   deleteById(id: string) {
+    console.log(id);
     return this.httpClient.delete<{message?: string}>(API + 'delete-by-id/' + id);
   }
 }

@@ -3,6 +3,7 @@ import { SummaryModule } from './summary/summary.module';
 import { DeshboardComponent } from './deshboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MyReturnModule } from './my-return/my-return.module';
 
 const routes: Routes = [
   {
@@ -60,6 +61,14 @@ const routes: Routes = [
       {
         path:"order-single-product-details",
         loadChildren: () => import('./order-single-product-details/order-single-product-details.module').then(m => m.OrderSingleProductDetailsModule)
+      },
+      {
+        path:"canceled-orders",
+        loadChildren: () => import('./canceled-order/canceled-order.module').then(m => m.CanceledOrderModule)
+      },
+      {
+        path:"my-return",
+        loadChildren: () => import('./my-return/my-return.module').then(m => MyReturnModule)
       },
     ]
   }

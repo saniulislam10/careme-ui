@@ -2,20 +2,6 @@
 <div class="deshboard">
     <div class="container">
         <div class="deshboard-main">
-            <!---side-nav-->
-            <!-- <div class="side-bar">
-               <div class="side-bar-menu" [class]="deshMenu?'side-bar-menu-active':'inactive'">
-                <ul>
-                    <li><a routerLink="./"><span><i class="fa fa-file-invoice-dollar"></i></span> Order</a></li>
-                    <li><a routerLink="./subscription"><span><i class="fa fa-layer-group"></i></span> Subscription</a></li>
-                    <li><a routerLink="./coupons"><span><i class="fa fa-bullhorn"></i></span> Coupons</a></li>
-                    <li><a routerLink="./points"><span><i class="fa fa-coins"></i></span> Points</a></li>
-                    <li><a routerLink="./tickets"><span><i class="fa fa-clipboard-check"></i></span> Tickets</a></li>
-                    <li><a routerLink="./setting"><span><i class="fa fa-cog"></i></span> Settings</a></li>
-                </ul>
-               </div>
-               <div class="over-lay" *ngIf="deshMenu == true" (click)="sideMenuInactive()"></div>
-            </div> -->
             <ul nz-menu nzMode="inline" style="width: 240px;">
               <li
                 nz-menu-item
@@ -43,8 +29,8 @@
               >
                 <ul>
                   <li nz-menu-item routerLink="./orders">My Orders</li>
-                  <li nz-menu-item>My Return</li>
-                  <li nz-menu-item>Canceled Order</li>
+                  <li nz-menu-item routerLink="./my-return">My Return</li>
+                  <li nz-menu-item routerLink="./canceled-orders">Canceled Order</li>
                 </ul>
               </li>
               <li nz-menu-item routerLink="./reviews">My Reviews</li>

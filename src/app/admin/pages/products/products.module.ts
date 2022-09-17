@@ -15,6 +15,9 @@ import { ExportPopupComponent } from './export-popup/export-popup.component';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+
 
 
 @NgModule({
@@ -30,11 +33,13 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NgxPaginationModule,
     ProductCardAdminModule,
     FormsModule,
+    NgxSpinnerModule,
     PipesModule,
     NzImageModule,
     NzTableModule,
     NzSelectModule,
-    NgxSpinnerModule
+    NzCheckboxModule,
+    NzTabsModule
   ],
   providers: []
 })

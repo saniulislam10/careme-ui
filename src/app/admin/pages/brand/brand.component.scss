@@ -1,5 +1,13 @@
 @import'./../../../../theme/variables';
 
+.upload-text{
+  text-align: right;
+  width: 100px;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
+
 i {
   cursor: pointer;
 }
@@ -194,20 +202,6 @@ i {
     font-style: normal;
     font-size: 16px;
     border-radius: 20px;
-}
-.edit button{
-    outline: none;
-    background-color: #fff;
-    border: none;
-    color: #0058ff;
-    font-size: 20px;
-    display: block;
-    padding: 3px 7px;
-    box-sizing: border-box;
-}
-.edit{
-    width: 50px;
-    min-width: 50px;
 }
 .serial{
     width: 50px;

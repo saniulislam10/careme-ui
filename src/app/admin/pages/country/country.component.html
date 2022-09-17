@@ -31,9 +31,11 @@
   <tbody>
     <tr *ngFor="let data of basicTable.data">
       <td>{{data.name}}</td>
-      <td> <img style="width: 50px" [src]="data.logo ? data.logo : '/assets/images/placeholder/test.png'" [alt]="data.name"></td>
-      <td class="edit">
-        <button><i class="fa fa-edit" (click)="edit(data)"></i></button>
+      <td> <img nz-image style="width: 50px" [nzSrc]="data.flag ? data.flag : '/assets/images/placeholder/test.png'" [alt]="data.name"></td>
+      <td >
+        <button nz-button nz-icon [nzType]="'edit'" (click)="edit(data)"></button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nz-icon [nzType]="'delete'" nzDanger (click)="showDeleteConfirm(data._id)"></button>
       </td>
     </tr>
   </tbody>
@@ -68,6 +70,25 @@
                     <input type="text" formControlName="name" matInput placeholder="Enter country name" required>
                     <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
                   </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="input-info">
+            <!--input-info-left--->
+            <div class="input-info-left">
+              <h3>Image:</h3>
+            </div>
+            <!---input-info-right-->
+            <div class="input-info-right">
+              <div class="form-input">
+                <div class="field">
+                  <button type="button" nz-button (click)="imagePicker.click()">
+                    <span nz-icon nzType="upload"></span>
+                    Click to Upload
+                  </button>
+                  <p *ngIf="this.url" class="upload-text">{{this.file.name}}</p>
+                  <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
                 </div>
               </div>
             </div>

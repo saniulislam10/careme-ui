@@ -9,30 +9,16 @@
     <div class="view-product-header-right">
       <ul>
         <li (click)="exportPopUpShow()">Export</li>
-        <li><button [routerLink]="['../../', 'add-by-link']">Add By link</button></li>
         <li><button class="active-btn" [routerLink]="['../../', 'add-product']">Add Product</button></li>
       </ul>
     </div>
   </div>
 </div>
 
-<!---all-products-main-area-->
-<div class="all-products-main-area">
-  <!--products-menu-->
-  <div class="all-products-menu">
-    <ul>
-      <!-- <li><button class="active-tab" (click)="onFilterSelectChange(0)">All</button></li> -->
-      <li><button [class]="status == 0 ?'active-tab':'inactive'" (click)="onFilterSelectChange(0)">All</button></li>
-      <li><button [class]="status == 1 ?'active-tab':'inactive'" (click)="onFilterSelectChange(1)">Draft</button></li>
-      <li><button [class]="status == 2 ?'active-tab':'inactive'" (click)="onFilterSelectChange(2)">Active</button></li>
-      <li><button [class]="status == 5 ?'active-tab':'inactive'" (click)="onFilterSelectChange(5)">Stock Out</button></li>
-      <li><button [class]="status == 3 ?'active-tab':'inactive'" (click)="onFilterSelectChange(3)">Pre-Order</button></li>
-      <li><button [class]="status == 6 ?'active-tab':'inactive'" (click)="onFilterSelectChange(6)">Re Order</button></li>
-      <li><button [class]="status == 4 ?'active-tab':'inactive'" (click)="getAllArchivedProducts(4)">Archived</button></li>
-    </ul>
-  </div>
-  <!--products-menu-end-->
-  <!---products-search-area-->
+    <nz-tabset nzCentered>
+      <nz-tab nz-tab *ngFor="let tab of tabs" (nzSelect)="onFilterSelectChange(tab.value)" [nzTitle]="tab.label"></nz-tab>
+      <!-- <nz-tab nz-tab (nzSelect)="getAllArchivedProducts(4)" nzTitle="Archived"></nz-tab> -->
+    </nz-tabset>
   <div class="products-search-area">
     <!---search-->
     <div class="search" (click)="onClickSearchArea($event)">
@@ -42,7 +28,6 @@
           (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel required>
       </form>
     </div>
-    <!--products-search-area-btn--->
     <div class="products-search-area-btn">
       <ul>
         <li><button [matMenuTriggerFor]="changeProductStatus">Bulk Action <i class="fa fa-caret-down"></i></button></li>
@@ -69,8 +54,9 @@
       </ul>
     </div>
   </div>
+
     <!---main-table-->
-    <nz-table #nestedTable [nzData]="products">
+    <nz-table #nestedTable [nzData]="products" >
       <!---main-table-head-->
       <thead>
         <tr>
@@ -78,6 +64,8 @@
           <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllSelectChange($event)"></th>
           <th>Image</th>
           <th>Product</th>
+          <th></th>
+          <th>Sku</th>
           <th>Price</th>
           <th>Qty</th>
           <!-- <th>Variants</th> -->
@@ -95,11 +83,16 @@
             <td [nzChecked]="setOfCheckedId.has(data._id)" (nzCheckedChange)="onCheckChange($event, i, data._id)"></td>
             <td><img style="width: 40px; cursor:pointer" nz-image [nzSrc]="setThumbnailImage(data) ? setThumbnailImage(data) : '/assets/images/placeholder/test.png'" alt=""></td>
             <td>
-              <a [routerLink]="['../../', 'add-product', data._id]">{{data.name}}</a>
+              <a class="text" [routerLink]="['../../', 'add-product', data._id]">{{data.name}}</a>
+
+            </td>
+            <td>
               <a target="_blank" [routerLink]="['../../../', 'product-details', data.slug]">
                 <i  class="eyeButton"  class="fa fa-eye"></i>
               </a>
-              <span>{{data.sku}}</span>
+            </td>
+            <td>
+              <span><b>{{data.sku}}</b></span>
             </td>
             <td>{{data.sellingPrice}}</td>
             <td>{{data.quantity}}</td>
@@ -112,7 +105,7 @@
                 (ngModelChange)="onStatusChange(data.status, data, data._id)"
               ></nz-select>
             </td>
-            <td>{{data?.productType?.name}}</td>
+            <td>{{data?.productType?.name ? data.productType.name : 'None'}}</td>
             <td>
               <span *ngIf = "!data.canEarnPoints">0</span>
               <span *ngIf = "data.canEarnPoints">{{data.earnPoints}} {{data.earnPointsType | amountType}}</span>
@@ -126,36 +119,30 @@
             </td>
           </tr>
           <tr [nzExpand]="expandSet.has(data._id) && data.hasVariant" >
-                <nz-table [nzData]="nestedTable.data">
+                <nz-table [nzData]="nestedTable.data" nzSize="middle" [nzShowPagination]="false">
                   <thead>
                     <tr>
                       <th>SKU</th>
                       <th *ngFor="let variantType of data.variants; let i=index">
                         {{variantType}}</th>
-                      <th >Stock</th>
-                      <th >Status</th>
-                      <th >Pre Order</th>
-                      <th >Price</th>
-                      <th >Vendor</th>
+                      <th >Qty</th>
                       <th>Re-order</th>
+                      <th>Status</th>
+                      <th>Pre Order</th>
+                      <th>Price</th>
+                      <th>Vendor</th>
                       </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let variant of data.variantFormArray; let i=index">
-                      <td>
-                        <span>{{variant.variantSku}}</span>
-                      </td>
-                      <td *ngFor="let type of data.variants; let x=index">
-                        <span>{{this.getVariantName(i, type, data)}}</span>
-                      </td>
-                      <td>
-                        <span>{{variant.variantQuantity}}</span>
+                      <td>{{variant.variantSku}}</td>
+                      <td *ngFor="let type of data.variants; let x=index">{{this.getVariantName(i, type, data)}}</td>
+                      <td>{{variant.variantQuantity}}</td>
+                      <td>{{variant.variantReOrder}}</td>
+                      <td ><span [class]="getVariantStatusColor(variant)">{{getVariantStatus(variant)}}</span>
                       </td>
                       <td>
-                        <button [class]="getVariantStatusColor(variant)">{{getVariantStatus(variant)}}</button>
-                      </td>
-                      <td>
-                        <mat-checkbox [checked]="variant?.variantContinueSelling ? true: false"></mat-checkbox>
+                        <label nz-checkbox [(ngModel)]="variant.variantContinueSelling">{{ variant?.variantContinueSelling ? 'On ':'Off '}}</label>
                       </td>
                       <td>
                         <span>{{variant.variantPrice}}</span>
@@ -163,9 +150,7 @@
                       <td>
                         <span>{{variant.variantVendorName.name}}</span>
                       </td>
-                      <td>
-                        <span>{{variant.variantReOrder}}</span>
-                      </td>
+
                     </tr>
                   </tbody>
                 </nz-table>
@@ -192,9 +177,3 @@
   <div class="export-popup-area">
     <app-export-popup (valueChange)='exportToExcel($event)' #export></app-export-popup>
   </div>
-  <!-- NO DATA TEMPLATE -->
-  <ng-template #noData>
-    <div style="margin-top: 50px; text-align: center">
-      <h2>No Product Found</h2>
-    </div>
-  </ng-template>

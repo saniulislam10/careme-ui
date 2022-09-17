@@ -1,4 +1,15 @@
+<div class="button-groups">
+  <button (click)="callMethod('getWidth')" nz-button nztype="default">getWidth()</button>
+  <button (click)="callMethod('getHeight')" nz-button nztype="default">getHeight()</button>
+  <button (click)="callMethod('getDom')" nz-button nztype="default">getDom()</button>
+  <button (click)="callMethod('getOption')" nz-button nztype="default">getOption()</button>
+  <button (click)="callMethod('clear')" nz-button nztype="default">clear()</button>
+</div>
+
+<div echarts (chartinit)="onChartInit($event)" class="demo-chart"></div>
 <div class="container">
+
+
 
   <app-tiles></app-tiles>
 

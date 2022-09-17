@@ -1,3 +1,4 @@
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DashboardComponent} from './dashboard.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
     FlexLayoutModule,
     FlexLayoutServerModule,
     LineChartModule,
+    NzButtonModule,
     BarChartModule
   ]
 })

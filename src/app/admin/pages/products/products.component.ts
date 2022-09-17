@@ -84,6 +84,15 @@ export class ProductsComponent implements OnInit {
   indeterminate: boolean = false;
   setOfCheckedId = new Set<number>();
   expandSet = new Set<number>();
+  tabs = [
+    {value: 0, label: 'All'},
+    {value: 1, label: 'Draft'},
+    {value: 2, label: 'Active'},
+    {value: 3, label: 'Pre-Order'},
+    {value: 4, label: 'Archieved'},
+    {value: 5, label: 'Stock Out'},
+    {value: 6, label: 'Re Order'},
+  ];
 
 
 
@@ -653,11 +662,11 @@ export class ProductsComponent implements OnInit {
 
   getVariantStatusColor(variant: any){
     if(variant?.variantContinueSelling === true && variant?.variantQuantity === 0){
-      return "orange"
+      return "orange status"
     } else if (variant?.variantQuantity === 0) {
-      return "red"
+      return "red status"
     } else{
-      return "green"
+      return "green status"
     }
   }
 
