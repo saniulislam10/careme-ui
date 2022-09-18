@@ -1,1 +1,38 @@
-<p>my-return works!</p>
+<nz-card nzTitle="Card title" [nzExtra]="returnSearch">
+  <nz-table #basicTable>
+    <thead>
+      <tr style="display: none">
+        <th></th>
+        <th>Name</th>
+        <th>Platform</th>
+        <th>Version</th>
+        <th>Upgraded</th>
+        <th>Creator</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="retunr-id">
+            <h3>RTO-195212</h3>
+            <span>05 Jul 2022 | 11:30PM</span>
+          </div>
+        </td>
+        <td>SO-195212</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+          <a class="order-status">Return</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #returnSearch>
+  <input nz-input placeholder="Search here" [(ngModel)]="value" />
+</ng-template>

@@ -1,7 +1,12 @@
-<nz-tabset [nzTabBarExtraContent]="extraTemplate">
+<nz-tabset [nzTabBarExtraContent]="orderTemplate">
   <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab" (nzClick)="onTabSelect(tab)">
-    <nz-table #nestedTable [nzData]="listOfParentData" [nzPageSize]="10">
-      <thead >
+    <nz-table
+      #nestedTable
+      [nzData]="listOfParentData"
+      [nzPageSize]="10"
+      nzSize="small"
+    >
+      <thead>
         <tr style="display: none">
           <th></th>
           <th>Name</th>
@@ -16,31 +21,62 @@
       <tbody>
         <ng-template ngFor let-data [ngForOf]="listOfParentData">
           <tr>
-            <td [(nzExpand)]="data.expand"></td>
-            <td ><a class="order-id" matTooltip="Click to view order details" [routerLink]="['../../order-details', data.id]">SO - {{ data.orderId }}</a> </td>
-            <td>{{ data.date | date : 'short' }}</td>
+            <td [(nzExpand)]="data.expand" style="width: 50px"></td>
+            <td>
+              <a
+                class="order-id"
+                matTooltip="Click to view order details"
+                [routerLink]="['../../order-details', data.id]"
+              >
+                <h2>SO - {{ data.orderId }}</h2>
+                <h5>{{ data.date | date: "short" }}</h5>
+              </a>
+            </td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td>
-              <a class="pay-order">Pay now</a>
+              <nz-countdown [nzValue]="deadline"></nz-countdown>
+            </td>
+            <td>
+              <a class="pay-order">Pay To Confirmed</a>
             </td>
           </tr>
           <tr [nzExpand]="data.expand">
-            <nz-table #innerTable [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
-
+            <nz-table
+              #innerTable
+              [nzData]="listOfChildrenData"
+              nzSize="middle"
+              [nzShowPagination]="false"
+            >
               <tbody>
                 <tr *ngFor="let data of innerTable.data">
-                  <td>
-                    <img style="width: 100px" src="/assets/images/placeholder/test.png" alt="">
+                  <td style="width: 60px">
+                    <img
+                      style="width: 60px"
+                      src="/assets/images/placeholder/test.png"
+                      alt=""
+                    />
                   </td>
-                  <td>{{data?.name}}<br>{{data?.sku}}</td>
+                  <td>
+                    <h3>{{ data?.name }}</h3>
+                    <span>{{ data?.sku }}</span>
+                  </td>
                   <td>Qty : {{ data?.qty }}</td>
                   <td>Total : {{ data?.total }}</td>
                   <td>Advance : {{ data?.advance }}TK</td>
-                  <td><a class="status">{{ data?.paymentStatus }}</a></td>
-                  <td class="instock">Estimated Delivery by <br><span>{{ data?.deliveryDate | date : 'short'}}</span></td>
+                  <td>
+                    <span class="payment paid unpaid">
+                      {{ data?.paymentStatus }}
+                    </span>
+                  </td>
+                  <td class="estimated-time instock">
+                    <h3>
+                      Estimated Delivery by
+                      <span>{{ data?.deliveryDate | date: "short" }}</span>
+                    </h3>
+                  </td>
                   <td>
                     <a class="order-status">{{ data?.orderStatus }}</a>
                   </td>
@@ -51,10 +87,8 @@
         </ng-template>
       </tbody>
     </nz-table>
-
   </nz-tab>
-
 </nz-tabset>
-<ng-template #extraTemplate>
-  <input nz-search placeholder="Search by id">
+<ng-template #orderTemplate>
+  <input nz-input placeholder="Search here" [(ngModel)]="value" />
 </ng-template>
