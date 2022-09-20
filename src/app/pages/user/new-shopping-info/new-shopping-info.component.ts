@@ -154,6 +154,7 @@ export class NewShoppingInfoComponent implements OnInit {
 
   onSelectAddress(address, i){
     this.selectedAddress = address;
+    console.log(this.selectedAddress);
     this.storageService.storeDataToSessionStorage(DATABASE_KEY.selectedShippingAddress, this.selectedAddress);
     this.clickActive = [];
     this.clickActive[i] = true;
@@ -472,7 +473,7 @@ export class NewShoppingInfoComponent implements OnInit {
 
     let vendors = [...new Set(TempVendors)];
 
-    console.log("wer are filtering vendors",vendors)
+    console.log("address",this.selectedAddress)
 
     this.order = {
       checkoutDate: new Date(),

@@ -1,12 +1,16 @@
+import { FileUploadService } from 'src/app/services/file-upload.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, NgForm, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription, EMPTY } from 'rxjs';
 import { pluck, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Collection } from 'src/app/interfaces/collection';
+import { FileData } from 'src/app/interfaces/file-data';
 import { AdminService } from 'src/app/services/admin.service';
 import { CollectionService } from 'src/app/services/collection.service';
 import { ReloadService } from 'src/app/services/reload.service';
+import { ImageCropperComponent } from 'src/app/shared/components/image-cropper/image-crop.component';
 
 @Component({
   selector: 'app-collections',
@@ -31,12 +35,21 @@ export class CollectionsComponent implements OnInit {
   isFocused: any;
   isOpen: boolean;
   overlay: boolean;
+  file: any = null;
+  newFileName: string;
+  imgBlob: any = null;
+  pickedImage?: any;
+  imgPlaceHolder = '/assets/svg/user.svg';
+  imageChangedEvent: any = null;
+  url: string;
 
   constructor(
     private fb : FormBuilder,
     private message: NzMessageService,
     private collectionService: CollectionService,
     private reloadService: ReloadService,
+    private dialog: MatDialog,
+    private fileUploadService: FileUploadService
   ) { }
 
   ngOnInit(): void {
@@ -240,6 +253,69 @@ export class CollectionsComponent implements OnInit {
 
   onClickSearchArea(event: MouseEvent): void {
     event.stopPropagation();
+  }
+
+  async fileChangeEvent(event: any) {
+    this.file = (event.target as HTMLInputElement).files[0];
+    // File Name Modify...
+    const originalNameWithoutExt = this.file.name.toLowerCase().split(' ').join('-').split('.').shift();
+    const fileExtension = this.file.name.split('.').pop();
+    // Generate new File Name..
+    this.newFileName = `${Date.now().toString()}_${originalNameWithoutExt}.${fileExtension}`;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(this.file);
+
+
+    reader.onload = () => {
+      // this.imgPlaceHolder = reader.result as string;
+    };
+
+    // Open Upload Dialog
+    if (event.target.files[0]) {
+      await this.openComponentDialog(event);
+    }
+    // NGX Image Cropper Event..
+    this.imageChangedEvent = event;
+  }
+
+  public openComponentDialog(data?: any) {
+    const dialogRef = this.dialog.open(ImageCropperComponent, {
+      data,
+      panelClass: ['theme-dialog'],
+      autoFocus: false,
+      disableClose: true,
+      width: '600px',
+      minHeight: '400px',
+      maxHeight: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        if (dialogResult.imgBlob) {
+          this.imgBlob = dialogResult.imgBlob;
+        }
+        if (dialogResult.croppedImage) {
+          this.pickedImage = dialogResult.croppedImage;
+          this.imgPlaceHolder = this.pickedImage;
+          this.imageUploadOnServer();
+        }
+      }
+    });
+  }
+  imageUploadOnServer() {
+
+    const data: FileData = {
+      fileName: this.newFileName,
+      file: this.imgBlob,
+      folderPath: 'collections'
+    };
+    this.fileUploadService.uploadSingleImage(data)
+      .subscribe(res => {
+        this.url = res.downloadUrl;
+      }, error => {
+        console.log(error);
+      });
   }
 
 }

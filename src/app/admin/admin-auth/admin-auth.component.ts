@@ -16,6 +16,8 @@ export class AdminAuthComponent implements OnInit {
   username = new FormControl('', [Validators.required]);
   password = new FormControl('', [Validators.required]);
 
+  visibility : boolean = false;
+
   constructor(
     private uiService: UiService,
     private adminService: AdminService,
@@ -32,6 +34,10 @@ export class AdminAuthComponent implements OnInit {
       password: this.password
     });
 
+  }
+
+  visibilityChange(){
+    this.visibility = !this.visibility;
   }
 
   // Main Login Method..

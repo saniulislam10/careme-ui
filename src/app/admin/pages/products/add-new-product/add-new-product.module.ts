@@ -28,6 +28,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzImageModule } from 'ng-zorro-antd/image';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NzUploadModule,
     NzMessageModule,
     NzModalModule,
-    NzTableModule
+    NzTableModule,
+    NzImageModule
   ]
 })
 export class AddNewProductModule {

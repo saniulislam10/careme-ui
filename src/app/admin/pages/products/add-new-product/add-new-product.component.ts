@@ -49,6 +49,7 @@ import { ProductTypeService } from 'src/app/services/product-type.service';
 import { ImageCropperComponent } from 'src/app/shared/components/image-cropper/image-crop.component';
 import { FileData } from 'src/app/interfaces/file-data';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 export interface Data {
   id: number;
@@ -69,8 +70,8 @@ export class AddNewProductComponent implements OnInit {
   checked = false;
   loading = false;
   indeterminate = false;
-  listOfData: readonly Data[] = [];
-  listOfCurrentPageData: readonly Data[] = [];
+  listOfData: Data[] = [];
+  listOfCurrentPageData: Data[] = [];
   setOfCheckedId = new Set<number>();
 
 
@@ -198,7 +199,8 @@ export class AddNewProductComponent implements OnInit {
     private dialog: MatDialog,
     private utilsService: UtilsService,
     private router: Router,
-    private message: NzMessageService,
+    private msg: NzMessageService,
+    private modal: NzModalService
   ) {
     // angulartics2GoogleAnalytics.startTracking();
   }
@@ -390,7 +392,7 @@ export class AddNewProductComponent implements OnInit {
     this.spinner.show();
     this.productService.deleteProductById(this.product._id).subscribe(
       (res) => {
-        this.uiService.success(res.message);
+        this.msg.create('success', res.message);
         this.templateForm.resetForm();
         this.spinner.hide();
         this.reloadService.needRefreshProduct$;
@@ -408,7 +410,7 @@ export class AddNewProductComponent implements OnInit {
     this.productService.editProductById(product).subscribe(
       (res) => {
         this.spinner.hide();
-        this.uiService.success(res.message);
+        this.msg.create('success', res.message);
         this.storageService.removeSessionData('PRODUCT_INPUT');
       },
       (error) => {
@@ -492,7 +494,6 @@ export class AddNewProductComponent implements OnInit {
     for (let i = 0; i < options.length; i++) {
       let key = Object.keys(options[i]);
       let values = Object.values(options[i]);
-      console.log(options[i])
 
       keyArr.push(key[0]);
       valueArr.push(values[0]);
@@ -703,11 +704,9 @@ export class AddNewProductComponent implements OnInit {
   }
   separateOptions() {
     let options : string[] = [];
-      console.log(this.fruits);
       for(let i = 0; i< this.fruits.length; i++){
         let optionName : string;
         for(let j=0; j < this.fruits[i].length; j++){
-          console.log(this.fruits[j])
           if(j===0){
             optionName = this.fruits[i][j];
           }else{
@@ -790,6 +789,7 @@ export class AddNewProductComponent implements OnInit {
 
         this.fruits[i]= this.product.options[i].split(',')
       }
+      console.log("For Patch",this.product)
       this.dataForm.patchValue(this.product);
     }
     else{
@@ -798,7 +798,6 @@ export class AddNewProductComponent implements OnInit {
   }
 
   private patchByImport(data){
-    console.log(data);
     //for medias
     for (let i = 0; i < data.images?.length - 1; i++) {
       this.addMediaLinkButton();
@@ -848,8 +847,6 @@ export class AddNewProductComponent implements OnInit {
     this.dataForm.value.isStockOut = false;
     this.dataForm.value.hasLink = false;
     const rawData = this.dataForm.value;
-    console.log(this.downloadUrls)
-    console.log(rawData)
     if(this.dataForm.value.quantity === 0){
       this.dataForm.value.isStockOut = true;
     }
@@ -893,7 +890,6 @@ export class AddNewProductComponent implements OnInit {
       };
       this.editProductData(finalData);
     } else {
-      console.log(rawData);
       this.addProduct(rawData);
     }
   }
@@ -960,8 +956,6 @@ export class AddNewProductComponent implements OnInit {
   onCheckVariantImage(event: MatCheckboxChange, i:number) {
     if (event.checked) {
      this.checkedVariantImgIndex.push(i);
-     console.log(this.checkedVariantImgIndex);
-
     } else {
       const fIndex = this.checkedVariantImgIndex.findIndex(h => h === i);
       this.checkedVariantImgIndex.splice(fIndex, 1)
@@ -992,13 +986,11 @@ export class AddNewProductComponent implements OnInit {
 
   onEditHtmlEditor(){
     this.htmlData = this.dataForm.value.description;
-    console.log(this.dataForm.value.description);
     this.showHtmlEditor = !this.showHtmlEditor;
   }
 
   onInput(event: Event){
     const data = (event.target as HTMLInputElement).value;
-    console.log("Data for edit",data);
     this.dataForm.patchValue(
       {
         name : 'Saniul',
@@ -1061,7 +1053,6 @@ export class AddNewProductComponent implements OnInit {
     this.fileUploadService.uploadSingleImage(data)
       .subscribe(res => {
         this.url = res.downloadUrl;
-        console.log(this.url);
       }, error => {
         console.log(error);
       });
@@ -1092,10 +1083,6 @@ export class AddNewProductComponent implements OnInit {
    */
 
    drop(event: CdkDragDrop<string[]>) {
-     console.log(this.chooseImage);
-     console.log(event.previousIndex);
-     console.log(event.currentIndex);
-
     moveItemInArray(this.chooseImage, event.previousIndex, event.currentIndex);
   }
 
@@ -1103,8 +1090,23 @@ export class AddNewProductComponent implements OnInit {
    * REMOVE SELECTED IMAGE
    */
    removeSelectImage(s: string) {
-    const index = this.chooseImage.findIndex(x => x === s);
-    this.chooseImage.splice(index, 1);
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this task?',
+      nzContent: '<b style="color: red;">Click on the save button to update</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => {
+        const index = this.chooseImage.findIndex(x => x === s);
+        this.chooseImage.splice(index, 1);
+        this.msg.create('success', 'image removed from list');
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => {
+        this.msg.create('warning', 'image is not deleted');
+      }
+    });
+
   }
 
 
@@ -1120,7 +1122,6 @@ export class AddNewProductComponent implements OnInit {
   importProductInfo(){
 
     let baseurl = new URL(this.dataForm.value.link).hostname;
-    console.log(baseurl);
     this.spinner.show();
       if (baseurl==="www.aliexpress.com"){
         let link = this.dataForm.value.link.split('/');
@@ -1129,25 +1130,21 @@ export class AddNewProductComponent implements OnInit {
         .subscribe(
           (res)=>{
             this.spinner.hide();
-            console.log(res.data);
             let data = res.data;
             this.patchByImport(data);
 
           },(err)=>{
             this.spinner.hide();
-            console.log(err);
           }
         )
       }
       if (baseurl==="www.amazon.com"){
         let link = this.dataForm.value.link.split('/');
-        console.log(link);
         let productCode = link[5];
         this.productService.getAmazonProductInfo(productCode)
         .subscribe(
           (res)=>{
             this.spinner.hide();
-            console.log(res.data);
             let data = res.data;
             this.patchByImport(data);
 
@@ -1159,13 +1156,11 @@ export class AddNewProductComponent implements OnInit {
       }
       if (baseurl==="www.amazon.in"){
         let link = this.dataForm.value.link.split('/');
-        console.log(link);
         let productCode = link[4];
         this.productService.getAmazonIndiaProductInfo(productCode)
         .subscribe(
           (res)=>{
             this.spinner.hide();
-            console.log(res.data);
             let data = res.data;
             this.patchByImport(data);
 
@@ -1177,13 +1172,11 @@ export class AddNewProductComponent implements OnInit {
       }
       if (baseurl==="www.walmart.com"){
         let link = this.dataForm.value.link.split('/');
-        console.log(link);
         let productCode = link[5];
         this.productService.getWalmartProductInfo(productCode)
         .subscribe(
           (res)=>{
             this.spinner.hide();
-            console.log(res.data);
             let data = res.data;
             this.patchByImport(data);
 
@@ -1200,7 +1193,6 @@ export class AddNewProductComponent implements OnInit {
   add(event: MatChipInputEvent, index:number): void {
     const value = (event.value || '').trim();
     // Add our fruit
-    console.log(index);
     if (value) {
       this.fruits[index].push(value);
     }
@@ -1241,11 +1233,9 @@ export class AddNewProductComponent implements OnInit {
 
   onSelect(event: { addedFiles: any; }) {
     this.files.push(...event.addedFiles);
-    console.log(this.files);
   }
 
   onRemove(event: File) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
@@ -1254,7 +1244,6 @@ export class AddNewProductComponent implements OnInit {
       this.uiService.warn('No Image selected!');
       return;
     }
-    console.log(this.files);
     this.fileUploadService.uploadMultiImageOriginal(this.files)
       .subscribe(res => {
         this.downloadUrls = res.downloadUrls;
@@ -1262,8 +1251,7 @@ export class AddNewProductComponent implements OnInit {
           this.chooseImage.push(m)
         })
         this.files = [];
-        console.log(this.chooseImage);
-        this.message.create('success', res.message);
+        this.msg.create('success', res.message);
       }, error => {
         console.log(error);
       });

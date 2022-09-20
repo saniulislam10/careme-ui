@@ -24,8 +24,6 @@ export class BulkSmsService {
    */
 
   sentSingleBulkSms(phoneNo: string, message: string) {
-    console.log("bulk sms service", phoneNo);
-
     return this.httpClient.post<{ success: boolean; message: string }>(API_BULK_SMS + 'send-bulk-sms', {phoneNo, message});
   }
 

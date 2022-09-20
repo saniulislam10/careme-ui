@@ -88,7 +88,7 @@
                 <div class="product-area">
                   <!---product-img-->
                   <div class="product-img">
-                    <img [src]="getThumbImage(data)" [alt]="data.product?.name" />
+                    <img nz-image [nzSrc]="getThumbImage(data)" [alt]="data.product?.name" />
 
                   </div>
                   <!---product-info-->
@@ -578,7 +578,7 @@
                           : 'check_box'
                       ">
                       Redeem Point (-)
-                      <span>({{ user?.points }} Available)</span>
+                      <span >({{ user?.points }} Available)</span>
                     </p>
                     <p>{{ redeemPointsTotal() }}</p>
                   </div>

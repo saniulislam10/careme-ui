@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserAuthStateGuard } from '../auth-guard/user-auth-state.guard';
 import { PagesComponent } from './pages.component';
+import { UserAuthGuard } from '../auth-guard/user-auth.guard';
 
 const routes: Routes = [
   {
@@ -115,8 +116,8 @@ const routes: Routes = [
       },
       {
         path: 'dashboard',
-        loadChildren: () =>
-          import('./deshboard/deshboard.module').then((m) => m.DeshboardModule),
+        canActivate : [UserAuthGuard],
+        loadChildren: () => import('./deshboard/deshboard.module').then((m) => m.DeshboardModule),
       },
       {
         path: 'request-product',

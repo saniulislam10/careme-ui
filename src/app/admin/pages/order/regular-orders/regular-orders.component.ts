@@ -72,7 +72,7 @@ export class RegularOrdersComponent implements OnInit {
     {value: OrderStatus.CANCEL, viewValue: 'Cancel'},
     {value: OrderStatus.REFUND, viewValue: 'Refund'}
   ];
-  
+
 
   paymentOrderStatus: Select[] = [
     {value: PaymentStatus.PAID, viewValue: 'Paid'},
@@ -163,11 +163,11 @@ selectedIds: string[] = [];
     };
 
     this.orderService.getAllOrdersByAdmin(pagination, this.sortQuery, this.filter)
-    
+
     .subscribe(res => {
-      
+
       console.log("total regular order data",res.data)
-      
+
       this.orders = res.data;
       if (this.orders && this.orders.length) {
         this.orders.forEach((m, i) => {
@@ -366,8 +366,6 @@ selectedIds: string[] = [];
 
     getDeliveryStatus(data:any){
       const status = data?.status;
-      console.log('getDeliveryStatus', status === 4);
-
        if (status === 0) {
          return 'pending';
        } else if (status === 1) {
@@ -385,15 +383,12 @@ selectedIds: string[] = [];
        } else {
          return 'pending';
        }
-       return '0';
     }
 
     onFilterSelectChange(data) {
-      console.log(data)
       this.status = data;
       switch (data) {
         case 1:
-          console.log("bitch")
           this.filter = { paymentMethod: "Cash On Delivery" };
           this.getAllOrders()
           break;
@@ -413,7 +408,7 @@ selectedIds: string[] = [];
         default:
         // code block
       }
-  
+
       if (data) {
         this.query = { ...this.query, ...{ hasLink: false } };
        // this.getAllProducts();

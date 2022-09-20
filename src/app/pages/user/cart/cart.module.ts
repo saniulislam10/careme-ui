@@ -1,3 +1,4 @@
+import { NzImageModule } from 'ng-zorro-antd/image';
 import { SwiperModule } from 'swiper/angular';
 import { MaterialModule } from 'src/app/material/material.module';
 import { NgModule } from '@angular/core';
@@ -27,7 +28,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzModalModule,
     NzTableModule,
     NzButtonModule,
-    NzSelectModule
+    NzSelectModule,
+    NzImageModule
   ]
 })
 export class CartModule { }

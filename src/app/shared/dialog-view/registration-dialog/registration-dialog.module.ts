@@ -8,6 +8,8 @@ import {SharedModule} from "../../shared.module";
 import {AngularFireAuthModule} from "@angular/fire/auth";
 import {PhoneVerificationDialogModule} from "../../lazy-component/phone-verification-dialog/phone-verification-dialog.module";
 import {DigitOnlyModule} from "@uiowa/digit-only";
+import { PipesModule } from '../../pipes/pipes.module';
+import { ExtendedModule } from '@angular/flex-layout';
 
 
 
@@ -25,6 +27,8 @@ import {DigitOnlyModule} from "@uiowa/digit-only";
     AngularFireAuthModule,
     PhoneVerificationDialogModule,
     DigitOnlyModule,
+    PipesModule,
+    ExtendedModule
   ],
   exports: [
     RegistrationDialogComponent

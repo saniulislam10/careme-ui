@@ -361,7 +361,7 @@ export class HeaderComponent implements OnInit {
   openRegistrationDialog() {
     const dialogRef = this.dialog.open(RegistrationDialogComponent, {
       panelClass: ['theme-dialog'],
-      height: '60%',
+      // height: '100%',
       autoFocus: false,
       disableClose: false,
     });

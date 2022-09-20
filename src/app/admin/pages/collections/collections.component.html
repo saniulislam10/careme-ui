@@ -1,12 +1,12 @@
-<!--vendor-header-->
+<!--header-->
 <div class="vendor-header">
-  <!---vendor-header-main-->
+  <!----header-main-->
   <div class="vendor-header-main">
     <!---title-->
     <div class="title">
       <h2>Collection</h2>
     </div>
-    <!---vendor-search-->
+    <!---search-->
     <div class="vendor-search" (click)="onClickSearchArea($event)">
       <button><i class="fa fa-search"></i></button>
       <form #searchForm=ngForm  style="width: 100%;">
@@ -43,16 +43,16 @@
 
 
 
-<!----create-vendor-area-->
+<!----create-area-->
 <div class="create-vendor" *ngIf="createCollection == true">
   <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
 
     <div class="create-vendor-main">
-      <!---create-vendor-header-->
+      <!---create-header-->
       <div class="create-vendor-header">
         <h2>Create Collection</h2>
       </div>
-      <!---create-vendor-body-->
+      <!---create-body-->
       <div class="create-vendor-body">
         <div class="input-area">
           <!---input-infoo-->
@@ -78,17 +78,18 @@
           <div class="input-info">
             <!--input-info-left--->
             <div class="input-info-left">
-              <h3>Link:</h3>
+              <h3>Image:</h3>
             </div>
             <!---input-info-right-->
             <div class="input-info-right">
               <div class="form-input">
                 <div class="field">
-                  <mat-form-field appearance="outline" class="form-field">
-                    <mat-label>Link</mat-label>
-                    <input type="text" formControlName="link" matInput placeholder="Enter collection web link">
-                    <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
-                  </mat-form-field>
+                  <button type="button" nz-button (click)="imagePicker.click()">
+                    <span nz-icon nzType="upload"></span>
+                    Click to Upload
+                  </button>
+                  <p *ngIf="this.url" class="upload-text">{{this.file.name}}</p>
+                  <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
                 </div>
               </div>
             </div>

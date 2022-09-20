@@ -33,7 +33,7 @@
 // Main Container
 .content {
   width: 100%;
-  height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -42,16 +42,10 @@
   padding-top: 50px;
 }
 
-
-// Left Area...
-.left {
-  flex: 1;
-}
-
 .img-placeholder {
-  margin-left: 150px;
-  width: 480px;
-  height: 480px;
+  margin: auto;
+  width: 200px;
+  height: auto;
 
   img {
     width: 100%;
@@ -62,15 +56,16 @@
 
 // Right Area...
 .right {
-  flex: 1;
+  margin: auto;
 }
 
 .card {
   background: #FFFFFF;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  margin-left: 45px;
+  margin: auto;
   width: 70%;
+  // min-width: 400px;
   min-height: 450px;
   padding: 45px;
 }
@@ -106,28 +101,28 @@
   .mat-data-input-field {
     width: 100%;
   }
+
+  a {
+    margin-top: 20px;
+    text-decoration: none;
+    color: #A8A8A8;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .submit-area {
-  text-align: center;
-
-  .forget-pass-link {
-    text-align: right;
-
-    a {
-      text-decoration: none;
-      color: #A8A8A8;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
+  .remember{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .btn-login {
     margin-top: 18px;
-    width: 180px;
-    padding: 5px;
+    padding: 5px 30px;
     font-size: 16px;
 
     ::ng-deep {
@@ -189,13 +184,8 @@
   }
   // Main Container
   .content {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    width: 50%;
+    margin: 100px auto;
   }
 
   // Left Area...
@@ -205,11 +195,11 @@
 
   // Right Area...
   .right {
-    flex: 1;
+    margin: auto;
   }
 
   .card {
-    width: 95%;
+    width: 70%;
     margin: 150px auto;
     min-height: 450px;
     padding: 25px;

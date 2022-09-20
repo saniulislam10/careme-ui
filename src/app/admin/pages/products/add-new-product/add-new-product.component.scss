@@ -148,8 +148,8 @@ tbody {
 }
 
 .preview img{
-  width: 150px !important;
-  height: 150px !important;
+  width: 100px !important;
+  height: 100px !important;
   object-fit: contain;
 }
 
@@ -157,14 +157,16 @@ tbody {
   width: 100%;
   margin-top: 24px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   .preview {
     position: relative;
-    width: 85%;
-    max-width: 150px;
-    margin: 0 auto;
-    height: 150px;
+    // width: 85%;
+    width: 100px;
+    margin: 10px auto;
+    height: 100px;
     overflow: hidden;
+
     cursor: pointer;
 
     &:hover {
@@ -182,16 +184,19 @@ tbody {
     .overlay-ac {
       visibility: hidden;
       position: absolute;
-      left: 0;
+      right: 0px;
       top: 0;
-      width: 100%;
-      height: 100%;
+      width: auto;
+      height: auto;
       display: grid;
       place-items: center;
-      background: rgba(6, 6, 6, 0.19);
+      z-index: 999;
+      border-radius: 0px !important;
+      background: white;
 
       button {
         mat-icon {
+          z-index: 99999;
           color: orangered;
         }
       }

@@ -48,7 +48,6 @@ export class UserService {
    */
 
   userRegistration(data: User, redirectForm?: string) {
-    console.log("registration", data);
 
     this.httpClient.post<{ success: boolean; message: string; token: string; expiredIn: number }>
     (API_USER + 'registration', data)

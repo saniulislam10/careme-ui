@@ -12,6 +12,10 @@ import { EditOrderComponent } from './edit-order/edit-order.component';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 
 @NgModule({
@@ -29,6 +33,10 @@ import { NzImageModule } from 'ng-zorro-antd/image';
     MatFormFieldModule,
     FormsModule,
     NzImageModule,
+    NzTableModule,
+    NzButtonModule,
+    NzSelectModule,
+    NzInputModule,
     NgxPaginationModule,
   ]
 })

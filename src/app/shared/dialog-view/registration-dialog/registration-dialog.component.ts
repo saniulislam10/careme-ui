@@ -27,6 +27,16 @@ export class RegistrationDialogComponent implements OnInit {
   isHiddenPass = true;
   isHiddenConPass = true;
 
+  showOtpSection = false;
+
+  // Counter
+  countDown = 0;
+  timeInstance = null;
+
+  expireCountDown = 0;
+  timeInstanceExpire = null;
+  otpMatched = false;
+
   // OTP
   generatedOtpCode: string;
 
@@ -35,6 +45,7 @@ export class RegistrationDialogComponent implements OnInit {
 
   // Modified Phone Number
   mPhoneNumber: string = null;
+  verificationForm: FormGroup;
 
   constructor(
     public userService: UserService,
@@ -50,18 +61,14 @@ export class RegistrationDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.hide();
+    this.initVerificationForm();
     this.dataForm = this.fb.group({
       phoneNo: [null, Validators.required],
-      // email: [null, [Validators.email]],
-      // password: [null, Validators.required],
-      // confirmPassword: [null, Validators.required],
-      // fullName: [null, Validators.required],
-      // gender: [null, Validators.required],
-      // agree: [true, Validators.required],
     });
   }
 
   onSubmitForm() {
+    this.showOtpSection = true;
     console.log("this.dataForm ", this.dataForm.value);
 
     if (this.dataForm.invalid) {
@@ -69,22 +76,6 @@ export class RegistrationDialogComponent implements OnInit {
       this.uiService.warn('Please complete all the required field');
       return;
     }
-
-    // if (this.dataForm.value.password !== this.dataForm.value.confirmPassword) {
-    //   this.uiService.warn('Password and confirm password not matched');
-    //   return;
-    // }
-
-    // if (this.dataForm.value.phoneNo.length === 10) {
-    //   this.dataForm.get('phoneNo').setErrors({invalid: true});
-    //   this.uiService.warn('Please enter a valid 11 digit phone no');
-    //   return;
-    // }
-
-    // if (this.dataForm.value.password.length < 6) {
-    //   this.uiService.warn('Password must be at lest 6 characters!');
-    //   return;
-    // }
 
     if (this.dataForm.value.phoneNo.length === 10) {
       this.mPhoneNumber = '880' + this.dataForm.value.phoneNo;
@@ -101,7 +92,7 @@ export class RegistrationDialogComponent implements OnInit {
     // this.sentSingleBulkSms(this.mPhoneNumber);
     // this.spinner.show();
 
-    this.checkAndGetUserByPhone(this.dataForm.value.phoneNo);
+    this.checkAndGetUserByPhone(this.mPhoneNumber);
   }
 
   /**
@@ -113,31 +104,22 @@ export class RegistrationDialogComponent implements OnInit {
    */
   private sentSingleBulkSms(phoneNumber) {
 
-    this.generatedOtpCode = this.utilsService.getRandomOtpCode6();
-    console.log(this.generatedOtpCode);
+    this.countOtpExpireTime(300);
+    this.countResendTime(60);
+    this.generatedOtpCode = this.utilsService.getRandomOtpCode4();
     const message =
       this.generatedOtpCode +
-      ' is your OTP (One-Time Password) for CaremeBd. OTP will expire in 5 minutes.';
+      ' is your OTP (One-Time Password) for Care Me. OTP will expire in 5 minutes.';
 
-
+    console.log(message)
     this.bulkSmsService.sentSingleBulkSms(phoneNumber, message).subscribe(
       (res) => {
-        console.log("bulk res", res);
-
         this.isLoading = false;
         this.spinner.hide();
-        if (res.success) {
-          this.openComponentDialog();
-        } else {
-          this.isLoading = false;
-          this.spinner.hide();
-          this.uiService.wrong('Something went wrong! Please try again.');
-        }
       },
       (error) => {
         this.isLoading = false;
         this.uiService.wrong('Something went wrong! Please try again.');
-        console.log(error);
         this.spinner.hide();
       }
     );
@@ -148,20 +130,12 @@ export class RegistrationDialogComponent implements OnInit {
       (res) => {
         const status = res.data;
         if (!status) {
-          // Create Message Data
-          const finalPhoneNo = '880' + this.dataForm.value.phoneNo;
           this.generatedOtpCode = this.utilsService.getRandomOtpCode6();
-          const message =
-            this.generatedOtpCode +
-            ' is your OTP (One-Time Password) for E-medilife. OTP will expire in 5 minutes.';
-          // Sent Message
-          this.sentSingleBulkSms(finalPhoneNo);
+          this.sentSingleBulkSms(phoneNo);
         } else {
           this.isLoading = false;
           this.spinner.hide();
-          this.uiService.warn('This phone no is already registered');
-          this.dataForm.get('phoneNo').setErrors({ invalid: true });
-          this.dataForm.get('phoneNo').markAsTouched({ onlySelf: true });
+          this.sentSingleBulkSms(phoneNo);
         }
       },
       (error) => {
@@ -175,27 +149,117 @@ export class RegistrationDialogComponent implements OnInit {
   /**
    *  COMPONENT DIALOG
    */
-  public openComponentDialog() {
-    console.log("open component");
+  // public openComponentDialog() {
+  //   const mData = {
+  //     otpCode: this.generatedOtpCode,
+  //     phoneNo: this.mPhoneNumber,
+  //   };
+  //   const dialogRef = this.dialog.open(PhoneVerificationDialogComponent, {
+  //     data: mData,
+  //     panelClass: ['theme-dialog', 'dialog-no-radius', 'small-padding-sm'],
+  //     width: '95%',
+  //     maxWidth: '1080px',
+  //     autoFocus: false,
+  //     disableClose: true,
+  //   });
 
-    const mData = {
-      otpCode: this.generatedOtpCode,
-      phoneNo: this.mPhoneNumber,
-    };
-    const dialogRef = this.dialog.open(PhoneVerificationDialogComponent, {
-      data: mData,
-      panelClass: ['theme-dialog', 'dialog-no-radius', 'small-padding-sm'],
-      width: '95%',
-      maxWidth: '1080px',
-      autoFocus: false,
-      disableClose: true,
+  //   dialogRef.afterClosed().subscribe((dialogResult) => {
+
+  //     if (dialogResult.regProgress) {
+  //       console.log('OTP matched');
+  //       this.spinner.show();
+  //       const registrationData = {
+  //         fullName: null,
+  //         phoneNo: this.mPhoneNumber,
+  //         email: null,
+  //         password: null,
+  //         gender: null,
+  //         isPhoneVerified: true,
+  //         registrationType: 'phone',
+  //         isEmailVerified: false,
+  //         hasAccess: true,
+  //         username: this.mPhoneNumber,
+  //         status: UserStatus.ACTIVE,
+  //         shippingAddress: null,
+  //         points: 0,
+  //         redeemedPoints: 0,
+  //         earnedPoints: 0,
+  //         totalReturn: 0,
+  //         totalReturnAmount: 0,
+  //         registrationAt: this.getDate(),
+  //       };
+  //       console.log('registrationData',registrationData);
+  //       this.userService.userRegistration(registrationData, this.router.url);
+  //     } else {
+  //       console.log('OTP not matched or closed dialog');
+  //     }
+  //   });
+  // }
+
+  getDate() {
+    var today = new Date();
+    let month =
+      today.getMonth() + 1 > 9
+        ? today.getMonth() + 1
+        : '0' + (today.getMonth() + 1);
+    let dateRn =
+      today.getDate() + 1 > 9
+        ? today.getDate() + 1
+        : '0' + (today.getDate() + 1);
+    var date = today.getFullYear() + '-' + month + '-' + dateRn;
+    return date;
+  }
+
+  initVerificationForm(){
+    this.verificationForm = this.fb.group({
+      code1: ['', Validators.required],
+      code2: ['', Validators.required],
+      code3: ['', Validators.required],
+      code4: ['', Validators.required],
     });
+  }
 
-    dialogRef.afterClosed().subscribe((dialogResult) => {
+  nextStep(event, step: number): void {
+    if (this.verificationForm.valid) {
+      this.onSubmit();
+    }
+    const prevElement = document.getElementById('code' + (step - 1));
+    const nextElement = document.getElementById('code' + (step + 1));
+    if (event.code === 'Backspace' && event.target.value === '') {
+      // event.target.parentElement.parentElement.children[step - 2 > 0 ? step - 2 : 0].children[0].value = ''
+      if (prevElement) {
+        prevElement.focus();
+        return;
+      }
+    } else {
+      if (nextElement) {
+        nextElement.focus();
+        return;
+      } else {
 
-      if (dialogResult.regProgress) {
-        console.log('OTP matched');
-        this.spinner.show();
+      }
+    }
+
+
+  }
+
+  onSubmit(): void {
+    if (this.verificationForm.invalid) {
+      return;
+    }
+    const code = this.verificationForm.value.code1 +
+      this.verificationForm.value.code2 +
+      this.verificationForm.value.code3 +
+      this.verificationForm.value.code4
+
+    this.verifyOtpCode(code);
+
+  }
+
+  verifyOtpCode(code: string) {
+    if (this.generatedOtpCode) {
+      if (code === this.generatedOtpCode) {
+        console.log("Otp matched")
         const registrationData = {
           fullName: null,
           phoneNo: this.mPhoneNumber,
@@ -219,24 +283,86 @@ export class RegistrationDialogComponent implements OnInit {
         console.log('registrationData',registrationData);
         this.userService.userRegistration(registrationData, this.router.url);
       } else {
-        console.log('OTP not matched or closed dialog');
+        this.uiService.wrong('Your OTP code is incorrect!');
       }
-    });
+    } else {
+      this.uiService.wrong('Your OTP code is expired! Please try again');
+    }
   }
 
-  getDate() {
-    var today = new Date();
-    let month =
-      today.getMonth() + 1 > 9
-        ? today.getMonth() + 1
-        : '0' + (today.getMonth() + 1);
-    let dateRn =
-      today.getDate() + 1 > 9
-        ? today.getDate() + 1
-        : '0' + (today.getDate() + 1);
-    var date = today.getFullYear() + '-' + month + '-' + dateRn;
-    return date;
+  focused(step) {
+    if (step === 2) {
+      if (this.verificationForm.controls.code1.value === '') {
+        document.getElementById('code1').focus();
+      }
+    }
+    if (step === 3) {
+      if (this.verificationForm.controls.code1.value === '' || this.verificationForm.controls.code2.value === '') {
+        document.getElementById('code2').focus();
+      }
+    }
+
+    if (step === 4) {
+      if (this.verificationForm.controls.code1.value === '' || this.verificationForm.controls.code2.value === '' || this.verificationForm.controls.code3.value === '') {
+        document.getElementById('code3').focus();
+      }
+    }
   }
+
+  paste(event) {
+    const clipboardData = event.clipboardData;
+    const pastedText = clipboardData.getData('text');
+    this.verificationForm.setValue({
+      code1: pastedText.charAt(0),
+      code2: pastedText.charAt(1),
+      code3: pastedText.charAt(2),
+      code4: pastedText.charAt(3)
+    });
+    this.onSubmit();
+  }
+
+  countResendTime(time?) {
+    const count = (num) => () => {
+      this.countDown = num;
+      num = num === 0 ? 0 : num - 1;
+      if (num <= 0) {
+        clearInterval(this.timeInstance);
+        this.countDown = 0;
+      }
+    };
+
+    this.timeInstance = setInterval(count(time), 1000);
+  }
+
+  countOtpExpireTime(time: number) {
+    const count = (num) => () => {
+      this.expireCountDown = num;
+      num = num === 0 ? 0 : num - 1;
+      if (num <= 0) {
+        clearInterval(this.timeInstanceExpire);
+        this.expireCountDown = 0;
+        this.generatedOtpCode = null;
+      }
+    };
+
+    this.timeInstanceExpire = setInterval(count(time), 1000);
+  }
+
+  resendLoginCode() {
+    clearInterval(this.timeInstance);
+    clearInterval(this.timeInstanceExpire);
+    this.sendLoginCode();
+  }
+
+  sendLoginCode() {
+    // Create Message Data
+    const finalPhoneNo = this.mPhoneNumber;
+    this.generatedOtpCode = this.utilsService.getRandomOtpCode6();
+    // Sent Message
+    this.sentSingleBulkSms(finalPhoneNo);
+  }
+
+
   ngOnDestroy() {}
 
 }

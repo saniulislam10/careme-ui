@@ -135,13 +135,6 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'request-order',
-        loadChildren: () =>
-          import('./order/request-order/request-order.module').then(
-            (m) => m.RequestOrderModule
-          ),
-      },
-      {
         path: 'abandoned-cart',
         loadChildren: () =>
           import('./order/abandoned-cart/abandoned-cart.module').then(

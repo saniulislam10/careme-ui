@@ -1,3 +1,4 @@
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AdminAuthComponent} from './admin-auth.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
+        MatCheckboxModule,
         ReactiveFormsModule,
         MatIconModule,
         NgxSpinnerModule,

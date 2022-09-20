@@ -9,40 +9,36 @@
 
 
   <div class="content">
-    <div class="left">
-      <div class="img-placeholder">
-        <img src="/assets/images/png/login.png" alt="">
-      </div>
-    </div>
-
     <div class="right">
       <div class="card">
         <div class="top-tittle">
-          <h1>Admin Login</h1>
-          <p>Enter your details bellow to continue</p>
+          <div class="img-placeholder">
+            <img src="/assets/brand/logo-white.svg" alt="fortune tech">
+          </div>
         </div>
         <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
-          <mat-form-field class="mat-data-input-field" appearance="outline">
+          <mat-form-field class="mat-data-input-field">
             <mat-label>Username</mat-label>
             <input type="text" formControlName="username" matInput placeholder="Enter your username...">
             <mat-icon matSuffix>person</mat-icon>
             <mat-error>This field is required</mat-error>
           </mat-form-field>
 
-          <mat-form-field class="mat-data-input-field" appearance="outline">
+          <mat-form-field class="mat-data-input-field">
             <mat-label>Password</mat-label>
-            <input formControlName="password" type="password" matInput placeholder="Enter your password...">
-            <mat-icon matSuffix>lock</mat-icon>
+            <input formControlName="password" [type]="visibility ? 'text' : 'password'" matInput placeholder="Enter your password...">
+            <mat-icon matSuffix (click)="visibilityChange()">{{visibility ? 'visibility_off': 'visibility'}}</mat-icon>
             <mat-error>This field is required</mat-error>
           </mat-form-field>
 
           <div class="submit-area">
-            <div class="forget-pass-link">
-              <a routerLink="/reset-password">Forget Password?</a>
+            <div class="remember">
+              <mat-checkbox>Remember</mat-checkbox>
+              <button class="btn-login" mat-raised-button color="primary" type="submit">Login</button>
             </div>
-            <button class="btn-login" mat-raised-button color="primary" type="submit">Login</button>
           </div>
 
+          <a routerLink="/reset-password">Forget Password?</a>
         </form>
       </div>
     </div>

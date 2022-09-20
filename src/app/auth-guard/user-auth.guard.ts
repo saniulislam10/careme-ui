@@ -1,3 +1,4 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
@@ -10,7 +11,8 @@ import {environment} from '../../environments/environment';
 export class UserAuthGuard implements CanActivate {
 
   constructor(
-    private userService: UserService, private router: Router
+    private userService: UserService, private router: Router,
+    private msg: NzMessageService
   ) {
   }
 
@@ -19,7 +21,8 @@ export class UserAuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const isUser = this.userService.getUserStatus();
     if (!isUser) {
-      this.router.navigate([environment.userLoginUrl]);
+      this.msg.create('warning', 'please login first');
+      this.router.navigate([environment.appBaseUrl]);
     }
     return isUser;
   }
