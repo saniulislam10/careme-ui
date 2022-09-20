@@ -31,6 +31,7 @@ import { NzStatisticModule } from 'ng-zorro-antd/statistic';
     NzInputModule,
     MyOrdersRoutingModule,
     NzStatisticModule,
+    NzCardModule,
   ],
 })
 export class MyOrdersModule {}

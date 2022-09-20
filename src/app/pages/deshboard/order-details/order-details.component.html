@@ -1,137 +1,137 @@
-<div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 256 }">
-  <div nz-col nzSpan="12">
-    <nz-divider nzText="Delivery Info" nzOrientation="left"></nz-divider>
-    <ul nz-list [nzDataSource]="list" [nzSplit]="false" nzSize="small">
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <a>: Pathao</a>
-          </nz-list-item-action>
-        </ul>
-        Shipped By
-      </li>
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <a>: 1KG</a>
-          </nz-list-item-action>
-        </ul>
-        Weight
-      </li>
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <a>: 120TK</a>
-          </nz-list-item-action>
-        </ul>
-        Shipping Cost
-      </li>
-    </ul>
+<div nz-row [nzGutter]="16">
+  <div nz-col nzSpan="24">
+    <div class="heading-title">
+      <h2>Order Details</h2>
+    </div>
   </div>
-
-  <div nz-col nzSpan="12">
-    <nz-divider nzText="Shipping Info" nzOrientation="left"></nz-divider>
-    <ul nz-list [nzDataSource]="list" [nzSplit]="false" nzSize="small">
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <span>{{ order?.name ? order.name : order?.user?.fullName }}</span>
-          </nz-list-item-action>
-        </ul>
-        Name
-      </li>
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <span>{{
-              order?.phoneNo ? order.phoneNo : order?.user?.phoneNo
-            }}</span>
-          </nz-list-item-action>
-        </ul>
-        Phone No
-      </li>
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <span>{{ order?.user?.email }}</span>
-          </nz-list-item-action>
-        </ul>
-        Email
-      </li>
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <span>{{ order?.shippingAddress }}</span>
-          </nz-list-item-action>
-        </ul>
-        Address
-      </li>
-    </ul>
+  <div nz-col nzSpan="24">
+    <nz-card class="order-details" nzSize="small">
+      <div nz-row>
+        <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 8 }">
+          <h3>Order Informations</h3>
+          <table>
+            <tbody>
+              <tr>
+                <td>Shipped by</td>
+                <td>:</td>
+                <td>Pathao</td>
+              </tr>
+              <tr>
+                <td>Weight</td>
+                <td>:</td>
+                <td>1 KG</td>
+              </tr>
+              <tr>
+                <td>Shipping Cost</td>
+                <td>:</td>
+                <td>120 Tk</td>
+              </tr>
+              <tr>
+                <td>Paid By</td>
+                <td>:</td>
+                <td>bKash (120 Tk)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 8 }">
+          <h3>Shipping Informations</h3>
+          <table>
+            <tbody>
+              <tr>
+                <td>Name</td>
+                <td>:</td>
+                <td>{{ order?.name ? order.name : order?.user?.fullName }}</td>
+              </tr>
+              <tr>
+                <td>Phone No</td>
+                <td>:</td>
+                <td>
+                  {{ order?.phoneNo ? order.phoneNo : order?.user?.phoneNo }}
+                </td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>:</td>
+                <td>{{ order?.user?.email }}</td>
+              </tr>
+              <tr>
+                <td>Address</td>
+                <td>:</td>
+                <td>{{ order?.shippingAddress }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </nz-card>
   </div>
 </div>
 
-<nz-table
-  style="margin: 30px 0px"
-  #innerTable
-  [nzData]="listOfChildrenData"
-  nzSize="middle"
-  [nzShowPagination]="false"
->
-  <thead>
-    <tr>
-      <th>
-        <a style="font-size: 20px">SO - {{ order?.orderId }}</a>
-        <br />
-        <span style="font-size: 15px">
-          Date : {{ order?.createdAt | date: "short" }}
-        </span>
-      </th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th><a class="pay-order">Pay now</a></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of innerTable.data; let i = index">
-      <td>
-        <img
-          nz-image
-          style="width: 100px"
-          [nzSrc]="
-            setThumbnailImage(data.product)
-              ? setThumbnailImage(data.product)
-              : '/assets/images/placeholder/test.png'
-          "
-          alt=""
-        />
-      </td>
-      <td>
-        <a
-          [routerLink]="['../../order-single-product-details', order._id, i]"
-          >{{ data.product.name }}</a
-        >
-        <br />{{ data.sku }}
-      </td>
-      <td>Qty : {{ data.quantity }}</td>
-      <td>Total : {{ data.price }}</td>
-      <td>Advance : {{ data.advance }}TK</td>
-      <td>
-        <a class="status">{{ data.status | orderStatus }}</a>
-      </td>
-      <td class="instock">
-        Estimated Delivery by <br /><span>{{
-          data.deliveryDate | date: "short"
-        }}</span>
-      </td>
-      <td>
-        <a class="order-status">{{
-          data.product.status | productOrderStatus
-        }}</a>
-      </td>
-    </tr>
-  </tbody>
-</nz-table>
+<div class="order-list" nz-row [nzGutter]="16">
+  <div nz-col nzSpan="24">
+    <nz-card nzSize="small">
+      <nz-table
+        #innerTable
+        [nzData]="listOfChildrenData"
+        [nzShowPagination]="false"
+        nzSize="small"
+      >
+        <thead style="background: transparent">
+          <tr>
+            <th class="orderid">
+              <h2>SO - {{ order?.orderId }}</h2>
+              <h4>{{ order?.createdAt | date: "short" }}</h4>
+            </th>
+            <th>Total Amount</th>
+            <th>Advance Amount</th>
+            <th>Payment Status</th>
+            <th></th>
+            <th><a class="track-order">Track Order</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of innerTable.data; let i = index">
+            <td>
+              <div class="product-details">
+                <img
+                  nz-image
+                  style="width: 80px"
+                  [nzSrc]="
+                    setThumbnailImage(data.product)
+                      ? setThumbnailImage(data.product)
+                      : '/assets/images/placeholder/test.png'
+                  "
+                  alt=""
+                />
+                <div class="producttitle">
+                  <h4>{{ data.product.name }}</h4>
+                  <span> SKU: {{ data.sku }} </span>
+                </div>
+              </div>
+            </td>
+            <td>
+              {{ data.quantity }} X {{ data.price }} =
+              {{ data.price * data.quantity }}
+            </td>
+            <td>{{ data.advance }}TK</td>
+            <td>
+              <span class="payment paid unpaid">
+                {{ data?.paymentStatus }}
+              </span>
+            </td>
+            <td class="estimated-time instock">
+              <h3>
+                Estimated Delivery by
+                <span>{{ data?.deliveryDate | date: "short" }}</span>
+              </h3>
+            </td>
+            <td class="order-status">
+              <span>{{ data.status | orderStatus }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+</div>

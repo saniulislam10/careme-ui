@@ -32,15 +32,17 @@
                 <h5>{{ data.date | date: "short" }}</h5>
               </a>
             </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td>
-              <nz-countdown [nzValue]="deadline"></nz-countdown>
+              <nz-countdown
+                [nzValueStyle]="{ fontSize: '18px', color: 'orange' }"
+                [nzValue]="deadline"
+              ></nz-countdown>
             </td>
-            <td>
-              <a class="pay-order">Pay To Confirmed</a>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="pay-order">
+              <a href="#">Pay To Confirmed!</a>
             </td>
           </tr>
           <tr [nzExpand]="data.expand">
@@ -63,9 +65,8 @@
                     <h3>{{ data?.name }}</h3>
                     <span>{{ data?.sku }}</span>
                   </td>
-                  <td>Qty : {{ data?.qty }}</td>
-                  <td>Total : {{ data?.total }}</td>
-                  <td>Advance : {{ data?.advance }}TK</td>
+                  <td>Total: {{ data?.total }} TK</td>
+                  <td>Advance: {{ data?.advance }} TK</td>
                   <td>
                     <span class="payment paid unpaid">
                       {{ data?.paymentStatus }}
@@ -78,7 +79,9 @@
                     </h3>
                   </td>
                   <td>
-                    <a class="order-status">{{ data?.orderStatus }}</a>
+                    <span class="order-status pending">{{
+                      data?.orderStatus
+                    }}</span>
                   </td>
                 </tr>
               </tbody>

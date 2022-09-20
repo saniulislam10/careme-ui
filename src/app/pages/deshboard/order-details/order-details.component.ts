@@ -21,16 +21,15 @@ interface ChildrenItemData {
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
-  styleUrls: ['./order-details.component.scss']
+  styleUrls: ['./order-details.component.scss'],
 })
 export class OrderDetailsComponent implements OnInit {
-
   list = [
     'Shipped',
     'Japanese princess to wed commoner.',
     'Australian walks 100km after outback crash.',
     'Man charged over missing wedding girl.',
-    'Los Angeles battles huge wildfires.'
+    'Los Angeles battles huge wildfires.',
   ];
 
   listOfChildrenData: ChildrenItemData[] = [];
@@ -42,8 +41,8 @@ export class OrderDetailsComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
@@ -55,15 +54,17 @@ export class OrderDetailsComponent implements OnInit {
     });
   }
 
-  getOrderById(id){
-    this.orderService.getOrderDetails(id)
-    .subscribe( res => {
-      this.order = res.data;
-      this.listOfChildrenData = this.order.orderedItems;
-      console.log(this.listOfChildrenData);
-    }, err => {
-      console.log(err);
-    })
+  getOrderById(id) {
+    this.orderService.getOrderDetails(id).subscribe(
+      (res) => {
+        this.order = res.data;
+        this.listOfChildrenData = this.order.orderedItems;
+        console.log(this.listOfChildrenData);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   setThumbnailImage(data) {
@@ -86,5 +87,4 @@ export class OrderDetailsComponent implements OnInit {
     }
     return allMedias;
   }
-
 }

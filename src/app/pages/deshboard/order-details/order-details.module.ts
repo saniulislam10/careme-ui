@@ -10,12 +10,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 @NgModule({
-  declarations: [
-    OrderDetailsComponent
-  ],
+  declarations: [OrderDetailsComponent],
   imports: [
     CommonModule,
     MatTooltipModule,
@@ -25,7 +23,8 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
     NzDividerModule,
     NzImageModule,
     PipesModule,
-    OrderDetailsRoutingModule
-  ]
+    OrderDetailsRoutingModule,
+    NzCardModule,
+  ],
 })
-export class OrderDetailsModule { }
+export class OrderDetailsModule {}
