@@ -1,82 +1,17 @@
-<div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 256 }">
-  <div nz-col nzSpan="12">
-    <nz-divider nzText="Delivery Info" nzOrientation="left"></nz-divider>
-    <ul nz-list [nzSplit]="false" nzSize="small">
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <a>: Pathao</a>
-          </nz-list-item-action>
-        </ul>
-        Shipped By
-      </li>
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <a>: 1KG</a>
-          </nz-list-item-action>
-        </ul>
-        Weight
-      </li>
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <a>: 120TK</a>
-          </nz-list-item-action>
-        </ul>
-        Shipping Cost
-      </li>
-    </ul>
-  </div>
-
-  <div nz-col nzSpan="12">
-    <nz-divider nzText="Shipping Info" nzOrientation="left"></nz-divider>
-    <ul nz-list [nzSplit]="false" nzSize="small">
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <span>{{order?.name ? order.name : order?.user?.fullName}}</span>
-          </nz-list-item-action>
-        </ul>
-        Name
-      </li>
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <span>{{order?.phoneNo ? order.phoneNo : order?.user?.phoneNo}}</span>
-          </nz-list-item-action>
-        </ul>
-        Phone No
-      </li>
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <span>{{order?.user?.email}}</span>
-          </nz-list-item-action>
-        </ul>
-        Email
-      </li>
-      <li nz-list-item nzNoFlex>
-        <ul nz-list-item-actions>
-          <nz-list-item-action>
-            <span>{{order?.shippingAddress}}</span>
-          </nz-list-item-action>
-        </ul>
-        Address
-      </li>
-    </ul>
-  </div>
-</div>
-
-
-<nz-table *ngIf="listOfChildrenData.length > 0" style="margin: 30px 0px" [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
+<nz-table
+  *ngIf="listOfChildrenData.length > 0"
+  style="margin: 30px 0px"
+  [nzData]="listOfChildrenData"
+  nzSize="middle"
+  [nzShowPagination]="false"
+>
   <thead>
     <tr>
       <th>
-        <a style="font-size: 20px">SO - {{order?.orderId}}</a>
-        <br>
+        <a style="font-size: 20px">SO - {{ order?.orderId }}</a>
+        <br />
         <span style="font-size: 15px">
-          Date : {{order?.createdAt | date : 'short'}}
+          Date : {{ order?.createdAt | date: "short" }}
         </span>
       </th>
       <th></th>
@@ -91,37 +26,65 @@
   <tbody>
     <tr *ngFor="let data of listOfChildrenData">
       <td>
-        <img nz-image style="width: 100px" [nzSrc]="data ? setThumbnailImage(data.product) : '/assets/images/placeholder/test.png'" alt="">
+        <img
+          nz-image
+          style="width: 100px"
+          [nzSrc]="
+            data
+              ? setThumbnailImage(data.product)
+              : '/assets/images/placeholder/test.png'
+          "
+          alt=""
+        />
       </td>
       <td>
-        <a>{{data.product.name}}</a>
-        <br>{{data.sku}}
+        <a>{{ data.product.name }}</a>
+        <br />{{ data.sku }}
       </td>
       <td>Qty : {{ data.quantity }}</td>
       <td>Total : {{ data.price }}</td>
       <td>Advance : {{ data.advance }}TK</td>
-      <td><a class="status">{{ data.status | productOrderStatus }}</a></td>
-      <td class="instock">Estimated Delivery by <br><span>{{ data.deliveryDate | date : 'short'}}</span></td>
       <td>
-        <button class="order-status" (click)="openReview(data.sku, data.product._id, order?.orderId)">Write a Review</button>
+        <a class="status">{{ data.status | productOrderStatus }}</a>
       </td>
-
+      <td class="instock">
+        Estimated Delivery by <br /><span>{{
+          data.deliveryDate | date: "short"
+        }}</span>
+      </td>
+      <td>
+        <button
+          class="order-status"
+          (click)="openReview(data.sku, data.product._id, order?.orderId)"
+        >
+          Write a Review
+        </button>
+      </td>
     </tr>
   </tbody>
 </nz-table>
 
+<nz-modal
+  [(nzVisible)]="isVisibleTop"
+  (nzOnOk)="handleOk()"
+  (nzOnCancel)="handleCancel()"
+  nzTitle="Write a Review"
+  nzMaskClosable
+>
+  <ng-container *nzModalContent>
+    <form [formGroup]="reviewForm" (ngSubmit)="handleOk()">
+      <textarea
+        nz-input
+        type="text"
+        placeholder="give your opinion about the product"
+        formControlName="reviewMessage"
+        nzAutosize
+      ></textarea>
+    </form>
+  </ng-container>
+</nz-modal>
 
-        <nz-modal [(nzVisible)]="isVisibleTop" (nzOnOk)="handleOk()" (nzOnCancel)="handleCancel()" nzTitle="Write a Review" nzMaskClosable>
-          <ng-container  *nzModalContent>
-            <form [formGroup]="reviewForm" (ngSubmit)="handleOk()">
-              <textarea nz-input type="text" placeholder="give your opinion about the product" formControlName="reviewMessage" nzAutosize></textarea>
-            </form>
-          </ng-container>
-
-        </nz-modal>
-
-
-<div style="margin: 40px 0px;">
+<div style="margin: 40px 0px">
   <nz-steps [nzCurrent]="0">
     <nz-step nzTitle="Payment Pending"></nz-step>
     <nz-step nzTitle="Waiting for confirmation"></nz-step>
@@ -129,25 +92,31 @@
     <nz-step nzTitle="Paid"></nz-step>
   </nz-steps>
   <ng-template #progressTemplate let-dot let-status="status" let-index="index">
-    <span nz-popover nzPopoverContent="steps {{ index }} status: {{ status }}" style="margin-left: -100%;">
+    <span
+      nz-popover
+      nzPopoverContent="steps {{ index }} status: {{ status }}"
+      style="margin-left: -100%"
+    >
       <ng-template [ngTemplateOutlet]="dot"></ng-template>
     </span>
   </ng-template>
 </div>
 <div class="timeline-items">
-  <h3 >Order Timeline</h3>
+  <h3>Order Timeline</h3>
   <nz-timeline [nzMode]="mode" nzReverse="true">
-    <nz-timeline-item class="timeline-item" *ngFor="let data of [1,2,3,4]; let i=index" [nzLabel]="currentDate | date : 'short'">
-      <span style="font-size: 20px">
-        Pending
-      </span>
-      <br>
+    <nz-timeline-item
+      class="timeline-item"
+      *ngFor="let data of [1, 2, 3, 4]; let i = index"
+      [nzLabel]="currentDate | date: 'short'"
+    >
+      <span style="font-size: 20px"> Pending </span>
+      <br />
       <span>
-        Thank you for placing your order at Care me.
-        We will start placing your order after payment is complete.
+        Thank you for placing your order at Care me. We will start placing your
+        order after payment is complete.
       </span>
-      <br>
-      <button class="return-button" *ngIf="i===1">Return & Refund</button>
+      <br />
+      <button class="return-button" *ngIf="i === 1">Return & Refund</button>
     </nz-timeline-item>
   </nz-timeline>
 </div>

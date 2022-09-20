@@ -3,7 +3,7 @@
 </div>
 
 <nz-card class="ticket-main" nzSize="small">
-  <nz-tabset [nzTabBarExtraContent]="extraTemplate">
+  <nz-tabset [nzTabBarExtraContent]="ticketTemplate">
     <nz-tab nzTitle="Tickets">
       <nz-table #fixedTable nzSize="small" [nzData]="listOfData">
         <thead>
@@ -99,7 +99,7 @@
       </nz-table>
     </nz-tab>
   </nz-tabset>
-  <ng-template #extraTemplate>
+  <ng-template #ticketTemplate>
     <input nz-input placeholder="Search here" [(ngModel)]="value" />
   </ng-template>
 </nz-card>

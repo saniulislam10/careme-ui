@@ -3,38 +3,60 @@ form nz-form-item {
   margin-bottom: 8px;
 }
 
-.instock{
-  color : rgb(252, 173, 47);
-  span{
-    color : green;
+.estimated-time {
+  h3 {
+    font-weight: 300;
+  }
+  h3 span {
+    color: #fcad2f;
+    font-weight: 600;
   }
 }
-.status{
-  color : red;
+.estimated-time.instock {
+  h3 span {
+    font-weight: 600;
+    color: green;
+  }
+}
+.payment {
   border: 1px solid rgb(56, 56, 56);
   border-radius: 25px;
   text-align: center;
-  padding: 5px;
+  padding: 5px 15px;
+  font-style: italic;
+  font-size: 12px;
 }
-.order-status{
-  color : black;
+.payment.paid {
+  background: #eeeeee;
+  border: #ddd;
+}
+.order-status {
+  color: black;
   text-align: center;
   background-color: rgb(208, 208, 208);
   height: 100%;
   width: 100%;
 }
-.pay-order{
-  color : white;
+.pay-order {
+  border: 1px solid green;
+  color: white;
   text-align: center;
-  padding: 10px;
+  padding: 10px 30px;
   background-color: green;
-  cursor: pointer;
+  transition: 0.3s;
+  float: right;
+  border-radius: 3px;
 }
-.pay-order:hover{
-  color : green;
-  text-align: center;
-  padding: 10px;
-  background: none;
-  border: 2px solid green;
-  cursor: pointer;
+.pay-order:hover {
+  color: green;
+  background: transparent;
+}
+.order-id {
+  h2 {
+    font-size: 18px;
+    color: rgb(236, 84, 203);
+  }
+  h5 {
+    font-size: 12px;
+  }
 }

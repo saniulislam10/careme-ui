@@ -35,7 +35,7 @@
       <li nz-list-item nzNoFlex>
         <ul nz-list-item-actions>
           <nz-list-item-action>
-            <span>{{order?.name ? order.name : order?.user?.fullName}}</span>
+            <span>{{ order?.name ? order.name : order?.user?.fullName }}</span>
           </nz-list-item-action>
         </ul>
         Name
@@ -43,7 +43,9 @@
       <li nz-list-item nzNoFlex>
         <ul nz-list-item-actions>
           <nz-list-item-action>
-            <span>{{order?.phoneNo ? order.phoneNo : order?.user?.phoneNo}}</span>
+            <span>{{
+              order?.phoneNo ? order.phoneNo : order?.user?.phoneNo
+            }}</span>
           </nz-list-item-action>
         </ul>
         Phone No
@@ -51,7 +53,7 @@
       <li nz-list-item nzNoFlex>
         <ul nz-list-item-actions>
           <nz-list-item-action>
-            <span>{{order?.user?.email}}</span>
+            <span>{{ order?.user?.email }}</span>
           </nz-list-item-action>
         </ul>
         Email
@@ -59,7 +61,7 @@
       <li nz-list-item nzNoFlex>
         <ul nz-list-item-actions>
           <nz-list-item-action>
-            <span>{{order?.shippingAddress}}</span>
+            <span>{{ order?.shippingAddress }}</span>
           </nz-list-item-action>
         </ul>
         Address
@@ -68,15 +70,20 @@
   </div>
 </div>
 
-
-<nz-table style="margin: 30px 0px" #innerTable [nzData]="listOfChildrenData" nzSize="middle" [nzShowPagination]="false">
+<nz-table
+  style="margin: 30px 0px"
+  #innerTable
+  [nzData]="listOfChildrenData"
+  nzSize="middle"
+  [nzShowPagination]="false"
+>
   <thead>
     <tr>
       <th>
-        <a style="font-size: 20px">SO - {{order?.orderId}}</a>
-        <br>
+        <a style="font-size: 20px">SO - {{ order?.orderId }}</a>
+        <br />
         <span style="font-size: 15px">
-          Date : {{order?.createdAt | date : 'short'}}
+          Date : {{ order?.createdAt | date: "short" }}
         </span>
       </th>
       <th></th>
@@ -89,21 +96,41 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of innerTable.data; let i =index">
+    <tr *ngFor="let data of innerTable.data; let i = index">
       <td>
-        <img nz-image style="width: 100px" [nzSrc]="setThumbnailImage(data.product) ? setThumbnailImage(data.product) : '/assets/images/placeholder/test.png'" alt="">
+        <img
+          nz-image
+          style="width: 100px"
+          [nzSrc]="
+            setThumbnailImage(data.product)
+              ? setThumbnailImage(data.product)
+              : '/assets/images/placeholder/test.png'
+          "
+          alt=""
+        />
       </td>
       <td>
-        <a [routerLink]="['../../order-single-product-details', order._id, i]">{{data.product.name}}</a>
-        <br>{{data.sku}}
+        <a
+          [routerLink]="['../../order-single-product-details', order._id, i]"
+          >{{ data.product.name }}</a
+        >
+        <br />{{ data.sku }}
       </td>
       <td>Qty : {{ data.quantity }}</td>
       <td>Total : {{ data.price }}</td>
       <td>Advance : {{ data.advance }}TK</td>
-      <td><a class="status">{{ data.status | orderStatus }}</a></td>
-      <td class="instock">Estimated Delivery by <br><span>{{ data.deliveryDate | date : 'short'}}</span></td>
       <td>
-        <a class="order-status">{{ data.product.status | productOrderStatus}}</a>
+        <a class="status">{{ data.status | orderStatus }}</a>
+      </td>
+      <td class="instock">
+        Estimated Delivery by <br /><span>{{
+          data.deliveryDate | date: "short"
+        }}</span>
+      </td>
+      <td>
+        <a class="order-status">{{
+          data.product.status | productOrderStatus
+        }}</a>
       </td>
     </tr>
   </tbody>

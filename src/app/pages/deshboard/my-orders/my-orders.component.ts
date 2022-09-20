@@ -31,9 +31,10 @@ interface ChildrenItemData {
 @Component({
   selector: 'app-my-orders',
   templateUrl: './my-orders.component.html',
-  styleUrls: ['./my-orders.component.scss']
+  styleUrls: ['./my-orders.component.scss'],
 })
 export class MyOrdersComponent implements OnInit {
+  deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
 
   tabs = ['All', 'To Pay', 'To Ship', 'To Receive'];
   listOfParentData: ParentItemData[] = [];
@@ -48,14 +49,14 @@ export class MyOrdersComponent implements OnInit {
     private orderService: OrderService,
     private userService: UserService,
     private message: NzMessageService,
-    private userDataService: UserDataService,) { }
+    private userDataService: UserDataService
+  ) {}
 
   ngOnInit(): void {
     this.getUser();
     this.getAllOrders();
-    console.log(this.listOfParentData)
-    console.log(this.listOfChildrenData)
-
+    console.log(this.listOfParentData);
+    console.log(this.listOfChildrenData);
   }
   setItems() {
     console.log(this.orders);
@@ -65,12 +66,12 @@ export class MyOrdersComponent implements OnInit {
         id: this.orders[i]._id,
         orderId: this.orders[i].orderId,
         date: this.orders[i].createdAt,
-        expand: i === 0 ? true : false
+        expand: i === 0 ? true : false,
       });
       for (let j = 0; j < this.orders[i].orderedItems.length; j++) {
         let data = this.orders[i].orderedItems;
         this.listOfChildrenData.push({
-          name: "Product Name",
+          name: 'Product Name',
           sku: data[j].sku,
           variantName: data[j].variant,
           qty: data[j].quantity,
@@ -80,7 +81,7 @@ export class MyOrdersComponent implements OnInit {
           advanceInTaka: data[j].advance,
           paymentStatus: 'Payment Status',
           orderStatus: 'Pending',
-          deliveryDate: data[j].deliveryDateTo
+          deliveryDate: data[j].deliveryDateTo,
         });
       }
     }
@@ -88,43 +89,42 @@ export class MyOrdersComponent implements OnInit {
 
   getUser() {
     this.userStatus = this.userService.getUserStatus();
-    if(this.userStatus){
+    if (this.userStatus) {
       this.getLoggedInUserInfo();
-    }else{
+    } else {
       let type = 'error';
       this.message.create(type, `Please Login First`);
     }
   }
 
   getLoggedInUserInfo() {
-    if(this.userStatus){
-      this.userDataService.getLoggedInUserInfo()
-        .subscribe(res => {
+    if (this.userStatus) {
+      this.userDataService.getLoggedInUserInfo().subscribe(
+        (res) => {
           this.user = res.data;
           this.id = this.user._id;
-        }, error => {
+        },
+        (error) => {
           console.log(error);
-        });
+        }
+      );
     }
   }
 
   getAllOrders() {
-    this.orderService.getAllOrdersByUser(null, null, this.id)
-    .subscribe(res => {
-      this.orders = res.data;
-      this.setItems();
-      console.log(res.data);
-    }, err => {
-      console.log(err);
-    })
+    this.orderService.getAllOrdersByUser(null, null, this.id).subscribe(
+      (res) => {
+        this.orders = res.data;
+        this.setItems();
+        console.log(res.data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
-
-
-  onTabSelect(tab){
+  onTabSelect(tab) {
     console.log(tab);
   }
-
-
 }
-
