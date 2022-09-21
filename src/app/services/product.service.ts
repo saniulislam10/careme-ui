@@ -46,6 +46,7 @@ export class ProductService {
   }
 
   updateProductQuantityById(data: OrderItem) {
+    console.log(data);
     return this.http.post<{ message: string }>(
       API_PRODUCT + 'update-product-quantity-by-id',
       data

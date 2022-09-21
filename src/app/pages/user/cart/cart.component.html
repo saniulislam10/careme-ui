@@ -112,76 +112,75 @@
                             <h3>{{ data?.variant[0]?.variant }}</h3>
                             <mat-icon (click)="showModal(gi,di,data?.variant[0])">edit</mat-icon>
                           </div>
-
-                          <nz-modal  [(nzVisible)]="isVisible"  nzTitle="Edit Option" okText="ok" cancelText="cancel"
-                            (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzWidth]="1000">
-                            <ng-container *nzModalContent>
-                              <nz-table [nzFrontPagination]="false"  #basicTable [nzData]="vCarts[sGI].data">
-                                <thead>
-                                  <tr>
-                                    <th>Name</th>
-                                    <th *ngFor="let item of basicTable.data[sPI]?.product.variants" >{{item}}</th>
-                                    <th>Price</th>
-                                    <th>Tax</th>
-                                    <th>Total</th>
-                                    <th>Advance</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>{{ basicTable.data[sPI]?.product.name }}</td>
-                                    <td *ngFor="let variant of basicTable.data[sPI]?.product?.variants; let i=index">
-                                      <nz-select  [ngModel]="this.clickActive[i]" (ngModelChange)="onSelectVariant(basicTable.data[sPI].product, basicTable.data[sPI].product.sku,basicTable.data[sPI]?.product?.variants[i],sPI,i, $event)">
-                                        <nz-option  [nzValue]="x" [nzLabel]="option" *ngFor="let option of getOptions(basicTable.data[sPI]?.product?.options[i]); let x=index"></nz-option>
-                                      </nz-select>
-                                    </td>
-                                    <td>{{ selectedVariant?.variantPrice }}</td>
-                                    <td>{{ basicTable.data[sPI]?.product.tax ?  basicTable.data[sPI]?.product.tax : 0}}</td>
-                                    <td>{{ basicTable.data[sPI]?.product.tax + selectedVariant?.variantPrice }}</td>
-                                    <td>{{ selectedVariant?.variantQuantity === 0 ? basicTable.data[sPI]?.product.partialPayment : '0' }}</td>
-                                    <!-- <td>{{data.address}}</td> -->
-                                    <!-- <td>
-                                      <a>Action 一 {{data.name}}</a>
-                                      <nz-divider nzType="vertical"></nz-divider>
-                                      <a>Delete</a>
-                                    </td> -->
-                                  </tr>
-                                </tbody>
-                              </nz-table>
-                            </ng-container>
-                            <div *nzModalFooter>
-                              <span></span>
-                              <button nz-button nzType="default" (click)="handleCancel()">
-                                Cancel
-                              </button>
-                              <button [disabled]="disableApplyButton" nz-button nzType="primary" (click)="handleOk(data)" [nzLoading]="isConfirmLoading">
-                                {{disableApplyButton ? "Out of Stock" : "Apply"}}
-                              </button>
-                            </div>
-                          </nz-modal>
-                          <div *ngIf="data?.product?.canEarnPoints">
-                            Earn
-                            <span style="color: #15d100">+{{
-                              data?.product
-                              | coin
-                              : "earn"
-                              : data?.selectedQty
-                              : data.variant[0].variantPrice
-                              }}
-                            </span>
-                          </div>
-                          <div *ngIf="data.product.canRedeemPoints" style="padding-left: 6px">
-                            or redeem
-                            <span style="color: #e62e04">-{{
-                              data?.product
-                              | coin
-                              : "redeem"
-                              : data?.selectedQty
-                              : data.variant[0].variantPrice
-                              }}</span>
-                          </div>
                         </h3>
                       </div>
+                      <div *ngIf="data?.product?.canEarnPoints">
+                        Earn
+                        <span style="color: #15d100">+{{
+                          data?.product
+                          | coin
+                          : "earn"
+                          : data?.selectedQty
+                          : data.variant[0].variantPrice
+                          }}
+                        </span>
+                      </div>
+                      <div *ngIf="data.product.canRedeemPoints" style="padding-left: 6px">
+                        or redeem
+                        <span style="color: #e62e04">-{{
+                          data?.product
+                          | coin
+                          : "redeem"
+                          : data?.selectedQty
+                          : data.variant[0].variantPrice
+                          }}</span>
+                      </div>
+                      <nz-modal  [(nzVisible)]="isVisible"  nzTitle="Edit Option" okText="ok" cancelText="cancel"
+                        (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzWidth]="1000">
+                        <ng-container *nzModalContent>
+                          <nz-table [nzFrontPagination]="false"  #basicTable [nzData]="vCarts[sGI].data">
+                            <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th *ngFor="let item of basicTable.data[sPI]?.product.variants" >{{item}}</th>
+                                <th>Price</th>
+                                <th>Tax</th>
+                                <th>Total</th>
+                                <th>Advance</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{{ basicTable.data[sPI]?.product.name }}</td>
+                                <td *ngFor="let variant of basicTable.data[sPI]?.product?.variants; let i=index">
+                                  <nz-select  [ngModel]="this.clickActive[i]" (ngModelChange)="onSelectVariant(basicTable.data[sPI].product, basicTable.data[sPI].product.sku,basicTable.data[sPI]?.product?.variants[i],sPI,i, $event)">
+                                    <nz-option  [nzValue]="x" [nzLabel]="option" *ngFor="let option of getOptions(basicTable.data[sPI]?.product?.options[i]); let x=index"></nz-option>
+                                  </nz-select>
+                                </td>
+                                <td>{{ selectedVariant?.variantPrice }}</td>
+                                <td>{{ basicTable.data[sPI]?.product.tax ?  basicTable.data[sPI]?.product.tax : 0}}</td>
+                                <td>{{ basicTable.data[sPI]?.product.tax + selectedVariant?.variantPrice }}</td>
+                                <td>{{ selectedVariant?.variantQuantity === 0 ? basicTable.data[sPI]?.product.partialPayment : '0' }}</td>
+                                <!-- <td>{{data.address}}</td> -->
+                                <!-- <td>
+                                  <a>Action 一 {{data.name}}</a>
+                                  <nz-divider nzType="vertical"></nz-divider>
+                                  <a>Delete</a>
+                                </td> -->
+                              </tr>
+                            </tbody>
+                          </nz-table>
+                        </ng-container>
+                        <div *nzModalFooter>
+                          <span></span>
+                          <button nz-button nzType="default" (click)="handleCancel()">
+                            Cancel
+                          </button>
+                          <button [disabled]="disableApplyButton" nz-button nzType="primary" (click)="handleOk(data)" [nzLoading]="isConfirmLoading">
+                            {{disableApplyButton ? "Out of Stock" : "Apply"}}
+                          </button>
+                        </div>
+                      </nz-modal>
                       <!---stock-->
                     </div>
                     <!---product-delivery-->

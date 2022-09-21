@@ -1,95 +1,62 @@
-import {User} from './user';
-import {Product} from './product';
-import { ProductOrderStatus } from '../enum/product-order-status';
-
 export interface OrderItem {
-  product?: string | Product;
-  deletedProduct?: any;
-  deleteDeliveryStatus?: string;
-  price?: number;
-  tax?: number;
-  discountType?: number;
-  discountAmount?: number;
-  quantity?: number;
-  status?: number | ProductOrderStatus;
-  orderType?: string;
-  vendor?:string;
-  variant?: string;
-  image?: string;
+  productId: string | any,
+  name: string,
+  slug: string,
+  price: Number,
+  image: string,
+  sku: string,
+  quantity: Number,
+  tax: Number,
+  vendorId: string | any,
+  vendorName: string,
+  brandId: string | any,
+  brandName: string,
+  productTypeId: string,
+  productTypeName: string,
+  orderType: string,
+  variant: string,
+  advanceType?: string,
+  advanceAmount: Number,
+  deliveryStatus: Number,
+  deliveryDateFrom: Date,
+  deliveryDateTo: Date,
+  paymentStatus: Number,
+  paidAmount?: Number,
+  paymentMethod?: String,
+  shippingFee?: Number,
+  returnPeriod: Number,
+  earnedAmount: Number,
+  redeemedAmount: Number
+}
+export interface OrderStatusTimeline {
+  status:  string,
+  adminInfo:string,
+  dateTime: Date,
+  statusNote: string,
+  sku: string,
 }
 
 
 export interface Order {
-  comments?: string[];
-  orderStatusTimeline?:any[],
   _id?: string;
-  orderId?: string;
-  checkoutDate?: Date;
-  deliveryStatus: number;
-  subTotal?: number;
-  shippingFee?: number;
-  discount?: number;
-  redeemAmount?: number;
-  paidAmount?: number;
-  totalAmount?: number;
-  totalAmountWithDiscount?: number;
-  deletedProduct?: boolean;
-  refundAmount?: number;
-  paymentMethod?: string;
-  user?: any;
-  name: string;
-  phoneNo: string;
-  email: string;
-  alternativePhoneNo?: string;
-  city: string;
-  area: string;
-  postCode: string;
-  shippingAddress: string | any;
-  couponId?: string | any;
-  couponValue?: number;
-  orderTimeline?: OrderTimeline;
-  hasPreorderItem?: boolean;
-  orderedItems: any[];
-  orderNotes?: string;
-  sessionkey?: string;
-  smsTemp?: object;
-  select?: boolean;
-  paymentStatus?: any;
-  statusNote?: string;
-  vendors?:string[];
-  images?: string[];
-  createdAt? : Date;
-}
+  orderId?: string,
+  checkoutDate: Date,
+  orderedItems: OrderItem[] | any,
+  canceledAmount: Number,
+  refundedAmount: Number,
+  paymentMethod?: string,
+  userId: string | any,
 
-export interface OrderTimeline {
-  others: boolean;
-  othersData: Date;
-  orderPlaced: boolean;
-  orderPlacedDate: Date;
-  orderProcessing: boolean;
-  orderProcessingDate: Date;
-  orderPickedByDeliveryMan: boolean;
-  orderPickedByDeliveryManDate: Date;
-  orderDelivered: boolean;
-  orderDeliveredDate: Date;
-}
-
-
-export interface OrderedItems {
-  product?: string;
-  price?: number;
-  sku?: string;
-  quantity?: number;
-  tax?: number;
-  status?: number;
-  orderType?: string;
-  variant?: string;
-  advance?: number;
-  discountType?: string;
-  discountAmount?: number;
-  vendorName?: string;
-  deliveryDateTo?: Date;
-  deliveryDateFrom?: Date;
+  name: string,
+  phoneNo: string,
+  address: string,
+  gender: string,
+  email: string,
+  shippingAddress: string,
+  shippingPhoneNo: string,
+  orderStatusTimeline: OrderStatusTimeline[],
+  comments: string[],
+  orderNotes: string
 }
 
 

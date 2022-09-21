@@ -64,8 +64,7 @@
                 <small>{{ data?.checkoutDate | date }}</small></span>
             </div>
             <div class="sidebar-info-right">
-              <h4>{{ data?.totalAmount }} TK</h4>
-              <span>Pending</span>
+              <h4>{{ data?.totalAmount ?  data?.totalAmount : 0}} TK</h4>
             </div>
           </li>
         </ul>
@@ -77,7 +76,7 @@
     <form [formGroup]="dataForm">
       <div class="order-id-area">
         <h4>#{{ order?.orderId }}</h4>
-        <span>{{order?.orderTimeline.orderPlacedDate | date: "short"}}</span>
+        <span>{{order?.checkoutDate | date: "short"}}</span>
       </div>
 
       <!---order-details-main-area-->
@@ -105,8 +104,9 @@
               (click)="openDialog()" type="button">
               Invoice
             </a>
-            <nz-select style="margin-right:10px" ngModel="selcted" [nzDisabled]="!selectedIds?.length" formControlName="selected">
-              <nz-option *ngFor="let data of productOrderStatus"  [nzLabel]="data.viewValue" [nzValue]="data.value">
+            <nz-select style="margin-right:10px" ngModel="selected" [nzDisabled]="!selectedIds?.length"
+              formControlName="selected">
+              <nz-option *ngFor="let data of productOrderStatus" [nzLabel]="data.viewValue" [nzValue]="data.value">
               </nz-option>
             </nz-select>
             <input style="margin-right:10px" nz-input type="text" formControlName="statusNote"
@@ -121,17 +121,17 @@
                   <mat-checkbox></mat-checkbox>
                 </th>
                 <th nzLeft nzWidth="25px">Image</th>
-                <th >Item Name</th>
+                <th>Item Name</th>
                 <th nzWidth="100px">Price</th>
-                <th >Discount(-)</th>
-                <th >Tax(+)</th>
-                <th >Total</th>
-                <th >Advance</th>
-                <th >Status</th>
+                <th>Discount (-)</th>
+                <th>Tax (+)</th>
+                <th>Total</th>
+                <th>Advance</th>
+                <th nzWidth="100px">Status</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let data of columnTable.data">
+              <tr *ngFor="let data of columnTable.data; let i=index">
                 <td nzWidth="25px" nzLeft>
                   <mat-checkbox (change)="onCheckChange($event, i)"></mat-checkbox>
                 </td>
@@ -143,28 +143,31 @@
                     " [alt]="data.product.name" />
                 </td>
                 <td>
-                  <span class="text">
+                  <a target="_blank" [routerLink]="['../../../', 'product-details', data.product.slug]" class="text">
                     {{ data?.product.name }}
-                  </span>
-                    {{ data?.sku }}
+                  </a>
+                  {{ data?.sku }}
                 </td>
                 <td>
                   {{ data?.quantity }} X {{ data?.price }}
                 </td>
-                <td >0</td>
-                <td >
+                <td>0</td>
+                <td>
                   {{ data.tax ? data.tax : "0" }}
                 </td>
-                <td >
+                <td>
                   {{ getAmount(data) }}
                 </td>
-                <td >
+                <td>
                   <span [style]="order.paymentStatus !== 1 ? 'color:green' : 'color:orange'">{{ data?.advance }}</span>
                 </td>
-                <td  nzRight>
-                  <button style="padding: 10px; border: none; color: white" [class]="getStatusColor(data?.status)">
-                    {{ data?.status | productOrderStatus }}
-                  </button>
+                <td>
+                  <mat-form-field style="width: 100px" appearance="outline">
+                    <mat-select [(value)]="data.status" (selectionChange)="onStatusChange($event.value, order, data)">
+                      <mat-option  *ngFor="let option of productOrderStatus" [value]="option.value">{{option.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 </td>
               </tr>
             </tbody>
@@ -180,7 +183,7 @@
                       <h3>Sub Total</h3>
                     </div>
                     <div class="total-price">
-                      <h4>{{ order?.totalAmount - 120 }} TK</h4>
+                      <h4>{{ 0 - 120 }} TK</h4>
                     </div>
                   </li>
                   <li>
@@ -197,7 +200,7 @@
                     </div>
                     <div class="total-price">
                       <h4 class="color-red">
-                        (-){{ order?.redeemAmount }} PTS
+                        (-){{ 0 }} PTS
                       </h4>
                     </div>
                   </li>
@@ -216,11 +219,7 @@
                     </div>
                     <div class="total-price">
                       <h4>
-                        {{
-                        order?.totalAmount -
-                        order?.paidAmount +
-                        (order?.paidAmount ? order?.paidAmount : 0)
-                        }}
+                        {{0}}
                         TK
                       </h4>
                     </div>
@@ -230,7 +229,7 @@
                       <h3>Paid</h3>
                     </div>
                     <div class="total-price">
-                      <h4 class="color-red">(-) {{ order?.paidAmount }}TK</h4>
+                      <h4 class="color-red">(-) {{ 0 }}TK</h4>
                     </div>
                   </li>
                   <li>
@@ -247,7 +246,7 @@
                       <h3>Due Amount</h3>
                     </div>
                     <div class="total-price">
-                      <h4>{{ order?.totalAmount - order?.paidAmount }} TK</h4>
+                      <h4>{{ 0 }} TK</h4>
                     </div>
                   </li>
                   <li>
@@ -285,19 +284,7 @@
                       <h3>Total Due =</h3>
                     </div>
                     <div class="total-price">
-                      <h4>
-                        {{
-                        order?.totalAmount -
-                        order?.paidAmount -
-                        (calculateCancelTotal()
-                        ? calculateCancelTotal() +
-                        (order?.totalAmount === calculateCancelTotal()
-                        ? 120
-                        : 0)
-                        : 0)
-                        }}
-                        TK
-                      </h4>
+                      <h4>{{calculateCancelTotal()}}</h4>
                     </div>
                   </li>
                 </ul>
@@ -441,7 +428,7 @@
                   </div>
                   <div class="customer-info-right">
                     <h4>
-                      {{ order?.name ? order.name : order?.user.fullName }}
+                      {{ order?.name }}
                     </h4>
                   </div>
                 </li>
@@ -451,9 +438,7 @@
                   </div>
                   <div class="customer-info-right">
                     <h4>
-                      {{
-                      order?.phoneNo ? order.phoneNo : order?.user?.phoneNo
-                      }}
+                      {{order?.phoneNo}}
                     </h4>
                   </div>
                 </li>
@@ -462,7 +447,7 @@
                     <h3>Email:</h3>
                   </div>
                   <div class="customer-info-right">
-                    <a href="#">{{ order?.user?.email }}</a>
+                    <a href="#">{{ order?.email }}</a>
                   </div>
                 </li>
                 <li>
@@ -471,14 +456,6 @@
                   </div>
                   <div class="customer-info-right">
                     <h3>{{ order?.shippingAddress }}</h3>
-                  </div>
-                </li>
-                <li>
-                  <div class="customer-info-left">
-                    <h3>Total Order:</h3>
-                  </div>
-                  <div class="customer-info-right">
-                    <h4>{{ order?.user?.checkouts.length }}</h4>
                   </div>
                 </li>
               </ul>

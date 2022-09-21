@@ -139,7 +139,7 @@ export class EditOrderComponent implements OnInit {
     console.log(this.dataForm.value);
     this.order.name = this.dataForm.value.fullName;
     this.order.phoneNo = this.dataForm.value.phoneNo;
-    this.order.user.email = this.dataForm.value.email;
+    this.order.email = this.dataForm.value.email;
     this.order.shippingAddress = this.dataForm.value.shippingAddress;
     this.order.orderNotes = this.dataForm.value.message;
     this.order.orderedItems = this.products;
@@ -157,9 +157,9 @@ export class EditOrderComponent implements OnInit {
   patchValues() {
     // this.dataForm.patchValue(this.order);
     this.dataForm.patchValue({
-      fullName: this.order?.name ? this.order.name : this.order?.user?.fullName,
-      phoneNo: this.order?.phoneNo ? this.order.phoneNo : this.order?.user?.phoneNo,
-      email: this.order?.user?.email,
+      fullName: this.order?.name,
+      phoneNo: this.order?.phoneNo,
+      email: this.order.email,
       shippingAddress: this.order?.shippingAddress,
       message: this.order?.orderNotes
     });

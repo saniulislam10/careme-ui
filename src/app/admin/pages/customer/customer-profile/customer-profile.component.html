@@ -97,7 +97,7 @@
           <!---customer-profile-bottom-info-->
           <div class="customer-profile-bottom-info">
             <a href="#">Last Order</a>
-            <h3>{{user?.checkouts ? (user.checkouts[user.checkouts.length-1].orderTimeline?.orderPlacedDate | date) :
+            <h3>{{user?.checkouts ? (user.checkouts[user.checkouts.length-1].checkoutDate | date) :
               'No order' }}</h3>
             <h4>From Draft orders</h4>
           </div>
@@ -520,7 +520,7 @@
                           <!-- {{(data | price: 'discountPercentage') > 0 ? '(' + (data | price: 'discountPercentage') + '% OFF)' : ''}} -->
                         </p>
                       </div>
-                      
+
                     </li>
                   </ul>
                   <!-- END SEARCH -->

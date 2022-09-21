@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { OrderedItems } from './../../../interfaces/order';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';

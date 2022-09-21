@@ -23,7 +23,7 @@ export class BulkSmsService {
    * URL: http://login.bulksmsbd.com/default.php
    */
 
-  sentSingleBulkSms(phoneNo: string, message: string) {
+  sentSingleBulkSms(phoneNo: String, message: string) {
     return this.httpClient.post<{ success: boolean; message: string }>(API_BULK_SMS + 'send-bulk-sms', {phoneNo, message});
   }
 

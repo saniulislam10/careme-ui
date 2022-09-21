@@ -464,89 +464,24 @@ export class CustomerProfileComponent implements OnInit {
       return;
     }
 
-    this.placeOrder();
+    // this.placeOrder();
   }
 
   /* Place Order */
 
-  placeOrder() {
-    const products = this.productCart.map((m) => {
-      const product = m.product as Product;
-      return {
-        product: product._id,
-        price: this.pricePipe.transform(
-          product as Product,
-          'priceWithDiscount'
-        ) as number,
-        discountType: product.discountType,
-        discountAmount: product.discountAmount,
-        quantity: m.selectedQty,
-        orderType: 'regular',
-      } as OrderItem;
-    });
-
-    this.order = {
-      paymentMethod: 'this.selectedPaymentType',
-      checkoutDate: new Date(),
-      name: this.dataForm.value.fullName,
-      phoneNo: this.dataForm.value.phoneNo,
-      email: this.dataForm.value.email,
-      alternativePhoneNo: this.dataForm.value.phoneNo,
-      area: this.dataForm.value.address,
-      city: this.dataForm.value.deliveryOption,
-      postCode: '1212',
-      shippingAddress: this.dataForm.value.shippingAddress,
-      deliveryStatus: OrderStatus.PENDING,
-      shippingFee: this.totalDeliveryFee,
-      subTotal: (this.cartSubtotal-this.totalDeliveryFee)+this.totalDiscount*1,
-      discount: this.totalDiscount,
-      totalAmount: this.cartSubtotal ,
-      totalAmountWithDiscount:this.cartSubtotal,
-      deletedProduct: false,
-      refundAmount: 0,
-      paymentStatus: PaymentStatus.UNPAID,
-      hasPreorderItem: false,
-      orderTimeline: {
-        others: false,
-        othersData: null,
-        orderPlaced: false,
-        orderPlacedDate: new Date(),
-        orderProcessing: false,
-        orderProcessingDate: null,
-        orderPickedByDeliveryMan: false,
-        orderPickedByDeliveryManDate: null,
-        orderDelivered: false,
-        orderDeliveredDate: null,
-      },
-      // couponId: this.couponData?._id,
-      couponValue: null,
-      orderedItems: products,
-      orderNotes: this.dataForm.value.message,
-      sessionkey: null,
-    };
-
-    this.orderService.placeOrder(this.order).subscribe((res) => {
-      this.createOrderHide();
-      this.saveUserInfo();
-      this.uiService.success(res.message);
-    });
-
-    // this.openConfirmOrderDialog();
-  }
-
   getTotalSpent(){
     let totalAmountSpent = 0;
-    for (let i=0; i < this.user?.checkouts.length; i++){
-      totalAmountSpent += this.user?.checkouts[i].totalAmount;
-    }
+    // for (let i=0; i < this.user?.checkouts.length; i++){
+    //   totalAmountSpent += this.user?.checkouts[i].totalAmount ?;
+    // }
     return totalAmountSpent;
   }
 
   getAverageOrderValue(){
     let totalAmountSpent = 0;
-    for (let i=0; i < this.user?.checkouts?.length; i++){
-      totalAmountSpent += this.user?.checkouts[i].totalAmount;
-    }
+    // for (let i=0; i < this.user?.checkouts?.length; i++){
+    //   totalAmountSpent += this.user?.checkouts[i].totalAmount;
+    // }
     return Math.floor(totalAmountSpent/this.user?.checkouts?.length);
   }
 
