@@ -8,18 +8,18 @@ form nz-form-item {
     font-weight: 300;
   }
   h3 span {
-    color: #fcad2f;
+    color: #db8700;
     font-weight: 600;
   }
 }
 .estimated-time.instock {
   h3 span {
-    font-weight: 600;
+    font-weight: 400;
     color: green;
   }
 }
 .payment {
-  border: 1px solid rgb(56, 56, 56);
+  border: 1px dashed rgb(56, 56, 56);
   border-radius: 25px;
   text-align: center;
   padding: 5px 15px;
@@ -27,29 +27,41 @@ form nz-form-item {
   font-size: 12px;
 }
 .payment.paid {
-  background: #eeeeee;
-  border: #ddd;
+  border: 1px dashed rgba(0, 128, 0, 0.336);
+  color: rgb(0 128 0 / 82%);
 }
 .order-status {
-  color: black;
-  text-align: center;
-  background-color: rgb(208, 208, 208);
-  height: 100%;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 150px;
+  float: right;
+}
+.order-status.pending {
+  border: 1px dashed #f7a103;
+  color: #f7a103;
 }
 .pay-order {
-  border: 1px solid green;
-  color: white;
-  text-align: center;
-  padding: 10px 30px;
-  background-color: green;
-  transition: 0.3s;
-  float: right;
-  border-radius: 3px;
-}
-.pay-order:hover {
-  color: green;
-  background: transparent;
+  width: 180px;
+  padding: 0 !important;
+  a {
+    text-transform: uppercase;
+    width: 100%;
+    min-height: 50px;
+    color: #da5894;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+    transition: 0.3s;
+  }
+  a:hover {
+    background: #da5894;
+    color: #fff;
+  }
 }
 .order-id {
   h2 {
