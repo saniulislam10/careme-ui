@@ -67,7 +67,6 @@
     </nz-card>
   </div>
 </div>
-
 <div class="order-list" nz-row [nzGutter]="16">
   <div nz-col nzSpan="24">
     <nz-card nzSize="small">
@@ -80,8 +79,10 @@
         <thead style="background: transparent">
           <tr>
             <th class="orderid">
-              <h2>SO - {{ order?.orderId }}</h2>
-              <h4>{{ order?.createdAt | date: "short" }}</h4>
+              <a>
+                <h2>SO - {{ order?.orderId }}</h2>
+                <h4>{{ order?.createdAt | date: "short" }}</h4>
+              </a>
             </th>
             <th>Total Amount</th>
             <th>Advance Amount</th>
@@ -132,6 +133,62 @@
           </tr>
         </tbody>
       </nz-table>
+      <div class="single-order-summary">
+        <div>
+          <button
+            nz-button
+            nzType="outline"
+            nzSize="large"
+            (click)="showModal()"
+          >
+            Raise an Issue
+          </button>
+          <nz-modal
+            [(nzVisible)]="isVisible"
+            nzTitle="Raise an Issue"
+            (nzOnCancel)="handleCancel()"
+            (nzOnOk)="handleOk()"
+            nzOkText="Send"
+          >
+            <ng-container *nzModalContent>
+              <div class="ticketinfo"></div>
+              <div class="issue-form">
+                <form>
+                  <div class="inputgroup">
+                    <label>Issue Type</label>
+                  </div>
+                </form>
+              </div>
+            </ng-container>
+          </nz-modal>
+        </div>
+        <div class="order-summary">
+          <nz-list>
+            <nz-list-item>
+              <h2>Sub-Total</h2>
+              <h3>08098</h3>
+            </nz-list-item>
+            <nz-list-item>
+              <span>Coupon Code</span>
+              <p>(-) 183 TK</p>
+            </nz-list-item>
+            <nz-list-item>
+              <span>Points Redeem</span>
+              <p>(-) 0 TK</p>
+            </nz-list-item>
+            <nz-list-item>
+              <span>Shipping Charge</span>
+              <p>120 TK</p>
+            </nz-list-item>
+          </nz-list>
+          <nz-list>
+            <nz-list-item>
+              <h2>Amount to pay</h2>
+              <h3>3157 TK</h3>
+            </nz-list-item>
+          </nz-list>
+        </div>
+      </div>
     </nz-card>
   </div>
 </div>

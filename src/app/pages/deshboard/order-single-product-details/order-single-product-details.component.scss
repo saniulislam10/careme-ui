@@ -1,63 +1,98 @@
 @import "src/theme/_variables.scss";
 
-.order-delivery-status{
-  background-color: rgb(14, 113, 5);
-  color: white;
-  padding: 10px;
-  text-align: center;
-}
-form nz-form-item {
-  margin-right: 16px;
-  margin-bottom: 8px;
-}
-
-.instock{
-  color : rgb(252, 173, 47);
-  span{
-    color : green;
+.single-inv {
+  h2 {
+    font-size: 20px;
+    margin-bottom: 15px !important;
   }
 }
-.status{
-  color : red;
-  border: 1px solid rgb(56, 56, 56);
-  border-radius: 25px;
-  text-align: center;
-  padding: 5px;
-}
-.order-status{
-  border: none;
-  color: white;
-  padding: 10px;
-  background-color: $color-primary;
-}
-.order-status:hover{
-  border: 2px solid $color-primary;
-  color: $color-primary;
-  padding: 10px;
-  background-color: white;
-}
-.return-button{
-  margin-top: 20px;
-  border: none;
-  color: white;
-  padding: 10px;
-  background-color: $table-sm-color;
-}
-.return-button:hover{
-  cursor: pointer;
-  border: 2px solid $table-sm-color;
-  color: white;
-  padding: 10px;
-  background-color: $table-sm-color;
-}
-.timeline-items{
-  position: relative;
-  height: auto;
-  justify-content: start;
-  width: 40%;
-  h3{
-    padding: 30px;
-    margin-bottom: 20px;
-    font-size: 25px;
+.invoice-card {
+  .invoice-table {
+    ul {
+      li {
+        list-style: none;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        .invoice-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0;
+          border-bottom: 1px solid #ddd;
+          .invoice-id {
+            padding-left: 15px;
+            span {
+              font-size: 12px;
+            }
+          }
+          > h3 {
+            background: rgb(78, 78, 248);
+            color: #fff;
+            padding: 15px 30px;
+            text-transform: uppercase;
+          }
+        }
+        .invoice-progress {
+          padding: 15px;
+          .invoice-progress_step {
+            padding: 15px 300px;
+            text-align: center;
+            h1 {
+              margin-bottom: 30px !important;
+              font-size: 18px;
+              span {
+                color: orangered;
+              }
+            }
+            .invoice-progress_timeline {
+              margin: 15px 0 0 0;
+              padding: 30px 0 0 0;
+              border-radius: 3px;
+              background: #f9f9f9;
+            }
+          }
+        }
+        .invoice-product {
+          margin: 15px;
+          padding: 15px;
+          border-radius: 5px;
+          border: 1px solid #ddd;
+          display: flex;
+          align-items: center;
+          text-align: center;
+          .image {
+            flex: 1;
+          }
+          .details {
+            flex: 3;
+            text-align: left;
+          }
+          .total {
+            flex: 2;
+          }
+          .advanch {
+            flex: 2;
+          }
+          .paystatus {
+            flex: 2;
+          }
+          .status {
+            flex: 1;
+          }
+          .returnpreiod {
+            flex: 1;
+            a {
+              padding: 5px 15px;
+              border: 1px dashed rgb(255, 0, 0);
+              background: #ff0000;
+              color: #fff;
+              h5 {
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

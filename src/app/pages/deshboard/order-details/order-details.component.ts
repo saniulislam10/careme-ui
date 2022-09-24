@@ -44,6 +44,19 @@ export class OrderDetailsComponent implements OnInit {
     private router: Router
   ) {}
 
+  isVisible = false;
+  showModal(): void {
+    this.isVisible = true;
+  }
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.isVisible = false;
+  }
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
+  }
+
   ngOnInit(): void {
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
       this.id = param.get('id');

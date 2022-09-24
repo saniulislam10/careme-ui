@@ -50,3 +50,12 @@
   text-transform: uppercase;
   text-align: center;
 }
+.single-order-summary {
+  margin: 30px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  .order-summary {
+    min-width: 30%;
+  }
+}
