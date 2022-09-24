@@ -65,7 +65,7 @@ export class MyOrdersComponent implements OnInit {
         key: i,
         id: this.orders[i]._id,
         orderId: this.orders[i].orderId,
-        date: this.orders[i].createdAt,
+        date: this.orders[i].checkoutDate,
         expand: i === 0 ? true : false,
       });
       for (let j = 0; j < this.orders[i].orderedItems.length; j++) {

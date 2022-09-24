@@ -23,7 +23,7 @@ export interface Product {
   select?: boolean;
   totalRatings?: number;
   totalAnsweredQuestions?: number;
-  brand: string;
+  brand: string | any;
   vendor?: string;
   canPartialPayment?: boolean;
   partialPaymentType?: number;
@@ -50,6 +50,6 @@ export interface Product {
   orderType?: string;
   maxQuantity?:number;
   advance?: number;
-  productType?: ProductType[];
+  productType?: ProductType[] | any[];
   expand?: boolean;
 }

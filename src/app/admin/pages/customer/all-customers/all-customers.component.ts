@@ -379,9 +379,9 @@ selectedIds: string[] = [];
 
    totalSpent(index){
      let total =0;
-     for(let i=0; i<this.customers[index].checkouts.length; i++){
-       total += this.customers[index].checkouts[i].totalAmount;
-     }
+    //  for(let i=0; i<this.customers[index].checkouts.length; i++){
+    //    total += this.customers[index].checkouts[i].totalAmount;
+    //  }
      return total;
    }
  /**** export pop up */

@@ -131,16 +131,14 @@ export class CreateInvoiceComponent implements OnInit {
       // invoiceDate: this.dataForm.value.invoiceDate,
       invoiceDate: new Date(),
       //salesPerson: this.dataForm.value.salesPerson ?this.dataForm.value.salesPerson: 'shamim'  ,
-      customerName: this.order.name
-        ? this.order.name
-        : this.order.user.fullName,
-      billingAddress: this.order.user?.addresses[0]
-        ? this.order.user?.addresses[0]
-        : 'Dhaka',
+      customerName: this.order.name,
+      // billingAddress: this.order.user?.addresses[0]
+      //   ? this.order.user?.addresses[0]
+      //   : 'Dhaka',
       shippingAddress: this.order.shippingAddress,
       shippingCarrier: this.dataForm.value.shippingCarrier,
       products: this.invoiceProducts,
-      paidAmount: this.order.paidAmount,
+      // paidAmount: this.order.paidAmount,
       subTotal: this.calculateSubTotal(),
       deliveryFee: this.dataForm.value.deliveryFee,
       adjustment: this.dataForm.value.adjustment,
@@ -148,7 +146,7 @@ export class CreateInvoiceComponent implements OnInit {
         this.calculateSubTotal() +
         this.dataForm.value.deliveryFee -
         this.dataForm.value.adjustment,
-      deliveryStatus: ProductOrderStatus.INVOICED,
+      deliveryStatus: ProductOrderStatus.SHIPPING,
       paymentStatus: PaymentStatus.UNPAID,
     };
 

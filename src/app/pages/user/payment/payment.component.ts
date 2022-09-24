@@ -369,16 +369,7 @@ export class PaymentComponent implements OnInit {
    */
   onSubmitOrder() {
     if (this.agreeConditions) {
-      // this.saveOrderInformationToTemp();
-      // if(this.advancePaid){
-        if (this.carts[0].requestProduct) {
-          this.placeOrderForRequest();
-        } else {
-          this.placeOrder();
-        }
-      // }else{
-        // this.uiService.warn("Please pay advance payment");
-      // }
+        // this.placeOrder();
     } else {
       this.uiService.warn('Please agree to terms and conditions');
     }
@@ -389,10 +380,10 @@ export class PaymentComponent implements OnInit {
     );
   }
   placeOrder() {
-    const orderItem =  this.getProductsFromCart()
+    const orderItem =  this.getProductsFromCart();
     const TempVendors = orderItem.map((item)=>{
       return (
-        item.vendor
+        item.vendorId
       )
     })
     let vendors = [...new Set(TempVendors)];
@@ -463,134 +454,59 @@ export class PaymentComponent implements OnInit {
     );
   }
 
-  placeOrderForRequest() {
-    let cartItems: any[] = [];
-    let subTotal = 0;
-    for (let i = 0; i < this.carts.length; i++) {
-      cartItems[i] = {
-        name: this.carts[i].name,
-        quantity: this.carts[i].selectedQty,
-        price: this.carts[i].price,
-        image: this.carts[i].image,
-        link: this.carts[i].link,
-        status: OrderStatus.PENDING,
-      };
-      subTotal += this.carts[i].price * this.carts[i].selectedQty;
-    }
-    this.order = {
-      checkoutDate: new Date(),
-      deliveryDate: null,
-      deliveryStatus: OrderStatus.PENDING,
-      subTotal: Math.floor(subTotal),
-      shippingFee: 0,
-      discount: 0,
-      redeemAmount: 0,
-      earnAmount: this.earnPointsTotal(),
-      paidAmount: this.advanceTotal(),
-      totalAmount: this.cartTotalForRequest(),
-      totalAmountWithDiscount: this.cartTotal(),
-      deletedProduct: false,
-      refundAmount: 0,
-      paymentMethod: 'Cash On Delivery',
-      paymentStatus: PaymentStatus.UNPAID,
-      city: this.selectedAddress.city,
-      phoneNo: this.selectedAddress.phone,
-      name: this.user.fullName,
-      address: this.user.address,
-      shippingAddress:
-        this.selectedAddress.address +
-        ', ' +
-        this.selectedAddress.thana.name +
-        ', ' +
-        this.selectedAddress.city.name +
-        ', ' +
-        this.selectedAddress.zila.name,
-      orderTimeline: {
-        others: false,
-        othersData: null,
-        orderPlaced: false,
-        orderPlacedDate: new Date(),
-        orderProcessing: false,
-        orderProcessingDate: null,
-        orderPickedByDeliveryMan: false,
-        orderPickedByDeliveryManDate: null,
-        orderDelivered: false,
-        orderDeliveredDate: null,
-      },
-      hasPreorderItem: false,
-      orderedItems: cartItems,
-      orderNotes: this.getUserOrderText(),
-      requestOrder: true,
-      comments: [],
-      orderStatusTimeline: [],
-    };
+  // getProductsFromCart() {
+  //   const products = this.carts.map((m) => {
+  //     const product = m.product as Product;
+  //     let orderPrice = 0;
+  //     let sku = '';
+  //     let advance = 0;
+  //     let vendor;
 
-    this.orderService.placeOrderRequest(this.order).subscribe(
-      (res) => {
-        this.uiService.success(res.message);
-        this.storageSession.removeSessionData(DATABASE_KEY.orderMessage);
-        this.router.navigate([environment.appBaseUrl, 'confirm', res.orderId]);
-      },
-      (err) => {
-        this.uiService.warn('Order Could not be placed');
-        console.log(err);
-      }
-    );
-  }
+  //     if (product.hasVariant === true) {
+  //       orderPrice = this.pricePipe.transform(
+  //         product as Product,
+  //         'priceWithoutTax',
+  //         1,
+  //         m.variant[0].variantPrice
+  //       );
+  //       vendor = m.variant[0].variantVendorName,
 
-  getProductsFromCart() {
-    const products = this.carts.map((m) => {
-      const product = m.product as Product;
-      let orderPrice = 0;
-      let sku = '';
-      let advance = 0;
-      let vendor;
+  //       console.log("this is vendor name: ", vendor)
 
-      if (product.hasVariant === true) {
-        orderPrice = this.pricePipe.transform(
-          product as Product,
-          'priceWithoutTax',
-          1,
-          m.variant[0].variantPrice
-        );
-        vendor = m.variant[0].variantVendorName,
+  //       sku = m.variant[0].variantSku;
+  //       advance = this.advanceForSingle(
+  //         product,
+  //         m.selectedQty,
+  //         m.variant[0].variantPrice
+  //       );
+  //     } else {
+  //       orderPrice = product.sellingPrice;
+  //       sku = product.sku;
+  //       advance = this.advanceForSingle(
+  //         product,
+  //         m.selectedQty
+  //       );
+  //     }
 
-        console.log("this is vendor name: ", vendor)
+  //     console.log("For tax", product);
 
-        sku = m.variant[0].variantSku;
-        advance = this.advanceForSingle(
-          product,
-          m.selectedQty,
-          m.variant[0].variantPrice
-        );
-      } else {
-        orderPrice = product.sellingPrice;
-        sku = product.sku;
-        advance = this.advanceForSingle(
-          product,
-          m.selectedQty
-        );
-      }
-
-      console.log("For tax", product);
-
-      return {
-        product: product._id,
-        price: orderPrice,
-        sku: sku,
-        vendor: vendor,
-        discountType: product.discountType,
-        discountAmount: product.discountAmount,
-        quantity: m.selectedQty,
-        tax: product.hasTax ? Math.round((product.tax * orderPrice) / 100): 0,
-        status: ProductOrderStatus.PENDING,
-        orderType: product?.quantity > 0 ? 'regular' : 'preorder',
-        advance: advance
-      } as OrderItem;
-    });
-    console.log("final product before,",products)
-    return products;
-  }
+  //     return {
+  //       product: product._id,
+  //       price: orderPrice,
+  //       sku: sku,
+  //       vendor: vendor,
+  //       discountType: product.discountType,
+  //       discountAmount: product.discountAmount,
+  //       quantity: m.selectedQty,
+  //       tax: product.hasTax ? Math.round((product.tax * orderPrice) / 100): 0,
+  //       status: ProductOrderStatus.PENDING,
+  //       orderType: product?.quantity > 0 ? 'regular' : 'preorder',
+  //       advance: advance
+  //     } as OrderItem;
+  //   });
+  //   console.log("final product before,",products)
+  //   return products;
+  // }
 
   changeAgreeConditions() {
     this.agreeConditions = !this.agreeConditions;

@@ -1,3 +1,4 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AddAddressComponent } from './add-new-address/add-address.component';
@@ -24,7 +25,7 @@ import { CoinPipe } from 'src/app/shared/pipes/coin.pipe';
 import { PricePipe } from 'src/app/shared/pipes/price.pipe';
 import { Product } from 'src/app/interfaces/product';
 import { ProductOrderStatus } from 'src/app/enum/product-order-status';
-import { OrderItem } from 'src/app/interfaces/order';
+import { Order, OrderItem } from 'src/app/interfaces/order';
 import { OrderStatus } from 'src/app/enum/order-status';
 import { PaymentStatus } from 'src/app/enum/payment-status';
 import { filter, map } from 'rxjs/operators';
@@ -56,11 +57,12 @@ export class NewShoppingInfoComponent implements OnInit {
     private bulkSmsService: BulkSmsService,
     private utilsService: UtilsService,
     private paymentSslService: PaymentSslService,
+    private msg: NzMessageService,
     @Inject(DOCUMENT) private document: Document
   ) { }
 
   user: User;
-  addressInfo : Address[] = [];
+  addressInfo: Address[] = [];
   // selectedAddress : any;
   clickActive = [];
   private subReload: Subscription;
@@ -74,7 +76,6 @@ export class NewShoppingInfoComponent implements OnInit {
   advance = 0;
   selectedAddress: Address;
   selectedPointsType: string;
-  order: any = null;
   advancePaid: boolean = false;
   agreeConditions: boolean = false;
   Vindex: number;
@@ -88,9 +89,9 @@ export class NewShoppingInfoComponent implements OnInit {
   orderType: string;
   ngOnInit(): void {
     this.reloadService.refreshAddress$
-    .subscribe(() => {
-      this.getUserAddress();
-    });
+      .subscribe(() => {
+        this.getUserAddress();
+      });
     this.getUserAddress();
     this.getCartsItems();
     this.getSelectedAddress();
@@ -107,7 +108,7 @@ export class NewShoppingInfoComponent implements OnInit {
    * Http Req Address
    */
 
-   private getLoggedInUserInfo() {
+  private getLoggedInUserInfo() {
     const select = '-password';
     this.userDataService.getLoggedInUserInfo(select)
       .subscribe(res => {
@@ -119,19 +120,19 @@ export class NewShoppingInfoComponent implements OnInit {
 
   private getUserAddress() {
     this.userDataService.getAllAddress()
-    .subscribe(res => {
-      this.addressInfo = res.data;
+      .subscribe(res => {
+        this.addressInfo = res.data;
 
-      if(this.selectedAddress){
-        const i = this.addressInfo.findIndex((f) => f._id == this.selectedAddress._id)
-        this.clickActive[i] = true;
-      }
+        if (this.selectedAddress) {
+          const i = this.addressInfo.findIndex((f) => f._id == this.selectedAddress._id)
+          this.clickActive[i] = true;
+        }
       }, err => {
         console.log(err);
       });
   }
 
-  deleteAddress(index){
+  deleteAddress(index) {
     this.userDataService.deleteAddress(this.addressInfo[index]._id)
       .subscribe(res => {
         console.log(res.message);
@@ -141,7 +142,7 @@ export class NewShoppingInfoComponent implements OnInit {
       });
   }
 
-  editAddress(data: Address){
+  editAddress(data: Address) {
     const dialogRef = this.dialog.open(AddAddressComponent, {
       data
     });
@@ -152,7 +153,7 @@ export class NewShoppingInfoComponent implements OnInit {
     });
   }
 
-  onSelectAddress(address, i){
+  onSelectAddress(address, i) {
     this.selectedAddress = address;
     console.log(this.selectedAddress);
     this.storageService.storeDataToSessionStorage(DATABASE_KEY.selectedShippingAddress, this.selectedAddress);
@@ -161,7 +162,7 @@ export class NewShoppingInfoComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    if(this.subReload){
+    if (this.subReload) {
       this.subReload.unsubscribe()
     }
     // this.subAddress.unsubscribe();
@@ -172,10 +173,10 @@ export class NewShoppingInfoComponent implements OnInit {
    * Http Req
    */
 
-   private getCartItemList() {
+  private getCartItemList() {
     this.cartService.getCartItemList().subscribe(
       (res) => {
-        this.carts = res.data.filter(f=>f.isSelected);
+        this.carts = res.data.filter(f => f.isSelected);
       },
       (error) => {
         console.log(error);
@@ -273,9 +274,9 @@ export class NewShoppingInfoComponent implements OnInit {
 
 
   cartSubTotalS(data): any {
-    if(data.product.hasVariant === true){
+    if (data.product.hasVariant === true) {
       return Math.floor(this.pricePipe.transform(data.product as Product, 'priceWithTax', data.selectedQty, data.variant[0].variantPrice) as number);
-    }else{
+    } else {
       return Math.floor(this.pricePipe.transform(data.product as Product, 'priceWithTax', data.selectedQty) as number);
     }
   }
@@ -325,7 +326,7 @@ export class NewShoppingInfoComponent implements OnInit {
     if (this.selectedPointsType === '1') {
       this.total -= this.redeemPointsTotal();
     }
-    return Math.floor(this.total+120) - this.getCouponAmount();
+    return Math.floor(this.total + 120) - this.getCouponAmount();
   }
 
   cartTotalForRequest() {
@@ -337,11 +338,11 @@ export class NewShoppingInfoComponent implements OnInit {
   }
 
   calculateTax(data, quantity) {
-    if(data.product.hasTax){
-      if(data.product?.hasVariant ){
-        return Math.round((data.variant[0].variantPrice*data.product.tax)/100) * quantity;
-      }else{
-        return Math.round((data.product.sellingPrice*data.product.tax)/100) * quantity;
+    if (data.product.hasTax) {
+      if (data.product?.hasVariant) {
+        return Math.round((data.variant[0].variantPrice * data.product.tax) / 100) * quantity;
+      } else {
+        return Math.round((data.product.sellingPrice * data.product.tax) / 100) * quantity;
       }
     }
     return 0
@@ -387,16 +388,16 @@ export class NewShoppingInfoComponent implements OnInit {
   //   return Math.floor(this.advance ? this.advance : 0);
   // }
 
-  advanceTotal(){
+  advanceTotal() {
     this.advance = 0;
-    for(let i=0; i< this.carts?.length; i++){
-      if(this.carts[i].variant.length > 0){
+    for (let i = 0; i < this.carts?.length; i++) {
+      if (this.carts[i].variant.length > 0) {
         const productVariant = this.carts[i].product.variantFormArray.find(f => f.variantSku === this.carts[i].variant[0].variantSku);
         if (this.carts[i].product.canPartialPayment && productVariant.variantQuantity === 0) {
           this.advance += this.advanceForSingle(this.carts[i].product, this.carts[i].selectedQty, this.carts[i].variant[0].variantPrice);
         }
-      }else{
-        this.advance += this.advanceForSingle(this.carts[i].product, this.carts[i].selectedQty );
+      } else {
+        this.advance += this.advanceForSingle(this.carts[i].product, this.carts[i].selectedQty);
       }
     }
     return this.advance;
@@ -444,14 +445,14 @@ export class NewShoppingInfoComponent implements OnInit {
     return pts;
   }
 
-  earnPointsTotal(){
+  earnPointsTotal() {
     let totalEarnPoints = 0;
-    for(let i=0; i< this.carts?.length; i++){
-      if(this.carts[i].variant.length > 0){
+    for (let i = 0; i < this.carts?.length; i++) {
+      if (this.carts[i].variant.length > 0) {
         totalEarnPoints += this.earnPointsForSingle(this.carts[i].product, this.carts[i].selectedQty, this.carts[i].variant[0].variantPrice);
 
-      }else{
-        totalEarnPoints += this.earnPointsForSingle(this.carts[i].product, this.carts[i].selectedQty );
+      } else {
+        totalEarnPoints += this.earnPointsForSingle(this.carts[i].product, this.carts[i].selectedQty);
       }
     }
     return Math.floor(totalEarnPoints);
@@ -464,70 +465,28 @@ export class NewShoppingInfoComponent implements OnInit {
     );
   }
   placeOrder() {
-    const orderItem =  this.getProductsFromCart()
-    const TempVendors = orderItem.map((item)=>{
-      return (
-        item.vendor
-      )
-    })
+    const orderItem = this.getProductsFromCart();
+    console.log(orderItem);
 
-    let vendors = [...new Set(TempVendors)];
-
-    console.log("address",this.selectedAddress)
-
-    this.order = {
+    let order: Order = {
       checkoutDate: new Date(),
-      deliveryDate: null,
-      deliveryStatus: OrderStatus.PENDING,
-      subTotal: this.cartSubTotal(),
-      shippingFee: 0,
-      discount: 0,
-      redeemAmount: this.redeemPointsTotal(),
-      earnAmount: this.earnPointsTotal(),
-      //paidAmount: this.advanceTotal(),
-      paidAmount: 0,
-      totalAmount: this.cartTotal(),
-      totalAmountWithDiscount: this.cartTotal(),
-      deletedProduct: false,
-      refundAmount: 0,
-      paymentMethod: 'Cash On Delivery',
-      paymentStatus: PaymentStatus.UNPAID,
-      city: this.selectedAddress.city,
-      phoneNo: this.selectedAddress.phone,
-      name: this.user.fullName,
-      address: this.user.address,
-      shippingAddress:
-        this.selectedAddress.address +
-        ', ' +
-        this.selectedAddress.thana.name +
-        ', ' +
-        this.selectedAddress.city.name +
-        ', ' +
-        this.selectedAddress.zila.name,
-      orderTimeline: {
-        others: false,
-        othersData: null,
-        orderPlaced: false,
-        orderPlacedDate: new Date(),
-        orderProcessing: false,
-        orderProcessingDate: null,
-        orderPickedByDeliveryMan: false,
-        orderPickedByDeliveryManDate: null,
-        orderDelivered: false,
-        orderDeliveredDate: null,
-      },
-      hasPreorderItem: false,
       orderedItems: orderItem,
-
-      vendors:vendors,
-      orderNotes: this.getUserOrderText(),
-      comments: [],
+      canceledAmount: 0,
+      refundedAmount: 0,
+      userId: this.user._id,
+      name: this.user.fullName ? this.user.fullName : 'No Name',
+      phoneNo: this.user.phoneNo,
+      address: this.user.address,
+      email: this.user.email ? this.user.email : 'No Email',
+      shippingAddress: this.selectedAddress.address + ', ' + this.selectedAddress.thana.name + ', ' + this.selectedAddress.city.name + ', ' + this.selectedAddress.zila.name,
+      shippingPhoneNo: this.selectedAddress.phone ? this.selectedAddress.phone : this.user.phoneNo,
       orderStatusTimeline: [],
-      sessionkey: null,
-      // productID:productID
+      comments: [],
+      orderNotes: this.getUserOrderText(),
+      gender: this.user.gender
     };
-
-    this.orderService.placeOrder(this.order).subscribe(
+    console.log(order);
+    this.orderService.placeOrder(order).subscribe(
       (res) => {
         this.uiService.success(res.message);
         this.storageSession.removeSessionData(DATABASE_KEY.orderMessage);
@@ -542,102 +501,27 @@ export class NewShoppingInfoComponent implements OnInit {
     );
   }
 
-  placeOrderForRequest() {
-    let cartItems: any[] = [];
-    let subTotal = 0;
-    for (let i = 0; i < this.carts.length; i++) {
-      cartItems[i] = {
-        name: this.carts[i].name,
-        quantity: this.carts[i].selectedQty,
-        price: this.carts[i].price,
-        image: this.carts[i].image,
-        link: this.carts[i].link,
-        status: OrderStatus.PENDING,
-      };
-      subTotal += this.carts[i].price * this.carts[i].selectedQty;
-    }
-    this.order = {
-      checkoutDate: new Date(),
-      deliveryDate: null,
-      deliveryStatus: OrderStatus.PENDING,
-      subTotal: Math.floor(subTotal),
-      shippingFee: 0,
-      discount: 0,
-      redeemAmount: 0,
-      earnAmount: this.earnPointsTotal(),
-      paidAmount: this.advanceTotal(),
-      totalAmount: this.cartTotalForRequest(),
-      totalAmountWithDiscount: this.cartTotal(),
-      deletedProduct: false,
-      refundAmount: 0,
-      paymentMethod: 'Cash On Delivery',
-      paymentStatus: PaymentStatus.UNPAID,
-      city: this.selectedAddress.city,
-      phoneNo: this.selectedAddress.phone,
-      name: this.user.fullName,
-      address: this.user.address,
-      shippingAddress:
-        this.selectedAddress.address +
-        ', ' +
-        this.selectedAddress.thana.name +
-        ', ' +
-        this.selectedAddress.city.name +
-        ', ' +
-        this.selectedAddress.zila.name,
-      orderTimeline: {
-        others: false,
-        othersData: null,
-        orderPlaced: false,
-        orderPlacedDate: new Date(),
-        orderProcessing: false,
-        orderProcessingDate: null,
-        orderPickedByDeliveryMan: false,
-        orderPickedByDeliveryManDate: null,
-        orderDelivered: false,
-        orderDeliveredDate: null,
-      },
-      hasPreorderItem: false,
-      orderedItems: cartItems,
-      orderNotes: this.getUserOrderText(),
-      requestOrder: true,
-      comments: [],
-      orderStatusTimeline: [],
-    };
-
-    this.orderService.placeOrderRequest(this.order).subscribe(
-      (res) => {
-        this.uiService.success(res.message);
-        this.storageSession.removeSessionData(DATABASE_KEY.orderMessage);
-        this.router.navigate([environment.appBaseUrl, 'confirm', res.orderId]);
-      },
-      (err) => {
-        this.uiService.warn('Order Could not be placed');
-        console.log(err);
-      }
-    );
-  }
-
   getProductsFromCart() {
+    console.log(this.carts);
+
     const products = this.carts.map((m) => {
       const product = m.product as Product;
       let image: any;
 
-
-
       if (product.hasVariant === true) {
-        product.variantFormArray.map((q,index)=>{
-          if(q.variantSku ==m.variant[0].variantSku){
-            return(
+        product.variantFormArray.map((q, index) => {
+          if (q.variantSku == m.variant[0].variantSku) {
+            return (
               this.Vindex = index,
               image = m.variant[0].image
-              )
-            }
-          })
+            )
+          }
+        })
 
-          this.v = (Object.values(product?.variantDataArray[this.Vindex]).toString()).replace(',','/')
-        }else{
-          this.v= "";
-        }
+        this.v = (Object.values(product?.variantDataArray[this.Vindex]).toString()).replace(',', '/')
+      } else {
+        this.v = "";
+      }
 
 
       let orderPrice = 0;
@@ -654,7 +538,7 @@ export class NewShoppingInfoComponent implements OnInit {
         );
         vendor = m.variant[0].variantVendorName,
 
-        sku = m.variant[0].variantSku;
+          sku = m.variant[0].variantSku;
 
         advance = this.advanceForSingle(
           product,
@@ -670,25 +554,35 @@ export class NewShoppingInfoComponent implements OnInit {
         );
       }
 
-      return {
-        product: product._id,
+      let orderedProduct : OrderItem = {
+        productId: product._id,
+        name: product.name,
+        slug: product.slug,
         price: orderPrice,
-        sku: sku,
-        vendor: vendor,
-        discountType: product.discountType,
-        discountAmount: product.discountAmount,
-        quantity: m.selectedQty,
-        variant: this.v,
         image: image,
-        tax: product.hasTax ? Math.round((product.tax * orderPrice) / 100): 0,
-        status: ProductOrderStatus.PENDING,
-        orderType: m.variant[0]?.variantQuantity>0 ? 'regular' : 'preorder',
-        advance: m.variant[0]?.variantQuantity>0 ? 0 : advance,
+        sku: sku,
+        quantity: m.selectedQty,
+        tax: product.hasTax ? Math.round((product.tax * orderPrice) / 100) : 0,
+        vendorId: vendor._id,
+        vendorName: vendor.name,
+        brandId: product.brand._id ,
+        brandName: product.brand.name,
+        productTypeId: product.productType[0]._id,
+        productTypeName: product.productType[0].name,
+        orderType: m.variant[0]?.variantQuantity > 0 ? 'regular' : 'preorder',
+        variant: this.v,
+        advanceAmount: m.variant[0]?.variantQuantity > 0 ? 0 : advance,
+        deliveryStatus: ProductOrderStatus.PENDING,
+        paymentStatus: PaymentStatus.PENDING,
         deliveryDateFrom: m.deliveryDateFrom,
         deliveryDateTo: m.deliveryDateTo,
-      } as OrderItem;
+        returnPeriod: undefined,
+        earnedAmount: undefined,
+        redeemedAmount: undefined
+      };
+      return orderedProduct;
     });
-    console.log("final product before,",products)
+    console.log("final product before,", products)
     return products;
   }
 
@@ -696,15 +590,15 @@ export class NewShoppingInfoComponent implements OnInit {
     this.agreeConditions = !this.agreeConditions;
   }
 
-  getRoundValue(price, qty){
-    return Math.floor(price*qty);
+  getRoundValue(price, qty) {
+    return Math.floor(price * qty);
   }
 
   //payment
   /**
    * BULK SMS
    */
-  private sentSingleBulkSms(phoneNo: string, message: string) {
+  private sentSingleBulkSms(phoneNo: String, message: string) {
     this.bulkSmsService.sentSingleBulkSms(phoneNo, message).subscribe(
       (res) => {
         // console.log(res);
@@ -714,13 +608,6 @@ export class NewShoppingInfoComponent implements OnInit {
       }
     );
   }
-
-  // onDistrictChange(event: MatSelectChange) {
-  //   this.getFinalShippingCharge();
-  //   const districtId = this.districts.find(f => f.district === event.value)._id;
-  //   const filter = {district: districtId};
-  //   this.getAllAreaByDistrict(filter);
-  // }
 
   editLoggedInUserData(data: any) {
     this.userDataService.editLoginUserInfo(data).subscribe(
@@ -736,44 +623,14 @@ export class NewShoppingInfoComponent implements OnInit {
    * COMPONENT DIALOG VIEW
    */
 
-  private saveOrderInformationToMain() {
-    this.orderService.placeOrder(this.order).subscribe(
-      (res) => {
-        // this.couponData = null;
-        // this.couponText = null;
-        // this.storageService.storeCouponData(this.couponData);
-
-        // Update User Info
-        // const updateUserData = {
-        //   fullName: this.dataForm.value.name,
-        //   email: this.dataForm.value.email,
-        //   district: this.dataForm.value.district,
-        //   area: this.dataForm.value.area,
-        //   shippingAddress: this.dataForm.value.shippingAddress
-        // };
-        // this.editLoggedInUserData(updateUserData);
-        // this.reloadService.needRefreshCart$();
-        // Create Message Data
-        const finalPhoneNo = this.order.phoneNo;
-        const message = `Dear ${this.order.name}, Your order ${res.orderId} has been placed. We will update you once the order is confirmed. Thank you for shopping at www.emedilife.com`;
-        this.sentSingleBulkSms(finalPhoneNo, message);
-        this.uiService.success(res.message);
-        this.router.navigate(['/account/order-list']);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
   //calculation
-  cartNewTotal(){
+  cartNewTotal() {
     this.total = 0;
-    for(let i=0; i< this.carts?.length; i++){
-      if(this.carts[i].variant.length > 0){
+    for (let i = 0; i < this.carts?.length; i++) {
+      if (this.carts[i].variant.length > 0) {
         this.total += this.cartSubTotalForTotal(this.carts[i].product, this.carts[i].selectedQty, this.carts[i].variant[0].variantPrice);
-      }else{
-        this.total += this.cartSubTotalForTotal(this.carts[i].product, this.carts[i].selectedQty );
+      } else {
+        this.total += this.cartSubTotalForTotal(this.carts[i].product, this.carts[i].selectedQty);
       }
     }
     return this.total;
@@ -782,64 +639,40 @@ export class NewShoppingInfoComponent implements OnInit {
   /**
    * On Submit
    */
-   onSubmit(){
+  onSubmit() {
 
-    if (!this.selectedAddress){
-      this.uiService.warn("Please Select an Address");
+    if (!this.selectedAddress) {
+      this.msg.create('warning','Please Select an Address');
+      return
     }
-    if(!this.agreeConditions){
-      this.uiService.warn('Please agree to terms and conditions');
+    else if (!this.agreeConditions) {
+      this.msg.create('warning','Please agree to terms and conditions');
+      return
     }
-    if(this.selectedAddress && this.agreeConditions){
-
-      if (this.carts[0]?.requestProduct) {
-              this.placeOrderForRequest();
-            } else {
-              this.placeOrder();
-            }
-      // this.router.navigate([environment.appBaseUrl, 'delivery-info']);
+    else {
+      this.placeOrder();
     }
-
-
-    // if(this.selectedAddress){
-    //   this.router.navigate([environment.appBaseUrl, 'delivery-info']);
-    // }else{
-    //   this.uiService.warn("Please Select an Address");
-    // }
-    // if (this.agreeConditions) {
-    //     if (this.carts[0].requestProduct) {
-    //       this.placeOrderForRequest();
-    //     } else {
-    //       this.placeOrder();
-    //     }
-    // } else {
-    //   this.uiService.warn('Please agree to terms and conditions');
-    // }
-
-
-
-
   }
 
-  getCouponAmount(){
-    if(this.couponApplied){
+  getCouponAmount() {
+    if (this.couponApplied) {
       let amount = this.cartNewTotal();
       return Math.floor(amount * 0.15);
-    }else{
+    } else {
       return 0
     }
   }
 
-  applyCoupon(){
+  applyCoupon() {
     let coupon = "CAREME15%"
-    if(this.couponCode.toUpperCase() === coupon.toUpperCase()){
+    if (this.couponCode.toUpperCase() === coupon.toUpperCase()) {
       this.couponApplied = true;
-    }else{
+    } else {
       this.couponApplied = false;
     }
   }
 
-  disableCoupon(){
+  disableCoupon() {
     this.couponCode = '';
     this.couponCode.value = '';
     this.couponApplied = false;

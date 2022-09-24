@@ -73,12 +73,7 @@ export class OrderDetailsComponent implements OnInit {
     { value: ProductOrderStatus.PENDING, viewValue: 'Pending' },
     { value: ProductOrderStatus.CANCEL, viewValue: 'Cancel' },
     { value: ProductOrderStatus.CONFIRM, viewValue: 'Confirm' },
-    { value: ProductOrderStatus.PURCHASED, viewValue: 'Purchased' },
-    { value: ProductOrderStatus.PARTIAL_PURCHASED, viewValue: 'Partial Purchased' },
-    { value: ProductOrderStatus.SEND_TO_BD, viewValue: 'Send to BD' },
-    { value: ProductOrderStatus.PARTIAL_SEND_TO_BD, viewValue: 'Partial Send to BD' },
-    { value: ProductOrderStatus.INVOICED, viewValue: 'Invoiced' },
-    { value: ProductOrderStatus.PARTIAL_INVOICED, viewValue: 'Partial Invoiced' },
+    { value: ProductOrderStatus.PARTIAL_SHIPPING, viewValue: 'Partial Shipping' },
     { value: ProductOrderStatus.SHIPPING, viewValue: 'Shipping' },
     { value: ProductOrderStatus.DELIVERED, viewValue: 'Delivered' },
     { value: ProductOrderStatus.PARTIAL_DELIVERED, viewValue: 'Partial Delivered' },
@@ -87,6 +82,8 @@ export class OrderDetailsComponent implements OnInit {
   ];
   selectedIds: number[] = [];
   timelineStatus: any[];
+
+
 
   constructor(
     private pricePipe: PricePipe,
@@ -122,7 +119,7 @@ export class OrderDetailsComponent implements OnInit {
 
   initFormValue() {
     this.dataForm = this.fb.group({
-      selected: [null],
+      // selected: [null],
       comment: [null],
       statusNote: [null],
     });
@@ -180,7 +177,6 @@ export class OrderDetailsComponent implements OnInit {
   getAdminData() {
     this.adminService.getAdminShortData().subscribe((res) => {
       this.admin = res.data;
-      console.log('admin', this.admin);
     });
   }
 
@@ -188,6 +184,7 @@ export class OrderDetailsComponent implements OnInit {
     this.orderService.getOrderDetails(id).subscribe(
       (res) => {
         this.order = res.data;
+        this.selectedIds = [];
 
         this.order.orderedItems.forEach(element => {
           element.previousStatus = element.status
@@ -199,7 +196,7 @@ export class OrderDetailsComponent implements OnInit {
         this.products = this.order.orderedItems;
         //console.log("products", this.products);
 
-        this.dataForm.get('selected').patchValue(this.order.deliveryStatus);
+        // this.dataForm.get('selected').patchValue(this.order.deliveryStatus);
         this.getInvoiceCount();
       },
       (err) => {
@@ -312,35 +309,23 @@ export class OrderDetailsComponent implements OnInit {
       case ProductOrderStatus.CANCEL: {
         return 'cancel';
       }
-      case ProductOrderStatus.PURCHASED: {
-        return 'processing';
+      case ProductOrderStatus.SHIPPING: {
+        return 'shipping';
       }
-      case ProductOrderStatus.PARTIAL_PURCHASED: {
-        return 'processing';
+      case ProductOrderStatus.PARTIAL_SHIPPING: {
+        return 'shipping';
       }
-      case ProductOrderStatus.SEND_TO_BD: {
-        return 'processing';
-      }
-      case ProductOrderStatus.PARTIAL_SEND_TO_BD: {
-        return 'processing';
-      }
-      case ProductOrderStatus.INVOICED: {
-        return 'processing';
-      }
-      case ProductOrderStatus.PARTIAL_INVOICED: {
-        return 'processing';
+      case ProductOrderStatus.DELIVERED: {
+        return 'delivered';
       }
       case ProductOrderStatus.PARTIAL_DELIVERED: {
-        return 'processing';
+        return 'delivered';
       }
       case ProductOrderStatus.PARTIAL_RETURN: {
         return 'refund';
       }
       case ProductOrderStatus.RETURN: {
         return 'refund';
-      }
-      case ProductOrderStatus.SHIPPING: {
-        return 'shipping';
       }
 
       default: {
@@ -378,8 +363,7 @@ export class OrderDetailsComponent implements OnInit {
         statusNote: this.dataForm.value.statusNote,
       };
 
-      this.order.deliveryStatus = this.dataForm.value.selected;
-      this.order.statusNote = this.dataForm.value.statusNote;
+      // this.order.statusNote = this.dataForm.value.statusNote;
       this.order.orderStatusTimeline.push(orderStatus);
 
       this.orderService.updateOrderById(this.order).subscribe(
@@ -482,18 +466,16 @@ export class OrderDetailsComponent implements OnInit {
   get calculateTotal() {
     return (
       this.calculateSubTotal() +
-      this.calculateTotalTax() -
-      this.order.redeemAmount
+      this.calculateTotalTax()
     );
   }
 
 
-  onStatusChange(status, order) {
-
-    if (status === 1 || status === 12) {
-      this.selectedIds.forEach(element => {
+  onStatusChange(status, order, data) {
+    console.log(data);
+    if (status === ProductOrderStatus.CANCEL) {
         this.productService
-          .updateProductQuantityById(order.orderedItems[element])
+          .updateProductQuantityById(data)
           .subscribe(
             (res) => {
               console.log(res.message);
@@ -502,7 +484,6 @@ export class OrderDetailsComponent implements OnInit {
               console.log(err);
             }
           );
-      });
     }
 
     this.selectedIds.forEach((element) => {
@@ -518,15 +499,14 @@ export class OrderDetailsComponent implements OnInit {
       (err) => {
         console.log(err);
       }
-    );
-  }
+      );
+    }
 
   /**
    * ON Select Check
    */
 
   onCheckChange(event: MatCheckboxChange,index: number) {
-
     if (event.checked) {
       const i = this.selectedIds.findIndex((f) => f === index);
       if (i >= 0) {
@@ -537,6 +517,7 @@ export class OrderDetailsComponent implements OnInit {
     } else {
       this.selectedIds.splice(index, 1);
     }
+    console.log(this.selectedIds);
 
 
 
@@ -552,12 +533,12 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   orderSubTotal() {
-    let total = 0;
+    let total: number = 0;
     this.order?.orderedItems.forEach((f) => {
-      if (f.advance) {
-        total += Math.round((f?.price * f?.quantity + f.tax * f?.quantity) - f.advance)
+      if (f.advanceAmount) {
+        total = total + Math.round((f?.price * f?.quantity + f.tax * f?.quantity) - f.advanceAmount);
       } else {
-        total += Math.round(f?.price * f?.quantity + f.tax * f?.quantity)
+        total = total + Math.round(f?.price * f?.quantity + f.tax * f?.quantity);
       }
     })
     return Math.round(total);

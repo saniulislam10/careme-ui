@@ -76,11 +76,11 @@ const routes: Routes = [
             (m) => m.DeliveryInfoModule
           ),
       },
-      {
-        path: 'payment',
-        loadChildren: () =>
-          import('./user/payment/payment.module').then((m) => m.PaymentModule),
-      },
+      // {
+      //   path: 'payment',
+      //   loadChildren: () =>
+      //     import('./user/payment/payment.module').then((m) => m.PaymentModule),
+      // },
       {
         path: 'new-payment',
         loadChildren: () =>
@@ -119,17 +119,6 @@ const routes: Routes = [
         canActivate : [UserAuthGuard],
         loadChildren: () => import('./deshboard/deshboard.module').then((m) => m.DeshboardModule),
       },
-      {
-        path: 'request-product',
-        loadChildren: () =>
-          import('./request-product/request-product.module').then(
-            (m) => m.RequestProductModule
-          ),
-      },
-      // {
-      //   path: 'product-details-search',
-      //   loadChildren: () => import('./product-details-search/product-details-search.module').then(m => m.ProductDetailsSearchModule),
-      // },
       {
         path: 'all-collection',
         loadChildren: () =>

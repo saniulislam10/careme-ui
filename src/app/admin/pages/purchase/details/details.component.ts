@@ -67,12 +67,7 @@ export class DetailsComponent implements OnInit {
     { value: ProductOrderStatus.PENDING, viewValue: 'Pending' },
     { value: ProductOrderStatus.CANCEL, viewValue: 'Cancel' },
     { value: ProductOrderStatus.CONFIRM, viewValue: 'Confirm' },
-    { value: ProductOrderStatus.PURCHASED, viewValue: 'Purchased' },
-    { value: ProductOrderStatus.PARTIAL_PURCHASED, viewValue: 'Partial Purchased' },
-    { value: ProductOrderStatus.SEND_TO_BD, viewValue: 'Send to BD' },
-    { value: ProductOrderStatus.PARTIAL_SEND_TO_BD, viewValue: 'Partial Send to BD' },
-    { value: ProductOrderStatus.INVOICED, viewValue: 'Invoiced' },
-    { value: ProductOrderStatus.PARTIAL_INVOICED, viewValue: 'Partial Invoiced' },
+    { value: ProductOrderStatus.PARTIAL_SHIPPING, viewValue: 'Partial Invoiced' },
     { value: ProductOrderStatus.SHIPPING, viewValue: 'Shipping' },
     { value: ProductOrderStatus.DELIVERED, viewValue: 'Delivered' },
     { value: ProductOrderStatus.PARTIAL_DELIVERED, viewValue: 'Partial Delivered' },
@@ -270,22 +265,10 @@ openRecieved(id, recieved, index, poQty){
       case ProductOrderStatus.CANCEL: {
         return 'cancel';
       }
-      case ProductOrderStatus.PURCHASED: {
+      case ProductOrderStatus.SHIPPING: {
         return 'processing';
       }
-      case ProductOrderStatus.PARTIAL_PURCHASED: {
-        return 'processing';
-      }
-      case ProductOrderStatus.SEND_TO_BD: {
-        return 'processing';
-      }
-      case ProductOrderStatus.PARTIAL_SEND_TO_BD: {
-        return 'processing';
-      }
-      case ProductOrderStatus.INVOICED: {
-        return 'processing';
-      }
-      case ProductOrderStatus.PARTIAL_INVOICED: {
+      case ProductOrderStatus.PARTIAL_SHIPPING: {
         return 'processing';
       }
       case ProductOrderStatus.PARTIAL_DELIVERED: {

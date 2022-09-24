@@ -8,6 +8,7 @@ import {Admin} from '../interfaces/admin';
 import {DATABASE_KEY} from '../core/utils/global-variable';
 import {StorageService} from './storage.service';
 import {NgxSpinnerService} from 'ngx-spinner';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 const API_URL_ADMIN = environment.apiBaseLink + '/api/admin/';
 
@@ -27,6 +28,7 @@ export class AdminService {
     private httpClient: HttpClient,
     private router: Router,
     private uiService: UiService,
+    private msg: NzMessageService,
     private storageService: StorageService,
     private spinner: NgxSpinnerService,
   ) {
@@ -41,12 +43,9 @@ export class AdminService {
 
   // For Login User..
   adminLogin(data: any) {
-
-        console.log('On Login', data);
     this.httpClient.put<{ success: boolean; message: string; token: string; expiredIn: number; role: string }>
     (API_URL_ADMIN + 'login', data)
       .subscribe(res => {
-        console.log('On Login', res);
         if (res.success) {
           this.token = res.token;
           this.adminRole = res.role;
@@ -63,15 +62,14 @@ export class AdminService {
             this.saveAdminData(res.token, expirationDate, res.role);
             this.spinner.hide();
             // Snack bar..
-            this.uiService.success(res.message);
+            this.msg.create('success', res.message);
             // Navigate..
             this.router.navigate([environment.adminBaseUrl]);
           }
         } else {
-              console.log('Error On Login');
-          this.uiService.wrong(res.message);
-          this.spinner.hide();
-          this.adminStatusListener.next(false);
+            this.msg.create('error', res.message);
+            this.spinner.hide();
+            this.adminStatusListener.next(false);
         }
 
       }, error => {

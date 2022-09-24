@@ -168,13 +168,6 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'request-details',
-        loadChildren: () =>
-          import('./order/request-details/request-details.module').then(
-            (m) => m.RequestDetailsModule
-          ),
-      },
-      {
         path: 'abandoned-cart-details',
         loadChildren: () =>
           import(

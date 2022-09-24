@@ -17,6 +17,7 @@ export class AdminAuthComponent implements OnInit {
   password = new FormControl('', [Validators.required]);
 
   visibility : boolean = false;
+  date = new Date();
 
   constructor(
     private uiService: UiService,
