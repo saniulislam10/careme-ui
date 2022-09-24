@@ -172,7 +172,7 @@ export class CartComponent implements OnInit {
           return {
             ...m,
             // variant: m.variant[0],
-            vendorName: m.product.hasVariant ? m.variant[0].variantVendorName : m.product.vendor,
+            vendorName: m.product.hasVariant ? m.variant[0].variantVendorName.name : m.product.vendor.name,
           }
         });
 
@@ -182,23 +182,14 @@ export class CartComponent implements OnInit {
         this.vCarts =  this.arrayGroupByField(fCarts, 'vendorName');
         console.log('this.vCarts', this.vCarts);
         this.vCarts.forEach(f => {
-          if (f._id === 'careme') {
+          // if (f._id === 'careme') {
             const selected = f.data.filter(g => g.isSelected === true);
             if (selected.length === f.data.length) {
               f.select = true;
             } else {
               f.select = false;
             }
-          }
-
-          if (f._id === 'global') {
-            const selected = f.data.filter(g => g.isSelected === true);
-            if (selected.length === f.data.length) {
-              f.select = true;
-            } else {
-              f.select = false;
-            }
-          }
+          // }
         })
       },
       (error) => {

@@ -73,8 +73,8 @@
                 <mat-checkbox [(ngModel)]="group.select" (ngModelChange)="onCheckVendorGroup($event, gi)">
                 </mat-checkbox>
               </div>
-              <p *ngIf="group._id === 'careme'">Care Me</p>
-              <p *ngIf="group._id === 'global'">Care Me Global</p>
+              <p>{{group._id}}</p>
+              <!-- <p *ngIf="group._id === 'global'">Care Me Global</p> -->
               <div class="horizontal_line"></div>
             </div>
             <div class="table-row" *ngFor="let data of group.data; let di=index">

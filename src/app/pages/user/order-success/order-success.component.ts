@@ -145,7 +145,7 @@ export class OrderSuccessComponent implements OnInit {
 
     else if(this.isPaidFull){
 
-      this.sessionStorage.storeDataToSessionStorage('amount',this.orderData.totalAmount.toString())
+      this.sessionStorage.storeDataToSessionStorage('amount',this.totalFullPayment.toString())
       this.sessionStorage.storeDataToSessionStorage('paymentStatus','0')
       this.router.navigate(['new-payment'], {queryParams: {orderId: this.id}});
 

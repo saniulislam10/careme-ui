@@ -64,11 +64,11 @@ const routes: Routes = [
             (m) => m.NewShoppingInfoModule
           ),
       },
-      // {
-      //   path: 'success',
-      //   loadChildren: () =>
-      //     import('./user/order-success/order-success.module').then((m) => m.OrderSuccessModule),
-      // },
+      {
+        path: 'success',
+        loadChildren: () =>
+          import('./user/order-success/order-success.module').then((m) => m.OrderSuccessModule),
+      },
       {
         path: 'delivery-info',
         loadChildren: () =>
@@ -114,22 +114,11 @@ const routes: Routes = [
             (m) => m.AllProductsModule
           ),
       },
-      // {
-      //   path: 'dashboard',
-      //   canActivate : [UserAuthGuard],
-      //   loadChildren: () => import('./deshboard/deshboard.module').then((m) => m.DeshboardModule),
-      // },
-      // {
-      //   path: 'request-product',
-      //   loadChildren: () =>
-      //     import('./request-product/request-product.module').then(
-      //       (m) => m.RequestProductModule
-      //     ),
-      // },
-      // {
-      //   path: 'product-details-search',
-      //   loadChildren: () => import('./product-details-search/product-details-search.module').then(m => m.ProductDetailsSearchModule),
-      // },
+      {
+        path: 'dashboard',
+        canActivate : [UserAuthGuard],
+        loadChildren: () => import('./deshboard/deshboard.module').then((m) => m.DeshboardModule),
+      },
       {
         path: 'all-collection',
         loadChildren: () =>

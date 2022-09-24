@@ -20,7 +20,7 @@ export interface Cart {
   variantName?: string;
 }
 export interface Variant {
-  variantVendorName?: string;
+  variantVendorName?: any;
   variantQuantity?: number,
   variantReOrder?: number,
   variantContinueSelling?: string;

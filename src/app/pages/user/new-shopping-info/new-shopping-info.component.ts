@@ -565,7 +565,7 @@ export class NewShoppingInfoComponent implements OnInit {
         tax: product.hasTax ? Math.round((product.tax * orderPrice) / 100) : 0,
         vendorId: vendor._id,
         vendorName: vendor.name,
-        brandId: product.brand._id,
+        brandId: product.brand._id ,
         brandName: product.brand.name,
         productTypeId: product.productType[0]._id,
         productTypeName: product.productType[0].name,
