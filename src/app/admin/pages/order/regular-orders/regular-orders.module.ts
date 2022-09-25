@@ -1,3 +1,4 @@
+import { NzTableModule } from 'ng-zorro-antd/table';
 import { MaterialModule } from 'src/app/material/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,6 +22,7 @@ import { CreateOrderDialogComponent } from './create-order-dialog/create-order-d
     CommonModule,
     RegularOrdersRoutingModule,
     MaterialModule,
+    NzTableModule,
     PipesModule,
     NgxPaginationModule,
     MaterialModule,

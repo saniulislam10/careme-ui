@@ -1,3 +1,4 @@
+import { NzTableModule } from 'ng-zorro-antd/table';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -19,6 +20,7 @@ import { PipesModule } from 'src/app/shared/pipes/pipes.module';
     AllInvoiceRoutingModule,
     MaterialModule,
     NgxPaginationModule,
+    NzTableModule,
     PipesModule
   ]
 })

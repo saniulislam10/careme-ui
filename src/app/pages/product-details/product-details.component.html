@@ -14,20 +14,12 @@
       <div class="product-img-area">
         <!--product-big-img-->
         <div class="product-big-img">
-          <img
-            nz-image
-            *ngIf="image"
-            [nzSrc]="image ? image : '/assets/images/placeholder/test.png'"
-            [alt]="product?.name"
-          />
+          <img nz-image *ngIf="image" [nzSrc]="image ? image : '/assets/images/placeholder/test.png'"
+            [alt]="product?.name" />
         </div>
         <!---product-img-slide-area-->
         <div class="product-img-slide-area carousel">
-          <swiper
-            *ngIf="images"
-            [slidesPerView]="4"
-            [spaceBetween]="10"
-            [breakpoints]="{
+          <swiper *ngIf="images" [slidesPerView]="4" [spaceBetween]="10" [breakpoints]="{
               '400': {
                 slidesPerView: 4.5
               },
@@ -46,17 +38,10 @@
               '1000': {
                 slidesPerView: 5
               }
-            }"
-            [autoplay]="true"
-            [navigation]="true"
-            class="mySwiper"
-          >
+            }" [autoplay]="true" [navigation]="true" class="mySwiper">
             <ng-template swiperSlide *ngFor="let data of images">
               <div class="slide-img" (click)="selectImage(data)">
-                <img
-                  [src]="data ? data : '/assets/images/placeholder/test.png'"
-                  alt="product"
-                />
+                <img [src]="data ? data : '/assets/images/placeholder/test.png'" alt="product" />
               </div>
             </ng-template>
           </swiper>
@@ -88,36 +73,28 @@
             <!---rating-text-->
             <div class="rating-text">
               <h3 *ngIf="product?.totalRatings">
-                <a href="#"
-                  >{{
-                    product?.totalRatings ? product?.totalRatings : 0
+                <a href="#">{{
+                  product?.totalRatings ? product?.totalRatings : 0
                   }}
-                  Ratings</a
-                >
+                  Ratings</a>
                 <span> | </span>
-                <a href="#"
-                  >{{
-                    product?.totalAnsweredQuestions
-                      ? product?.totalAnsweredQuestions
-                      : 0
+                <a href="#">{{
+                  product?.totalAnsweredQuestions
+                  ? product?.totalAnsweredQuestions
+                  : 0
                   }}
-                  answered questions</a
-                >
+                  answered questions</a>
               </h3>
               <h3 *ngIf="data?.ratings?.averageStar">
-                <a href="#"
-                  >{{
-                    data?.ratings?.averageStar ? data?.ratings?.averageStar : 0
+                <a href="#">{{
+                  data?.ratings?.averageStar ? data?.ratings?.averageStar : 0
                   }}
-                  Ratings</a
-                >
+                  Ratings</a>
                 <span> | </span>
-                <a href="#"
-                  >{{
-                    data?.ratingReviewsCount ? data?.ratingReviewsCount : 0
+                <a href="#">{{
+                  data?.ratingReviewsCount ? data?.ratingReviewsCount : 0
                   }}
-                  answered questions</a
-                >
+                  answered questions</a>
               </h3>
             </div>
           </div>
@@ -142,14 +119,6 @@
                   <a>{{ product?.sku }}</a>
                 </div>
               </li>
-              <!-- <li>
-                                <div>
-                                    <h3>Variant SKU:</h3>
-                                </div>
-                                <div>
-                                    <a>{{variantSku}}</a>
-                                </div>
-                            </li> -->
             </ul>
           </div>
         </div>
@@ -169,13 +138,13 @@
             <div class="discount">
               <span *ngIf="product?.discountAmount">{{
                 product?.discountAmount
-              }}</span>
+                }}</span>
             </div>
             <!---discount-parcent-->
             <div class="discount-parcent">
               <span *ngIf="product?.discountAmount">{{
                 product?.discountAmount
-              }}</span>
+                }}</span>
             </div>
           </div>
           <!--stock-area-->
@@ -184,75 +153,22 @@
           </div>
         </div>
         <!---price-end-->
-
-        <!---pts-area-->
-        <div class="product-pts-area">
-          <ul>
-            <li *ngIf="product?.canRedeemPoints">
-              Pay<span>{{
-                product | price: "redeem":selectedQty:globalPrice
-              }}</span
-              >TK<span
-                >and redeem
-                {{ product | coin: "redeem":selectedQty:globalPrice }}</span
-              >
-              <span
-                ><img class="coin" alt="coin" src="/assets/svg/coin.svg"
-              /></span>
-            </li>
-            <li *ngIf="product?.canEarnPoints">
-              Pay<span>{{
-                product | price: "earn":selectedQty:globalPrice
-              }}</span
-              >TK<span
-                >and earn
-                {{ product | coin: "earn":selectedQty:globalPrice }}</span
-              >
-              <span
-                ><img class="coin" alt="coin" src="/assets/svg/coin.svg"
-              /></span>
-            </li>
-          </ul>
-          <div [class]="getStockStatus(globalQuantity) ? 'product-stock-badge' : 'none'">
-            <!-- <span>In stock: {{product?.quantity ? product.quantity : '0'}} Pcs</span> -->
-            <span
-              >In stock:
-              {{
-                product?.quantity | variantQuantity: product:globalQuantity
-              }}
-              Pcs</span
-            >
-          </div>
-        </div>
         <!---product-quntity-size-info-->
-        <div
-          class="product-quantity-size-info-main"
-          *ngFor="let varName of product?.variants; let i = index"
-        >
+        <div class="product-quantity-size-info-main" *ngFor="let varName of product?.variants; let i = index">
           <!---size-info-->
           <div class="product-quantity-size-info">
             <!-- size/ color-->
-            <div
-              *ngIf="product.hasVariant === true"
-              class="product-quantity-size-info-left"
-            >
-              <span>{{ varName }}:</span>
-            </div>
-            <div
-              *ngIf="varName && varName.options"
-              class="product-quantity-size-info-left"
-            >
-              <span>{{ varName.options[i] }}:</span>
+            <div *ngIf="product.hasVariant === true" class="product-quantity-size-info-left">
+              <span>{{ varName }} : </span> &nbsp; {{variantOptions[i][selectedOptions[i]]}}
             </div>
             <!--right-->
             <div class="product-quantity-size-info-right">
               <ul class="size">
-                <li style="margin-bottom: 10px;" [class]="getDisplay(i,x) ? '' : 'none'" *ngFor="let option of variantOptions[i]; let x = index">
-                  <button
-                    type="button"
+                <li style="margin-bottom: 10px;" [class]="getDisplay(i,x) ? '' : 'none'"
+                  *ngFor="let option of variantOptions[i]; let x = index">
+                  <button type="button"
                     [class]="defaultVariantSelected ? (getButtonStatus(i,x) ? 'active' : 'inactive') : ''"
-                    (click)="selectedVariant(i, x)"
-                  >
+                    (click)="selectedVariant(i, x)">
                     {{ this.variantOptions[i][x] }}
                   </button>
                 </li>
@@ -284,84 +200,54 @@
                   +
                 </button>
               </li>
+              <span *ngIf="globalQuantity > 0">Only 2 items left</span>
             </ul>
           </div>
         </div>
         <!---end-->
         <!---in-stock-->
-        <div class="in-stock" *ngIf="globalQuantity !== 0">
+        <div class="delivery-details" *ngIf="globalQuantity !== 0">
           <h3 *ngIf="globalQuantity > 0 && globalQuantity >= selectedQty">
-            In Stock, Delivery Within
-            {{ dateCalculationFrom(2) | date: "EEE, MMM d, yyyy" }} -
-            {{ dateCalculationTo(3) | date: "EEE, MMM d, yyyy" }} days
+            Delivery Within ,&nbsp;<span>
+              {{ dateCalculationFrom(2) | date: "MMM d" }} -
+              {{ dateCalculationTo(3) | date: "MMM d" }}
+            </span>
           </h3>
           <h3 *ngIf="globalQuantity > 0 && globalQuantity < selectedQty">
-            Global Stock, Delivery Within
-            {{ dateCalculationFrom(15) | date: "EEE, MMM d, yyyy" }} -
-            {{
-              dateCalculationTo(25) | date: "EEE, MMM d,
-            yyyy"
-            }}
-            days
-          </h3>
-          <h3 *ngIf="globalQuantity < 0">
-            Global Stock, Delivery Within
-            {{
-              dateCalculationFrom(15) | date: "EEE, MMM d,
-            yyyy"
-            }}
-            - {{ dateCalculationTo(25) | date: "EEE, MMM d, yyyy" }} days
+            Delivery Within ,&nbsp;<span>
+              {{ dateCalculationFrom(15) | date: "MMM d" }} -
+              {{ dateCalculationTo(25) | date: "MMM d"}}
+            </span>
           </h3>
         </div>
-        <div
-          class="out-stock"
-          *ngIf="globalQuantity === 0 && globalContinue !== true"
-        >
+        <div class="out-stock" *ngIf="globalQuantity <= 0 && globalContinue !== true">
           <h3>Out of Stock</h3>
         </div>
-        <div
-          class="in-stock"
-          *ngIf="globalQuantity === 0 && globalContinue === true"
-        >
-          <h3>
-            Global Stock, Delivery Within
-            {{ dateCalculationFrom(15) | date: "EEE, MMM d, yyyy" }} -
-            {{ dateCalculationTo(25) | date: "EEE, MMM d, yyyy" }} days
-          </h3>
+        <div class="delivery-details" *ngIf="globalQuantity <= 0 && globalContinue === true">
+          Delivery Within,&nbsp;
+          <span>
+            {{ dateCalculationFrom(15) | date: " MMM d" }} -
+            {{ dateCalculationTo(25) | date: "MMM d" }}
+          </span>
         </div>
         <!---product-cart-btn-->
         <div class="product-btn">
-          <!-- <button [class]="btnActive?'inactive-btn':'active-btn'" (click)="activeBookBtn()" type="button">Buy Now</button> -->
-          <button
-            *ngIf="globalQuantity !== 0 && addToCartButton === true && existInCart !== true"
-            [class]="btnActive ? 'inactive-btn' : 'active-btn'"
-            (click)="activeCartBtn()"
-            type="button"
-          >
+          <button *ngIf="globalQuantity > 0 && addToCartButton === true && existInCart !== true && globalDisplay===true"
+            [class]="btnActive ? 'inactive-btn' : 'active-btn'" (click)="activeCartBtn()" type="button">
             Add to Cart
           </button>
+
           <button
-            *ngIf="globalQuantity === 0 && globalContinue === true && addToCartButton === true && existInCart !== true"
-            [class]="btnActive ? 'inactive-btn' : 'active-btn'"
-            (click)="activeCartBtn()"
-            type="button"
-          >
+            *ngIf="globalQuantity <= 0 && globalContinue === true && addToCartButton === true && existInCart !== true && globalDisplay===true"
+            [class]="btnActive ? 'inactive-btn' : 'active-btn'" (click)="activeCartBtn()" type="button">
             Add to Cart
           </button>
-          <button
-            *ngIf="existInCart === true"
-            [class]="btnActive ? 'active-btn' : 'inactive-btn'"
-            routerLink="/cart"
-            type="button"
-          >
+          <button *ngIf="existInCart === true" [class]="btnActive ? 'active-btn' : 'inactive-btn'" routerLink="/cart"
+            type="button">
             Go to Cart
           </button>
-          <button
-            *ngIf="globalQuantity === 0 && globalContinue !== true"
-            [class]="btnActive ? 'active-btn' : 'inactive-btn'"
-            type="button"
-            disabled
-          >
+          <button *ngIf="globalQuantity === 0 && globalContinue !== true"
+            [class]="btnActive ? 'active-btn' : 'inactive-btn'" type="button" disabled>
             Out of Stock
           </button>
         </div>
@@ -369,106 +255,114 @@
       <!---product-details-midle-end-->
       <!---product-details-right-->
       <div class="product-details-right">
-        <!---product-delivery-area-->
-        <div class="product-delivery-area">
-          <!--product-delivery-info-->
-          <div class="product-delivery-info">
-            <!---product-delivery-icon-->
-            <div class="product-delivery-icon">
-              <img src="./assets/images/image/delivery-man.svg" alt="" />
-            </div>
-            <div class="product-details-text">
-              <h3>
-                Delivery:
-                <span *ngIf="globalQuantity > 0"
-                  >{{ dateCalculationFrom(2) | date: "d MMMM" }} -
-                  {{ dateCalculationTo(3) | date: "d MMMM" }}</span
-                >
-                <span *ngIf="globalQuantity === 0 && globalContinue === true"
-                  >{{ dateCalculationFrom(15) | date: "d MMMM" }} -
-                  {{ dateCalculationTo(25) | date: "d MMMM" }}</span
-                >
-                <span *ngIf="globalQuantity === 0 && globalContinue !== true"
-                  >Out of Stock</span
-                >
-              </h3>
-            </div>
+        <div class="product-delivery-info">
+          <div class="product-delivery-icon">
+            <img src="./assets/images/image/delivery-man.svg" alt="" />
           </div>
-          <!--product-delivery-info-end-->
-          <!--product-delivery-info-->
-          <!-- <div class="product-delivery-info">
-            <div class="product-delivery-icon">
-              <img src="./assets/images/image/fast-delivery.svg" alt="">
-            </div>
-            <div class="product-details-text">
-              <h3>Shipping: <span>Free</span></h3>
-            </div>
-          </div> -->
-          <!--product-delivery-info-end-->
-          <!--product-delivery-info-->
-          <div class="product-delivery-info">
-            <!---product-delivery-icon-->
-            <div class="product-delivery-icon">
-              <img
-                src="./assets/images/image/cash-on-delivery (1).svg"
-                alt=""
-              />
-            </div>
-            <div class="product-details-text">
-              <h3>
-                Cash on Delivery:
-                <span>{{ this.canCOD }}</span>
-              </h3>
-            </div>
+          <div class="product-details-text">
+            <h3>
+              Delivery : &nbsp;
+              <span *ngIf="globalQuantity > 0">{{ dateCalculationFrom(2) | date: "MMM d" }} -
+                {{ dateCalculationTo(3) | date: "MMM d" }}</span>
+              <span *ngIf="globalQuantity <= 0 && globalContinue === true">{{ dateCalculationFrom(15) | date: "MMM d"
+                }} -
+                {{ dateCalculationTo(25) | date: "MMM d" }}</span>
+              <span *ngIf="globalQuantity <= 0 && globalContinue !== true">Out of Stock</span>
+            </h3>
           </div>
-          <!--product-delivery-info-end-->
-          <!--product-delivery-info-->
-          <div class="product-delivery-info" *ngIf="product?.canReturn">
-            <!---product-delivery-icon-->
-            <div class="product-delivery-icon">
-              <img src="./assets/images/image/return-box.svg" alt="" />
-            </div>
-            <div class="product-details-text" >
-              <h3>
-                Return: <span>{{ product?.returnPeriod }} day replacement</span>
-              </h3>
-            </div>
-          </div>
-          <!--product-delivery-info-end-->
-          <!--product-delivery-info-->
-          <div class="product-delivery-info">
-            <!---product-delivery-icon-->
-            <div class="product-delivery-icon">
-              <img
-                style="width: 30px; height: 30px"
-                src="./assets/images/image/vendor.svg"
-                alt=""
-              />
-            </div>
-            <div class="product-details-text">
-              <h3>
-                Vendor:
-                <span *ngIf="product?.hasVariant">{{
-                  selectedVariantData
-                    ? selectedVariantData?.variantVendorName.name
-                    : product?.vendor.name
-                }}</span>
-                <span *ngIf="!product?.hasVariant">{{ product?.vendor.name }}</span>
-              </h3>
-            </div>
-          </div>
-          <!--product-delivery-info-end-->
         </div>
-        <!---product-delivery-area-end-->
-        <!---quetions-area-->
-        <div class="question-area">
-          <h3>Have questions about this product?</h3>
-          <ul>
-            <li><i class="fa fa-phone-alt"></i></li>
-            <li><a href="tel:09606998800">09606-998800</a></li>
-          </ul>
+        <div class="product-delivery-info">
+          <!---product-delivery-icon-->
+          <div class="product-delivery-icon">
+            <img src="./assets/images/image/return-box.svg" alt="" />
+          </div>
+          <div class="product-details-text">
+            <h3>
+              Return:
+              <span *ngIf="product?.returnPeriod > 0">{{ product?.returnPeriod }} day replacement</span>
+              <span *ngIf="product?.returnPeriod <= 0">Return Not Applicable</span>
+            </h3>
+          </div>
+        </div>
+
+        <div *ngIf="product?.canEarnPoints" class="product-delivery-info">
+          <div class="product-delivery-icon">
+            <img src="./assets/svg/coin.svg" alt="coin" />
+          </div>
+          <div class="product-details-text">
+            <h3>
+              <span>
+                Pay <span>{{ product | price: "earn":selectedQty:globalPrice }}</span>TK<span>
+                  and earn {{ product | coin: "earn" :selectedQty:globalPrice }}</span>
+              </span>
+            </h3>
+          </div>
+        </div>
+        <div *ngIf="product?.canRedeemPoints" class="product-delivery-info">
+          <div class="product-delivery-icon">
+            <img src="./assets/svg/coin.svg" alt="coin" />
+          </div>
+          <div class="product-details-text">
+            <h3>
+              <span>
+                Pay <span> {{ product | price: "redeem" : selectedQty:globalPrice }}</span>TK<span>
+                  and redeem {{ product | coin: "redeem" : selectedQty:globalPrice }}</span>
+              </span>
+            </h3>
+          </div>
+        </div>
+        <div class="product-delivery-info">
+          <div class="product-delivery-icon">
+            <img src="./assets/images/image/fast-delivery.svg" alt="fast-delivery">
+          </div>
+          <div class="product-details-text">
+            <h3>Shipping: <span>120Tk</span></h3>
+          </div>
+        </div>
+        <div class="product-delivery-info">
+          <div class="product-delivery-icon">
+            <img src="./assets/images/image/cash-on-delivery (1).svg" alt="COD" />
+          </div>
+          <div class="product-details-text">
+            <h3 *ngIf="globalQuantity > 0">
+              Cash on Delivery:
+              <span>{{ this.canCOD }}</span>
+            </h3>
+            <h3 *ngIf="globalQuantity <= 0">
+              {{selectedVariant| json}}
+              <span>  advance required</span>
+            </h3>
+          </div>
+        </div>
+
+        <div class="product-delivery-info">
+          <div class="product-delivery-icon">
+            <img src="./assets/images/image/vendor.svg" alt="vendor" />
+          </div>
+          <div class="product-details-text">
+            <h3>
+              Vendor:
+              <span *ngIf="product?.hasVariant">{{
+                selectedVariantData
+                ? selectedVariantData?.variantVendorName.name
+                : product?.vendor.name
+                }}</span>
+              <span *ngIf="!product?.hasVariant">{{ product?.vendor.name }}</span>
+            </h3>
+          </div>
+        </div>
+        <div class="product-delivery-info">
+          <div class="product-delivery-icon">
+            <img src="./assets/svg/flag.svg" alt="flag" />
+          </div>
+          <div class="product-details-text">
+            <h3>
+              Country: <span>Bangladesh</span>
+            </h3>
+          </div>
         </div>
       </div>
+      <!---product-details-right-end-->
     </div>
   </div>
 </div>
@@ -491,10 +385,7 @@
           </div>
           <!---related-product-main-->
           <div class="related-product-main carousel">
-            <swiper
-              [slidesPerView]="1.7"
-              [spaceBetween]="11"
-              [breakpoints]="{
+            <swiper [slidesPerView]="1.7" [spaceBetween]="11" [breakpoints]="{
                 '400': {
                   slidesPerView: 1.7
                 },
@@ -519,11 +410,7 @@
                 '1600': {
                   slidesPerView: 4
                 }
-              }"
-              [autoplay]="true"
-              [navigation]="true"
-              class="mySwiper"
-            >
+              }" [autoplay]="true" [navigation]="true" class="mySwiper">
               <ng-template swiperSlide *ngFor="let data of cardOneData">
                 <app-product-card-one [data]="data"></app-product-card-one>
               </ng-template>
@@ -538,26 +425,17 @@
           <div class="toggle-tab-header">
             <ul>
               <li>
-                <button
-                  (click)="detailsToggle()"
-                  [class]="details ? 'toggle-tab-btn-active' : 'inactive'"
-                >
+                <button (click)="detailsToggle()" [class]="details ? 'toggle-tab-btn-active' : 'inactive'">
                   Details
                 </button>
               </li>
               <li>
-                <button
-                  (click)="reviewToggle()"
-                  [class]="review ? 'toggle-tab-btn-active' : 'inactive'"
-                >
+                <button (click)="reviewToggle()" [class]="review ? 'toggle-tab-btn-active' : 'inactive'">
                   Reviews
                 </button>
               </li>
               <li>
-                <button
-                  (click)="shippingToggle()"
-                  [class]="shipping ? 'toggle-tab-btn-active' : 'inactive'"
-                >
+                <button (click)="shippingToggle()" [class]="shipping ? 'toggle-tab-btn-active' : 'inactive'">
                   Shipping
                 </button>
               </li>
@@ -569,10 +447,7 @@
             <!---product-description-area-->
             <div class="product-description-area" *ngIf="details">
               <!---product-description-info-->
-              <div
-                *ngIf="product?.description"
-                class="product-description-info"
-              >
+              <div *ngIf="product?.description" class="product-description-info">
                 <h3>Product Details</h3>
                 <div [innerHTML]="product?.description | safeHtmlCustom"></div>
               </div>
@@ -581,14 +456,11 @@
                 <h3>Size Chart:</h3>
                 <!---size-chart-img-->
                 <div class="size-chart-img">
-                  <img
-                    [src]="
+                  <img [src]="
                       sizeChart[0]?.images
                         ? sizeChart[0]?.images
                         : '/assets/images/placeholder/test.png'
-                    "
-                    [alt]="sizeChart[0]?.name"
-                  />
+                    " [alt]="sizeChart[0]?.name" />
                 </div>
               </div>
             </div>
@@ -766,10 +638,8 @@
                     </ul>
                     <h3>
                       by Ataur R.
-                      <span
-                        ><i class="fa-solid fa-badge-check"></i> Verified
-                        Purchase</span
-                      >
+                      <span><i class="fa-solid fa-badge-check"></i> Verified
+                        Purchase</span>
                     </h3>
                   </div>
                   <!---add-left-->
@@ -787,16 +657,10 @@
                   </h3>
                   <div class="review-img">
                     <div>
-                      <img
-                        src="./assets/images/image/Rectangle 966.png"
-                        alt=""
-                      />
+                      <img src="./assets/images/image/Rectangle 966.png" alt="" />
                     </div>
                     <div>
-                      <img
-                        src="./assets/images/image/Rectangle 966.png"
-                        alt=""
-                      />
+                      <img src="./assets/images/image/Rectangle 966.png" alt="" />
                     </div>
                   </div>
                   <h4>Color Family: Black and Yellow, Size:EU:40</h4>
@@ -882,11 +746,7 @@
           <!---also-like-main-->
           <div class="also-like-main">
             <!---also-like-product-card-->
-            <div
-              class="also-like-product-card"
-              *ngFor="let data of alsoLikeProductCard"
-              [id]="data?._id"
-            >
+            <div class="also-like-product-card" *ngFor="let data of alsoLikeProductCard" [id]="data?._id">
               <!---also-like-product-img-->
               <div class="also-like-card-img">
                 <img [src]="data?.image" [alt]="data?.title" />
@@ -922,13 +782,7 @@
 </div>
 
 <!-- TEMPLATE NGX SPINNER-->
-<ngx-spinner
-  style="width: 100vw; height: 100vh"
-  bdColor="rgba(0,0,0,0.25)"
-  size="medium"
-  color="#fff"
-  type="ball-clip-rotate"
-  [fullScreen]="true"
->
+<ngx-spinner style="width: 100vw; height: 100vh" bdColor="rgba(0,0,0,0.25)" size="medium" color="#fff"
+  type="ball-clip-rotate" [fullScreen]="true">
   <p style="color: white">Loading...</p>
 </ngx-spinner>

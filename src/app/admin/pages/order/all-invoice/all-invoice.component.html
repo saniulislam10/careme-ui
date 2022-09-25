@@ -1,174 +1,249 @@
 <!---order-header-area-->
 <div class="order-header-area">
-    <div class="order-header-main">
-        <!---order-header-top-->
-        <div class="order-header-top">
-            <!---order-title-->
-            <div class="order-title">
-                <h3>All Invoice</h3>
-            </div>
-            <!--order-search-->
-            <div class="order-search">
-                <button><i class="fa fa-search"></i></button>
-                <input type="text" value="" placeholder="Search">
-            </div>
-            <!---order-btn-area-->
-            <div class="order-btn-area">
-                <ul>
-                    <li><button>Export</button></li>
-                    <li><button (click)="picker.open()">Date<i class="fa fa-caret-down"></i></button></li>
-                    <li><button [matMenuTriggerFor]="sort">Sort<i class="fa fa-caret-down"></i></button></li>
-                </ul>
-                <mat-menu #sort="matMenu">
-                  <button mat-menu-item (click)="sortData({orderNumber: -1}, 1)" [class.dropdown-active]="activeSort === 1">Order
-                    Number(High to low)</button>
-                  <button mat-menu-item (click)="sortData({orderNumber: 1}, 2)" [class.dropdown-active]="activeSort === 2">Order
-                    Number(Low to High)</button>
-                  <button mat-menu-item (click)="sortData({createdAt: 1}, 3)"
-                    [class.dropdown-active]="activeSort === 1">Date(oldest)</button>
-                  <button mat-menu-item (click)="sortData({createdAt: -1}, 4)"
-                    [class.dropdown-active]="activeSort === 2">Date(Newest)</button>
-                  <button mat-menu-item (click)="sortData({customerName: -1}, 5)"
-                    [class.dropdown-active]="activeSort === 1">Customer Name (A-Z)</button>
-                  <button mat-menu-item (click)="sortData({customerName: 1}, 6)" [class.dropdown-active]="activeSort === 2">Customer
-                    Name (Z-A)</button>
-                  <button mat-menu-item (click)="sortData({total: -1}, 5)"
-                    [class.dropdown-active]="activeSort === 1">Total(High to low)</button>
-                  <button mat-menu-item (click)="sortData({total: 1}, 6)" [class.dropdown-active]="activeSort === 2">Total
-                    (Low to High)</button>
-                </mat-menu>
-            </div>
-            <div class="datePicker">
-              <mat-date-range-input [formGroup]="dataFormDateRange" [rangePicker]="picker" [max]="today">
-                <input hidden matStartDate formControlName="start" readonly>
-                <input hidden matEndDate formControlName="end" readonly (dateChange)="endChangeRegDateRange($event)">
-              </mat-date-range-input>
-              <mat-datepicker-toggle [hidden]="true" matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-date-range-picker #picker></mat-date-range-picker>
+  <div class="order-header-main">
+    <!---order-header-top-->
+    <div class="order-header-top">
+      <!---order-title-->
+      <div class="order-title">
+        <h3>All Invoice</h3>
+      </div>
+      <!--order-search-->
+      <div class="order-search">
+        <button><i class="fa fa-search"></i></button>
+        <input type="text" value="" placeholder="Search" />
+      </div>
+      <!---order-btn-area-->
+      <div class="order-btn-area">
+        <ul>
+          <li><button>Export</button></li>
+          <li>
+            <button (click)="picker.open()">
+              Date<i class="fa fa-caret-down"></i>
+            </button>
+          </li>
+          <li>
+            <button [matMenuTriggerFor]="sort">
+              Sort<i class="fa fa-caret-down"></i>
+            </button>
+          </li>
+        </ul>
+        <mat-menu #sort="matMenu">
+          <button
+            mat-menu-item
+            (click)="sortData({ orderNumber: -1 }, 1)"
+            [class.dropdown-active]="activeSort === 1"
+          >
+            Order Number(High to low)
+          </button>
+          <button
+            mat-menu-item
+            (click)="sortData({ orderNumber: 1 }, 2)"
+            [class.dropdown-active]="activeSort === 2"
+          >
+            Order Number(Low to High)
+          </button>
+          <button
+            mat-menu-item
+            (click)="sortData({ createdAt: 1 }, 3)"
+            [class.dropdown-active]="activeSort === 1"
+          >
+            Date(oldest)
+          </button>
+          <button
+            mat-menu-item
+            (click)="sortData({ createdAt: -1 }, 4)"
+            [class.dropdown-active]="activeSort === 2"
+          >
+            Date(Newest)
+          </button>
+          <button
+            mat-menu-item
+            (click)="sortData({ customerName: -1 }, 5)"
+            [class.dropdown-active]="activeSort === 1"
+          >
+            Customer Name (A-Z)
+          </button>
+          <button
+            mat-menu-item
+            (click)="sortData({ customerName: 1 }, 6)"
+            [class.dropdown-active]="activeSort === 2"
+          >
+            Customer Name (Z-A)
+          </button>
+          <button
+            mat-menu-item
+            (click)="sortData({ total: -1 }, 5)"
+            [class.dropdown-active]="activeSort === 1"
+          >
+            Total(High to low)
+          </button>
+          <button
+            mat-menu-item
+            (click)="sortData({ total: 1 }, 6)"
+            [class.dropdown-active]="activeSort === 2"
+          >
+            Total (Low to High)
+          </button>
+        </mat-menu>
+      </div>
+      <div class="datePicker">
+        <mat-date-range-input
+          [formGroup]="dataFormDateRange"
+          [rangePicker]="picker"
+          [max]="today"
+        >
+          <input hidden matStartDate formControlName="start" readonly />
+          <input
+            hidden
+            matEndDate
+            formControlName="end"
+            readonly
+            (dateChange)="endChangeRegDateRange($event)"
+          />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          [hidden]="true"
+          matSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
 
-              <mat-error *ngIf="dataFormDateRange.controls.start.hasError('matStartDateInvalid')">Invalid start date
-              </mat-error>
-              <mat-error *ngIf="dataFormDateRange.controls.end.hasError('matEndDateInvalid')">Invalid end date </mat-error>
-            </div>
-        </div>
-
+        <mat-error
+          *ngIf="
+            dataFormDateRange.controls.start.hasError('matStartDateInvalid')
+          "
+          >Invalid start date
+        </mat-error>
+        <mat-error
+          *ngIf="dataFormDateRange.controls.end.hasError('matEndDateInvalid')"
+          >Invalid end date
+        </mat-error>
+      </div>
     </div>
+  </div>
 </div>
 <!---table-area-->
 <div class="order-table-area">
-    <!---table-area-header-->
-    <div class="order-table-area-header">
-         <!---order-btn-area-->
-         <div class="order-btn-area">
-          <ul>
-            <li><button [matMenuTriggerFor]="paymentStatus">Payment Status<i class="fa fa-caret-down"></i></button></li>
-            <mat-menu #paymentStatus="matMenu">
-              <button mat-menu-item *ngFor="let data of paymentOrderStatus"
-                (click)="filterByPaymentStatus(data.value)">{{data.viewValue}}</button>
-            </mat-menu>
-            <li><button [matMenuTriggerFor]="orderStatus">Order Status<i class="fa fa-caret-down"></i></button></li>
-            <mat-menu #orderStatus="matMenu">
-              <button mat-menu-item *ngFor="let data of productOrderStatus"
-                (click)="filterByOrderStatus(data.value)">{{data.viewValue}}</button>
-            </mat-menu>
-            <li><button [matMenuTriggerFor]="vendor">Vendor<i class="fa fa-caret-down"></i></button></li>
-            <mat-menu #vendor="matMenu">
-              <button mat-menu-item>Careme</button>
-              <button mat-menu-item>Careme Global</button>
-            </mat-menu>
-
-          </ul>
-        </div>
+  <!---table-area-header-->
+  <div class="order-table-area-header">
+    <!---order-btn-area-->
+    <div class="order-btn-area">
+      <ul>
+        <li>
+          <button [matMenuTriggerFor]="paymentStatus">
+            Payment Status<i class="fa fa-caret-down"></i>
+          </button>
+        </li>
+        <mat-menu #paymentStatus="matMenu">
+          <button
+            mat-menu-item
+            *ngFor="let data of paymentOrderStatus"
+            (click)="filterByPaymentStatus(data.value)"
+          >
+            {{ data.viewValue }}
+          </button>
+        </mat-menu>
+        <li>
+          <button [matMenuTriggerFor]="orderStatus">
+            Order Status<i class="fa fa-caret-down"></i>
+          </button>
+        </li>
+        <mat-menu #orderStatus="matMenu">
+          <button
+            mat-menu-item
+            *ngFor="let data of productOrderStatus"
+            (click)="filterByOrderStatus(data.value)"
+          >
+            {{ data.viewValue }}
+          </button>
+        </mat-menu>
+        <li>
+          <button [matMenuTriggerFor]="vendor">
+            Vendor<i class="fa fa-caret-down"></i>
+          </button>
+        </li>
+        <mat-menu #vendor="matMenu">
+          <button mat-menu-item>Careme</button>
+          <button mat-menu-item>Careme Global</button>
+        </mat-menu>
+      </ul>
     </div>
+  </div>
 
-    <div class="order-table-main">
-        <!---table-->
-        <div class="table">
-            <!---table-head-->
-            <div class="table-head">
-                <!---table-row-->
-                <div class="table-row">
-                    <div class="table-heading check">
-                        <mat-checkbox class="mat-check"></mat-checkbox>
-                    </div>
-                    <div class="table-heading id">
-                        <h3>Invoice#</h3>
-                    </div>
-
-                    <div class="table-heading date">
-                        <h3>Date & Time</h3>
-                    </div>
-                    <div class="table-heading id">
-                        <h3>Order No</h3>
-                    </div>
-                    <div class="table-heading item">
-                        <h3>Customer Name</h3>
-                    </div>
-                    <div class="table-heading pay-status">
-                        <h3>Status</h3>
-                    </div>
-                    <div class="table-heading amount">
-                        <h3>Amount</h3>
-                    </div>
-                    <div class="table-heading pay-status">
-                        <h3>Balance Due</h3>
-                    </div>
-
-                    <div class="table-heading order-status">
-                        <h3>Order Status</h3>
-                    </div>
-                    <div class="table-heading vendor">
-                        <h3>Vendor</h3>
-                    </div>
-                </div>
-            </div>
-            <!----table-body-->
-            <div class="table-body">
-                <div class="table-row" *ngFor="let data of invoices">
-                    <div class="table-data check">
-                        <mat-checkbox class="mat-check"></mat-checkbox>
-                    </div>
-                    <div class="table-data id">
-                        <span [routerLink]="['../../','invoice', data._id ]">{{data.invoiceId}}</span>
-                    </div>
-                    <div class="table-data date">
-                        <h3>{{data.invoiceDate | date}}</h3>
-                        <h3>{{data.createdAt | date:'shortTime' }}</h3>
-                    </div>
-                    <div class="table-data id">
-                        <span [routerLink]="['../../','invoice', data._id ]">{{data.orderNumber}}</span>
-                    </div>
-                    <div class="table-data item">
-                        <span>{{data.customerName}} <i class="fa fa-check-circle"></i></span>
-                    </div>
-                    <div class="table-data pay-status">
-                        <button>{{data.paymentStatus | paymentStatus }}</button>
-                    </div>
-                    <div class="table-data amount">
-                        <h3>{{data.total}}</h3>
-                    </div>
-                    <div class="table-data amount">
-                        <h3>0</h3>
-                    </div>
-                    <div class="table-data order-status">
-                        <h3 >{{data.deliveryStatus | orderStatus}}</h3>
-                    </div>
-                    <div class="table-data vendor">
-                        <button>{{data?.products[0]?.product.vendor}}</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!---indicator-->
-    <div class="indicator">
-        <ul>
-            <li><button><i class="fa fa-angle-left"></i></button></li>
-            <li><button><i class="fa fa-angle-right"></i></button></li>
-        </ul>
-    </div>
+  <div class="order-table-main">
+    <!---table-->
+    <nz-table #bodyData [nzData]="invoices">
+      <thead>
+        <tr>
+          <th>
+            <mat-checkbox class="mat-check"></mat-checkbox>
+          </th>
+          <th>Invoice</th>
+          <th>Order No</th>
+          <th>Customer Name</th>
+          <th>Status</th>
+          <th>Amount</th>
+          <th>Balance Due</th>
+          <th>Order Status</th>
+        </tr>
+      </thead>
+      <!----table-body-->
+      <tbody>
+        <tr *ngFor="let data of bodyData.data">
+          <td>
+            <mat-checkbox class="mat-check"></mat-checkbox>
+          </td>
+          <td>
+            <a [routerLink]="['../../', 'invoice', data._id]"
+              >INV-{{ data.invoiceId }}</a
+            >
+            <span>{{ data.createdAt | date: "short" }}</span>
+          </td>
+          <td>
+            <a [routerLink]="['../../', 'invoice', data._id]">{{
+              data.orderNumber
+            }}</a>
+          </td>
+          <td>
+            <span
+              >{{ data.customerName }} <i class="fa fa-check-circle"></i
+            ></span>
+          </td>
+          <td class="pay-status">
+            <span >{{
+              data.paymentStatus | paymentStatus
+            }}</span>
+          </td>
+          <td>
+            <h3>0</h3>
+          </td>
+          <td>
+            <h3>0</h3>
+          </td>
+          <td>
+            <span class="pay-status">{{ data.deliveryStatus | orderStatus }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <!---indicator-->
+  <div class="indicator">
+    <ul>
+      <li>
+        <button><i class="fa fa-angle-left"></i></button>
+      </li>
+      <li>
+        <button><i class="fa fa-angle-right"></i></button>
+      </li>
+    </ul>
+  </div>
 </div>
 
-  <pagination-controls class="product-pagination" [autoHide]="false" [maxSize]="15" (pageChange)="onPageChanged($event)">
-  </pagination-controls>
+<pagination-controls
+  class="product-pagination"
+  [autoHide]="false"
+  [maxSize]="15"
+  (pageChange)="onPageChanged($event)"
+>
+</pagination-controls>

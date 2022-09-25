@@ -1,4 +1,7 @@
 img{
   display: block;
-  width: 100%;
+  max-width: 100%;
+}
+.all-pages-render-area{
+  max-width: 1440px;
 }

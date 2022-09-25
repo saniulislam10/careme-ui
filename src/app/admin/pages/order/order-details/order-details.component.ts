@@ -73,15 +73,16 @@ export class OrderDetailsComponent implements OnInit {
     { value: ProductOrderStatus.PENDING, viewValue: 'Pending' },
     { value: ProductOrderStatus.CANCEL, viewValue: 'Cancel' },
     { value: ProductOrderStatus.CONFIRM, viewValue: 'Confirm' },
-    { value: ProductOrderStatus.PARTIAL_SHIPPING, viewValue: 'Partial Shipping' },
-    { value: ProductOrderStatus.SHIPPING, viewValue: 'Shipping' },
-    { value: ProductOrderStatus.DELIVERED, viewValue: 'Delivered' },
-    { value: ProductOrderStatus.PARTIAL_DELIVERED, viewValue: 'Partial Delivered' },
-    { value: ProductOrderStatus.RETURN, viewValue: 'Return' },
-    { value: ProductOrderStatus.PARTIAL_RETURN, viewValue: 'Partial Return' }
+    { value: ProductOrderStatus.PARTIAL_SHIPPING, viewValue: 'Partial Shipping' , disabled:true},
+    { value: ProductOrderStatus.SHIPPING, viewValue: 'Shipping'  , disabled:true},
+    { value: ProductOrderStatus.DELIVERED, viewValue: 'Delivered'  , disabled:true},
+    { value: ProductOrderStatus.PARTIAL_DELIVERED, viewValue: 'Partial Delivered' , disabled:true },
+    { value: ProductOrderStatus.RETURN, viewValue: 'Return' , disabled:true },
+    { value: ProductOrderStatus.PARTIAL_RETURN, viewValue: 'Partial Return' , disabled:true }
   ];
   selectedIds: number[] = [];
   timelineStatus: any[];
+  vProducts: any[];
 
 
 
@@ -194,15 +195,51 @@ export class OrderDetailsComponent implements OnInit {
         //console.log('order order', this.order);
 
         this.products = this.order.orderedItems;
-        //console.log("products", this.products);
+        console.log(this.products);
 
-        // this.dataForm.get('selected').patchValue(this.order.deliveryStatus);
+        this.vProducts =  this.arrayGroupByField(this.products, 'vendorName');
+
         this.getInvoiceCount();
       },
       (err) => {
         console.log(err);
       }
     );
+  }
+
+  private arrayGroupByField<T>(dataArray: T[], field: string, firstId?: string): any[] {
+    const data = dataArray.reduce((group, product) => {
+      const uniqueField = product[field]
+      group[uniqueField] = group[uniqueField] ?? [];
+      group[uniqueField].push(product);
+      return group;
+    }, {});
+
+    const final = [];
+
+    for (const key in data) {
+      final.push({
+        _id: key,
+        select: false,
+        data: data[key]
+      })
+    }
+
+    if (firstId) {
+      // Rearrange Index
+      const fromIndex = final.findIndex(f => f._id === firstId);
+      const toIndex = 0;
+      const element = final.splice(fromIndex, 1)[0];
+
+      final.splice(toIndex, 0, element);
+
+      return final as any[];
+
+    } else {
+      return final as any[];
+    }
+
+
   }
 
   //thumbnail
@@ -453,19 +490,17 @@ export class OrderDetailsComponent implements OnInit {
     return tax * quantity;
   }
 
-  calculateSubTotal() {
-    this.total = 0;
+  get calculateSubTotal() {
+    let subTotal:number = 0;
     for (let i = 0; i < this.order?.orderedItems?.length; i++) {
-      this.total +=
-        this.order?.orderedItems[i].price *
-        this.order?.orderedItems[i].quantity;
+      subTotal += this.getAmount(this.order?.orderedItems[i]);
     }
-    return this.total;
+    return subTotal;
   }
 
   get calculateTotal() {
     return (
-      this.calculateSubTotal() +
+      this.calculateSubTotal +
       this.calculateTotalTax()
     );
   }
@@ -525,7 +560,6 @@ export class OrderDetailsComponent implements OnInit {
 
   getAmount(item) {
     if (item.advance) {
-      // return Math.round((item?.price * item?.quantity + item.tax * item?.quantity) - item.advance);
       return Math.round((item?.price * item?.quantity + item.tax * item?.quantity));
     } else {
       return Math.round(item?.price * item?.quantity + item.tax * item?.quantity);

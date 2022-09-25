@@ -55,8 +55,10 @@
       <ul>
         <li><button [class]="status == 0 ?'menu-active':'inactive'" (click)="onFilterSelectChange(0)">All</button></li>
         <li><button [class]="status == 1 ?'menu-active':'inactive'" (click)="onFilterSelectChange(1)">COD</button></li>
-        <li><button [class]="status == 2 ?'menu-active':'inactive'" (click)="onFilterSelectChange(2)">Unpaid</button></li>
-        <li><button [class]="status == 3 ?'menu-active':'inactive'" (click)="onFilterSelectChange(3)">Partial Paid</button></li>
+        <li><button [class]="status == 2 ?'menu-active':'inactive'" (click)="onFilterSelectChange(2)">Unpaid</button>
+        </li>
+        <li><button [class]="status == 3 ?'menu-active':'inactive'" (click)="onFilterSelectChange(3)">Partial
+            Paid</button></li>
         <li><button [class]="status == 4 ?'menu-active':'inactive'" (click)="onFilterSelectChange(4)">Paid</button></li>
       </ul>
     </div>
@@ -85,14 +87,14 @@
     <div class="table-area-header-bottom">
       <!--left-->
       <div class="table-area-header-bottom-left">
-      <!--order-search-->
-      <form class="search-form" #searchForm="ngForm">
-        <div class="order-search">
-          <button><i class="fa fa-search"></i></button>
-          <input #searchInput id="searchInput" type="text" (focus)=handleFocus($event) name="searchTerm"
-            autocomplete="off" ngModel value="" placeholder="Search by phone, order number">
-        </div>
-      </form>
+        <!--order-search-->
+        <form class="search-form" #searchForm="ngForm">
+          <div class="order-search">
+            <button><i class="fa fa-search"></i></button>
+            <input #searchInput id="searchInput" type="text" (focus)=handleFocus($event) name="searchTerm"
+              autocomplete="off" ngModel value="" placeholder="Search by phone, order number">
+          </div>
+        </form>
 
       </div>
       <!---right-->
@@ -111,11 +113,13 @@
 
                 <mat-error *ngIf="dataFormDateRange.controls.start.hasError('matStartDateInvalid')">Invalid start date
                 </mat-error>
-                <mat-error *ngIf="dataFormDateRange.controls.end.hasError('matEndDateInvalid')">Invalid end date </mat-error>
+                <mat-error *ngIf="dataFormDateRange.controls.end.hasError('matEndDateInvalid')">Invalid end date
+                </mat-error>
               </div>
             </li>
             <!-- <li><button [matMenuTriggerFor]="paymentStatus"><i class="fa fa-angle-down"></i> Invoice Status</button></li> -->
-            <li><button [matMenuTriggerFor]="paymentStatus"><i class="fa fa-angle-down"></i> Payment Status</button></li>
+            <li><button [matMenuTriggerFor]="paymentStatus"><i class="fa fa-angle-down"></i> Payment Status</button>
+            </li>
             <li><button [matMenuTriggerFor]="orderStatus"><i class="fa fa-angle-down"></i> Order Status</button></li>
             <li><button [matMenuTriggerFor]="vendor"><i class="fa fa-angle-down"></i> Vendor</button></li>
           </ul>
@@ -136,119 +140,47 @@
     </div>
   </div>
 
-  <div class="order-table-main">
-    <!---table-->
-    <div class="table">
-      <!---table-head-->
-      <div class="table-head">
-        <!---table-row-->
-        <div class="table-row">
-          <div class="table-heading check">
-            <mat-checkbox #matCheckbox class="mat-check" (change)="onAllSelectChange($event)"></mat-checkbox>
-          </div>
-          <div class="table-heading id">
-            <h3>Order No</h3>
-          </div>
-          <div class="table-heading date">
-            <h3>Date & Time</h3>
-          </div>
-          <div class="table-heading item">
-            <h3>Customer Name</h3>
-          </div>
-          <div class="table-heading item">
-            <h3>Phone</h3>
-          </div>
-          <div class="table-heading amount">
-            <h3>Amount</h3>
-          </div>
-          <div class="table-heading pay-status">
-            <h3>Advance Payment</h3>
-          </div>
-          <div class="table-heading pay-status">
-            <h3>Invoice Status</h3>
-          </div>
-          <!-- <div class="table-heading order-status">
-            <h3>Order Status</h3>
-          </div> -->
-          <div class="table-heading vendor">
-            <h3>Vendor</h3>
-          </div>
-          <div class="table-heading note">
-            <h3>Notes</h3>
-          </div>
-        </div>
-      </div>
-      <!----table-body-->
-      <div class="table-body">
-        <div class="table-row"
-          *ngFor="let data of orders | paginate: { itemsPerPage: ordersPerPage, currentPage: currentPage, totalItems: totalOrders }; let i = index">
-          <div class="table-data check">
-            <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data._id)"
-              [(ngModel)]="data.select"></mat-checkbox>
-          </div>
-          <div class="table-data id">
-            <span [routerLink]="['../../','order-details', data._id ]">{{data.orderId}}</span>
-          </div>
-          <div class="table-data date">
-            <h3>{{data.checkoutDate | date}}</h3>
-            <h3>{{data.checkoutDate | date : 'mediumTime'}}</h3>
-          </div>
-          <div class="table-data item">
-            <span>{{data?.user?.fullName? data.user.fullName : 'No Name'}} <img style="width: 20px;"
-                [src]="data?.user?.tag?.images" alt=""></span>
-          </div>
-          <div class="table-data item">
-            <span>{{data?.phoneNo? data.phoneNo : data.user.phoneNo}} </span>
-          </div>
-          <div class="table-data amount">
-            <h3>{{data.totalAmount}}</h3>
-          </div>
-          <div class="table-data pay-status">
-            <button>{{data.paymentStatus | paymentStatus }}</button>
-          </div>
-          <div class="table-data order-status">
-            <span *ngFor="let status of data?.orderedItems" [ngClass]="getDeliveryStatus(status)">
-              <!-- {{getDeliveryStatus(status)}} -->
-              <i class="fa-solid fa-circle" ></i>
-            </span>
-          </div>
-          <!-- <div class="table-data order-status">
-            <h3>{{data.deliveryStatus | orderStatus }}</h3>
-          </div> -->
-          <div class="table-data vendor">
-            <button *ngIf="data?.vendors[0] && data?.vendors[0]==='global'" >careme global</button>
-            <button *ngIf="data?.vendors[0] && data?.vendors[0]!='global'" style="background:black;color:seashell" >careme</button>
-            <button *ngIf="data?.vendors[1] && data?.vendors[1]==='global'">careme global</button>
-            <button *ngIf="data?.vendors[1] && data?.vendors[1]!='global'" style="background:black;color:seashell" >careme</button>
-          </div>
-          <div class="table-data note">
-            <span><i class="fa-solid fa-file-lines"></i></span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-  <!---indicator-->
-
-
-  <!-- <ul>
-            <li><button ><i class="fa fa-angle-left"></i></button></li>
-            <li><button ><i class="fa fa-angle-right"></i></button></li>
-        </ul> -->
-
-  <!---indicator-->
-  <!-- <div class="indicator-area">
-    <div class="pagination-container">
-      <pagination-controls class="product-pagination" [autoHide]="true" [maxSize]="15"
-        (pageChange)="onPageChanged($event)">
-      </pagination-controls>
-    </div>
-    <div class="indicator-right">
-      <span>Showing {{currentPage*ordersPerPage-ordersPerPage+1}} to {{currentPage*ordersPerPage <= totalOrders ?
-          currentPage*ordersPerPage : totalOrders}} of {{totalOrders}} entries</span>
-    </div>
-  </div> -->
+  <!---table-->
+  <nz-table #basicTable [nzData]="orders">
+    <!---table-head-->
+    <thead>
+      <!---table-row-->
+      <tr>
+        <th>
+          <mat-checkbox #matCheckbox class="mat-check" (change)="onAllSelectChange($event)"></mat-checkbox>
+        </th>
+        <th>Order
+        </th>
+        <th>Customer</th>
+        <th>Amount</th>
+        <th>Advance Payment</th>
+        <th>
+          Notes
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data; let i = index">
+        <td>
+          <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data._id)"
+            [(ngModel)]="data.select"></mat-checkbox>
+        </td>
+        <td>
+          <a [routerLink]="['../../','order-details', data._id ]">SO-{{data.orderId}}</a>
+          <p>{{data.checkoutDate | date : 'short'}}</p>
+        </td>
+        <td>
+          <a [routerLink]="['../../','customer', data.userId._id ]">{{data.userId.fullName ? data.userId.fullName :
+            data.userId.phoneNo}} </a>
+        </td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <i class="fa-solid fa-file-lines"></i>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
 </div>
 <!---create-return-->
 <!-- <div class="create-order-area">

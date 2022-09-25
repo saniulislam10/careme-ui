@@ -58,13 +58,13 @@
               let i = index
             " [class.active]="data?._id === id" [routerLink]="['../../', 'order-details', data._id]">
             <div class="sidebar-info-left">
-              {{ data?.user?.fullName ? data?.user.fullName : data.user.phoneNo }}
+              {{ data?.name ? data?.name : data.phoneNo }}
               <span [routerLink]="['../../', 'order-details', data._id]">SO-{{ data?.orderId }}
                 |
                 <small>{{ data?.checkoutDate | date }}</small></span>
             </div>
             <div class="sidebar-info-right">
-              <h4>{{ data?.totalAmount ?  data?.totalAmount : 0}} TK</h4>
+              <h4>{{ data?.totalAmount ? data?.totalAmount : 0}} TK</h4>
             </div>
           </li>
         </ul>
@@ -75,7 +75,7 @@
   <div class="order-details-container">
     <form [formGroup]="dataForm">
       <div class="order-id-area">
-        <h4>#{{ order?.orderId }}</h4>
+        <h4>#SO-{{ order?.orderId }}</h4>
         <span>{{order?.checkoutDate | date: "short"}}</span>
       </div>
 
@@ -104,74 +104,88 @@
               (click)="openDialog()" type="button">
               Invoice
             </a>
-            <nz-select style="margin-right:10px" ngModel="selected" [nzDisabled]="!selectedIds?.length"
-              formControlName="selected">
-              <nz-option *ngFor="let data of productOrderStatus" [nzLabel]="data.viewValue" [nzValue]="data.value">
-              </nz-option>
-            </nz-select>
             <input style="margin-right:10px" nz-input type="text" formControlName="statusNote"
               placeholder="Write a note " />
             <button style="margin-right:10px" nz-button nzType="primary" (click)="onOrderStatusChange()">Send</button>
           </div>
+          <div>
+          </div>
           <!---table-end-->
-          <nz-table class="table" #columnTable [nzData]="products">
-            <thead>
-              <tr>
-                <th nzLeft nzWidth="25px" class="check">
-                  <mat-checkbox></mat-checkbox>
-                </th>
-                <th nzLeft nzWidth="25px">Image</th>
-                <th>Item Name</th>
-                <th nzWidth="100px">Price</th>
-                <th>Discount (-)</th>
-                <th>Tax (+)</th>
-                <th>Total</th>
-                <th>Advance</th>
-                <th nzWidth="100px">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let data of columnTable.data; let i=index">
-                <td nzWidth="25px" nzLeft>
-                  <mat-checkbox (change)="onCheckChange($event, i)"></mat-checkbox>
-                </td>
-                <td nzLeft>
-                  <img nz-image width="50px" [nzSrc]="
-                      data.product
-                        ? setThumbnailImage(data.product)
+          <div *ngFor="let products of vProducts">
+
+
+            <nz-table class="table" #columnTable [nzData]="products.data" [nzShowPagination]="false" [nzTitle]="'Vendor Name : '+products._id">
+              <thead>
+                <tr>
+                  <th nzLeft nzWidth="25px" class="check">
+                    <mat-checkbox></mat-checkbox>
+                  </th>
+                  <th nzLeft nzWidth="25px">Image</th>
+                  <th>Item Name</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                  <th>Tax (+)</th>
+                  <th>Discount (-)</th>
+                  <th>Total</th>
+                  <th>Advance</th>
+                  <th nzWidth="100px">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of columnTable.data; let i=index">
+
+                  <td nzWidth="25px" nzLeft>
+                    <mat-checkbox (change)="onCheckChange($event, i)"></mat-checkbox>
+                  </td>
+                  <td nzLeft>
+                    <img nz-image width="50px" [nzSrc]="
+                      data.productId
+                        ? setThumbnailImage(data.productId)
                         : '/assets/images/placeholder/test.png'
-                    " [alt]="data.product.name" />
-                </td>
-                <td>
-                  <a target="_blank" [routerLink]="['../../../', 'product-details', data.product.slug]" class="text">
-                    {{ data?.product.name }}
-                  </a>
-                  {{ data?.sku }}
-                </td>
-                <td>
-                  {{ data?.quantity }} X {{ data?.price }}
-                </td>
-                <td>0</td>
-                <td>
-                  {{ data.tax ? data.tax : "0" }}
-                </td>
-                <td>
-                  {{ getAmount(data) }}
-                </td>
-                <td>
-                  <span [style]="order.paymentStatus !== 1 ? 'color:green' : 'color:orange'">{{ data?.advance }}</span>
-                </td>
-                <td>
-                  <mat-form-field style="width: 100px" appearance="outline">
-                    <mat-select [(value)]="data.status" (selectionChange)="onStatusChange($event.value, order, data)">
-                      <mat-option  *ngFor="let option of productOrderStatus" [value]="option.value">{{option.viewValue}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-              </tr>
-            </tbody>
-          </nz-table>
+                    " [alt]="data.productId.name" />
+                  </td>
+                  <td>
+                    <a target="_blank" [routerLink]="['../../../', 'product-details', data.productId.slug]"
+                      class="text">
+                      {{ data?.productId.name }}
+                    </a>
+                    {{ data?.sku }}
+                  </td>
+                  <td>
+                    <div>
+                      <b>{{ data?.quantity }}</b>
+                    </div>
+                    <div class="inv-qty">
+                      INV-{{data?.invoicedQuantity}}
+                    </div>
+                    <div class="rto-qty">
+                      RTO-{{data?.returnedQuantity}}
+                    </div>
+                  </td>
+                  <td>{{ data?.price }}</td>
+                  <td>
+                    {{ data.tax ? data.tax : "0" }}
+                  </td>
+                  <td>0</td>
+                  <td>{{ getAmount(data) }}</td>
+                  <td>
+                    <span [style]="order.paymentStatus !== 1 ? 'color:green' : 'color:orange'">{{ data.advance ?
+                      data.advance : 0}}</span>
+                  </td>
+                  <td>
+                    <mat-form-field style="width: 100px" appearance="outline">
+                      <mat-select [(value)]="data.deliveryStatus"
+                        (selectionChange)="onStatusChange($event.value, order, data)">
+                        <mat-option *ngFor="let option of productOrderStatus" [value]="option.value" [disabled]="option.disabled">
+                          {{option.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
           <!---order-payment-details-->
           <div class="order-pay-details">
             <!--payment-summery-area-->
@@ -183,7 +197,7 @@
                       <h3>Sub Total</h3>
                     </div>
                     <div class="total-price">
-                      <h4>{{ 0 - 120 }} TK</h4>
+                      <h4>{{ calculateSubTotal }} TK</h4>
                     </div>
                   </li>
                   <li>
@@ -209,7 +223,7 @@
                       <h3>Shipping Charge</h3>
                     </div>
                     <div class="total-price">
-                      <h4>120 TK</h4>
+                      <h4>{{120}} TK</h4>
                     </div>
                   </li>
                   <hr />
@@ -218,10 +232,7 @@
                       <h3>Amount to pay</h3>
                     </div>
                     <div class="total-price">
-                      <h4>
-                        {{0}}
-                        TK
-                      </h4>
+                      <h4>{{calculateSubTotal - 120}} TK</h4>
                     </div>
                   </li>
                   <li>

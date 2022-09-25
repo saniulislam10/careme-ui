@@ -100,13 +100,6 @@ export class DashboardComponent implements OnInit {
     console.log('on chart init:', e);
   }
 
-  callMethod(type: string) {
-    if (this.chartInstance) {
-      const result = this.chartInstance[type]();
-      this.msg.info(`${type}(): ${result || 'void'}`);
-      console.log(result);
-    }
-  }
 
 
   /**

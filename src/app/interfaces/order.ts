@@ -26,7 +26,9 @@ export interface OrderItem {
   shippingFee?: Number,
   returnPeriod: Number,
   earnedAmount: Number,
-  redeemedAmount: Number
+  invoicedQuantity: Number,
+  returnedQuantity: Number,
+  redeemedAmount: Number,
 }
 export interface OrderStatusTimeline {
   status:  string,
@@ -56,7 +58,8 @@ export interface Order {
   shippingPhoneNo: string,
   orderStatusTimeline: OrderStatusTimeline[],
   comments: string[],
-  orderNotes: string
+  orderNotes: string,
+  select?: any
 }
 
 

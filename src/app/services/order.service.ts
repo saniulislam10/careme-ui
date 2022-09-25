@@ -161,7 +161,7 @@ export class OrderService {
 
 
   getAllOrdersByAdmin(paginate?: Pagination, sort?: any, filter?: any, select?: string, ) {
-    return this.httpClient.post<{ data: Product[], priceRange: any, count: number}>(API_ORDER + 'get-all-orders-by-admin', {paginate, sort, filter, select});
+    return this.httpClient.post<{ data: Order[], priceRange: any, count: number}>(API_ORDER + 'get-all-orders-by-admin', {paginate, sort, filter, select});
   }
 
   getOrdersBySearch(searchTerm: string, pagination?: Pagination, filter?: any) {

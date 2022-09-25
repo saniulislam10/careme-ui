@@ -576,6 +576,8 @@ export class NewShoppingInfoComponent implements OnInit {
         paymentStatus: PaymentStatus.PENDING,
         deliveryDateFrom: m.deliveryDateFrom,
         deliveryDateTo: m.deliveryDateTo,
+        invoicedQuantity: 0,
+        returnedQuantity: 0,
         returnPeriod: undefined,
         earnedAmount: undefined,
         redeemedAmount: undefined

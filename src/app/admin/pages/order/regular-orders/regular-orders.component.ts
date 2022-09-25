@@ -48,7 +48,7 @@ export class RegularOrdersComponent implements OnInit {
   isLoading = false;
   isSelect = false;
   query = null;
-  orders: any;
+  orders: Order[];
   status: number=0;
   searchProducts: any[];
   products: any;

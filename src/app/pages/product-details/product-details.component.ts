@@ -79,13 +79,14 @@ export class ProductDetailsComponent implements OnInit {
   existInCart: boolean = false;
   globalContinue: boolean;
 
-  selectedRow: number
-  selectedColumn: number
+  selectedRow: number;
+  selectedColumn: number;
   selectedVarientName: string
   isUserAuth: boolean;
   globalDisplay: any;
   defaultVariantSelected: boolean;
-  display: boolean;
+  display: boolean = true;
+  selectedOptions: Number[] = [];
 
 
 
@@ -451,13 +452,6 @@ export class ProductDetailsComponent implements OnInit {
 
   }
 
-
-  // buy now button
-  activeBookBtn() {
-    this.btnActive = false;
-    this.newUser.newUserPopUpShow();
-  }
-
   /**
    * Variant Functions
    */
@@ -470,7 +464,7 @@ export class ProductDetailsComponent implements OnInit {
 
   selectedVariant(row: number, col: number) {
 
-    console.log(this.defaultVariantSelected, this.clickActive)
+    this.selectedOptions[row]=col;
     this.selectedRow = row;
     this.selectedColumn = col;
     this.variantSelected = true;
@@ -489,7 +483,7 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.getVariantInfo(this.variantSku);
 
-    if (this.selectedQty > this.globalQuantity && this.globalQuantity !== 0) {
+    if (this.selectedQty > this.globalQuantity && this.globalQuantity > 0) {
       this.addToCartButton = false;
       this.uiService.warn(
         'Your selected quantity is more than in stock quantity, Please select less.'
@@ -515,13 +509,14 @@ export class ProductDetailsComponent implements OnInit {
       this.clickVariant = false;
       this.globalPrice = this.product.sellingPrice;
       this.globalContinue = this.product.continueSelling;
-      this.globalDisplay = this.selectedVariantData.variantContinueSelling;
+      this.globalDisplay = true;
     } else {
       this.allTypeVariantSelected = true;
       this.clickVariant = true;
       this.globalQuantity = this.selectedVariantData.variantQuantity;
       this.globalPrice = this.selectedVariantData.variantPrice;
       this.globalContinue = this.selectedVariantData.variantContinueSelling;
+      this.globalDisplay = this.selectedVariantData.variantDisplay;
     }
 
   }
