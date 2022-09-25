@@ -1,27 +1,32 @@
 @import "src/theme/variables";
-// .main-container{
-//   display: block;
-//   max-width: 1550px;
-//   width: 100%;
-//   margin: auto;
-// }
+.main-container{
+  display: block;
+  margin: auto;
+  max-width: 1600px;
+  border: 0.5px solid #d4e5fa;
+  overflow: hidden !important;
+}
 // ## SideNav
  img{
-     display: block;
-     width: 100%;
+    display: block;
+    max-width: 100%;
  }
 mat-sidenav {
-  position: fixed;
-  margin-top: $toolbar-height;
+  position: absolute;
+  // margin-top: $toolbar-height;
   width: $mat-sidenav-width;
+  min-height: 100vh;
+  height: auto;
   background-color: #17203f;
 }
 .sivenav::-webkit-scrollbar{
-  width: 0px;
-  background-color: transparent;
+  width: 10px;
+  background-color: #d4e5fa;
 }
 mat-sidenav-content{
-  margin-top: $toolbar-height;
+  // margin-top: $toolbar-height;
+  min-height: 100vh;
+  height: auto;
   background-color: #f6f9fd;
 }
 
