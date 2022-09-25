@@ -1,49 +1,111 @@
 <!---banner-area-->
-<div class="banner-area">
+<div class="entry-banner">
   <div class="container">
-    <!---banner-main-->
-    <div class="banner-main">
-      <!---category-menu-->
-      <div class="category-menu">
-        <!--category-top-->
-        <div class="categories-top">
-          <!---categories-top-left-->
-          <div class="categories-top-left">
-            <h3 #title>Top Categories</h3>
-          </div>
-          <!---categories-top-right-->
-          <div class="categories-top-right">
-            <a routerLink="/all-collection">See more <i class="fa fa-angle-right"></i></a>
-          </div>
+    <div class="entry-banner_main">
+      <div class="entry-banner_categoty">
+        <div class="categoty_title">
+          <h2><i class="las la-bars"></i> Categories</h2>
+          <a href="#">View All</a>
         </div>
-        <!----category dynamic menu------>
         <ul>
-          <li *ngFor="let data of category; let i = index">
-            <a [routerLink]="['/products-list', data?.slug]" [skipLocationChange]="false">
-              <span></span> {{ data.name }}</a>
-            <span><i class="fa fa-angle-right"></i></span>
-            <div class="sub-mega-menu" *ngIf="data.hasChild.length > 0">
-              <app-menu-hover-content [parentCategory]="data" [data]="data.hasChild"></app-menu-hover-content>
+          <li>
+            <div class="menu-item">
+              <a href="#"> Men Fashion </a>
+              <span>
+                <i class="las la-long-arrow-alt-right"></i>
+              </span>
             </div>
+            <ul class="submenu">
+              <li>
+                <div class="menu-item"><a>Men Fashion </a></div>
+              </li>
+              <li>
+                <div class="menu-item"><a>Women's Fashion</a></div>
+              </li>
+              <li>
+                <div class="menu-item"><a>Men Fashion</a></div>
+              </li>
+              <li>
+                <div class="menu-item"><a>Men Fashion</a></div>
+              </li>
+              <li>
+                <div class="menu-item"><a>Women's Fashion</a></div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="menu-item"><a>Men Fashion </a></div>
+          </li>
+          <li>
+            <div class="menu-item"><a>Women's Fashion</a></div>
+          </li>
+          <li>
+            <div class="menu-item"><a>Men Fashion</a></div>
+          </li>
+          <li>
+            <div class="menu-item"><a>Men Fashion</a></div>
+          </li>
+          <li>
+            <div class="menu-item"><a>Women's Fashion</a></div>
+          </li>
+          <li>
+            <div class="menu-item">
+              <a href="#"> Men Fashion </a>
+              <span>
+                <i class="las la-long-arrow-alt-right"></i>
+              </span>
+            </div>
+            <ul class="submenu">
+              <li>
+                <div class="menu-item"><a>Men Fashion </a></div>
+              </li>
+              <li>
+                <div class="menu-item"><a>Women's Fashion</a></div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <div class="menu-item"><a>Women's Fashion</a></div>
+          </li>
+          <li>
+            <div class="menu-item"><a>Women's Fashion</a></div>
           </li>
         </ul>
-      <!---category-static testing menu -->
-
       </div>
-      <!--banner-slide-->
-      <div class="banner-slide carousel">
-        <swiper [spaceBetween]="10" [pagination]="{clickable: true}" [navigation]="true" [loop]="true" [autoplay]="true" class="mySwiper banner-carousel">
-          <ng-container *ngFor="let carousel of carouselData">
-            <ng-template swiperSlide >
-              <!---slide-img-->
-              <div class="slide-img">
-                <img [src]="carousel?.bannerImage" alt="" />
-              </div>
-            </ng-template>
-          </ng-container>
-        </swiper>
+      <div class="entry-banner_slider">
+        <div class="entry-banner_image">
+          <swiper
+            [spaceBetween]="10"
+            [pagination]="{ clickable: true }"
+            [navigation]="true"
+            [loop]="true"
+            [autoplay]="true"
+            class="mySwiper"
+          >
+            <ng-container *ngFor="let carousel of carouselData">
+              <ng-template swiperSlide>
+                <div class="banner-single">
+                  <img [src]="carousel?.bannerImage" alt="" />
+                </div>
+              </ng-template>
+            </ng-container>
+          </swiper>
+        </div>
+        <div class="entry-banner_promotion">
+          <div class="entry-banner_promotion_thumb">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0464/2281/8974/files/Small_banner_global_430X130_crop_center.gif?v=1661601501"
+              alt=""
+            />
+          </div>
+          <div class="entry-banner_promotion_thumb">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0464/2281/8974/files/Small_banner_eng_430X130_crop_center.gif?v=1661601554"
+              alt=""
+            />
+          </div>
+        </div>
       </div>
-      <!---banner-slide-end-->
     </div>
   </div>
 </div>
@@ -64,7 +126,10 @@
     </div>
     <!---section1-main-->
     <div class="section1-main carousels">
-      <swiper [slidesPerView]="2" [spaceBetween]="14" [breakpoints]="{
+      <swiper
+        [slidesPerView]="2"
+        [spaceBetween]="14"
+        [breakpoints]="{
           '450': {
             slidesPerView: 1.5
           },
@@ -89,9 +154,14 @@
           '1600': {
             slidesPerView: 5
           }
-        }" [pagination]="{
+        }"
+        [pagination]="{
           clickable: true
-        }" [autoplay]="true" [navigation]="true" class="mySwiper">
+        }"
+        [autoplay]="true"
+        [navigation]="true"
+        class="mySwiper"
+      >
         <ng-template swiperSlide *ngFor="let data of cardOneData">
           <app-product-card-one [data]="data"></app-product-card-one>
         </ng-template>
@@ -125,7 +195,10 @@
 
     <!---section3-main-->
     <div class="section3-main carousels">
-      <swiper [slidesPerView]="2" [spaceBetween]="14" [breakpoints]="{
+      <swiper
+        [slidesPerView]="2"
+        [spaceBetween]="14"
+        [breakpoints]="{
           '450': {
             slidesPerView: 1.5
           },
@@ -150,9 +223,14 @@
           '1600': {
             slidesPerView: 5
           }
-        }" [pagination]="{
+        }"
+        [pagination]="{
           clickable: true
-        }" [autoplay]="true" [navigation]="true" class="mySwiper">
+        }"
+        [autoplay]="true"
+        [navigation]="true"
+        class="mySwiper"
+      >
         <ng-template swiperSlide *ngFor="let data of cardThreeData">
           <app-product-card-three [data]="data"></app-product-card-three>
         </ng-template>
@@ -191,7 +269,10 @@
       <div class="categorys-details">
         <!---categorys-img-->
         <div class="categorys-img">
-          <img src="./assets/images/image/pmv-chamara-dMjkQJs58uo-unsplash.png" alt="" />
+          <img
+            src="./assets/images/image/pmv-chamara-dMjkQJs58uo-unsplash.png"
+            alt=""
+          />
         </div>
         <!---categorys-text-info-->
         <div class="categorys-text-info">
@@ -202,7 +283,10 @@
       <div class="categorys-details">
         <!---categorys-img-->
         <div class="categorys-img">
-          <img src="./assets/images/image/italian-kitchen-accessories.png.png" alt="" />
+          <img
+            src="./assets/images/image/italian-kitchen-accessories.png.png"
+            alt=""
+          />
         </div>
         <!---categorys-text-info-->
         <div class="categorys-text-info">
@@ -213,7 +297,10 @@
       <div class="categorys-details">
         <!---categorys-img-->
         <div class="categorys-img">
-          <img src="./assets/images/image/josiah-weiss-8sjBzL1IyMo-unsplash.png" alt="" />
+          <img
+            src="./assets/images/image/josiah-weiss-8sjBzL1IyMo-unsplash.png"
+            alt=""
+          />
         </div>
         <!---categorys-text-info-->
         <div class="categorys-text-info">
@@ -241,7 +328,10 @@
 
     <!---section3-main-->
     <div class="section3-main carousels">
-      <swiper [slidesPerView]="2" [spaceBetween]="14" [breakpoints]="{
+      <swiper
+        [slidesPerView]="2"
+        [spaceBetween]="14"
+        [breakpoints]="{
           '450': {
             slidesPerView: 1.5
           },
@@ -266,9 +356,14 @@
           '1600': {
             slidesPerView: 5
           }
-        }" [pagination]="{
+        }"
+        [pagination]="{
           clickable: true
-        }" [autoplay]="true" [navigation]="true" class="mySwiper">
+        }"
+        [autoplay]="true"
+        [navigation]="true"
+        class="mySwiper"
+      >
         <ng-template swiperSlide *ngFor="let data of cardThreeData">
           <app-product-card-three [data]="data"></app-product-card-three>
         </ng-template>
@@ -293,7 +388,10 @@
     </div>
     <!---section1-main    [autoplay]="true"-->
     <div class="section4-main carousels">
-      <swiper [slidesPerView]="1.5" [spaceBetween]="16" [breakpoints]="{
+      <swiper
+        [slidesPerView]="1.5"
+        [spaceBetween]="16"
+        [breakpoints]="{
           '400': {
             slidesPerView: 1.5
           },
@@ -312,9 +410,13 @@
           '1400': {
             slidesPerView: 3.5
           }
-        }" [pagination]="{
+        }"
+        [pagination]="{
           clickable: true
-        }" [navigation]="true" class="mySwiper">
+        }"
+        [navigation]="true"
+        class="mySwiper"
+      >
         <ng-template swiperSlide *ngFor="let data of cardTwoData">
           <app-product-card-two [data]="data"></app-product-card-two>
         </ng-template>
@@ -325,9 +427,14 @@
 
 <!-- TEMPLATE NGX SPINNER-->
 <ngx-spinner
-bdColor = "rgba(0, 0, 0, 0.8)"
-size = "medium" color = "#fff"
-type = "pacman" [fullScreen] = "true">
-<!-- <p style="color: white" > Loading... </p> -->
-<p style="color: white; padding-left: 40px;" > We are testing your patience... </p>
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="pacman"
+  [fullScreen]="true"
+>
+  <!-- <p style="color: white" > Loading... </p> -->
+  <p style="color: white; padding-left: 40px">
+    We are testing your patience...
+  </p>
 </ngx-spinner>

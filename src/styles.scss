@@ -43,20 +43,21 @@ body {
 body {
   margin: 0;
   font-family: "Roboto", "Helvetica Neue", sans-serif;
+  background: #f3f3f3 !important;
 }
 .ant-btn-primary {
   color: #fff !important;
-  background: #e26ca3 !important;
-  border: 1px solid #e26ca3 !important;
+  background: #da5894 !important;
+  border: 1px solid #da5894 !important;
 }
 .ant-btn-primary:hover {
   color: #fff !important;
-  background: #ce337b !important;
-  border: 1px solid #ce337b !important;
+  background: #da5894 !important;
+  border: 1px solid #da5894 !important;
 }
 .ant-input-focused,
 .ant-input:focus {
-  box-shadow: 0 0 0 2px #e26ca3;
+  box-shadow: 0 0 0 2px #da5894;
   border-right-width: 1px;
   outline: 0;
 }

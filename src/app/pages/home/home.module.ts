@@ -10,12 +10,8 @@ import { ProductCardOneModule } from 'src/app/shared/lazy-component/product-card
 import { ProductCardTwoModule } from 'src/app/shared/lazy-component/product-card-two/product-card-two.module';
 import { ProductCardThreeModule } from 'src/app/shared/lazy-component/product-card-three/product-card-three.module';
 
-
 @NgModule({
-  declarations: [
-    HomeComponent,
-    MenuHoverContentComponent
-  ],
+  declarations: [HomeComponent, MenuHoverContentComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
@@ -23,7 +19,7 @@ import { ProductCardThreeModule } from 'src/app/shared/lazy-component/product-ca
     SwiperModule,
     ProductCardOneModule,
     ProductCardTwoModule,
-    ProductCardThreeModule
-  ]
+    ProductCardThreeModule,
+  ],
 })
-export class HomeModule { }
+export class HomeModule {}
