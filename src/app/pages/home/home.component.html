@@ -205,7 +205,7 @@
     <div class="section1-main carousels">
       <swiper
         [slidesPerView]="2"
-        [spaceBetween]="14"
+        [spaceBetween]="10"
         [breakpoints]="{
           '450': {
             slidesPerView: 1.5
@@ -214,19 +214,19 @@
             slidesPerView: 2
           },
           '660': {
-            slidesPerView: 2.5
+            slidesPerView: 3
           },
           '900': {
             slidesPerView: 3
           },
           '1000': {
-            slidesPerView: 3.5
+            slidesPerView: 4
           },
           '1200': {
             slidesPerView: 4
           },
           '1370': {
-            slidesPerView: 4.5
+            slidesPerView: 5
           },
           '1600': {
             slidesPerView: 5
@@ -239,8 +239,8 @@
         [navigation]="true"
         class="mySwiper"
       >
-        <ng-template swiperSlide *ngFor="let data of cardOneData">
-          <app-product-card-one [data]="data"></app-product-card-one>
+        <ng-template swiperSlide *ngFor="let data of cardThreeData">
+          <app-product-card-three [data]="data"></app-product-card-three>
         </ng-template>
       </swiper>
     </div>

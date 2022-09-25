@@ -4,10 +4,15 @@
 .user_icon {
   font-size: 14px;
 }
+.full-header{
+  background-color: #fff;
+}
 
 .header-top-area {
   display: block;
-  width: 100%;
+  max-width: 1600px;
+  margin: auto;
+  // width: 100%;
   height: auto;
   box-sizing: border-box;
   padding: 10px 0px;
@@ -17,7 +22,8 @@
 }
 .header-top-content {
   display: block;
-  width: 100%;
+  max-width: 1600px;
+  // width: 100%;
 }
 .header-top-content p {
   color: #5d5c5c;
@@ -61,19 +67,24 @@
 /**** header-midle-area ****/
 .header-midle-area {
   display: block;
-  width: 100%;
+  max-width: 1600px;
+  margin: auto;
   background-color: #fff;
   padding: 15px 0px;
   box-sizing: border-box;
-  position: relative;
 }
 
 .header-fixed {
+  .container{
+    max-width: 1600px;
+    margin: auto;
+  }
   position: fixed;
+  background: #fff;
   top: 0px;
-  left: 0px;
-  width: 100%;
+  padding: 20px 0;
   height: auto;
+  width: 100%;
   box-sizing: border-box;
   z-index: 300;
   transition: all 0.3s linear;
