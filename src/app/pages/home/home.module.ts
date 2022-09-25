@@ -9,6 +9,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { ProductCardOneModule } from 'src/app/shared/lazy-component/product-card-one/product-card-one.module';
 import { ProductCardTwoModule } from 'src/app/shared/lazy-component/product-card-two/product-card-two.module';
 import { ProductCardThreeModule } from 'src/app/shared/lazy-component/product-card-three/product-card-three.module';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 
 @NgModule({
   declarations: [HomeComponent, MenuHoverContentComponent],
@@ -20,6 +21,7 @@ import { ProductCardThreeModule } from 'src/app/shared/lazy-component/product-ca
     ProductCardOneModule,
     ProductCardTwoModule,
     ProductCardThreeModule,
+    NzStatisticModule,
   ],
 })
 export class HomeModule {}
