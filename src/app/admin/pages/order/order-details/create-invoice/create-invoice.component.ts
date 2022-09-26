@@ -138,8 +138,7 @@ export class CreateInvoiceComponent implements OnInit {
       adjustment: this.dataForm.value.adjustment,
       total:
         this.calculateSubTotal() +
-        this.dataForm.value.deliveryFee -
-        this.dataForm.value.adjustment,
+        this.dataForm.value.deliveryFee,
       deliveryStatus: ProductOrderStatus.SHIPPING,
       paymentStatus: PaymentStatus.UNPAID,
     };

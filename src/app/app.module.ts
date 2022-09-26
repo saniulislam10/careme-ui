@@ -29,6 +29,7 @@ registerLocaleData(en);
 
 /** config ng-zorro-antd i18n **/
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -42,6 +43,7 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
     BrowserAnimationsModule,
     LoadingBarModule,
     LoadingBarRouterModule,
+    NgxSpinnerModule,
     HttpClientModule,
     SharedModule,
     NzMessageModule,

@@ -535,7 +535,7 @@ export class OrderDetailsComponent implements OnInit {
         console.log(err);
       }
       );
-    }
+  }
 
   /**
    * ON Select Check

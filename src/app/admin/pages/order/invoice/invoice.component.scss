@@ -1,18 +1,22 @@
 @import '../../../../../theme/variables';
 
-.invoice{
-  padding: 30px 0;
+.invoice {
+  padding: 0;
+  margin-bottom: 50px;
 }
+
 .invoice_header {
   display: flex;
   align-items: flex-start;
   column-gap: 20px;
   padding-bottom: 30px;
 }
+
 ::ng-deep .invoice_header mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
   font-size: 30px;
 }
-.invoice_header_content h1{
+
+.invoice_header_content h1 {
   color: #131523;
   font-family: $font-en-primary-2;
   font-weight: 600;
@@ -20,7 +24,8 @@
   line-height: 18px;
   display: block;
 }
-.invoice_header_content P{
+
+.invoice_header_content P {
   color: #131523;
   font-family: $font-en-primary-2;
   font-weight: 500;
@@ -32,31 +37,36 @@
 }
 
 //ivoice body
-.inovice_body{
+.inovice_body {
   background-color: #F9FBFD;
   box-shadow: 0 4px 5px rgb(0 0 0/10%);
 }
-.invoice_buttons{
+
+.invoice_buttons {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 20px;
 }
-.invoice_buttons ul{
+
+.invoice_buttons ul {
   list-style: none;
   padding: 0px;
   margin: 0px;
   text-align: right;
 }
-.invoice_buttons ul li{
+
+.invoice_buttons ul li {
   display: inline-block;
   margin-right: 30px;
   margin-bottom: 10px;
 }
-.invoice_buttons ul li:last-child{
+
+.invoice_buttons ul li:last-child {
   margin: 0px;
 }
-.invoice_buttons ul li button{
+
+.invoice_buttons ul li button {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -72,17 +82,25 @@
   border-radius: 5px;
   cursor: pointer;
 }
+.invoice_buttons ul li button:hover{
+  color: #0058ff;
+  background: none;
+  border: 1px solid #0058ff;
+}
+
 // invoice horizontal line
-.invoice_horizontal_line{
+.invoice_horizontal_line {
   width: 100%;
   height: 2px;
   background-color: #357afa;
 }
+
 // invoice table
-.invoice_chackout_table{
+.invoice_chackout_table {
   width: 800px;
   padding: 20px;
 }
+
 .invoice_dropdown {
   display: flex;
   align-items: center;
@@ -90,29 +108,35 @@
   padding: 10px 20px;
   box-shadow: 0 4px 5px rgb(0 0 0 / 10%);
 }
-.invoice_dropdown h3{
-  font-size: 16px;
+
+.invoice_dropdown h3 {
+  font-size: 14px;
   font-weight: 500;
 }
-.invoice_dropdown p{
+
+.invoice_dropdown p {
   font-size: 14px;
   font-weight: 400;
   padding-top: 5px;
   box-sizing: border-box;
 }
-.paid_content{
+
+.paid_content {
   color: #228200;
 }
-.IVN_code_content{
+
+.IVN_code_content {
   color: #0058FF;
 }
-.invoice_dropdown p span{
+
+.invoice_dropdown p span {
   font-weight: 500;
   padding-right: 10px;
   box-sizing: border-box;
 }
-.invoice_item i{
-  font-size: 16px;
+
+.invoice_item i {
+  font-size: 14px;
   background-color: #ffffff;
   padding: 8px 10px;
   box-sizing: border-box;
@@ -121,43 +145,61 @@
 }
 
 //main invoice checkout table
-.main_invoice_checkout_table{
+.main_invoice_checkout_table {
   background-color: #FFFFFF;
   padding: 20px;
   box-sizing: border-box;
   margin-top: 20px;
 }
-.invoice_careme_logo{
-  width: 200px;
+
+.invoice_careme_logo {
+  width: 100px;
 }
-.invoice_careme_logo img{
-  width: 100%;
+
+.invoice_careme_logo img {
+  width: 100px;
 }
+
 .invoice_logo_header {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  padding-top: 20px;
+  // padding-top: 20px;
 }
+
 .invoice_logo_header_right {
   justify-self: end;
   text-align: right;
 }
+
 .invoice_careme_logo_content {
-  padding-top: 20px;
+  // padding-top: 20px;
   box-sizing: border-box;
 }
-.invoice_careme_logo_content h4{
+
+.invoice_careme_logo_content h4 {
   color: #131523;
   font-family: $font-en-primary-2;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 30px;
+  display: block;
+  // padding-top: 20px;
+  box-sizing: border-box;
+}
+
+.shipping-title {
+  color: #131523;
+  font-family: $font-en-primary-2;
+  font-weight: 600;
+  font-size: 14px;
   line-height: 30px;
   display: block;
   padding-top: 20px;
   box-sizing: border-box;
 }
-.invoice_careme_logo_content p{
+
+.invoice_careme_logo_content p {
   color: #131523;
   font-family: $font-en-primary-2;
   font-weight: 400;
@@ -165,7 +207,8 @@
   line-height: 30px;
   display: block;
 }
-.invoice_logo_header_right h1{
+
+.invoice_logo_header_right h1 {
   color: #131523;
   font-family: $font-en-primary-2;
   font-weight: 500;
@@ -173,10 +216,12 @@
   line-height: 18px;
   display: block;
 }
+
 .invoice_code {
   padding-top: 20px;
   box-sizing: border-box;
 }
+
 .invoice_balance {
   padding-top: 30px;
   box-sizing: border-box;
@@ -187,40 +232,54 @@
   line-height: 18px;
   display: block;
 }
+
 .invoie_bdt {
   padding-top: 10px;
   box-sizing: border-box;
   color: #131523;
   font-family: $font-en-primary-2;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 18px;
   display: block;
 }
 
 // invoice bill to field
 .invoice_bill_to_field {
-  padding-top: 40px;
+  padding-top: 20px;
+  margin-bottom: 10px;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: auto 300px;
   align-items: flex-start;
 }
+
 .invoice_date_field {
   display: flex;
   justify-content: space-between;
+  padding: 0;
   align-items: center;
   text-align: right;
 }
-.bill_to_left p{
-  padding-top: 10px;
-  color: #131523;
-  font-family: $font-en-primary-2;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 25px;
-  display: block;
+
+.bill_to_left {
+  div {
+    display: flex;
+    h2{
+      padding-bottom: 10px;
+    }
+    span {
+      padding-left: 5px;
+      color: #131523;
+      font-family: $font-en-primary-2;
+      font-weight: 500;
+      font-size: 12px;
+      // line-height: 25px;
+      display: block;
+    }
+  }
 }
+
 .invoice_date_field h4 {
   width: 120px;
   color: #131523;
@@ -230,7 +289,8 @@
   line-height: 35px;
   display: block;
 }
-.invoice_date_field p{
+
+.invoice_date_field p {
   color: #131523;
   font-family: $font-en-primary-2;
   font-weight: 500;
@@ -238,91 +298,111 @@
   line-height: 35px;
   display: block;
 }
-sup{
+
+sup {
   font-size: 8px;
 }
 
 //below shipped by pathao field
-.shipped_header{
-  padding: 30px 0;
+.shipped_header {
+  padding: 3px 0;
   box-sizing: border-box;
 }
-.shipped_header h1{
+
+.shipped_header h1 {
   color: #131523;
   font-family: $font-en-primary-2;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 14px;
   line-height: 35px;
   display: block;
 }
-.shipped_table table{
+
+.shipped_table table {
   width: 100%;
 }
-.shipped_table table thead{
+
+.shipped_table table thead {
   background-color: #3B3B39;
   color: #ffffff;
-  font-size: 16px;
+  font-size: 14px;
 }
-.shipped_table table thead tr th{
+
+.shipped_table table thead tr th {
   background-color: #3B3B39;
   color: #ffffff;
   font-size: 14px;
   font-weight: 400;
   font-family: $font-en-primary-2;
 }
-.items_left{
+
+.items_left {
   text-align: left;
   padding: 10px 20px;
   box-sizing: border-box;
 }
-.items_right{
+
+.items_right {
   text-align: right;
   padding: 10px 10px 10px 30px;
   box-sizing: border-box;
 }
-.items_middle{
+
+.items_middle {
   text-align: center;
   padding: 10px 20px;
   box-sizing: border-box;
 }
-.shipped_table table tbody tr{
+
+.shipped_table table tbody tr {
   font-size: 14px;
   font-weight: 500;
   font-family: $font-en-primary-2;
   color: #131523;
 }
-.table_horizontal_line{
+
+.table_horizontal_line {
   width: 100%;
   height: 1px;
   background-color: #131523;
 }
-.shipped_table table tbody tr td.items_left span{
+
+.shipped_table table tbody tr td.items_left span {
   padding: 10px 0;
   box-sizing: border-box;
   font-size: 10px;
 }
-.shipped_table table tbody tr td.items_right span{
+
+.shipped_table table tbody tr td.items_right span {
   padding: 10px 0;
   box-sizing: border-box;
 }
+
 .sub_total_content,
 .total_content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 0;
+  padding: 5px 0;
   box-sizing: border-box;
 }
+
+.sub_total_content:first-child{
+  padding-top: 15px;
+}
+
 .sub_total_right {
   display: grid;
   align-items: center;
   justify-items: end;
 }
+
 .main_sub_total_content {
   width: 400px;
   padding-right: 10px;
   box-sizing: border-box;
 }
+
 .balance_due_content {
   width: 400px;
   display: flex;
@@ -333,47 +413,57 @@ sup{
   padding: 20px 10px 20px 0;
   box-sizing: border-box;
 }
+
 .sub_total_content h5,
-.total_content h5{
+.total_content h5 {
   text-align: right;
   width: 245px;
 }
-.balance_due_content h5{
+
+.balance_due_content h5 {
   width: 245px;
 }
+
 .balance_due_content h5,
 .balance_due_content p {
   text-align: right;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   font-family: $font-en-primary-2;
 }
+
 .sub_total_content h5,
-.sub_total_content p{
+.sub_total_content p {
   font-size: 12px;
   font-weight: 400;
   font-family: $font-en-primary-2;
   color: #131523;
 }
+
 .total_content h5,
-.total_content p{
+.total_content p {
   font-size: 14px;
   font-weight: 500;
   font-family: $font-en-primary-2;
   color: #131523;
 }
+
+
+
 // INVOICE NOTES
-.invoice_notes{
+.invoice_notes {
   padding: 40px 0 100px 0;
   box-sizing: border-box;
 }
-.invoice_notes h4{
+
+.invoice_notes h4 {
   font-size: 14px;
-  font-weight:400;
+  font-weight: 400;
   font-family: $font-en-primary-2;
   color: #131523;
 }
-.invoice_notes p{
+
+.invoice_notes p {
   padding: 15px 0;
   box-sizing: border-box;
   font-size: 14px;
@@ -383,7 +473,7 @@ sup{
 }
 
 // invoice more information
-.invoice_more_info h1{
+.invoice_more_info h1 {
   color: #131523;
   font-family: $font-en-primary-2;
   font-weight: 500;
@@ -391,7 +481,8 @@ sup{
   line-height: 35px;
   display: block;
 }
-.sales_person_content{
+
+.sales_person_content {
   padding: 20px 0;
   box-sizing: border-box;
   display: flex;
@@ -399,7 +490,8 @@ sup{
   justify-content: space-between;
   width: 300px;
 }
-.sales_person_content p{
+
+.sales_person_content p {
   color: #131523;
   font-family: $font-en-primary-2;
   font-weight: 400;
@@ -407,22 +499,26 @@ sup{
   line-height: 35px;
   display: block;
 }
+
 .invoice_more_info {
   padding: 30px 40px;
   box-sizing: border-box;
 }
+
 // Invoice sales orders
-.sales_order_horizontal_line{
+.sales_order_horizontal_line {
   width: 300px;
   height: 2px;
   background-color: #D6472F;
 }
-.sales_order_line{
+
+.sales_order_line {
   width: 100%;
   height: 2px;
   background-color: #E4E7EB;
 }
-.sales_oreders_header h2{
+
+.sales_oreders_header h2 {
   color: #131523;
   font-family: $font-en-primary-2;
   font-weight: 500;
@@ -432,25 +528,29 @@ sup{
   padding-left: 10px;
 }
 
-.sales_table table{
+.sales_table table {
   border-collapse: collapse;
   width: 100%;
   text-align: left;
 }
+
 .sales_table table th {
   padding: 8px;
   text-align: left;
   border-bottom: 2px solid #E4E7EB;
   font-weight: 500;
 }
-.sales_table table td{
+
+.sales_table table td {
   padding: 10px 8px;
 }
-.table_content{
+
+.table_content {
   color: #2585E8;
 }
-@media (max-width: 869px){
+
+@media (max-width: 869px) {
   .invoice_chackout_table {
     width: 600px;
-}
+  }
 }

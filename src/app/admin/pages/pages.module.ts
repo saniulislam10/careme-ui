@@ -425,7 +425,7 @@ const routes: Routes = [
     HeaderComponent,
     ProductViewTableOneComponent,
     ProductTableComponent,
-    SidenavListComponent,
+    SidenavListComponent
   ],
   imports: [
     CommonModule,
