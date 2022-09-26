@@ -1,8 +1,8 @@
 <div class="invoice">
   <div class="invoice_header">
-    <mat-icon [routerLink]="['../../', 'all-invoice']"
-      >keyboard_backspace</mat-icon
-    >
+    <mat-icon [routerLink]="['../../', 'all-invoice']">
+      keyboard_backspace
+    </mat-icon>
     <div class="invoice_header_content">
       <h1>INV-{{ invoice?.invoiceId }}</h1>
       <p>{{ invoice?.invoiceDate | date }}</p>
@@ -47,7 +47,7 @@
         </div>
       </div>
 
-      <div  class="main_invoice_checkout_table" id="invoice">
+      <div class="main_invoice_checkout_table" id="invoice">
         <div class="invoice_logo_header">
           <div class="invoice_logo_header_left">
             <div class="invoice_careme_logo">
@@ -75,10 +75,12 @@
         <div class="invoice_bill_to_field">
           <div class="bill_to_left">
             <div><span class="shipping-title">Shipping Address</span></div>
-            <div><span> Name : &nbsp; </span> {{ invoice.customerName }} </div>
-            <div><span> Phone : &nbsp; </span> {{ invoice.phoneNo }} </div>
-            <div><span> Email : &nbsp; </span> {{ invoice.email }} </div>
-            <div><span> Address : &nbsp; </span> {{ invoice.shippingAddress }} </div>
+            <div><span> Name : &nbsp; </span> {{ invoice.customerName }}</div>
+            <div><span> Phone : &nbsp; </span> {{ invoice.phoneNo }}</div>
+            <div><span> Email : &nbsp; </span> {{ invoice.email }}</div>
+            <div>
+              <span> Address : &nbsp; </span> {{ invoice.shippingAddress }}
+            </div>
           </div>
           <div class="bill_to_right">
             <div class="invoice_date_field">
@@ -125,7 +127,7 @@
                 <td class="items_left">
                   <div>{{ data?.name }}</div>
                   <span>{{ data?.variant }} </span>
-                  <br>
+                  <br />
                   <span>SKU: {{ data?.sku }}</span>
                 </td>
                 <td class="items_right">{{ data?.quantity }}</td>
@@ -168,10 +170,12 @@
         </div>
 
         <div class="invoice_notes">
-          <h4> Terms & Conditions </h4>
-          <div> - Product can not be refunded after package is opened</div>
-          <div> - Shipping Charge Must Be paid if the order is returned</div>
-          <div> - We offer free replacement if the order is faulty/defective</div>
+          <h4>Terms & Conditions</h4>
+          <div>- Product can not be refunded after package is opened</div>
+          <div>- Shipping Charge Must Be paid if the order is returned</div>
+          <div>
+            - We offer free replacement if the order is faulty/defective
+          </div>
         </div>
       </div>
     </div>
