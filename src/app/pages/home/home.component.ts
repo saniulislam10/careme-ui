@@ -158,6 +158,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
       price: 180,
       discount: 300,
     },
+    {
+      _id: '6',
+      image:
+        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+      routerLink: '/product-details',
+      price: 344,
+      discount: 566,
+    },
   ];
 
   cardTwoData: ProductCardOne[] = [

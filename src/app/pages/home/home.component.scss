@@ -189,7 +189,6 @@ img {
 .entry-banner_main {
   display: flex;
   justify-content: space-between;
-  min-height: 400px;
   .entry-banner_categoty {
     width: 20%;
     background: #ffffff;
@@ -295,6 +294,7 @@ img {
     }
   }
 }
+
 .grid-section-title {
   display: flex;
   align-items: center;
@@ -325,20 +325,28 @@ img {
     }
   }
   .title-right {
+    color: #da5894;
     i {
       margin: 0 0 0 10px;
+      transition: 0.3s;
+    }
+  }
+  .title-right:hover {
+    i {
+      margin: 0 5px 0 5px;
     }
   }
 }
 .grid-section-product {
-  display: block;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 16.66% 16.66% 16.66% 16.66% 16.66% 16.66%;
+  grid-template-rows: auto;
+  grid-template-areas: "grid";
+  column-gap: 0;
+  row-gap: 10px;
   .single-product {
-    width: 19%;
-    display: inline-block;
     background: #fff;
-    margin: 0 7.5px 15px 7.5px;
-    border: 1px solid #e5e5e5;
+    border: 1px solid #ffffff;
     transition: 0.3s;
     .product-top {
       padding: 10px;
@@ -349,10 +357,11 @@ img {
     }
     .product-bottom {
       padding: 15px;
-      h2 {
+      a {
         font-size: 14px;
         font-weight: 400;
         line-height: 20px;
+        color: #2d2d2d;
       }
       .price {
         font-size: 20px;
@@ -381,9 +390,11 @@ img {
     }
   }
   .single-product:hover {
+    border: 1px solid #ffdeed;
     box-shadow: 0px 4px 10px 0px #e5e5e5;
   }
 }
+
 .active-title {
   color: red !important;
 }
@@ -738,12 +749,40 @@ img {
   }
 }
 
-@media (min-width: 960px) and (max-width: 1300px) {
-  .main-menu > li {
-    height: 45px;
-    padding: 0px 17px;
+// Responcive
+
+@media (max-width: 1440px) {
+  .grid-section-product {
+    grid-template-columns: 20% 20% 20% 20% 20%;
   }
-  .sub-mega-menu {
-    min-height: 400px;
+}
+@media (max-width: 1024px) {
+  .grid-section-product {
+    grid-template-columns: 25% 25% 25% 25%;
+  }
+}
+@media (max-width: 768px) {
+  .flash-promo {
+    flex-direction: column;
+    .title-left {
+      margin-bottom: 20px;
+    }
+  }
+  .entry-banner_slider {
+    width: 100% !important;
+  }
+  .entry-banner_categoty {
+    display: none;
+  }
+  .grid-section-product {
+    grid-template-columns: 33.33% 33.33% 33.33%;
+  }
+}
+@media (max-width: 425px) {
+  .entry-banner_slider {
+    width: 100% !important;
+  }
+  .grid-section-product {
+    grid-template-columns: 50% 50%;
   }
 }

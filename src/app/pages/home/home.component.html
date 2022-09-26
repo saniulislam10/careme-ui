@@ -120,10 +120,10 @@
 </div>
 
 <!-- Product Grid  -->
-<div class="entry-grid-bg">
+<div class="entry-grid-bg" style="background: #fff; padding: 50px 0">
   <div class="container">
     <div>
-      <div class="grid-section-title">
+      <div class="grid-section-title flash-promo">
         <div class="title-left">
           <h2>DEALS OF THE DAY</h2>
           <div class="promo-countdown">
@@ -136,12 +136,12 @@
         </a>
       </div>
       <div class="grid-section-product">
-        <div class="single-product" *ngFor="let data of cardThreeData">
+        <div class="single-product grid" *ngFor="let data of cardThreeData">
           <div class="product-top">
-            <img src="{{ data.image }}" />
+            <a href="{{ data.routerLink }}"><img src="{{ data.image }}" /></a>
           </div>
           <div class="product-bottom">
-            <h2>{{ data.title }}</h2>
+            <a href="{{ data.routerLink }}">{{ data.title }}</a>
             <div class="price">
               ৳ {{ data.price }} <span>৳ {{ data.discount }}</span>
             </div>
