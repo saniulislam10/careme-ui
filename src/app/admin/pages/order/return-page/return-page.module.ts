@@ -1,21 +1,21 @@
+import { SharedModule } from 'src/app/shared/shared.module';
 import { MaterialModule } from 'src/app/material/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ReturnPageRoutingModule } from './return-page-routing.module';
 import { ReturnPageComponent } from './return-page.component';
-import { CreateReturnComponent } from './create-return/create-return.component';
 
 
 @NgModule({
   declarations: [
-    ReturnPageComponent,
-    CreateReturnComponent
+    ReturnPageComponent
   ],
   imports: [
     CommonModule,
     ReturnPageRoutingModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ]
 })
 export class ReturnPageModule { }

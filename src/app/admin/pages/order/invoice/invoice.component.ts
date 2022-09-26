@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { InvoiceService } from 'src/app/services/invoice.service';
-import { products } from '../../../../core/utils/dashboard.data';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { CreateReturnComponent } from '../../../../shared/create-return/create-return.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-invoice',
@@ -11,6 +14,8 @@ import { products } from '../../../../core/utils/dashboard.data';
 })
 export class InvoiceComponent implements OnInit {
 
+  // @ViewChild('invoice') invoiceElement!: ElementRef;
+  @ViewChild('createReturn') createReturn: CreateReturnComponent;
   invoice: any;
   id: any;
   today = new Date();
@@ -20,8 +25,10 @@ export class InvoiceComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private invoiceService: InvoiceService
+    private invoiceService: InvoiceService,
+    private spinner: NgxSpinnerService
   ) { }
+
 
   ngOnInit(): void {
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
@@ -32,23 +39,32 @@ export class InvoiceComponent implements OnInit {
     });
   }
 
+  public generatePDF(): void {
+    this.spinner.show();
+    let DATA: any = document.getElementById('invoice');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width ;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      PDF.save('INV-'+this.invoice.invoiceId+'.pdf');
+      this.spinner.hide();
+    });
+  }
+
   getInvoice() {
     this.invoiceService.getInvoiceById(this.id)
     .subscribe(res => {
       this.invoice = res.data;
-      console.log("invoice", this.invoice);
-
     }, err=>{
       console.log(err);
     });
   }
 
-  paidAmmount() {
-    let total = 0;
-    for (let i = 0; i < this.invoice?.products.length; i++) {
-      total +=this.invoice?.products[i].advance
-    }
-    return total;
+  createReturnButton(){
+    this.createReturn.createReturnShow();
   }
 }
 
