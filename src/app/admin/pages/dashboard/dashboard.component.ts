@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {DataService} from '../../../services/data.service';
-import {AdminService} from '../../../services/admin.service';
-import {StoredDataService} from '../../../services/stored-data.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DataService } from '../../../services/data.service';
+import { AdminService } from '../../../services/admin.service';
+import { StoredDataService } from '../../../services/stored-data.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  date = null;
 
   chartInstance: any;
   options = {
@@ -87,8 +88,7 @@ export class DashboardComponent implements OnInit {
     private adminService: AdminService,
     private storedDataService: StoredDataService,
     private msg: NzMessageService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.getUserData();
@@ -100,28 +100,7 @@ export class DashboardComponent implements OnInit {
     console.log('on chart init:', e);
   }
 
-
-
-  /**
-   * HTTP REQ HANDLE
-   */
-
-  // private countsCollectionsDocuments() {
-  //   this.dataService.countsCollectionsDocuments()
-  //     .subscribe(res => {
-  //       this.counts = res.data;
-  //     }, error => {
-  //       console.log(error);
-  //     });
-  // }
-
-  /**
-   * HTTP Requested Data
-   */
   private getUserData() {
-    this.adminService.getAdminShortData()
-      .subscribe(res => {
-      });
+    this.adminService.getAdminShortData().subscribe((res) => {});
   }
-
 }

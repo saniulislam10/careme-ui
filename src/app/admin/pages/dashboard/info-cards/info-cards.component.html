@@ -1,76 +1,78 @@
-<div  #resizedDiv class="container">
-  <div class="card">
-    <mat-card class="p-0 gradient-purple">
-      <div class="p-1" fxLayoutAlign="space-between center">
-        <p>Products profit</p>
-        <div fxLayoutAlign="center center">
-          <mat-icon class="icon-sm px-1">trending_up</mat-icon>
-          <span>38%</span>
+<div #resizedDiv style="padding-bottom: 15px">
+  <div nz-row [nzGutter]="8">
+    <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+      <nz-card nzSize="small">
+        <div class="entry-chart_title">
+          <h4>Total Order <b>(500)</b></h4>
+          <span><i class="las la-arrow-up"></i> 24%</span>
         </div>
-      </div>
-      <div class="w-100 h-100p">
-        <ngx-charts-bar-vertical
-          [scheme]="colorScheme"
-          [results]="products"
-          (select)="onSelect($event)">
-        </ngx-charts-bar-vertical>
-      </div>
-    </mat-card>
-  </div>
-  <div class="card">
-    <mat-card class="p-0 gradient-teal">
-      <div class="p-1" fxLayoutAlign="space-between center">
-        <p>Total orders</p>
-        <div fxLayoutAlign="center center">
-          <mat-icon class="icon-sm px-1">trending_up</mat-icon>
-          <span>16%</span>
+        <div class="entry-chart">
+          <h2>BDT 22,110.00</h2>
+          <div class="chart">
+            <ngx-charts-bar-vertical
+              [results]="products"
+              (select)="onSelect($event)"
+            >
+            </ngx-charts-bar-vertical>
+          </div>
         </div>
-      </div>
-      <div class="w-100 h-100p">
-        <ngx-charts-line-chart
-          [scheme]="colorScheme"
-          [results]="orders"
-          [autoScale]="autoScale"
-          (select)="onSelect($event)">
-        </ngx-charts-line-chart>
-      </div>
-    </mat-card>
-  </div>
-  <div class="card">
-    <mat-card class="p-0 gradient-indigo">
-      <div class="p-1" fxLayoutAlign="space-between center">
-        <p>Refunds</p>
-        <div fxLayoutAlign="center center">
-          <mat-icon class="icon-sm px-1">trending_down</mat-icon>
-          <span>-11%</span>
+      </nz-card>
+    </div>
+    <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+      <nz-card nzSize="small">
+        <div class="entry-chart_title">
+          <h4>Total Order</h4>
+          <span><i class="las la-arrow-up"></i> 24%</span>
         </div>
-      </div>
-      <div class="w-100 h-100p">
-        <ngx-charts-bar-vertical
-          [scheme]="colorScheme"
-          [results]="refunds"
-          (select)="onSelect($event)">
-        </ngx-charts-bar-vertical>
-      </div>
-    </mat-card>
-  </div>
-  <div class="card">
-    <mat-card class="p-0 gradient-amber">
-      <div class="p-1" fxLayoutAlign="space-between center">
-        <p>Customers</p>
-        <div fxLayoutAlign="center center">
-          <mat-icon class="icon-sm px-1">trending_up</mat-icon>
-          <span>17%</span>
+        <div class="entry-chart">
+          <h2>BDT 22,110.00</h2>
+          <div class="chart">
+            <ngx-charts-line-chart
+              [results]="orders"
+              [autoScale]="autoScale"
+              (select)="onSelect($event)"
+            >
+            </ngx-charts-line-chart>
+          </div>
         </div>
-      </div>
-      <div class="w-100 h-100p">
-        <ngx-charts-line-chart
-          [scheme]="colorScheme"
-          [results]="customers"
-          [autoScale]="autoScale"
-          (select)="onSelect($event)">
-        </ngx-charts-line-chart>
-      </div>
-    </mat-card>
+      </nz-card>
+    </div>
+    <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+      <nz-card nzSize="small">
+        <div class="entry-chart_title">
+          <h4>Total Order</h4>
+          <span><i class="las la-arrow-up"></i> 24%</span>
+        </div>
+        <div class="entry-chart">
+          <h2>BDT 22,110.00</h2>
+          <div class="chart">
+            <ngx-charts-bar-vertical
+              [results]="refunds"
+              (select)="onSelect($event)"
+            >
+            </ngx-charts-bar-vertical>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+    <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+      <nz-card nzSize="small">
+        <div class="entry-chart_title">
+          <h4>Total Order</h4>
+          <span><i class="las la-arrow-up"></i> 24%</span>
+        </div>
+        <div class="entry-chart">
+          <h2>BDT 22,110.00</h2>
+          <div class="chart">
+            <ngx-charts-line-chart
+              [results]="customers"
+              [autoScale]="autoScale"
+              (select)="onSelect($event)"
+            >
+            </ngx-charts-line-chart>
+          </div>
+        </div>
+      </nz-card>
+    </div>
   </div>
 </div>
