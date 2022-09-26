@@ -34,19 +34,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   carouselData: BannerCarousel[] = [
     {
       _id: '1',
-      bannerImage: './assets/images/image/Untitled-2.png',
+      bannerImage:
+        'https://cdn.shopify.com/s/files/1/0464/2281/8974/files/Global_Smart_Watch_Banner.jpg?v=1658396431',
     },
     {
       _id: '2',
-      bannerImage: './assets/images/image/Untitled-2.png',
-    },
-    {
-      _id: '3',
-      bannerImage: './assets/images/image/Untitled-2.png',
-    },
-    {
-      _id: '4',
-      bannerImage: './assets/images/image/Untitled-2.png',
+      bannerImage:
+        'https://cdn.shopify.com/s/files/1/0464/2281/8974/files/sunglass_banner.png?v=1662032513',
     },
   ];
 
