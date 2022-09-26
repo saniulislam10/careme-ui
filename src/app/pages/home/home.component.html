@@ -70,6 +70,15 @@
           <li>
             <div class="menu-item"><a>Women's Fashion</a></div>
           </li>
+          <li>
+            <div class="menu-item"><a>Women's Fashion</a></div>
+          </li>
+          <li>
+            <div class="menu-item"><a>Women's Fashion</a></div>
+          </li>
+          <li>
+            <div class="menu-item"><a>Women's Fashion</a></div>
+          </li>
         </ul>
       </div>
       <div class="entry-banner_slider">
@@ -103,6 +112,39 @@
               src="https://cdn.shopify.com/s/files/1/0464/2281/8974/files/Small_banner_eng_430X130_crop_center.gif?v=1661601554"
               alt=""
             />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Product Grid  -->
+<div class="entry-grid-bg" style="background: #fff; padding: 50px 0">
+  <div class="container">
+    <div>
+      <div class="grid-section-title flash-promo">
+        <div class="title-left">
+          <h2>DEALS OF THE DAY</h2>
+          <div class="promo-countdown">
+            End in
+            <span>12</span>: <span>58</span>:<span>65</span>
+          </div>
+        </div>
+        <a class="title-right">
+          View More <i class="las la-long-arrow-alt-right"></i>
+        </a>
+      </div>
+      <div class="grid-section-product">
+        <div class="single-product grid" *ngFor="let data of cardThreeData">
+          <div class="product-top">
+            <a href="{{ data.routerLink }}"><img src="{{ data.image }}" /></a>
+          </div>
+          <div class="product-bottom">
+            <a href="{{ data.routerLink }}">{{ data.title }}</a>
+            <div class="price">
+              ৳ {{ data.price }} <span>৳ {{ data.discount }}</span>
+            </div>
           </div>
         </div>
       </div>

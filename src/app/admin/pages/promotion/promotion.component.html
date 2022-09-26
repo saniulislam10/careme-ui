@@ -1,97 +1,96 @@
 <!---view-Points-top-->
 <div class="view-product-header-area">
-    <div class="view-product-header-main">
-        <!--view-product-left-->
-        <div class="view-product-header-left">
-            <h2>Coupon</h2>
-        </div>
-        <div class="header-midle">
-          <div class="search">
-            <button><i class="fa fa-search"></i></button>
-            <input type="text" name="" value="" placeholder="Search">
-          </div>
-        </div>
-        <div class="header-right">
-          <ul>
-            <li><button>Export</button></li>
-            <li><button class="active-btn">Create Cupon</button></li>
-          </ul>
-        </div>
+  <div class="view-product-header-main">
+    <!--view-product-left-->
+    <div class="view-product-header-left">
+      <h2>Coupon</h2>
     </div>
-  </div>
-  <div class="second">
-    <ul class="second-header">
-      <li class="active">Coupon Code</li>
-      <li>Automatic Discount</li>
-    </ul>
-  </div>
-  
-  
-  
-  
-  <div class="catagory-table">
-  
-    <div class="header-list">
+    <div class="header-midle">
+      <div class="search">
+        <button><i class="fa fa-search"></i></button>
+        <input type="text" name="" value="" placeholder="Search" />
+      </div>
+    </div>
+    <div class="header-right">
       <ul>
-        <li class="active">All</li>
-        <li>Active</li>
-        <li>Scheduled</li>
-        <li>Expired</li>
+        <li><button>Export</button></li>
+        <li><button class="active-btn">Create Cupon</button></li>
       </ul>
     </div>
-  
-    <div class="search-filter">
-  
-      <div class="filter">
-        <mat-form-field appearance="outline" class="filter form-field">
-          <mat-label>Select</mat-label>
-          <mat-select >
-              <mat-option value="">Filter</mat-option>
-              <mat-option value="">Filter1</mat-option>
-              <mat-option value="">Filter2</mat-option>
-          </mat-select>
+  </div>
+</div>
+<div class="second">
+  <ul class="second-header">
+    <li class="active">Coupon Code</li>
+    <li>Automatic Discount</li>
+  </ul>
+</div>
+
+<div class="catagory-table">
+  <div class="header-list">
+    <ul>
+      <li class="active">All</li>
+      <li>Active</li>
+      <li>Scheduled</li>
+      <li>Expired</li>
+    </ul>
+  </div>
+
+  <div class="search-filter">
+    <div class="filter">
+      <mat-form-field appearance="outline" class="filter form-field">
+        <mat-label>Select</mat-label>
+        <mat-select>
+          <mat-option value="">Filter</mat-option>
+          <mat-option value="">Filter1</mat-option>
+          <mat-option value="">Filter2</mat-option>
+        </mat-select>
       </mat-form-field>
-      </div>
-  
-      <div class="search">
-          <button><i class="fa fa-search"></i></button>
-          <input type="text" name="" value="" placeholder="Search Coupon Codes">
-      </div>
-  
     </div>
-  
-  
-    <div class="table">
-      <div class="header">
-          <div class="coupon">
-            <div class="check"><mat-checkbox class="mat-check" ></mat-checkbox></div>
-            <strong>Showing 5 coupon codes</strong>
-            <button>Actions<i  class="fa fa-caret-down"></i></button>
-          </div>
-          <div class="sort">
-            <button>Sort by last created newest first<i class="fa-solid fa-sort"></i></button>
-          </div>
+
+    <div class="search">
+      <button><i class="fa fa-search"></i></button>
+      <input type="text" name="" value="" placeholder="Search Coupon Codes" />
+    </div>
+  </div>
+
+  <div class="table">
+    <div class="header">
+      <div class="coupon">
+        <div class="check"><mat-checkbox class="mat-check"></mat-checkbox></div>
+        <strong>Showing 5 coupon codes</strong>
+        <button>Actions<i class="fa fa-caret-down"></i></button>
       </div>
-      <!---table-row-->
-      <div class="table-row-area">
-        <div class="table-row-main">
-          <div class="row" *ngFor="let data of [1,2,3,4,5]">
-            <div class="coupon">
-              <div class="check"><mat-checkbox class="mat-check" ></mat-checkbox></div>
-              <div>
-                <div class="head"><strong>Black 50</strong></div>
-                <div class="details"><strong>Tk 50 off all Products. Minimum purchase of 500 Tk</strong></div>
+      <div class="sort">
+        <button>
+          Sort by last created newest first<i class="fa-solid fa-sort"></i>
+        </button>
+      </div>
+    </div>
+    <!---table-row-->
+    <div class="table-row-area">
+      <div class="table-row-main">
+        <div class="row" *ngFor="let data of [1, 2, 3, 4, 5]">
+          <div class="coupon">
+            <div class="check">
+              <mat-checkbox class="mat-check"></mat-checkbox>
+            </div>
+            <div>
+              <div class="head"><strong>Black 50</strong></div>
+              <div class="details">
+                <strong
+                  >Tk 50 off all Products. Minimum purchase of 500 Tk</strong
+                >
               </div>
             </div>
-            <div class="status"><p><strong>Expired</strong></p></div>
-            <div class="used"><strong>0 used</strong></div>
-            <div class="date"><strong>Nov 28'20-December 10'20</strong></div>
-        </div>
+          </div>
+          <div class="status">
+            <p><strong>Expired</strong></p>
+          </div>
+          <div class="used"><strong>0 used</strong></div>
+          <div class="date"><strong>Nov 28'20-December 10'20</strong></div>
         </div>
       </div>
-  
     </div>
-    
   </div>
-  
-  
+</div>

@@ -5,18 +5,9 @@
       <div class="container">
         <div class="header-top-content">
           <marquee behavior="smooth">
-            সম্মানিত গ্রাহকদের অবগতির জন্য জানানো যাচ্ছে যে, ঈদের প্রি-অর্ডার নেয়া
-            হবে ১০ এপ্রিল পর্যন্ত, ১০ এপ্রিলের মধ্যে অর্ডারকৃত সব পণ্য পর্যায়ক্রমে
-            ২৭ রোজার মধ্যে ডেলিভারি সম্পন্ন করা হবে।
-          </marquee>
-        </div>
-        <div class="res-header-top-content">
-          <marquee behavior="smooth">
-            <!-- <p> -->
-            সম্মানিত গ্রাহকদের অবগতির জন্য জানানো যাচ্ছে যে, ঈদের প্রি-অর্ডার নেয়া
-            হবে ১০ এপ্রিল পর্যন্ত, ১০ এপ্রিলের মধ্যে অর্ডারকৃত সব পণ্য পর্যায়ক্রমে
-            ২৭ রোজার মধ্যে ডেলিভারি সম্পন্ন করা হবে।
-            <!-- </p> -->
+            সম্মানিত গ্রাহকদের অবগতির জন্য জানানো যাচ্ছে যে, ঈদের প্রি-অর্ডার
+            নেয়া হবে ১০ এপ্রিল পর্যন্ত, ১০ এপ্রিলের মধ্যে অর্ডারকৃত সব পণ্য
+            পর্যায়ক্রমে ২৭ রোজার মধ্যে ডেলিভারি সম্পন্ন করা হবে।
           </marquee>
         </div>
       </div>
@@ -28,15 +19,26 @@
         <div class="header-midle">
           <!---logo-area-->
           <div class="logo-area">
-            <a routerLink="/"><img src="./assets/images/logo/logo.svg" alt="" /></a>
+            <a routerLink="/"
+              ><img src="./assets/images/logo/logo.svg" alt=""
+            /></a>
           </div>
           <div class="sub-menu-bar">
-            <span (click)="categoryMenuShow()" *ngIf="categoryBar"><i class="fa fa-bars"></i></span>
+            <span (click)="categoryMenuShow()" *ngIf="categoryBar"
+              ><i class="fa fa-bars"></i
+            ></span>
           </div>
           <!---search-box-->
           <div class="search">
             <form [formGroup]="dataForm" (ngSubmit)="onSearch()">
-              <input formControlName="url" type="text" name="url" id="url" value="" placeholder="Search..." />
+              <input
+                formControlName="url"
+                type="text"
+                name="url"
+                id="url"
+                value=""
+                placeholder="Search..."
+              />
               <button class="text_search" type="submit">
                 <i class="las la-search"></i>
               </button>
@@ -49,7 +51,11 @@
           <div class="header-midle-menu">
             <ul>
               <li>
-                <h4 class="user_name" *ngIf="!isUserAuth" (click)="openRegistrationDialog()">
+                <h4
+                  class="user_name"
+                  *ngIf="!isUserAuth"
+                  (click)="openRegistrationDialog()"
+                >
                   Login
                 </h4>
               </li>
@@ -71,16 +77,21 @@
                 </button>
                 <button mat-menu-item>
                   <mat-icon>stop</mat-icon>
-                  <span>(Login as
-                    {{ user?.fullName ? user?.fullName : user?.username }})</span>
+                  <span
+                    >(Login as
+                    {{
+                      user?.fullName ? user?.fullName : user?.username
+                    }})</span
+                  >
                 </button>
               </mat-menu>
               <li>
-                <a routerLink="/cart"><span><i class="las la-shopping-cart"></i></span>
+                <a routerLink="/cart"
+                  ><span><i class="las la-shopping-cart"></i></span>
                 </a>
                 <small *ngIf="carts?.length" class="total-cart">{{
                   carts?.length
-                  }}</small>
+                }}</small>
               </li>
               <li class="bar">
                 <button (click)="slideMenuActive()">
@@ -90,15 +101,21 @@
             </ul>
           </div>
           <!---category-menu-->
-          <div class="category-menu" [class]="
-            categoryMenu ? 'category-menu-active' : 'category-menu-inactive'
-          ">
+          <div
+            class="category-menu"
+            [class]="
+              categoryMenu ? 'category-menu-active' : 'category-menu-inactive'
+            "
+          >
             <ul>
               <li *ngFor="let c of category; let i = index">
                 <a [routerLink]="['/products-list', c?.slug]">{{ c.name }}</a>
                 <span><i class="fa fa-angle-right"></i></span>
                 <div class="sub-mega-menu" *ngIf="c.hasChild.length > 0">
-                  <app-menu-hover-content [parentCategory]="c" [data]="c.hasChild"></app-menu-hover-content>
+                  <app-menu-hover-content
+                    [parentCategory]="c"
+                    [data]="c.hasChild"
+                  ></app-menu-hover-content>
                 </div>
               </li>
             </ul>
@@ -154,7 +171,11 @@
   </div>
 
   <!---slide-menu-->
-  <div class="overlay" *ngIf="slideMenu == true" (click)="slideMenuInactive()"></div>
+  <div
+    class="overlay"
+    *ngIf="slideMenu == true"
+    (click)="slideMenuInactive()"
+  ></div>
   <div class="slide-menu" [class]="slideMenu ? 'active-slide-menu' : 's'">
     <!--slide-menu-top-->
     <div class="slide-menu-top">
@@ -170,12 +191,18 @@
     <div class="slide-toggle-btn">
       <ul>
         <li>
-          <button [class]="resHomeMenu ? 'active-toggle' : 'res-inactive'" (click)="resHomeMenuActive()">
+          <button
+            [class]="resHomeMenu ? 'active-toggle' : 'res-inactive'"
+            (click)="resHomeMenuActive()"
+          >
             Home Menu
           </button>
         </li>
         <li>
-          <button [class]="resCateMenu ? 'active-toggle' : 'res-inactive'" (click)="resCategoryMenuActive()">
+          <button
+            [class]="resCateMenu ? 'active-toggle' : 'res-inactive'"
+            (click)="resCategoryMenuActive()"
+          >
             Categories
           </button>
         </li>
@@ -187,10 +214,14 @@
         <li><a (click)="slideMenuInactive()" routerLink="/">Shop</a></li>
         <li><a (click)="slideMenuInactive()" routerLink="/">New </a></li>
         <li>
-          <a (click)="slideMenuInactive()" routerLink="/request-product">Request Product</a>
+          <a (click)="slideMenuInactive()" routerLink="/request-product"
+            >Request Product</a
+          >
         </li>
         <li><a (click)="slideMenuInactive()" routerLink="/">Campaigns</a></li>
-        <li><a (click)="slideMenuInactive()" routerLink="/">Flash Deals </a></li>
+        <li>
+          <a (click)="slideMenuInactive()" routerLink="/">Flash Deals </a>
+        </li>
         <li><a (click)="slideMenuInactive()" routerLink="/">Blog</a></li>
       </ul>
     </div>
@@ -198,54 +229,87 @@
     <div class="responsive-categorie" *ngIf="resCateMenu">
       <ul>
         <li>
-          <a href="#">Women's Fashion <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Women's Fashion <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Men's Fashion <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Men's Fashion <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Phones <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Phones <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Computer <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Computer <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Consumer Elecetronics <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Consumer Elecetronics <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Jewelry & Watches <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Jewelry & Watches <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Home Appliances <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Home Appliances <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Bags & Shoes <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Bags & Shoes <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Toys,Kids & Babies <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Toys,Kids & Babies <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Outdoor Fun & Sports <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Outdoor Fun & Sports <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Beauty,Health & Hair <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Beauty,Health & Hair <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Automobiles <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Automobiles <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Bags & Shoes<span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Bags & Shoes<span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Jewelry & Watches <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Jewelry & Watches <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
         <li>
-          <a href="#">Phones <span><i class="fa fa-angle-down"></i></span></a>
+          <a href="#"
+            >Phones <span><i class="fa fa-angle-down"></i></span
+          ></a>
         </li>
       </ul>
     </div>
   </div>
 
-  <div class="overlay1" *ngIf="categoryMenu == true" (click)="categoryMenuHide()"></div>
-
+  <div
+    class="overlay1"
+    *ngIf="categoryMenu == true"
+    (click)="categoryMenuHide()"
+  ></div>
 </div>
