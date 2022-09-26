@@ -70,6 +70,15 @@
           <li>
             <div class="menu-item"><a>Women's Fashion</a></div>
           </li>
+          <li>
+            <div class="menu-item"><a>Women's Fashion</a></div>
+          </li>
+          <li>
+            <div class="menu-item"><a>Women's Fashion</a></div>
+          </li>
+          <li>
+            <div class="menu-item"><a>Women's Fashion</a></div>
+          </li>
         </ul>
       </div>
       <div class="entry-banner_slider">
@@ -127,59 +136,15 @@
         </a>
       </div>
       <div class="grid-section-product">
-        <div class="single-product">
+        <div class="single-product" *ngFor="let data of cardThreeData">
           <div class="product-top">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
-            />
+            <img src="{{ data.image }}" />
           </div>
           <div class="product-bottom">
-            <h2>Men's Casual Shock Absorption Wear-resistant Shoes</h2>
-            <div class="price">1054 TK <span>-12%</span></div>
-          </div>
-        </div>
-        <div class="single-product">
-          <div class="product-top">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
-            />
-          </div>
-          <div class="product-bottom">
-            <h2>Men's Casual Shock Absorption Wear-resistant Shoes</h2>
-            <div class="price">1054 TK <span>-12%</span></div>
-          </div>
-        </div>
-        <div class="single-product">
-          <div class="product-top">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
-            />
-          </div>
-          <div class="product-bottom">
-            <h2>Men's Casual Shock Absorption Wear-resistant Shoes</h2>
-            <div class="price">1054 TK <span>-12%</span></div>
-          </div>
-        </div>
-        <div class="single-product">
-          <div class="product-top">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
-            />
-          </div>
-          <div class="product-bottom">
-            <h2>Men's Casual Shock Absorption Wear-resistant Shoes</h2>
-            <div class="price">1054 TK <span>-12%</span></div>
-          </div>
-        </div>
-        <div class="single-product">
-          <div class="product-top">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
-            />
-          </div>
-          <div class="product-bottom">
-            <h2>Men's Casual Shock Absorption Wear-resistant Shoes</h2>
-            <div class="price">1054 TK <span>-12%</span></div>
+            <h2>{{ data.title }}</h2>
+            <div class="price">
+              ৳ {{ data.price }} <span>৳ {{ data.discount }}</span>
+            </div>
           </div>
         </div>
       </div>

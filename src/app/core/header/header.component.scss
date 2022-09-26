@@ -4,15 +4,13 @@
 .user_icon {
   font-size: 14px;
 }
-.full-header{
+.full-header {
   background-color: #fff;
 }
 
 .header-top-area {
   display: block;
-  max-width: 1600px;
   margin: auto;
-  // width: 100%;
   height: auto;
   box-sizing: border-box;
   padding: 10px 0px;
@@ -22,8 +20,6 @@
 }
 .header-top-content {
   display: block;
-  max-width: 1600px;
-  // width: 100%;
 }
 .header-top-content p {
   color: #5d5c5c;
@@ -75,7 +71,7 @@
 }
 
 .header-fixed {
-  .container{
+  .container {
     max-width: 1600px;
     margin: auto;
   }
