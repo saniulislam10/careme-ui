@@ -1,15 +1,7 @@
 import { CarouselCntrlService } from './../../services/carousel-cntrl.service';
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  HostListener,
-} from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ProductCardOne } from 'src/app/interfaces/product-card-one';
 import { BannerCarousel } from 'src/app/interfaces/banner-carousel';
-import { CategoryService } from 'src/app/services/category.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { CategoryMenu } from 'src/app/interfaces/category-menu';
 

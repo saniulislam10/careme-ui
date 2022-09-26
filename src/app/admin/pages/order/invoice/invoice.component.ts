@@ -10,10 +10,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
-  styleUrls: ['./invoice.component.scss']
+  styleUrls: ['./invoice.component.scss'],
 })
 export class InvoiceComponent implements OnInit {
-
   // @ViewChild('invoice') invoiceElement!: ElementRef;
   @ViewChild('createReturn') createReturn: CreateReturnComponent;
   invoice: any;
@@ -27,8 +26,7 @@ export class InvoiceComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private invoiceService: InvoiceService,
     private spinner: NgxSpinnerService
-  ) { }
-
+  ) {}
 
   ngOnInit(): void {
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
@@ -44,27 +42,28 @@ export class InvoiceComponent implements OnInit {
     let DATA: any = document.getElementById('invoice');
     html2canvas(DATA).then((canvas) => {
       let fileWidth = 208;
-      let fileHeight = (canvas.height * fileWidth) / canvas.width ;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
       const FILEURI = canvas.toDataURL('image/png');
       let PDF = new jsPDF('p', 'mm', 'a4');
       let position = 0;
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      PDF.save('INV-'+this.invoice.invoiceId+'.pdf');
+      PDF.save('INV-' + this.invoice.invoiceId + '.pdf');
       this.spinner.hide();
     });
   }
 
   getInvoice() {
-    this.invoiceService.getInvoiceById(this.id)
-    .subscribe(res => {
-      this.invoice = res.data;
-    }, err=>{
-      console.log(err);
-    });
+    this.invoiceService.getInvoiceById(this.id).subscribe(
+      (res) => {
+        this.invoice = res.data;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
-  createReturnButton(){
+  createReturnButton() {
     this.createReturn.createReturnShow();
   }
 }
-
