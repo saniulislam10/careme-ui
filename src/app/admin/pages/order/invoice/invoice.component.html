@@ -38,7 +38,7 @@
         <div class="invoice_item">
           <h3>Amount</h3>
           <p>
-            <span>BDT {{ invoice.total }}</span>
+            <span>BDT 0</span>
           </p>
         </div>
         <div class="invoice_item">
@@ -61,9 +61,9 @@
             </div>
           </div>
           <div class="invoice_logo_header_right">
-            <h1>INV-{{ invoice.invoiceId }}</h1>
+            <h1>INV-{{ invoice?.invoiceId }}</h1>
             <p class="invoice_balance">Balance Due</p>
-            <p class="invoie_bdt">BDT{{ invoice.subTotal + 120 }}</p>
+            <p class="invoie_bdt">BDT{{ invoice?.subTotal + 120 }}</p>
           </div>
         </div>
 
@@ -71,11 +71,11 @@
         <div class="invoice_bill_to_field">
           <div class="bill_to_left">
             <div><span class="shipping-title">Shipping Address</span></div>
-            <div><span> Name : &nbsp; </span> {{ invoice.customerName }}</div>
-            <div><span> Phone : &nbsp; </span> {{ invoice.phoneNo }}</div>
-            <div><span> Email : &nbsp; </span> {{ invoice.email }}</div>
+            <div><span> Name : &nbsp; </span> {{ invoice?.customerName }}</div>
+            <div><span> Phone : &nbsp; </span> {{ invoice?.phoneNo }}</div>
+            <div><span> Email : &nbsp; </span> {{ invoice?.email }}</div>
             <div>
-              <span> Address : &nbsp; </span> {{ invoice.shippingAddress }}
+              <span> Address : &nbsp; </span> {{ invoice?.shippingAddress }}
             </div>
           </div>
           <div class="bill_to_right">
@@ -85,11 +85,11 @@
             </div>
             <div class="invoice_date_field">
               <h4>Invoice Date:</h4>
-              <p>{{ invoice.invoiceDate | date }}</p>
+              <p>{{ invoice?.invoiceDate | date }}</p>
             </div>
             <div class="invoice_date_field">
               <h4>Order Number:</h4>
-              <p>SO-{{ invoice.orderNumber }}</p>
+              <p>SO-{{ invoice?.orderNumber }}</p>
             </div>
             <div class="invoice_date_field">
               <h4>Sales Person:</h4>
@@ -97,7 +97,7 @@
             </div>
             <div class="invoice_date_field">
               <h4>Shipping Carrier</h4>
-              <p>{{ invoice.shippingCarrier }}</p>
+              <p>{{ invoice?.shippingCarrier }}</p>
             </div>
           </div>
         </div>
@@ -201,7 +201,18 @@
             Click to Upload
           </button>
           <p *ngIf="this.url" class="upload-text">{{this.file.name}}</p>
-          <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
+          <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/* | video/*" multiple/>
+        </div>
+      </div>
+      <div>
+        <h4>Refund Eligibility</h4>
+        <div class="field">
+          <button type="button" nz-button (click)="imagePicker.click()">
+            <span nz-icon nzType="upload"></span>
+            Click to Upload
+          </button>
+          <p *ngIf="this.url" class="upload-text">{{this.file.name}}</p>
+          <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/* | video/*" multiple/>
         </div>
       </div>
     </div>

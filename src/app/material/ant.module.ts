@@ -1,3 +1,5 @@
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NgModule } from '@angular/core';
@@ -22,6 +24,8 @@ const materials = [
   FormsModule,
   ReactiveFormsModule,
   NzLayoutModule,
+  NzIconModule,
+  NzButtonModule
   // SharedModule
 ];
 

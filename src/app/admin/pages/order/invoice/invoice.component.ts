@@ -1,3 +1,4 @@
+import { FileUploadService } from './../../../../services/file-upload.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Invoice } from './../../../../interfaces/invoice';
 import { Return } from './../../../../interfaces/return';
@@ -30,13 +31,15 @@ export class InvoiceComponent implements OnInit {
   private subRouteOne?: Subscription;
   returnProducts: any;
   loading: boolean;
+  file: FileList | any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private invoiceService: InvoiceService,
     private returnService: ReturnService,
     private spinner: NgxSpinnerService,
-    private msg: NzMessageService
+    private msg: NzMessageService,
+    private fileUploadService: FileUploadService
   ) {}
 
   ngOnInit(): void {
@@ -111,9 +114,22 @@ export class InvoiceComponent implements OnInit {
       });
     }, err=>{
       this.msg.create('error',err.message);
-
     })
-
-
   }
+
+  async fileChangeEvent(event: any) {
+    this.file = (event.target as HTMLInputElement).files;
+    console.log(this.file);
+    this.fileUploadService.uploadMultiImageOriginal(this.file)
+      .subscribe(res => {
+        console.log(res.downloadUrls);
+        this.msg.create('success', res.message);
+      }, error => {
+        console.log(error);
+      });
+  }
+
+
+
+
 }
