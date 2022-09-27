@@ -4,8 +4,8 @@ import { Subscription } from 'rxjs';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { CreateReturnComponent } from '../../../../shared/create-return/create-return.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CreateReturnComponent } from 'src/app/shared/components/create-return/create-return.component';
 
 @Component({
   selector: 'app-invoice',
@@ -65,5 +65,6 @@ export class InvoiceComponent implements OnInit {
 
   createReturnButton() {
     this.createReturn.createReturnShow();
+
   }
 }

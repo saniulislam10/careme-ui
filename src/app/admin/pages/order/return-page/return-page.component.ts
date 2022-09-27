@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReturnService } from 'src/app/services/return.service';
-import { CreateReturnComponent } from 'src/app/shared/create-return/create-return.component';
+import { CreateReturnComponent } from 'src/app/shared/components/create-return/create-return.component';
 
 @Component({
   selector: 'app-return-page',

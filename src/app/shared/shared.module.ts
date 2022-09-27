@@ -18,8 +18,7 @@ import { CookieConsentComponent } from './components/cookie-consent/cookie-conse
 import { ConfirmDialogComponent } from './components/ui/confirm-dialog/confirm-dialog.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperComponent } from './components/image-cropper/image-crop.component';
-import { CreateReturnComponent } from './create-return/create-return.component';
-
+import { CreateReturnComponent } from './components/create-return/create-return.component';
 
 @NgModule({
   imports: [
@@ -45,11 +44,9 @@ import { CreateReturnComponent } from './create-return/create-return.component';
     CartViewDialogComponent,
     BottomSheetViewComponent,
     CookieConsentComponent,
-
-
+    CreateReturnComponent
   ],
   declarations: [
-    CreateReturnComponent,
     SnackbarNotificationComponent,
     MessageDialogComponent,
     ConfirmDialogComponent,
@@ -58,7 +55,8 @@ import { CreateReturnComponent } from './create-return/create-return.component';
     CartViewDialogComponent,
     BottomSheetViewComponent,
     CookieConsentComponent,
-    ImageCropperComponent
+    ImageCropperComponent,
+    CreateReturnComponent
   ],
   providers: [],
   entryComponents: []
