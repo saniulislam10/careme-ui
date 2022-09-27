@@ -1,112 +1,55 @@
 @import "src/theme/variables";
 
 mat-toolbar {
-  position: relative;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 2;
   height: $toolbar-height;
   background: #17203f;
-
-  .toggleBtn {
-    button {
-      mat-icon {
-        color: $icon-default-color;
-      }
-    }
-  }
-}
-.toggleBtn {
-  display: block;
-}
-@media (max-width: 1288px) {
-  .toggleBtn {
-    display: block;
-  }
-}
-
-// ## Brand
-.brand {
-  margin-left: 20px;
+  color: #ccc;
   display: flex;
   align-items: center;
-
-  img {
-    width: auto;
-    max-width: 100%;
-    height: 38px;
-  }
+  justify-content: space-between;
 }
-
-#profile-thumb {
-  width: 36px;
-  height: 36px;
-
-  img {
+.toggleBtn {
+  display: flex;
+  align-items: center;
+}
+.brand {
+  width: 150px;
+}
+.multi-serarch {
+  width: 650px;
+  input {
+    color: #ccc;
     width: 100%;
-    height: 100%;
-    border-radius: 50%;
+    font-size: 14px;
+    border-radius: 50px;
+    border: 1px solid #5c637a;
+    background: #293049;
+    height: 40px;
+    padding: 20px;
+  }
+  input:placeholder {
+    color: #919090;
   }
 }
-
 .toolbar-action {
-  width: 265px;
-  .action-container {
-    button {
-      mat-icon {
-        color: $icon-default-color;
-      }
+  button {
+    i {
+      font-size: 24px;
     }
   }
-}
-
-.toolbar-date {
-  flex: 1;
-  .date-container {
-    text-align: center;
-    h4 {
-      color: #fff;
-      font-size: 15px;
-      // font-family: $font-en-lato;
-      font-weight: bold;
-    }
-  }
-}
-
-/*Custom BreakPoint*/
-@media (max-width: $max-tablet-width) {
-  .toolbar-date {
-    display: none;
-  }
-
-  .brand {
-    img {
-      width: auto;
-      height: 38px;
-    }
-  }
-  .c-toolbar {
-    justify-content: space-between;
-  }
-}
-
-@media (max-width: 599px) {
-  mat-toolbar {
-    height: 65px;
-
-    .brand-logo {
-      width: 70px;
-      margin-left: 10px;
-    }
-  }
-
-  .brand {
-    margin-left: 8px;
-    img {
-      width: auto;
-      height: 38px;
-      object-fit: contain;
+  .notifibell {
+    position: relative;
+    span {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: red;
+      color: #ccc;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      border-radius: 100%;
+      font-size: 10px;
     }
   }
 }

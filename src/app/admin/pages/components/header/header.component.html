@@ -1,48 +1,61 @@
-<mat-toolbar class="dashboard-topbar">
+<mat-toolbar>
   <div class="toggleBtn">
     <button (click)="onToggleSidenav()" mat-icon-button matTooltip="Toggle Menu">
       <mat-icon>menu</mat-icon>
     </button>
-  </div>
-
-  <div class="brand">
-    <img routerLink="/admin" src="/assets/brand/logo-white.svg" alt="">
-  </div>
-
-  <div class="toolbar-date">
-    <div class="date-container">
-      <h4>ADMINISTRATOR</h4>
+    <div class="brand">
+      <img routerLink="/admin" src="/assets/brand/logo-white.svg" alt="">
     </div>
+  </div>
+
+  <div class="multi-serarch">
+    <input nz-input placeholder="Search anything here..." />
   </div>
 
   <div fxLayout="row" fxLayoutAlign="end" class="toolbar-action">
     <div class="action-container" fxLayout="row" fxLayoutGap="10px" fxLayoutGap.xs="0px">
 
-      <button mat-icon-button matTooltip="Notifications">
-        <mat-icon>notifications</mat-icon>
+      <button mat-icon-button [matMenuTriggerFor]="quickadd" matTooltip="Add Quick">
+        <i class="las la-plus-square"></i>
       </button>
+      <button mat-icon-button matTooltip="View Store">
+        <i class="las la-store"></i>
+      </button>
+      <button class="notifibell" mat-icon-button matTooltip="Notifications">
+        <i class="las la-bell"></i>
+        <span>99</span>
+      </button>
+      <button (click)="adminLogOut()" mat-icon-button matTooltip="Logout">
+        <i class="las la-power-off"></i>
+      </button>
+
       <button mat-icon-button [matMenuTriggerFor]="profile" matTooltip="My Profile">
-        <mat-icon>account_circle</mat-icon>
+        <i class="las la-user"></i>
       </button>
 
       <mat-menu #profile="matMenu">
+        <button mat-menu-item>
+          <mat-icon>stop</mat-icon>
+          <span>Hello {{adminData?.username}}!</span>
+        </button>
         <button mat-menu-item [routerLink]="['my-profile']">
           <mat-icon>perm_identity</mat-icon>
           <span>View Profile</span>
         </button>
-        <button (click)="adminLogOut()" mat-menu-item>
-          <mat-icon>exit_to_app</mat-icon>
-          <span>Logout</span>
+      </mat-menu>
+
+      <mat-menu #quickadd="matMenu">
+        <button mat-menu-item>
+          <i class="las la-store"></i>
+          <span>New Product</span>
         </button>
         <button mat-menu-item>
-          <mat-icon>stop</mat-icon>
-          <span>(Login as {{adminData?.username}})</span>
+          <i class="las la-store"></i>
+          <span>Creat Purchase</span>
         </button>
       </mat-menu>
 
 
     </div>
   </div>
-
-
 </mat-toolbar>
