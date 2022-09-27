@@ -10,6 +10,13 @@ import { Select } from 'src/app/interfaces/select';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
+interface ItemData {
+  id: number;
+  name: string;
+  age: number;
+  address: string;
+}
+
 @Component({
   selector: 'app-all-invoice',
   templateUrl: './all-invoice.component.html',
@@ -17,6 +24,72 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class AllInvoiceComponent implements OnInit {
   tabs = ['All Invoice', 'Overdue', 'Unpaid', 'Open', 'Closed', 'Paid'];
+  listOfSelection = [
+    {
+      text: 'Select All Row',
+      onSelect: () => {
+        this.onAllChecked(true);
+      },
+    },
+    {
+      text: 'Select Odd Row',
+      onSelect: () => {
+        this.listOfCurrentPageData.forEach((data, index) =>
+          this.updateCheckedSet(data.id, index % 2 !== 0)
+        );
+        this.refreshCheckedStatus();
+      },
+    },
+    {
+      text: 'Select Even Row',
+      onSelect: () => {
+        this.listOfCurrentPageData.forEach((data, index) =>
+          this.updateCheckedSet(data.id, index % 2 === 0)
+        );
+        this.refreshCheckedStatus();
+      },
+    },
+  ];
+  checked = false;
+  indeterminate = false;
+  listOfCurrentPageData: readonly ItemData[] = [];
+  listOfData: readonly ItemData[] = [];
+  setOfCheckedId = new Set<number>();
+
+  updateCheckedSet(id: number, checked: boolean): void {
+    if (checked) {
+      this.setOfCheckedId.add(id);
+    } else {
+      this.setOfCheckedId.delete(id);
+    }
+  }
+
+  onItemChecked(id: number, checked: boolean): void {
+    this.updateCheckedSet(id, checked);
+    this.refreshCheckedStatus();
+  }
+
+  onAllChecked(value: boolean): void {
+    this.listOfCurrentPageData.forEach((item) =>
+      this.updateCheckedSet(item.id, value)
+    );
+    this.refreshCheckedStatus();
+  }
+
+  onCurrentPageDataChange($event: readonly ItemData[]): void {
+    this.listOfCurrentPageData = $event;
+    this.refreshCheckedStatus();
+  }
+
+  refreshCheckedStatus(): void {
+    this.checked = this.listOfCurrentPageData.every((item) =>
+      this.setOfCheckedId.has(item.id)
+    );
+    this.indeterminate =
+      this.listOfCurrentPageData.some((item) =>
+        this.setOfCheckedId.has(item.id)
+      ) && !this.checked;
+  }
 
   invoices: any;
   currentPage = 1;
@@ -65,6 +138,13 @@ export class AllInvoiceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.listOfData = new Array(20).fill(0).map((_, index) => ({
+      id: index,
+      name: `INV-${index}`,
+      age: 32,
+      address: `London, Park Lane no. ${index}`,
+    }));
+
     // GET PAGE FROM QUERY PARAM
     this.subAcRoute = this.activatedRoute.queryParams.subscribe((qParam) => {
       if (qParam && qParam.page) {

@@ -52,58 +52,44 @@
             </mat-menu>
           </ul>
         </div>
-
-        <nz-table #bodyData [nzData]="invoices">
+        <nz-table
+          #rowSelectionTable
+          [nzData]="listOfData"
+          (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+          nzSize="small"
+        >
           <thead>
             <tr>
-              <th>
-                <mat-checkbox class="mat-check"></mat-checkbox>
-              </th>
-              <th>Invoice</th>
+              <th
+                [(nzChecked)]="checked"
+                [nzIndeterminate]="indeterminate"
+                (nzCheckedChange)="onAllChecked($event)"
+              ></th>
+              <th>ID & Date</th>
+              <th>Delivery Status</th>
+              <th>Due (TK)</th>
               <th>Order No</th>
+              <th>Amount (TK)</th>
+              <th>Payment Status</th>
               <th>Customer Name</th>
-              <th>Status</th>
-              <th>Amount</th>
-              <th>Balance Due</th>
-              <th>Order Status</th>
             </tr>
           </thead>
-          <!----table-body-->
           <tbody>
-            <tr *ngFor="let data of bodyData.data">
+            <tr *ngFor="let data of rowSelectionTable.data">
+              <td
+                [nzChecked]="setOfCheckedId.has(data.id)"
+                (nzCheckedChange)="onItemChecked(data.id, $event)"
+              ></td>
               <td>
-                <mat-checkbox class="mat-check"></mat-checkbox>
+                <h4>{{ data.id }}</h4>
+                <h5>01/12/2022 | 12.20 PM</h5>
               </td>
-              <td>
-                <a [routerLink]="['../../', 'invoice', data._id]"
-                  >INV-{{ data.invoiceId }}</a
-                >
-                <span>{{ data.createdAt | date: "short" }}</span>
-              </td>
-              <td>
-                <a [routerLink]="['../../', 'invoice', data._id]">{{
-                  data.orderNumber
-                }}</a>
-              </td>
-              <td>
-                <span
-                  >{{ data.customerName }} <i class="fa fa-check-circle"></i
-                ></span>
-              </td>
-              <td class="pay-status">
-                <span>{{ data.paymentStatus | paymentStatus }}</span>
-              </td>
-              <td>
-                <h3>0</h3>
-              </td>
-              <td>
-                <h3>0</h3>
-              </td>
-              <td>
-                <span class="pay-status">{{
-                  data.deliveryStatus | orderStatus
-                }}</span>
-              </td>
+              <td><span class="btn delivered">Delivered</span></td>
+              <td>0</td>
+              <td>78523-A</td>
+              <td>5830</td>
+              <td>Paid</td>
+              <td>Mr. Rafiq</td>
             </tr>
           </tbody>
         </nz-table>
