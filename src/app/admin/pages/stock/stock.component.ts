@@ -18,9 +18,10 @@ import { ProductStatus } from 'src/app/enum/product-status';
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.component.html',
-  styleUrls: ['./stock.component.scss']
+  styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent implements OnInit {
+  tabs = ['All Invoice', 'Overdue', 'Unpaid', 'Open', 'Closed', 'Paid'];
 
   @ViewChild('export') exportStock: ExportPopupComponent;
   status: number = 0;
@@ -56,9 +57,8 @@ export class StockComponent implements OnInit {
     private productService: ProductService,
     private router: Router,
     private utilsService: UtilsService,
-    private uiService: UiService,
-
-  ) { }
+    private uiService: UiService
+  ) {}
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -68,7 +68,7 @@ export class StockComponent implements OnInit {
    * HTTP REQ
    */
 
-   private getAllProducts() {
+  private getAllProducts() {
     this.spinner.show();
 
     const pagination: Pagination = {
@@ -134,12 +134,11 @@ export class StockComponent implements OnInit {
   }
 
   getVariantName(i, x, product, index) {
-    if(index !== 0){
-      return "/"+product.variantDataArray[i][x];
+    if (index !== 0) {
+      return '/' + product.variantDataArray[i][x];
     }
     return product.variantDataArray[i][x];
   }
-
 
   private checkSelectionData() {
     let isAllSelect = true;
@@ -152,8 +151,6 @@ export class StockComponent implements OnInit {
     this.matCheckbox.checked = isAllSelect;
   }
 
-
-
   /**** export pop up */
   exportPopUpShow() {
     this.exportStock.exportPOpUpShow();
@@ -162,7 +159,7 @@ export class StockComponent implements OnInit {
   /**
    * EXPORTS TO EXCEL
    */
-   exportToExcel(value) {
+  exportToExcel(value) {
     if (value.selectedAmount === ExportType.ALL_STOCK) {
       this.productService.getAllProducts(null).subscribe((res) => {
         this.exportData(res.data, value.SelectedType);
@@ -204,28 +201,28 @@ export class StockComponent implements OnInit {
     this.status = data;
     switch (data) {
       case 1:
-        this.query = {quantity: {$gt: 0}};
+        this.query = { quantity: { $gt: 0 } };
         break;
-        case 2:
-          this.query = {committedQuantity: {$gt: 0}};
-          // code block
-          break;
-          case 3:
-            this.query = {quantity: {$gt: 0}};
-            // code block
-            break;
-          case 4:
-            this.query = {quantity: {$lte: 2}};
-              // code block
-            break;
-          case 5:
-            this.query = { continueSelling: true };
-            // code block
-          break;
-          case 6:
-            this.getAllArchivedProducts(6);
-            // code block
-          break;
+      case 2:
+        this.query = { committedQuantity: { $gt: 0 } };
+        // code block
+        break;
+      case 3:
+        this.query = { quantity: { $gt: 0 } };
+        // code block
+        break;
+      case 4:
+        this.query = { quantity: { $lte: 2 } };
+        // code block
+        break;
+      case 5:
+        this.query = { continueSelling: true };
+        // code block
+        break;
+      case 6:
+        this.getAllArchivedProducts(6);
+        // code block
+        break;
       default:
       // code block
     }
@@ -296,13 +293,13 @@ export class StockComponent implements OnInit {
   /**
    * PAGINATION CHANGE
    */
-   public onPageChanged(event: any) {
+  public onPageChanged(event: any) {
     this.router.navigate([], { queryParams: { page: event } });
   }
 
   /*
-  * Search
-  */
+   * Search
+   */
 
   onClickSearchArea(event: MouseEvent): void {
     event.stopPropagation();
@@ -368,6 +365,4 @@ export class StockComponent implements OnInit {
     this.searchProducts = [];
     this.isFocused = false;
   }
-
-
 }

@@ -1,215 +1,109 @@
-<!---view-product-top-->
-<div class="view-product-header-area">
-  <div class="view-product-header-main">
-    <!--view-product-left-->
-    <div class="view-product-header-left">
-      <h2>Stock </h2>
-    </div>
-    <!---header-right-->
-    <div class="view-product-header-right">
-      <ul>
-        <li (click)="exportPopUpShow()">Export</li>
-        <li (click)="exportPopUpShow()">Import</li>
-      </ul>
-    </div>
+<!---header-area-->
+<div class="page-header">
+  <h2>All Stock</h2>
+  <div class="header-action">
+    <button type="button" (click)="exportPopUpShow()">Export</button>
+    <button type="button" (click)="exportPopUpShow()">Import</button>
   </div>
 </div>
 
-<!---all-products-main-area-->
-<div class="all-products-main-area">
-  <!--products-menu-->
-  <div class="all-products-menu">
-    <ul>
-      <!-- <li><button class="active-tab" (click)="onFilterSelectChange(0)">All</button></li> -->
-      <li><button [class]="status == 0 ?'active-tab':'inactive'" (click)="onFilterSelectChange(0)">All</button></li>
-      <li><button [class]="status == 1 ?'active-tab':'inactive'" (click)="onFilterSelectChange(1)">Instock</button></li>
-      <li><button [class]="status == 2 ?'active-tab':'inactive'" (click)="onFilterSelectChange(2)">Committed</button>
-      </li>
-      <li><button [class]="status == 3 ?'active-tab':'inactive'" (click)="onFilterSelectChange(3)">Available</button>
-      </li>
-      <li><button [class]="status == 4 ?'active-tab':'inactive'" (click)="onFilterSelectChange(4)">Low Stock</button>
-      </li>
-      <li><button [class]="status == 5 ?'active-tab':'inactive'" (click)="onFilterSelectChange(5)">Pre-Order</button>
-      </li>
-      <li><button [class]="status == 6 ?'active-tab':'inactive'" (click)="getAllArchivedProducts(6)">Archived</button>
-      </li>
-    </ul>
-  </div>
-  <!--products-menu-end-->
-  <!---products-search-area-->
-  <div class="products-search-area">
-    <!---search-->
-    <div class="search" (click)="onClickSearchArea($event)">
-      <button><i class="fa fa-search"></i></button>
-      <form #searchForm=ngForm style="width: 100%;">
-        <input #searchInput id="searchInput" class="tw" type="text" placeholder="Filter Products"
-          (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel required>
-      </form>
-    </div>
-    <!--products-search-area-btn--->
-    <div class="products-search-area-btn">
-      <ul>
-        <li><button [matMenuTriggerFor]="changeProductStatus">Bulk Action <i class="fa fa-caret-down"></i></button></li>
-        <mat-menu #changeProductStatus="matMenu">
-          <button mat-menu-item>Action 1</button>
-          <button mat-menu-item>Action 2</button>
-          <button mat-menu-item>Action 3</button>
-        </mat-menu>
-        <li><button [matMenuTriggerFor]="productSort">Sort <i class="fa fa-caret-down"></i></button></li>
-        <mat-menu #productSort="matMenu">
-          <button mat-menu-item (click)="sortData({name: 1}, 1)" [class.dropdown-active]="activeSort === 1">Product
-            Title (A-Z)</button>
-          <button mat-menu-item (click)="sortData({createdAt: 1}, 2)" [class.dropdown-active]="activeSort === 2">Created
-            (Oldest First)</button>
-          <button mat-menu-item (click)="sortData({quantity: -1}, 3)" [class.dropdown-active]="activeSort === 3">High
-            Inventory</button>
-          <!-- need to change -->
-          <button mat-menu-item (click)="sortData({categoryName: -1}, 4)"
-            [class.dropdown-active]="activeSort === 4">Product Type (A-Z)</button>
-          <button mat-menu-item (click)="sortData({vendor: 1}, 5)" [class.dropdown-active]="activeSort === 5">Vendor
-            (A-Z)</button>
-        </mat-menu>
-        <li><button>More</button></li>
-      </ul>
-    </div>
-  </div>
-  <!---table-area-->
-  <div class="table-area">
-    <!---main-table-->
-    <div class="main-table">
-      <!---main-table-head-->
-      <div class="main-table-head">
-        <div class="main-table-row">
-          <div class="check  main-table-heading">
-            <mat-checkbox #matCheckbox class="mat-check" (change)="onAllSelectChange($event)">
-
-            </mat-checkbox>
-          </div>
-          <div class="product  main-table-heading">Item</div>
-          <div class="price  main-table-heading">Sku</div>
-          <div class="stock-hand  main-table-heading">Instock</div>
-          <div class="status  main-table-heading">Committed</div>
-          <div class="category  main-table-heading">Available</div>
-          <div class="earn-point  main-table-heading">Unit Cost Price</div>
-          <div class="redeem-points  main-table-heading">Pre-Order</div>
+<!---Table-area-->
+<div class="table-samary" style="margin-bottom: 30px">
+  <nz-card>
+    <nz-tabset>
+      <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
+        <div class="table-filter-area">
+          <input nz-input placeholder="Search here" nzSize="large" />
+          <ul>
+            <li>
+              <button>Payment Status <i class="fa fa-caret-down"></i></button>
+            </li>
+          </ul>
         </div>
-      </div>
-      <div class="main-table-body">
-        <!---table-row-->
-        <div class="loop" *ngFor="let data of products | paginate: { itemsPerPage: productsPerPage, currentPage: currentPage, totalItems: totalProducts }; let i = index">
-          <!---main-table-row-->
-          <div class="without-variant" *ngIf="!data.hasVariant">
-            <div class="main-table-row divHover" [routerLink]="['details']">
-            <div class="check main-table-data">
-              <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data?._id)"
-                [(ngModel)]="data.select"></mat-checkbox>
-            </div>
-            <div class="product main-table-data">
-              <div class="product-info ">
-                <!---product-img-->
-                <div class="product-img">
-                  <img [src]="setThumbnailImage(data) ? setThumbnailImage(data) : '/assets/images/placeholder/test.png'"
-                    alt="">
-                </div>
-                <!---product-item-name-->
-                <div class="product-text-info">
-                  <a>{{data?.name}}</a>
-                </div>
-              </div>
-            </div>
-            <div class="price main-table-data">
-              <span>{{data?.sku}}</span>
-            </div>
-            <div class="stock-hand main-table-data">
-              <span>{{data?.quantity + data.committedQuantity}}</span>
-            </div>
-            <div class="main-table-data">
-              <span>{{data.committedQuantity}}</span>
-            </div>
-            <div class="category main-table-data">
-              <span>{{data?.quantity }}</span>
-            </div>
-            <div class="earn-point main-table-data">
-              <span>{{data?.costPrice}}</span>
-            </div>
-            <div class="redeem-points main-table-data">
-              <span>{{data.continueSelling ? "yes":"no"}}</span>
-            </div>
-            </div>
-          </div>
-          <div class="variant-condition" *ngIf="data.hasVariant">
-            <div class="variant" *ngFor="let variant of data?.variantFormArray; let i=index">
-              <div class="main-table-row">
-                <div class="check main-table-data">
-                  <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data?._id)"
-                    [(ngModel)]="data.select"></mat-checkbox>
-                </div>
-              <div class="product main-table-data">
-                <div class="product-info ">
-                  <!---product-img-->
-                  <div class="product-img">
-                    <img [src]="setThumbnailImage(data) ? setThumbnailImage(data) : '/assets/images/placeholder/test.png'"
-                      alt="">
-                  </div>
-                  <!---product-item-name-->
-                  <div class="product-text-info">
-                    <a>{{data?.name}}</a>
-                    <div class="variant-name" >
-                      <span *ngFor="let type of data.variants; let x=index">{{this.getVariantName(i, type, data, x)}}</span>
+
+        <nz-table [nzData]="products" #basicTable nzSize="small">
+          <thead>
+            <tr>
+              <th style="width: 50px; text-align: center">
+                <mat-checkbox #matCheckbox class="mat-check" (change)="onAllSelectChange($event)">
+                </mat-checkbox>
+              </th>
+              <th style="width: 50px; text-align: center">Image</th>
+              <th>Product Details</th>
+              <th>Instock</th>
+              <th>Committed</th>
+              <th>Available</th>
+              <th>Unit Cost</th>
+              <th>Pre-Order</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let data of basicTable.data">
+            <tr *ngIf="!data.hasVariant">
+              <td style="width: 50px; text-align: center">
+                <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data?._id)"
+                  [(ngModel)]="data.select"></mat-checkbox>
+              </td>
+              <td>
+                <img style="width: 80px" [src]="
+                    setThumbnailImage(data)
+                      ? setThumbnailImage(data)
+                      : '/assets/images/placeholder/test.png'
+                  " alt="data.name" />
+              </td>
+              <td class="produc-details">
+                <h2>
+                  {{ data.name }}
+                  <a><i class="eyeButton" class="fa fa-eye"></i></a>
+                </h2>
+                <span>{{ data.sku }}</span>
+              </td>
+              <td style="color: blue">
+                {{ data.quantity + data.committedQuantity }}
+              </td>
+              <td style="color: orange">{{ data.committedQuantity }}</td>
+              <td style="color: green">{{ data.quantity }}</td>
+              <td>{{ data.costPrice }}</td>
+              <td>{{ data.continueSelling ? "Yes" : "No" }}</td>
+            </tr>
+
+            <tr *ngFor="let variant of data?.variantFormArray; let i = index">
+              <td style="width: 50px; text-align: center">
+                <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data?._id)"
+                  [(ngModel)]="data.select"></mat-checkbox>
+              </td>
+              <td>
+                <img style="width: 80px" [src]="
+                    setThumbnailImage(data)
+                      ? setThumbnailImage(data)
+                      : '/assets/images/placeholder/test.png'
+                  " alt="data.name" />
+              </td>
+              <td class="produc-details">
+                <h2>
+                  {{ data.name }}
+                  <a>
+                    <div class="variant-name">
+                      <span *ngFor="let type of data.variants; let x = index">{{ this.getVariantName(i, type, data, x)
+                        }}</span>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div class="price main-table-data">
-                <span>{{variant?.variantSku}}</span>
-              </div>
-              <div class="stock-hand main-table-data">
-                <span>{{variant?.variantQuantity + variant?.variantCommittedQuantity}}</span>
-              </div>
-              <div class="main-table-data">
-                <span>{{variant?.variantCommittedQuantity}}</span>
-              </div>
-              <div class="category main-table-data">
-                <span>{{variant?.variantQuantity}}</span>
-              </div>
-              <div class="earn-point main-table-data">
-                <span>0</span>
-              </div>
-              <div class="redeem-points main-table-data">
-                <span> {{variant?.variantContinueSelling ? "yes":"no"}} </span>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-
-      </div>
-      <!---tbody-end-->
-    </div>
-    <!---main-table-end-->
-
-  </div>
-
-  <!---indicator-area-->
-  <div class="indicator-area">
-    <div class="pagination-container">
-      <pagination-controls class="product-pagination" [autoHide]="true" [maxSize]="15"
-        (pageChange)="onPageChanged($event)">
-      </pagination-controls>
-    </div>
-
-    <div class="indicator-right">
-      <span>Showing {{currentPage*productsPerPage-productsPerPage+1}} to {{currentPage*productsPerPage <= totalProducts
-          ? currentPage*productsPerPage : totalProducts}} of {{totalProducts}} entries</span>
-    </div>
-  </div>
+                    <i class="eyeButton" class="fa fa-eye"></i>
+                  </a>
+                </h2>
+                <span>{{ variant?.variantSku }}</span>
+              </td>
+              <td style="color: blue">
+                {{
+                variant?.variantQuantity + variant?.variantCommittedQuantity
+                }}
+              </td>
+              <td style="color: orange">{{ variant?.variantCommittedQuantity }}</td>
+              <td style="color: green">{{ variant?.variantQuantity }}</td>
+              <td>0 TAKA</td>
+              <td>{{ variant.variantContinueSelling ? "Yes" : "No" }}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
 </div>
-<div class="export-popup-area">
-  <app-export-popup (valueChange)='exportToExcel($event)' #export></app-export-popup>
-</div>
-<!-- NO DATA TEMPLATE -->
-<ng-template #noData>
-  <div style="margin-top: 50px; text-align: center">
-    <h2>No Product Found</h2>
-  </div>
-</ng-template>

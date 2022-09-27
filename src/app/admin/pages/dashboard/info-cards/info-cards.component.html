@@ -1,13 +1,21 @@
 <div #resizedDiv style="padding-bottom: 15px">
   <div nz-row [nzGutter]="8">
-    <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+    <div
+      style="margin-bottom: 10px"
+      nz-col
+      [nzXs]="{ span: 12 }"
+      [nzLg]="{ span: 6 }"
+    >
       <nz-card nzSize="small">
-        <div class="entry-chart_title">
-          <h4>Total Order <b>(500)</b></h4>
-          <span><i class="las la-arrow-up"></i> 24%</span>
+        <div class="entry-chart_title order_chat">
+          <h4>
+            Total Order <br />
+            <span>8045</span>
+          </h4>
+          <span><i class="las la-arrow-up"></i> 56%</span>
         </div>
         <div class="entry-chart">
-          <h2>BDT 22,110.00</h2>
+          <h2>984,988.00 TK</h2>
           <div class="chart">
             <ngx-charts-bar-vertical
               [results]="products"
@@ -18,14 +26,22 @@
         </div>
       </nz-card>
     </div>
-    <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+    <div
+      style="margin-bottom: 10px"
+      nz-col
+      [nzXs]="{ span: 12 }"
+      [nzLg]="{ span: 6 }"
+    >
       <nz-card nzSize="small">
-        <div class="entry-chart_title">
-          <h4>Total Order</h4>
-          <span><i class="las la-arrow-up"></i> 24%</span>
+        <div class="entry-chart_title inventorty_chat">
+          <h4>
+            Total Inventory <br />
+            <span>80101</span>
+          </h4>
+          <span><i class="las la-arrow-up"></i> 35%</span>
         </div>
         <div class="entry-chart">
-          <h2>BDT 22,110.00</h2>
+          <h2>10,080,896.00 TK</h2>
           <div class="chart">
             <ngx-charts-line-chart
               [results]="orders"
@@ -37,14 +53,22 @@
         </div>
       </nz-card>
     </div>
-    <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+    <div
+      style="margin-bottom: 10px"
+      nz-col
+      [nzXs]="{ span: 12 }"
+      [nzLg]="{ span: 6 }"
+    >
       <nz-card nzSize="small">
-        <div class="entry-chart_title">
-          <h4>Total Order</h4>
-          <span><i class="las la-arrow-up"></i> 24%</span>
+        <div class="entry-chart_title invoice_chat">
+          <h4>
+            Total Invoice <br />
+            <span>500</span>
+          </h4>
+          <span><i class="las la-arrow-up"></i> 89%</span>
         </div>
         <div class="entry-chart">
-          <h2>BDT 22,110.00</h2>
+          <h2>20,110.00 TK</h2>
           <div class="chart">
             <ngx-charts-bar-vertical
               [results]="refunds"
@@ -55,14 +79,22 @@
         </div>
       </nz-card>
     </div>
-    <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+    <div
+      style="margin-bottom: 10px"
+      nz-col
+      [nzXs]="{ span: 12 }"
+      [nzLg]="{ span: 6 }"
+    >
       <nz-card nzSize="small">
-        <div class="entry-chart_title">
-          <h4>Total Order</h4>
-          <span><i class="las la-arrow-up"></i> 24%</span>
+        <div class="entry-chart_title return_chat">
+          <h4>
+            Total Return <br />
+            <span>50</span>
+          </h4>
+          <span><i class="las la-arrow-down"></i> 18%</span>
         </div>
         <div class="entry-chart">
-          <h2>BDT 22,110.00</h2>
+          <h2>2058.00 TK</h2>
           <div class="chart">
             <ngx-charts-line-chart
               [results]="customers"
