@@ -11,14 +11,12 @@ import { ExportPopupComponent } from './export-popup/export-popup.component';
 import { DetailsComponent } from './details/details.component';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
-
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @NgModule({
-  declarations: [
-    StockComponent,
-    ExportPopupComponent,
-    DetailsComponent
-  ],
+  declarations: [StockComponent, ExportPopupComponent, DetailsComponent],
   imports: [
     CommonModule,
     StockRoutingModule,
@@ -27,7 +25,10 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     NgxPaginationModule,
     PipesModule,
     NzTabsModule,
-    NzRadioModule
-  ]
+    NzRadioModule,
+    NzCardModule,
+    NzTableModule,
+    NzInputModule,
+  ],
 })
-export class StockModule { }
+export class StockModule {}
