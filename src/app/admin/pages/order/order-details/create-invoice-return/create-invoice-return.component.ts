@@ -73,6 +73,7 @@ export class CreateInvoiceReturnComponent implements OnInit {
     }
 
     let returnObj = {
+      invoiceId: "INV001",
       orderNumber: this.order.orderId,
       returnDate: this.dataForm.value.date,
       customerName: this.order.name ? this.order.name : this.order.user.fullName,

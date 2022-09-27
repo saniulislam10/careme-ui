@@ -1,3 +1,4 @@
+import { Return } from './../interfaces/return';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
@@ -18,8 +19,8 @@ export class ReturnService {
   /**
    * ORDER
    */
-  placeReturn(data: any) {
-    return this.httpClient.post<{ _id: string; returnId: any; message: string; success: boolean }>(API_RETURN + 'place-return', data);
+  placeReturn(data: Return) {
+    return this.httpClient.post<{ _id: string; returnId: string; message: string; success: boolean }>(API_RETURN + 'place-return', data);
   }
   getAllReturnsByOrderNo(data: any) {
     return this.httpClient.post<{ data: any; message: string; success: boolean }>(API_RETURN + 'get-all-returns-by-orderNo', {data});

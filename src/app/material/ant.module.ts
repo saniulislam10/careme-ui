@@ -1,3 +1,4 @@
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -29,9 +30,16 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 const materials = [
   NzModalModule,
+  NzTableModule,
+  NzInputModule,
+  NzMessageModule,
+  NzSelectModule,
   OverlayModule,
   DragDropModule,
   ReactiveFormsModule,

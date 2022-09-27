@@ -1,5 +1,13 @@
 @import '../../../../../theme/variables';
 
+.reason{
+  display: block;
+}
+nz-select {
+  margin: 0 8px 10px 0;
+  width: 150px;
+}
+
 .invoice {
   padding: 0;
   margin-bottom: 50px;

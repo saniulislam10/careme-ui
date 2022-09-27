@@ -50,10 +50,7 @@
         <div class="invoice_logo_header">
           <div class="invoice_logo_header_left">
             <div class="invoice_careme_logo">
-              <img
-                src="../../../../../assets/images/logo/logo.png"
-                alt="Care Me Logo"
-              />
+              <img src="../../../../../assets/images/logo/logo.png" alt="Care Me Logo" />
             </div>
             <div class="invoice_careme_logo_content">
               <h4>Care Me Global</h4>
@@ -180,7 +177,60 @@
     </div>
   </div>
 </div>
+
+
 <!---create-return-->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <div>
+      <div>
+        <h4>Reason</h4>
+        <nz-select placeholder="Select option">
+          <nz-option nzValue="damage" nzLabel="Product Damage "></nz-option>
+          <nz-option nzValue="mismatch" nzLabel="Quantity Mismatch"></nz-option>
+          <nz-option nzValue="quality" nzLabel="Product Quality Issue"></nz-option>
+          <nz-option nzValue="late" nzLabel="Late delivery"></nz-option>
+          <nz-option nzValue="mind_change" nzLabel="Change of mind"></nz-option>
+        </nz-select>
+      </div>
+      <div>
+        <h4>Upload Image</h4>
+        <div class="field">
+          <button type="button" nz-button (click)="imagePicker.click()">
+            <span nz-icon nzType="upload"></span>
+            Click to Upload
+          </button>
+          <p *ngIf="this.url" class="upload-text">{{this.file.name}}</p>
+          <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
+        </div>
+      </div>
+    </div>
+    <form>
+      <nz-table #return [nzLoading]="loading" [nzData]="returnProducts" [nzShowPagination]="false">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Varaint</th>
+            <th>SKU</th>
+            <th>quantity</th>
+            <th>price</th>
+            <th>tax</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of return.data">
+            <td>{{data.name}}</td>
+            <td>{{data.variant}}</td>
+            <td>{{data.sku}}</td>
+            <td>{{data.quantity}}</td>
+            <td>{{data.price}}</td>
+            <td>{{data.tax}}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </form>
+  </ng-container>
+</nz-modal>
 
 <!-- TEMPLATE NGX SPINNER-->
 <ngx-spinner></ngx-spinner>

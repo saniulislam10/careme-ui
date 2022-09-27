@@ -576,7 +576,7 @@ export const menuItemsSuperAdmin: MenuAdmin[] = [
     icon: null,
     hasSubMenu: false,
     parentId: '9',
-    routerLink: 'return',
+    routerLink: 'refund',
     href: null,
     target: null,
   },
