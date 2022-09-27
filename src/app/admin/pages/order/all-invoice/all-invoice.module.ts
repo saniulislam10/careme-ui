@@ -7,21 +7,24 @@ import { AllInvoiceComponent } from './all-invoice.component';
 import { MaterialModule } from 'src/app/material/material.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
-
-
-
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
-  declarations: [
-    AllInvoiceComponent,
-  ],
+  declarations: [AllInvoiceComponent],
   imports: [
     CommonModule,
     AllInvoiceRoutingModule,
     MaterialModule,
     NgxPaginationModule,
     NzTableModule,
-    PipesModule
-  ]
+    PipesModule,
+    NzInputModule,
+    NzTabsModule,
+    NzCardModule,
+    NzSelectModule,
+  ],
 })
-export class AllInvoiceModule { }
+export class AllInvoiceModule {}

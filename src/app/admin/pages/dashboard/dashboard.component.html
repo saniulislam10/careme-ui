@@ -1,12 +1,14 @@
-
-
 <div echarts (chartinit)="onChartInit($event)" class="demo-chart"></div>
-<div class="container">
-
-
-
-  <app-tiles></app-tiles>
-
+<div class="dashboard-report">
+  <div class="report-welocme">
+    <h2>Welcome to Dashboards !</h2>
+    <div class="compare-date">
+      compared to Jul 5, 2022
+      <span>
+        <nz-range-picker [(ngModel)]="date"> </nz-range-picker>
+      </span>
+    </div>
+  </div>
   <app-info-cards></app-info-cards>
-
+  <app-tiles></app-tiles>
 </div>

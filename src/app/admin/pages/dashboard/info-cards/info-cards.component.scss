@@ -1,23 +1,46 @@
 @import "src/theme/gradients";
 
-.container {
-  width: 100%;
+.pl-report {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 25% 25% 25% 25%;
   grid-gap: 16px;
   margin-top: 16px;
-
-  .card {
-    width: 100%;
+}
+.entry-chart_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  span {
+    font-size: 20px;
+    color: green;
+  }
+}
+.entry-chart {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  .chart {
+    height: 50px;
+    width: 150px;
   }
 }
 
-.mat-chip.info-chip{
+@media (max-width: 768px) {
+  .entry-chart {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column-reverse;
+  }
+}
+
+.mat-chip.info-chip {
   padding: 4px 8px;
-  .mat-icon{
+  .mat-icon {
     margin-right: 4px;
   }
 }
-.h-100p{
+
+.h-100p {
   height: 100px;
 }
