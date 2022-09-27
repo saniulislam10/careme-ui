@@ -53,10 +53,14 @@
           </ul>
         </div>
         <nz-table
-          #rowSelectionTable
-          [nzData]="listOfData"
-          (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
-          nzSize="small"
+        #rowSelectionTable
+        [nzData]="listOfData"
+        [nzLoading]="loading"
+        [nzPageIndex]="currentPage"
+        [nzFrontPagination]="false"
+        [nzTotal]="totalNumbers"
+        (nzQueryParams)="onPageChanged($event)"
+        nzSize="small"
         >
           <thead>
             <tr>
@@ -77,19 +81,19 @@
           <tbody>
             <tr *ngFor="let data of rowSelectionTable.data">
               <td
-                [nzChecked]="setOfCheckedId.has(data.id)"
-                (nzCheckedChange)="onItemChecked(data.id, $event)"
+                [nzChecked]="setOfCheckedId.has(data.invoiceId)"
+                (nzCheckedChange)="onItemChecked(data.invoiceId, $event)"
               ></td>
               <td>
-                <h4>{{ data.id }}</h4>
-                <h5>01/12/2022 | 12.20 PM</h5>
+                <a [routerLink]="['../../', 'invoice', data._id]">INV-{{ data.invoiceId }}</a>
+                <h5>{{data.invoiceDate | date: 'short'}}</h5>
               </td>
-              <td><span class="btn delivered">Delivered</span></td>
+              <td><span class="btn delivered">{{data.deliveryStatus | orderStatus}}</span></td>
               <td>0</td>
-              <td>78523-A</td>
-              <td>5830</td>
-              <td>Paid</td>
-              <td>Mr. Rafiq</td>
+              <td>{{data.orderNumber}}</td>
+              <td>{{data.subTotal}}</td>
+              <td>{{data.paymentStatus | paymentStatus}}</td>
+              <td>{{data.customerName}}</td>
             </tr>
           </tbody>
         </nz-table>

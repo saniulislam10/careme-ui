@@ -6,6 +6,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CreateReturnComponent } from 'src/app/shared/components/create-return/create-return.component';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-invoice',
@@ -18,6 +19,7 @@ export class InvoiceComponent implements OnInit {
   invoice: any;
   id: any;
   today = new Date();
+  confirmModal?: NzModalRef;
 
   //subscription
   private subRouteOne?: Subscription;
@@ -25,7 +27,8 @@ export class InvoiceComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private invoiceService: InvoiceService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private modal: NzModalService
   ) {}
 
   ngOnInit(): void {
@@ -64,7 +67,14 @@ export class InvoiceComponent implements OnInit {
   }
 
   createReturnButton() {
-    this.createReturn.createReturnShow();
+    this.confirmModal = this.modal.confirm({
+      nzTitle: 'Do you Want to delete these items?',
+      nzContent: 'When clicked the OK button, this dialog will be closed after 1 second',
+      nzOnOk: () =>
+        new Promise((resolve, reject) => {
+          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+        }).catch(() => console.log('Oops errors!'))
+    });
 
   }
 }

@@ -1,3 +1,4 @@
+import { Invoice } from './../interfaces/invoice';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
@@ -26,7 +27,7 @@ export class InvoiceService {
     return this.httpClient.post<{ data: any; message: string; success: boolean }>(API_INVOICE + 'get-all-invoices-by-orderNo', {data});
   }
   getAllInvoices(paginate?: Pagination, sort?: any, filter?: any, select?: string) {
-    return this.httpClient.post<{ data: any; message: string; success: boolean }>(API_INVOICE + 'get-all-invoices', {paginate, sort, filter, select});
+    return this.httpClient.post<{ data: Invoice[]; count: number }>(API_INVOICE + 'get-all-invoices', {paginate, sort, filter, select});
   }
   getInvoiceById(id) {
     return this.httpClient.get<{ data: any; message: string; success: boolean }>(API_INVOICE + 'get-invoice-by-id/'+ id);

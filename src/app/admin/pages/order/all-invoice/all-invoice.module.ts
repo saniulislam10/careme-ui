@@ -11,6 +11,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 @NgModule({
   declarations: [AllInvoiceComponent],
@@ -24,6 +25,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzInputModule,
     NzTabsModule,
     NzCardModule,
+    NzPaginationModule,
     NzSelectModule,
   ],
 })

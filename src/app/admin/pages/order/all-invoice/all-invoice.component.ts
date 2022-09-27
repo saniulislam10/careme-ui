@@ -5,17 +5,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrderStatus } from 'src/app/enum/order-status';
 import { PaymentStatus } from 'src/app/enum/payment-status';
+import { Invoice } from 'src/app/interfaces/invoice';
 import { Pagination } from 'src/app/interfaces/pagination';
 import { Select } from 'src/app/interfaces/select';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
-interface ItemData {
-  id: number;
-  name: string;
-  age: number;
-  address: string;
-}
 
 @Component({
   selector: 'app-all-invoice',
@@ -23,6 +18,10 @@ interface ItemData {
   styleUrls: ['./all-invoice.component.scss'],
 })
 export class AllInvoiceComponent implements OnInit {
+
+
+
+  private subAcRoute: Subscription;
   tabs = ['All Invoice', 'Overdue', 'Unpaid', 'Open', 'Closed', 'Paid'];
   listOfSelection = [
     {
@@ -30,33 +29,16 @@ export class AllInvoiceComponent implements OnInit {
       onSelect: () => {
         this.onAllChecked(true);
       },
-    },
-    {
-      text: 'Select Odd Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) =>
-          this.updateCheckedSet(data.id, index % 2 !== 0)
-        );
-        this.refreshCheckedStatus();
-      },
-    },
-    {
-      text: 'Select Even Row',
-      onSelect: () => {
-        this.listOfCurrentPageData.forEach((data, index) =>
-          this.updateCheckedSet(data.id, index % 2 === 0)
-        );
-        this.refreshCheckedStatus();
-      },
-    },
+    }
   ];
   checked = false;
   indeterminate = false;
-  listOfCurrentPageData: readonly ItemData[] = [];
-  listOfData: readonly ItemData[] = [];
-  setOfCheckedId = new Set<number>();
+  listOfCurrentPageData: readonly Invoice[] = [];
+  listOfData: readonly Invoice[] = [];
+  loading = false;
+  setOfCheckedId = new Set<string>();
 
-  updateCheckedSet(id: number, checked: boolean): void {
+  updateCheckedSet(id: string, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
     } else {
@@ -64,36 +46,39 @@ export class AllInvoiceComponent implements OnInit {
     }
   }
 
-  onItemChecked(id: number, checked: boolean): void {
+  onItemChecked(id: string, checked: boolean): void {
     this.updateCheckedSet(id, checked);
     this.refreshCheckedStatus();
   }
 
   onAllChecked(value: boolean): void {
     this.listOfCurrentPageData.forEach((item) =>
-      this.updateCheckedSet(item.id, value)
+      this.updateCheckedSet(item.invoiceId, value)
     );
     this.refreshCheckedStatus();
   }
 
-  onCurrentPageDataChange($event: readonly ItemData[]): void {
+  onCurrentPageDataChange($event: readonly Invoice[]): void {
     this.listOfCurrentPageData = $event;
+    this.currentPage = 2;
+    // this.getAllInvoices();
     this.refreshCheckedStatus();
   }
 
   refreshCheckedStatus(): void {
     this.checked = this.listOfCurrentPageData.every((item) =>
-      this.setOfCheckedId.has(item.id)
+      this.setOfCheckedId.has(item.invoiceId)
     );
     this.indeterminate =
       this.listOfCurrentPageData.some((item) =>
-        this.setOfCheckedId.has(item.id)
+        this.setOfCheckedId.has(item.invoiceId)
       ) && !this.checked;
   }
 
-  invoices: any;
-  currentPage = 1;
+  invoices: Invoice[] = [];
+  currentPage: number = 1;
   invoicePerPage = 10;
+  totalNumbers = 0;
   //date
   today = new Date();
   dataFormDateRange = new FormGroup({
@@ -106,7 +91,6 @@ export class AllInvoiceComponent implements OnInit {
   public activeSort = null;
 
   //subscription
-  private subAcRoute: Subscription;
   searchInvoices: any[] = [];
 
   productOrderStatus: Select[] = [
@@ -138,12 +122,6 @@ export class AllInvoiceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.listOfData = new Array(20).fill(0).map((_, index) => ({
-      id: index,
-      name: `INV-${index}`,
-      age: 32,
-      address: `London, Park Lane no. ${index}`,
-    }));
 
     // GET PAGE FROM QUERY PARAM
     this.subAcRoute = this.activatedRoute.queryParams.subscribe((qParam) => {
@@ -156,21 +134,28 @@ export class AllInvoiceComponent implements OnInit {
         this.getAllInvoices();
       }
     });
+    console.log(this.currentPage);
     this.getAllInvoices();
   }
   getAllInvoices() {
+    this.loading = true;
     const pagination: Pagination = {
       pageSize: this.invoicePerPage.toString(),
       currentPage: this.currentPage.toString(),
     };
+    console.log(this.currentPage.toString());
     this.invoiceService
       .getAllInvoices(pagination, this.sortQuery, this.filter)
       .subscribe(
         (res) => {
           this.invoices = res.data;
+          this.totalNumbers = res.count;
+          this.listOfData = this.invoices;
+          this.loading=false;
         },
         (err) => {
           console.log(err);
+          this.loading=false;
         }
       );
   }
@@ -202,7 +187,7 @@ export class AllInvoiceComponent implements OnInit {
    * PAGINATION CHANGE
    */
   public onPageChanged(event: any) {
-    this.router.navigate([], { queryParams: { page: event } });
+    this.router.navigate([], {queryParams: {page: event.pageIndex}});
   }
 
   endChangeRegDateRange(event: MatDatepickerInputEvent<any>) {
