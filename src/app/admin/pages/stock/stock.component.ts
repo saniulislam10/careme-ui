@@ -21,7 +21,15 @@ import { ProductStatus } from 'src/app/enum/product-status';
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent implements OnInit {
-  tabs = ['All Invoice', 'Overdue', 'Unpaid', 'Open', 'Closed', 'Paid'];
+  tabs = [
+    'All Stock',
+    'Instock',
+    'Committed',
+    'Available',
+    'Low Stock',
+    'Pre-Order',
+    'Archived',
+  ];
 
   @ViewChild('export') exportStock: ExportPopupComponent;
   status: number = 0;

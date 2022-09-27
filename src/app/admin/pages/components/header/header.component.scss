@@ -1,18 +1,13 @@
 @import "src/theme/variables";
-// .c-toolbar{
-//   max-width: 1550px;
-//   width: 100%;
-//   margin: auto;
-// }
-// ## Top Toolbar
+
 mat-toolbar {
   position: relative;
   top: 0;
   right: 0;
   left: 0;
-  z-index:2;
+  z-index: 2;
   height: $toolbar-height;
-  background:#17203f;
+  background: #17203f;
 
   .toggleBtn {
     button {
@@ -21,13 +16,12 @@ mat-toolbar {
       }
     }
   }
-
 }
-.toggleBtn{
-  display:block;
+.toggleBtn {
+  display: block;
 }
-@media(max-width:1288px){
-  .toggleBtn{
+@media (max-width: 1288px) {
+  .toggleBtn {
     display: block;
   }
 }
@@ -68,7 +62,6 @@ mat-toolbar {
 }
 
 .toolbar-date {
-
   flex: 1;
   .date-container {
     text-align: center;
@@ -80,7 +73,6 @@ mat-toolbar {
     }
   }
 }
-
 
 /*Custom BreakPoint*/
 @media (max-width: $max-tablet-width) {
@@ -94,7 +86,7 @@ mat-toolbar {
       height: 38px;
     }
   }
-  .c-toolbar{
+  .c-toolbar {
     justify-content: space-between;
   }
 }
@@ -117,6 +109,4 @@ mat-toolbar {
       object-fit: contain;
     }
   }
-
 }
-

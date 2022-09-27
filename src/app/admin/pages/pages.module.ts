@@ -1,42 +1,42 @@
 import { StockModule } from './stock/stock.module';
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {PagesComponent} from './pages.component';
-import {RouterModule, Routes} from '@angular/router';
-import {HeaderComponent} from './components/header/header.component';
-import {SharedModule} from '../../shared/shared.module';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatIconModule} from '@angular/material/icon';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatBadgeModule} from '@angular/material/badge';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
-import {MatSelectModule} from '@angular/material/select';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatCardModule} from '@angular/material/card';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatListModule} from '@angular/material/list';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {EditorAuthRoleGuard} from '../../auth-guard/editor-auth-role.guard';
-import {PipesModule} from '../../shared/pipes/pipes.module';
-import {NgxPaginationModule} from 'ngx-pagination';
-import {AdminAuthRoleGuard} from '../../auth-guard/admin-auth-role.guard';
-import {CheckAuthAccessGuard} from '../../auth-guard/check-auth-access.guard';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PagesComponent } from './pages.component';
+import { RouterModule, Routes } from '@angular/router';
+import { HeaderComponent } from './components/header/header.component';
+import { SharedModule } from '../../shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { EditorAuthRoleGuard } from '../../auth-guard/editor-auth-role.guard';
+import { PipesModule } from '../../shared/pipes/pipes.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { AdminAuthRoleGuard } from '../../auth-guard/admin-auth-role.guard';
+import { CheckAuthAccessGuard } from '../../auth-guard/check-auth-access.guard';
 import { ProductTableComponent } from './components/product-table/product-table.component';
 import { ProductViewTableOneComponent } from './components/product-view-table-one/product-view-table-one.component';
 import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
 import { ProductsComponent } from './products/products.component';
-import {ConversionRateModule} from './conversion-rate/conversion-rate.module';
-
+import { ConversionRateModule } from './conversion-rate/conversion-rate.module';
+import { AntModule } from 'src/app/material/ant.module';
 
 const routes: Routes = [
   {
@@ -58,8 +58,11 @@ const routes: Routes = [
       },
       {
         path: 'products-by-link',
-        loadChildren: () => import('./products-by-link/products-by-link.module').then(m => m.ProductsByLinkModule),
-        canActivate: [CheckAuthAccessGuard]
+        loadChildren: () =>
+          import('./products-by-link/products-by-link.module').then(
+            (m) => m.ProductsByLinkModule
+          ),
+        canActivate: [CheckAuthAccessGuard],
       },
       {
         path: 'add-product',
@@ -211,15 +214,18 @@ const routes: Routes = [
       },
       {
         path: 'city',
-          loadChildren: () => import('./zone/city/city.module').then(m => m.CityModule)
+        loadChildren: () =>
+          import('./zone/city/city.module').then((m) => m.CityModule),
       },
       {
         path: 'thana',
-          loadChildren: () => import('./zone/thana/thana.module').then(m => m.ThanaModule)
+        loadChildren: () =>
+          import('./zone/thana/thana.module').then((m) => m.ThanaModule),
       },
       {
         path: 'zila',
-          loadChildren: () => import('./zone/zila/zila.module').then(m => m.ZilaModule)
+        loadChildren: () =>
+          import('./zone/zila/zila.module').then((m) => m.ZilaModule),
       },
       // {
       //   path: 'zone',
@@ -385,35 +391,49 @@ const routes: Routes = [
       },
       {
         path: 'brand',
-          loadChildren: () => import('./brand/brand.module').then(m => m.BrandModule)
+        loadChildren: () =>
+          import('./brand/brand.module').then((m) => m.BrandModule),
       },
       {
         path: 'product-type',
-          loadChildren: () => import('./product-type/product-type.module').then(m => m.ProductTypeModule)
+        loadChildren: () =>
+          import('./product-type/product-type.module').then(
+            (m) => m.ProductTypeModule
+          ),
       },
       {
         path: 'country',
-          loadChildren: () => import('./country/country.module').then(m => m.CountryModule)
+        loadChildren: () =>
+          import('./country/country.module').then((m) => m.CountryModule),
       },
       {
         path: 'supplier',
-          loadChildren: () => import('./supplier/supplier.module').then(m => m.SupplierModule)
+        loadChildren: () =>
+          import('./supplier/supplier.module').then((m) => m.SupplierModule),
       },
       {
         path: 'stock',
-          loadChildren: () => import('./stock/stock.module').then(m => m.StockModule)
+        loadChildren: () =>
+          import('./stock/stock.module').then((m) => m.StockModule),
       },
       {
         path: 'purchase',
-          loadChildren: () => import('./purchase/purchase.module').then(m => m.PurchaseModule)
+        loadChildren: () =>
+          import('./purchase/purchase.module').then((m) => m.PurchaseModule),
       },
       {
         path: 'adjustment',
-          loadChildren: () => import('./adjustment/adjustment.module').then(m => m.AdjustmentModule)
+        loadChildren: () =>
+          import('./adjustment/adjustment.module').then(
+            (m) => m.AdjustmentModule
+          ),
       },
       {
         path: 'collections',
-          loadChildren: () => import('./collections/collections.module').then(m => m.CollectionsModule)
+        loadChildren: () =>
+          import('./collections/collections.module').then(
+            (m) => m.CollectionsModule
+          ),
       },
     ],
   },
@@ -425,7 +445,7 @@ const routes: Routes = [
     HeaderComponent,
     ProductViewTableOneComponent,
     ProductTableComponent,
-    SidenavListComponent
+    SidenavListComponent,
   ],
   imports: [
     CommonModule,
@@ -456,12 +476,10 @@ const routes: Routes = [
     MatTooltipModule,
     PipesModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    AntModule,
   ],
-  exports: [
-    ProductViewTableOneComponent
-  ],
-  providers: [AdminAuthRoleGuard, EditorAuthRoleGuard, CheckAuthAccessGuard]
+  exports: [ProductViewTableOneComponent],
+  providers: [AdminAuthRoleGuard, EditorAuthRoleGuard, CheckAuthAccessGuard],
 })
-export class PagesModule {
-}
+export class PagesModule {}

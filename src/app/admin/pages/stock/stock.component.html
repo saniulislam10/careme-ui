@@ -16,8 +16,40 @@
           <input nz-input placeholder="Search here" nzSize="large" />
           <ul>
             <li>
-              <button>Payment Status <i class="fa fa-caret-down"></i></button>
+              <button [matMenuTriggerFor]="changeProductStatus">
+                Bulk Action <i class="fa fa-caret-down"></i>
+              </button>
             </li>
+            <mat-menu #changeProductStatus="matMenu">
+              <button mat-menu-item>Action 1</button>
+              <button mat-menu-item>Action 2</button>
+              <button mat-menu-item>Action 3</button>
+            </mat-menu>
+            <li>
+              <button [matMenuTriggerFor]="productSort">
+                Sort <i class="fa fa-caret-down"></i>
+              </button>
+            </li>
+            <mat-menu #productSort="matMenu">
+              <button mat-menu-item (click)="sortData({ name: 1 }, 1)" [class.dropdown-active]="activeSort === 1">
+                Product Title (A-Z)
+              </button>
+              <button mat-menu-item (click)="sortData({ createdAt: 1 }, 2)" [class.dropdown-active]="activeSort === 2">
+                Created (Oldest First)
+              </button>
+              <button mat-menu-item (click)="sortData({ quantity: -1 }, 3)" [class.dropdown-active]="activeSort === 3">
+                High Inventory
+              </button>
+              <!-- need to change -->
+              <button mat-menu-item (click)="sortData({ categoryName: -1 }, 4)"
+                [class.dropdown-active]="activeSort === 4">
+                Product Type (A-Z)
+              </button>
+              <button mat-menu-item (click)="sortData({ vendor: 1 }, 5)" [class.dropdown-active]="activeSort === 5">
+                Vendor (A-Z)
+              </button>
+            </mat-menu>
+            <li><button>More</button></li>
           </ul>
         </div>
 
@@ -89,7 +121,7 @@
                   </a>
                 </h2>
                 <span *ngFor="let type of data.variants; let x = index">
-                  {{ this.getVariantName(i, type, data, x)}}
+                  {{ this.getVariantName(i, type, data, x) }}
                 </span>
               </td>
               <td>
@@ -100,7 +132,9 @@
                 variant?.variantQuantity + variant?.variantCommittedQuantity
                 }}
               </td>
-              <td style="color: orange">{{ variant?.variantCommittedQuantity }}</td>
+              <td style="color: orange">
+                {{ variant?.variantCommittedQuantity }}
+              </td>
               <td style="color: green">{{ variant?.variantQuantity }}</td>
               <td>0 TAKA</td>
               <td>{{ variant.variantContinueSelling ? "Yes" : "No" }}</td>
@@ -110,4 +144,8 @@
       </nz-tab>
     </nz-tabset>
   </nz-card>
+</div>
+
+<div class="export-popup-area">
+  <app-export-popup (valueChange)="exportToExcel($event)" #export></app-export-popup>
 </div>
