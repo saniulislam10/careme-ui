@@ -12,6 +12,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 const materials = [
   NzModalModule,
@@ -27,7 +29,9 @@ const materials = [
   NzLayoutModule,
   NzIconModule,
   NzButtonModule,
-  NzCheckboxModule
+  NzCheckboxModule,
+  NzCardModule,
+  NzTabsModule,
   // SharedModule
 ];
 

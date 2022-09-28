@@ -11,16 +11,12 @@ import { Select } from 'src/app/interfaces/select';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
-
 @Component({
   selector: 'app-all-invoice',
   templateUrl: './all-invoice.component.html',
   styleUrls: ['./all-invoice.component.scss'],
 })
 export class AllInvoiceComponent implements OnInit {
-
-
-
   private subAcRoute: Subscription;
   tabs = ['All Invoice', 'Overdue', 'Unpaid', 'Open', 'Closed', 'Paid'];
   listOfSelection = [
@@ -29,7 +25,7 @@ export class AllInvoiceComponent implements OnInit {
       onSelect: () => {
         this.onAllChecked(true);
       },
-    }
+    },
   ];
   checked = false;
   indeterminate = false;
@@ -122,7 +118,6 @@ export class AllInvoiceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     // GET PAGE FROM QUERY PARAM
     this.subAcRoute = this.activatedRoute.queryParams.subscribe((qParam) => {
       if (qParam && qParam.page) {
@@ -151,11 +146,11 @@ export class AllInvoiceComponent implements OnInit {
           this.invoices = res.data;
           this.totalNumbers = res.count;
           this.listOfData = this.invoices;
-          this.loading=false;
+          this.loading = false;
         },
         (err) => {
           console.log(err);
-          this.loading=false;
+          this.loading = false;
         }
       );
   }
@@ -187,7 +182,7 @@ export class AllInvoiceComponent implements OnInit {
    * PAGINATION CHANGE
    */
   public onPageChanged(event: any) {
-    this.router.navigate([], {queryParams: {page: event.pageIndex}});
+    this.router.navigate([], { queryParams: { page: event.pageIndex } });
   }
 
   endChangeRegDateRange(event: MatDatepickerInputEvent<any>) {
