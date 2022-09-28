@@ -1,3 +1,6 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Refund } from './../../../../interfaces/refund';
+import { RefundService } from './../../../../services/refund.service';
 import { Component, OnInit } from '@angular/core';
 
 interface ItemData {
@@ -14,14 +17,48 @@ interface ItemData {
 })
 export class RefundComponent implements OnInit {
   tabs = ['All Invoice', 'Closed', 'Pending'];
-  constructor() {}
-
   checked = false;
   indeterminate = false;
   listOfCurrentPageData: readonly ItemData[] = [];
-  listOfData: readonly ItemData[] = [];
+  listOfData: Refund[] = [];
   setOfCheckedId = new Set<number>();
+  // Create Refund Modal
+  isVisible = false;
+  loading = false;
 
+  constructor(
+    private refundService: RefundService,
+    private msg: NzMessageService,
+  ) {}
+
+
+
+
+  ngOnInit(): void {
+    this.getAllRefund();
+  }
+  getAllRefund() {
+    this.loading = true;
+    this.refundService.getAll()
+    .subscribe(res => {
+      this.listOfData = res.data;
+      this.loading = false;
+    }, err=> {
+      this.msg.create('error',err.message, {
+        nzDuration: 5000
+      });
+    })
+  }
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+  handleOk(): void {
+    this.isVisible = false;
+  }
+  handleCancel(): void {
+    this.isVisible = false;
+  }
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
@@ -55,26 +92,5 @@ export class RefundComponent implements OnInit {
       this.listOfCurrentPageData.some((item) =>
         this.setOfCheckedId.has(item.id)
       ) && !this.checked;
-  }
-
-  // Create Refund Modal
-  isVisible = false;
-  showModal(): void {
-    this.isVisible = true;
-  }
-  handleOk(): void {
-    this.isVisible = false;
-  }
-  handleCancel(): void {
-    this.isVisible = false;
-  }
-
-  ngOnInit(): void {
-    this.listOfData = new Array(100).fill(0).map((_, index) => ({
-      id: index,
-      name: `RFD-${index}`,
-      initiatedby: 'Rafiq',
-      returnid: `RTO-${index}`,
-    }));
   }
 }

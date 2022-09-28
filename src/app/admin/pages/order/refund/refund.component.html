@@ -31,7 +31,7 @@
                     </ul>
                 </div>
                 <div class="table-data-area">
-                    <nz-table nzSize="small" #rowSelectionTable nzShowSizeChanger [nzData]="listOfData"
+                    <nz-table nzSize="small" #rowSelectionTable nzShowSizeChanger [nzLoading]="loading" [nzData]="listOfData"
                         (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
                         <thead>
                             <tr>
@@ -56,18 +56,18 @@
                                 </td>
                                 <td>
                                     <a routerLink="details">
-                                        <h4>{{ data.name }}</h4>
+                                        <h4>{{ data.refundId }}</h4>
                                     </a>
-                                    <h5>05 Jul 2022 | 11:65 PM</h5>
+                                    <h5>{{ data.createdAt | date:'short' }}</h5>
                                 </td>
-                                <td>{{ data.initiatedby }}</td>
-                                <td>{{data.returnid}}</td>
-                                <td>Return Status</td>
-                                <td>Sales Order</td>
-                                <td>Refund Status</td>
-                                <td>Returned</td>
-                                <td>Return Amount</td>
-                                <td>Refunded Amount</td>
+                                <td>SUPERADMIN</td>
+                                <td>{{data.returnId}}</td>
+                                <td>PENDING</td>
+                                <td>{{ data.orderNumber }}</td>
+                                <td>Pending</td>
+                                <td>Accepted</td>
+                                <td>0</td>
+                                <td>0</td>
                             </tr>
                         </tbody>
                     </nz-table>
