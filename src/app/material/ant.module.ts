@@ -16,7 +16,8 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 const materials = [
   NzModalModule,
   NzTableModule,
@@ -36,6 +37,8 @@ const materials = [
   NzTabsModule,
   NzMenuModule,
   NzDropDownModule,
+  NzGridModule,
+  NzDividerModule,
   // SharedModule
 ];
 
