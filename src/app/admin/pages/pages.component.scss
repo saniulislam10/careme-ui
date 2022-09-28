@@ -1,5 +1,6 @@
 @import "src/theme/variables";
-.main-container{
+
+.main-container {
   display: block;
   margin: auto;
   max-width: 1600px;
@@ -7,10 +8,10 @@
   overflow: hidden !important;
 }
 // ## SideNav
- img{
-    display: block;
-    max-width: 100%;
- }
+img {
+  display: block;
+  max-width: 100%;
+}
 mat-sidenav {
   position: absolute;
   // margin-top: $toolbar-height;
@@ -19,32 +20,31 @@ mat-sidenav {
   height: auto;
   background-color: #17203f;
 }
-.sivenav::-webkit-scrollbar{
+.sivenav::-webkit-scrollbar {
   width: 10px;
   background-color: #d4e5fa;
 }
-mat-sidenav-content{
+mat-sidenav-content {
   // margin-top: $toolbar-height;
   min-height: 100vh;
   height: auto;
   background-color: #f6f9fd;
 }
 
-.main-content{
+.main-content {
   background-color: #f6f9fd;
   box-sizing: border-box;
   padding: 0px 20px;
 }
 @media only screen and (max-device-width: 599px) {
-  mat-sidenav-content{
+  mat-sidenav-content {
     margin-top: 65px;
     min-height: calc(100vh - 65px);
   }
   mat-sidenav {
     margin-top: 65px;
   }
-
 }
-::ng-deep.mat-drawer-inner-container::-webkit-scrollbar{
+::ng-deep.mat-drawer-inner-container::-webkit-scrollbar {
   width: 0px;
 }

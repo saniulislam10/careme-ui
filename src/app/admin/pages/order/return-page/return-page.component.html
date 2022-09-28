@@ -16,7 +16,8 @@
             <div class="return-btn-area">
                 <ul>
                     <li><button>Export</button></li>
-                    <li><button><i class="fa-solid fa-calendar-day"></i>Date<i class="fa fa-caret-down"></i></button></li>
+                    <li><button><i class="fa-solid fa-calendar-day"></i>Date<i class="fa fa-caret-down"></i></button>
+                    </li>
                     <li><button>Sort<i class="fa fa-caret-down"></i></button></li>
                 </ul>
             </div>
@@ -79,7 +80,7 @@
                         <h3>{{i+1}}</h3>
                     </div>
                     <div class="table-data id">
-                      <span [routerLink]="['../', 'details', data._id]" >{{data?.returnId}}</span>
+                        <span [routerLink]="['../', 'details', data._id]">{{data?.returnId}}</span>
                     </div>
                     <div class="table-data number">
                         <span>{{data?.orderNumber}}</span>
@@ -89,13 +90,13 @@
                         <h3>{{data?.createdAt | date:'shortTime' }}</h3>
                     </div>
                     <div class="table-data amount">
-                      <h3>0 TK</h3>
+                        <h3>0 TK</h3>
                     </div>
                     <div class="table-data status">
                         <button>Active</button>
                     </div>
                     <div class="table-data vendor">
-                      <button>Care Me</button>
+                        <button>Care Me</button>
                     </div>
                 </div>
             </div>

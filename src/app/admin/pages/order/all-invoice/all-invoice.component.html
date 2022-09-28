@@ -19,11 +19,7 @@
               </button>
             </li>
             <mat-menu #paymentStatus="matMenu">
-              <button
-                mat-menu-item
-                *ngFor="let data of paymentOrderStatus"
-                (click)="filterByPaymentStatus(data.value)"
-              >
+              <button mat-menu-item *ngFor="let data of paymentOrderStatus" (click)="filterByPaymentStatus(data.value)">
                 {{ data.viewValue }}
               </button>
             </mat-menu>
@@ -33,11 +29,7 @@
               </button>
             </li>
             <mat-menu #orderStatus="matMenu">
-              <button
-                mat-menu-item
-                *ngFor="let data of productOrderStatus"
-                (click)="filterByOrderStatus(data.value)"
-              >
+              <button mat-menu-item *ngFor="let data of productOrderStatus" (click)="filterByOrderStatus(data.value)">
                 {{ data.viewValue }}
               </button>
             </mat-menu>
@@ -52,23 +44,12 @@
             </mat-menu>
           </ul>
         </div>
-        <nz-table
-        #rowSelectionTable
-        [nzData]="listOfData"
-        [nzLoading]="loading"
-        [nzPageIndex]="currentPage"
-        [nzFrontPagination]="false"
-        [nzTotal]="totalNumbers"
-        (nzQueryParams)="onPageChanged($event)"
-        nzSize="small"
-        >
+        <nz-table #rowSelectionTable [nzData]="listOfData" [nzLoading]="loading" [nzPageIndex]="currentPage"
+          [nzFrontPagination]="false" [nzTotal]="totalNumbers" (nzQueryParams)="onPageChanged($event)" nzSize="small">
           <thead>
             <tr>
-              <th
-                [(nzChecked)]="checked"
-                [nzIndeterminate]="indeterminate"
-                (nzCheckedChange)="onAllChecked($event)"
-              ></th>
+              <th [(nzChecked)]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)">
+              </th>
               <th>ID & Date</th>
               <th>Delivery Status</th>
               <th>Due (TK)</th>
@@ -80,17 +61,15 @@
           </thead>
           <tbody>
             <tr *ngFor="let data of rowSelectionTable.data">
-              <td
-                [nzChecked]="setOfCheckedId.has(data.invoiceId)"
-                (nzCheckedChange)="onItemChecked(data.invoiceId, $event)"
-              ></td>
+              <td [nzChecked]="setOfCheckedId.has(data.invoiceId)"
+                (nzCheckedChange)="onItemChecked(data.invoiceId, $event)"></td>
               <td>
                 <a [routerLink]="['../../', 'invoice', data._id]">{{ data.invoiceId }}</a>
                 <h5>{{data.invoiceDate | date: 'short'}}</h5>
               </td>
               <td><span class="btn delivered">{{data.deliveryStatus | orderStatus}}</span></td>
               <td>0</td>
-              <td>{{data.orderNumber}}</td>
+              <td>SO-{{data.orderNumber}}</td>
               <td>{{data.subTotal}}</td>
               <td>{{data.paymentStatus | paymentStatus}}</td>
               <td>{{data.customerName}}</td>
