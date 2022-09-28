@@ -53,3 +53,19 @@ mat-toolbar {
     }
   }
 }
+.menuitem_btn {
+  line-height: 30px;
+  height: 30px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  i {
+    margin-right: 15px;
+    font-size: 20px;
+  }
+}
+.action-container {
+  i.la-plus-square {
+    color: #00ff00;
+  }
+}
