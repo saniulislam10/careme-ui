@@ -1,1 +1,32 @@
-<p>details works!</p>
+<!---order-header-area-->
+<div class="page-header">
+    <h2>All Refund</h2>
+    <div class="header-action">
+        <button type="button">Export</button>
+        <button type="button">Import</button>
+    </div>
+</div>
+<div class="table-samary">
+    <nz-card nzSize="small">
+        <nz-tabset class="refunt-tab" nzTabPosition="left">
+            <nz-tab class="refunt-details-tab" *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
+                <ng-template #titleTemplate>
+                    <div class="tab-list">
+                        <div class="title">
+                            <h4>RFD-00{{tab}}</h4>
+                            <h5>05 Jul 2022 | 11:30</h5>
+                        </div>
+                        <div class="status-details">
+                            <h4>Pending</h4>
+                            <div class="details">
+                                <span>1 / 0</span>
+                                <span>846 TK</span>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                Content of tab {{ tab }}
+            </nz-tab>
+        </nz-tabset>
+    </nz-card>
+</div>
