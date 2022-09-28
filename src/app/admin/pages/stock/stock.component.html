@@ -116,7 +116,7 @@
               <td class="produc-details">
                 <h2>
                   {{ data.name }}
-                  <a>
+                  <a [routerLink]="['../../', 'add-product', data._id]">
                     <i class="eyeButton" class="fa fa-eye"></i>
                   </a>
                 </h2>
