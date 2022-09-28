@@ -182,7 +182,7 @@
 <!---create-return-->
 <nz-modal [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <ng-container *nzModalContent>
-    <div>
+    <div class="return">
       <div>
         <h4>Reason</h4>
         <nz-select placeholder="Select option">
@@ -206,14 +206,7 @@
       </div>
       <div>
         <h4>Refund Eligibility</h4>
-        <div class="field">
-          <button type="button" nz-button (click)="imagePicker.click()">
-            <span nz-icon nzType="upload"></span>
-            Click to Upload
-          </button>
-          <p *ngIf="this.url" class="upload-text">{{this.file.name}}</p>
-          <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/* | video/*" multiple/>
-        </div>
+        <mat-checkbox>Yes</mat-checkbox>
       </div>
     </div>
     <form>
