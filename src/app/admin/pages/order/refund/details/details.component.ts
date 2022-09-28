@@ -6,8 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
-  tabs = [1, 2, 3];
-
   constructor() {}
 
   ngOnInit(): void {}

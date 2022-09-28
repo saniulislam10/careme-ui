@@ -8,25 +8,55 @@
 </div>
 <div class="table-samary">
     <nz-card nzSize="small">
-        <nz-tabset class="refunt-tab" nzTabPosition="left">
-            <nz-tab class="refunt-details-tab" *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
-                <ng-template #titleTemplate>
-                    <div class="tab-list">
-                        <div class="title">
-                            <h4>RFD-00{{tab}}</h4>
-                            <h5>05 Jul 2022 | 11:30</h5>
+        <nz-layout style="min-height: 50vh;">
+            <nz-sider class="left_navbar">
+                <div class="inner_nav_header">
+                    <div class="header_action">
+                        <a nz-dropdown [nzDropdownMenu]="statusMenu">
+                            All Refund <i class="las la-angle-down"></i>
+                            <nz-dropdown-menu #statusMenu="nzDropdownMenu">
+                                <ul nz-menu nzSelectable>
+                                    <li nz-menu-item>Close</li>
+                                    <li nz-menu-item>Pending</li>
+                                    <li nz-menu-item>Reject</li>
+                                </ul>
+                            </nz-dropdown-menu>
+                        </a>
+                        <nz-button-group>
+                            <button nz-button nz-dropdown [nzDropdownMenu]="actionMenu" nzPlacement="bottomRight">
+                                <span nz-icon nzType="ellipsis"></span>
+                            </button>
+                            <nz-dropdown-menu #actionMenu="nzDropdownMenu">
+                                <ul nz-menu nzSelectable>
+                                    <li nz-menu-item>Delete</li>
+                                    <li nz-menu-item>Pending</li>
+                                    <li nz-menu-item>Reject</li>
+                                </ul>
+                            </nz-dropdown-menu>
+                        </nz-button-group>
+
+                    </div>
+                    <input nz-input placeholder="Basic usage" />
+                </div>
+                <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
+                    <li nz-menu-item>
+                        <div class="left">
+                            <h4>RFD-16767</h4>
+                            <h5>05 Jul 2022 | 11:30 PM</h5>
                         </div>
-                        <div class="status-details">
+                        <div class="right">
                             <h4>Pending</h4>
-                            <div class="details">
+                            <h5>
                                 <span>1 / 0</span>
                                 <span>846 TK</span>
-                            </div>
+                            </h5>
                         </div>
-                    </div>
-                </ng-template>
-                Content of tab {{ tab }}
-            </nz-tab>
-        </nz-tabset>
+                    </li>
+                </ul>
+            </nz-sider>
+            <nz-content style="background: #fff;">
+                <p>main content</p>
+            </nz-content>
+        </nz-layout>
     </nz-card>
 </div>

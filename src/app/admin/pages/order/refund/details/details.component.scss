@@ -47,3 +47,44 @@
 .ant-tabs-nav-list {
   padding: 0;
 }
+.header_action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.left_navbar {
+  background: #fff;
+  border-right: 1px solid #ddd;
+  min-width: 230px !important;
+}
+.inner_nav_header {
+  margin-right: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 5px;
+  .header_action {
+    margin-bottom: 15px;
+  }
+}
+.refund_list {
+  padding: 0;
+  margin: 0;
+  li {
+    display: flex;
+    padding: 5px 10px 5px 0 !important;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+    height: unset;
+    .right {
+      text-align: right;
+    }
+  }
+  li:hover {
+    .left {
+      h4 {
+        color: #1b75bb;
+      }
+    }
+  }
+}
