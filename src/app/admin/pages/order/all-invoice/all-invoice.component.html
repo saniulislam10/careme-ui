@@ -85,7 +85,7 @@
                 (nzCheckedChange)="onItemChecked(data.invoiceId, $event)"
               ></td>
               <td>
-                <a [routerLink]="['../../', 'invoice', data._id]">INV-{{ data.invoiceId }}</a>
+                <a [routerLink]="['../../', 'invoice', data._id]">{{ data.invoiceId }}</a>
                 <h5>{{data.invoiceDate | date: 'short'}}</h5>
               </td>
               <td><span class="btn delivered">{{data.deliveryStatus | orderStatus}}</span></td>

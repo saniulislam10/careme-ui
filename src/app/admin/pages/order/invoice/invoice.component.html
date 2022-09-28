@@ -4,7 +4,7 @@
       keyboard_backspace
     </mat-icon>
     <div class="invoice_header_content">
-      <h1>INV-{{ invoice?.invoiceId }}</h1>
+      <h1>{{ invoice?.invoiceId }}</h1>
       <p>{{ invoice?.invoiceDate | date }}</p>
     </div>
   </div>
@@ -25,7 +25,7 @@
     <div class="invoice_chackout_table">
       <div class="invoice_dropdown">
         <div class="invoice_item">
-          <h3 class="IVN_code_content">INV-{{ invoice?.invoiceId }}</h3>
+          <h3 class="IVN_code_content">{{ invoice?.invoiceId }}</h3>
           <p>25 Dec 2021</p>
         </div>
         <div class="invoice_item">
@@ -61,7 +61,7 @@
             </div>
           </div>
           <div class="invoice_logo_header_right">
-            <h1>INV-{{ invoice?.invoiceId }}</h1>
+            <h1>{{ invoice?.invoiceId }}</h1>
             <p class="invoice_balance">Balance Due</p>
             <p class="invoie_bdt">BDT{{ invoice?.subTotal + 120 }}</p>
           </div>
@@ -81,7 +81,7 @@
           <div class="bill_to_right">
             <div class="invoice_date_field">
               <h4>Invoice Id:</h4>
-              <p>INV-{{ invoice?.invoiceId }}</p>
+              <p>{{ invoice?.invoiceId }}</p>
             </div>
             <div class="invoice_date_field">
               <h4>Invoice Date:</h4>
@@ -89,7 +89,7 @@
             </div>
             <div class="invoice_date_field">
               <h4>Order Number:</h4>
-              <p>SO-{{ invoice?.orderNumber }}</p>
+              <p>{{ invoice?.orderNumber }}</p>
             </div>
             <div class="invoice_date_field">
               <h4>Sales Person:</h4>
@@ -183,7 +183,11 @@
 <nz-modal [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <ng-container *nzModalContent>
     <div class="return">
-      <div>
+      <div class="box">
+        <h4>Refund Eligibility</h4>
+        <label nz-checkbox [(ngModel)]="checked" (click)="changeEligibility()">Yes</label>
+      </div>
+      <div class="box">
         <h4>Reason</h4>
         <nz-select placeholder="Select option">
           <nz-option nzValue="damage" nzLabel="Product Damage "></nz-option>
@@ -193,7 +197,7 @@
           <nz-option nzValue="mind_change" nzLabel="Change of mind"></nz-option>
         </nz-select>
       </div>
-      <div>
+      <div class="box">
         <h4>Upload Image</h4>
         <div class="field">
           <button type="button" nz-button (click)="imagePicker.click()">
@@ -201,29 +205,31 @@
             Click to Upload
           </button>
           <p *ngIf="this.url" class="upload-text">{{this.file.name}}</p>
-          <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/* | video/*" multiple/>
+          <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/* | video/*"
+            multiple />
         </div>
       </div>
+
+    </div>
+    <div *ngIf="checked" class="return">
       <div class="box">
-        <h4>Refund Eligibility</h4>
-        <div class="field">
-          <label nz-checkbox [(ngModel)]="checked" (click)="changeEligibility()">Yes</label>
-        </div>
-      </div>
-      <div class="box">
-        <nz-select placeholder="Select Payment">
-          <nz-option nzValue="damage" nzLabel="Same as Payment"></nz-option>
+        <h4>Payment By</h4>
+        <nz-select [(ngModel)]="paymentBy">
+          <nz-option nzValue="damage" nzLabel="Same as Payment" selected></nz-option>
           <nz-option nzValue="mismatch" nzLabel="Others"></nz-option>
         </nz-select>
       </div>
       <div class="box">
-        <nz-select placeholder="Payment Method">
-          <nz-option nzValue="damage" nzLabel="Same as Payment"></nz-option>
-          <nz-option nzValue="mismatch" nzLabel="Others"></nz-option>
+        <h4>Payment Options</h4>
+        <nz-select [(ngModel)]="paymentOption" placeholder="Payment Method">
+          <nz-option nzValue="bkash" nzLabel="Bkash" selected></nz-option>
+          <nz-option nzValue="rocket" nzLabel="Rocket"></nz-option>
+          <nz-option nzValue="visa" nzLabel="Visa/Master"></nz-option>
         </nz-select>
       </div>
       <div class="box">
-        <input type="text" placeholder="01X-XXX-XXXX" >
+        <h4>Phone</h4>
+        <input nz-input [(ngModel)]="phone" type="text" placeholder="01X-XXX-XXXX">
       </div>
     </div>
     <form>

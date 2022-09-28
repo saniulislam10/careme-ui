@@ -28,7 +28,7 @@
                 matTooltip="Click to view order details"
                 [routerLink]="['../../order-details', data.id]"
               >
-                <h2>SO - {{ data.orderId }}</h2>
+                <h2>{{ data.orderId }}</h2>
                 <h5>{{ data.date | date: "short" }}</h5>
               </a>
             </td>

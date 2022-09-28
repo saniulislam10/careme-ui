@@ -1,3 +1,5 @@
+import { Refund } from './../../../../interfaces/refund';
+import { RefundService } from './../../../../services/refund.service';
 import { FileUploadService } from './../../../../services/file-upload.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Invoice } from './../../../../interfaces/invoice';
@@ -27,6 +29,9 @@ export class InvoiceComponent implements OnInit {
   confirmModal?: NzModalRef;
   isVisible = false;
   checked = false;
+  paymentBy :String;
+  paymentOption :String;
+  phone :String;
 
   //subscription
   private subRouteOne?: Subscription;
@@ -38,6 +43,7 @@ export class InvoiceComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private invoiceService: InvoiceService,
     private returnService: ReturnService,
+    private refundService: RefundService,
     private spinner: NgxSpinnerService,
     private msg: NzMessageService,
     private fileUploadService: FileUploadService
@@ -62,7 +68,7 @@ export class InvoiceComponent implements OnInit {
       let PDF = new jsPDF('p', 'mm', 'a4');
       let position = 0;
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      PDF.save('INV-' + this.invoice.invoiceId + '.pdf');
+      PDF.save(this.invoice.invoiceId + '.pdf');
       this.spinner.hide();
     });
   }
@@ -91,31 +97,8 @@ export class InvoiceComponent implements OnInit {
   handleOk(){
     console.log('Button ok clicked!');
     this.loading = true;
-    let returnData:Return = {
-      invoiceId: this.invoice._id,
-      orderNumber: this.invoice.orderNumber,
-      returnDate: new Date(),
-      customerName: this.invoice.customerName,
-      billingAddress: this.invoice.billingAddress,
-      shippingAddress: this.invoice.shippingAddress,
-      subTotal: this.invoice.subTotal,
-      adjustment: 0,
-      deliveryFee: 120,
-      total: this.invoice.total,
-      products: this.returnProducts
-    }
-    this.returnService.placeReturn(returnData)
-    .subscribe(res => {
-      console.log(res.message)
-      this.loading = false;
-      this.isVisible = false;
-      let message = res.message + ". Return Id: "+ res.returnId;
-      this.msg.success(message, {
-        nzDuration: 10000
-      });
-    }, err=>{
-      this.msg.create('error',err.message);
-    })
+    this.placeReturn();
+
   }
 
   async fileChangeEvent(event: any) {
@@ -132,6 +115,70 @@ export class InvoiceComponent implements OnInit {
 
   changeEligibility(){
     this.checked = !this.checked;
+  }
+
+  placeReturn(){
+    let returnId;
+    let returnData:Return = {
+      invoiceId: this.invoice._id,
+      orderNumber: this.invoice.orderNumber,
+      returnDate: new Date(),
+      customerName: this.invoice.customerName,
+      billingAddress: this.invoice.billingAddress,
+      shippingAddress: this.invoice.shippingAddress,
+      subTotal: this.invoice.subTotal,
+      adjustment: 0,
+      deliveryFee: 120,
+      total: this.invoice.total,
+      products: this.returnProducts
+    }
+    this.returnService.placeReturn(returnData)
+    .subscribe(res => {
+      returnId = res.returnId
+      let message = res.message + ". Return Id: "+ res.returnId;
+      this.msg.success(message, {
+        nzDuration: 10000
+      });
+      if(this.checked){
+        this.createRefund(returnId);
+      }else{
+        this.loading = false;
+        this.isVisible = false;
+      }
+    }, err=>{
+      this.msg.create('error',err.message);
+    })
+    return returnId;
+  }
+
+  createRefund(returnId){
+
+    let data:Refund = {
+      invoiceId: this.invoice._id,
+      returnId: returnId,
+      orderNumber: this.invoice.orderNumber,
+      customerName: this.invoice.customerName,
+      products: this.returnProducts,
+      paymentBy: this.paymentBy,
+      paymentOptions: this.paymentOption,
+      phoneNo: this.phone
+    }
+    this.refundService.add(data)
+    .subscribe(res => {
+      console.log(res.message)
+      let message = res.message + ". Refund Id: "+ res.refundId;
+      this.msg.success(message, {
+        nzDuration: 10000
+      });
+      this.loading = false;
+      this.isVisible = false;
+    }, err=>{
+      this.msg.create('error',err.message, {
+        nzDuration: 5000
+      });
+      this.loading = false;
+    })
+
   }
 
 

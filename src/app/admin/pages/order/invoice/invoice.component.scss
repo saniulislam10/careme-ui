@@ -3,11 +3,11 @@
 
 .return{
   display: flex;
-  flex: wrap;
   .box{
-    margin-left: 5px;
-    align-items: center;
-    top: 5px;
+    padding-left: 5px;
+  }
+  input {
+    width: 150px;
   }
 }
 

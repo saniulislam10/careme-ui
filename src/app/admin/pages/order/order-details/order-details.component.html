@@ -59,7 +59,7 @@
             " [class.active]="data?._id === id" [routerLink]="['../../', 'order-details', data._id]">
             <div class="sidebar-info-left">
               {{ data?.name ? data?.name : data.phoneNo }}
-              <span [routerLink]="['../../', 'order-details', data._id]">SO-{{ data?.orderId }}
+              <span [routerLink]="['../../', 'order-details', data._id]">{{ data?.orderId }}
                 |
                 <small>{{ data?.checkoutDate | date }}</small></span>
             </div>
@@ -75,7 +75,7 @@
   <div class="order-details-container">
     <form [formGroup]="dataForm">
       <div class="order-id-area">
-        <h4>#SO-{{ order?.orderId }}</h4>
+        <h4>{{ order?.orderId }}</h4>
         <span>{{order?.checkoutDate | date: "short"}}</span>
       </div>
 

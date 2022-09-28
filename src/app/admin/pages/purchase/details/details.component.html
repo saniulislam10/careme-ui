@@ -54,7 +54,7 @@
               let i = index
             " [class.active]="data?._id === id" [routerLink]="['../../', 'details', data._id]">
             <div class="sidebar-info-left">
-              <span [routerLink]="['../../', 'details', data._id]">PO-{{ data?.purchaseId }} |
+              <span [routerLink]="['../../', 'details', data._id]">{{ data?.purchaseId }} |
                 <small>{{ data?.dateTime | date }}</small></span>
             </div>
             <div class="sidebar-info-right">
@@ -74,7 +74,7 @@
       <div class="order-id-area">
         <!---req-id-title-->
         <div class="req-id-title">
-          <h4>PO-{{ purchase?.purchaseId }}</h4>
+          <h4>{{ purchase?.purchaseId }}</h4>
           <span>{{ purchase?.timeline?.purchasePlacedDate | date }}
             {{
             purchase?.timeline?.purchasePlacedDate | date: "mediumTime"

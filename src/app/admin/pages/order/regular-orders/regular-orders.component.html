@@ -166,7 +166,7 @@
             [(ngModel)]="data.select"></mat-checkbox>
         </td>
         <td>
-          <a [routerLink]="['../../','order-details', data._id ]">SO-{{data.orderId}}</a>
+          <a [routerLink]="['../../','order-details', data._id ]">{{data.orderId}}</a>
           <p>{{data.checkoutDate | date : 'short'}}</p>
         </td>
         <td>

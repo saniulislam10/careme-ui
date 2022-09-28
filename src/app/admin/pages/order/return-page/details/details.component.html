@@ -47,7 +47,7 @@
               let i = index
             " [class.active]="data?._id === id" [routerLink]="['../../', 'details', data._id]">
             <div class="sidebar-info-left">
-              <span [routerLink]="['../../', 'details', data._id]">RTO-{{ data?.returnId }} |
+              <span [routerLink]="['../../', 'details', data._id]">{{ data?.returnId }} |
                 <small>{{ data?.returnDate | date }}</small></span>
             </div>
             <div class="sidebar-info-right">
@@ -60,7 +60,7 @@
     <!---end-->
   </div>
   <div class="product-info">
-    <h3 class="id">RTO-{{return?.returnId}}</h3>
+    <h3 class="id">{{return?.returnId}}</h3>
     <h3 class="title">Products Information</h3>
     <nz-table #headerTable [nzData]="listOfData" nzTableLayout="fixed">
       <thead>
