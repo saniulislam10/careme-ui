@@ -26,6 +26,7 @@ export class InvoiceComponent implements OnInit {
   today = new Date();
   confirmModal?: NzModalRef;
   isVisible = false;
+  checked = false;
 
   //subscription
   private subRouteOne?: Subscription;
@@ -127,6 +128,10 @@ export class InvoiceComponent implements OnInit {
       }, error => {
         console.log(error);
       });
+  }
+
+  changeEligibility(){
+    this.checked = !this.checked;
   }
 
 

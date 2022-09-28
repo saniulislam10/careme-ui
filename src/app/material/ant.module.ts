@@ -11,6 +11,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 const materials = [
   NzModalModule,
@@ -25,7 +26,8 @@ const materials = [
   ReactiveFormsModule,
   NzLayoutModule,
   NzIconModule,
-  NzButtonModule
+  NzButtonModule,
+  NzCheckboxModule
   // SharedModule
 ];
 

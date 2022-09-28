@@ -204,9 +204,26 @@
           <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/* | video/*" multiple/>
         </div>
       </div>
-      <div>
+      <div class="box">
         <h4>Refund Eligibility</h4>
-        <mat-checkbox>Yes</mat-checkbox>
+        <div class="field">
+          <label nz-checkbox [(ngModel)]="checked" (click)="changeEligibility()">Yes</label>
+        </div>
+      </div>
+      <div class="box">
+        <nz-select placeholder="Select Payment">
+          <nz-option nzValue="damage" nzLabel="Same as Payment"></nz-option>
+          <nz-option nzValue="mismatch" nzLabel="Others"></nz-option>
+        </nz-select>
+      </div>
+      <div class="box">
+        <nz-select placeholder="Payment Method">
+          <nz-option nzValue="damage" nzLabel="Same as Payment"></nz-option>
+          <nz-option nzValue="mismatch" nzLabel="Others"></nz-option>
+        </nz-select>
+      </div>
+      <div class="box">
+        <input type="phone" placeholder="01X-XXX-XXXX" >
       </div>
     </div>
     <form>

@@ -435,6 +435,11 @@ const routes: Routes = [
             (m) => m.CollectionsModule
           ),
       },
+      {
+        path: 'refund',
+        loadChildren: () =>
+          import('./order/refund/refund.module').then((m) => m.RefundModule),
+      },
     ],
   },
 ];
