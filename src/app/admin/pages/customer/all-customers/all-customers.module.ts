@@ -9,20 +9,18 @@ import { FormsModule } from '@angular/forms';
 // import { ExportPopupComponent } from '../../order/regular-orders/export-popup/export-popup.component';
 import { RegularOrdersModule } from '../../order/regular-orders/regular-orders.module';
 import { ExportPopupComponent } from './export-popup/export-popup.component';
-
+import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
-  declarations: [
-    AllCustomersComponent,
-    ExportPopupComponent
-  ],
+  declarations: [AllCustomersComponent, ExportPopupComponent],
   imports: [
     CommonModule,
     NgxPaginationModule,
     AllCustomersRoutingModule,
     MaterialModule,
     FormsModule,
+    AntModule,
     // RegularOrdersModule
-  ]
+  ],
 })
-export class AllCustomersModule { }
+export class AllCustomersModule {}

@@ -34,8 +34,6 @@ import { CheckAuthAccessGuard } from '../../auth-guard/check-auth-access.guard';
 import { ProductTableComponent } from './components/product-table/product-table.component';
 import { ProductViewTableOneComponent } from './components/product-view-table-one/product-view-table-one.component';
 import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
-import { ProductsComponent } from './products/products.component';
-import { ConversionRateModule } from './conversion-rate/conversion-rate.module';
 import { AntModule } from 'src/app/material/ant.module';
 
 const routes: Routes = [

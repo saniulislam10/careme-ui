@@ -1,10 +1,14 @@
 <mat-toolbar>
   <div class="toggleBtn">
-    <button (click)="onToggleSidenav()" mat-icon-button matTooltip="Toggle Menu">
+    <button
+      (click)="onToggleSidenav()"
+      mat-icon-button
+      matTooltip="Toggle Menu"
+    >
       <mat-icon>menu</mat-icon>
     </button>
     <div class="brand">
-      <img routerLink="/admin" src="/assets/brand/logo-white.svg" alt="">
+      <img routerLink="/admin" src="/assets/brand/logo-white.svg" alt="" />
     </div>
   </div>
 
@@ -13,47 +17,76 @@
   </div>
 
   <div fxLayout="row" fxLayoutAlign="end" class="toolbar-action">
-    <div class="action-container" fxLayout="row" fxLayoutGap="10px" fxLayoutGap.xs="0px">
-      <button mat-icon-button [matMenuTriggerFor]="quickadd" matTooltip="Add Quick">
+    <div
+      class="action-container"
+      fxLayout="row"
+      fxLayoutGap="10px"
+      fxLayoutGap.xs="0px"
+    >
+      <button
+        class="addnewquick"
+        nz-dropdown
+        [nzDropdownMenu]="addnewQuick"
+        mat-icon-button
+      >
         <i class="las la-plus-square"></i>
+        <nz-dropdown-menu #addnewQuick="nzDropdownMenu">
+          <ul nz-menu nzSelectable>
+            <li class="single_menu" nz-menu-item>
+              <i
+                style="font-size: 20px; margin-right: 10px"
+                class="las la-list"
+              ></i>
+              Add New Products
+            </li>
+            <li nz-menu-item>
+              <i
+                style="font-size: 20px; margin-right: 10px"
+                class="las la-money-check-alt"
+              ></i>
+              Create Purchase Orders
+            </li>
+          </ul>
+        </nz-dropdown-menu>
       </button>
-      <button mat-icon-button matTooltip="View Store">
+
+      <a
+        mat-icon-button
+        matTooltip="View Store"
+        target="_blank"
+        [routerLink]="['/']"
+      >
         <i class="las la-store"></i>
-      </button>
-      <button class="notifibell" mat-icon-button matTooltip="Notifications">
+      </a>
+      <button class="notifibell" mat-icon-button>
         <i class="las la-bell"></i>
         <span>99</span>
       </button>
       <button (click)="adminLogOut()" mat-icon-button matTooltip="Logout">
         <i class="las la-power-off"></i>
       </button>
-      <button mat-icon-button [matMenuTriggerFor]="profile" matTooltip="My Profile">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="profile"
+        matTooltip="My Profile"
+      >
         <i class="las la-user"></i>
       </button>
 
       <mat-menu class="topbar_dropdown" #profile="matMenu">
         <button class="menuitem_btn" mat-menu-item>
           <i class="las la-user"></i>
-          <span>Hello {{adminData?.username}}!</span>
+          <span>Hello {{ adminData?.username }}!</span>
         </button>
-        <button class="menuitem_btn" mat-menu-item [routerLink]="['my-profile']">
+        <button
+          class="menuitem_btn"
+          mat-menu-item
+          [routerLink]="['my-profile']"
+        >
           <i class="las la-id-card"></i>
           <span>View Profile</span>
         </button>
       </mat-menu>
-
-      <mat-menu class="topbar_dropdown" #quickadd="matMenu">
-        <button mat-menu-item class="menuitem_btn">
-          <i class="las la-list"></i>
-          <span>New Product</span>
-        </button>
-        <button mat-menu-item class="menuitem_btn">
-          <i class="las la-money-check-alt"></i>
-          <span>Creat Purchase</span>
-        </button>
-      </mat-menu>
-
-
     </div>
   </div>
 </mat-toolbar>
