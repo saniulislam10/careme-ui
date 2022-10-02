@@ -111,7 +111,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     {
       _id: '2',
       image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+        'https://cdn.shopify.com/s/files/1/0464/2281/8974/files/20220519121901_480x480.png?v=1652946677',
       title: "Men's Casual Shock Absorption Wear-resistant Shoes",
       routerLink: '/product-details',
       price: 150,
@@ -153,41 +153,59 @@ export class HomeComponent implements OnInit, AfterViewInit {
       price: 344,
       discount: 566,
     },
-  ];
-
-  cardTwoData: ProductCardOne[] = [
     {
-      _id: '1',
-      image: './assets/images/image/egts.png',
-      title: 'Waterproof wireless Headphone',
-      routerLink: '/product-details',
-      price: 150,
-      discount: 299,
-    },
-    {
-      _id: '2',
-      image: './assets/images/image/c1b95cc5-d2e3-4cba-87e3-6b646eb7e1ec.png',
-      title: 'Toothbrush & Paste Holder',
-      routerLink: '/product-details',
-      price: 160,
-      discount: 273,
-    },
-    {
-      _id: '3',
-      image: './assets/images/image/photo-1517420879524-86d64ac2f339.png',
-      title: 'Toothbrush & Paste Holder',
-      routerLink: '/product-details',
-      price: 190,
-      discount: 399,
-    },
-    {
-      _id: '4',
+      _id: '7',
       image:
-        './assets/images/image/nike-air-force-1-07-lv8-lakers-dc8874-101-mood-1.png',
-      title: 'Toothbrush & Paste Holder',
+        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
       routerLink: '/product-details',
-      price: 140,
-      discount: 183,
+      price: 344,
+      discount: 566,
+    },
+    {
+      _id: '8',
+      image:
+        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+      routerLink: '/product-details',
+      price: 344,
+      discount: 566,
+    },
+    {
+      _id: '9',
+      image:
+        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+      routerLink: '/product-details',
+      price: 344,
+      discount: 566,
+    },
+    {
+      _id: '10',
+      image:
+        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+      routerLink: '/product-details',
+      price: 344,
+      discount: 566,
+    },
+    {
+      _id: '11',
+      image:
+        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+      routerLink: '/product-details',
+      price: 344,
+      discount: 566,
+    },
+    {
+      _id: '12',
+      image:
+        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+      routerLink: '/product-details',
+      price: 344,
+      discount: 566,
     },
   ];
 

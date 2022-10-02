@@ -1,202 +1,79 @@
 @import "src/theme/variables";
 
-.container {
-  width: 100%;
-}
-
-
-// Main Container
-.content {
-  width: 100%;
-  height: auto;
+.login_page {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  padding-top: 50px;
-}
-
-.img-placeholder {
-  margin: auto;
-  width: 200px;
-  height: auto;
-
-  img {
-    width: 100%;
-    height: 100%;
+  justify-content: center;
+  height: 100vh;
+  .login_card {
+    width: 400px;
+    padding: 35px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 60px 0px #0000001f;
+    text-align: center;
+    img {
+      width: 200px;
+      margin-bottom: 40px;
+    }
   }
 }
-
-
-// Right Area...
-.right {
-  margin: auto;
-}
-
-.card {
-  background: #FFFFFF;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  margin: auto;
-  width: 70%;
-  min-height: 450px;
-  padding: 45px;
-}
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-
-.top-tittle {
-  text-align: left;
-  margin-bottom: 25px;
-
-  h1 {
-    font-family: $font-en-primary;
-    font-weight: 600;
-    color: #2AB3FC;
-    font-size: 32px;
-    padding: 8px 0;
-  }
-
-  p {
-    font-family: $font-en-primary;
-    font-size: 14px;
-    color: #484848;
-  }
-}
-
 .login-form {
   width: 100%;
-  font-size: 15.5px;
-
-  .mat-data-input-field {
-    width: 100%;
-  }
-
+  font-size: 14px;
   a {
     margin-top: 20px;
     text-decoration: none;
-    color: #A8A8A8;
-
+    color: #a8a8a8;
+    text-align: left;
     &:hover {
       text-decoration: underline;
     }
   }
 }
-
 .submit-area {
-  .remember{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+  button {
+    padding: 5px 20px;
+    background: #1b75bb;
+    border: 1px solid #1b75bb;
+    color: #fff;
+    transition: 0.3s;
+    border-radius: 3px;
   }
-
-  .btn-login {
-    // margin-top: 18px;
-    padding: 5px 30px;
-    font-size: 16px;
-
-    ::ng-deep {
-      span {
-        font-family: $font-en-primary;
-        color: #FFFFFF;
-      }
-    }
+  button:hover {
+    background: #63af00;
+    border: 1px solid #63af00;
   }
-
 }
-
-// Footer...
-.footer {
+.mat-data-input-field {
   width: 100%;
-  // position: absolute;
-  // bottom: 0;
-  // left: 0;
-  text-align: center;
-  padding: 25px 0;
-
-  p {
-    font-size: 18px;
-    color: $color-primary;
-    font-family: $font-en-primary;
-    font-weight: 400;
-  }
-
-  .footer-nav {
-    list-style: none;
-    margin-bottom: 8px;
-
-    li {
-      display: inline-block;
-      margin-left: 12px;
-
-      &:first-child {
-        margin-left: 0;
-      }
-
-      a {
-        color: $color-primary;
-        font-size: 14px;
-        text-decoration: none;
-
-        &:hover {
-          text-decoration: underline;
-        }
+  align-items: flex-end !important;
+  background: #fff;
+}
+.mat-label {
+  color: rgb(78, 78, 78);
+}
+.mat-icon {
+  color: rgb(78, 78, 78);
+}
+.mat-error {
+  opacity: 0.8;
+}
+@media (max-width: 500px) {
+  .login_page {
+    .login_card {
+      width: 350px;
+      padding: 20px;
+      img {
+        width: 150px;
+        margin-bottom: 30px;
       }
     }
   }
 }
-
-
-@media only screen and (max-device-width: 599px) {
-  .container {
-    width: 100%;
-    position: relative;
-  }
-  // Main Container
-  .content {
-    width: 100%;
-    margin: auto;
-  }
-
-  // Left Area...
-  .left {
-    display: none;
-  }
-
-  // Right Area...
-  .right {
-    margin: 0;
-  }
-
-  .card {
-    width: 80%;
-    padding: 15px;
-  }
-
-  // Footer...
-  .footer {
-    width: 100%;
-    padding: 25px 0;
-
-    p {
-      font-size: 15px;
-    }
-
-    .footer-nav {
-      margin-bottom: 8px;
-
-      li {
-        a {
-          font-size: 11.5px;
-        }
-      }
-    }
-  }
-
-
-}
-

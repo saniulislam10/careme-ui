@@ -119,7 +119,7 @@
   </div>
 </div>
 
-<!-- Product Grid  -->
+<!-- Flash Product Grid  -->
 <div class="entry-grid-bg" style="background: #fff; padding: 50px 0">
   <div class="container">
     <div>
@@ -137,13 +137,24 @@
       </div>
       <div class="grid-section-product">
         <div class="single-product grid" *ngFor="let data of cardThreeData">
-          <div class="product-top">
-            <a href="{{ data.routerLink }}"><img src="{{ data.image }}" /></a>
-          </div>
+          <nz-ribbon nzText="Big Offer" nzColor="red">
+            <div class="product-top">
+              <a href="{{ data.routerLink }}"><img src="{{ data.image }}" /></a>
+            </div>
+          </nz-ribbon>
           <div class="product-bottom">
             <a href="{{ data.routerLink }}">{{ data.title }}</a>
-            <div class="price">
-              ৳ {{ data.price }} <span>৳ {{ data.discount }}</span>
+            <div class="price_rating">
+              <div class="price">
+                {{ data.price }} TK<span>{{ data.discount }} TK</span>
+              </div>
+              <ul>
+                <li><i class="las la-star"></i></li>
+                <li><i class="las la-star"></i></li>
+                <li><i class="las la-star"></i></li>
+                <li><i class="las la-star"></i></li>
+                <li><i class="las la-star-half"></i></li>
+              </ul>
             </div>
           </div>
         </div>
@@ -152,62 +163,31 @@
   </div>
 </div>
 
-<!---section1-->
-<div class="section1">
-  <!---container-->
+<!-- Product Grid  -->
+<div class="entry-grid-bg" style="background: transparent; padding: 50px 0">
   <div class="container">
-    <div class="section-title-area">
-      <!---title-left-->
-      <div class="title-left">
-        <h3>Deals of the day</h3>
+    <div>
+      <div class="grid-section-title flash-promo">
+        <div class="title-left">
+          <h2>New Arrivals</h2>
+        </div>
+        <a class="title-right">
+          View More <i class="las la-long-arrow-alt-right"></i>
+        </a>
       </div>
-      <!---title-right-->
-      <div class="title-right">
-        <a href="#">View All</a>
+      <div class="grid-section-product">
+        <div class="single-product grid" *ngFor="let data of cardThreeData">
+          <div class="product-top">
+            <a href="{{ data.routerLink }}"><img src="{{ data.image }}" /></a>
+          </div>
+          <div class="product-bottom">
+            <a href="{{ data.routerLink }}">{{ data.title }}</a>
+            <div class="price">
+              {{ data.price }} TK<span>{{ data.discount }} TK</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <!---section1-main-->
-    <div class="section1-main carousels">
-      <swiper
-        [slidesPerView]="2"
-        [spaceBetween]="10"
-        [breakpoints]="{
-          '450': {
-            slidesPerView: 1.5
-          },
-          '520': {
-            slidesPerView: 2
-          },
-          '660': {
-            slidesPerView: 3
-          },
-          '900': {
-            slidesPerView: 3
-          },
-          '1000': {
-            slidesPerView: 4
-          },
-          '1200': {
-            slidesPerView: 4
-          },
-          '1370': {
-            slidesPerView: 5
-          },
-          '1600': {
-            slidesPerView: 5
-          }
-        }"
-        [pagination]="{
-          clickable: true
-        }"
-        [autoplay]="true"
-        [navigation]="true"
-        class="mySwiper"
-      >
-        <ng-template swiperSlide *ngFor="let data of cardThreeData">
-          <app-product-card-three [data]="data"></app-product-card-three>
-        </ng-template>
-      </swiper>
     </div>
   </div>
 </div>
@@ -220,237 +200,40 @@
   </div>
 </div>
 
-<!---section1-->
-<div class="section3">
-  <!---container-->
+<!-- Product Grid  -->
+<div class="entry-grid-bg" style="background: transparent; padding: 50px 0">
   <div class="container">
-    <div class="section-title-area">
-      <!---title-left-->
-      <div class="title-left">
-        <h3>Just For You</h3>
+    <div>
+      <div class="grid-section-title">
+        <div class="title-left">
+          <h2>New Arrivals</h2>
+        </div>
+        <a class="title-right">
+          View More <i class="las la-long-arrow-alt-right"></i>
+        </a>
       </div>
-      <!-- -title-right -->
-      <div class="title-right">
-        <a href="#">View All</a>
-      </div>
-    </div>
 
-    <!---section3-main-->
-    <div class="section3-main carousels">
-      <swiper
-        [slidesPerView]="2"
-        [spaceBetween]="14"
-        [breakpoints]="{
-          '450': {
-            slidesPerView: 1.5
-          },
-          '520': {
-            slidesPerView: 2
-          },
-          '660': {
-            slidesPerView: 2.5
-          },
-          '900': {
-            slidesPerView: 3
-          },
-          '1000': {
-            slidesPerView: 3.5
-          },
-          '1200': {
-            slidesPerView: 4
-          },
-          '1370': {
-            slidesPerView: 4.5
-          },
-          '1600': {
-            slidesPerView: 5
-          }
-        }"
-        [pagination]="{
-          clickable: true
-        }"
-        [autoplay]="true"
-        [navigation]="true"
-        class="mySwiper"
-      >
-        <ng-template swiperSlide *ngFor="let data of cardThreeData">
-          <app-product-card-three [data]="data"></app-product-card-three>
-        </ng-template>
-      </swiper>
-    </div>
-  </div>
-</div>
-
-<!---section2-->
-<div class="section2">
-  <div class="container">
-    <div class="section-title-area">
-      <!---title-left-->
-      <div class="title-left">
-        <h3>Categorys</h3>
-      </div>
-      <!-- -title-right -->
-      <div class="title-right">
-        <a href="#">View All</a>
-      </div>
-    </div>
-    <!----section2-main-->
-    <div class="section2-main">
-      <!---categorys-details-->
-      <div class="categorys-details">
-        <!---categorys-img-->
-        <div class="categorys-img">
-          <img src="./assets/images/image/dsaf.png" alt="" />
-        </div>
-        <!---categorys-text-info-->
-        <div class="categorys-text-info">
-          <a href="#">Men's Fashion</a>
-        </div>
-      </div>
-      <!---categorys-details-->
-      <div class="categorys-details">
-        <!---categorys-img-->
-        <div class="categorys-img">
-          <img
-            src="./assets/images/image/pmv-chamara-dMjkQJs58uo-unsplash.png"
-            alt=""
-          />
-        </div>
-        <!---categorys-text-info-->
-        <div class="categorys-text-info">
-          <a href="#">Beautty Bay</a>
-        </div>
-      </div>
-      <!---categorys-details-->
-      <div class="categorys-details">
-        <!---categorys-img-->
-        <div class="categorys-img">
-          <img
-            src="./assets/images/image/italian-kitchen-accessories.png.png"
-            alt=""
-          />
-        </div>
-        <!---categorys-text-info-->
-        <div class="categorys-text-info">
-          <a href="#">Kitchen Corner</a>
-        </div>
-      </div>
-      <!---categorys-details-->
-      <div class="categorys-details">
-        <!---categorys-img-->
-        <div class="categorys-img">
-          <img
-            src="./assets/images/image/josiah-weiss-8sjBzL1IyMo-unsplash.png"
-            alt=""
-          />
-        </div>
-        <!---categorys-text-info-->
-        <div class="categorys-text-info">
-          <a href="#">Travel Picks</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!---section1-->
-<div class="section3">
-  <!---container-->
-  <div class="container">
-    <div class="section-title-area">
-      <!---title-left-->
-      <div class="title-left">
-        <h3>Subscription</h3>
-      </div>
-      <!-- -title-right -->
-      <div class="title-right">
-        <a href="#">View All</a>
-      </div>
-    </div>
-
-    <!---section3-main-->
-    <div class="section3-main carousels">
-      <swiper
-        [slidesPerView]="2"
-        [spaceBetween]="14"
-        [breakpoints]="{
-          '450': {
-            slidesPerView: 1.5
-          },
-          '520': {
-            slidesPerView: 2
-          },
-          '660': {
-            slidesPerView: 2.5
-          },
-          '900': {
-            slidesPerView: 3
-          },
-          '1000': {
-            slidesPerView: 3.5
-          },
-          '1200': {
-            slidesPerView: 4
-          },
-          '1370': {
-            slidesPerView: 4.5
-          },
-          '1600': {
-            slidesPerView: 5
-          }
-        }"
-        [pagination]="{
-          clickable: true
-        }"
-        [autoplay]="true"
-        [navigation]="true"
-        class="mySwiper"
-      >
-        <ng-template swiperSlide *ngFor="let data of cardThreeData">
-          <app-product-card-three [data]="data"></app-product-card-three>
-        </ng-template>
-      </swiper>
-    </div>
-  </div>
-</div>
-
-<!---section1-->
-<div class="section4">
-  <!---container-->
-  <div class="container">
-    <div class="section-title-area">
-      <!---title-left-->
-      <div class="title-left">
-        <h3>Only For You</h3>
-      </div>
-      <!---title-right-->
-      <div class="title-right">
-        <a href="#">View All</a>
-      </div>
-    </div>
-    <!---section1-main    [autoplay]="true"-->
-    <div class="section4-main carousels">
       <swiper
         [slidesPerView]="1.5"
         [spaceBetween]="16"
         [breakpoints]="{
           '400': {
-            slidesPerView: 1.5
+            slidesPerView: 2
           },
           '500': {
             slidesPerView: 2
           },
           '700': {
-            slidesPerView: 2
-          },
-          '800': {
-            slidesPerView: 2.5
-          },
-          '1000': {
             slidesPerView: 3
           },
-          '1400': {
+          '800': {
             slidesPerView: 3.5
+          },
+          '1000': {
+            slidesPerView: 4
+          },
+          '1400': {
+            slidesPerView: 5.5
           }
         }"
         [pagination]="{
@@ -459,7 +242,7 @@
         [navigation]="true"
         class="mySwiper"
       >
-        <ng-template swiperSlide *ngFor="let data of cardTwoData">
+        <ng-template swiperSlide *ngFor="let data of cardThreeData">
           <app-product-card-two [data]="data"></app-product-card-two>
         </ng-template>
       </swiper>
