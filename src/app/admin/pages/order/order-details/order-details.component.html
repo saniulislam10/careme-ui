@@ -1,25 +1,16 @@
-<div class="order-header-top">
-  <!---order-title-->
-  <div class="order-title">
-    <h3>Order Details</h3>
-  </div>
-  <!---order-btn-area-->
-  <div class="order-btn-area">
-    <ul>
-      <li><button>Import</button></li>
-      <li><button>Export</button></li>
-      <li>
-        <button class="active-btn" (click)="openDialog2()">Create Order</button>
-      </li>
-    </ul>
+<!-- order-header-area-->
+<div class="page-header">
+  <h2>Sales Order</h2>
+  <div class="header-action">
+    <button type="button">Export</button>
+    <button type="button">Import</button>
+    <button class="create_btn" (click)="openDialog2()">Create Order</button>
   </div>
 </div>
-<!---order-details-right-side-bar-top-->
 
 
 <!--order-details-->
 <div class="order_details">
-
   <div class="order_details_left-sidebar">
     <div class="order-details-left-sidebar-top">
       <div class="order-details-left-top-dotted">

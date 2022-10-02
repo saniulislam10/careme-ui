@@ -152,13 +152,35 @@
     margin-left: 15px;
   }
 }
+.return_action{
+  ul{
+    li{
 
+    }
+  }
+}
 @media (max-width: 500px) {
+  .main-layout{
+    flex-direction: column !important;
+  }
   .left_navbar {
-    display: none;
+    min-width: 100% !important;
+    width: 100% !important;
+    border: none;
+  }
+  .thumb_img{
+    width: 80px;
   }
   .ammount_summary {
     margin: 10px 0;
     width: 300px;
+  }
+  .refund_body_main{
+    width: 100% !important;
+    margin: 20px 0;
+    padding: 0;
+  }
+  .refund_details_body{
+    padding: 0;
   }
 }

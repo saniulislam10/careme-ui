@@ -1,7 +1,7 @@
-import { RefundComponent } from './refund.component';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { DetailsComponent } from './details/details.component';
+import {RefundComponent} from './refund.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {DetailsComponent} from './details/details.component';
 
 const routes: Routes = [
   {
@@ -18,4 +18,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class RefundRoutingModule {}
+export class RefundRoutingModule {
+}

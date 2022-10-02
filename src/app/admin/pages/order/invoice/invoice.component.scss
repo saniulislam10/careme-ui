@@ -1,19 +1,22 @@
 @import '../../../../../theme/variables';
 
 
-.return{
+.return {
   display: flex;
-  .box{
+
+  .box {
     padding-left: 5px;
   }
+
   input {
     width: 150px;
   }
 }
 
-.reason{
+.reason {
   display: block;
 }
+
 nz-select {
   margin: 0 8px 10px 0;
   width: 150px;
@@ -101,7 +104,8 @@ nz-select {
   border-radius: 5px;
   cursor: pointer;
 }
-.invoice_buttons ul li button:hover{
+
+.invoice_buttons ul li button:hover {
   color: #0058ff;
   background: none;
   border: 1px solid #0058ff;
@@ -284,9 +288,11 @@ nz-select {
 .bill_to_left {
   div {
     display: flex;
-    h2{
+
+    h2 {
       padding-bottom: 10px;
     }
+
     span {
       padding-left: 5px;
       color: #131523;
@@ -406,7 +412,7 @@ sup {
   box-sizing: border-box;
 }
 
-.sub_total_content:first-child{
+.sub_total_content:first-child {
   padding-top: 15px;
 }
 
@@ -466,7 +472,6 @@ sup {
   font-family: $font-en-primary-2;
   color: #131523;
 }
-
 
 
 // INVOICE NOTES
