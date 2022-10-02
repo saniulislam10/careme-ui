@@ -1,212 +1,99 @@
-<!---order-header-area-->
-<div class="order-header-area">
-  <div class="order-header-main">
-    <!---order-header-top-->
-    <div class="order-header-top">
-      <!---order-title-->
-      <div class="order-title">
-        <h3>Sales Orders</h3>
-      </div>
-      <!---order-btn-area-->
-      <div class="order-btn-area">
-        <ul>
-          <li><button>Import</button></li>
-          <li><button (click)="exportPopUpShow()">Export</button></li>
-          <li><button class="active-btn" (click)="openDialog()">Create Order</button></li>
-          <!-- <li><button (click)="picker.open()">Date<i class="fa fa-caret-down"></i></button></li> -->
-          <!-- <li><button [matMenuTriggerFor]="sort">Sort<i class="fa fa-caret-down"></i></button></li> -->
-
-        </ul>
-        <!--  -->
-
-
-        <mat-menu #sort="matMenu">
-          <button mat-menu-item (click)="sortData({orderId: -1}, 1)" [class.dropdown-active]="activeSort === 1">Order
-            Number(High to low)</button>
-          <button mat-menu-item (click)="sortData({orderId: 1}, 2)" [class.dropdown-active]="activeSort === 2">Order
-            Number(Low to High)</button>
-          <button mat-menu-item (click)="sortData({checkoutDate: -1}, 3)"
-            [class.dropdown-active]="activeSort === 1">Date(oldest)</button>
-          <button mat-menu-item (click)="sortData({checkoutDate: 1}, 4)"
-            [class.dropdown-active]="activeSort === 2">Date(Newest)</button>
-          <button mat-menu-item (click)="sortData({fullName: -1}, 5)"
-            [class.dropdown-active]="activeSort === 1">Customer Name (A-Z)</button>
-          <button mat-menu-item (click)="sortData({fullName: 1}, 6)" [class.dropdown-active]="activeSort === 2">Customer
-            Name (Z-A)</button>
-          <button mat-menu-item (click)="sortData({totalAmount: -1}, 5)"
-            [class.dropdown-active]="activeSort === 1">Total(High to low)</button>
-          <button mat-menu-item (click)="sortData({totalAmount: 1}, 6)" [class.dropdown-active]="activeSort === 2">Total
-            (Low to High)</button>
-        </mat-menu>
-
-
-      </div>
-
-    </div>
-
+<!-- order-header-area-->
+<div class="page-header">
+  <h2>Sales Order</h2>
+  <div class="header-action">
+    <button type="button">Export</button>
+    <button type="button" (click)="exportPopUpShow()">Import</button>
+    <button class="create_btn" (click)="openDialog()">Create Order</button>
   </div>
 </div>
-<!---table-area-->
-<div class="order-table-area">
-  <!---table-area-header-->
-  <div class="order-table-area-header">
-    <!---table-menu-->
-    <div class="table-menu">
-      <ul>
-        <li><button [class]="status == 0 ?'menu-active':'inactive'" (click)="onFilterSelectChange(0)">All</button></li>
-        <li><button [class]="status == 1 ?'menu-active':'inactive'" (click)="onFilterSelectChange(1)">COD</button></li>
-        <li><button [class]="status == 2 ?'menu-active':'inactive'" (click)="onFilterSelectChange(2)">Unpaid</button>
-        </li>
-        <li><button [class]="status == 3 ?'menu-active':'inactive'" (click)="onFilterSelectChange(3)">Partial
-            Paid</button></li>
-        <li><button [class]="status == 4 ?'menu-active':'inactive'" (click)="onFilterSelectChange(4)">Paid</button></li>
-      </ul>
-    </div>
-    <!---order-btn-area-->
-    <!-- <div class="order-btn-area">
-      <ul>
-        <li><button>Create Order</button></li>
-        <mat-menu #paymentStatus="matMenu">
-          <button mat-menu-item *ngFor="let data of paymentOrderStatus"
-            (click)="filterByPaymentStatus(data.value)">{{data.viewValue}}</button>
-        </mat-menu>
-        <li><button [matMenuTriggerFor]="orderStatus">Order Status<i class="fa fa-caret-down"></i></button></li>
-        <mat-menu #orderStatus="matMenu">
-          <button mat-menu-item *ngFor="let data of productOrderStatus"
-            (click)="filterByOrderStatus(data.value)">{{data.viewValue}}</button>
-        </mat-menu>
-        <li><button [matMenuTriggerFor]="vendor">Vendor<i class="fa fa-caret-down"></i></button></li>
-        <mat-menu #vendor="matMenu">
-          <button mat-menu-item>Careme</button>
-          <button mat-menu-item>Careme Global</button>
-        </mat-menu>
 
-      </ul>
-    </div> -->
-
-    <div class="table-area-header-bottom">
-      <!--left-->
-      <div class="table-area-header-bottom-left">
-        <!--order-search-->
-        <form class="search-form" #searchForm="ngForm">
-          <div class="order-search">
-            <button><i class="fa fa-search"></i></button>
-            <input #searchInput id="searchInput" type="text" (focus)=handleFocus($event) name="searchTerm"
-              autocomplete="off" ngModel value="" placeholder="Search by phone, order number">
-          </div>
-        </form>
-
-      </div>
-      <!---right-->
-      <div class="table-area-header-bottom-right">
-        <!--status-->
-        <div class="status-btn">
+<div class="table-samary">
+  <nz-card nzSize="small">
+    <nz-tabset>
+      <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
+        <div class="table-filter-area">
+          <form class="search-form" #searchForm="ngForm">
+              <input #searchInput (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel nz-input placeholder="Search here" nzSize="large">
+          </form>
           <ul>
-            <li><button (click)="picker.open()"><i class="fa fa-calendar"></i> Date</button>
-              <div class="datePicker">
-                <mat-date-range-input [formGroup]="dataFormDateRange" [rangePicker]="picker" [max]="today">
-                  <input hidden matStartDate formControlName="start" readonly>
-                  <input hidden matEndDate formControlName="end" readonly (dateChange)="endChangeRegDateRange($event)">
-                </mat-date-range-input>
-                <mat-datepicker-toggle [hidden]="true" matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
-
-                <mat-error *ngIf="dataFormDateRange.controls.start.hasError('matStartDateInvalid')">Invalid start date
-                </mat-error>
-                <mat-error *ngIf="dataFormDateRange.controls.end.hasError('matEndDateInvalid')">Invalid end date
-                </mat-error>
-              </div>
+            <li>
+              <button nz-dropdown [nzDropdownMenu]="vendorMenu">
+                Vendor <i class="las la-angle-down"></i>
+              </button>
+              <nz-dropdown-menu #vendorMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Care Me</li>
+                  <li nz-menu-item>Global</li>
+                  <li nz-menu-item>Intimate Star</li>
+                  <li nz-menu-item>Thirdstep</li>
+                </ul>
+              </nz-dropdown-menu>
             </li>
-            <!-- <li><button [matMenuTriggerFor]="paymentStatus"><i class="fa fa-angle-down"></i> Invoice Status</button></li> -->
-            <li><button [matMenuTriggerFor]="paymentStatus"><i class="fa fa-angle-down"></i> Payment Status</button>
+            <li>
+              <button nz-dropdown [nzDropdownMenu]="sortMenu">
+                Sort <i class="las la-sort"></i>
+              </button>
+              <nz-dropdown-menu #sortMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item (click)="sortData({orderId: -1}, 1)"> Order Number(High to low) </li>
+                  <li nz-menu-item (click)="sortData({orderId: 1}, 2)"> Order Number(Low to High) </li>
+                  <li nz-menu-item (click)="sortData({checkoutDate: -1}, 3)"> Created (oldest first) </li>
+                  <li nz-menu-item (click)="sortData({checkoutDate: 1}, 4)"> Created (newest first) </li>
+                  <li nz-menu-item (click)="sortData({fullName: -1}, 5)"> Customer Name (A-Z) </li>
+                  <li nz-menu-item (click)="sortData({fullName: 1}, 6)"> Customer Name (Z-A) </li>
+                  <li nz-menu-item (click)="sortData({totalAmount: -1}, 5)"> Amount(High to low)  </li>
+                  <li nz-menu-item (click)="sortData({totalAmount: 1}, 6)"> Amount (Low to High) </li>
+                </ul>
+              </nz-dropdown-menu>
             </li>
-            <li><button [matMenuTriggerFor]="orderStatus"><i class="fa fa-angle-down"></i> Order Status</button></li>
-            <li><button [matMenuTriggerFor]="vendor"><i class="fa fa-angle-down"></i> Vendor</button></li>
           </ul>
         </div>
-
-        <!--filter-->
-        <div class="filter">
-          <ul>
-            <!-- <li><button><i class="fa fa-angle-down"></i> Filter</button></li> -->
-            <li><button [matMenuTriggerFor]="sort"><i class="fa fa-angle-down"></i> Sort</button></li>
-          </ul>
-          <div class="dots">
-            <button><i class="fa-solid fa-ellipsis"></i></button>
-          </div>
+        <div class="table-data-area">
+          <nz-table nzSize="small" #rowSelectionTable nzShowSizeChanger [nzData]="orders"
+                    (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+            <thead>
+            <tr>
+              <th style="width: 50px;" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
+                  (nzCheckedChange)="onAllChecked($event)">
+              </th>
+              <th>Oreder ID & Date</th>
+              <th>Invoice Status</th>
+              <th>Customer</th>
+              <th>Total Amount</th>
+              <th>Advance Payment</th>
+              <th>Notes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of rowSelectionTable.data">
+              <td style="width: 50px;" [nzChecked]="setOfCheckedId.has(data.id)"
+                  (nzCheckedChange)="onItemChecked(data.id, $event)">
+              </td>
+              <td>
+                <a [routerLink]="['../../','order-details', data._id ]">
+                  <h4>{{ data.orderId }}</h4>
+                </a>
+                <h5>{{data.checkoutDate | date : 'short'}}</h5>
+              </td>
+              <td class="invoice_status">
+                <img src="/assets/svg/in.svg" alt="">
+              </td>
+              <td>
+                <span [routerLink]="['../../','customer', data.userId._id ]">
+                  {{data.userId.fullName ? data.userId.fullName : data.userId.phoneNo}}
+                </span>
+              </td>
+              <td>1</td>
+              <td>2</td>
+              <td>
+                  <i class="las la-lg la-comment"></i>
+              </td>
+            </tr>
+            </tbody>
+          </nz-table>
         </div>
-        <!--dots-->
-      </div>
-    </div>
-  </div>
-
-  <!---table-->
-  <nz-table #basicTable [nzData]="orders">
-    <!---table-head-->
-    <thead>
-      <!---table-row-->
-      <tr>
-        <th>
-          <mat-checkbox #matCheckbox class="mat-check" (change)="onAllSelectChange($event)"></mat-checkbox>
-        </th>
-        <th>Order
-        </th>
-        <th>Customer</th>
-        <th>Amount</th>
-        <th>Advance Payment</th>
-        <th>
-          Notes
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of basicTable.data; let i = index">
-        <td>
-          <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data._id)"
-            [(ngModel)]="data.select"></mat-checkbox>
-        </td>
-        <td>
-          <a [routerLink]="['../../','order-details', data._id ]">{{data.orderId}}</a>
-          <p>{{data.checkoutDate | date : 'short'}}</p>
-        </td>
-        <td>
-          <a [routerLink]="['../../','customer', data.userId._id ]">{{data.userId.fullName ? data.userId.fullName :
-            data.userId.phoneNo}} </a>
-        </td>
-        <td>0</td>
-        <td>0</td>
-        <td>
-          <i class="fa-solid fa-file-lines"></i>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
 </div>
-<!---create-return-->
-<!-- <div class="create-order-area">
-  <app-create-order #createOrder></app-create-order>
-</div> -->
-<!---export-pop-area-->
-<div class="pagination-container">
-  <pagination-controls class="product-pagination" [autoHide]="true" [maxSize]="15" (pageChange)="onPageChanged($event)">
-  </pagination-controls>
-</div>
-<div class="export-popup-area">
-  <app-export-popup (valueChange)='exportToExcel($event)' #export></app-export-popup>
-</div>
-
-
-<mat-menu #paymentStatus="matMenu">
-  <button mat-menu-item *ngFor="let data of paymentOrderStatus"
-    (click)="filterByPaymentStatus(data.value)">{{data.viewValue}}</button>
-</mat-menu>
-
-<mat-menu #orderStatus="matMenu">
-  <button mat-menu-item *ngFor="let data of productOrderStatus"
-    (click)="filterByOrderStatus(data.value)">{{data.viewValue}}</button>
-</mat-menu>
-
-<mat-menu #vendor="matMenu">
-  <button mat-menu-item (click)="filterByVendor('careme')">Careme</button>
-  <button mat-menu-item (click)="filterByVendor('global')">Careme Global</button>
-</mat-menu>

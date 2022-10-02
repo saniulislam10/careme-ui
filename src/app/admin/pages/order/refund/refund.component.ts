@@ -22,6 +22,7 @@ export class RefundComponent implements OnInit {
   listOfCurrentPageData: readonly ItemData[] = [];
   listOfData: Refund[] = [];
   setOfCheckedId = new Set<number>();
+
   // Create Refund Modal
   isVisible = false;
   loading = false;
@@ -37,7 +38,7 @@ export class RefundComponent implements OnInit {
   }
 
   getAllRefund() {
-    this.loading = true;
+    this.loading= true;
     this.refundService.getAll()
       .subscribe(res => {
         this.listOfData = res.data;
