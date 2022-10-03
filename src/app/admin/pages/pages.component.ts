@@ -32,7 +32,7 @@ export class PagesComponent implements OnInit, AfterViewInit {
   @Input() isAdminMenu = false;
   @Input() sideNavMenuList: any[];
 
-  isCollapsed = false;
+  isCollapsed = true;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
