@@ -34,7 +34,7 @@ mat-sidenav-content {
 .main-content {
   background-color: #f6f9fd;
   box-sizing: border-box;
-  padding: 0px 20px;
+  padding: 0px 15px;
 }
 @media only screen and (max-device-width: 599px) {
   mat-sidenav-content {
@@ -43,6 +43,9 @@ mat-sidenav-content {
   }
   mat-sidenav {
     margin-top: 65px;
+  }
+  .main-content {
+    padding: 0px 10px;
   }
 }
 ::ng-deep.mat-drawer-inner-container::-webkit-scrollbar {

@@ -1,47 +1,51 @@
-<div class="container">
+<div class="login_page">
+  <nz-card class="login_card">
+    <img src="/assets/brand/logo-white.svg" alt="Fortune Tech" />
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <mat-form-field class="mat-data-input-field">
+        <mat-label>Username or Email Address</mat-label>
+        <input
+          type="text"
+          formControlName="username"
+          matInput
+          placeholder="Enter your username..."
+        />
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error>This field is required</mat-error>
+      </mat-form-field>
 
-  <div class="content">
-    <div class="right">
-      <div class="card">
-        <div class="top-tittle">
-          <div class="img-placeholder">
-            <img src="/assets/brand/logo-white.svg" alt="fortune tech">
-          </div>
-        </div>
-        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
-          <mat-form-field class="mat-data-input-field">
-            <mat-label>Username</mat-label>
-            <input type="text" formControlName="username" matInput placeholder="Enter your username...">
-            <mat-icon matSuffix>person</mat-icon>
-            <mat-error>This field is required</mat-error>
-          </mat-form-field>
+      <mat-form-field class="mat-data-input-field">
+        <mat-label>Password</mat-label>
+        <input
+          formControlName="password"
+          [type]="visibility ? 'text' : 'password'"
+          matInput
+          placeholder="Enter your password..."
+        />
+        <mat-icon matSuffix (click)="visibilityChange()">{{
+          visibility ? "visibility_off" : "visibility"
+        }}</mat-icon>
+        <mat-error>This field is required</mat-error>
+      </mat-form-field>
 
-          <mat-form-field class="mat-data-input-field">
-            <mat-label>Password</mat-label>
-            <input formControlName="password" [type]="visibility ? 'text' : 'password'" matInput placeholder="Enter your password...">
-            <mat-icon matSuffix (click)="visibilityChange()">{{visibility ? 'visibility_off': 'visibility'}}</mat-icon>
-            <mat-error>This field is required</mat-error>
-          </mat-form-field>
-
-          <div class="submit-area">
-            <div class="remember">
-              <mat-checkbox>Remember</mat-checkbox>
-              <button class="btn-login" mat-raised-button color="primary" type="submit">Login</button>
-            </div>
-          </div>
-
-          <a routerLink="/reset-password">Forget Password?</a>
-        </form>
+      <div class="submit-area">
+        <mat-checkbox>Remember me</mat-checkbox>
+        <button type="submit">Login</button>
       </div>
-    </div>
-  </div>
+
+      <a routerLink="/reset-password">Lost your password?</a>
+    </form>
+  </nz-card>
 </div>
 
-
 <!-- TEMPLATE NGX SPINNER-->
-<ngx-spinner style="width: 100vw; height: 100vh" bdColor = "rgba(0,0,0,0.25)" size = "medium" color = "#fff" type = "ball-clip-rotate"
-             [fullScreen] = "true">
-  <p style="color: white" > Loading... </p>
+<ngx-spinner
+  style="width: 100vw; height: 100vh"
+  bdColor="rgba(0,0,0,0.25)"
+  size="medium"
+  color="#fff"
+  type="ball-clip-rotate"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
 </ngx-spinner>
-
-

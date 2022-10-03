@@ -1,86 +1,203 @@
-<div class="order-header-top">
-  <!---order-title-->
-  <div class="order-title">
-    <h3>Return</h3>
-  </div>
-  <!---order-btn-area-->
-  <div class="order-btn-area">
-    <ul>
-      <li><button>Import</button></li>
-      <li><button>Export</button></li>
-    </ul>
+<!---order-header-area-->
+<div class="page-header">
+  <h2><i class="las la-arrow-left"></i> All Return</h2>
+  <div class="header-action">
+    <button type="button">Export</button>
+    <button type="button">Import</button>
   </div>
 </div>
-
-<!--order-details-->
-<div class="order_details">
-  <div class="order_details_left-sidebar">
-    <!---order-details-right-side-bar-top-->
-    <div class="order-details-left-sidebar-top">
-      <div class="order-details-left-top-dotted">
-        <div>
-          <button routerLink="/admin/regular-orders">
-            All Returns <i class="fa fa-angle-down"></i>
-          </button>
+<div class="table-samary">
+  <nz-card nzSize="small">
+    <nz-layout class="main-layout" style="min-height: 50vh">
+      <nz-sider class="left_navbar">
+        <div class="inner_nav_header">
+          <div class="header_action">
+            <a nz-dropdown [nzDropdownMenu]="statusMenu">
+              All Refund <i class="las la-angle-down"></i>
+              <nz-dropdown-menu #statusMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Close</li>
+                  <li nz-menu-item>Pending</li>
+                  <li nz-menu-item>Reject</li>
+                </ul>
+              </nz-dropdown-menu>
+            </a>
+            <nz-button-group>
+              <button nz-button nz-dropdown [nzDropdownMenu]="actionMenu" nzPlacement="bottomRight">
+                <span nz-icon nzType="ellipsis"></span>
+              </button>
+              <nz-dropdown-menu #actionMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Delete</li>
+                  <li nz-menu-item>Pending</li>
+                  <li nz-menu-item>Reject</li>
+                </ul>
+              </nz-dropdown-menu>
+            </nz-button-group>
+          </div>
+          <input nz-input placeholder="Basic usage"/>
         </div>
-        <div class="dotted">
-          <span><i class="fa-solid fa-ellipsis"></i></span>
-        </div>
-      </div>
-      <!--search-->
-      <div class="top-search-area">
-        <div>
-          <button><i class="fa fa-search"></i></button>
-        </div>
-        <div class="search-input">
-          <input type="text" value="" placeholder="Search purchase" />
-        </div>
-      </div>
-    </div>
-    <!---top-end-->
-    <!---order-details-right-side-bar-main-->
-    <div class="order-details-left-side-bar-main">
-      <div class="order-details-sidebar-info">
-        <ul>
-          <li *ngFor="
+        <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
+          <li nz-menu-item  *ngFor="
               let data of dataSet
               let i = index
             " [class.active]="data?._id === id" [routerLink]="['../../', 'details', data._id]">
-            <div class="sidebar-info-left">
-              <span [routerLink]="['../../', 'details', data._id]">{{ data?.returnId }} |
-                <small>{{ data?.returnDate | date }}</small></span>
+            <div class="left">
+              <h4 [routerLink]="['../../', 'details', data._id]">{{ data?.returnId }}</h4>
+              <h5>{{ data?.returnDate | date }}</h5>
             </div>
-            <div class="sidebar-info-right">
-              <h4>{{ data?.products.length }} items</h4>
+            <div class="right">
+              <h4>Pending</h4>
+              <h5>
+                <span>{{ data?.products.length }} / {{ data.products.length }} </span>
+                <span> {{ data.subTotal }} TK</span>
+              </h5>
             </div>
           </li>
         </ul>
-      </div>
-    </div>
-    <!---end-->
-  </div>
-  <div class="product-info">
-    <h3 class="id">{{return?.returnId}}</h3>
-    <h3 class="title">Products Information</h3>
-    <nz-table #headerTable [nzData]="listOfData" nzTableLayout="fixed">
-      <thead>
-        <tr >
-          <th *ngFor="let column of listOfColumn" [nzSortFn]="column.compare" [nzSortPriority]="column.priority">
-            {{column.title}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of headerTable.data">
-          <td>{{data.name}}</td>
-          <td>{{data.sku}}</td>
-          <td>{{data.quantity}}</td>
-          <td>{{data.price}}</td>
-          <td>{{data.returnedQuantity}}</td>
-          <td>0 Tk</td>
-        </tr>
-      </tbody>
-    </nz-table>
-  </div>
-</div>
+      </nz-sider>
+      <nz-content class="refund_body_main" style="background: #fff">
+        <div class="refund_details_header">
+          <h4>{{return.returnId}}</h4>
+          <h5>{{ return.returnDate | date}}</h5>
+        </div>
+        <div class="return_action">
+          <nz-tabset>
+            <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
+              <div class="refund_details_body">
+                <div nz-row [nzGutter]="16">
+                  <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+                    <h2>Refund Details</h2>
+                    <table>
+                      <tbody>
+                      <tr>
+                        <td>Refund Status</td>
+                        <td>:</td>
+                        <td>
+                          <span> Pending </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Refund</td>
+                        <td>:</td>
+                        <td>Yes</td>
+                      </tr>
+                      <tr>
+                        <td>Amount</td>
+                        <td>:</td>
+                        <td><b>120 TK</b></td>
+                      </tr>
+                      <tr>
+                        <td>Refund Way</td>
+                        <td>:</td>
+                        <td>bKash ( 01934548454 )</td>
+                      </tr>
+                      <tr>
+                        <td>Customer</td>
+                        <td>:</td>
+                        <td>{{ return.customerName == null ? '01917632421' : return.customerName }}</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+                    <table>
+                      <tbody>
+                      <tr>
+                        <td>Invoice#</td>
+                        <td>:</td>
+                        <td><a>INV-195212</a></td>
+                      </tr>
+                      <tr>
+                        <td>Sales Order</td>
+                        <td>:</td>
+                        <td><a>SO-195212</a></td>
+                      </tr>
+                      <tr>
+                        <td>Crated By</td>
+                        <td>:</td>
+                        <td>Customer</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <nz-card class="refund_details_body-product" nzSize="small">
+                  <nz-table nzSize="small" nzShowPagination="false" #returnItemsTable [nzData]="listOfData">
+                    <thead>
+                    <tr>
+                      <th class="thumb_img">Image</th>
+                      <th>Item</th>
+                      <th>Shipped</th>
+                      <th>Amount (TK)</th>
+                      <th>Received QTY</th>
+                      <th>Refund Amount (TK)</th>
+                    </tr>
+                    </thead>
 
+                    <tbody>
+                    <tr *ngFor="let data of returnItemsTable.data">
+                      <td style="width: 100px">
+                        <img style="max-width: 100%"
+                             src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
+                             alt=""/>
+                      </td>
+                      <td>
+                        <h3>{{data.name}}</h3>
+                        <h5>Yellow / XXL</h5>
+                        <h5>SKU: {{data.sku}}</h5>
+                      </td>
+                      <td>{{data.quantity}}</td>
+                      <td>{{data.price}}</td>
+                      <td>{{data.returnedQuantity}}</td>
+                      <td>{{data.price}}</td>
+                    </tr>
+                    </tbody>
+                  </nz-table>
+                  <div nz-row [nzGutter]="0">
+                    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+                      <nz-card nzSize="small" class="ammount_summary">
+                        <div class="ammount_summary_single">
+                          <h4>Sub-Total</h4>
+                          <span>1200 TK</span>
+                        </div>
+                        <div class="ammount_summary_single">
+                          <h4>Shipping</h4>
+                          <span>120 TK</span>
+                        </div>
+                        <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
+                        <div class="ammount_summary_single">
+                          <h4></h4>
+                          <span> Refundable Amount = 1200 TK</span>
+                        </div>
+                        <div class="ammount_summary_single mt15">
+                          <h4>Refund Amount</h4>
+                          <span>
+                      <input nz-input value="1200"/>TK
+                    </span>
+                        </div>
+                        <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
+                        <div class="ammount_summary_single">
+                          <h4></h4>
+                          <span> Refundable Amount = 0 TK</span>
+                        </div>
+                      </nz-card>
+                    </div>
+
+                    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+                      <div class="action_btn">
+                        <button nzSize="large" nz-button nzType="default">Reject</button>
+                        <button nzSize="large" nz-button nzType="primary">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </nz-card>
+              </div>
+            </nz-tab>
+          </nz-tabset>
+        </div>
+
+      </nz-content>
+    </nz-layout>
+  </nz-card>
+</div>

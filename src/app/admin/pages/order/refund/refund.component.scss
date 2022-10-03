@@ -32,9 +32,15 @@
       list-style: none;
       border: 1px solid #ddd;
       button {
-        border: none;
-        background: none;
+        background: #1b75bb;
         padding: 10px 20px;
+        color: #ebebeb;
+        border: 1px solid #1b75bb;
+        transition: 0.3s;
+      }
+      button:hover{
+        background: #589b00;
+        border: 1px solid #589b00;
       }
     }
   }

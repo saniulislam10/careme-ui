@@ -16,6 +16,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import {AntModule} from "../../../../material/ant.module";
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     NzSelectModule,
     NzInputModule,
     NgxPaginationModule,
+    AntModule,
   ]
 })
 export class OrderDetailsModule { }

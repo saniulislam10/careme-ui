@@ -18,12 +18,28 @@ import { PaymentStatus } from 'src/app/enum/payment-status';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateOrderDialogComponent } from './create-order-dialog/create-order-dialog.component';
+
+interface ItemData {
+  id: number;
+  name: string;
+  initiatedby: string;
+  returnid: string;
+}
+
 @Component({
   selector: 'app-regular-orders',
   templateUrl: './regular-orders.component.html',
   styleUrls: ['./regular-orders.component.scss']
 })
 export class RegularOrdersComponent implements OnInit {
+  tabs = ['All Order', 'COD', 'Unpaid', 'Partial Paid', 'paid', 'Invoiced', "Partial Invoiced"];
+
+  checked = false;
+  indeterminate = false;
+  listOfCurrentPageData: readonly ItemData[] = [];
+  listOfData: Order[] = [];
+  setOfCheckedId = new Set<number>();
+
   @ViewChild('export') exportOrder:ExportPopupComponent;
   @ViewChild('searchForm') searchForm: NgForm;
   @ViewChild('searchInput') searchInput: ElementRef;
@@ -417,5 +433,46 @@ selectedIds: string[] = [];
         //this.getAllProducts();
       }
     }
+
+
+  updateCheckedSet(id: number, checked: boolean): void {
+    if (checked) {
+      this.setOfCheckedId.add(id);
+    } else {
+      this.setOfCheckedId.delete(id);
+    }
+  }
+
+  onItemChecked(id: number, checked: boolean): void {
+    this.updateCheckedSet(id, checked);
+    this.refreshCheckedStatus();
+  }
+
+  onAllChecked(value: boolean): void {
+    this.listOfCurrentPageData.forEach((item) =>
+      this.updateCheckedSet(item.id, value)
+    );
+    this.refreshCheckedStatus();
+  }
+
+  onCurrentPageDataChange($event: readonly ItemData[]): void {
+    this.listOfCurrentPageData = $event;
+    this.refreshCheckedStatus();
+  }
+
+  refreshCheckedStatus(): void {
+    this.checked = this.listOfCurrentPageData.every((item) =>
+      this.setOfCheckedId.has(item.id)
+    );
+    this.indeterminate =
+      this.listOfCurrentPageData.some((item) =>
+        this.setOfCheckedId.has(item.id)
+      ) && !this.checked;
+  }
+
+
+
+
+
 }
 

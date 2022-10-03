@@ -1,110 +1,107 @@
-<!---return-header-area-->
-<div class="return-header-area">
-    <div class="return-header-main">
-        <!---return-header-top-->
-        <div class="return-header-top">
-            <!---return-title-->
-            <div class="return-title">
-                <h3>Return</h3>
-            </div>
-            <!--return-search-->
-            <div class="return-search">
-                <button><i class="fa fa-search"></i></button>
-                <input type="text" value="" placeholder="Search">
-            </div>
-            <!---return-btn-area-->
-            <div class="return-btn-area">
-                <ul>
-                    <li><button>Export</button></li>
-                    <li><button><i class="fa-solid fa-calendar-day"></i>Date<i class="fa fa-caret-down"></i></button>
-                    </li>
-                    <li><button>Sort<i class="fa fa-caret-down"></i></button></li>
-                </ul>
-            </div>
-        </div>
-        <!---header-bottom-area-->
-        <div class="header-bottom-area">
-            <!---return-btn-area-->
-            <div class="return-btn-area">
-                <ul>
-                    <li><button (click)="createReturnPopUp()">Create Return</button></li>
-                    <li><button>Status<i class="fa fa-caret-down"></i></button></li>
-                    <li><button>Vendor<i class="fa fa-caret-down"></i></button></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<!-- order-header-area-->
+<div class="page-header">
+  <h2>All Return</h2>
+  <div class="header-action">
+    <button type="button">Export</button>
+    <button type="button">Import</button>
+  </div>
 </div>
-<!---table-area-->
-<div class="return-table-area">
-    <div class="return-table-main">
-        <!---table-->
-        <div class="table">
-            <!---table-head-->
-            <div class="table-head">
-                <!---table-row-->
-                <div class="table-row">
-                    <div class="table-heading check">
-                        <mat-checkbox class="mat-check"></mat-checkbox>
-                    </div>
-                    <div class="table-heading serial">
-                        <h3>SI</h3>
-                    </div>
-                    <div class="table-heading id">
-                        <h3>Return ID</h3>
-                    </div>
-                    <div class="table-heading number">
-                        <h3>So Number</h3>
-                    </div>
-                    <div class="table-heading date">
-                        <h3>Date & Time</h3>
-                    </div>
-                    <div class="table-heading amount">
-                        <h3>Amount</h3>
-                    </div>
-                    <div class="table-heading status">
-                        <h3>Status</h3>
-                    </div>
-                    <div class="table-heading vendor">
-                        <h3>Vendor</h3>
-                    </div>
-                </div>
-            </div>
-            <!----table-body-->
-            <div class="table-body">
-                <div class="table-row" *ngFor="let data of returns ; let i=index">
-                    <div class="table-data check">
-                        <mat-checkbox class="mat-check"></mat-checkbox>
-                    </div>
-                    <div class="table-data serial">
-                        <h3>{{i+1}}</h3>
-                    </div>
-                    <div class="table-data id">
-                        <span [routerLink]="['../', 'details', data._id]">{{data?.returnId}}</span>
-                    </div>
-                    <div class="table-data number">
-                        <span>{{data?.orderNumber}}</span>
-                    </div>
-                    <div class="table-data date">
-                        <h3>{{data?.createdAt | date}}</h3>
-                        <h3>{{data?.createdAt | date:'shortTime' }}</h3>
-                    </div>
-                    <div class="table-data amount">
-                        <h3>0 TK</h3>
-                    </div>
-                    <div class="table-data status">
-                        <button>Active</button>
-                    </div>
-                    <div class="table-data vendor">
-                        <button>Care Me</button>
-                    </div>
-                </div>
-            </div>
-
+<div class="table-samary">
+  <nz-card nzSize="small">
+    <nz-tabset>
+      <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
+        <div class="table-filter-area">
+          <input nz-input placeholder="Search here" nzSize="large"/>
+          <ul>
+            <li>
+              <button nz-dropdown [nzDropdownMenu]="vendorMenu">
+                Vendor <i class="las la-angle-down"></i>
+              </button>
+              <nz-dropdown-menu #vendorMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Care Me</li>
+                  <li nz-menu-item>Global</li>
+                  <li nz-menu-item>Intimate Star</li>
+                  <li nz-menu-item>Thirdstep</li>
+                </ul>
+              </nz-dropdown-menu>
+            </li>
+            <li>
+              <button nz-dropdown [nzDropdownMenu]="sortMenu">
+                Sort <i class="las la-sort"></i>
+              </button>
+              <nz-dropdown-menu #sortMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Product title A–Z</li>
+                  <li nz-menu-item>Product title Z–A</li>
+                  <li nz-menu-item>Created (oldest first)</li>
+                  <li nz-menu-item>Created (newest first)</li>
+                  <li nz-menu-item>Updated (oldest first)</li>
+                  <li nz-menu-item>Updated (newest first)</li>
+                  <li nz-menu-item>Low Amount</li>
+                  <li nz-menu-item>High Amount</li>
+                </ul>
+              </nz-dropdown-menu>
+            </li>
+          </ul>
         </div>
-    </div>
+        <div class="table-data-area">
+          <nz-table
+            nzSize="small"
+            #rowSelectionTable
+            nzShowSizeChanger
+            [nzLoading]="loading"
+            [nzData]="returns"
+            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+          >
+            <thead>
+            <tr>
+              <th
+                style="width: 50px"
+                [(nzChecked)]="checked"
+                [nzIndeterminate]="indeterminate"
+                (nzCheckedChange)="onAllChecked($event)"
+              ></th>
+              <th>Return ID & Date</th>
+              <th>Initiated By</th>
+              <th>Invoice ID</th>
+              <th>Return Status</th>
+              <th>Sales Order</th>
+              <th>Customer</th>
+              <th>Received Qty</th>
+              <th>Return (TK)</th>
+              <th>Refund (TK)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of rowSelectionTable.data">
+              <td
+                style="width: 50px"
+                [nzChecked]="setOfCheckedId.has(data.id)"
+                (nzCheckedChange)="onItemChecked(data.id, $event)"
+              ></td>
+              <td>
+                <a
+                  [routerLink]="['../', 'details', data._id]"
+                  routerLink="details"
+                >
+                  {{ data.returnId }}
+                  <h5>{{ data.createdAt | date: "short" }}</h5>
+                </a>
+              </td>
+              <td>SUPERADMIN</td>
+              <td>{{ data.invoiceId }}</td>
+              <td>PENDING</td>
+              <td>{{ data.orderNumber }}</td>
+              <td>Pending</td>
+              <td>Accepted</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
 </div>
-<!---create-return-->
-<!-- <div class="create-return-area">
-    <app-create-return #createReturn></app-create-return>
-</div> -->
