@@ -67,11 +67,11 @@
               <div class="refund_details_body">
                 <div nz-row [nzGutter]="16">
                   <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
-                    <h2>Refund Details</h2>
+                    <h2>Return Details</h2>
                     <table>
                       <tbody>
                       <tr>
-                        <td>Refund Status</td>
+                        <td>Return Status</td>
                         <td>:</td>
                         <td>
                           <span> Pending </span>
@@ -80,7 +80,7 @@
                       <tr>
                         <td>Refund</td>
                         <td>:</td>
-                        <td>Yes</td>
+                        <td>{{return.refundEligible ? 'Yes':'No'}}</td>
                       </tr>
                       <tr>
                         <td>Amount</td>
@@ -106,17 +106,17 @@
                       <tr>
                         <td>Invoice#</td>
                         <td>:</td>
-                        <td><a>INV-195212</a></td>
+                        <td><a>{{return.invoiceId}}</a></td>
                       </tr>
                       <tr>
                         <td>Sales Order</td>
                         <td>:</td>
-                        <td><a>SO-195212</a></td>
+                        <td><a>{{return.orderNumber}}</a></td>
                       </tr>
                       <tr>
-                        <td>Crated By</td>
+                        <td>Created By</td>
                         <td>:</td>
-                        <td>Customer</td>
+                        <td>SUPERADMIN</td>
                       </tr>
                       </tbody>
                     </table>
@@ -144,13 +144,13 @@
                       </td>
                       <td>
                         <h3>{{data.name}}</h3>
-                        <h5>Yellow / XXL</h5>
+                        <h5>{{data.variant}}</h5>
                         <h5>SKU: {{data.sku}}</h5>
                       </td>
                       <td>{{data.quantity}}</td>
                       <td>{{data.price}}</td>
-                      <td>{{data.returnedQuantity}}</td>
-                      <td>{{data.price}}</td>
+                      <td>0</td>
+                      <td>0</td>
                     </tr>
                     </tbody>
                   </nz-table>
