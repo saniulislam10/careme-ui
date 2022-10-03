@@ -28,7 +28,12 @@
               </nz-dropdown-menu>
             </a>
             <nz-button-group>
-              <button nz-button nz-dropdown [nzDropdownMenu]="actionMenu" nzPlacement="bottomRight">
+              <button
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="actionMenu"
+                nzPlacement="bottomRight"
+              >
                 <span nz-icon nzType="ellipsis"></span>
               </button>
               <nz-dropdown-menu #actionMenu="nzDropdownMenu">
@@ -43,112 +48,155 @@
           <input nz-input placeholder="Basic usage" />
         </div>
         <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
-          <li nz-menu-item
-              *ngFor="let data of orders" [routerLink]="['../../', 'order-details', data._id]">
+          <li
+            nz-menu-item
+            *ngFor="let data of orders"
+            [routerLink]="['../../', 'order-details', data._id]"
+          >
             <div class="left">
               <h4>{{ data?.orderId }}</h4>
-              <h5>{{ data?.checkoutDate | date }}</h5>
+              <h5>{{ data?.checkoutDate | date: "short" }}</h5>
             </div>
             <div class="right">
               <h4>Pending</h4>
-              <h5> {{ data?.totalAmount ? data?.totalAmount : 0}} TK</h5>
+              <h5>{{ data?.totalAmount ? data?.totalAmount : 0 }} TK</h5>
             </div>
           </li>
         </ul>
       </nz-sider>
       <nz-content class="refund_body_main" style="background: #fff">
         <div class="refund_details_header">
-          <h4><b>RFD-16767</b></h4>
-          <h5>05 Jul 2022 | 11:30 PM</h5>
+          <h4>{{ order?.orderId }}</h4>
+          <h5>{{ order?.checkoutDate | date: "short" }}</h5>
+        </div>
+        <div class="action_btn_area">
+          <button nz-button nzType="text">Overview</button>
+          <button nz-button nzType="text">Edit</button>
+          <button nz-button nzType="text">Invoice</button>
+          <button nz-button nzType="text">Return</button>
         </div>
         <div class="refund_details_body">
           <div nz-row [nzGutter]="16">
-            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
-              <h2>Refund Details</h2>
+            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 10 }">
+              <h2>Order Details</h2>
               <table>
                 <tbody>
-                <tr>
-                  <td>Refund Status</td>
-                  <td>:</td>
-                  <td>
-                    <span> Pending </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Refund</td>
-                  <td>:</td>
-                  <td>Yes</td>
-                </tr>
-                <tr>
-                  <td>Amount</td>
-                  <td>:</td>
-                  <td><b>120 TK</b></td>
-                </tr>
-                <tr>
-                  <td>Refund Way</td>
-                  <td>:</td>
-                  <td>bKash ( 01934548454 )</td>
-                </tr>
-                <tr>
-                  <td>Customer</td>
-                  <td>:</td>
-                  <td>01917635242</td>
-                </tr>
+                  <tr>
+                    <td>Shipped by</td>
+                    <td>:</td>
+                    <td> Pathao </td>
+                  </tr>
+                  <tr>
+                    <td>Weight</td>
+                    <td>:</td>
+                    <td>2 KG</td>
+                  </tr>
+                  <tr>
+                    <td>Cost</td>
+                    <td>:</td>
+                    <td><b>120 TK</b></td>
+                  </tr>
+                  <tr>
+                    <td>Paid by</td>
+                    <td>:</td>
+                    <td>bKash(01917658452)</td>
+                  </tr>
+                  <tr>
+                    <td>Note</td>
+                    <td>:</td>
+                    <td>
+                      <div>
+                        <p>Sunday office hour er moddhe amar product ta delivery dewar try korben. Thank you.</p>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
-            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12,  offset: 2 }">
+              <h2>Delivery Details</h2>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Name</td>
+                    <td>:</td>
+                    <td><a>Md. Rahim</a></td>
+                  </tr>
+                  <tr>
+                    <td>Phone No</td>
+                    <td>:</td>
+                    <td>01619187770</td>
+                  </tr>
+                  <tr>
+                    <td>Shipping to</td>
+                    <td>:</td>
+                    <td>57/12 Sonargong Plaza, Panthapath Signal, Dhaka.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h2>Customer Details</h2>
               <table>
                 <tbody>
                 <tr>
-                  <td>Invoice#</td>
+                  <td>Name</td>
                   <td>:</td>
-                  <td><a>INV-195212</a></td>
+                  <td><a>Md. Karim Khan</a></td>
                 </tr>
                 <tr>
-                  <td>Sales Order</td>
+                  <td>Phone No</td>
                   <td>:</td>
-                  <td><a>SO-195212</a></td>
+                  <td>01619187770</td>
                 </tr>
                 <tr>
-                  <td>Crated By</td>
+                  <td>Email</td>
                   <td>:</td>
-                  <td>Customer</td>
+                  <td>fortunetech@gmail.com</td>
+                </tr>
+                <tr>
+                  <td>Shipping to</td>
+                  <td>:</td>
+                  <td>57/12 Sonargong Plaza, Panthapath Signal, Dhaka.</td>
                 </tr>
                 </tbody>
               </table>
             </div>
           </div>
           <nz-card class="refund_details_body-product" nzSize="small">
-            <nz-table nzSize="small" nzShowPagination="false" [nzData]="[1, 2, 3]">
+            <nz-table
+              nzSize="small"
+              nzShowPagination="false"
+              [nzData]="[1, 2, 3]"
+            >
               <thead>
-              <tr>
-                <th style="width: 100px">Image</th>
-                <th>Item</th>
-                <th>Shipped</th>
-                <th>Amount (TK)</th>
-                <th>Recived QTY</th>
-                <th>Refund Amount (TK)</th>
-              </tr>
+                <tr>
+                  <th style="width: 100px">Image</th>
+                  <th>Item</th>
+                  <th>Shipped</th>
+                  <th>Amount (TK)</th>
+                  <th>Recived QTY</th>
+                  <th>Refund Amount (TK)</th>
+                </tr>
               </thead>
 
               <tbody>
-              <tr>
-                <td style="width: 100px">
-                  <img style="max-width: 100%"
-                       src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
-                       alt="" />
-                </td>
-                <td>
-                  <h3>Men's casual shirt</h3>
-                  <h5>Yellow / XXL</h5>
-                  <h5>SKU: 5072036</h5>
-                </td>
-                <td>1</td>
-                <td>1200</td>
-                <td>1</td>
-                <td>1200</td>
-              </tr>
+                <tr>
+                  <td style="width: 100px">
+                    <img
+                      style="max-width: 100%"
+                      src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
+                      alt=""
+                    />
+                  </td>
+                  <td>
+                    <h3>Men's casual shirt</h3>
+                    <h5>Yellow / XXL</h5>
+                    <h5>SKU: 5072036</h5>
+                  </td>
+                  <td>1</td>
+                  <td>1200</td>
+                  <td>1</td>
+                  <td>1200</td>
+                </tr>
               </tbody>
             </nz-table>
             <div nz-row [nzGutter]="0">
@@ -162,18 +210,22 @@
                     <h4>Shipping</h4>
                     <span>120 TK</span>
                   </div>
-                  <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
+                  <nz-divider
+                    style="margin: 10px 0"
+                    nzType="horizontal"
+                  ></nz-divider>
                   <div class="ammount_summary_single">
                     <h4></h4>
                     <span> Refundable Amount = 1200 TK</span>
                   </div>
                   <div class="ammount_summary_single mt15">
                     <h4>Refund Amount</h4>
-                    <span>
-                                            <input nz-input value="1200" />TK
-                                        </span>
+                    <span> <input nz-input value="1200" />TK </span>
                   </div>
-                  <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
+                  <nz-divider
+                    style="margin: 10px 0"
+                    nzType="horizontal"
+                  ></nz-divider>
                   <div class="ammount_summary_single">
                     <h4></h4>
                     <span> Refundable Amount = 0 TK</span>
@@ -183,8 +235,12 @@
 
               <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
                 <div class="action_btn">
-                  <button nzSize="large" nz-button nzType="default">Reject</button>
-                  <button nzSize="large" nz-button nzType="primary">Save</button>
+                  <button nzSize="large" nz-button nzType="default">
+                    Reject
+                  </button>
+                  <button nzSize="large" nz-button nzType="primary">
+                    Save
+                  </button>
                 </div>
               </div>
             </div>
@@ -194,12 +250,6 @@
     </nz-layout>
   </nz-card>
 </div>
-
-
-
-
-
-
 
 <!--order-details-->
 <div class="order_details">
@@ -221,7 +271,7 @@
           <button><i class="fa fa-search"></i></button>
         </div>
         <div class="search-input">
-          <input type="text" value="" placeholder="Search customer "/>
+          <input type="text" value="" placeholder="Search customer " />
         </div>
       </div>
     </div>
@@ -230,7 +280,8 @@
     <div class="order-details-left-side-bar-main">
       <div class="order-details-sidebar-info">
         <ul>
-          <li *ngFor="
+          <li
+            *ngFor="
               let data of orders
                 | paginate
                   : {
@@ -239,15 +290,20 @@
                       totalItems: totalOrders
                     };
               let i = index
-            " [class.active]="data?._id === id" [routerLink]="['../../', 'order-details', data._id]">
+            "
+            [class.active]="data?._id === id"
+            [routerLink]="['../../', 'order-details', data._id]"
+          >
             <div class="sidebar-info-left">
               {{ data?.name ? data?.name : data.phoneNo }}
-              <span [routerLink]="['../../', 'order-details', data._id]">{{ data?.orderId }}
+              <span [routerLink]="['../../', 'order-details', data._id]"
+                >{{ data?.orderId }}
                 |
-                <small>{{ data?.checkoutDate | date }}</small></span>
+                <small>{{ data?.checkoutDate | date }}</small></span
+              >
             </div>
             <div class="sidebar-info-right">
-              <h4>{{ data?.totalAmount ? data?.totalAmount : 0}} TK</h4>
+              <h4>{{ data?.totalAmount ? data?.totalAmount : 0 }} TK</h4>
             </div>
           </li>
         </ul>
@@ -259,7 +315,7 @@
     <form [formGroup]="dataForm">
       <div class="order-id-area">
         <h4>{{ order?.orderId }}</h4>
-        <span>{{order?.checkoutDate | date: "short"}}</span>
+        <span>{{ order?.checkoutDate | date: "short" }}</span>
       </div>
 
       <!---order-details-main-area-->
@@ -270,104 +326,166 @@
           <div class="table-head-left">
             <ul>
               <li>
-                <span [class]="clickActive[0] ? 'menu-active' : ''" (click)="getOrderDetails()">Order Details</span>
+                <span
+                  [class]="clickActive[0] ? 'menu-active' : ''"
+                  (click)="getOrderDetails()"
+                >
+                  Order Details
+                </span>
               </li>
               <li>
-                <span [class]="clickActive[1] ? 'menu-active' : ''"
-                      (click)="getInvoicesByOrderNo()">Invoices(100)</span>
+                <span
+                  [class]="clickActive[1] ? 'menu-active' : ''"
+                  (click)="getInvoicesByOrderNo()"
+                >
+                  Invoices(100)
+                </span>
               </li>
               <li>
-                <span [class]="clickActive[2] ? 'menu-active' : ''" (click)="getReturns()">Return(100)</span>
+                <span
+                  [class]="clickActive[2] ? 'menu-active' : ''"
+                  (click)="getReturns()"
+                >
+                  Return(100)
+                </span>
               </li>
             </ul>
           </div>
           <div class="table-head-right">
-            <span class="edit"><i class="fa fa-edit" [routerLink]="['../../', 'edit-order', order?._id]"></i></span>
-            <a style="margin-right:10px" nz-button nzType="primary" [disabled]="selectedIds?.length < 1"
-               (click)="openDialog()" type="button">
+            <span class="edit">
+              <i
+                class="fa fa-edit"
+                [routerLink]="['../../', 'edit-order', order?._id]"
+              >
+              </i>
+            </span>
+            <a
+              style="margin-right: 10px"
+              nz-button
+              nzType="primary"
+              [disabled]="selectedIds?.length < 1"
+              (click)="openDialog()"
+              type="button"
+            >
               Invoice
             </a>
-            <input style="margin-right:10px" nz-input type="text" formControlName="statusNote"
-                   placeholder="Write a note "/>
-            <button style="margin-right:10px" nz-button nzType="primary" (click)="onOrderStatusChange()">Send</button>
+            <input
+              style="margin-right: 10px"
+              nz-input
+              type="text"
+              formControlName="statusNote"
+              placeholder="Write a note "
+            />
+            <button
+              style="margin-right: 10px"
+              nz-button
+              nzType="primary"
+              (click)="onOrderStatusChange()"
+            >
+              Send
+            </button>
           </div>
-          <div>
-          </div>
+          <div></div>
           <!---table-end-->
           <div *ngFor="let products of vProducts">
-
-
-            <nz-table class="table" #columnTable [nzData]="products.data" [nzShowPagination]="false"
-                      [nzTitle]="'Vendor Name : '+products._id">
+            <nz-table
+              class="table"
+              #columnTable
+              [nzData]="products.data"
+              [nzShowPagination]="false"
+              [nzTitle]="'Vendor Name : ' + products._id"
+            >
               <thead>
-              <tr>
-                <th nzLeft nzWidth="25px" class="check">
-                  <mat-checkbox></mat-checkbox>
-                </th>
-                <th nzLeft nzWidth="25px">Image</th>
-                <th>Item Name</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>Tax (+)</th>
-                <th>Discount (-)</th>
-                <th>Total</th>
-                <th>Advance</th>
-                <th nzWidth="100px">Status</th>
-              </tr>
+                <tr>
+                  <th nzLeft nzWidth="25px" class="check">
+                    <mat-checkbox></mat-checkbox>
+                  </th>
+                  <th nzLeft nzWidth="25px">Image</th>
+                  <th>Item Name</th>
+                  <th>Qty</th>
+                  <th>Price</th>
+                  <th>Tax (+)</th>
+                  <th>Discount (-)</th>
+                  <th>Total</th>
+                  <th>Advance</th>
+                  <th nzWidth="100px">Status</th>
+                </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let data of columnTable.data; let i=index">
-
-                <td nzWidth="25px" nzLeft>
-                  <mat-checkbox (change)="onCheckChange($event, i)"></mat-checkbox>
-                </td>
-                <td nzLeft>
-                  <img nz-image width="50px" [nzSrc]="
-                      data.productId
-                        ? setThumbnailImage(data.productId)
-                        : '/assets/images/placeholder/test.png'
-                    " [alt]="data.productId.name"/>
-                </td>
-                <td>
-                  <a target="_blank" [routerLink]="['../../../', 'product-details', data.productId.slug]"
-                     class="text">
-                    {{ data?.productId.name }}
-                  </a>
-                  {{ data?.sku }}
-                </td>
-                <td>
-                  <div>
-                    <b>{{ data?.quantity }}</b>
-                  </div>
-                  <div class="inv-qty">
-                    INV-{{data?.invoicedQuantity}}
-                  </div>
-                  <div class="rto-qty">
-                    RTO-{{data?.returnedQuantity}}
-                  </div>
-                </td>
-                <td>{{ data?.price }}</td>
-                <td>
-                  {{ data.tax ? data.tax : "0" }}
-                </td>
-                <td>0</td>
-                <td>{{ getAmount(data) }}</td>
-                <td>
-                    <span [style]="order.paymentStatus !== 1 ? 'color:green' : 'color:orange'">{{ data.advance ?
-                      data.advance : 0}}</span>
-                </td>
-                <td>
-                  <mat-form-field style="width: 100px" appearance="outline">
-                    <mat-select [(value)]="data.deliveryStatus"
-                                (selectionChange)="onStatusChange($event.value, order, data)">
-                      <mat-option *ngFor="let option of productOrderStatus" [value]="option.value"
-                                  [disabled]="option.disabled">
-                        {{option.viewValue}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-              </tr>
+                <tr *ngFor="let data of columnTable.data; let i = index">
+                  <td nzWidth="25px" nzLeft>
+                    <mat-checkbox
+                      (change)="onCheckChange($event, i)"
+                    ></mat-checkbox>
+                  </td>
+                  <td nzLeft>
+                    <img
+                      nz-image
+                      width="50px"
+                      [nzSrc]="
+                        data.productId
+                          ? setThumbnailImage(data.productId)
+                          : '/assets/images/placeholder/test.png'
+                      "
+                      [alt]="data.productId.name"
+                    />
+                  </td>
+                  <td>
+                    <a
+                      target="_blank"
+                      [routerLink]="[
+                        '../../../',
+                        'product-details',
+                        data.productId.slug
+                      ]"
+                      class="text"
+                    >
+                      {{ data?.productId.name }}
+                    </a>
+                    {{ data?.sku }}
+                  </td>
+                  <td>
+                    <div>
+                      <b>{{ data?.quantity }}</b>
+                    </div>
+                    <div class="inv-qty">INV-{{ data?.invoicedQuantity }}</div>
+                    <div class="rto-qty">RTO-{{ data?.returnedQuantity }}</div>
+                  </td>
+                  <td>{{ data?.price }}</td>
+                  <td>
+                    {{ data.tax ? data.tax : "0" }}
+                  </td>
+                  <td>0</td>
+                  <td>{{ getAmount(data) }}</td>
+                  <td>
+                    <span
+                      [style]="
+                        order.paymentStatus !== 1
+                          ? 'color:green'
+                          : 'color:orange'
+                      "
+                      >{{ data.advance ? data.advance : 0 }}</span
+                    >
+                  </td>
+                  <td>
+                    <mat-form-field style="width: 100px" appearance="outline">
+                      <mat-select
+                        [(value)]="data.deliveryStatus"
+                        (selectionChange)="
+                          onStatusChange($event.value, order, data)
+                        "
+                      >
+                        <mat-option
+                          *ngFor="let option of productOrderStatus"
+                          [value]="option.value"
+                          [disabled]="option.disabled"
+                        >
+                          {{ option.viewValue }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </tr>
               </tbody>
             </nz-table>
           </div>
@@ -398,9 +516,7 @@
                       <h3>Points Redeem</h3>
                     </div>
                     <div class="total-price">
-                      <h4 class="color-red">
-                        (-){{ 0 }} PTS
-                      </h4>
+                      <h4 class="color-red">(-){{ 0 }} PTS</h4>
                     </div>
                   </li>
                   <li>
@@ -408,16 +524,16 @@
                       <!--<h3>Shipping Charge</h3>-->
                     </div>
                     <div class="total-price">
-                      <h4>{{120}} TK</h4>
+                      <h4>{{ 120 }} TK</h4>
                     </div>
                   </li>
-                  <hr/>
+                  <hr />
                   <li>
                     <div class="total-title">
                       <h3>Amount to pay</h3>
                     </div>
                     <div class="total-price">
-                      <h4>{{calculateSubTotal - 120}} TK</h4>
+                      <h4>{{ calculateSubTotal - 120 }} TK</h4>
                     </div>
                   </li>
                   <li>
@@ -436,7 +552,7 @@
                       <h4 class="color-red">(-) 0 TK</h4>
                     </div>
                   </li>
-                  <hr/>
+                  <hr />
                   <li>
                     <div class="total-title">
                       <h3>Due Amount</h3>
@@ -457,7 +573,7 @@
                       </h4>
                     </div>
                   </li>
-                  <hr/>
+                  <hr />
                   <li>
                     <div class="total-title">
                       <h3>Refundable Amount</h3>
@@ -474,13 +590,13 @@
                       <h4>(-) 0 TK</h4>
                     </div>
                   </li>
-                  <hr/>
+                  <hr />
                   <li>
                     <div class="total-title">
                       <h3>Total Due =</h3>
                     </div>
                     <div class="total-price">
-                      <h4>{{calculateCancelTotal()}}</h4>
+                      <h4>{{ calculateCancelTotal() }}</h4>
                     </div>
                   </li>
                 </ul>
@@ -502,12 +618,16 @@
               <h3>Timeline</h3>
             </div>
             <div class="timeline-main">
-              <ng-container *ngIf="
+              <ng-container
+                *ngIf="
                   order &&
                   order?.orderStatusTimeline &&
                   order?.orderStatusTimeline.length
-                ">
-                <ul *ngFor="let data of timelineStatus.reverse(); let i = index">
+                "
+              >
+                <ul
+                  *ngFor="let data of timelineStatus.reverse(); let i = index"
+                >
                   <li>
                     <div class="time-check">
                       <span><i class="fa fa-check"></i></span>
@@ -541,11 +661,15 @@
                   </li>
                 </ul>
               </ng-container>
-              <ng-container *ngIf="order && order?.orderStatusTimeline.length === 0">
+              <ng-container
+                *ngIf="order && order?.orderStatusTimeline.length === 0"
+              >
                 <ul>
                   <li>
                     <div class="time-check">
-                      <span class="active-check"><i class="fa fa-check"></i></span>
+                      <span class="active-check"
+                        ><i class="fa fa-check"></i
+                      ></span>
                     </div>
                     <div class="timeline-info">
                       <h3>{{ "Pending" }}</h3>
@@ -634,7 +758,7 @@
                   </div>
                   <div class="customer-info-right">
                     <h4>
-                      {{order?.phoneNo}}
+                      {{ order?.phoneNo }}
                     </h4>
                   </div>
                 </li>
@@ -666,8 +790,13 @@
             </div>
             <div class="customer-comment-main">
               <mat-form-field class="form-field" appearance="overlay">
-                <textarea rows="5" formControlName="comment" [(ngModel)]="commentEmpty" matInput
-                          placeholder="..."></textarea>
+                <textarea
+                  rows="5"
+                  formControlName="comment"
+                  [(ngModel)]="commentEmpty"
+                  matInput
+                  placeholder="..."
+                ></textarea>
               </mat-form-field>
             </div>
             <button (click)="addNewComment()">Add</button>
@@ -680,7 +809,10 @@
             <div class="status-info"></div>
             <!---status-info-end-->
             <!---status-info-->
-            <div class="status-info" *ngFor="let c of order?.comments.reverse(); let i = index">
+            <div
+              class="status-info"
+              *ngFor="let c of order?.comments.reverse(); let i = index"
+            >
               <!--status-check-->
               <div class="status-check" *ngIf="i === 0">
                 <span class="active-status"><i class="fa fa-check"></i></span>
