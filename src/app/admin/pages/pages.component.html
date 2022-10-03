@@ -23,7 +23,7 @@
           [routerLink]="data.routerLink">
           <ul>
             <li  nz-menu-item *ngFor="let item of menuList | menu: 'submenu': data.id "
-            >{{item.title}}</li>
+            [routerLink]="item.routerLink">{{item.title}}</li>
           </ul>
         </li>
       </ul>
