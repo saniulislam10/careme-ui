@@ -21,7 +21,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-
+import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 
 const materials = [
   NzModalModule,
@@ -47,7 +47,8 @@ const materials = [
   NzDatePickerModule,
   NzBadgeModule,
   NzMenuModule,
-  NzToolTipModule
+  NzToolTipModule,
+  NzTimelineModule,
 
   // SharedModule
 ];
