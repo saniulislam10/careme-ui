@@ -26,6 +26,14 @@ import { CreateInvoiceReturnComponent } from './create-invoice-return/create-inv
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { EditOrderComponent } from './edit-order/edit-order.component';
 
+interface ItemData {
+  id: number;
+  name: string;
+  age: number;
+  address: string;
+}
+
+
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
@@ -33,6 +41,27 @@ import { EditOrderComponent } from './edit-order/edit-order.component';
   providers: [PricePipe],
 })
 export class OrderDetailsComponent implements OnInit {
+  bodyTabs = [
+    {
+      name: 'Overview',
+      disabled: false
+    },
+    {
+      name: 'Invoice',
+      disabled: true
+    },
+    {
+      name: 'Return',
+      disabled: true
+    }
+  ];
+  checked = false;
+  indeterminate = false;
+  listOfCurrentPageData: readonly ItemData[] = [];
+  listOfData: readonly ItemData[] = [];
+  setOfCheckedId = new Set<number>();
+
+
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
 
   dataForm: FormGroup;
@@ -243,6 +272,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   //thumbnail
+  tabs: ({ name: string; disabled: boolean } | { name: string; disabled: boolean } | { name: string; disabled: boolean })[];
   setThumbnailImage(data) {
     let images = this.getImages(data.medias, data.images);
     return images[0];
@@ -577,4 +607,39 @@ export class OrderDetailsComponent implements OnInit {
     })
     return Math.round(total);
   }
+
+
+
+
+
+
+  // Mamun
+  updateCheckedSet(id: number, checked: boolean): void {
+    if (checked) {
+      this.setOfCheckedId.add(id);
+    } else {
+      this.setOfCheckedId.delete(id);
+    }
+  }
+
+  onItemChecked(id: number, checked: boolean): void {
+    this.updateCheckedSet(id, checked);
+    this.refreshCheckedStatus();
+  }
+
+  onAllChecked(value: boolean): void {
+    this.listOfCurrentPageData.forEach(item => this.updateCheckedSet(item.id, value));
+    this.refreshCheckedStatus();
+  }
+
+  onCurrentPageDataChange($event: readonly ItemData[]): void {
+    this.listOfCurrentPageData = $event;
+    this.refreshCheckedStatus();
+  }
+
+  refreshCheckedStatus(): void {
+    this.checked = this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
+    this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
+  }
+
 }
