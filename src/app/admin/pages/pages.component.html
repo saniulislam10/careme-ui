@@ -22,9 +22,8 @@
         <li  nz-submenu *ngFor="let data of menuList | menu:'parent'" [nzTitle]="data.title" nzIcon="right"
           [routerLink]="data.routerLink">
           <ul>
-            <li nz-menu-item *ngFor="let item of menuList | menu: 'submenu': data.id "
-            [routerLink]="data.routerLink">
-              {{item.title}}</li>
+            <li [routerLink]="item.routerLink" nz-menu-item *ngFor="let item of menuList | menu: 'submenu': data.id "
+            >{{item.title}}</li>
           </ul>
         </li>
       </ul>
