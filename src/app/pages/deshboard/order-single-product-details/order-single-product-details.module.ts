@@ -1,3 +1,4 @@
+import { AntModule } from 'src/app/material/ant.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -19,6 +20,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzStepsModule,
     NzTimelineModule,
     NzIconModule,
+    AntModule
   ],
 })
 export class OrderSingleProductDetailsModule {}

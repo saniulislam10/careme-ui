@@ -39,10 +39,6 @@ export class SummaryComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getUser();
-    this.getAllOrders();
-  }
-  getUser() {
     this.userStatus = this.userService.getUserStatus();
     if(this.userStatus){
       this.getLoggedInUserInfo();
@@ -51,6 +47,9 @@ export class SummaryComponent implements OnInit {
       this.message.create(type, `Please Login First`);
     }
   }
+  getUser() {
+
+  }
 
   getLoggedInUserInfo() {
     if(this.userStatus){
@@ -58,14 +57,16 @@ export class SummaryComponent implements OnInit {
         .subscribe(res => {
           this.user = res.data;
           this.id = this.user._id;
+          this.getAllOrders(this.id);
         }, error => {
           console.log(error);
         });
     }
   }
 
-  getAllOrders() {
-    this.orderService.getAllOrdersByUser(null, null, this.id)
+  getAllOrders(id) {
+    console.log(id);
+    this.orderService.getAllOrdersByUser(null, null, id)
     .subscribe(res => {
       this.orders = res.data;
       console.log(res.data);
