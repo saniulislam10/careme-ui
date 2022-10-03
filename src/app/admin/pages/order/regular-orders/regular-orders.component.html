@@ -73,11 +73,11 @@
               <td>
                 <a [routerLink]="['../../','order-details', data._id ]">
                   <h4>{{ data.orderId }}</h4>
+                  <h5>{{data.checkoutDate | date : 'short'}}</h5>
                 </a>
-                <h5>{{data.checkoutDate | date : 'short'}}</h5>
               </td>
               <td class="invoice_status">
-                <img src="/assets/svg/in.svg" alt="">
+                <img src="/assets/svg/bw-in.svg" alt="">
               </td>
               <td>
                 <span [routerLink]="['../../','customer', data.userId._id ]">

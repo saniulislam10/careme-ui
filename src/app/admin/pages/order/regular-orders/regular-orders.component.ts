@@ -32,7 +32,7 @@ interface ItemData {
   styleUrls: ['./regular-orders.component.scss']
 })
 export class RegularOrdersComponent implements OnInit {
-  tabs = ['All Order', 'COD', 'Unpaid', 'Partial Paid', 'paid'];
+  tabs = ['All Order', 'COD', 'Unpaid', 'Partial Paid', 'paid', 'Invoiced', "Partial Invoiced"];
 
   checked = false;
   indeterminate = false;

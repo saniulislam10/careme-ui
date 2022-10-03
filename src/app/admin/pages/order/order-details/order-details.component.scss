@@ -26,7 +26,174 @@
     }
   }
 }
+.refunt-tab {
+  min-height: 80vh;
+  margin-bottom: 30px;
+}
+.tab-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  min-width: 200px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  margin-left: -22px;
+  padding: 0 0 10px 0;
+  .title {
+    font-size: 14px;
+  }
+  .status-details {
+    text-align: right;
+    font-size: 14px;
+    .details {
+      font-size: 12px;
+      span {
+        margin-left: 15px;
+      }
+    }
+  }
+}
+.ant-tabs-nav-list {
+  padding: 0;
+}
+.header_action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.left_navbar {
+  background: #fff;
+  border-right: 1px solid #ddd;
+  min-width: 230px !important;
+}
+.inner_nav_header {
+  margin-right: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 5px;
+  .header_action {
+    margin-bottom: 15px;
+  }
+}
+.refund_list {
+  padding: 0;
+  margin: 0;
+  li {
+    display: flex;
+    padding: 5px 10px 5px 0 !important;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+    height: unset;
+    .right {
+      text-align: right;
+    }
+  }
+  li:hover {
+    .left {
+      h4 {
+        color: #1b75bb;
+      }
+    }
+  }
+}
+.refund_body_main {
+  padding: 0 15px;
+}
+.refund_details_header {
+  border-bottom: 1px solid #ddd;
+  padding: 0 0 10px 0;
+  h4 {
+    font-size: 20px;
+  }
+  h5 {
+    font-size: 12px;
+  }
+}
+.refund_details_body {
+  padding: 15px;
+  table {
+    margin: 20px 0;
+  }
+  tr > td {
+    line-height: 30px;
+    span {
+      border: 1px solid #ff8800;
+      color: #ff8800;
+      padding: 2px 10px;
+    }
+  }
+  tr > td:first-child {
+    width: 110px;
+  }
+  tr > td:last-child {
+    padding-left: 15px;
+  }
+}
+.refund_details_body-product {
+  margin: 30px 0;
+  .thumb_img{
+    width: 100px;
+  }
+}
+.ammount_summary {
+  margin: 15px 0;
+  width: 400px;
+  float: right;
+}
+.ammount_summary_single {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  input {
+    width: 70px;
+    border: none;
+    text-align: right;
+    border-bottom: 1px solid #e4e4e4;
+  }
+  input:focus {
+    background: none;
+    box-shadow: none;
+  }
+}
+.mt15 {
+  margin-top: 15px;
+}
+.action_btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  button {
+    margin-left: 15px;
+  }
+}
 
+@media (max-width: 500px) {
+  .main-layout{
+    flex-direction: column !important;
+  }
+  .left_navbar {
+    min-width: 100% !important;
+    width: 100% !important;
+    border: none;
+  }
+  .thumb_img{
+    width: 80px;
+  }
+  .ammount_summary {
+    margin: 10px 0;
+    width: 300px;
+  }
+  .refund_body_main{
+    width: 100% !important;
+    margin: 20px 0;
+    padding: 0;
+  }
+  .refund_details_body{
+    padding: 0;
+  }
+}
 
 
 
