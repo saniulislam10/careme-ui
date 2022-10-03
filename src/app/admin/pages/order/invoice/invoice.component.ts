@@ -1,3 +1,4 @@
+import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Refund } from './../../../../interfaces/refund';
 import { RefundService } from './../../../../services/refund.service';
 import { FileUploadService } from './../../../../services/file-upload.service';
@@ -29,15 +30,18 @@ export class InvoiceComponent implements OnInit {
   confirmModal?: NzModalRef;
   isVisible = false;
   checked = false;
-  paymentBy :String;
-  paymentOption :String;
-  phone :String;
+  paymentBy: String;
+  paymentOption: String;
+  phone: String;
+  public dataForm: FormGroup;
+  public products: FormArray;
 
   //subscription
   private subRouteOne?: Subscription;
   returnProducts: any[] = [];
   loading: boolean;
   file: FileList | any;
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,8 +50,9 @@ export class InvoiceComponent implements OnInit {
     private refundService: RefundService,
     private spinner: NgxSpinnerService,
     private msg: NzMessageService,
-    private fileUploadService: FileUploadService
-  ) {}
+    private fileUploadService: FileUploadService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
@@ -56,7 +61,51 @@ export class InvoiceComponent implements OnInit {
         this.getInvoice();
       }
     });
+
   }
+
+  initReturnForm() {
+    this.dataForm = this.fb.group({
+      invoiceId: this.invoice._id,
+      orderNumber: this.invoice.orderNumber,
+      returnDate: new Date(),
+      customerName: this.invoice.customerName,
+      billingAddress: this.invoice.billingAddress,
+      shippingAddress: this.invoice.shippingAddress,
+      subTotal: this.invoice.subTotal,
+      adjustment: 0,
+      deliveryFee: 120,
+      total: this.invoice.total,
+      products: this.fb.array([])
+    });
+
+    this.products = this.dataForm.get('products') as FormArray;
+  }
+
+  newProduct(data) {
+
+    let newProduct = this.fb.group({
+      name: [data.name],
+      variant: [data.variant],
+      sku: [data.sku],
+      quantity: [1, Validators.required],
+      totalInvoicedQty: [data.quantity, Validators.required],
+      price: [data.price],
+      tax: [data.tax],
+    })
+    this.products.push(newProduct);
+    console.log(this.products);
+  }
+
+  deleteFromReturn(i: number) {
+
+    this.products.removeAt(i);
+  }
+
+  // get products() {
+  //   return this.dataForm.get('products') as FormArray;
+  // }
+
 
   public generatePDF(): void {
     this.spinner.show();
@@ -77,6 +126,8 @@ export class InvoiceComponent implements OnInit {
     this.invoiceService.getInvoiceById(this.id).subscribe(
       (res) => {
         this.invoice = res.data;
+        console.log(this.invoice);
+        this.initReturnForm();
       },
       (err) => {
         console.log(err);
@@ -88,13 +139,15 @@ export class InvoiceComponent implements OnInit {
     this.isVisible = true;
     this.invoice.products;
     this.setReturnProducts(this.invoice.products);
+
   }
 
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isVisible = false;
+    console.log(this.products.length);
   }
-  handleOk(){
+  handleOk() {
     console.log('Button ok clicked!');
     this.loading = true;
     this.placeReturn();
@@ -113,47 +166,34 @@ export class InvoiceComponent implements OnInit {
       });
   }
 
-  changeEligibility(){
+  changeEligibility() {
     this.checked = !this.checked;
   }
 
-  placeReturn(){
+  placeReturn() {
     let returnId;
-    let returnData:Return = {
-      invoiceId: this.invoice._id,
-      orderNumber: this.invoice.orderNumber,
-      returnDate: new Date(),
-      customerName: this.invoice.customerName,
-      billingAddress: this.invoice.billingAddress,
-      shippingAddress: this.invoice.shippingAddress,
-      subTotal: this.invoice.subTotal,
-      adjustment: 0,
-      deliveryFee: 120,
-      total: this.invoice.total,
-      products: this.returnProducts
-    }
-    this.returnService.placeReturn(returnData)
-    .subscribe(res => {
-      returnId = res.returnId
-      let message = res.message + ". Return Id: "+ res.returnId;
-      this.msg.success(message, {
-        nzDuration: 10000
-      });
-      if(this.checked){
-        this.createRefund(returnId);
-      }else{
-        this.loading = false;
-        this.isVisible = false;
-      }
-    }, err=>{
-      this.msg.create('error',err.message);
-    })
+    this.returnService.placeReturn(this.dataForm.value)
+      .subscribe(res => {
+        returnId = res.returnId
+        let message = res.message + ". Return Id: " + res.returnId;
+        this.msg.success(message, {
+          nzDuration: 10000
+        });
+        if (this.checked) {
+          this.createRefund(returnId);
+        } else {
+          this.loading = false;
+          this.isVisible = false;
+        }
+      }, err => {
+        this.msg.create('error', err.message);
+      })
     return returnId;
   }
 
-  createRefund(returnId){
+  createRefund(returnId) {
 
-    let data:Refund = {
+    let data: Refund = {
       invoiceId: this.invoice._id,
       returnId: returnId,
       orderNumber: this.invoice.orderNumber,
@@ -164,37 +204,53 @@ export class InvoiceComponent implements OnInit {
       phoneNo: this.phone
     }
     this.refundService.add(data)
-    .subscribe(res => {
-      console.log(res.message)
-      let message = res.message + ". Refund Id: "+ res.refundId;
-      this.msg.success(message, {
-        nzDuration: 10000
-      });
-      this.loading = false;
-      this.isVisible = false;
-    }, err=>{
-      this.msg.create('error',err.message, {
-        nzDuration: 5000
-      });
-      this.loading = false;
-    })
+      .subscribe(res => {
+        console.log(res.message)
+        let message = res.message + ". Refund Id: " + res.refundId;
+        this.msg.success(message, {
+          nzDuration: 10000
+        });
+        this.loading = false;
+        this.isVisible = false;
+      }, err => {
+        this.msg.create('error', err.message, {
+          nzDuration: 5000
+        });
+        this.loading = false;
+      })
 
   }
 
-  deleteFromReturn(i){
-    let newProducts = this.returnProducts.splice(i, 1);
-    this.setReturnProducts(newProducts);
-  }
-
-  setReturnProducts(products){
+  setReturnProducts(products) {
     this.returnProducts = products;
+    let length = this.products.length;
+    for (let i = 0; i < length; i++) {
+      this.deleteFromReturn(0);
+    }
+    for (let i = 0; i < this.returnProducts.length; i++) {
+      this.newProduct(this.returnProducts[i]);
+    }
   }
 
-  getReturnProducts(){
+  getReturnProducts() {
     return this.returnProducts
   }
 
+  onChangeQty(i, value, max){
+    console.log(i);
+    console.log(value);
+    console.log(max);
 
-
-
+    
+    // this.products[i].value.quantity = 5;
+    if(value > max){
+      this.products.controls[i].patchValue(
+        { quantity : max}
+      )
+    }else if (value < 1){
+      this.products.controls[i].patchValue(
+        { quantity : 1}
+      )
+    }
+  }
 }

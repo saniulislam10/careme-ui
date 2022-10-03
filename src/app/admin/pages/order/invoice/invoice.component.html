@@ -180,7 +180,7 @@
 
 
 <!---create-return-->
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<nz-modal style="width: max-content" [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <ng-container *nzModalContent>
     <div class="return">
       <div class="box">
@@ -232,8 +232,8 @@
         <input nz-input [(ngModel)]="phone" type="text" placeholder="01X-XXX-XXXX">
       </div>
     </div>
-    <form>
-      <nz-table #return [nzLoading]="loading" [nzData]="getReturnProducts()" [nzShowPagination]="false">
+    <form [formGroup]="dataForm">
+      <nz-table [nzData]="returnProducts">
         <thead>
           <tr>
             <th>Name</th>
@@ -245,14 +245,16 @@
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let data of returnProducts; let i=index">
-            <td>{{data.name}}</td>
-            <td>{{data.variant}}</td>
-            <td>{{data.sku}}</td>
-            <td>{{data.quantity}}</td>
-            <td>{{data.price}}</td>
-            <td>{{data.tax}}</td>
+        <tbody formArrayName="products">
+          <tr *ngFor="let data of products?.controls; let i=index" [formGroupName]="i">
+            <td>{{data?.value.name}}</td>
+            <td>{{data?.value.variant}}</td>
+            <td>{{data?.value.sku}}</td>
+            <td>
+              <input type="number" max="data.value.totalInvoiceQty" formControlName="quantity" (change)="onChangeQty(i, data?.value.quantity, data.value.totalInvoicedQty)">
+            </td>
+            <td>{{data?.value.price}}</td>
+            <td>{{data?.value.tax}}</td>
             <td><button nz-icon nzType="delete" nzTheme="outline" (click)="deleteFromReturn(i)"></button></td>
           </tr>
         </tbody>

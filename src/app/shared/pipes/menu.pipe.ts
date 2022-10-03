@@ -13,7 +13,6 @@ export class MenuPipe implements PipeTransform {
       let list = menuList.filter(m => m.hasSubMenu=== true)
       return list;
     }else if (id){
-      console.log(id)
       let list = menuList.filter(m => m.parentId=== id)
       return list;
     }
