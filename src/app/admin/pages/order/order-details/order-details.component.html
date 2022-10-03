@@ -28,12 +28,7 @@
               </nz-dropdown-menu>
             </a>
             <nz-button-group>
-              <button
-                nz-button
-                nz-dropdown
-                [nzDropdownMenu]="actionMenu"
-                nzPlacement="bottomRight"
-              >
+              <button nz-button nz-dropdown [nzDropdownMenu]="actionMenu" nzPlacement="bottomRight">
                 <span nz-icon nzType="ellipsis"></span>
               </button>
               <nz-dropdown-menu #actionMenu="nzDropdownMenu">
@@ -48,11 +43,7 @@
           <input nz-input placeholder="Basic usage" />
         </div>
         <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
-          <li
-            nz-menu-item
-            *ngFor="let data of orders"
-            [routerLink]="['../../', 'order-details', data._id]"
-          >
+          <li nz-menu-item *ngFor="let data of orders" [routerLink]="['../../', 'order-details', data._id]">
             <div class="left">
               <h4>{{ data?.orderId }}</h4>
               <h5>{{ data?.checkoutDate | date: "short" }}</h5>
@@ -70,42 +61,42 @@
           <h5>{{ order?.checkoutDate | date: "short" }}</h5>
         </div>
         <nz-tabset [nzTabBarExtraContent]="extraTemplate">
-          <nz-tab  *ngFor="let tab of bodyTabs" [nzTitle]="tab.name" [nzDisabled]="tab.disabled">
+          <nz-tab *ngFor="let tab of bodyTabs" [nzTitle]="tab.name" [nzDisabled]="tab.disabled">
             <div class="refund_details_body">
               <div nz-row [nzGutter]="16">
                 <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 10 }">
                   <h2>Order Details</h2>
                   <table>
                     <tbody>
-                    <tr>
-                      <td>Shipped by</td>
-                      <td>:</td>
-                      <td> Pathao </td>
-                    </tr>
-                    <tr>
-                      <td>Weight</td>
-                      <td>:</td>
-                      <td>2 KG</td>
-                    </tr>
-                    <tr>
-                      <td>Cost</td>
-                      <td>:</td>
-                      <td><b>120 TK</b></td>
-                    </tr>
-                    <tr>
-                      <td>Paid by</td>
-                      <td>:</td>
-                      <td>bKash(01917658452)</td>
-                    </tr>
-                    <tr>
-                      <td>Note</td>
-                      <td>:</td>
-                      <td>
-                        <div>
-                          <p>Sunday office hour er moddhe amar product ta delivery dewar try korben. Thank you.</p>
-                        </div>
-                      </td>
-                    </tr>
+                      <tr>
+                        <td>Shipped by</td>
+                        <td>:</td>
+                        <td> Pathao </td>
+                      </tr>
+                      <tr>
+                        <td>Weight</td>
+                        <td>:</td>
+                        <td>2 KG</td>
+                      </tr>
+                      <tr>
+                        <td>Cost</td>
+                        <td>:</td>
+                        <td><b>120 TK</b></td>
+                      </tr>
+                      <tr>
+                        <td>Paid by</td>
+                        <td>:</td>
+                        <td>bKash(01917658452)</td>
+                      </tr>
+                      <tr>
+                        <td>Note</td>
+                        <td>:</td>
+                        <td>
+                          <div>
+                            <p>Sunday office hour er moddhe amar product ta delivery dewar try korben. Thank you.</p>
+                          </div>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -113,46 +104,46 @@
                   <h2>Delivery Details</h2>
                   <table>
                     <tbody>
-                    <tr>
-                      <td>Name</td>
-                      <td>:</td>
-                      <td><a>Md. Rahim</a></td>
-                    </tr>
-                    <tr>
-                      <td>Phone No</td>
-                      <td>:</td>
-                      <td>01619187770</td>
-                    </tr>
-                    <tr>
-                      <td>Shipping to</td>
-                      <td>:</td>
-                      <td>57/12 Sonargong Plaza, Panthapath Signal, Dhaka.</td>
-                    </tr>
+                      <tr>
+                        <td>Name</td>
+                        <td>:</td>
+                        <td><a>Md. Rahim</a></td>
+                      </tr>
+                      <tr>
+                        <td>Phone No</td>
+                        <td>:</td>
+                        <td>01619187770</td>
+                      </tr>
+                      <tr>
+                        <td>Shipping to</td>
+                        <td>:</td>
+                        <td>57/12 Sonargong Plaza, Panthapath Signal, Dhaka.</td>
+                      </tr>
                     </tbody>
                   </table>
                   <h2>Customer Details</h2>
                   <table>
                     <tbody>
-                    <tr>
-                      <td>Name</td>
-                      <td>:</td>
-                      <td><a>Md. Karim Khan</a></td>
-                    </tr>
-                    <tr>
-                      <td>Phone No</td>
-                      <td>:</td>
-                      <td>01619187770</td>
-                    </tr>
-                    <tr>
-                      <td>Email</td>
-                      <td>:</td>
-                      <td>fortunetech@gmail.com</td>
-                    </tr>
-                    <tr>
-                      <td>Shipping to</td>
-                      <td>:</td>
-                      <td>57/12 Sonargong Plaza, Panthapath Signal, Dhaka.</td>
-                    </tr>
+                      <tr>
+                        <td>Name</td>
+                        <td>:</td>
+                        <td><a>Md. Karim Khan</a></td>
+                      </tr>
+                      <tr>
+                        <td>Phone No</td>
+                        <td>:</td>
+                        <td>01619187770</td>
+                      </tr>
+                      <tr>
+                        <td>Email</td>
+                        <td>:</td>
+                        <td>fortunetech@gmail.com</td>
+                      </tr>
+                      <tr>
+                        <td>Shipping to</td>
+                        <td>:</td>
+                        <td>57/12 Sonargong Plaza, Panthapath Signal, Dhaka.</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -162,41 +153,52 @@
 
 
 
-                <nz-table
-                  #rowSelectProduct
-                  [nzFrontPagination]="false"
-                  [nzData]="vProducts"
-                  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
-                >
+                <nz-table #rowSelectProduct [nzFrontPagination]="false" [nzData]="products"
+                  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
                   <thead>
-                  <tr>
-                    <th nzWidth="25px"
-                      [(nzChecked)]="checked"
-                      [nzIndeterminate]="indeterminate"
-                      (nzCheckedChange)="onAllChecked($event)"
-                    ></th>
-                    <th>Image</th>
-                    <th>Item Details</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Tax (+)</th>
-                    <th>Discount (-)</th>
-                    <th>Total</th>
-                    <th>Advance</th>
-                  </tr>
+                    <tr>
+                      <th nzWidth="25px" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
+                        (nzCheckedChange)="onAllChecked($event)"></th>
+                      <th>Image</th>
+                      <th>Item Details</th>
+                      <th>Qty</th>
+                      <th>Price</th>
+                      <th>Tax (+)</th>
+                      <th>Discount (-)</th>
+                      <th>Total</th>
+                      <th>Advance</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let data of rowSelectProduct.data; let i = index">
-                    <td nzWidth="25px" [nzChecked]="setOfCheckedId.has(data.id)" (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
-                    <td>1</td>
-                    <td>{{ data.productId.name }}</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>6</td>
-                    <td>7</td>
-                    <td>8</td>
-                  </tr>
+                    <tr *ngFor="let data of rowSelectProduct.data; let i = index">
+                      <td nzWidth="25px" [nzChecked]="setOfCheckedId.has(data.id)"
+                        (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+                      <td>
+                        <img nz-image width="50px"
+                        [nzSrc]="data.productId
+                          ? setThumbnailImage(data.productId)
+                          : '/assets/images/placeholder/test.png'"
+                          [alt]="data.productId.name" />
+                      </td>
+                      <td>
+                        {{data.name}}
+                        {{data.sku}}
+                      </td>
+                      <td>
+                        {{data.quantity}}
+                        <div class="inv-qty">INV-{{ data?.invoicedQuantity }}</div>
+                        <div class="rto-qty">RTO-{{ data?.returnedQuantity }}</div>
+                      </td>
+                      <td>{{data.price}}</td>
+                      <td>{{data.tax? data.tax : '0'}}</td>
+                      <td>0</td>
+                      <td>{{ getAmount(data) }}</td>
+                      <td>
+                        <span [style]="order.paymentStatus === 1 ? 'color:green': 'color:orange'">
+                          {{data.advanceAmount}}
+                        </span>
+                      </td>
+                    </tr>
                   </tbody>
                 </nz-table>
 
@@ -211,10 +213,7 @@
                         <h4>Shipping</h4>
                         <span>120 TK</span>
                       </div>
-                      <nz-divider
-                        style="margin: 10px 0"
-                        nzType="horizontal"
-                      ></nz-divider>
+                      <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
                       <div class="ammount_summary_single">
                         <h4></h4>
                         <span> Refundable Amount = 1200 TK</span>
@@ -223,10 +222,7 @@
                         <h4>Refund Amount</h4>
                         <span> <input nz-input value="1200" />TK </span>
                       </div>
-                      <nz-divider
-                        style="margin: 10px 0"
-                        nzType="horizontal"
-                      ></nz-divider>
+                      <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
                       <div class="ammount_summary_single">
                         <h4></h4>
                         <span> Refundable Amount = 0 TK</span>
@@ -256,587 +252,4 @@
       </nz-content>
     </nz-layout>
   </nz-card>
-</div>
-
-<!--order-details-->
-<div class="order_details">
-  <div class="order_details_left-sidebar">
-    <div class="order-details-left-sidebar-top">
-      <div class="order-details-left-top-dotted">
-        <div>
-          <button routerLink="/admin/regular-orders">
-            All Order <i class="fa fa-angle-down"></i>
-          </button>
-        </div>
-        <div class="dotted">
-          <span><i class="fa-solid fa-ellipsis"></i></span>
-        </div>
-      </div>
-      <!--search-->
-      <div class="top-search-area">
-        <div>
-          <button><i class="fa fa-search"></i></button>
-        </div>
-        <div class="search-input">
-          <input type="text" value="" placeholder="Search customer " />
-        </div>
-      </div>
-    </div>
-    <!---top-end-->
-    <!---order-details-right-side-bar-main-->
-    <div class="order-details-left-side-bar-main">
-      <div class="order-details-sidebar-info">
-        <ul>
-          <li
-            *ngFor="
-              let data of orders
-                | paginate
-                  : {
-                      itemsPerPage: ordersPerPage,
-                      currentPage: currentPage,
-                      totalItems: totalOrders
-                    };
-              let i = index
-            "
-            [class.active]="data?._id === id"
-            [routerLink]="['../../', 'order-details', data._id]"
-          >
-            <div class="sidebar-info-left">
-              {{ data?.name ? data?.name : data.phoneNo }}
-              <span [routerLink]="['../../', 'order-details', data._id]"
-                >{{ data?.orderId }}
-                |
-                <small>{{ data?.checkoutDate | date }}</small></span
-              >
-            </div>
-            <div class="sidebar-info-right">
-              <h4>{{ data?.totalAmount ? data?.totalAmount : 0 }} TK</h4>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!---end-->
-  </div>
-  <div class="order-details-container">
-    <form [formGroup]="dataForm">
-      <div class="order-id-area">
-        <h4>{{ order?.orderId }}</h4>
-        <span>{{ order?.checkoutDate | date: "short" }}</span>
-      </div>
-
-      <!---order-details-main-area-->
-      <div class="order-details-main">
-        <!---order-details-left-->
-        <div class="order-details-left">
-          <!---order-details-table-area-->
-          <div class="table-head-left">
-            <ul>
-              <li>
-                <span
-                  [class]="clickActive[0] ? 'menu-active' : ''"
-                  (click)="getOrderDetails()"
-                >
-                  Order Details
-                </span>
-              </li>
-              <li>
-                <span
-                  [class]="clickActive[1] ? 'menu-active' : ''"
-                  (click)="getInvoicesByOrderNo()"
-                >
-                  Invoices(100)
-                </span>
-              </li>
-              <li>
-                <span
-                  [class]="clickActive[2] ? 'menu-active' : ''"
-                  (click)="getReturns()"
-                >
-                  Return(100)
-                </span>
-              </li>
-            </ul>
-          </div>
-          <div class="table-head-right">
-            <span class="edit">
-              <i
-                class="fa fa-edit"
-                [routerLink]="['../../', 'edit-order', order?._id]"
-              >
-              </i>
-            </span>
-            <a
-              style="margin-right: 10px"
-              nz-button
-              nzType="primary"
-              [disabled]="selectedIds?.length < 1"
-              (click)="openDialog()"
-              type="button"
-            >
-              Invoice
-            </a>
-            <input
-              style="margin-right: 10px"
-              nz-input
-              type="text"
-              formControlName="statusNote"
-              placeholder="Write a note "
-            />
-            <button
-              style="margin-right: 10px"
-              nz-button
-              nzType="primary"
-              (click)="onOrderStatusChange()"
-            >
-              Send
-            </button>
-          </div>
-          <div></div>
-          <!---table-end-->
-          <div *ngFor="let products of vProducts">
-            <nz-table
-              class="table"
-              #columnTable
-              [nzData]="products.data"
-              [nzShowPagination]="false"
-              [nzTitle]="'Vendor Name : ' + products._id"
-            >
-              <thead>
-                <tr>
-                  <th nzLeft nzWidth="25px" class="check">
-                    <mat-checkbox></mat-checkbox>
-                  </th>
-                  <th nzLeft nzWidth="25px">Image</th>
-                  <th>Item Name</th>
-                  <th>Qty</th>
-                  <th>Price</th>
-                  <th>Tax (+)</th>
-                  <th>Discount (-)</th>
-                  <th>Total</th>
-                  <th>Advance</th>
-                  <th nzWidth="100px">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let data of columnTable.data; let i = index">
-                  <td nzWidth="25px" nzLeft>
-                    <mat-checkbox
-                      (change)="onCheckChange($event, i)"
-                    ></mat-checkbox>
-                  </td>
-                  <td nzLeft>
-                    <img
-                      nz-image
-                      width="50px"
-                      [nzSrc]="
-                        data.productId
-                          ? setThumbnailImage(data.productId)
-                          : '/assets/images/placeholder/test.png'
-                      "
-                      [alt]="data.productId.name"
-                    />
-                  </td>
-                  <td>
-                    <a
-                      target="_blank"
-                      [routerLink]="[
-                        '../../../',
-                        'product-details',
-                        data.productId.slug
-                      ]"
-                      class="text"
-                    >
-                      {{ data?.productId.name }}
-                    </a>
-                    {{ data?.sku }}
-                  </td>
-                  <td>
-                    <div>
-                      <b>{{ data?.quantity }}</b>
-                    </div>
-                    <div class="inv-qty">INV-{{ data?.invoicedQuantity }}</div>
-                    <div class="rto-qty">RTO-{{ data?.returnedQuantity }}</div>
-                  </td>
-                  <td>{{ data?.price }}</td>
-                  <td>
-                    {{ data.tax ? data.tax : "0" }}
-                  </td>
-                  <td>0</td>
-                  <td>{{ getAmount(data) }}</td>
-                  <td>
-                    <span
-                      [style]="
-                        order.paymentStatus !== 1
-                          ? 'color:green'
-                          : 'color:orange'
-                      "
-                      >{{ data.advance ? data.advance : 0 }}</span
-                    >
-                  </td>
-                  <td>
-                    <mat-form-field style="width: 100px" appearance="outline">
-                      <mat-select
-                        [(value)]="data.deliveryStatus"
-                        (selectionChange)="
-                          onStatusChange($event.value, order, data)
-                        "
-                      >
-                        <mat-option
-                          *ngFor="let option of productOrderStatus"
-                          [value]="option.value"
-                          [disabled]="option.disabled"
-                        >
-                          {{ option.viewValue }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </td>
-                </tr>
-              </tbody>
-            </nz-table>
-          </div>
-          <!---order-payment-details-->
-          <div class="order-pay-details">
-            <!--payment-summery-area-->
-            <div class="payment-summery-area">
-              <div class="total-area">
-                <ul>
-                  <li>
-                    <div class="total-title">
-                      <h3>Sub Total</h3>
-                    </div>
-                    <div class="total-price">
-                      <h4>{{ calculateSubTotal }} TK</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="total-title">
-                      <h3>Coupon Code</h3>
-                    </div>
-                    <div class="total-price">
-                      <h4 class="color-red">(-) 0 TK</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="total-title">
-                      <h3>Points Redeem</h3>
-                    </div>
-                    <div class="total-price">
-                      <h4 class="color-red">(-){{ 0 }} PTS</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="total-title">
-                      <!--<h3>Shipping Charge</h3>-->
-                    </div>
-                    <div class="total-price">
-                      <h4>{{ 120 }} TK</h4>
-                    </div>
-                  </li>
-                  <hr />
-                  <li>
-                    <div class="total-title">
-                      <h3>Amount to pay</h3>
-                    </div>
-                    <div class="total-price">
-                      <h4>{{ calculateSubTotal - 120 }} TK</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="total-title">
-                      <h3>Paid</h3>
-                    </div>
-                    <div class="total-price">
-                      <h4 class="color-red">(-) {{ 0 }}TK</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="total-title">
-                      <h3>Adjustment</h3>
-                    </div>
-                    <div class="total-price">
-                      <h4 class="color-red">(-) 0 TK</h4>
-                    </div>
-                  </li>
-                  <hr />
-                  <li>
-                    <div class="total-title">
-                      <h3>Due Amount</h3>
-                    </div>
-                    <div class="total-price">
-                      <h4>{{ 0 }} TK</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="total-title">
-                      <!--                          <p>Cancelled (SKU:{{getCancelSKU()}})</p>-->
-                      <!--                          <p >(-) &nbsp;{{calculateCancelTotal()}}TK</p>-->
-                      <h3>Cancelled(SKU:{{ getCancelSKU() }})</h3>
-                    </div>
-                    <div class="total-price">
-                      <h4 class="color-red">
-                        (-) {{ calculateCancelTotal() }} TK
-                      </h4>
-                    </div>
-                  </li>
-                  <hr />
-                  <li>
-                    <div class="total-title">
-                      <h3>Refundable Amount</h3>
-                    </div>
-                    <div class="total-price">
-                      <h4 class="color-red">- 0 TK</h4>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="total-title">
-                      <h3>Refund(SKU:676ds7)</h3>
-                    </div>
-                    <div class="total-price">
-                      <h4>(-) 0 TK</h4>
-                    </div>
-                  </li>
-                  <hr />
-                  <li>
-                    <div class="total-title">
-                      <h3>Total Due =</h3>
-                    </div>
-                    <div class="total-price">
-                      <h4>{{ calculateCancelTotal() }}</h4>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <!--payment-summery-area-end-->
-          </div>
-          <!---order-payment-details-end-->
-
-          <!---customer-msg-->
-          <!-- <div class="customer-msg">
-            <h3>Message From Customer</h3>
-            <p>{{order?.orderNotes}}</p>
-          </div> -->
-
-          <!---time-line--->
-          <div class="time-line-area">
-            <div class="time-line-title">
-              <h3>Timeline</h3>
-            </div>
-            <div class="timeline-main">
-              <ng-container
-                *ngIf="
-                  order &&
-                  order?.orderStatusTimeline &&
-                  order?.orderStatusTimeline.length
-                "
-              >
-                <ul
-                  *ngFor="let data of timelineStatus.reverse(); let i = index"
-                >
-                  <li>
-                    <div class="time-check">
-                      <span><i class="fa fa-check"></i></span>
-                    </div>
-                    <div class="timeline-info">
-                      <h3>{{ data?.status }}</h3>
-                      <p>Status: {{ data?.sku }} product {{ data?.status }}</p>
-                      <p class="date">{{ data?.dateTime | date: "medium" }}</p>
-                      <h4>{{ data?.statusNote }}</h4>
-                    </div>
-                  </li>
-                </ul>
-
-                <ul>
-                  <li>
-                    <div class="time-check">
-                      <span><i class="fa fa-check"></i></span>
-                    </div>
-                    <div class="timeline-info">
-                      <h3>{{ "Pending" }}</h3>
-                      <p>
-                        Thank you for placing for your order at Care me. We will
-                        start processing your order after payment is complete -
-                        Care me
-                      </p>
-                      <p class="date">
-                        {{ order?.checkoutDate | date: "medium" }}
-                      </p>
-                      <h4>{{ data?.statusNote }}</h4>
-                    </div>
-                  </li>
-                </ul>
-              </ng-container>
-              <ng-container
-                *ngIf="order && order?.orderStatusTimeline.length === 0"
-              >
-                <ul>
-                  <li>
-                    <div class="time-check">
-                      <span class="active-check"
-                        ><i class="fa fa-check"></i
-                      ></span>
-                    </div>
-                    <div class="timeline-info">
-                      <h3>{{ "Pending" }}</h3>
-                      <p>
-                        Thank you for placing for your order at Care me. We will
-                        start processing your order after payment is complete -
-                        Care me
-                      </p>
-                      <p class="date">
-                        {{ order?.checkoutDate | date: "medium" }}
-                      </p>
-                      <h4>{{ data?.statusNote }}</h4>
-                    </div>
-                  </li>
-                </ul>
-              </ng-container>
-            </div>
-          </div>
-        </div>
-
-        <!---order-details-left-end-->
-        <!---order-details-right-->
-        <div class="order-details-right">
-          <!---delivery-info-->
-          <div class="delivery-info">
-            <!--customer-title-->
-            <div class="customer-title">
-              <h3>Delivery Info</h3>
-            </div>
-            <!--customer-title-end-->
-            <!---delivery-data-->
-            <div class="delivery-data">
-              <ul>
-                <li>
-                  <div>
-                    <h3>Shipped By:</h3>
-                  </div>
-                  <div>
-                    <span>Pathao</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <h3>Weight:</h3>
-                  </div>
-                  <div>
-                    <span>2kg</span>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <h3>Cost:</h3>
-                  </div>
-                  <div>
-                    <span>700 TK</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!---delivery-info-end-->
-
-          <!---customer-info-->
-          <div class="customer-info-area">
-            <!--customer-title-->
-            <div class="customer-title">
-              <h3>Customer Info</h3>
-            </div>
-            <!--customer-title-end-->
-            <!---customer-info--->
-            <div class="customer-info">
-              <ul>
-                <li>
-                  <div class="customer-info-left">
-                    <h3>Name:</h3>
-                  </div>
-                  <div class="customer-info-right">
-                    <h4>
-                      {{ order?.name }}
-                    </h4>
-                  </div>
-                </li>
-                <li>
-                  <div class="customer-info-left">
-                    <h3>Phone No:</h3>
-                  </div>
-                  <div class="customer-info-right">
-                    <h4>
-                      {{ order?.phoneNo }}
-                    </h4>
-                  </div>
-                </li>
-                <li>
-                  <div class="customer-info-left">
-                    <h3>Email:</h3>
-                  </div>
-                  <div class="customer-info-right">
-                    <a href="#">{{ order?.email }}</a>
-                  </div>
-                </li>
-                <li>
-                  <div class="customer-info-left">
-                    <h3>Shipping Address:</h3>
-                  </div>
-                  <div class="customer-info-right">
-                    <h3>{{ order?.shippingAddress }}</h3>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!---customer-info-end-->
-
-          <!---comment-->
-          <div class="customer-comment">
-            <div class="customer-title">
-              <h3>Comments</h3>
-            </div>
-            <div class="customer-comment-main">
-              <mat-form-field class="form-field" appearance="overlay">
-                <textarea
-                  rows="5"
-                  formControlName="comment"
-                  [(ngModel)]="commentEmpty"
-                  matInput
-                  placeholder="..."
-                ></textarea>
-              </mat-form-field>
-            </div>
-            <button (click)="addNewComment()">Add</button>
-          </div>
-          <!---comment-end-->
-
-          <!---order-confirm-status-->
-          <div class="order-confirm-status">
-            <!---status-info-->
-            <div class="status-info"></div>
-            <!---status-info-end-->
-            <!---status-info-->
-            <div
-              class="status-info"
-              *ngFor="let c of order?.comments.reverse(); let i = index"
-            >
-              <!--status-check-->
-              <div class="status-check" *ngIf="i === 0">
-                <span class="active-status"><i class="fa fa-check"></i></span>
-              </div>
-              <div class="status-check" *ngIf="i !== 0">
-                <span><i class="fa fa-check"></i></span>
-              </div>
-              <!--status-type-->
-              <div class="status-type">
-                <p class="admin_name">{{ admin?.name }}</p>
-                <p class="admin_massage">{{ c }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!---order-details-main-area-end-->
-    </form>
-  </div>
 </div>
