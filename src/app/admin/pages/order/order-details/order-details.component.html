@@ -28,7 +28,12 @@
               </nz-dropdown-menu>
             </a>
             <nz-button-group>
-              <button nz-button nz-dropdown [nzDropdownMenu]="actionMenu" nzPlacement="bottomRight">
+              <button
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="actionMenu"
+                nzPlacement="bottomRight"
+              >
                 <span nz-icon nzType="ellipsis"></span>
               </button>
               <nz-dropdown-menu #actionMenu="nzDropdownMenu">
@@ -43,7 +48,11 @@
           <input nz-input placeholder="Basic usage" />
         </div>
         <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
-          <li nz-menu-item *ngFor="let data of orders" [routerLink]="['../../', 'order-details', data._id]">
+          <li
+            nz-menu-item
+            *ngFor="let data of orders"
+            [routerLink]="['../../', 'order-details', data._id]"
+          >
             <div class="left">
               <h4>{{ data?.orderId }}</h4>
               <h5>{{ data?.checkoutDate | date: "short" }}</h5>
@@ -61,17 +70,21 @@
           <h5>{{ order?.checkoutDate | date: "short" }}</h5>
         </div>
         <nz-tabset [nzTabBarExtraContent]="extraTemplate">
-          <nz-tab *ngFor="let tab of bodyTabs" [nzTitle]="tab.name" [nzDisabled]="tab.disabled">
+          <nz-tab
+            *ngFor="let tab of bodyTabs"
+            [nzTitle]="tab.name"
+            [nzDisabled]="tab.disabled"
+          >
             <div class="refund_details_body">
               <div nz-row [nzGutter]="16">
-                <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 10 }">
+                <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
                   <h2>Order Details</h2>
                   <table>
                     <tbody>
                       <tr>
                         <td>Shipped by</td>
                         <td>:</td>
-                        <td> Pathao </td>
+                        <td>Pathao</td>
                       </tr>
                       <tr>
                         <td>Weight</td>
@@ -92,73 +105,128 @@
                         <td>Note</td>
                         <td>:</td>
                         <td>
-                          <div>
-                            <p>Sunday office hour er moddhe amar product ta delivery dewar try korben. Thank you.</p>
-                          </div>
+                          Sunday office hour er moddhe amar product ta delivery
+                          dewar try korben. Thank you.
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12,  offset: 2 }">
-                  <h2>Delivery Details</h2>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>Name</td>
-                        <td>:</td>
-                        <td><a>Md. Rahim</a></td>
-                      </tr>
-                      <tr>
-                        <td>Phone No</td>
-                        <td>:</td>
-                        <td>01619187770</td>
-                      </tr>
-                      <tr>
-                        <td>Shipping to</td>
-                        <td>:</td>
-                        <td>57/12 Sonargong Plaza, Panthapath Signal, Dhaka.</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <h2>Customer Details</h2>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>Name</td>
-                        <td>:</td>
-                        <td><a>Md. Karim Khan</a></td>
-                      </tr>
-                      <tr>
-                        <td>Phone No</td>
-                        <td>:</td>
-                        <td>01619187770</td>
-                      </tr>
-                      <tr>
-                        <td>Email</td>
-                        <td>:</td>
-                        <td>fortunetech@gmail.com</td>
-                      </tr>
-                      <tr>
-                        <td>Shipping to</td>
-                        <td>:</td>
-                        <td>57/12 Sonargong Plaza, Panthapath Signal, Dhaka.</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 16 }">
+                  <div nz-row [nzGutter]="16">
+                    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 16 }">
+                      <h2>Delivery Details</h2>
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td>Name</td>
+                            <td>:</td>
+                            <td>Md. Rahim</td>
+                          </tr>
+                          <tr>
+                            <td>Phone No</td>
+                            <td>:</td>
+                            <td>
+                              01619187770 <i class="las la-lg la-sms"></i>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Shipping to</td>
+                            <td>:</td>
+                            <td>
+                              57/12 Sonargong Plaza, Panthapath Signal, Dhaka.
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <h2>Customer Details</h2>
+                      <table class="customer_details">
+                        <tbody>
+                          <tr>
+                            <td>Name</td>
+                            <td>:</td>
+                            <td>
+                              <a href="#">
+                                Md. Karim Khan <i class="las la-medal"></i>
+                              </a>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Phone No</td>
+                            <td>:</td>
+                            <td>01619187770</td>
+                          </tr>
+                          <tr>
+                            <td>Email</td>
+                            <td>:</td>
+                            <td>fortunetech@gmail.com</td>
+                          </tr>
+                          <tr>
+                            <td>Shipping to</td>
+                            <td>:</td>
+                            <td>
+                              57/12 Sonargong Plaza, Panthapath Signal, Dhaka.
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Total Orders</td>
+                            <td>:</td>
+                            <td>
+                              <span class="total-order"> 15 </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
+                      <div class="customadmin_note">
+                        <div class="text_area">
+                          <textarea
+                            rows="2"
+                            nz-input
+                            [(ngModel)]="inputValue"
+                            placeholder="this comment only for admin ..."
+                          ></textarea>
+                          <button nz-button nzType="default">
+                            Add Comment
+                          </button>
+                        </div>
+                        <div class="timeline">
+                          <nz-timeline>
+                            <nz-timeline-item>
+                              <p>Customer say send later</p>
+                              <span>2015-09-01 by Omi</span>
+                            </nz-timeline-item>
+                            <nz-timeline-item>
+                              <p>Customer did not pick</p>
+                              <span>2015-09-01 by Omi</span>
+                            </nz-timeline-item>
+                            <nz-timeline-item>
+                              <p>Customer did not pick call</p>
+                              <span>2015-09-01 by Omi</span>
+                            </nz-timeline-item>
+                          </nz-timeline>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <nz-card class="refund_details_body-product" nzSize="small">
-
-
-
-                <nz-table #rowSelectProduct [nzFrontPagination]="false" [nzData]="products"
-                  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+                <nz-table
+                  #rowSelectProduct
+                  [nzFrontPagination]="false"
+                  [nzData]="products"
+                  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+                >
                   <thead>
                     <tr>
-                      <th nzWidth="25px" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
-                        (nzCheckedChange)="onAllChecked($event)"></th>
+                      <th
+                        [(nzChecked)]="checked"
+                        [nzIndeterminate]="indeterminate"
+                        (nzCheckedChange)="onAllChecked($event)"
+                      ></th>
                       <th>Image</th>
                       <th>Item Details</th>
                       <th>Qty</th>
@@ -167,36 +235,74 @@
                       <th>Discount (-)</th>
                       <th>Total</th>
                       <th>Advance</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let data of rowSelectProduct.data; let i = index">
-                      <td nzWidth="25px" [nzChecked]="setOfCheckedId.has(data.id)"
-                        (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+                    <tr
+                      *ngFor="let data of rowSelectProduct.data; let i = index"
+                    >
+                      <td
+                        [nzChecked]="setOfCheckedId.has(data.id)"
+                        (nzCheckedChange)="onItemChecked(data.id, $event)"
+                      ></td>
                       <td>
-                        <img nz-image width="50px"
-                        [nzSrc]="data.productId
-                          ? setThumbnailImage(data.productId)
-                          : '/assets/images/placeholder/test.png'"
-                          [alt]="data.productId.name" />
+                        <img
+                          nz-image
+                          width="50px"
+                          [nzSrc]="
+                            data.productId
+                              ? setThumbnailImage(data.productId)
+                              : '/assets/images/placeholder/test.png'
+                          "
+                          [alt]="data.productId.name"
+                        />
                       </td>
                       <td>
-                        {{data.name}}
-                        {{data.sku}}
+                        {{ data.name }}
+                        {{ data.sku }}
                       </td>
                       <td>
-                        {{data.quantity}}
-                        <div class="inv-qty">INV-{{ data?.invoicedQuantity }}</div>
-                        <div class="rto-qty">RTO-{{ data?.returnedQuantity }}</div>
+                        {{ data.quantity }}
+                        <div class="inv-qty">
+                          INV-{{ data?.invoicedQuantity }}
+                        </div>
+                        <div class="rto-qty">
+                          RTO-{{ data?.returnedQuantity }}
+                        </div>
                       </td>
-                      <td>{{data.price}}</td>
-                      <td>{{data.tax? data.tax : '0'}}</td>
+                      <td>{{ data.price }}</td>
+                      <td>{{ data.tax ? data.tax : "0" }}</td>
                       <td>0</td>
                       <td>{{ getAmount(data) }}</td>
                       <td>
-                        <span [style]="order.paymentStatus === 1 ? 'color:green': 'color:orange'">
-                          {{data.advanceAmount}}
-                        </span>
+                        <p
+                          [style]="
+                            order.paymentStatus === 1
+                              ? 'color:orange'
+                              : 'color:green'
+                          "
+                        >
+                          {{ data.advanceAmount }}
+                        </p>
+                      </td>
+                      <td>
+                        <a
+                          class="btn"
+                          nz-dropdown
+                          [nzDropdownMenu]="itemStatus"
+                          nzTrigger="click"
+                        >
+                          Pending <i class="las la-angle-down"></i>
+                        </a>
+                        <nz-dropdown-menu #itemStatus="nzDropdownMenu">
+                          <ul nz-menu nzSelectable>
+                            <li nz-menu-item>Cancel</li>
+                            <li nz-menu-item>Confirmed</li>
+                            <li nz-menu-item [nzDisabled]="true">Shipped</li>
+                            <li nz-menu-item [nzDisabled]="true">Delivered</li>
+                          </ul>
+                        </nz-dropdown-menu>
                       </td>
                     </tr>
                   </tbody>
@@ -210,35 +316,69 @@
                         <span>1200 TK</span>
                       </div>
                       <div class="ammount_summary_single">
+                        <h4>
+                          Coupon Code
+                          <span><i class="las la-tag"></i>CAREME15%</span>
+                        </h4>
+                        <span>0 TK</span>
+                      </div>
+                      <div class="ammount_summary_single">
+                        <h4>Points Redeem</h4>
+                        <span>120 TK</span>
+                      </div>
+                      <div class="ammount_summary_single">
                         <h4>Shipping</h4>
                         <span>120 TK</span>
                       </div>
-                      <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
+                      <nz-divider
+                        style="margin: 10px 0"
+                        nzType="horizontal"
+                      ></nz-divider>
                       <div class="ammount_summary_single">
                         <h4></h4>
-                        <span> Refundable Amount = 1200 TK</span>
+                        <span> Amount to pay = 1200 TK</span>
                       </div>
                       <div class="ammount_summary_single mt15">
-                        <h4>Refund Amount</h4>
-                        <span> <input nz-input value="1200" />TK </span>
+                        <h4>Paid</h4>
+                        <span>120 TK</span>
                       </div>
-                      <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
+                      <div class="ammount_summary_single mt15">
+                        <h4>Adjustment</h4>
+                        <span>0.00 TK</span>
+                      </div>
+                      <nz-divider
+                        style="margin: 10px 0"
+                        nzType="horizontal"
+                      ></nz-divider>
                       <div class="ammount_summary_single">
                         <h4></h4>
-                        <span> Refundable Amount = 0 TK</span>
+                        <span> Due Amount = 0 TK</span>
+                      </div>
+                      <div class="ammount_summary_single mt15">
+                        <h4>Cancelled (SKU: 5045844)</h4>
+                        <span>0.00 TK</span>
+                      </div>
+                      <nz-divider
+                        style="margin: 10px 0"
+                        nzType="horizontal"
+                      ></nz-divider>
+                      <div class="ammount_summary_single">
+                        <h4></h4>
+                        <span> Refundable Amount = 0.00 TK</span>
+                      </div>
+                      <div class="ammount_summary_single mt15">
+                        <h4>Refund (SKU: 5045844)</h4>
+                        <span>0.00 TK</span>
+                      </div>
+                      <nz-divider
+                        style="margin: 10px 0"
+                        nzType="horizontal"
+                      ></nz-divider>
+                      <div class="ammount_summary_single">
+                        <h4></h4>
+                        <span> Due Amount = 0 TK</span>
                       </div>
                     </nz-card>
-                  </div>
-
-                  <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-                    <div class="action_btn">
-                      <button nzSize="large" nz-button nzType="default">
-                        Reject
-                      </button>
-                      <button nzSize="large" nz-button nzType="primary">
-                        Save
-                      </button>
-                    </div>
                   </div>
                 </div>
               </nz-card>
@@ -246,8 +386,12 @@
           </nz-tab>
         </nz-tabset>
         <ng-template #extraTemplate>
-          <button nz-button [routerLink]="['../../', 'edit-order', order?._id]"><i class="lar la-edit"></i></button>
-          <button nz-button (click)="openDialog()"><i class="las la-file-invoice"></i></button>
+          <button nz-button [routerLink]="['../../', 'edit-order', order?._id]">
+            <i class="lar la-edit"></i>
+          </button>
+          <button nz-button (click)="openDialog()">
+            <i class="las la-file-invoice"></i>
+          </button>
         </ng-template>
       </nz-content>
     </nz-layout>
