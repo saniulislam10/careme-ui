@@ -35,7 +35,7 @@ export class InvoiceComponent implements OnInit {
 
   //subscription
   private subRouteOne?: Subscription;
-  returnProducts: any;
+  returnProducts: any[] = [];
   loading: boolean;
   file: FileList | any;
 
@@ -86,8 +86,8 @@ export class InvoiceComponent implements OnInit {
 
   createReturnButton() {
     this.isVisible = true;
-    this.returnProducts = this.invoice.products;
-
+    this.invoice.products;
+    this.setReturnProducts(this.invoice.products);
   }
 
   handleCancel(): void {
@@ -179,6 +179,19 @@ export class InvoiceComponent implements OnInit {
       this.loading = false;
     })
 
+  }
+
+  deleteFromReturn(i){
+    let newProducts = this.returnProducts.splice(i, 1);
+    this.setReturnProducts(newProducts);
+  }
+
+  setReturnProducts(products){
+    this.returnProducts = products;
+  }
+
+  getReturnProducts(){
+    return this.returnProducts
   }
 
 

@@ -5,7 +5,7 @@ export interface Refund {
   orderNumber: String,
   invoiceId: any,
   customerName?: string,
-  products: [],
+  products: any[],
   paymentBy: String,
   paymentOptions: String,
   phoneNo: String,

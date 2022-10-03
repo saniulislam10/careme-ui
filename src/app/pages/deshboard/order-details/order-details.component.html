@@ -88,7 +88,7 @@
             <th>Advance Amount</th>
             <th>Payment Status</th>
             <th></th>
-            <th><a class="track-order">Track Order</a></th>
+            <th><a [routerLink]="['../../', 'order-single-product-details', order.orderId]" class="track-order">Track Order</a></th>
           </tr>
         </thead>
         <tbody>
@@ -98,15 +98,11 @@
                 <img
                   nz-image
                   style="width: 80px"
-                  [nzSrc]="
-                    setThumbnailImage(data.product)
-                      ? setThumbnailImage(data.product)
-                      : '/assets/images/placeholder/test.png'
-                  "
-                  alt=""
+                  [nzSrc]="thumbnailImage ? thumbnailImage : '/assets/image/placeholder/test.png'"
+                  [alt]="data.name"
                 />
                 <div class="producttitle">
-                  <h4>{{ data.product.name }}</h4>
+                  <h4>{{ data.name }}</h4>
                   <span> SKU: {{ data.sku }} </span>
                 </div>
               </div>
@@ -124,11 +120,12 @@
             <td class="estimated-time instock">
               <h3>
                 Estimated Delivery by
-                <span>{{ data?.deliveryDate | date: "short" }}</span>
+                <span>{{ data?.deliveryDateTo | date: "d MMM" }}</span>
               </h3>
             </td>
             <td class="order-status">
-              <span>{{ data.status | orderStatus }}</span>
+              <!-- <span>{{ data.status | orderStatus }}</span> -->
+              <span>Pending</span>
             </td>
           </tr>
         </tbody>
@@ -166,7 +163,7 @@
           <nz-list>
             <nz-list-item>
               <h2>Sub-Total</h2>
-              <h3>08098</h3>
+              <h3>{{getSubTotal()}}</h3>
             </nz-list-item>
             <nz-list-item>
               <span>Coupon Code</span>

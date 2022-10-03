@@ -3,20 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 
-interface ChildrenItemData {
-  name: string;
-  sku: string;
-  variantName: string;
-  qty: number;
-  total: number;
-  advance: number;
-  advanceType: number;
-  advanceInTaka: number;
-  paymentStatus: string;
-  orderStatus: string;
-  deliveryDate: Date;
-}
-
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
@@ -31,11 +17,12 @@ export class OrderDetailsComponent implements OnInit {
     'Los Angeles battles huge wildfires.',
   ];
 
-  listOfChildrenData: ChildrenItemData[] = [];
+  listOfChildrenData: any[] = [];
   order: any;
   id: any;
   subRouteOne: any;
   index: string;
+  thumbnailImage: any;
 
   constructor(
     private orderService: OrderService,
@@ -67,6 +54,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   getOrderById(id) {
+    console.log(id);
     this.orderService.getOrderDetails(id).subscribe(
       (res) => {
         this.order = res.data;
@@ -80,8 +68,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   setThumbnailImage(data) {
-    let images = this.getImages(data.medias, data.images);
-    return images[0];
+    this.thumbnailImage = data.images? data.images[0] : data.medias[0];
   }
 
   getImages(medias, images) {
@@ -99,4 +86,14 @@ export class OrderDetailsComponent implements OnInit {
     }
     return allMedias;
   }
+
+  getSubTotal(){
+    let total = 0;
+     this.listOfChildrenData.forEach(m => {
+      total += m.price
+    })
+    console.log(total);
+    return total;
+  }
+
 }

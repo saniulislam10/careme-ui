@@ -1,3 +1,5 @@
+import { Invoice } from './../../../interfaces/invoice';
+import { InvoiceService } from './../../../services/invoice.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { FormBuilder } from '@angular/forms';
@@ -9,6 +11,8 @@ import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/interfaces/order';
 import { Subscription } from 'rxjs';
 import { ReviewService } from 'src/app/services/review.service';
+import { Return } from 'src/app/interfaces/return';
+import { ReturnService } from 'src/app/services/return.service';
 
 
 interface ChildrenItemData {
@@ -37,7 +41,7 @@ export class OrderSingleProductDetailsComponent implements OnInit {
   currentDate : Date = new Date();
   subRouteOne: Subscription;
   id: string;
-  order: Order;
+  invoices: Invoice[] = [];
   index: number;
   data: any;
   mode : NzTimelineMode = 'left';
@@ -48,12 +52,18 @@ export class OrderSingleProductDetailsComponent implements OnInit {
   productId : any;
   orderNo: any;
   sku: any;
+  isVisible : boolean = false;
+  loading: boolean = false;
+  checked: any;
+  returnInvoice: any;
+  returnProducts: any[] = [];
   constructor(
     private activatedRoute: ActivatedRoute,
-    private orderService: OrderService,
+    private invoiceService: InvoiceService,
     private userDataService: UserDataService,
     private reviewService: ReviewService,
-    private message: NzMessageService,
+    private returnService: ReturnService,
+    private msg: NzMessageService,
     private fb: FormBuilder
   ) { }
 
@@ -61,10 +71,7 @@ export class OrderSingleProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
       this.id = param.get('id');
-      this.index = Number(param.get('index'));
-      if (this.index >=0 ) {
-        this.getOrderById(this.id, this.index);
-      }
+      this.getAllInvoiceByOrderId(this.id);
     });
 
     this.initReviewForm();
@@ -77,7 +84,7 @@ export class OrderSingleProductDetailsComponent implements OnInit {
     .subscribe(res =>{
       this.userId = res.data._id;
     }, err => {
-      this.message.create('error', err);
+      this.msg.create('error', err);
     })
   }
 
@@ -87,12 +94,11 @@ export class OrderSingleProductDetailsComponent implements OnInit {
     })
   }
 
-  getOrderById(id, index){
-    this.orderService.getOrderDetails(id)
+  getAllInvoiceByOrderId(id){
+    this.invoiceService.getAllInvoicesByOrderNo(id)
     .subscribe( res => {
-      this.order = res.data;
-      this.listOfChildrenData.push(this.order.orderedItems[index]);
-      console.log(this.listOfChildrenData);
+      this.invoices = res.data;
+      console.log(this.invoices);
     }, err => {
       console.log(err);
     })
@@ -121,7 +127,7 @@ export class OrderSingleProductDetailsComponent implements OnInit {
 
   handleOk() {
     if(this.reviewForm.invalid){
-      this.message.create('warning', "Provide your review before submitting");
+      this.msg.create('warning', "Provide your review before submitting");
       return
     }
 
@@ -136,9 +142,9 @@ export class OrderSingleProductDetailsComponent implements OnInit {
     }
     this.reviewService.add(data)
     .subscribe(res => {
-      this.message.create('success', res.message);
+      this.msg.create('success', res.message);
     }, err=>{
-      this.message.create('error', err);
+      this.msg.create('error', err);
     })
     this.productId = null;
     this.orderNo = null;
@@ -159,6 +165,55 @@ export class OrderSingleProductDetailsComponent implements OnInit {
     this.orderNo = orderNo;
     this.sku = sku;
     this.isVisibleTop = true;
+  }
+
+  showReturn(invoice, product){
+    this.isVisible = true;
+    console.log(invoice)
+    this.returnInvoice = invoice;
+    this.returnProducts[0]=product;
+  }
+
+  returnCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
+  }
+  submitReturn(){
+    console.log('Button ok clicked!');
+    this.loading = true;
+    this.placeReturn(this.returnInvoice, this.returnProducts);
+  }
+  placeReturn(invoice, products){
+    console.log(invoice)
+    console.log(products)
+    let returnId;
+    let returnData:Return = {
+      invoiceId: invoice._id,
+      orderNumber: invoice.orderNumber,
+      returnDate: new Date(),
+      customerName: invoice.customerName,
+      billingAddress: invoice.billingAddress,
+      shippingAddress: invoice.shippingAddress,
+      subTotal: invoice.subTotal,
+      adjustment: 0,
+      deliveryFee: 120,
+      total: invoice.total,
+      products: products
+    }
+    this.returnService.placeReturn(returnData)
+    .subscribe(res => {
+      returnId = res.returnId
+      let message = res.message + ". Return Id: "+ res.returnId;
+      this.msg.success(message, {
+        nzDuration: 10000
+      });
+      this.loading = false;
+      this.isVisible = false;
+      }, err=>{
+      this.msg.create('error',err.message);
+      this.loading = false;
+    })
+    return returnId;
   }
 
 }

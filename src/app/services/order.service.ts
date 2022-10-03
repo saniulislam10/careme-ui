@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {environment} from '../../environments/environment';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 // import {SslInit} from '../interfaces/ssl-init';
-import {Order} from '../interfaces/order';
-import {Product} from '../interfaces/product';
-import {Pagination} from '../interfaces/pagination';
-import {ProductFilter} from '../interfaces/product-filter';
+import { Order } from '../interfaces/order';
+import { Product } from '../interfaces/product';
+import { Pagination } from '../interfaces/pagination';
+import { ProductFilter } from '../interfaces/product-filter';
 // import {OrderFilter} from '../admin/pages/orders/orders.component';
 
 
@@ -24,7 +24,7 @@ export class OrderService {
   /**
    * ORDER
    */
-   editOrder(data: Order) {
+  editOrder(data: Order) {
     return this.httpClient.post<{ _id: string; orderId: any; message: string; success: boolean }>(API_ORDER + 'edit-order', data);
   }
   placeOrder(data: Order) {
@@ -38,78 +38,56 @@ export class OrderService {
   }
 
   placeTempOrder(data: any) {
-    return this.httpClient.post<{ _id: string; orderId: any; message: string; success: boolean }>(API_ORDER+ 'place-temp-order', data);
+    return this.httpClient.post<{ _id: string; orderId: any; message: string; success: boolean }>(API_ORDER + 'place-temp-order', data);
   }
 
   updateOrderSessionKey(tranId: string, sessionkey: string) {
     return this.httpClient.post<{ message: string }>(API_ORDER + 'update-session-key/' + tranId + '/' + sessionkey, {});
   }
 
-  getAllOrdersByUser(pagination?: Pagination, select?: string,id?:string) {
-    let params = new HttpParams();
-
-     if(id)
-     {
-       params = params.append('id',id)
-     }
-     if (pagination) {
-       params = params.append('pageSize', pagination.pageSize);
-       params = params.append('page', pagination.currentPage);
-       if (select) {
-        params = params.append('select', select);
-      }
-      return this.httpClient.get<{ data: Order[], count: number, message?: string }>
-      (API_ORDER + 'get-all-orders-by-user', {params});
-    } else {
-      if (select) {
-        params = params.append('select', select);
-      }
-      return this.httpClient.get<{ data: Order[], count: number, message?: string }>
-      (API_ORDER + 'get-all-orders-by-user', {params});
-    }
+  getAllOrdersByUser(pagination?: Pagination, select?: string, id?: string) {
+    return this.httpClient.get<{ data: Order[], count: number, message?: string }>(API_ORDER + 'get-all-orders-by-user');
   }
 
-  getAllOrdersByUserOrderId( id:string, select?: string,) {
+  getAllOrdersByUserOrderId(id: string, select?: string,) {
     let params = new HttpParams();
 
-     if(id)
-     {
-      console.log("param id ",id)
+    if (id) {
+      console.log("param id ", id)
 
-       params = params.append('id',id)
-     }
+      params = params.append('id', id)
+    }
 
+    if (select) {
+      params = params.append('select', select);
+    }
+
+    return this.httpClient.get<{ data: Order[], count: number, message?: string }>
+      (API_ORDER + 'get-orders-by-user-orderId', { params });
+  }
+
+
+
+  getAllOrdersofyUserByAdmin(pagination?: Pagination, select?: string, userId?: string) {
+    let params = new HttpParams();
+
+    if (userId) {
+      params = params.append('userId', userId)
+    }
+    if (pagination) {
+      params = params.append('pageSize', pagination.pageSize);
+      params = params.append('page', pagination.currentPage);
       if (select) {
         params = params.append('select', select);
       }
-
       return this.httpClient.get<{ data: Order[], count: number, message?: string }>
-      (API_ORDER + 'get-orders-by-user-orderId', {params});
-    }
-
-
-
-  getAllOrdersofyUserByAdmin(pagination?: Pagination, select?: string,userId?:string) {
-    let params = new HttpParams();
-
-     if(userId)
-     {
-       params = params.append('userId',userId)
-     }
-     if (pagination) {
-       params = params.append('pageSize', pagination.pageSize);
-       params = params.append('page', pagination.currentPage);
-       if (select) {
-        params = params.append('select', select);
-      }
-      return this.httpClient.get<{ data: Order[], count: number, message?: string }>
-      (API_ORDER + 'get-all-orders-of-user-by-admin', {params});
+        (API_ORDER + 'get-all-orders-of-user-by-admin', { params });
     } else {
       if (select) {
         params = params.append('select', select);
       }
       return this.httpClient.get<{ data: Order[], count: number, message?: string }>
-      (API_ORDER + 'get-all-orders-of-user-by-admin', {params});
+        (API_ORDER + 'get-all-orders-of-user-by-admin', { params });
     }
   }
 
@@ -141,13 +119,13 @@ export class OrderService {
         params = params.append('select', select);
       }
       return this.httpClient.get<{ data: Order[], count: number, message?: string }>
-      (API_ORDER + 'get-all-transactions-by-user', {params});
+        (API_ORDER + 'get-all-transactions-by-user', { params });
     } else {
       if (select) {
         params = params.append('select', select);
       }
       return this.httpClient.get<{ data: Order[], count: number, message?: string }>
-      (API_ORDER + 'get-all-transactions-by-user', {params});
+        (API_ORDER + 'get-all-transactions-by-user', { params });
     }
   }
 
@@ -160,8 +138,8 @@ export class OrderService {
   // }
 
 
-  getAllOrdersByAdmin(paginate?: Pagination, sort?: any, filter?: any, select?: string, ) {
-    return this.httpClient.post<{ data: Order[], priceRange: any, count: number}>(API_ORDER + 'get-all-orders-by-admin', {paginate, sort, filter, select});
+  getAllOrdersByAdmin(paginate?: Pagination, sort?: any, filter?: any, select?: string,) {
+    return this.httpClient.post<{ data: Order[], priceRange: any, count: number }>(API_ORDER + 'get-all-orders-by-admin', { paginate, sort, filter, select });
   }
 
   getOrdersBySearch(searchTerm: string, pagination?: Pagination, filter?: any) {
@@ -172,18 +150,18 @@ export class OrderService {
       params = params.append('pageSize', pagination.pageSize);
       params = params.append('currentPage', pagination.currentPage);
     }
-    return this.httpClient.post<{ data: Order[], count: number }>(API_ORDER + 'get-order-by-search', {filter}, {params});
+    return this.httpClient.post<{ data: Order[], count: number }>(API_ORDER + 'get-order-by-search', { filter }, { params });
   }
-  getSelectedOrderDetails(selectedIds:string[]){
-    return this.httpClient.post<{ data: Order[], count: number }>(API_ORDER + 'get-selected-order-details', {selectedIds});
+  getSelectedOrderDetails(selectedIds: string[]) {
+    return this.httpClient.post<{ data: Order[], count: number }>(API_ORDER + 'get-selected-order-details', { selectedIds });
   }
 
   getAllOrdersByAdminNoPaginate() {
-      return this.httpClient.get<{ data: Order[]}>(API_ORDER + 'get-all-orders-by-admin-no-paginate');
+    return this.httpClient.get<{ data: Order[] }>(API_ORDER + 'get-all-orders-by-admin-no-paginate');
   }
 
   changeOrderStatus(data: any) {
-    return this.httpClient.put<{ message: string }>(API_ORDER + 'change-order-status' , data);
+    return this.httpClient.put<{ message: string }>(API_ORDER + 'change-order-status', data);
   }
 
   // router.get('/get-all-transaction-by-admin', checkAdminAuth, controller.getAllTransactionByAdmin);
@@ -198,13 +176,13 @@ export class OrderService {
         params = params.append('select', select);
       }
       return this.httpClient.get<{ data: Order[], count: number, message?: string }>
-      (API_ORDER + 'get-all-transaction-by-admin', {params});
+        (API_ORDER + 'get-all-transaction-by-admin', { params });
     } else {
       if (select) {
         params = params.append('select', select);
       }
       return this.httpClient.get<{ data: Order[], count: number, message?: string }>
-      (API_ORDER + 'get-all-transaction-by-admin', {params});
+        (API_ORDER + 'get-all-transaction-by-admin', { params });
     }
   }
 
@@ -212,12 +190,12 @@ export class OrderService {
     return this.httpClient.get<any>(API_ORDER + 'sent-test-ssl-message');
   }
 
-  updateOrderById(data){
-    return this.httpClient.put<{message: string}>(API_ORDER + 'update-order-by-id', data);
+  updateOrderById(data) {
+    return this.httpClient.put<{ message: string }>(API_ORDER + 'update-order-by-id', data);
   }
 
-  updateRequestOrderById(data){
-    return this.httpClient.put<{message: string}>(API_ORDER + 'update-request-order-by-id', data);
+  updateRequestOrderById(data) {
+    return this.httpClient.put<{ message: string }>(API_ORDER + 'update-request-order-by-id', data);
   }
 
   // router.get('/sent-test-ssl-message', controller.testSslSmsApi);

@@ -117,7 +117,7 @@
             </thead>
 
             <tbody>
-              <tr *ngFor="let data of invoice.products; let i = index">
+              <tr *ngFor="let data of invoice?.products; let i = index">
                 <!-- {{data | json}} -->
                 <td class="items_middle">{{ i + 1 }}</td>
                 <td class="items_left">
@@ -233,7 +233,7 @@
       </div>
     </div>
     <form>
-      <nz-table #return [nzLoading]="loading" [nzData]="returnProducts" [nzShowPagination]="false">
+      <nz-table #return [nzLoading]="loading" [nzData]="getReturnProducts()" [nzShowPagination]="false">
         <thead>
           <tr>
             <th>Name</th>
@@ -242,16 +242,18 @@
             <th>quantity</th>
             <th>price</th>
             <th>tax</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of return.data">
+          <tr *ngFor="let data of returnProducts; let i=index">
             <td>{{data.name}}</td>
             <td>{{data.variant}}</td>
             <td>{{data.sku}}</td>
             <td>{{data.quantity}}</td>
             <td>{{data.price}}</td>
             <td>{{data.tax}}</td>
+            <td><button nz-icon nzType="delete" nzTheme="outline" (click)="deleteFromReturn(i)"></button></td>
           </tr>
         </tbody>
       </nz-table>
