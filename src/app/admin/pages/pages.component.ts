@@ -32,6 +32,8 @@ export class PagesComponent implements OnInit, AfterViewInit {
   @Input() isAdminMenu = false;
   @Input() sideNavMenuList: any[];
 
+  isCollapsed = false;
+
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -50,6 +52,12 @@ export class PagesComponent implements OnInit, AfterViewInit {
 
   // Store Data
   menuList: MenuAdmin[] = [];
+
+
+
+  toggleCollapsed(): void {
+    this.isCollapsed = !this.isCollapsed;
+  }
 
   constructor(
     private breakpointObserver: BreakpointObserver,

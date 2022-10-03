@@ -22,6 +22,7 @@ import { PaymentStatusPipe } from './payment-status.pipe';
 import { RequestPricePipe } from './requestPrice.pipe';
 import { RequestCoinPipe } from './requestCoin.pipe';
 import { VariantQuantityPipe } from './variantQuantity.pipe';
+import { MenuPipe } from './menu.pipe';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { VariantQuantityPipe } from './variantQuantity.pipe';
         ArrayStringPipe,
         DiscountPipe,
         TextWrapPipe,
+        MenuPipe,
         HideDealOfDayPipe,
         EmiStatusPipe,
         FormatBytesPipe,
@@ -64,6 +66,7 @@ import { VariantQuantityPipe } from './variantQuantity.pipe';
         OrderStatusPipe,
         DiscountPipe,
         TextWrapPipe,
+        MenuPipe,
         HideDealOfDayPipe,
         EmiStatusPipe,
         FormatBytesPipe,

@@ -1,10 +1,9 @@
 <div class="main-container">
   <!--Main Head Navbar..-->
-  <app-header (sidenavNavToggle)="sidenav.toggle()"></app-header>
+  <app-header (sidenavNavToggle)="toggleCollapsed()"></app-header>
 
   <!--SideNav bar-->
-  <mat-sidenav-container>
-    <!--[mode]="(isHandset$ | async) ? 'over' : 'side'"-->
+  <!-- <mat-sidenav-container>
     <mat-sidenav class="sidenav" #sidenav [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="!(isMidDevice$ | async) && !(isHandset$ | async)">
       <app-sidenav-list [menuItems]="menuList" [menuParentId]="null"></app-sidenav-list>
@@ -14,5 +13,25 @@
         <router-outlet></router-outlet>
       </main>
     </mat-sidenav-content>
-  </mat-sidenav-container>
+  </mat-sidenav-container> -->
+
+  <!-- new menu -->
+  <div class="body">
+    <div class="wrapper">
+      <ul nz-menu nzMode="inline" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
+        <li  nz-submenu *ngFor="let data of menuList | menu:'parent'" [nzTitle]="data.title" nzIcon="right"
+          [routerLink]="data.routerLink">
+          <ul>
+            <li nz-menu-item *ngFor="let item of menuList | menu: 'submenu': data.id "
+            [routerLink]="data.routerLink">
+              {{item.title}}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+  <!-- New Menu -->
 </div>

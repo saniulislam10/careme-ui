@@ -20,6 +20,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 
 const materials = [
@@ -45,6 +46,9 @@ const materials = [
   NzDividerModule,
   NzDatePickerModule,
   NzBadgeModule,
+  NzMenuModule,
+  NzToolTipModule
+
   // SharedModule
 ];
 

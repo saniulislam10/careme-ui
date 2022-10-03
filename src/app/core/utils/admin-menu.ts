@@ -8,7 +8,7 @@ export const menuItemsSuperAdmin: MenuAdmin[] = [
     id: '1',
     title: 'Dashboard',
     icon: 'dashboard',
-    hasSubMenu: false,
+    hasSubMenu: true,
     parentId: null,
     routerLink: 'dashboard',
     href: null,

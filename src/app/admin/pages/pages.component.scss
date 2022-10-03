@@ -1,5 +1,21 @@
 @import "src/theme/variables";
 
+.wrapper {
+  width: 240px;
+}
+
+button {
+  margin-bottom: 12px;
+}
+
+.body{
+  display: flex;
+  .wrapper{
+    position: relative;
+    display: block;
+  }
+}
+
 .main-container {
   display: block;
   margin: auto;
@@ -32,6 +48,7 @@ mat-sidenav-content {
 }
 
 .main-content {
+  width: 100%;
   background-color: #f6f9fd;
   box-sizing: border-box;
   padding: 0px 15px;
