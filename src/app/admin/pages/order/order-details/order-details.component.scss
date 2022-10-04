@@ -1,4 +1,33 @@
 @import "./../../../../../theme/variables";
+
+.pending {
+  background: #dbdbdb !important;
+  color: #2d2d2d;
+}
+.confirm {
+  background: #05c600 !important;
+  color: #f0efef;
+}
+.delivered {
+  background: #065600 !important;
+  color: #f0efef;
+}
+.cancel {
+  background: #ec0000 !important;
+  color: #f0efef;
+}
+.processing {
+  background: #f57224 !important;
+  color: #f0efef;
+}
+.refund {
+  background: #af0000 !important;
+  color: #f0efef;
+}
+.shipping {
+  background: #001bce !important;
+  color: #f0efef;
+}
 .page-header {
   display: flex;
   align-items: center;
@@ -54,6 +83,7 @@
     }
   }
 }
+
 .ant-tabs-nav-list {
   padding: 0;
 }
@@ -134,6 +164,10 @@
   td .btn {
     text-align: center;
     width: 100%;
+    padding: 5px 10px;
+  }
+  .btn:hover {
+    background: transparent;
   }
 }
 .refund_details_body-product {
@@ -146,7 +180,7 @@
   }
 }
 .ammount_summary {
-  margin: 15px 0;
+  margin: 0 0 15px 0;
   width: 400px;
   float: right;
 }
@@ -191,33 +225,16 @@
     }
   }
 }
-.pending {
-  background-color: gray !important;
-}
-.confirm {
-  background-color: #00ff2a !important;
-}
-.delivered {
-  background-color: #5277ff !important;
-}
-.cancel {
-  background-color: #ff0909 !important;
-}
-.processing {
-  background-color: #f9e106 !important;
-}
-.refund {
-  background-color: #faa906 !important;
-}
-.shipping {
-  background-color: #a108f9 !important;
-}
-
 .total-order {
-  padding: 5px;
-  border-radius: 50px;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
   background: green;
   color: #fff;
+  display: block;
+  border-radius: 50px;
+  font-size: 12px;
 }
 .customadmin_note {
   button {
@@ -231,6 +248,27 @@
     margin-top: 30px;
   }
 }
+.cuppon {
+  span {
+    font-size: 12px;
+    color: #7c7c7c;
+    font-weight: 300;
+    margin-left: 5px;
+  }
+}
+.customer_time_line {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ebebeb;
+}
+.customer_time_line input {
+}
+.timeline_record {
+  padding: 20px 0 0 40px;
+  .timeline_record_list {
+  }
+}
+
 @media (max-width: 500px) {
   .main-layout {
     flex-direction: column !important;
