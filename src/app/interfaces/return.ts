@@ -13,5 +13,8 @@ export interface Return {
   deliveryFee: Number,
   subTotal: Number,
   total: Number,
-  products: OrderItem | any
+  products: OrderItem | any,
+  refundEligible?: boolean,
+  reason?: string,
+  images?: string[],
 }

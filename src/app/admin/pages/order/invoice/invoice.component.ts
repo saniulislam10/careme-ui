@@ -1,3 +1,4 @@
+import { products } from './../../../../core/utils/dashboard.data';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Refund } from './../../../../interfaces/refund';
 import { RefundService } from './../../../../services/refund.service';
@@ -30,6 +31,8 @@ export class InvoiceComponent implements OnInit {
   confirmModal?: NzModalRef;
   isVisible = false;
   checked = false;
+  reason: string;
+  images: string[];
   paymentBy: String;
   paymentOption: String;
   phone: String;
@@ -66,16 +69,6 @@ export class InvoiceComponent implements OnInit {
 
   initReturnForm() {
     this.dataForm = this.fb.group({
-      invoiceId: this.invoice._id,
-      orderNumber: this.invoice.orderNumber,
-      returnDate: new Date(),
-      customerName: this.invoice.customerName,
-      billingAddress: this.invoice.billingAddress,
-      shippingAddress: this.invoice.shippingAddress,
-      subTotal: this.invoice.subTotal,
-      adjustment: 0,
-      deliveryFee: 120,
-      total: this.invoice.total,
       products: this.fb.array([])
     });
 
@@ -90,6 +83,7 @@ export class InvoiceComponent implements OnInit {
       sku: [data.sku],
       quantity: [1, Validators.required],
       totalInvoicedQty: [data.quantity, Validators.required],
+      recievedQty: [0],
       price: [data.price],
       tax: [data.tax],
     })
@@ -172,7 +166,24 @@ export class InvoiceComponent implements OnInit {
 
   placeReturn() {
     let returnId;
-    this.returnService.placeReturn(this.dataForm.value)
+    let data = {
+      invoiceId: this.invoice._id,
+      orderNumber: this.invoice.orderNumber,
+      returnDate: new Date(),
+      customerName: this.invoice.customerName,
+      billingAddress: this.invoice.billingAddress,
+      shippingAddress: this.invoice.shippingAddress,
+      subTotal: this.invoice.subTotal,
+      adjustment: 0,
+      deliveryFee: 120,
+      total: this.invoice.total,
+      products: this.dataForm.value.products,
+      refundEligible: this.checked,
+      reason: this.reason,
+      images: this.images
+
+    }
+    this.returnService.placeReturn(data)
       .subscribe(res => {
         returnId = res.returnId
         let message = res.message + ". Return Id: " + res.returnId;
@@ -241,7 +252,7 @@ export class InvoiceComponent implements OnInit {
     console.log(value);
     console.log(max);
 
-    
+
     // this.products[i].value.quantity = 5;
     if(value > max){
       this.products.controls[i].patchValue(

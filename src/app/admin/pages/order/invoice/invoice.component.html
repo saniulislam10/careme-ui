@@ -189,7 +189,7 @@
       </div>
       <div class="box">
         <h4>Reason</h4>
-        <nz-select placeholder="Select option">
+        <nz-select [(ngModel)]="reason" placeholder="Select option">
           <nz-option nzValue="damage" nzLabel="Product Damage "></nz-option>
           <nz-option nzValue="mismatch" nzLabel="Quantity Mismatch"></nz-option>
           <nz-option nzValue="quality" nzLabel="Product Quality Issue"></nz-option>
@@ -251,7 +251,7 @@
             <td>{{data?.value.variant}}</td>
             <td>{{data?.value.sku}}</td>
             <td>
-              <input type="number" max="data.value.totalInvoiceQty" formControlName="quantity" (change)="onChangeQty(i, data?.value.quantity, data.value.totalInvoicedQty)">
+              <input nz-input type="number" max="data.value.totalInvoiceQty" formControlName="quantity" (change)="onChangeQty(i, data?.value.quantity, data.value.totalInvoicedQty)">
             </td>
             <td>{{data?.value.price}}</td>
             <td>{{data?.value.tax}}</td>

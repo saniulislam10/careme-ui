@@ -90,13 +90,12 @@
 </div>
 
 <!---create-return-->
-<nz-modal [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="returnCancel()" (nzOnOk)="submitReturn()">
+<nz-modal style="width: max-content" [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="handleCancelRTD()" (nzOnOk)="handleOkRTD()">
   <ng-container *nzModalContent>
     <div class="return">
-
       <div class="box">
         <h4>Reason</h4>
-        <nz-select placeholder="Select option">
+        <nz-select [(ngModel)]="reason" placeholder="Select option">
           <nz-option nzValue="damage" nzLabel="Product Damage "></nz-option>
           <nz-option nzValue="mismatch" nzLabel="Quantity Mismatch"></nz-option>
           <nz-option nzValue="quality" nzLabel="Product Quality Issue"></nz-option>
@@ -116,9 +115,31 @@
             multiple />
         </div>
       </div>
+
     </div>
-    <form>
-      <nz-table #return [nzLoading]="loading" [nzData]="returnProducts" [nzShowPagination]="false">
+    <div class="return">
+      <div class="box">
+        <h4>Payment By</h4>
+        <nz-select [(ngModel)]="paymentBy">
+          <nz-option nzValue="damage" nzLabel="Same as Payment" selected></nz-option>
+          <nz-option nzValue="mismatch" nzLabel="Others"></nz-option>
+        </nz-select>
+      </div>
+      <div class="box">
+        <h4>Payment Options</h4>
+        <nz-select [(ngModel)]="paymentOption" placeholder="Payment Method">
+          <nz-option nzValue="bkash" nzLabel="Bkash" selected></nz-option>
+          <nz-option nzValue="rocket" nzLabel="Rocket"></nz-option>
+          <nz-option nzValue="visa" nzLabel="Visa/Master"></nz-option>
+        </nz-select>
+      </div>
+      <div class="box">
+        <h4>Phone</h4>
+        <input nz-input [(ngModel)]="phone" type="text" placeholder="01X-XXX-XXXX">
+      </div>
+    </div>
+    <form [formGroup]="dataForm">
+      <nz-table [nzData]="returnProducts" [nzShowPagination]="false">
         <thead>
           <tr>
             <th>Name</th>
@@ -129,14 +150,16 @@
             <th>tax</th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let data of return.data">
-            <td>{{data.name}}</td>
-            <td>{{data.variant}}</td>
-            <td>{{data.sku}}</td>
-            <td>{{data.quantity}}</td>
-            <td>{{data.price}}</td>
-            <td>{{data.tax}}</td>
+        <tbody formArrayName="products">
+          <tr *ngFor="let data of products?.controls; let i=index" [formGroupName]="i">
+            <td>{{data?.value.name}}</td>
+            <td>{{data?.value.variant}}</td>
+            <td>{{data?.value.sku}}</td>
+            <td>
+              <input nz-input type="number" max="data.value.totalInvoiceQty" formControlName="quantity" (change)="onChangeQty(i, data?.value.quantity, data.value.totalInvoicedQty)">
+            </td>
+            <td>{{data?.value.price}}</td>
+            <td>{{data?.value.tax}}</td>
           </tr>
         </tbody>
       </nz-table>

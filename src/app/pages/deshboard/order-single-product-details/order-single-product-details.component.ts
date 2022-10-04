@@ -1,8 +1,9 @@
+import { products } from './../../../core/utils/dashboard.data';
 import { Invoice } from './../../../interfaces/invoice';
 import { InvoiceService } from './../../../services/invoice.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { UserDataService } from 'src/app/services/user-data.service';
-import { FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder } from '@angular/forms';
 import { FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -57,6 +58,10 @@ export class OrderSingleProductDetailsComponent implements OnInit {
   checked: any;
   returnInvoice: any;
   returnProducts: any[] = [];
+  reason: string;
+  images: string [] = [];
+  dataForm: FormGroup;
+  products: FormArray;
   constructor(
     private activatedRoute: ActivatedRoute,
     private invoiceService: InvoiceService,
@@ -75,8 +80,16 @@ export class OrderSingleProductDetailsComponent implements OnInit {
     });
 
     this.initReviewForm();
+
     this.getUserInfo();
 
+  }
+
+  initReturnForm() {
+    this.dataForm = this.fb.group({
+      products: this.fb.array([])
+    });
+    this.products = this.dataForm.get('products') as FormArray;
   }
 
   getUserInfo(){
@@ -98,7 +111,6 @@ export class OrderSingleProductDetailsComponent implements OnInit {
     this.invoiceService.getAllInvoicesByOrderNo(id)
     .subscribe( res => {
       this.invoices = res.data;
-      console.log(this.invoices);
     }, err => {
       console.log(err);
     })
@@ -153,11 +165,24 @@ export class OrderSingleProductDetailsComponent implements OnInit {
   }
 
   handleCancel(): void {
+    this.isVisibleTop = false;
     this.productId = null;
     this.orderNo = null;
     this.sku = null;
-    this.isVisibleTop = false;
 
+  }
+  handleCancelRTD(): void {
+    this.isVisible = false;
+  }
+
+  handleOkRTD() {
+    this.loading = true;
+    this.placeReturn(this.returnInvoice, this.dataForm.value.products);
+
+  }
+
+  changeEligibilityRTD() {
+    this.checked = !this.checked;
   }
 
   openReview(sku, id, orderNo){
@@ -169,25 +194,41 @@ export class OrderSingleProductDetailsComponent implements OnInit {
 
   showReturn(invoice, product){
     this.isVisible = true;
-    console.log(invoice)
     this.returnInvoice = invoice;
-    this.returnProducts[0]=product;
+    this.initReturnForm();
+    let data = product;
+    let newProduct = this.fb.group({
+      name: [data.name],
+      variant: [data.variant],
+      sku: [data.sku],
+      quantity: [1, Validators.required],
+      totalInvoicedQty: [data.quantity, Validators.required],
+      recievedQty: [0],
+      price: [data.price],
+      tax: [data.tax],
+    })
+    this.products.push(newProduct);
+    this.returnProducts.push(product)
+
   }
 
-  returnCancel(): void {
-    console.log('Button cancel clicked!');
-    this.isVisible = false;
+  onChangeQty(i, value, max){
+    // this.products[i].value.quantity = 5;
+    if(value > max){
+      this.products.controls[i].patchValue(
+        { quantity : max}
+      )
+    }else if (value < 1){
+      this.products.controls[i].patchValue(
+        { quantity : 1}
+      )
+    }
   }
-  submitReturn(){
-    console.log('Button ok clicked!');
-    this.loading = true;
-    this.placeReturn(this.returnInvoice, this.returnProducts);
-  }
-  placeReturn(invoice, products){
-    console.log(invoice)
-    console.log(products)
+
+
+  placeReturn(invoice, products) {
     let returnId;
-    let returnData:Return = {
+    let data = {
       invoiceId: invoice._id,
       orderNumber: invoice.orderNumber,
       returnDate: new Date(),
@@ -198,21 +239,25 @@ export class OrderSingleProductDetailsComponent implements OnInit {
       adjustment: 0,
       deliveryFee: 120,
       total: invoice.total,
-      products: products
+      products: products,
+      refundEligible: this.checked,
+      reason: this.reason,
+      images: this.images
     }
-    this.returnService.placeReturn(returnData)
-    .subscribe(res => {
-      returnId = res.returnId
-      let message = res.message + ". Return Id: "+ res.returnId;
-      this.msg.success(message, {
-        nzDuration: 10000
-      });
-      this.loading = false;
-      this.isVisible = false;
-      }, err=>{
-      this.msg.create('error',err.message);
-      this.loading = false;
-    })
+
+    console.log(data);
+    this.returnService.placeReturn(data)
+      .subscribe(res => {
+        returnId = res.returnId
+        let message = res.message + ". Return Id: " + res.returnId;
+        this.msg.success(message, {
+          nzDuration: 10000
+        });
+          this.loading = false;
+          this.isVisible = false;
+      }, err => {
+        this.msg.create('error', err.message);
+      })
     return returnId;
   }
 
