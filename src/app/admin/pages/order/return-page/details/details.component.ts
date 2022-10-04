@@ -22,6 +22,7 @@ interface DataItem {
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
+  checked = true;
   tabs = ['Overview', 'Edit', 'Received', 'Refund'];
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
   listOfColumn = [
@@ -133,18 +134,16 @@ export class DetailsComponent implements OnInit {
     })
   }
 
-  onChangeQty(i, value, max){
-    console.log(i);
-    console.log(value);
-    console.log(max);
-    if(value > max){
-      this.listOfData[i].recievedQty = max;
-      this.msg.create('warning','Recieved Quantity can not be more than initiated')
-    } else if (value < 1){
-      this.listOfData[i].recievedQty = 1;
-    }
-    console.log(this.listOfData);
+  markRecieved(i, value){
+    this.listOfData[i].recievedQty = value;
+  }
 
+  getRecievedStatus(a,b){
+    if(a === b){
+      return true
+    }else{
+      return false
+    }
   }
 
 }
