@@ -83,6 +83,7 @@ export class InvoiceComponent implements OnInit {
       sku: [data.sku],
       quantity: [1, Validators.required],
       totalInvoicedQty: [data.quantity, Validators.required],
+      recievedQty: [0],
       price: [data.price],
       tax: [data.tax],
     })

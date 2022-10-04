@@ -251,7 +251,7 @@
             <td>{{data?.value.variant}}</td>
             <td>{{data?.value.sku}}</td>
             <td>
-              <input type="number" max="data.value.totalInvoiceQty" formControlName="quantity" (change)="onChangeQty(i, data?.value.quantity, data.value.totalInvoicedQty)">
+              <input nz-input type="number" max="data.value.totalInvoiceQty" formControlName="quantity" (change)="onChangeQty(i, data?.value.quantity, data.value.totalInvoicedQty)">
             </td>
             <td>{{data?.value.price}}</td>
             <td>{{data?.value.tax}}</td>

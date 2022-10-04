@@ -58,8 +58,8 @@
       </nz-sider>
       <nz-content class="refund_body_main" style="background: #fff">
         <div class="refund_details_header">
-          <h4>{{return.returnId}}</h4>
-          <h5>{{ return.returnDate | date}}</h5>
+          <h4>{{return?.returnId}}</h4>
+          <h5>{{ return?.returnDate | date}}</h5>
         </div>
         <div class="return_action">
           <nz-tabset>
@@ -128,7 +128,7 @@
                     <tr>
                       <th class="thumb_img">Image</th>
                       <th>Item</th>
-                      <th>Shipped</th>
+                      <th>Return Initiated</th>
                       <th>Amount (TK)</th>
                       <th>Received QTY</th>
                       <th>Refund Amount (TK)</th>
@@ -136,7 +136,7 @@
                     </thead>
 
                     <tbody>
-                    <tr *ngFor="let data of returnItemsTable.data">
+                    <tr *ngFor="let data of returnItemsTable.data; let i= index">
                       <td style="width: 100px">
                         <img style="max-width: 100%"
                              src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
@@ -149,7 +149,12 @@
                       </td>
                       <td>{{data.quantity}}</td>
                       <td>{{data.price}}</td>
-                      <td>0</td>
+                      <td class="editable-cell" [hidden]="editSku === data.sku" (click)="startEdit(data.sku)">
+                        {{ data.recievedQty }}
+                      </td>
+                      <td [hidden]="editSku !== data.sku">
+                        <input [hidden]="editSku !== data.sku" type="number" nz-input [(ngModel)]="data.recievedQty" (change)="onChangeQty(i, data.recievedQty, data.quantity)" (blur)="stopEdit()" />
+                      </td>
                       <td>0</td>
                     </tr>
                     </tbody>
@@ -187,7 +192,7 @@
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
                       <div class="action_btn">
                         <button nzSize="large" nz-button nzType="default">Reject</button>
-                        <button nzSize="large" nz-button nzType="primary">Save</button>
+                        <button nzSize="large" nz-button nzType="primary" (click)="updateReturn()">Save</button>
                       </div>
                     </div>
                   </div>

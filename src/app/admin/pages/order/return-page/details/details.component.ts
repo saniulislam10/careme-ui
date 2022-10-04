@@ -8,6 +8,7 @@ import {Adjustment} from 'src/app/interfaces/adjustment';
 import {Pagination} from 'src/app/interfaces/pagination';
 import {AdjustmentService} from 'src/app/services/adjustment.service';
 import {ReturnService} from 'src/app/services/return.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 interface DataItem {
   name: string;
@@ -65,10 +66,12 @@ export class DetailsComponent implements OnInit {
   listOfData: any;
   private subRouteOne?: Subscription;
   id: string;
+  editSku: string;
 
   constructor(
     private dialog: MatDialog,
     private returnService: ReturnService,
+    private msg: NzMessageService,
     private activatedRoute: ActivatedRoute,
   ) {
   }
@@ -111,4 +114,39 @@ export class DetailsComponent implements OnInit {
         console.log(err);
       })
   }
+
+  startEdit(sku: string): void {
+    this.editSku = sku;
+  }
+
+  stopEdit(): void {
+    this.editSku = null;
+  }
+
+  updateReturn(){
+    console.log(this.return._id, this.return);
+    this.returnService.updateReturnById(this.return._id, this.return)
+    .subscribe(res => {
+      this.msg.create('success', res.message);
+    }, err => {
+
+    })
+  }
+
+  onChangeQty(i, value, max){
+    console.log(i);
+    console.log(value);
+    console.log(max);
+    if(value > max){
+      this.listOfData[i].recievedQty = max;
+      this.msg.create('warning','Recieved Quantity can not be more than initiated')
+    } else if (value < 1){
+      this.listOfData[i].recievedQty = 1;
+    }
+    console.log(this.listOfData);
+
+  }
+
 }
+
+

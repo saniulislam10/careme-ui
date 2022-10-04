@@ -31,5 +31,8 @@ export class ReturnService {
   getReturnById(id) {
     return this.httpClient.get<{ data: Return; message: string; success: boolean }>(API_RETURN + 'get-return-by-id/'+ id);
   }
+  updateReturnById(id, data){
+    return this.httpClient.put<{ message: string; success: boolean }>(API_RETURN + 'update-return-by-id/'+ id, data);
+  }
 
 }
