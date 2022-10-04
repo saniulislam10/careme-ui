@@ -204,6 +204,7 @@ export class OrderSingleProductDetailsComponent implements OnInit {
       quantity: [1, Validators.required],
       totalInvoicedQty: [data.quantity, Validators.required],
       recievedQty: [0],
+      recieved: [false],
       price: [data.price],
       tax: [data.tax],
     })

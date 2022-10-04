@@ -22,7 +22,7 @@ interface DataItem {
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-  checked = true;
+  checked: boolean[] = [false];
   tabs = ['Overview', 'Edit', 'Received', 'Refund'];
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
   listOfColumn = [
@@ -134,8 +134,13 @@ export class DetailsComponent implements OnInit {
     })
   }
 
-  markRecieved(i, value){
-    this.listOfData[i].recievedQty = value;
+  markRecieved(i, recieved, value){
+    if(recieved){
+      console.log("recieved");
+      this.listOfData[i].recievedQty = value;
+    }else{
+      this.listOfData[i].recievedQty = 0;
+    }
   }
 
   getRecievedStatus(a,b){
