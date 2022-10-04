@@ -289,12 +289,12 @@
                       </td>
                       <td>
                         <a
-                          class="btn pending"
+                          class="btn confirm"
                           nz-dropdown
                           [nzDropdownMenu]="itemStatus"
                           nzTrigger="click"
                         >
-                          Pending <i class="las la-angle-down"></i>
+                          Confirmed <i class="las la-angle-down"></i>
                         </a>
                         <nz-dropdown-menu #itemStatus="nzDropdownMenu">
                           <ul nz-menu nzSelectable>
@@ -393,26 +393,43 @@
 
                   <div class="timeline_record">
                     <nz-timeline class="timeline_record_list" nzMode="left">
-                      <nz-timeline-item [nzDot]="cancleTemp" nzColor="red">
-                        <h4>Cancel</h4>
-                        <p>
+                      <nz-timeline-item [nzDot]="successTem" nzColor="red">
+                        <h4 class="title">Confirmed!</h4>
+                        <p class="bodytext">
                           Thank you for placing for your order at Care me. We
                           will start processing your order after payment is
                           complete
                         </p>
-                        <span>05 Jul 2022 05:51 PM by Omee</span>
+                        <span class="linetime">
+                          05 Jul 2022 05:51 PM by Omee
+                        </span>
+                      </nz-timeline-item>
+                      <nz-timeline-item [nzDot]="cancleTemp" nzColor="red">
+                        <h4 class="title">Cancelled!</h4>
+                        <p class="bodytext">
+                          Thank you for placing for your order at Care me. We
+                          will start processing your order after payment is
+                          complete
+                        </p>
+                        <span class="linetime">
+                          05 Jul 2022 05:51 PM by Omee
+                        </span>
                       </nz-timeline-item>
                       <nz-timeline-item [nzDot]="successTem" nzColor="green">
-                        <h4>Pending</h4>
-                        <p>
+                        <h4 class="title">Pending!</h4>
+                        <p class="bodytext">
                           Thank you for placing for your order at Care me. We
                           will start processing your order after payment is
                           complete
                         </p>
-                        <span>05 Jul 2022 05:51 PM by Omee</span>
+                        <span class="linetime">
+                          05 Jul 2022 05:51 PM by Omee
+                        </span>
                       </nz-timeline-item>
                     </nz-timeline>
-                    <a nz-button nzType="text">Show More</a>
+                    <a class="showmore" nz-button nzType="text">
+                      Show More <i class="las la-angle-down"></i>
+                    </a>
                     <ng-template #successTem>
                       <i class="lar la-2x la-check-circle"></i>
                     </ng-template>

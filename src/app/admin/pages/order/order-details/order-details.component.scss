@@ -261,11 +261,25 @@
   border-radius: 5px;
   border: 1px solid #ebebeb;
 }
-.customer_time_line input {
-}
 .timeline_record {
   padding: 20px 0 0 40px;
-  .timeline_record_list {
+}
+.bodytext {
+  color: #727272;
+}
+.title {
+  color: #272727;
+}
+.linetime {
+  color: #838383;
+  font-size: 12px;
+}
+.showmore {
+  padding: 0;
+  margin: 0 0 0 0;
+  font-size: 12px;
+  i {
+    margin-left: 5px;
   }
 }
 
