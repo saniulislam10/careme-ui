@@ -113,7 +113,7 @@
                   </table>
                 </div>
                 <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 16 }">
-                  <div nz-row [nzGutter]="16">
+                  <div nz-row [nzGutter]="0">
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 16 }">
                       <h2>Delivery Details</h2>
                       <table>
@@ -147,7 +147,8 @@
                             <td>:</td>
                             <td>
                               <a href="#">
-                                Md. Karim Khan <i class="las la-medal"></i>
+                                Md. Karim Khan
+                                <i class="las la-medal"></i>
                               </a>
                             </td>
                           </tr>
@@ -288,7 +289,7 @@
                       </td>
                       <td>
                         <a
-                          class="btn"
+                          class="btn pending"
                           nz-dropdown
                           [nzDropdownMenu]="itemStatus"
                           nzTrigger="click"
@@ -307,24 +308,23 @@
                     </tr>
                   </tbody>
                 </nz-table>
-
                 <div nz-row [nzGutter]="0">
                   <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
                     <nz-card nzSize="small" class="ammount_summary">
                       <div class="ammount_summary_single">
-                        <h4>Sub-Total</h4>
-                        <span>1200 TK</span>
+                        <h4><b>Sub-Total</b></h4>
+                        <span><b>1200 TK</b></span>
                       </div>
                       <div class="ammount_summary_single">
-                        <h4>
+                        <h4 class="cuppon">
                           Coupon Code
-                          <span><i class="las la-tag"></i>CAREME15%</span>
+                          <span><i class="las la-lg la-tag"></i>CAREME15%</span>
                         </h4>
-                        <span>0 TK</span>
+                        <span style="color: red">- 0.00 TK</span>
                       </div>
                       <div class="ammount_summary_single">
                         <h4>Points Redeem</h4>
-                        <span>120 TK</span>
+                        <span style="color: red">120 TK</span>
                       </div>
                       <div class="ammount_summary_single">
                         <h4>Shipping</h4>
@@ -336,15 +336,15 @@
                       ></nz-divider>
                       <div class="ammount_summary_single">
                         <h4></h4>
-                        <span> Amount to pay = 1200 TK</span>
+                        <span> Amount to pay = <b>1200 TK</b></span>
                       </div>
                       <div class="ammount_summary_single mt15">
                         <h4>Paid</h4>
-                        <span>120 TK</span>
+                        <span style="color: green">120 TK</span>
                       </div>
                       <div class="ammount_summary_single mt15">
                         <h4>Adjustment</h4>
-                        <span>0.00 TK</span>
+                        <span style="color: red">0.00 TK</span>
                       </div>
                       <nz-divider
                         style="margin: 10px 0"
@@ -356,7 +356,7 @@
                       </div>
                       <div class="ammount_summary_single mt15">
                         <h4>Cancelled (SKU: 5045844)</h4>
-                        <span>0.00 TK</span>
+                        <span style="color: red">0.00 TK</span>
                       </div>
                       <nz-divider
                         style="margin: 10px 0"
@@ -364,11 +364,13 @@
                       ></nz-divider>
                       <div class="ammount_summary_single">
                         <h4></h4>
-                        <span> Refundable Amount = 0.00 TK</span>
+                        <span style="color: red">
+                          Refundable Amount = 0.00 TK</span
+                        >
                       </div>
                       <div class="ammount_summary_single mt15">
                         <h4>Refund (SKU: 5045844)</h4>
-                        <span>0.00 TK</span>
+                        <span style="color: red">0.00 TK</span>
                       </div>
                       <nz-divider
                         style="margin: 10px 0"
@@ -379,6 +381,44 @@
                         <span> Due Amount = 0 TK</span>
                       </div>
                     </nz-card>
+                  </div>
+                </div>
+                <div class="customer_time_line">
+                  <nz-collapse nzGhost>
+                    <nz-collapse-panel nzHeader="Add Comment" nzActive="false">
+                      <textarea rows="2" nz-input></textarea>
+                      <button nz-button nzType="default">Send Message</button>
+                    </nz-collapse-panel>
+                  </nz-collapse>
+
+                  <div class="timeline_record">
+                    <nz-timeline class="timeline_record_list" nzMode="left">
+                      <nz-timeline-item [nzDot]="cancleTemp" nzColor="red">
+                        <h4>Cancel</h4>
+                        <p>
+                          Thank you for placing for your order at Care me. We
+                          will start processing your order after payment is
+                          complete
+                        </p>
+                        <span>05 Jul 2022 05:51 PM by Omee</span>
+                      </nz-timeline-item>
+                      <nz-timeline-item [nzDot]="successTem" nzColor="green">
+                        <h4>Pending</h4>
+                        <p>
+                          Thank you for placing for your order at Care me. We
+                          will start processing your order after payment is
+                          complete
+                        </p>
+                        <span>05 Jul 2022 05:51 PM by Omee</span>
+                      </nz-timeline-item>
+                    </nz-timeline>
+                    <a nz-button nzType="text">Show More</a>
+                    <ng-template #successTem>
+                      <i class="lar la-2x la-check-circle"></i>
+                    </ng-template>
+                    <ng-template #cancleTemp>
+                      <i class="lar la-2x la-times-circle"></i>
+                    </ng-template>
                   </div>
                 </div>
               </nz-card>
