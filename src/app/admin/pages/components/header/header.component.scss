@@ -78,3 +78,27 @@ mat-toolbar {
     color: #00ff00;
   }
 }
+@media (max-width: 500px) {
+  .brand {
+    display: none;
+  }
+  .mat-icon-button {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+  }
+  .notifibell {
+    span {
+      top: -10px;
+      right: -2px;
+      min-width: 20px;
+      height: 20px;
+      line-height: 20px;
+      font-size: 10px;
+    }
+  }
+  .multi-serarch {
+    width: 100%;
+    padding: 0 10px;
+  }
+}
