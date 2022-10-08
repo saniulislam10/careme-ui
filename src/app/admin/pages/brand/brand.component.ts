@@ -123,12 +123,8 @@ export class BrandComponent implements OnInit {
       this.msg.create('warning', 'Please input the required fields');
       return
     }
-    else if(this.dataForm.value.password !== this.dataForm.value.confirmPassword){
-      this.msg.create('warning', 'Password Mismatch');
-      return
-    }else{
+    else{
       this.addBrand(brand);
-
     }
   }
 

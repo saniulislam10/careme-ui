@@ -180,7 +180,7 @@
 
 
 <!---create-return-->
-<nz-modal style="width: max-content" [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<nz-modal [nzWidth]="600" [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <ng-container *nzModalContent>
     <div class="return">
       <div class="box">
@@ -233,7 +233,7 @@
       </div>
     </div>
     <form [formGroup]="dataForm">
-      <nz-table [nzData]="returnProducts">
+      <nz-table [nzData]="returnProducts" style="width: fit-content" >
         <thead>
           <tr>
             <th>Name</th>
