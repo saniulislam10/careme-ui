@@ -39,6 +39,7 @@ export class ProductsComponent implements OnInit {
   isSelect = false;
   query = null;
   searchQuery = null;
+
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild('searchForm') searchForm: NgForm;
   @ViewChild('export') exportOrder: ExportPopupComponent;

@@ -224,9 +224,9 @@
                   <thead>
                     <tr>
                       <th
-                        [(nzChecked)]="checked"
+                        [(nzChecked)]="allSelected"
                         [nzIndeterminate]="indeterminate"
-                        (nzCheckedChange)="onAllChecked($event)"
+                        (nzCheckedChange)="onAllCheck($event)"
                       ></th>
                       <th>Image</th>
                       <th>Item Details</th>
@@ -244,8 +244,8 @@
                       *ngFor="let data of rowSelectProduct.data; let i = index"
                     >
                       <td
-                        [nzChecked]="setOfCheckedId.has(data.id)"
-                        (nzCheckedChange)="onItemChecked(data.id, $event)"
+                        [nzChecked]="setOfCheckedId.has(data._id)"
+                        (nzCheckedChange)="onCheckChange($event, i, data._id)"
                       ></td>
                       <td>
                         <img

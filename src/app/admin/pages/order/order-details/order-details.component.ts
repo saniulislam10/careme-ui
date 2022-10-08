@@ -1,3 +1,4 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -55,7 +56,7 @@ export class OrderDetailsComponent implements OnInit {
       disabled: true
     }
   ];
-  checked = false;
+  allSelected = false;
   indeterminate = false;
   listOfCurrentPageData: readonly ItemData[] = [];
   listOfData: readonly ItemData[] = [];
@@ -129,6 +130,7 @@ export class OrderDetailsComponent implements OnInit {
     private reloadService: ReloadService,
     public router: Router,
     private spinner: NgxSpinnerService,
+    private msg: NzMessageService,
   ) { }
 
   ngOnInit(): void {
@@ -162,6 +164,9 @@ export class OrderDetailsComponent implements OnInit {
   // view child create invoice
   /*** Create Order Pop Up Controll */
   openDialog() {
+    if(this.selectedIds.length === 0){
+      this.msg.create('warning', 'Please select an item to create invoice')
+    }
       const dialogRef = this.dialog.open(CreateInvoiceComponent, {
         restoreFocus: false,
         data: {
@@ -571,8 +576,17 @@ export class OrderDetailsComponent implements OnInit {
    * ON Select Check
    */
 
-  onCheckChange(event: MatCheckboxChange,index: number) {
-    if (event.checked) {
+  onAllCheck(event: any){
+    for(let i=0; i<this.products.length; i++){
+      this.onCheckChange(event, i, this.products[i]._id);
+      this.onAllChecked(event);
+    }
+    this.allSelected = !this.allSelected;
+  }
+
+  onCheckChange(event: any,index: number, id: any) {
+    this.onItemChecked(id, event);
+    if (event) {
       const i = this.selectedIds.findIndex((f) => f === index);
       if (i >= 0) {
         this.selectedIds.splice(i, 1);
@@ -580,9 +594,13 @@ export class OrderDetailsComponent implements OnInit {
         this.selectedIds.push(index);
       }
     } else {
-      this.selectedIds.splice(index, 1);
+      const i = this.selectedIds.findIndex((f) => f === index);
+      this.selectedIds.splice(i, 1);
     }
-    console.log(this.selectedIds);
+
+    console.log(this.selectedIds)
+
+
 
 
 
@@ -614,7 +632,7 @@ export class OrderDetailsComponent implements OnInit {
 
 
   // Mamun
-  updateCheckedSet(id: number, checked: boolean): void {
+  updateCheckedSet(id: any, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
     } else {
@@ -638,8 +656,8 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   refreshCheckedStatus(): void {
-    this.checked = this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
-    this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
+    this.allSelected = this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
+    this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.allSelected;
   }
 
 }

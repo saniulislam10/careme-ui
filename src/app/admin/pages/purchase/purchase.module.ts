@@ -1,3 +1,4 @@
+import { AntModule } from 'src/app/material/ant.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -27,6 +28,7 @@ import { CreateNewPurchaseComponent } from './create-new-purchase/create-new-pur
     PurchaseRoutingModule,
     MaterialModule,
     FormsModule,
+    AntModule,
     NgxPaginationModule,
     PipesModule
   ]

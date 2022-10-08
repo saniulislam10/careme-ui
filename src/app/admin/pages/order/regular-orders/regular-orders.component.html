@@ -2,8 +2,8 @@
 <div class="page-header">
   <h2>Sales Order</h2>
   <div class="header-action">
-    <button type="button">Export</button>
-    <button type="button" (click)="exportPopUpShow()">Import</button>
+    <button type="button" (click)="exportPopUpShow()">Export</button>
+    <button type="button" >Import</button>
     <button class="create_btn" (click)="openDialog()">Create Order</button>
   </div>
 </div>
@@ -57,7 +57,7 @@
               <th style="width: 50px;" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
                   (nzCheckedChange)="onAllChecked($event)">
               </th>
-              <th>Oreder ID & Date</th>
+              <th>Order ID & Date</th>
               <th>Invoice Status</th>
               <th>Customer</th>
               <th>Total Amount</th>

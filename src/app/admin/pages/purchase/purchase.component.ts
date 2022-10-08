@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subscription } from 'rxjs';
 import { ExportType } from 'src/app/enum/exportType.enum';
 import { ProductStatus } from 'src/app/enum/product-status';
 import { Pagination } from 'src/app/interfaces/pagination';
@@ -19,6 +19,7 @@ import { CreateNewPurchaseComponent } from './create-new-purchase/create-new-pur
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Purchase } from 'src/app/interfaces/purchase';
+import { debounceTime, distinctUntilChanged, pluck, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-purchase',
@@ -26,6 +27,7 @@ import { Purchase } from 'src/app/interfaces/purchase';
   styleUrls: ['./purchase.component.scss']
 })
 export class PurchaseComponent implements OnInit {
+  tabs = ['All', 'Draft', 'Issued', 'Closed', 'Canceled'];
 
   @ViewChild('export') exportStock: ExportPopupComponent;
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
@@ -39,6 +41,7 @@ export class PurchaseComponent implements OnInit {
   public sortQuery;
   public activeSort = null;
   private holdPrevData: any[] = [];
+  pagination : any;
   searchProducts: Product[] = [];
   purchases: Purchase[] = [];
   selectedIds: string[] = [];
@@ -47,6 +50,8 @@ export class PurchaseComponent implements OnInit {
   isFocused = false;
   isLoading = false;
   isSelect = false;
+  checked = false;
+  indeterminate = false;
   public productEnum = ProductStatus;
   @ViewChild('matCheckbox') matCheckbox: MatCheckbox;
   @ViewChild('searchForm') searchForm: NgForm;
@@ -54,6 +59,7 @@ export class PurchaseComponent implements OnInit {
 
   // Subscriptions
   private subProduct: Subscription;
+  searchQuery: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -73,14 +79,14 @@ export class PurchaseComponent implements OnInit {
         this.getAllPurchase();
       });
 
-      this.getAllPurchase();
+    this.getAllPurchase();
   }
 
   /**
    * HTTP REQ
    */
 
-   private getAllPurchase() {
+  private getAllPurchase() {
     this.spinner.show();
 
     const pagination: Pagination = {
@@ -88,23 +94,21 @@ export class PurchaseComponent implements OnInit {
       pageSize: this.productsPerPage.toString(),
     };
 
-    const select = '';
+    this.pagination = pagination;
 
-    if (this.query === '' || this.query === null || this.query === undefined) {
-      this.query = { hasLink: false };
-    }
 
-    this.subProduct = this.purchaseService.getAll(pagination, this.query)
+
+    this.subProduct = this.purchaseService.getAll(this.pagination, this.query, this.sortQuery)
       .subscribe(
         (res) => {
           this.purchases = res.data;
-          console.log('Products', this.purchases);
+          this.holdPrevData = this.purchases;
           // if (this.products && this.products.length) {
           //   this.products.forEach((m, i) => {
           //     const index = this.selectedIds.findIndex((f) => f === m._id);
           //     this.products[i].select = index !== -1;
           //   });
-            // this.checkSelectionData();
+          // this.checkSelectionData();
           //   this.holdPrevData = res.data;
           //   this.totalProducts = res.count;
           //   this.totalProductsStore = res.count;
@@ -145,8 +149,8 @@ export class PurchaseComponent implements OnInit {
   }
 
   getVariantName(i, x, product, index) {
-    if(index !== 0){
-      return "/"+product.variantDataArray[i][x];
+    if (index !== 0) {
+      return "/" + product.variantDataArray[i][x];
     }
     return product.variantDataArray[i][x];
   }
@@ -173,7 +177,7 @@ export class PurchaseComponent implements OnInit {
   /**
    * EXPORTS TO EXCEL
    */
-   exportToExcel(value) {
+  exportToExcel(value) {
     if (value.selectedAmount === ExportType.ALL_STOCK) {
       this.purchaseService.getAll(null).subscribe((res) => {
         this.exportData(res.data, value.SelectedType);
@@ -217,19 +221,19 @@ export class PurchaseComponent implements OnInit {
       case 1:
         this.query = { status: data };
         break;
-        case 2:
-          this.query = { status: data };
-          // code block
-          break;
-          case 3:
-            this.query = { isPreOrder: true };
-            // code block
-            break;
-            case 5:
-              this.query = { isStockOut: true };
-              // code block
-              break;
-              case 6:
+      case 2:
+        this.query = { status: data };
+        // code block
+        break;
+      case 3:
+        this.query = { isPreOrder: true };
+        // code block
+        break;
+      case 5:
+        this.query = { isStockOut: true };
+        // code block
+        break;
+      case 6:
         this.query = { isReOrder: true };
         // code block
         break;
@@ -250,7 +254,19 @@ export class PurchaseComponent implements OnInit {
   sortData(query: any, type: number) {
     this.sortQuery = query;
     this.activeSort = type;
-    this.getAllPurchase();
+    if(this.searchQuery){
+      this.purchaseService.getBySearch(this.pagination, this.searchQuery, this.sortQuery, this.query)
+      .subscribe(
+        (res) => {
+          this.purchases = res.data;
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
+    }else{
+      this.getAllPurchase();
+    }
   }
 
   onAllSelectChange(event: MatCheckboxChange) {
@@ -275,7 +291,7 @@ export class PurchaseComponent implements OnInit {
   /**
    * PAGINATION CHANGE
    */
-   public onPageChanged(event: any) {
+  public onPageChanged(event: any) {
     this.router.navigate([], { queryParams: { page: event } });
   }
 
@@ -360,6 +376,41 @@ export class PurchaseComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
-}
+  }
+
+  ngAfterViewInit(): void {
+    // this.searchAnim();
+    const formValue = this.searchForm.valueChanges;
+
+    formValue
+      .pipe(
+        // map(t => t.searchTerm)
+        // filter(() => this.searchForm.valid),
+        pluck('searchTerm'),
+        debounceTime(200),
+        distinctUntilChanged(),
+        switchMap((data) => {
+          this.searchQuery = data.trim();
+
+          console.log(this.searchQuery);
+
+          if (this.searchQuery) {
+            return this.purchaseService.getBySearch(this.pagination, this.searchQuery, this.sortQuery, this.query );
+          } else {
+            this.purchases = this.holdPrevData;
+            this.searchQuery = null;
+            return EMPTY;
+          }
+        })
+      )
+      .subscribe(
+        (res) => {
+          this.purchases = res.data;
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
+  }
 
 }

@@ -47,13 +47,26 @@ export class PurchaseService {
   getById(id) {
     return this.http.get<{ data: Purchase, message: string }>(API + 'get/' +id);
   }
-  getAll(paginate: Pagination, filter?: ProductFilter) {
+  getAll(paginate: Pagination, filter?: ProductFilter, sort?:any) {
     return this.http.post<{
       data: any[];
       priceRange: any;
       count: number;
       message: string;
-    }>(API + 'get-all', { paginate, filter });
+    }>(API + 'get-all', { paginate, filter, sort });
   }
+  getBySearch(paginate: Pagination, searchQuery?: string, sort?:any, filter?: ProductFilter ) {
+    let params = new HttpParams();
+    params = params.append('q', searchQuery);
+    if (paginate) {
+      params = params.append('pageSize', paginate.pageSize);
+      params = params.append('currentPage', paginate.currentPage);
+    }
+    console.log(params);
+    return this.http.post<{
+      data: any[];
+    }>(API + 'get-by-search', {filter, sort}, { params });
+  }
+
 
 }
