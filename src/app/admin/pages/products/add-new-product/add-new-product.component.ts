@@ -241,6 +241,13 @@ export class AddNewProductComponent implements OnInit {
 
   }
 
+  onRefresh(){
+    this.getAllProductTypes();
+    this.getCountrys();
+    this.getBrands();
+    this.getVendors();
+  }
+
   /**
    * INIT FORM
    */

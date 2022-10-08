@@ -13,6 +13,7 @@
             <li>
               <mat-icon *ngIf="product" target="_blank" (click)="preview()">remove_red_eye</mat-icon>
             </li>
+            <li><button type="button" (click)="onRefresh()"><i class="las la-sync"></i>Refresh</button></li>
             <li><button type="button" [routerLink]="['../../', 'products']">Discard</button></li>
             <li><button class="btn-active" type="submit">Save</button></li>
           </ul>
