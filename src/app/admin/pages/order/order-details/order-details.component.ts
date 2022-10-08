@@ -177,7 +177,10 @@ export class OrderDetailsComponent implements OnInit {
           selectedIds: this.selectedIds,
         },
       });
-      dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
+      dialogRef.afterClosed().subscribe(() => {
+        this.menuTrigger.focus();
+        this.reloadService.needRefreshOrder$();
+      });
   }
 
   openReturn() {
