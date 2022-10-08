@@ -61,7 +61,7 @@ export class CreateInvoiceComponent implements OnInit {
     products = [];
     // INIT FORM
     this.initFormGroup();
-    // this.patchValues();
+    this.patchValues();
   }
 
   /**
@@ -69,7 +69,7 @@ export class CreateInvoiceComponent implements OnInit {
    */
   private initFormGroup() {
     this.dataForm = this.fb.group({
-      orderNumber: [null],
+      orderNumber: [null, Validators.required],
       invoiceDate: [null, Validators.required],
       //salesPerson: [null, Validators.required],
       shippingCarrier: [null, Validators.required],
