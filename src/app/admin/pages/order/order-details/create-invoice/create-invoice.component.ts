@@ -61,7 +61,7 @@ export class CreateInvoiceComponent implements OnInit {
     products = [];
     // INIT FORM
     this.initFormGroup();
-    // this.patchValues();
+    this.patchValues();
   }
 
   /**
