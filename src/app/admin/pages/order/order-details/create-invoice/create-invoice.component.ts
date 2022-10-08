@@ -49,20 +49,19 @@ export class CreateInvoiceComponent implements OnInit {
     this.canceledOrderSku = this.data.canceledOrderSku;
     this.canceledOrderAmount = this.data.canceledOrderAmount;
     this.selectedIds = this.data.selectedIds;
-    console.log(this.selectedIds);
     let products = this.order.orderedItems;
     for(let i=0; i<this.selectedIds.length; i++){
       this.invoiceProducts[i]=products[this.selectedIds[i]];
     }
     this.invoiceProducts.forEach(f => {
-      f.originalQty = f.quantity;
+      f.quantity = f.quantity-f.invoicedQuantity;
+      f.maxQty = f.quantity-f.invoicedQuantity;
     });
 
     products = [];
     // INIT FORM
     this.initFormGroup();
-    this.patchValues();
-    console.log(this.invoiceProducts);
+    // this.patchValues();
   }
 
   /**
@@ -163,13 +162,7 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   deleteFromInvoice(index: number) {
-    this.invoiceProducts.splice(index, 1)
-    // const index = value;
-    // let newArray = array;
-    // newArray.splice(index, 1);
-    // // this.invoiceProducts.splice(index, 1);
-    // this.invoiceProducts = newArray;
-    // console.log('deleteFromInvoice', this.invoiceProducts);
+    this.invoiceProducts.splice(index, 1);
   }
 
   quantity(i) {
@@ -179,29 +172,22 @@ export class CreateInvoiceComponent implements OnInit {
 
   // Decrement
   decrementQty(data: any, i: number) {
-    console.log('Data decrementQty', data);
     if (data?.quantity === 1) {
       this.uiService.warn('Minimum Quantity is selected');
       return;
     }
-    data.quantity -= 1;
+    this.invoiceProducts[i].quantity -= 1;
   }
 
   // incrementQty
   incrementQuty(data: any, i: number) {
-
-    console.log(data.quantity); // 13
-    console.log(data.originalQty); // 15
-
-    if(data.quantity === data.originalQty) {
+    if(data.quantity === data.maxQty){
       this.uiService.warn('Maximum Quantity is selected');
-    } else {
-      this.invoiceProducts[i].quantity += 1;
+      return;
     }
+    this.invoiceProducts[i].quantity += 1;
   }
   close(){
-    console.log("Closed");
-
     this.invoiceProducts = null;
   }
 }

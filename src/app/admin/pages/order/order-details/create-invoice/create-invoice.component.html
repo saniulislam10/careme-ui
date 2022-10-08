@@ -131,72 +131,64 @@
 
         <!-- invoice table  -->
         <div class="order-table">
-          <table>
+          <nz-table #bodyData [nzData]="invoiceProducts">
 
             <thead>
               <tr>
-                <th class="si">SI</th>
-                <th class="item">Item Name</th>
-                <th class="quantity">Quantity</th>
-                <th class="price">Unit Price</th>
-                <th class="discount">Discount</th>
-                <th class="discount">Tax</th>
-                <th class="amount">Amount</th>
-                <th class="order-status">Delete</th>
+                <th >SI</th>
+                <th nzWidth="50px">Image</th>
+                <th >Item Name</th>
+                <th >Quantity</th>
+                <th >Unit Price</th>
+                <th >Discount</th>
+                <th >Tax</th>
+                <th >Amount</th>
+                <th >Delete</th>
               </tr>
             </thead>
 
             <tbody>
 
-              <tr *ngFor="let data of invoiceProducts; let i=index">
-                <td class="si">
+              <tr *ngFor="let data of bodyData.data; let i=index">
+                <td >
                   <span>{{i+1}}</span>
                 </td>
-                <td class="item">
-                  <div class="product">
-                    <div class="product-img">
-                      <img nz-image
-                        [nzSrc]="data.productId.images ? data.productId.images[0] : '/assets/images/placeholder/test.png'"
-                        [alt]="data.productId.name">
-                    </div>
-                    <div class="product-info">
-                      <h3>{{data?.name}}</h3>
-                      <p>SKU: {{data?.sku}}</p>
-                      <p>Delivery: {{data.deliveryDateFrom | date: 'd MMM'}} to {{data.deliveryDateTo | date: 'd MMM'}}
-                      </p>
-                    </div>
-                  </div>
+                <td nzWidth="50px"><img width="50px" nz-image
+                  [nzSrc]="data.productId.images ? data.productId.images[0] : '/assets/images/placeholder/test.png'"
+                  [alt]="data.productId.name"></td>
+                <td >
+                  <a>{{data?.name}}</a>
+                  <span>SKU: {{data?.sku}}</span>
+                  <span>Delivery: {{data.deliveryDateFrom | date: 'd MMM'}} to {{data.deliveryDateTo | date: 'd MMM'}}</span>
                 </td>
-                <td class="quantity">
-                  <div class="invoice_total_main">
-                    <button type="button" id="mine" (click)="decrementQty(data,i)">-</button>
-                    <mat-form-field appearance="outline">
-                      <input matInput formControlName="quantity" [(ngModel)]="data.quantity" (change)="quantity(i)"
+                <td >
+                  <div >
+                    <button nz-button type="button" id="mine" (click)="decrementQty(data,i)">-</button>
+                      <input nzInput [value]="data.quantity" (change)="quantity(i)"
                         readonly>
-                    </mat-form-field>
-                    <button type="button" id="decre" (click)="incrementQuty(data,i)">+</button>
+                    <button nz-button type="button" id="decre" (click)="incrementQuty(data,i)">+</button>
                   </div>
                 </td>
-                <td class="price">
+                <td >
                   <span>{{data?.price}}</span>
                 </td>
-                <td class="discount">
+                <td >
                   <span>0</span>
                 </td>
-                <td class="tax">
+                <td >
                   <span>{{data.tax ? data.tax : '0'}}</span>
                 </td>
-                <td class="amount">
+                <td >
                   <span>{{(data?.price + data.tax) * data?.quantity}}</span>
                 </td>
-                <td class="order-delete">
+                <td >
                   <mat-icon (click)="deleteFromInvoice(i)">delete_sweep</mat-icon>
                 </td>
               </tr>
 
             </tbody>
 
-          </table>
+          </nz-table>
 
         </div>
 

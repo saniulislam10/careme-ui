@@ -165,7 +165,8 @@ export class OrderDetailsComponent implements OnInit {
   /*** Create Order Pop Up Controll */
   openDialog() {
     if(this.selectedIds.length === 0){
-      this.msg.create('warning', 'Please select an item to create invoice')
+      this.msg.create('warning', 'Please select an item to create invoice');
+      return
     }
       const dialogRef = this.dialog.open(CreateInvoiceComponent, {
         restoreFocus: false,
