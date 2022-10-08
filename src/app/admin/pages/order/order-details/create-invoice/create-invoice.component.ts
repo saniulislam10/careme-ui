@@ -69,7 +69,7 @@ export class CreateInvoiceComponent implements OnInit {
    */
   private initFormGroup() {
     this.dataForm = this.fb.group({
-      orderNumber: [null, Validators.required],
+      orderNumber: [null],
       invoiceDate: [null, Validators.required],
       //salesPerson: [null, Validators.required],
       shippingCarrier: [null, Validators.required],
