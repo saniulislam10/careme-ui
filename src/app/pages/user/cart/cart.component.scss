@@ -18,16 +18,34 @@
   margin-bottom: 10px;
 }
 .product_info_right_amount {
-  text-align: right;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  align-items: baseline;
+  .ammount_area {
+    display: flex;
+    align-items: center;
+  }
+  span.item_delete {
+    width: 40px;
+    height: 40px;
+    background: #ff000014;
+    border-radius: 100%;
+    transition: 0.3s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    i {
+      margin: 0;
+      padding: 0;
+      font-size: 20px;
+    }
+  }
+  span.item_delete:hover {
+    background: #ff0000;
+    color: #fff;
+  }
 }
-.product_info_left_price {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+
 .total_advanch_price {
   display: flex;
   align-items: center;
@@ -61,15 +79,34 @@
     }
   }
 }
-.cart_single_item {
+li.cart_single_item {
   display: grid;
   grid-template-columns: 11% 89%;
+  border-bottom: 1px solid #dddddd7a;
+  padding: 15px 0;
 }
-.product_info {
-  display: grid;
-  grid-template-columns: 40% 15% 20% 25%;
+li.cart_single_item:last-child {
+  border: none;
+  padding-bottom: 0;
 }
 
+.product_info {
+  display: grid;
+  grid-template-columns: 35% 15% 10% 20% 20%;
+  text-align: center;
+}
+.product_info_left_price {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product_info_left {
+  text-align: left;
+}
+
+// Old css
 @media (max-width: 550px) {
   .order-process-main {
     flex-direction: column;
