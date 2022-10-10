@@ -1,17 +1,85 @@
 @import "./../../../../theme/client-side-varriables";
 
-
-
-@media(max-width:550px){
-  .order-process-main{
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 20px 10px;
-      flex-basis: 100%;
+.entry_cart {
+  padding: 15px 0;
+}
+.entry_cart_actions {
+  margin-bottom: 15px;
+}
+.cart_actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cart_vendor_actions {
+  border-bottom: 1px solid #ddd;
+  display: block;
+  padding: 0 0 5px 0;
+  margin-bottom: 10px;
+}
+.product_info_right_amount {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.product_info_left_price {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.total_advanch_price {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #ff8800;
+  span {
+    color: #5e5e5e;
+    font-size: 12px;
   }
-  .order-process-system{
-      margin: 10px 0px 30px 0px;
+}
+.product_info_right {
+  input {
+    width: 50px;
+    border: none;
+    text-align: center;
+    padding: 5px 15px;
+  }
+  input:focus-visible {
+    border: none;
+    box-shadow: none;
+  }
+}
+.product_thumb {
+  display: flex;
+  align-items: center;
+  .thumb {
+    width: 80px;
+    margin: 0 auto;
+    img {
+      max-width: 100%;
+    }
+  }
+}
+.cart_single_item {
+  display: grid;
+  grid-template-columns: 11% 89%;
+}
+.product_info {
+  display: grid;
+  grid-template-columns: 40% 15% 20% 25%;
+}
+
+@media (max-width: 550px) {
+  .order-process-main {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px 10px;
+    flex-basis: 100%;
+  }
+  .order-process-system {
+    margin: 10px 0px 30px 0px;
   }
 }
 .sub_content {
@@ -255,10 +323,10 @@ img {
   font-style: normal;
   font-weight: 700;
 }
-.modal{
+.modal {
   width: auto;
 }
-.variant-table-data{
+.variant-table-data {
   display: flex;
   width: 20px;
 }
@@ -636,10 +704,10 @@ img {
     margin: 15px 0;
     align-items: flex-end;
     width: 100%;
-}
-::ng-deep .mat-radio-label-content {
-  width: 100%;
-}
+  }
+  ::ng-deep .mat-radio-label-content {
+    width: 100%;
+  }
 
   ::ng-deep mat-radio-button#mat-radio-2 {
     width: 100%;
@@ -653,7 +721,7 @@ img {
   ::ng-deep .example-radio-button {
     margin: 5px;
     width: 100%;
-}
+  }
 }
 .user_points {
   padding-top: 22px;
@@ -881,10 +949,10 @@ img {
   }
 }
 
-.disabled{
+.disabled {
   color: #a8a8a8;
 }
-.active{
+.active {
   color: #5f0e0e;
 }
 .total_horizontal_line {
@@ -973,4 +1041,3 @@ img {
     left: -144px;
   }
 }
-

@@ -5,16 +5,15 @@ nz-select {
   width: 150px;
 }
 
-.return{
+.return {
   display: flex;
-  .box{
+  .box {
     padding-left: 5px;
   }
   input {
     width: 150px;
   }
 }
-
 
 .single-inv {
   h2 {
@@ -29,6 +28,7 @@ nz-select {
         list-style: none;
         border: 1px solid #ddd;
         border-radius: 3px;
+        margin-bottom: 20px;
         .invoice-header {
           display: flex;
           align-items: center;
@@ -51,8 +51,9 @@ nz-select {
         .invoice-progress {
           padding: 15px;
           .invoice-progress_step {
-            padding: 15px 300px;
             text-align: center;
+            width: 70%;
+            margin: 0 auto;
             h1 {
               margin-bottom: 30px !important;
               font-size: 18px;
@@ -72,10 +73,11 @@ nz-select {
           margin: 15px;
           padding: 15px;
           border-radius: 5px;
-          border: 1px solid #ddd;
+          border: 1px solid #ffffff;
           display: flex;
           align-items: center;
           text-align: center;
+          background: #ffffff;
           .image {
             flex: 1;
           }
@@ -110,5 +112,10 @@ nz-select {
         }
       }
     }
+  }
+}
+@media (max-width: 500px) {
+  .invoice-progress_step {
+    width: 100%;
   }
 }
