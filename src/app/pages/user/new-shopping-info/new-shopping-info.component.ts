@@ -329,14 +329,6 @@ export class NewShoppingInfoComponent implements OnInit {
     return Math.floor(this.total + 120) - this.getCouponAmount();
   }
 
-  cartTotalForRequest() {
-    this.total = 0;
-    for (let i = 0; i < this.carts?.length; i++) {
-      this.total += this.carts[i].price * this.carts[i].selectedQty;
-    }
-    return Math.floor(this.total);
-  }
-
   calculateTax(data, quantity) {
     if (data.product.hasTax) {
       if (data.product?.hasVariant) {
@@ -471,8 +463,14 @@ export class NewShoppingInfoComponent implements OnInit {
     let order: Order = {
       checkoutDate: new Date(),
       orderedItems: orderItem,
+      subTotal: this.cartTotal(),
+      advanceTotal: this.advanceTotal(),
+      earnedPoints: this.earnPointsTotal(),
+      redeemedPoints: this.redeemPointsTotal(),
+      shippingCharge: 120,
       canceledAmount: 0,
       refundedAmount: 0,
+      paidAmount: 0,
       userId: this.user._id,
       name: this.user.fullName ? this.user.fullName : 'No Name',
       phoneNo: this.user.phoneNo,
