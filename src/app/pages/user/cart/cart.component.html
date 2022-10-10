@@ -47,8 +47,11 @@
                   <div class="product_info_left_title">
                     <h3>{{ data?.product.name }}</h3>
                     <div class="product_sku_variation">
-                      <span style="display: flex">
-                        <p>Red/32</p>
+                      <span
+                        style="display: flex"
+                        *ngIf="data.product.hasVariant"
+                      >
+                        <p>{{ data?.variant[0]?.variant }}</p>
                         <a (click)="showModal(gi, di, data?.variant[0])">
                           <i class="las la-edit"></i>
                         </a>

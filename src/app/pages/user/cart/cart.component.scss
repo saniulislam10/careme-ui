@@ -19,10 +19,11 @@
 }
 .product_info_right_amount {
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
   .ammount_area {
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
   span.item_delete {
     width: 40px;
@@ -34,6 +35,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0 0 0 auto;
+    visibility: hidden;
+    opacity: 0;
     i {
       margin: 0;
       padding: 0;
@@ -43,6 +47,12 @@
   span.item_delete:hover {
     background: #ff0000;
     color: #fff;
+  }
+}
+.cart_single_item:hover .product_info_right_amount {
+  span.item_delete {
+    visibility: visible;
+    opacity: 1;
   }
 }
 
