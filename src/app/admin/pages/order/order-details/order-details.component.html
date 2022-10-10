@@ -219,6 +219,7 @@
                   #rowSelectProduct
                   [nzFrontPagination]="false"
                   [nzData]="products"
+                  [nzLoading]="loading"
                   (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
                 >
                   <thead>
@@ -313,22 +314,22 @@
                     <nz-card nzSize="small" class="ammount_summary">
                       <div class="ammount_summary_single">
                         <h4><b>Sub-Total</b></h4>
-                        <span><b>1200 TK</b></span>
+                        <span><b>{{order.subTotal - order.shippingCharge}} TK</b></span>
                       </div>
-                      <div class="ammount_summary_single">
-                        <h4 class="cuppon">
+                      <div class="ammount_summary_single" *ngIf="order.couponCode">
+                        <h4 class="cuppon" >
                           Coupon Code
-                          <span><i class="las la-lg la-tag"></i>CAREME15%</span>
+                          <span><i class="las la-lg la-tag"></i>{{order.couponCode}}</span>
                         </h4>
                         <span style="color: red">- 0.00 TK</span>
                       </div>
-                      <div class="ammount_summary_single">
+                      <div class="ammount_summary_single" *ngIf="order.redeemedPoints">
                         <h4>Points Redeem</h4>
-                        <span style="color: red">120 TK</span>
+                        <span style="color: red">{{order.redeemedPoints}}TK</span>
                       </div>
                       <div class="ammount_summary_single">
                         <h4>Shipping</h4>
-                        <span>120 TK</span>
+                        <span>{{order.shippingCharge}} TK</span>
                       </div>
                       <nz-divider
                         style="margin: 10px 0"
@@ -336,7 +337,7 @@
                       ></nz-divider>
                       <div class="ammount_summary_single">
                         <h4></h4>
-                        <span> Amount to pay = <b>1200 TK</b></span>
+                        <span> Amount to pay = <b>{{order.subTotal}} TK</b></span>
                       </div>
                       <div class="ammount_summary_single mt15">
                         <h4>Paid</h4>

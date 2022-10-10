@@ -138,7 +138,6 @@ export class AllInvoiceComponent implements OnInit {
       pageSize: this.invoicePerPage.toString(),
       currentPage: this.currentPage.toString(),
     };
-    console.log(this.currentPage.toString());
     this.invoiceService
       .getAllInvoices(pagination, this.sortQuery, this.filter)
       .subscribe(
