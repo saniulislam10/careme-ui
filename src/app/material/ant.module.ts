@@ -23,7 +23,7 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
-
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 const materials = [
   NzModalModule,
   NzTableModule,
@@ -51,6 +51,7 @@ const materials = [
   NzToolTipModule,
   NzTimelineModule,
   NzCollapseModule,
+  NzRadioModule,
 
   // SharedModule
 ];
