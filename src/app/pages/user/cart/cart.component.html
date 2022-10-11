@@ -1,12 +1,7 @@
 <div class="entry_cart_page">
   <div class="container">
     <div nz-row [nzGutter]="16">
-      <div
-        nz-col
-        [nzXs]="{ span: 24 }"
-        [nzLg]="{ span: 16 }"
-        [nzXXl]="{ span: 17 }"
-      >
+      <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 17 }">
         <nz-card class="entry_cart_actions" nzSize="small">
           <div class="cart_actions">
             <label
@@ -48,13 +43,14 @@
                     </label>
                   </div>
                   <div class="single_vendor-items-thumb">
-                    <img nz-image
+                    <img
+                      nz-image
                       nzSrc="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/Hdd59afbbb8364c80ba526444dff1dbc8I_1.jpg"
                       alt="Mamun"
                     />
                   </div>
                   <div class="single_vendor-items-details">
-                    <h2>Men's Waterproof Breathable Anti Slip Shoe</h2>
+                    <h2>Men's Waterproof Breathable Shoe</h2>
                     <div class="single_vendor-items-info">
                       <h4>SKU:987979, Black/32 <i class="las la-edit"></i></h4>
                       <h4>Price: <b>302TK</b>, Tax: <b>15TK</b></h4>
@@ -100,12 +96,7 @@
           </ul>
         </nz-card>
       </div>
-      <div
-        nz-col
-        [nzXs]="{ span: 24 }"
-        [nzLg]="{ span: 8 }"
-        [nzXXl]="{ span: 7 }"
-      >
+      <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 7 }">
         <nz-card class="entry_cart_actions" nzSize="small">
           <div class="order_summary">
             <h2>Order Summary</h2>
@@ -176,6 +167,250 @@
   </div>
 </div>
 
+<div class="entry_cart">
+  <div class="container">
+    <div nz-row [nzGutter]="16">
+      <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 18 }">
+        <nz-card class="entry_cart_actions" nzSize="small">
+          <div class="cart_actions">
+            <label
+              nz-checkbox
+              [(ngModel)]="isCheckedButton"
+              [nzDisabled]="isDisabledButton"
+            >
+              Select all
+            </label>
+            <span
+              [style]="isCheckedButton ? 'display: Block' : 'display: None'"
+              (click)="deleteUserCartList()"
+            >
+              <i style="color: #e62e04" class="las la-lg la-trash-alt"></i>
+              DELETE
+            </span>
+          </div>
+        </nz-card>
+        <nz-card
+          class="entry_cart_actions"
+          nzSize="small"
+          *ngFor="let group of vCarts; let gi = index"
+        >
+          <div class="cart_vendor_actions">
+            <label nz-checkbox [(ngModel)]="isCheckedButton"> Care Me </label>
+          </div>
+          <ul>
+            <li
+              class="cart_single_item"
+              *ngFor="let data of group.data; let di = index"
+            >
+              <div class="product_thumb">
+                <label nz-checkbox [(ngModel)]="isCheckedButton"></label>
+                <div class="thumb">
+                  <img
+                    src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN01rbKoSF27p3pPwHyza__2822927845-0-cib.jpg"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="product_info">
+                <div class="product_info_left">
+                  <div class="product_info_left_title">
+                    <h3>{{ data?.product.name }}</h3>
+                    <div
+                      class="product_sku_variation"
+                      *ngIf="data.product.hasVariant"
+                    >
+                      <p>
+                        SKU :
+                        {{
+                          data.variant[0]?.variantSku
+                            ? data.variant[0].variantSku
+                            : data.sku
+                        }}, {{ data?.variant[0]?.variant }}
+                      </p>
+                      <a (click)="showModal(gi, di, data?.variant[0])">
+                        <i class="las la-edit"></i>
+                      </a>
+                    </div>
+                    <div
+                      class="product_points"
+                      *ngIf="data?.product?.canEarnPoints"
+                    >
+                      <i style="color: #ff9100" class="las la-lg la-coins"></i>
+                      <span>
+                        <span style="color: #008516ad">
+                          +{{
+                            data?.product
+                              | coin
+                                : "earn"
+                                : data?.selectedQty
+                                : data.variant[0].variantPrice
+                          }}
+                        </span>
+                        <span> / </span>
+                        <span style="color: #ff000093">
+                          -
+                          {{
+                            data?.product
+                              | coin
+                                : "redeem"
+                                : data?.selectedQty
+                                : data.variant[0].variantPrice
+                          }}
+                        </span>
+                      </span>
+                    </div>
+                    <h5>
+                      Delivery withing
+                      {{ data?.deliveryDateFrom | date: "EEE, MMM d" }} -
+                      {{ data?.deliveryDateTo | date: "EEE, MMM d" }}
+                    </h5>
+                  </div>
+                </div>
+                <div class="mobile_view">
+                  <div class="product_info_left_price">
+                    <p *ngIf="!data?.requestProduct">
+                      {{
+                        data?.product
+                          | price: "variant":1:data?.variant[0]?.variantPrice
+                      }}
+                      TK
+                    </p>
+                    <!-- <p>
+                    Tax:
+                    {{
+                      data?.product?.hasTax
+                        ? getTax(data?.product?.tax, data, data?.selectedQty)
+                        : "0"
+                    }}TK
+                  </p> -->
+                  </div>
+                  <div class="cart_quantity_area">
+                    <button
+                      nz-button
+                      (click)="decrementQty(data?._id, i, data.selectedQty)"
+                    >
+                      <i class="las la-minus"></i>
+                    </button>
+                    <input type="text" [value]="data.selectedQty" />
+                    <button nz-button (click)="incrementQty(data._id, i)">
+                      <i class="las la-plus"></i>
+                    </button>
+                  </div>
+                  <div class="product_info_right_amount">
+                    <div class="ammount_area">
+                      <h3 class="total_price">{{ cartSubTotal(data) }}TK</h3>
+                      <h2 class="total_advanch_price">
+                        <span *ngIf="data?.product?.canPartialPayment">
+                          <span *ngIf="data?.product?.partialPaymentType === 0">
+                            ( {{ data?.product.partialPayment }}Tk )
+                          </span>
+                          <span *ngIf="data?.product?.partialPaymentType === 1">
+                            ( {{ data?.product.partialPayment }}%)
+                          </span>
+                        </span>
+                        {{
+                          advanceForSingle(
+                            data.product,
+                            data.selectedQty,
+                            data.variant[0].variantPrice
+                          )
+                        }}
+                        TK
+                      </h2>
+                    </div>
+                    <span
+                      class="item_delete"
+                      *ngIf="!data?.requestProduct"
+                      (click)="
+                        onDeleteCartItem(data?._id, data, data?.product._id)
+                      "
+                    >
+                      <i class="las la-trash"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </nz-card>
+      </div>
+      <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 6 }">
+        <nz-card>
+          <div class="order_summary">
+            <h2>Order Summary</h2>
+            <ul *ngIf="!carts[0]?.requestProduct">
+              <li>
+                <p>Subtotal (3 items)</p>
+                <p>{{ cartNewTotal() }} TK</p>
+              </li>
+              <li>
+                <p>Coupon Code</p>
+                <p><span>(-)</span> 50TK</p>
+              </li>
+              <li>
+                <p>Shipping Fee</p>
+                <p>120TK</p>
+              </li>
+              <li>
+                <div class="point_main" [(ngModel)]="pointsType">
+                  <div class="earn_point">
+                    <span>
+                      <input type="radio" id="earn" name="point" value="50" />
+                      <label for="earn">Earn Points</label>
+                    </span>
+                    <h4>{{ earnPointsTotal() }} TK</h4>
+                  </div>
+                  <div class="earn_point">
+                    <span>
+                      <input type="radio" id="redeem" name="point" value="50" />
+                      <label for="redeem">
+                        Redeem Points
+                        <span style="font-size: 11px; color: #898989">
+                          ({{ user?.points }} Available)
+                        </span>
+                      </label>
+                    </span>
+                    <h4>{{ redeemPointsTotal() }} TK</h4>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <nz-divider
+                  nzType="horizontal"
+                  style="margin: 5px 0"
+                ></nz-divider>
+              </li>
+              <li class="total_amount">
+                <h3>Total Amount = {{ cartTotal() }} TK</h3>
+              </li>
+              <li class="total_advanch">
+                <h2>
+                  Advance to pay = <span>{{ advanceTotal() }} TK</span>
+                </h2>
+              </li>
+              <li class="order_summary_btn">
+                <button
+                  *ngIf="this.carts?.length > 0"
+                  type="submit"
+                  (click)="onContinueToShipping()"
+                >
+                  PROCEED TO CHECKOUT
+                </button>
+              </li>
+            </ul>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="0">
+      <div nz-col [nzXs]="{ span: 24 }">
+        <a routerLink="/all-products">
+          <i class="las la-lg la-long-arrow-alt-left"></i> Return to shop
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 <nz-modal
   [(nzVisible)]="isVisible"
   nzTitle="Edit Option"
