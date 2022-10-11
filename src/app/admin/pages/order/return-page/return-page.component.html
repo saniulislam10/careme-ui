@@ -35,14 +35,12 @@
               </button>
               <nz-dropdown-menu #sortMenu="nzDropdownMenu">
                 <ul nz-menu nzSelectable>
-                  <li nz-menu-item>Product title A–Z</li>
-                  <li nz-menu-item>Product title Z–A</li>
-                  <li nz-menu-item>Created (oldest first)</li>
-                  <li nz-menu-item>Created (newest first)</li>
-                  <li nz-menu-item>Updated (oldest first)</li>
-                  <li nz-menu-item>Updated (newest first)</li>
-                  <li nz-menu-item>Low Amount</li>
-                  <li nz-menu-item>High Amount</li>
+                  <li nz-menu-item (click)="sortData({returnId: -1}, 1)"> Return Number(High to low) </li>
+                  <li nz-menu-item (click)="sortData({returnId: 1}, 2)"> Return Number(Low to High) </li>
+                  <li nz-menu-item (click)="sortData({createdAt: 1}, 3)"> Created (oldest first) </li>
+                  <li nz-menu-item (click)="sortData({createdAt: -1}, 4)"> Created (newest first) </li>
+                  <li nz-menu-item (click)="sortData({subTotal: -1}, 5)"> Amount(High to low) </li>
+                  <li nz-menu-item (click)="sortData({subTotal: 1}, 6)"> Amount (Low to High) </li>
                 </ul>
               </nz-dropdown-menu>
             </li>
@@ -53,7 +51,7 @@
             nzSize="small"
             #rowSelectionTable
             nzShowSizeChanger
-            [nzLoading]="loading"
+            [nzLoading]="isLoading"
             [nzData]="returns"
             (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
           >

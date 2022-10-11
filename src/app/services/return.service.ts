@@ -26,10 +26,10 @@ export class ReturnService {
   getAllReturnsByOrderNo(data: any) {
     return this.httpClient.post<{ data: Return[]; message: string; success: boolean }>(API_RETURN + 'get-all-returns-by-orderNo', {data});
   }
-  getAllReturns() {
-    return this.httpClient.get<{ data: Return[]; message: string; success: boolean }>(API_RETURN + 'get-all-returns');
+  getAllReturns(pagination, sort?: any) {
+    return this.httpClient.post<{ data: Return[]; message: string; success: boolean }>(API_RETURN + 'get-all-returns', {sort});
   }
-  getSearchData(searchTerm: string, pagination?: Pagination, filter?: any) {
+  getSearchData(searchTerm: string, pagination?: Pagination, sort?: any) {
 
     let params = new HttpParams();
     params = params.append('q', searchTerm);
@@ -37,7 +37,7 @@ export class ReturnService {
       params = params.append('pageSize', pagination.pageSize);
       params = params.append('currentPage', pagination.currentPage);
     }
-    return this.httpClient.post<{ data: Return[], count: number }>(API_RETURN + 'get-return-by-search', { filter }, { params });
+    return this.httpClient.post<{ data: Return[], count: number }>(API_RETURN + 'get-return-by-search', { sort }, { params });
   }
   getReturnById(id) {
     return this.httpClient.get<{ data: Return; message: string; success: boolean }>(API_RETURN + 'get-return-by-id/'+ id);

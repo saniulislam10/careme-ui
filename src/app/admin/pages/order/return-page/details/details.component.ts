@@ -66,6 +66,7 @@ export class DetailsComponent implements OnInit {
   public query = null;
   return: Return;
   listOfData: any;
+  public sortQuery = { createdAt: -1 };
   private subRouteOne?: Subscription;
   id: string;
   editSku: string;
@@ -96,7 +97,7 @@ export class DetailsComponent implements OnInit {
     };
     console.log("Get all data");
 
-    this.returnService.getAllReturns()
+    this.returnService.getAllReturns(pagination, this.sortQuery)
       .subscribe(res => {
         console.log(res.data);
         this.dataSet = res.data;

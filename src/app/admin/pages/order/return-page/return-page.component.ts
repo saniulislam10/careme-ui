@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EMPTY } from 'rxjs';
 import { pluck, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -27,14 +27,20 @@ export class ReturnPageComponent implements OnInit {
   setOfCheckedId = new Set<number>();
 
   @ViewChild('createReturn') createReturn: CreateReturnComponent;
+  @ViewChild('searchInput') searchInput: ElementRef;
   returns: any[] = [];
   @ViewChild('searchForm') searchForm: NgForm;
   searchQuery: string;
+  public sortQuery = { createdAt: -1 };
   holdPrevData: Return[] = [];
   searchReturn: Return[] = [];
   isLoading: boolean;
   overlay: boolean;
   isOpen: boolean;
+  isFocused: boolean;
+  returnsPerPage = 50;
+  currentPage = 1;
+  totalNumbers = 0;
   constructor(
     private returnService: ReturnService
   ) { }
@@ -44,9 +50,18 @@ export class ReturnPageComponent implements OnInit {
   }
 
   getAllReturns(){
-    this.returnService.getAllReturns()
+
+    this.isLoading = true;
+
+    const pagination: Pagination = {
+      pageSize: this.returnsPerPage.toString(),
+      currentPage: this.currentPage.toString()
+    };
+
+    this.returnService.getAllReturns(pagination, this.sortQuery)
     .subscribe(res => {
       this.returns = res.data;
+      this.isLoading = false;
     }, err=>{
       console.log(err);
     })
@@ -110,10 +125,10 @@ export class ReturnPageComponent implements OnInit {
         }
         this.isLoading = true;
         const pagination: Pagination = {
-          currentPage: '1',
-          pageSize: '10'
+          currentPage: this.currentPage.toString(),
+          pageSize: this.returnsPerPage.toString()
         };
-        return this.returnService.getSearchData(this.searchQuery, pagination);
+        return this.returnService.getSearchData(this.searchQuery, pagination, this.sortQuery);
       })
     )
       .subscribe(res => {
@@ -128,6 +143,59 @@ export class ReturnPageComponent implements OnInit {
       }, () => {
         this.isLoading = false;
       });
+  }
+
+  handleFocus(event: FocusEvent): void {
+    this.searchInput.nativeElement.focus();
+
+    if (this.isFocused) {
+      return;
+    }
+    if (this.searchReturn.length > 0) {
+      this.setPanelState(event);
+    }
+    this.isFocused = true;
+  }
+
+  private setPanelState(event: FocusEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.isOpen = false;
+    this.handleOpen();
+  }
+  handleOpen(): void {
+    if (this.isOpen || this.isOpen && !this.isLoading) {
+      return;
+    }
+    if (this.searchReturn.length > 0) {
+      this.isOpen = true;
+      this.overlay = true;
+    }
+  }
+
+  sortData(query: any, type: any) {
+    this.sortQuery = query;
+    if(this.searchQuery){
+      const pagination: Pagination = {
+        currentPage: '1',
+        pageSize: '10'
+      };
+      this.returnService.getSearchData(this.searchQuery, pagination, this.sortQuery)
+      .subscribe(res => {
+        this.isLoading = false;
+        this.returns = res.data;
+        this.searchReturn = res.data;
+        if (this.searchReturn.length > 0) {
+          this.isOpen = true;
+          this.overlay = true;
+        }
+      }, err=>{
+        this.isLoading = false;
+      })
+    }else{
+      this.getAllReturns();
+    }
   }
 
 }
