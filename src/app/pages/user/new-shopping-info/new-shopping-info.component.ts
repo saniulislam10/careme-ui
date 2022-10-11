@@ -388,6 +388,7 @@ export class NewShoppingInfoComponent implements OnInit {
         if (this.carts[i].product.canPartialPayment && productVariant.variantQuantity === 0) {
           this.advance += this.advanceForSingle(this.carts[i].product, this.carts[i].selectedQty, this.carts[i].variant[0].variantPrice);
         }
+        console.log(this.advance);
       } else {
         this.advance += this.advanceForSingle(this.carts[i].product, this.carts[i].selectedQty);
       }
@@ -463,7 +464,7 @@ export class NewShoppingInfoComponent implements OnInit {
     let order: Order = {
       checkoutDate: new Date(),
       orderedItems: orderItem,
-      subTotal: this.cartTotal(),
+      totalAmount: this.cartTotal(),
       advanceTotal: this.advanceTotal(),
       earnedPoints: this.earnPointsTotal(),
       redeemedPoints: this.redeemPointsTotal(),

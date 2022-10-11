@@ -1,3 +1,5 @@
+import { Invoice } from 'src/app/interfaces/invoice';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -40,6 +42,7 @@ export class CreateInvoiceComponent implements OnInit {
     public uiService: UiService,
     private activatedRoute: ActivatedRoute,
     private utilsService: UtilsService,
+    private msg: NzMessageService,
     public dialogRef: MatDialogRef<CreateInvoiceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
@@ -54,8 +57,9 @@ export class CreateInvoiceComponent implements OnInit {
       this.invoiceProducts[i]=products[this.selectedIds[i]];
     }
     this.invoiceProducts.forEach(f => {
-      f.quantity = f.quantity-f.invoicedQuantity;
-      f.maxQty = f.quantity-f.invoicedQuantity;
+      let qty = f.quantity-f.invoicedQuantity;
+      f.quantity = qty;
+      f.maxQty = qty;
     });
 
     products = [];
@@ -100,7 +104,7 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   calculateSubTotal() {
-    let total = 0;
+    let total: number = 0;
     for (let i = 0; i < this.invoiceProducts?.length; i++) {
       total +=
         (this.invoiceProducts[i].price + this.invoiceProducts[i].tax) *
@@ -111,7 +115,7 @@ export class CreateInvoiceComponent implements OnInit {
   paidAmmount() {
     let total = 0;
     for (let i = 0; i < this.order?.orderedItems.length; i++) {
-      total +=this.order?.orderedItems[i]?.advance
+      total +=this.order?.orderedItems[i]?.advanceAmount
     }
     return total;
   }
@@ -172,8 +176,8 @@ export class CreateInvoiceComponent implements OnInit {
 
   // Decrement
   decrementQty(data: any, i: number) {
-    if (data?.quantity === 1) {
-      this.uiService.warn('Minimum Quantity is selected');
+    if (data?.quantity <= 1) {
+      this.msg.create('warning','Minimum Quantity is selected');
       return;
     }
     this.invoiceProducts[i].quantity -= 1;
@@ -181,13 +185,16 @@ export class CreateInvoiceComponent implements OnInit {
 
   // incrementQty
   incrementQuty(data: any, i: number) {
-    if(data.quantity === data.maxQty){
-      this.uiService.warn('Maximum Quantity is selected');
+    console.log(data.quantity)
+    console.log(data.maxQty)
+    if(data.quantity >= data.maxQty){
+      this.msg.create('warning','Maximum Quantity is selected');
       return;
     }
     this.invoiceProducts[i].quantity += 1;
   }
   close(){
     this.invoiceProducts = null;
+    this.order = null;
   }
 }

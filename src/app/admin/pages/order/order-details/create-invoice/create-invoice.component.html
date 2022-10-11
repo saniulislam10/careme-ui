@@ -98,9 +98,9 @@
                   <div class="invoice_date_field">
                     <h3>Shipping Carrier</h3>
                     <mat-form-field appearance="outline">
-                      <mat-label>Pathao</mat-label>
+                      <mat-label>Select</mat-label>
                       <mat-select formControlName="shippingCarrier">
-                        <mat-option value="Pathao">Pathao</mat-option>
+                        <mat-option value="Pathao" selected>Pathao</mat-option>
                         <mat-option value="REDX">REDX</mat-option>
                         <mat-option value="SA Paribahan">SA Paribahan</mat-option>
                       </mat-select>
@@ -151,7 +151,7 @@
 
               <tr *ngFor="let data of bodyData.data; let i=index">
                 <td >
-                  <span>{{i+1}}</span>
+                  {{i+1}}
                 </td>
                 <td nzWidth="50px"><img width="50px" nz-image
                   [nzSrc]="data.productId.images ? data.productId.images[0] : '/assets/images/placeholder/test.png'"
@@ -162,24 +162,21 @@
                   <span>Delivery: {{data.deliveryDateFrom | date: 'd MMM'}} to {{data.deliveryDateTo | date: 'd MMM'}}</span>
                 </td>
                 <td >
-                  <div >
                     <button nz-button type="button" id="mine" (click)="decrementQty(data,i)">-</button>
-                      <input nzInput [value]="data.quantity" (change)="quantity(i)"
-                        readonly>
+                    <input style="width: 50px" nz-input [value]="data.quantity" (change)="quantity(i)" readonly />
                     <button nz-button type="button" id="decre" (click)="incrementQuty(data,i)">+</button>
-                  </div>
                 </td>
                 <td >
-                  <span>{{data?.price}}</span>
+                  {{data?.price}}
                 </td>
                 <td >
-                  <span>0</span>
+                  0
                 </td>
                 <td >
-                  <span>{{data.tax ? data.tax : '0'}}</span>
+                  {{data.tax ? data.tax : '0'}}
                 </td>
                 <td >
-                  <span>{{(data?.price + data.tax) * data?.quantity}}</span>
+                  {{(data?.price + data.tax) * data?.quantity}}
                 </td>
                 <!-- <td >
                   <mat-icon (click)="deleteFromInvoice(i)">delete_sweep</mat-icon>
@@ -234,7 +231,7 @@
                   <h4>{{calculateSubTotal()}} TK</h4>
                 </div>
               </li>
-              <li>
+              <li *ngIf="order.couponCode">
                 <div class="total-title">
                   <h3>Coupon Code</h3>
                 </div>
@@ -242,20 +239,20 @@
                   <h4 class="color-red">(-) 0 TK</h4>
                 </div>
               </li>
-              <li>
-                <div class="total-title">
+              <li *ngIf="order.redeemedPoints">
+                <div class="total-title" >
                   <h3>Points Redeem</h3>
                 </div>
                 <div class="total-price">
-                  <h4 class="color-red">(-) 0 PTS</h4>
+                  <h4 class="color-red">(-) {{order.redeemedPoints}} PTS</h4>
                 </div>
               </li>
-              <li>
+              <li *ngIf="order.redeemedPoints">
                 <div class="total-title">
                   <h3>Shipping Charge</h3>
                 </div>
                 <div class="total-price">
-                  <h4>120 TK</h4>
+                  <h4>{{order.shippingCharge}} TK</h4>
                 </div>
               </li>
               <hr>
@@ -272,10 +269,10 @@
                   <h3>Paid</h3>
                 </div>
                 <div class="total-price">
-                  <h4 class="color-red">(-) {{paidAmmount()}} TK</h4>
+                  <h4 class="color-red">(-) 0 TK</h4>
                 </div>
               </li>
-              <li>
+              <li *ngIf="order.adjustmentAmount">
                 <div class="total-title">
                   <h3>Adjustment</h3>
                 </div>
@@ -284,37 +281,12 @@
                 </div>
               </li>
               <hr>
-              <li>
+              <li *ngIf="order.adjustmentAmount">
                 <div class="total-title">
                   <h3>Due Amount</h3>
                 </div>
                 <div class="total-price">
-                  <h4>{{(calculateSubTotal() + 120) - paidAmmount()}} TK</h4>
-                </div>
-              </li>
-              <li>
-                <div class="total-title">
-                  <h3>Cancelled(SKU:{{canceledOrderSku}})</h3>
-                </div>
-                <div class="total-price">
-                  <h4 class="color-red">(-) {{canceledOrderAmount}} TK</h4>
-                </div>
-              </li>
-              <hr>
-              <li>
-                <div class="total-title">
-                  <h3>Refundable Amount</h3>
-                </div>
-                <div class="total-price">
-                  <h4 class="color-red">-0 TK</h4>
-                </div>
-              </li>
-              <li>
-                <div class="total-title">
-                  <h3>Refund(SKU:)</h3>
-                </div>
-                <div class="total-price">
-                  <h4>(-) 0 TK</h4>
+                  <h4>{{(calculateSubTotal() + 120) - 0}} TK</h4>
                 </div>
               </li>
               <hr>
@@ -323,8 +295,7 @@
                   <h3>Total Due =</h3>
                 </div>
                 <div class="total-price">
-                  <h4>{{((calculateSubTotal() + 120) - paidAmmount()) - (canceledOrderAmount ? (canceledOrderAmount +
-                    120) : 0)}} TK</h4>
+                  <h4>{{calculateSubTotal() + order.shippingCharge}} TK</h4>
                 </div>
               </li>
             </ul>

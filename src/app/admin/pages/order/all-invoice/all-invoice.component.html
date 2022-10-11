@@ -11,7 +11,11 @@
     <nz-tabset>
       <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
         <div class="table-filter-area">
-          <input nz-input placeholder="Search here" nzSize="large" />
+          <form #searchForm=ngForm>
+            <input #searchInput nz-input id="searchInput" class="tw" type="text" placeholder="Filter Invoices"
+              (focus)=handleFocus($event) name="searchTerm" nzSize="large" autocomplete="off" ngModel required>
+          </form>
+          <!-- <input nz-input placeholder="Search here" nzSize="large" /> -->
           <ul>
             <li>
               <button [matMenuTriggerFor]="paymentStatus">
@@ -44,7 +48,7 @@
             </mat-menu>
           </ul>
         </div>
-        <nz-table #rowSelectionTable [nzData]="listOfData" [nzLoading]="loading" [nzPageIndex]="currentPage"
+        <nz-table #rowSelectionTable [nzData]="invoices" [nzLoading]="loading" [nzPageIndex]="currentPage"
           [nzFrontPagination]="false" [nzTotal]="totalNumbers" (nzQueryParams)="onPageChanged($event)" nzSize="small">
           <thead>
             <tr>
@@ -69,7 +73,7 @@
               </td>
               <td><span class="btn delivered">{{data.deliveryStatus | orderStatus}}</span></td>
               <td>0</td>
-              <td>SO-{{data.orderNumber}}</td>
+              <td>{{data.orderNumber}}</td>
               <td>{{data.subTotal}}</td>
               <td>{{data.paymentStatus | paymentStatus}}</td>
               <td>{{data.customerName}}</td>

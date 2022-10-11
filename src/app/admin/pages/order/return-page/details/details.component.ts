@@ -126,7 +126,7 @@ export class DetailsComponent implements OnInit {
 
   updateReturn(){
     console.log(this.return._id, this.return);
-    this.returnService.updateReturnById(this.return._id, this.return)
+    this.returnService.recieveReturnById(this.return._id, this.return)
     .subscribe(res => {
       this.msg.create('success', res.message);
     }, err => {
@@ -134,11 +134,12 @@ export class DetailsComponent implements OnInit {
     })
   }
 
-  markRecieved(i, recieved, value){
-    if(recieved){
-      console.log("recieved");
+  markRecieved(i, value){
+    if(value){
       this.listOfData[i].recievedQty = value;
+      this.listOfData[i].returnedQty = value;
     }else{
+      this.listOfData[i].returnedQty = 0;
       this.listOfData[i].recievedQty = 0;
     }
   }

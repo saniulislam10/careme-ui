@@ -82,10 +82,10 @@ export class PricePipe implements PipeTransform {
             if (product.hasVariant === true) {
               if(product.partialPaymentType === AmountType.PERCENTAGE){
                 if (product.tax !== 0) {
-                  const taxx = Math.round((product.tax / 100) * variantPrice);
+                  const tax = Math.round((product.tax / 100) * variantPrice);
                   if (quantity) {
                   return Math.round(
-                    ((variantPrice + taxx) *
+                    ((variantPrice + tax) *
                     quantity *
                     product.partialPayment) /
                     100

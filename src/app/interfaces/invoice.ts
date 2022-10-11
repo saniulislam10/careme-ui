@@ -17,5 +17,5 @@ export interface Invoice {
   deliveryStatus: number,
   paymentStatus: number,
   shippingCarrier: String,
-  products: OrderItem | any
+  products: OrderItem | any,
 }

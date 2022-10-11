@@ -1,5 +1,21 @@
 @import "./../../../../../theme/variables";
 
+.timeline-items{
+  height: 250px;
+  width: auto;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+@keyframes spin {
+  from {
+      transform:rotate(0deg);
+  }
+  to {
+      transform:rotate(360deg);
+  }
+}
+
 .pending {
   background: #dbdbdb !important;
   color: #2d2d2d;

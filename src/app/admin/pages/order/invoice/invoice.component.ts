@@ -32,6 +32,7 @@ export class InvoiceComponent implements OnInit {
   isVisible = false;
   checked = false;
   reason: string;
+  notes: string;
   images: string[];
   paymentBy: String;
   paymentOption: String;
@@ -67,6 +68,11 @@ export class InvoiceComponent implements OnInit {
 
   }
 
+  onRefresh(){
+    this.invoice = null;
+    this.getInvoice();
+  }
+
   initReturnForm() {
     this.dataForm = this.fb.group({
       products: this.fb.array([])
@@ -81,8 +87,9 @@ export class InvoiceComponent implements OnInit {
       name: [data.name],
       variant: [data.variant],
       sku: [data.sku],
-      quantity: [1, Validators.required],
+      quantity: [data.quantity-data.returnedQuantity, Validators.required],
       totalInvoicedQty: [data.quantity, Validators.required],
+      returnedQty: [data.returnedQuantity],
       recievedQty: [0],
       recieved: [false],
       price: [data.price],
@@ -118,10 +125,11 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoice() {
+    this.loading = true;
     this.invoiceService.getInvoiceById(this.id).subscribe(
       (res) => {
         this.invoice = res.data;
-        console.log(this.invoice);
+        this.loading = false;
         this.initReturnForm();
       },
       (err) => {
@@ -168,7 +176,7 @@ export class InvoiceComponent implements OnInit {
   placeReturn() {
     let returnId;
     let data = {
-      invoiceId: this.invoice._id,
+      invoiceId: this.invoice.invoiceId,
       orderNumber: this.invoice.orderNumber,
       returnDate: new Date(),
       customerName: this.invoice.customerName,
@@ -181,6 +189,7 @@ export class InvoiceComponent implements OnInit {
       products: this.dataForm.value.products,
       refundEligible: this.checked,
       reason: this.reason,
+      notes: this.notes,
       images: this.images
 
     }
@@ -194,6 +203,7 @@ export class InvoiceComponent implements OnInit {
         if (this.checked) {
           this.createRefund(returnId);
         } else {
+          this.onRefresh();
           this.loading = false;
           this.isVisible = false;
         }
@@ -222,6 +232,7 @@ export class InvoiceComponent implements OnInit {
         this.msg.success(message, {
           nzDuration: 10000
         });
+        this.onRefresh();
         this.loading = false;
         this.isVisible = false;
       }, err => {
@@ -248,20 +259,24 @@ export class InvoiceComponent implements OnInit {
     return this.returnProducts
   }
 
-  onChangeQty(i, value, max){
-    console.log(i);
+  onChangeQty(i, value, max, returnQty){
+
     console.log(value);
-    console.log(max);
+    console.log(this.products);
 
+    if(returnQty){
+      max = max - returnQty;
+    }
 
-    // this.products[i].value.quantity = 5;
     if(value > max){
+      this.msg.create('warning','return quantity cannot be more than invoiced quantity');
       this.products.controls[i].patchValue(
         { quantity : max}
       )
-    }else if (value < 1){
+    }else if (value < 0){
+      this.msg.create('warning','value cannot be less than 1');
       this.products.controls[i].patchValue(
-        { quantity : 1}
+        { quantity : 0}
       )
     }
   }

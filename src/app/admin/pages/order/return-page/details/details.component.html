@@ -152,7 +152,7 @@
                       <td>{{data.price}}</td>
                       <td>{{ data.recievedQty ? data.recievedQty : '0'}}</td>
                       <td>0</td>
-                      <td><label nz-checkbox [(ngModel)]="data.recieved" (ngModelChange)="markRecieved(i, data.recieved, data.quantity)"></label></td>
+                      <td><button [disabled]="data.quantity ===  data.recievedQty" nz-button (click)="markRecieved(i, data.quantity)">Mark As Recieved</button></td>
                     </tr>
                     </tbody>
                   </nz-table>

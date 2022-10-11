@@ -76,6 +76,8 @@ export class OrderDetailsComponent implements OnInit {
   commentEmpty: string = '';
   // calculation
   total = 0;
+  spin : boolean = false;
+  inputValue: string = null;
 
   selectedDiv: boolean = false;
   // Pagination
@@ -149,6 +151,15 @@ export class OrderDetailsComponent implements OnInit {
     this.getAllOrders();
   }
 
+  onRefresh(){
+    this.spin = true;
+    this.products = [];
+    this.setOfCheckedId.clear();
+    this.getOrderInfo(this.id);
+    this.getAllOrders();
+
+  }
+
   initFormValue() {
     this.dataForm = this.fb.group({
       // selected: [null],
@@ -178,8 +189,9 @@ export class OrderDetailsComponent implements OnInit {
         },
       });
       dialogRef.afterClosed().subscribe(() => {
+        this.onRefresh();
         this.menuTrigger.focus();
-        this.reloadService.needRefreshOrder$();
+
       });
   }
 
@@ -358,6 +370,7 @@ export class OrderDetailsComponent implements OnInit {
       .subscribe(
         (res) => {
           this.orders = res.data;
+          this.spin = false;
           console.log("orders ", this.orders);
 
         },
@@ -478,7 +491,13 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   addNewComment() {
-    this.order.comments.push(this.dataForm.value.comment);
+    this.order.comments.push(
+      {
+        text: this.inputValue,
+        date: new Date(),
+        name: this.admin.name
+      }
+    );
     this.orderService.updateOrderById(this.order).subscribe(
       (res) => {
         console.log(res.message);
@@ -487,7 +506,7 @@ export class OrderDetailsComponent implements OnInit {
         console.log(err);
       }
     );
-    this.commentEmpty = null;
+    this.inputValue = null;
   }
   /**
    * Calculation
@@ -611,7 +630,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   getAmount(item) {
-    if (item.advance) {
+    if (item.advanceAmount) {
       return Math.round((item?.price * item?.quantity + item.tax * item?.quantity));
     } else {
       return Math.round(item?.price * item?.quantity + item.tax * item?.quantity);
