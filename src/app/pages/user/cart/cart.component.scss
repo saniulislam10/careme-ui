@@ -260,24 +260,24 @@ ul.single_vendor-items {
       width: 2%;
     }
     .single_vendor-items-thumb {
-      width: 10%;
+      width: 12%;
       img {
         max-width: 80px;
         margin: 0 10px;
       }
     }
     .single_vendor-items-details {
-      width: 58%;
+      width: 41%;
       h2 {
-        font-size: 18px;
+        font-size: 16px;
         line-height: 20px;
         font-weight: 400;
         color: #2d2d2d;
-        margin: -4px 0 0 0 !important;
+        margin: -4px 0 5px 0 !important;
       }
     }
     .single_vendor-items-price {
-      width: 40%;
+      width: 45%;
       display: flex;
       align-items: flex-start;
       justify-content: flex-end;
@@ -334,9 +334,11 @@ ul.single_vendor-items {
         line-height: 18px;
       }
     }
-    .single_vendor-items-offer-info {
-      display: flex;
-      justify-content: space-between;
+    .single_vendor-items-offer-info h4,
+    .single_vendor-items-info h4 {
+      font-size: 14px;
+      line-height: 18px;
+      color: #505050;
     }
   }
 }
@@ -400,11 +402,6 @@ ul.single_vendor-items {
       .single_vendor-items-info h4 {
         font-size: 12px !important;
         line-height: 16px !important;
-      }
-      .single_vendor-items-offer-info {
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: column;
       }
     }
   }
