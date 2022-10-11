@@ -33,4 +33,15 @@ export class InvoiceService {
     return this.httpClient.get<{ data: any; message: string; success: boolean }>(API_INVOICE + 'get-invoice-by-id/'+ id);
   }
 
+  getInvoicesBySearch(searchTerm: string, pagination?: Pagination, filter?: any) {
+
+    let params = new HttpParams();
+    params = params.append('q', searchTerm);
+    if (pagination) {
+      params = params.append('pageSize', pagination.pageSize);
+      params = params.append('currentPage', pagination.currentPage);
+    }
+    return this.httpClient.post<{ data: Invoice[], count: number }>(API_INVOICE + 'get-invoices-by-search', { filter }, { params });
+  }
+
 }

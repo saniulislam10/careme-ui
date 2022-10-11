@@ -232,8 +232,12 @@
         <input nz-input [(ngModel)]="phone" type="text" placeholder="01X-XXX-XXXX">
       </div>
     </div>
+    <div class="box">
+      <h4>Notes</h4>
+      <textarea nz-input [(ngModel)]="notes" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+    </div>
     <form [formGroup]="dataForm">
-      <nz-table [nzData]="returnProducts" style="width: fit-content" >
+      <nz-table [nzData]="returnProducts" style="width: fit-content; margin-top: 10px" [nzShowPagination]="false">
         <thead>
           <tr>
             <th>Name</th>
@@ -251,7 +255,7 @@
             <td>{{data?.value.variant}}</td>
             <td>{{data?.value.sku}}</td>
             <td>
-              <input nz-input type="number" max="data.value.totalInvoiceQty" formControlName="quantity" (change)="onChangeQty(i, data?.value.quantity, data.value.totalInvoicedQty)">
+              <input nz-input type="number" max="{{data.value.totalInvoiceQty-data.value.returnedQty}}" formControlName="quantity" (change)="onChangeQty(i, data?.value.quantity, data.value.totalInvoicedQty, data.value.returnedQty)">
             </td>
             <td>{{data?.value.price}}</td>
             <td>{{data?.value.tax}}</td>

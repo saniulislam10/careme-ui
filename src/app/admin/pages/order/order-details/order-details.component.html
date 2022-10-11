@@ -1,9 +1,10 @@
 <!-- order-header-area-->
 <div class="page-header">
-  <h2>Sales Order</h2>
+  <h2>Sales Order <span (click)="onRefresh()"><i [class]="spin ? 'fa fa-refresh fa-spin': 'fa fa-refresh'"></i></span></h2>
   <div class="header-action">
     <button type="button">Export</button>
     <button type="button">Import</button>
+
     <button class="create_btn" (click)="openDialog2()">Create Order</button>
   </div>
 </div>
@@ -27,6 +28,7 @@
                 </ul>
               </nz-dropdown-menu>
             </a>
+
             <nz-button-group>
               <button
                 nz-button
@@ -121,20 +123,20 @@
                           <tr>
                             <td>Name</td>
                             <td>:</td>
-                            <td>Md. Rahim</td>
+                            <td>{{order.name}}</td>
                           </tr>
                           <tr>
                             <td>Phone No</td>
                             <td>:</td>
                             <td>
-                              01619187770 <i class="las la-lg la-sms"></i>
+                              {{order.shippingPhoneNo}} <i class="las la-lg la-sms"></i>
                             </td>
                           </tr>
                           <tr>
                             <td>Shipping to</td>
                             <td>:</td>
                             <td>
-                              57/12 Sonargong Plaza, Panthapath Signal, Dhaka.
+                              {{order.shippingAddress}}
                             </td>
                           </tr>
                         </tbody>
@@ -147,7 +149,7 @@
                             <td>:</td>
                             <td>
                               <a href="#">
-                                Md. Karim Khan
+                                {{order.userId.fullName}}
                                 <i class="las la-medal"></i>
                               </a>
                             </td>
@@ -155,25 +157,25 @@
                           <tr>
                             <td>Phone No</td>
                             <td>:</td>
-                            <td>01619187770</td>
+                            <td>{{order.userId.phoneNo}}</td>
                           </tr>
                           <tr>
                             <td>Email</td>
                             <td>:</td>
-                            <td>fortunetech@gmail.com</td>
+                            <td>{{order.userId.email}}</td>
                           </tr>
                           <tr>
                             <td>Shipping to</td>
                             <td>:</td>
                             <td>
-                              57/12 Sonargong Plaza, Panthapath Signal, Dhaka.
+                              {{order.userId.address}}
                             </td>
                           </tr>
                           <tr>
                             <td>Total Orders</td>
                             <td>:</td>
                             <td>
-                              <span class="total-order"> 15 </span>
+                              <span class="total-order"> {{order.userId.checkouts.length}} </span>
                             </td>
                           </tr>
                         </tbody>
@@ -188,23 +190,15 @@
                             [(ngModel)]="inputValue"
                             placeholder="this comment only for admin ..."
                           ></textarea>
-                          <button nz-button nzType="default">
+                          <button nz-button nzType="default" (click)="addNewComment()">
                             Add Comment
                           </button>
                         </div>
-                        <div class="timeline">
-                          <nz-timeline>
-                            <nz-timeline-item>
-                              <p>Customer say send later</p>
-                              <span>2015-09-01 by Omi</span>
-                            </nz-timeline-item>
-                            <nz-timeline-item>
-                              <p>Customer did not pick</p>
-                              <span>2015-09-01 by Omi</span>
-                            </nz-timeline-item>
-                            <nz-timeline-item>
-                              <p>Customer did not pick call</p>
-                              <span>2015-09-01 by Omi</span>
+                        <div class="timeline timeline-items">
+                          <nz-timeline class="timeline">
+                            <nz-timeline-item *ngFor="let comment of order.comments.reverse()">
+                              <p>{{comment.text}}</p>
+                              <span>{{comment.date | date:'short'}} by {{comment.name}}</span>
                             </nz-timeline-item>
                           </nz-timeline>
                         </div>
@@ -314,7 +308,7 @@
                     <nz-card nzSize="small" class="ammount_summary">
                       <div class="ammount_summary_single">
                         <h4><b>Sub-Total</b></h4>
-                        <span><b>{{order.subTotal - order.shippingCharge}} TK</b></span>
+                        <span><b>{{order.totalAmount - order.shippingCharge}} TK</b></span>
                       </div>
                       <div class="ammount_summary_single" *ngIf="order.couponCode">
                         <h4 class="cuppon" >
@@ -337,15 +331,15 @@
                       ></nz-divider>
                       <div class="ammount_summary_single">
                         <h4></h4>
-                        <span> Amount to pay = <b>{{order.subTotal}} TK</b></span>
+                        <span> Amount to pay = <b>{{order.totalAmount}} TK</b></span>
                       </div>
                       <div class="ammount_summary_single mt15">
                         <h4>Paid</h4>
-                        <span style="color: green">120 TK</span>
+                        <span style="color: green">{{order.paidAmount}} TK</span>
                       </div>
-                      <div class="ammount_summary_single mt15">
+                      <div class="ammount_summary_single mt15" *ngIf="order.adjustmentAmount">
                         <h4>Adjustment</h4>
-                        <span style="color: red">0.00 TK</span>
+                        <span style="color: red">{{order.adjustmentAmount}} TK</span>
                       </div>
                       <nz-divider
                         style="margin: 10px 0"
@@ -353,9 +347,9 @@
                       ></nz-divider>
                       <div class="ammount_summary_single">
                         <h4></h4>
-                        <span> Due Amount = 0 TK</span>
+                        <span> Due Amount = {{order.totalAmount - order.paidAmount}} TK</span>
                       </div>
-                      <div class="ammount_summary_single mt15">
+                      <div class="ammount_summary_single mt15" *ngIf="order.canceledAmount">
                         <h4>Cancelled (SKU: 5045844)</h4>
                         <span style="color: red">0.00 TK</span>
                       </div>
@@ -363,21 +357,22 @@
                         style="margin: 10px 0"
                         nzType="horizontal"
                       ></nz-divider>
-                      <div class="ammount_summary_single">
+                      <div class="ammount_summary_single" *ngIf="order.canceledAmount">
                         <h4></h4>
                         <span style="color: red">
                           Refundable Amount = 0.00 TK</span
                         >
                       </div>
-                      <div class="ammount_summary_single mt15">
+                      <div class="ammount_summary_single mt15" *ngIf="order.canceledAmount">
                         <h4>Refund (SKU: 5045844)</h4>
                         <span style="color: red">0.00 TK</span>
                       </div>
                       <nz-divider
                         style="margin: 10px 0"
                         nzType="horizontal"
+                        *ngIf="order.canceledAmount"
                       ></nz-divider>
-                      <div class="ammount_summary_single">
+                      <div class="ammount_summary_single" *ngIf="order.canceledAmount">
                         <h4></h4>
                         <span> Due Amount = 0 TK</span>
                       </div>

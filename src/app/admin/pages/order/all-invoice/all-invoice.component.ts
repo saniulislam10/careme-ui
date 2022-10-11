@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, pluck, switchMap } from 'rxjs/operators';
 import { OrderStatus } from 'src/app/enum/order-status';
 import { PaymentStatus } from 'src/app/enum/payment-status';
 import { Invoice } from 'src/app/interfaces/invoice';
@@ -18,6 +19,10 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class AllInvoiceComponent implements OnInit {
   private subAcRoute: Subscription;
+
+  @ViewChild('searchForm') searchForm: NgForm;
+  @ViewChild('searchInput') searchInput: ElementRef;
+
   tabs = ['All Invoice', 'Overdue', 'Unpaid', 'Open', 'Closed', 'Paid'];
   listOfSelection = [
     {
@@ -29,10 +34,13 @@ export class AllInvoiceComponent implements OnInit {
   ];
   checked = false;
   indeterminate = false;
+  overlay = false;
+  isOpen = false;
   listOfCurrentPageData: readonly Invoice[] = [];
   listOfData: readonly Invoice[] = [];
   loading = false;
   setOfCheckedId = new Set<string>();
+  isFocused: any;
 
   updateCheckedSet(id: string, checked: boolean): void {
     if (checked) {
@@ -84,6 +92,7 @@ export class AllInvoiceComponent implements OnInit {
   filter: any;
   // sort
   public sortQuery = { createdAt: -1 };
+  public query = null;
   public activeSort = null;
 
   //subscription
@@ -200,6 +209,73 @@ export class AllInvoiceComponent implements OnInit {
       } else {
         this.getAllInvoices();
       }
+    }
+  }
+
+  ngAfterViewInit(): void {
+    const formValue = this.searchForm.valueChanges;
+
+    formValue.pipe(
+      pluck('searchTerm'),
+      debounceTime(200),
+      distinctUntilChanged(),
+      switchMap(data => {
+        this.query = data.trim();
+        if (this.query === '' || this.query === null) {
+          this.overlay = false;
+          this.searchInvoices = [];
+          this.query = null;
+          this.getAllInvoices();
+          return EMPTY;
+        }
+        this.loading = true;
+        const pagination: Pagination = {
+          currentPage: '1',
+          pageSize: '10'
+        };
+        return this.invoiceService.getInvoicesBySearch(this.query, pagination, this.filter);
+      })
+    )
+      .subscribe(res => {
+        this.loading = false;
+        console.log(res.data);
+        this.invoices = res.data;
+        this.searchInvoices = res.data;
+        if (this.searchInvoices.length > 0) {
+          this.isOpen = true;
+          this.overlay = true;
+        }
+      }, () => {
+        this.loading = false;
+      });
+  }
+
+  handleFocus(event: FocusEvent): void {
+    this.searchInput.nativeElement.focus();
+
+    if (this.isFocused) {
+      return;
+    }
+    if (this.searchInvoices.length > 0) {
+      this.setPanelState(event);
+    }
+    this.isFocused = true;
+  }
+
+  private setPanelState(event: FocusEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.isOpen = false;
+    this.handleOpen();
+  }
+  handleOpen(): void {
+    if (this.isOpen || this.isOpen && !this.loading) {
+      return;
+    }
+    if (this.searchInvoices.length > 0) {
+      this.isOpen = true;
+      this.overlay = true;
     }
   }
 }

@@ -34,5 +34,8 @@ export class ReturnService {
   updateReturnById(id, data){
     return this.httpClient.put<{ message: string; success: boolean }>(API_RETURN + 'update-return-by-id/'+ id, data);
   }
+  recieveReturnById(id, data){
+    return this.httpClient.put<{ message: string; success: boolean }>(API_RETURN + 'recieve-return-by-id/'+ id, data);
+  }
 
 }
