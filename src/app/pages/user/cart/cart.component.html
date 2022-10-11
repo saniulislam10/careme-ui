@@ -37,8 +37,8 @@
                 <label nz-checkbox [(ngModel)]="isCheckedButton"></label>
                 <div class="thumb">
                   <img
-                    src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN01rbKoSF27p3pPwHyza__2822927845-0-cib.jpg"
-                    alt=""
+                    [src]="getThumbImage(data)"
+                    [alt]="data.name"
                   />
                 </div>
               </div>
