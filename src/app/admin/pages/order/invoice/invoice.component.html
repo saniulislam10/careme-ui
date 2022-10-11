@@ -15,7 +15,7 @@
         <li><button>Write Off</button></li>
         <li><button (click)="generatePDF()">Pdf/Print</button></li>
         <li><button>Record Payment</button></li>
-        <li><button (click)="createReturnButton()">Return</button></li>
+        <li><button nzButton (click)="createReturnButton()">Return</button></li>
         <li><button>Refund</button></li>
       </ul>
     </div>
@@ -23,22 +23,20 @@
     <div class="invoice_horizontal_line"></div>
 
     <div class="invoice_chackout_table">
-      <div class="invoice_dropdown">
+      <div class="invoice_dropdown" *ngFor="let data of returns">
         <div class="invoice_item">
-          <h3 class="IVN_code_content">{{ invoice?.invoiceId }}</h3>
-          <p>25 Dec 2021</p>
-        </div>
-        <div class="invoice_item">
-          <h3 class="paid_content" *ngIf="invoice?.shippingStatus">Paid</h3>
-        </div>
-        <div class="invoice_item">
-          <h3>Balance</h3>
-          <p><span>BDT 00</span>{{ invoice?.invoiceDate | date }}</p>
+          <h3 class="IVN_code_content" >{{ data?.returnId }}</h3>
+          <p>{{data.createdAt | date : 'short'}}</p>
         </div>
         <div class="invoice_item">
           <h3>Amount</h3>
+          <p><span>BDT {{data.subTotal}}</span>
+        </div>
+        <div class="invoice_item">
+          <h3>Refund Created</h3>
           <p>
-            <span>BDT 0</span>
+            <span>{{data.refundEligible ? 'Yes':'No' }}</span>
+            <!-- <span *ngIf="data.refundEligible">{{getRefundId(data?.returnId)}}</span> -->
           </p>
         </div>
         <div class="invoice_item">
@@ -180,7 +178,7 @@
 
 
 <!---create-return-->
-<nz-modal [nzWidth]="600" [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<nz-modal [nzWidth]="600" [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkDisabled]="saveButtonDisable || !products?.length">
   <ng-container *nzModalContent>
     <div class="return">
       <div class="box">

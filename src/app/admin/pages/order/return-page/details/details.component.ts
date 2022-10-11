@@ -9,6 +9,7 @@ import {Pagination} from 'src/app/interfaces/pagination';
 import {AdjustmentService} from 'src/app/services/adjustment.service';
 import {ReturnService} from 'src/app/services/return.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { FlexAlignStyleBuilder } from '@angular/flex-layout';
 
 interface DataItem {
   name: string;
@@ -68,6 +69,7 @@ export class DetailsComponent implements OnInit {
   private subRouteOne?: Subscription;
   id: string;
   editSku: string;
+  saveButtonDisable: boolean = true;
 
   constructor(
     private dialog: MatDialog,
@@ -108,9 +110,6 @@ export class DetailsComponent implements OnInit {
       .subscribe(res => {
         this.return = res.data;
         this.listOfData = this.return.products;
-        console.log("listOfData");
-        console.log(this.return);
-        console.log(this.listOfData);
       }, err => {
         console.log(err);
       })
@@ -129,8 +128,9 @@ export class DetailsComponent implements OnInit {
     this.returnService.recieveReturnById(this.return._id, this.return)
     .subscribe(res => {
       this.msg.create('success', res.message);
+      this.saveButtonDisable = true;
     }, err => {
-
+      this.msg.create('error', err.message)
     })
   }
 
@@ -138,9 +138,11 @@ export class DetailsComponent implements OnInit {
     if(value){
       this.listOfData[i].recievedQty = value;
       this.listOfData[i].returnedQty = value;
+      this.saveButtonDisable = false;
     }else{
       this.listOfData[i].returnedQty = 0;
       this.listOfData[i].recievedQty = 0;
+      this.saveButtonDisable = false;
     }
   }
 

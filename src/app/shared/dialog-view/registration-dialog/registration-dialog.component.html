@@ -21,6 +21,7 @@
     </form>
   </div>
   <div *ngIf="showOtpSection" class="code-area">
+    {{ this.generatedOtpCode }}
     <form [formGroup]="verificationForm">
       <div >
         <mat-form-field class="verify-input-field" appearance="outline">

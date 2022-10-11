@@ -40,6 +40,7 @@ export class ProductDetailsComponent implements OnInit {
   defaultVariantSku: string;
   variantSelected = false;
   allTypeVariantSelected = false;
+  displaySku : string;
 
   clickActive: boolean[][] = [[]];
   star = 4.3;
@@ -647,31 +648,33 @@ export class ProductDetailsComponent implements OnInit {
 
   getDisplay(row, col) {
     let length = this.product.variants.length;
-    let displaySku;
+    console.log(row);
+    console.log(col);
+    console.log(this.allTypeVariantSelected);
 
     if (length === 1) {
-      displaySku = this.product.sku + "-" + col;
+      this.displaySku = this.product.sku + "-" + col;
     } else {
       if (this.allTypeVariantSelected) {
-        displaySku = this.product.sku + '-';
+        this.displaySku = this.product.sku + '-';
 
         for (let i = 0; i < this.sku.length; i++) {
           if(i !== row){
-            displaySku += this.sku[i];
+            this.displaySku += this.sku[i];
           }else{
-            displaySku += col;
+            this.displaySku += col;
           }
         }
       }
       else if (this.variantSelected) {
         if (this.sku[row] !== undefined) {
         } else {
-          displaySku = this.product.sku + '-';
+          this.displaySku = this.product.sku + '-';
           for (let y = 0; y < this.product.variants.length; y++) {
             if (this.sku[y] >= 0) {
-              displaySku += this.sku[y];
+              this.displaySku += this.sku[y];
             } else {
-              displaySku += col;
+              this.displaySku += col;
             }
           }
         }
@@ -683,15 +686,17 @@ export class ProductDetailsComponent implements OnInit {
       }
     }
     let selectedVariantData;
-    if (displaySku) {
+    if (this.displaySku) {
       let array = this.product.variantFormArray;
       selectedVariantData = array.find(
-        ({ variantSku }) => variantSku === displaySku
+        ({ variantSku }) => variantSku === this.displaySku
       );
     }
 
+    console.log(this.displaySku);
+    console.log(selectedVariantData);
 
-    if (selectedVariantData.variantDisplay) {
+    if (selectedVariantData.variantDisplay !== false) {
       if (selectedVariantData?.variantQuantity === 0 && selectedVariantData?.variantContinueSelling !== true ) {
         this.display = false;
         return false

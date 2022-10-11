@@ -37,6 +37,7 @@ export class InvoiceComponent implements OnInit {
   paymentBy: String;
   paymentOption: String;
   phone: String;
+  saveButtonDisable: boolean = false;
   public dataForm: FormGroup;
   public products: FormArray;
 
@@ -45,6 +46,9 @@ export class InvoiceComponent implements OnInit {
   returnProducts: any[] = [];
   loading: boolean;
   file: FileList | any;
+
+  returns: Return[] = [];
+
 
 
   constructor(
@@ -83,25 +87,28 @@ export class InvoiceComponent implements OnInit {
 
   newProduct(data) {
 
+    console.log("For return",data)
+
     let newProduct = this.fb.group({
       name: [data.name],
       variant: [data.variant],
       sku: [data.sku],
-      quantity: [data.quantity-data.returnedQuantity, Validators.required],
       totalInvoicedQty: [data.quantity, Validators.required],
       returnedQty: [data.returnedQuantity],
+      quantity: [data.quantity-data.returnedQuantity, Validators.required],
       recievedQty: [0],
       recieved: [false],
       price: [data.price],
       tax: [data.tax],
     })
     this.products.push(newProduct);
+    this.checkValue();
     console.log(this.products);
   }
 
   deleteFromReturn(i: number) {
-
     this.products.removeAt(i);
+    this.checkValue();
   }
 
   // get products() {
@@ -129,6 +136,7 @@ export class InvoiceComponent implements OnInit {
     this.invoiceService.getInvoiceById(this.id).subscribe(
       (res) => {
         this.invoice = res.data;
+        this.getAllReturns(this.invoice.invoiceId);
         this.loading = false;
         this.initReturnForm();
       },
@@ -138,6 +146,14 @@ export class InvoiceComponent implements OnInit {
     );
   }
 
+  getAllReturns(id){
+    this.returnService.getReturnByInvoiceId(id)
+    .subscribe(res => {
+      this.returns = res.data;
+    }, err=> {
+      this.msg.create('error', err.message)
+    })
+  }
   createReturnButton() {
     this.isVisible = true;
     this.invoice.products;
@@ -148,7 +164,6 @@ export class InvoiceComponent implements OnInit {
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isVisible = false;
-    console.log(this.products.length);
   }
   handleOk() {
     console.log('Button ok clicked!');
@@ -159,7 +174,6 @@ export class InvoiceComponent implements OnInit {
 
   async fileChangeEvent(event: any) {
     this.file = (event.target as HTMLInputElement).files;
-    console.log(this.file);
     this.fileUploadService.uploadMultiImageOriginal(this.file)
       .subscribe(res => {
         console.log(res.downloadUrls);
@@ -174,6 +188,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   placeReturn() {
+
     let returnId;
     let data = {
       invoiceId: this.invoice.invoiceId,
@@ -260,10 +275,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   onChangeQty(i, value, max, returnQty){
-
-    console.log(value);
-    console.log(this.products);
-
     if(returnQty){
       max = max - returnQty;
     }
@@ -279,5 +290,27 @@ export class InvoiceComponent implements OnInit {
         { quantity : 0}
       )
     }
+    this.checkValue();
   }
+
+  checkValue(){
+    this.saveButtonDisable = false;
+    this.products.value.forEach(element => {
+      if(element.quantity === 0){
+        this.saveButtonDisable = true;
+      }
+    });
+  }
+
+  getRefundId(returnId){
+    this.refundService.getByReturnId(returnId)
+    .subscribe(res=>{
+      console.log(res.data);
+      return res.data.refundId;
+    }, err=> {
+      console.log(err);
+    })
+  }
+
+
 }

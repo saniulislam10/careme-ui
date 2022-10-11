@@ -1,4 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { EMPTY } from 'rxjs';
+import { pluck, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Pagination } from 'src/app/interfaces/pagination';
+import { Return } from 'src/app/interfaces/return';
 import { ReturnService } from 'src/app/services/return.service';
 import { CreateReturnComponent } from 'src/app/shared/components/create-return/create-return.component';
 interface ItemData {
@@ -23,6 +28,13 @@ export class ReturnPageComponent implements OnInit {
 
   @ViewChild('createReturn') createReturn: CreateReturnComponent;
   returns: any[] = [];
+  @ViewChild('searchForm') searchForm: NgForm;
+  searchQuery: string;
+  holdPrevData: Return[] = [];
+  searchReturn: Return[] = [];
+  isLoading: boolean;
+  overlay: boolean;
+  isOpen: boolean;
   constructor(
     private returnService: ReturnService
   ) { }
@@ -78,6 +90,44 @@ export class ReturnPageComponent implements OnInit {
       this.listOfCurrentPageData.some((item) =>
         this.setOfCheckedId.has(item.id)
       ) && !this.checked;
+  }
+
+  ngAfterViewInit(): void {
+    const formValue = this.searchForm.valueChanges;
+
+    formValue.pipe(
+      pluck('searchTerm'),
+      debounceTime(200),
+      distinctUntilChanged(),
+      switchMap(data => {
+        this.searchQuery = data.trim();
+        if (this.searchQuery === '' || this.searchQuery === null) {
+          this.overlay = false;
+          this.searchReturn = [];
+          this.searchQuery = null;
+          this.getAllReturns();
+          return EMPTY;
+        }
+        this.isLoading = true;
+        const pagination: Pagination = {
+          currentPage: '1',
+          pageSize: '10'
+        };
+        return this.returnService.getSearchData(this.searchQuery, pagination);
+      })
+    )
+      .subscribe(res => {
+        this.isLoading = false;
+        console.log(res.data);
+        this.returns = res.data;
+        this.searchReturn = res.data;
+        if (this.searchReturn.length > 0) {
+          this.isOpen = true;
+          this.overlay = true;
+        }
+      }, () => {
+        this.isLoading = false;
+      });
   }
 
 }

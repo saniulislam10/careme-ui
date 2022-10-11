@@ -2,6 +2,7 @@ import { Return } from './../interfaces/return';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
+import { Pagination } from '../interfaces/pagination';
 
 
 const API_RETURN = environment.apiBaseLink + '/api/return/';
@@ -28,6 +29,16 @@ export class ReturnService {
   getAllReturns() {
     return this.httpClient.get<{ data: Return[]; message: string; success: boolean }>(API_RETURN + 'get-all-returns');
   }
+  getSearchData(searchTerm: string, pagination?: Pagination, filter?: any) {
+
+    let params = new HttpParams();
+    params = params.append('q', searchTerm);
+    if (pagination) {
+      params = params.append('pageSize', pagination.pageSize);
+      params = params.append('currentPage', pagination.currentPage);
+    }
+    return this.httpClient.post<{ data: Return[], count: number }>(API_RETURN + 'get-return-by-search', { filter }, { params });
+  }
   getReturnById(id) {
     return this.httpClient.get<{ data: Return; message: string; success: boolean }>(API_RETURN + 'get-return-by-id/'+ id);
   }
@@ -37,5 +48,9 @@ export class ReturnService {
   recieveReturnById(id, data){
     return this.httpClient.put<{ message: string; success: boolean }>(API_RETURN + 'recieve-return-by-id/'+ id, data);
   }
+  getReturnByInvoiceId(id){
+    return this.httpClient.get<{ data: Return[]; message: string; success: boolean }>(API_RETURN + 'get-all-returns-by-invoiceId/'+ id);
+  }
+
 
 }

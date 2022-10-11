@@ -55,4 +55,8 @@ export class RefundService {
     console.log(id);
     return this.httpClient.delete<{message?: string}>(API + 'delete-by-id/' + id);
   }
+  getByReturnId(id: string) {
+    console.log(id);
+    return this.httpClient.get<{data: Refund, message?: string}>(API + 'get-by-returnId/' + id);
+  }
 }

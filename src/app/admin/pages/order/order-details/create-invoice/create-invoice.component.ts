@@ -60,6 +60,7 @@ export class CreateInvoiceComponent implements OnInit {
       let qty = f.quantity-f.invoicedQuantity;
       f.quantity = qty;
       f.maxQty = qty;
+      f.returnedQuantity = 0;
     });
 
     products = [];

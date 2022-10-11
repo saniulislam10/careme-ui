@@ -239,6 +239,7 @@
                       *ngFor="let data of rowSelectProduct.data; let i = index"
                     >
                       <td
+                        [nzDisabled]="data.quantity===data.invoicedQuantity"
                         [nzChecked]="setOfCheckedId.has(data._id)"
                         (nzCheckedChange)="onCheckChange($event, i, data._id)"
                       ></td>

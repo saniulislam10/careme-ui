@@ -189,7 +189,7 @@
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
                       <div class="action_btn">
                         <button nzSize="large" nz-button nzType="default">Reject</button>
-                        <button nzSize="large" nz-button nzType="primary" (click)="updateReturn()">Save</button>
+                        <button nz-button [disabled]="saveButtonDisable" nzSize="large"  [nzType]="saveButtonDisable ? 'default' : 'primary'" (click)="updateReturn()">Save</button>
                       </div>
                     </div>
                   </div>
