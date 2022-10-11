@@ -11,7 +11,10 @@
         <nz-tabset>
             <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
                 <div class="table-filter-area">
-                    <input nz-input placeholder="Search here" nzSize="large" />
+                  <form #searchForm=ngForm>
+                    <input #searchInput nz-input id="searchInput" class="tw" type="text" placeholder="Filter Refund"
+                      (focus)=handleFocus($event) name="searchTerm" nzSize="large" autocomplete="off" ngModel required>
+                  </form>
                     <ul>
                         <li>
                             <button [matMenuTriggerFor]="paymentStatus">
@@ -31,7 +34,7 @@
                     </ul>
                 </div>
                 <div class="table-data-area">
-                    <nz-table nzSize="small" #rowSelectionTable nzShowSizeChanger [nzLoading]="loading" [nzData]="listOfData"
+                    <nz-table nzSize="small" #rowSelectionTable nzShowSizeChanger [nzLoading]="loading" [nzData]="refunds"
                         (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
                         <thead>
                             <tr>

@@ -59,4 +59,15 @@ export class RefundService {
     console.log(id);
     return this.httpClient.get<{data: Refund, message?: string}>(API + 'get-by-returnId/' + id);
   }
+
+  getSearchData(searchTerm: string, pagination?: Pagination, sort?: any) {
+    console.log("Search Term :",searchTerm);
+    let params = new HttpParams();
+    params = params.append('q', searchTerm);
+    if (pagination) {
+      params = params.append('pageSize', pagination.pageSize);
+      params = params.append('currentPage', pagination.currentPage);
+    }
+    return this.httpClient.post<{ data: Refund[], count: number }>(API + 'get-by-search', { sort }, { params });
+  }
 }

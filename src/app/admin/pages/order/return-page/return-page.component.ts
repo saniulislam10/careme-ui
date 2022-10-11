@@ -23,13 +23,12 @@ export class ReturnPageComponent implements OnInit {
   checked = false;
   indeterminate = false;
   listOfCurrentPageData: readonly ItemData[] = [];
-  listOfData: ReturnService[] = [];
   setOfCheckedId = new Set<number>();
 
   @ViewChild('createReturn') createReturn: CreateReturnComponent;
   @ViewChild('searchInput') searchInput: ElementRef;
-  returns: any[] = [];
   @ViewChild('searchForm') searchForm: NgForm;
+  returns: any[] = [];
   searchQuery: string;
   public sortQuery = { createdAt: -1 };
   holdPrevData: Return[] = [];
@@ -116,6 +115,7 @@ export class ReturnPageComponent implements OnInit {
       distinctUntilChanged(),
       switchMap(data => {
         this.searchQuery = data.trim();
+        console.log(this.searchQuery)
         if (this.searchQuery === '' || this.searchQuery === null) {
           this.overlay = false;
           this.searchReturn = [];
