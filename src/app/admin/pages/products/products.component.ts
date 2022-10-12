@@ -132,6 +132,12 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  onRefresh(){
+    this.isLoading = true;
+    this.getAllProducts();
+
+  }
+
   /**
    * INIT FORM
    */
@@ -500,9 +506,11 @@ export class ProductsComponent implements OnInit {
           this.totalProducts = res.count;
           this.totalProductsStore = res.count;
           this.spinner.hide();
+          this.isLoading = false;
         },
         (error) => {
           this.spinner.hide();
+          this.isLoading = false;
           console.log(error);
         }
       );

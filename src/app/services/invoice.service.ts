@@ -23,8 +23,8 @@ export class InvoiceService {
   placeInvoice(data: any) {
     return this.httpClient.post<{ _id: string; invoiceId: any; message: string; success: boolean }>(API_INVOICE + 'place-invoice', data);
   }
-  getAllInvoicesByOrderNo(data: any) {
-    return this.httpClient.post<{ data: any; message: string; success: boolean }>(API_INVOICE + 'get-all-invoices-by-orderNo', {data});
+  getAllInvoicesByOrderNo(id: any) {
+    return this.httpClient.get<{ data: Invoice[]; message: string; success: boolean }>(API_INVOICE + 'get-all-invoices-by-orderNo/' + id);
   }
   getAllInvoices(paginate?: Pagination, sort?: any, filter?: any, select?: string) {
     return this.httpClient.post<{ data: Invoice[]; count: number }>(API_INVOICE + 'get-all-invoices', {paginate, sort, filter, select});

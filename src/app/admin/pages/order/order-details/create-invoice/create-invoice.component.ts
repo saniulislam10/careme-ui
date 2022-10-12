@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PaymentStatus } from 'src/app/enum/payment-status';
 import { ProductOrderStatus } from 'src/app/enum/product-order-status';
-import { Order } from 'src/app/interfaces/order';
+import { Order, OrderItem } from 'src/app/interfaces/order';
 import { InvoiceService } from 'src/app/services/invoice.service';
 import { OrderService } from 'src/app/services/order.service';
 import { UiService } from 'src/app/services/ui.service';
@@ -23,7 +23,7 @@ export class CreateInvoiceComponent implements OnInit {
   public dataForm: FormGroup;
 
   private subRouteOne?: Subscription;
-  invoiceProducts: any[] = [];
+  invoiceProducts: OrderItem[] = [];
   public date = new Date();
   createInvoice = false;
   id: any;
@@ -157,6 +157,7 @@ export class CreateInvoiceComponent implements OnInit {
         console.log(err);
       }
     );
+
   }
 
   patchValues() {

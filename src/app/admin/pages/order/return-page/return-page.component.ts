@@ -28,7 +28,7 @@ export class ReturnPageComponent implements OnInit {
   @ViewChild('createReturn') createReturn: CreateReturnComponent;
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild('searchForm') searchForm: NgForm;
-  returns: any[] = [];
+  returns: Return[] = [];
   searchQuery: string;
   public sortQuery = { createdAt: -1 };
   holdPrevData: Return[] = [];

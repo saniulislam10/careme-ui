@@ -1,5 +1,34 @@
 @import "./../../../../../theme/variables";
 
+.header-left{
+  display: flex;
+  align-items: center;
+  .arrow{
+    margin-right: 20px;
+  }
+}
+
+.invoice_dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  box-shadow: 0 4px 5px rgb(0 0 0 / 10%);
+  background-color: lightblue;
+}
+
+.invoice_dropdown h3 {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.invoice_dropdown p {
+  font-size: 14px;
+  font-weight: 400;
+  padding-top: 5px;
+  box-sizing: border-box;
+}
+
 .timeline-items{
   height: 250px;
   width: auto;
@@ -247,6 +276,17 @@
   line-height: 25px;
   text-align: center;
   background: green;
+  color: #fff;
+  display: block;
+  border-radius: 50px;
+  font-size: 12px;
+}
+.total-return {
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  background: red;
   color: #fff;
   display: block;
   border-radius: 50px;

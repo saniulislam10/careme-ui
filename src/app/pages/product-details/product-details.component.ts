@@ -84,7 +84,7 @@ export class ProductDetailsComponent implements OnInit {
   selectedColumn: number;
   selectedVarientName: string
   isUserAuth: boolean;
-  globalDisplay: any;
+  globalDisplay = true;
   defaultVariantSelected: boolean;
   display: boolean = true;
   selectedOptions: Number[] = [];
@@ -724,6 +724,14 @@ export class ProductDetailsComponent implements OnInit {
     }else{
       return true
     }
+  }
+
+  get showAddToCart(){
+    console.log(this.globalQuantity);
+    console.log(this.addToCartButton);
+    console.log(this.existInCart);
+    console.log(this.globalDisplay);
+    return true
   }
 
   /*** Product Carde One Data */

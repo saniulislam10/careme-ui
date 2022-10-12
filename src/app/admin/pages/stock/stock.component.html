@@ -1,6 +1,6 @@
 <!---header-area-->
 <div class="page-header">
-  <h2>All Stock</h2>
+  <h2>All Stock <span (click)="onRefresh()"><i [class]="isLoading ? 'fa fa-refresh fa-spin': 'fa fa-refresh'"></i></span></h2>
   <div class="header-action">
     <button type="button" (click)="exportPopUpShow()">Export</button>
     <button type="button" (click)="exportPopUpShow()">Import</button>
@@ -13,7 +13,10 @@
     <nz-tabset>
       <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
         <div class="table-filter-area">
-          <input nz-input placeholder="Search here" nzSize="large" />
+          <form #searchForm=ngForm >
+            <input nz-input #searchInput id="searchInput" class="tw" type="text" placeholder="Filter Products"
+              (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel required>
+          </form>
           <ul>
             <li>
               <button [matMenuTriggerFor]="changeProductStatus">
@@ -53,7 +56,7 @@
           </ul>
         </div>
 
-        <nz-table [nzData]="products" #basicTable nzSize="small">
+        <nz-table [nzData]="products" [nzLoading]="isLoading" #basicTable nzSize="small">
           <thead>
             <tr>
               <th style="width: 50px; text-align: center">
