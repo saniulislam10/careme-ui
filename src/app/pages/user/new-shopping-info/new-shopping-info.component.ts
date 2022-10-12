@@ -547,6 +547,7 @@ export class NewShoppingInfoComponent implements OnInit {
       } else {
         orderPrice = product.sellingPrice;
         sku = product.sku;
+        vendor = product.vendor;
         advance = this.advanceForSingle(
           product,
           m.selectedQty

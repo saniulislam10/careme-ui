@@ -87,7 +87,7 @@
                         <td>:</td>
                         <td><b>120 TK</b></td>
                       </tr>
-                      <tr>
+                      <tr *ngIf="return.refundEligible">
                         <td>Refund Way</td>
                         <td>:</td>
                         <td>bKash ( 01934548454 )</td>
@@ -96,6 +96,16 @@
                         <td>Customer</td>
                         <td>:</td>
                         <td>{{ return.customerName == null ? '01917632421' : return.customerName }}</td>
+                      </tr>
+                      <tr>
+                        <td>Reason</td>
+                        <td>:</td>
+                        <td>{{ return.reason }}</td>
+                      </tr>
+                      <tr>
+                        <td>Notes</td>
+                        <td>:</td>
+                        <td>{{ return.notes }}</td>
                       </tr>
                       </tbody>
                     </table>

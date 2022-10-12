@@ -256,14 +256,6 @@
                 </div>
               </li>
               <hr>
-              <!--              <li>-->
-              <!--                <div class="total-title">-->
-              <!--                   <h3>Amount to pay</h3>-->
-              <!--                </div>-->
-              <!--                <div class="total-price">-->
-              <!--                   <h4>{{calculateSubTotal() + 120}} TK</h4>-->
-              <!--                </div>-->
-              <!--             </li>-->
               <li>
                 <div class="total-title">
                   <h3>Paid</h3>
@@ -272,16 +264,16 @@
                   <h4 class="color-red">(-) 0 TK</h4>
                 </div>
               </li>
-              <li *ngIf="order.adjustmentAmount">
+              <li>
                 <div class="total-title">
                   <h3>Adjustment</h3>
                 </div>
                 <div class="total-price">
-                  <h4 class="color-red">(-) 0 TK</h4>
+                  <input nz-input class="color-red" value="0"> />
                 </div>
               </li>
               <hr>
-              <li *ngIf="order.adjustmentAmount">
+              <li>
                 <div class="total-title">
                   <h3>Due Amount</h3>
                 </div>

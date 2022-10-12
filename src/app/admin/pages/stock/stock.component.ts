@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subscription } from 'rxjs';
 import { ExportType } from 'src/app/enum/exportType.enum';
 import { Pagination } from 'src/app/interfaces/pagination';
 import { Product } from 'src/app/interfaces/product';
@@ -14,6 +14,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { ExportPopupComponent } from './export-popup/export-popup.component';
 import * as XLSX from 'xlsx';
 import { ProductStatus } from 'src/app/enum/product-status';
+import { debounceTime, distinctUntilChanged, pluck, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stock',
@@ -57,6 +58,7 @@ export class StockComponent implements OnInit {
 
   // Subscriptions
   private subProduct: Subscription;
+  searchQuery: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -69,6 +71,11 @@ export class StockComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getAllProducts();
+  }
+
+  onRefresh(){
+    this.isLoading = true;
     this.getAllProducts();
   }
 
@@ -109,9 +116,11 @@ export class StockComponent implements OnInit {
           this.totalProducts = res.count;
           this.totalProductsStore = res.count;
           this.spinner.hide();
+          this.isLoading = false;
         },
         (error) => {
           this.spinner.hide();
+          this.isLoading = false;
           console.log(error);
         }
       );
@@ -372,5 +381,69 @@ export class StockComponent implements OnInit {
     this.overlay = false;
     this.searchProducts = [];
     this.isFocused = false;
+  }
+
+  ngAfterViewInit(): void {
+    // this.searchAnim();
+    const formValue = this.searchForm.valueChanges;
+
+    formValue
+      .pipe(
+        // map(t => t.searchTerm)
+        // filter(() => this.searchForm.valid),
+        pluck('searchTerm'),
+        debounceTime(200),
+        distinctUntilChanged(),
+        switchMap((data) => {
+          const pagination: Pagination = {
+            currentPage: this.currentPage.toString(),
+            pageSize: this.productsPerPage.toString(),
+          };
+          this.searchQuery = data.trim();
+          console.log(this.searchQuery);
+          if (this.searchQuery) {
+            if (this.status === 0) {
+              this.query = { hasLink: false };
+            } else {
+              this.query = { status: this.status };
+              this.query = { ...this.query, ...{ hasLink: false } };
+            }
+            if (this.status === 0) {
+              return this.productService.getSearchProduct(
+                this.searchQuery,
+                pagination,
+                this.query
+              );
+            } else {
+              return this.productService.getSearchProduct(
+                this.searchQuery,
+                pagination,
+                this.query
+              );
+            }
+          } else {
+            this.searchProducts = [];
+            this.products = this.holdPrevData;
+            this.totalProducts = this.totalProductsStore;
+            this.searchProducts = [];
+            this.searchQuery = null;
+            return EMPTY;
+          }
+        })
+      )
+      .subscribe(
+        (res) => {
+          this.isLoading = false;
+          this.searchProducts = res.data;
+          this.products = res.data;
+          if (this.searchProducts.length > 0) {
+            this.isOpen = true;
+            this.overlay = true;
+          }
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
   }
 }

@@ -200,7 +200,7 @@
                   +
                 </button>
               </li>
-              <span *ngIf="globalQuantity > 0">Only 2 items left</span>
+              <span *ngIf="globalQuantity > 0 && globalQuantity <= 3">Only {{globalQuantity}} items left</span>
             </ul>
           </div>
         </div>
@@ -232,6 +232,7 @@
         </div>
         <!---product-cart-btn-->
         <div class="product-btn">
+          <!-- <button *ngIf="showAddToCart" [class]="btnActive ? 'inactive-btn' : 'active-btn'" (click)="activeCartBtn()" type="button">Add to Cart</button> -->
           <button *ngIf="globalQuantity > 0 && addToCartButton === true && existInCart !== true && globalDisplay===true"
             [class]="btnActive ? 'inactive-btn' : 'active-btn'" (click)="activeCartBtn()" type="button">
             Add to Cart

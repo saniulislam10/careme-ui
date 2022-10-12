@@ -4,9 +4,6 @@
 
 export const environment = {
   production: false,
-  // apiBaseLink: 'https://api.caremein.softlabit.com',
-  // ftpBaseLink: 'https://ftp.caremein.softlabit.com',
-  // apiBaseLinkAli: 'https://api.careme.softlabit.com',
   apiBaseLinkAli: 'http://localhost:5502',
   // apiBaseLink: 'http://localhost:5502',
   // ftpBaseLink: 'http://localhost:5502',

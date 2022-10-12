@@ -10,7 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { ProductOrderStatus } from 'src/app/enum/product-order-status';
 import { ProductStatus } from 'src/app/enum/product-status';
-import { Order } from 'src/app/interfaces/order';
+import { Order, OrderItem } from 'src/app/interfaces/order';
 import { Pagination } from 'src/app/interfaces/pagination';
 import { Product } from 'src/app/interfaces/product';
 import { Select } from 'src/app/interfaces/select';
@@ -26,6 +26,9 @@ import { CreateOrderDialogComponent } from '../regular-orders/create-order-dialo
 import { CreateInvoiceReturnComponent } from './create-invoice-return/create-invoice-return.component';
 import { CreateInvoiceComponent } from './create-invoice/create-invoice.component';
 import { EditOrderComponent } from './edit-order/edit-order.component';
+import { Invoice } from 'src/app/interfaces/invoice';
+import { Return } from 'src/app/interfaces/return';
+import { ReturnService } from 'src/app/services/return.service';
 
 interface ItemData {
   id: number;
@@ -42,6 +45,10 @@ interface ItemData {
   providers: [PricePipe],
 })
 export class OrderDetailsComponent implements OnInit {
+  invoices: Invoice[] = [];
+  returns: Return[] = [];
+  invoiceDisable: boolean = true;
+  returnDisable: boolean = true;
   bodyTabs = [
     {
       name: 'Overview',
@@ -49,11 +56,11 @@ export class OrderDetailsComponent implements OnInit {
     },
     {
       name: 'Invoice',
-      disabled: true
+      disabled: this.invoiceDisable
     },
     {
       name: 'Return',
-      disabled: true
+      disabled: this.returnDisable
     }
   ];
   allSelected = false;
@@ -69,7 +76,6 @@ export class OrderDetailsComponent implements OnInit {
   id: any;
   order: Order;
   products: any[] = [];
-  invoices: any[] = [];
   countInvoice: number;
   clickActive: any[] = [];
   admin: any;
@@ -102,15 +108,15 @@ export class OrderDetailsComponent implements OnInit {
   canceledOrderAmount: number;
 
   productOrderStatus: Select[] = [
-    { value: ProductOrderStatus.PENDING, viewValue: 'Pending' },
-    { value: ProductOrderStatus.CANCEL, viewValue: 'Cancel' },
-    { value: ProductOrderStatus.CONFIRM, viewValue: 'Confirm' },
-    { value: ProductOrderStatus.PARTIAL_SHIPPING, viewValue: 'Partial Shipping' , disabled:true},
-    { value: ProductOrderStatus.SHIPPING, viewValue: 'Shipping'  , disabled:true},
-    { value: ProductOrderStatus.DELIVERED, viewValue: 'Delivered'  , disabled:true},
-    { value: ProductOrderStatus.PARTIAL_DELIVERED, viewValue: 'Partial Delivered' , disabled:true },
-    { value: ProductOrderStatus.RETURN, viewValue: 'Return' , disabled:true },
-    { value: ProductOrderStatus.PARTIAL_RETURN, viewValue: 'Partial Return' , disabled:true }
+    { value: ProductOrderStatus.PENDING, label: 'Pending' },
+    { value: ProductOrderStatus.CANCEL, label: 'Cancel' },
+    { value: ProductOrderStatus.CONFIRM, label: 'Confirm' },
+    { value: ProductOrderStatus.PARTIAL_SHIPPING, label: 'Partial Shipping' , disabled:true},
+    { value: ProductOrderStatus.SHIPPING, label: 'Shipping'  , disabled:true},
+    { value: ProductOrderStatus.DELIVERED, label: 'Delivered'  , disabled:true},
+    { value: ProductOrderStatus.PARTIAL_DELIVERED, label: 'Partial Delivered' , disabled:true },
+    { value: ProductOrderStatus.RETURN, viewValue: 'Return' , label:true },
+    { value: ProductOrderStatus.PARTIAL_RETURN, viewValue: 'Partial Return' , label:true }
   ];
   selectedIds: number[] = [];
   timelineStatus: any[];
@@ -123,6 +129,7 @@ export class OrderDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     public invoiceService: InvoiceService,
+    public returnService: ReturnService,
     private dialog: MatDialog,
     private uiService: UiService,
     private fb: FormBuilder,
@@ -149,6 +156,48 @@ export class OrderDetailsComponent implements OnInit {
     this.initFormValue();
     this.getAdminData();
     this.getAllOrders();
+
+  }
+
+  getDisable(tab){
+    if(tab.name === 'Invoice'){
+      return this.invoiceDisable;
+    }
+    if(tab.name === 'Return'){
+      return this.returnDisable;
+    }
+  }
+
+  getInvoicesByOrderId(id){
+    this.invoiceService.getAllInvoicesByOrderNo(id).subscribe(
+      (res) => {
+        this.invoices = res.data;
+        if(this.invoices.length > 0){
+          this.invoiceDisable = false;
+        }else{
+          this.invoiceDisable  = true;
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  getReturnsByOrderId(id){
+    this.returnService.getAllReturnsByOrderNo(id).subscribe(
+      (res) => {
+        console.log("Returns",res.data)
+        this.returns = res.data;
+        if(this.returns.length){
+          this.returnDisable = false;
+        }else{
+          this.returnDisable = true;
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   onRefresh(){
@@ -235,6 +284,8 @@ export class OrderDetailsComponent implements OnInit {
     this.orderService.getOrderDetails(id).subscribe(
       (res) => {
         this.order = res.data;
+        this.getInvoicesByOrderId(this.order.orderId);
+        this.getReturnsByOrderId(this.order.orderId)
         this.selectedIds = [];
 
         this.order.orderedItems.forEach(element => {
@@ -564,8 +615,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
 
-  onStatusChange(status, order, data) {
-    console.log(data);
+  onStatusChange(status, order, data:OrderItem) {
     if (status === ProductOrderStatus.CANCEL) {
         this.productService
           .updateProductQuantityById(data)
@@ -580,7 +630,7 @@ export class OrderDetailsComponent implements OnInit {
     }
 
     this.selectedIds.forEach((element) => {
-      order.orderedItems[element].status = status;
+      order.orderedItems[element].deliveryStatus = status;
     });
 
 
@@ -681,6 +731,11 @@ export class OrderDetailsComponent implements OnInit {
   refreshCheckedStatus(): void {
     this.allSelected = this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.allSelected;
+  }
+
+  getReturnPercentage(userData){
+    console.log("User Data", userData);
+    return 10
   }
 
 }

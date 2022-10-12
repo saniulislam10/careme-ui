@@ -23,8 +23,8 @@ export class ReturnService {
   placeReturn(data: Return) {
     return this.httpClient.post<{ _id: string; returnId: string; message: string; success: boolean }>(API_RETURN + 'place-return', data);
   }
-  getAllReturnsByOrderNo(data: any) {
-    return this.httpClient.post<{ data: Return[]; message: string; success: boolean }>(API_RETURN + 'get-all-returns-by-orderNo', {data});
+  getAllReturnsByOrderNo(id: any) {
+    return this.httpClient.get<{ data: Return[]; message: string; success: boolean }>(API_RETURN + 'get-all-returns-by-orderNo/' + id);
   }
   getAllReturns(pagination, sort?: any) {
     return this.httpClient.post<{ data: Return[]; message: string; success: boolean }>(API_RETURN + 'get-all-returns', {sort});
