@@ -91,7 +91,7 @@ li.cart_vendor_single-items:last-child {
 }
 .advanch-price {
   h3 {
-    color: #ff8d00;
+    color: #ff8100;
   }
 }
 
@@ -129,7 +129,7 @@ li.cart_vendor_single-items:last-child {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 2px 0;
+      padding: 5px 0;
     }
   }
 }
@@ -140,17 +140,82 @@ li.cart_vendor_single-items:last-child {
     align-items: center;
     justify-content: space-between;
   }
+  input {
+    cursor: pointer;
+  }
+  span {
+    display: flex;
+    align-items: center;
+  }
   span > label {
     margin-left: 5px !important;
+    cursor: pointer;
+    display: flex;
+    span {
+      margin-left: 5px !important;
+    }
   }
 }
-li.order_summary_btn button {
+.order_summary_action_btn {
+  text-align: center;
+  h3 {
+    padding: 10px 15px;
+    background: #fffaed;
+    border: 2px dashed #ffe5a4;
+    color: #2d2d2d;
+    font-size: 16px;
+    margin-bottom: 15px !important;
+    font-weight: 300;
+    span {
+      color: #ff8100;
+      font-weight: 600;
+    }
+  }
+  .order_summary_btn {
+    width: 100%;
+    height: 50px;
+    background: #db5791;
+    border: 1px solid #db5791;
+    color: #fff;
+    font-size: 16px;
+    position: relative;
+    transition: 0.3s;
+    i {
+      position: absolute;
+      right: 0;
+      transform: translate(10%, 20%);
+      animation: nextmove 2s infinite;
+    }
+  }
+  .order_summary_btn:hover {
+    background: #1c871b;
+    border: 1px solid #1c871b;
+  }
+  @keyframes nextmove {
+    from {
+      right: 20%;
+      opacity: 0;
+    }
+    to {
+      right: 10%;
+      opacity: 1;
+    }
+  }
+}
+.coupon_code {
   width: 100%;
-  height: 50px;
-  background: #db5791;
-  border: 1px solid #db5791;
-  color: #fff;
-  font-size: 16px;
+  height: 40px;
+  margin-bottom: 15px !important;
+  input {
+    width: 70%;
+    height: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+  }
+  button {
+    width: 30%;
+    height: 100%;
+  }
 }
 .total_advanch h2,
 .total_amount h3 {
@@ -160,6 +225,7 @@ li.order_summary_btn button {
 .deskoff {
   display: none;
 }
+
 @media (max-width: 1024px) {
 }
 @media (max-width: 768px) {
@@ -227,18 +293,19 @@ li.order_summary_btn button {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    background: #f3f3f39e;
+    border-top: 1px solid #dddddd82;
+    border-bottom: 1px solid #dddddd82;
     .advanch-price {
       background: #e9e9e9;
       padding: 5px;
-      clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
-      width: 60%;
+      clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
+      width: 50%;
       flex-direction: column;
       span {
         font-size: 12px;
       }
       h3 {
-        color: #ff8d00;
+        color: #ff8100;
       }
     }
     .trash_item {

@@ -21,19 +21,12 @@
             </span>
           </div>
         </nz-card>
-        <nz-card
-          class="cart_single_vendor"
-          nzSize="small"
-          *ngFor="let group of vCarts; let gi = index"
-        >
+        <nz-card class="cart_single_vendor" nzSize="small">
           <div class="cart_single_vendor-head">
             <label nz-checkbox [(ngModel)]="isCheckedButton"> Care Me </label>
           </div>
           <ul class="cart_vendor-items">
-            <li
-              class="cart_vendor_single-items"
-              *ngFor="let data of group.data; let di = index"
-            >
+            <li class="cart_vendor_single-items">
               <div class="cart_single_vendor-items-details">
                 <div class="items-thumb">
                   <label nz-checkbox [(ngModel)]="isCheckedButton"></label>
@@ -44,8 +37,8 @@
                 </div>
                 <div class="items-details">
                   <h2>
-                    Men's Titanium Steel Signet Band Rings for Men (Balck / 23
-                    <i class="las la-lg la-edit"></i>)
+                    Men's Titanium Steel Signet Band Rings for Men <br />
+                    (Balck / 23 <i class="las la-lg la-edit"></i>)
                   </h2>
                   <div class="items-details_info">
                     <div class="product_point">
@@ -121,18 +114,27 @@
         <nz-card nzSize="small">
           <div class="cart_page_summary">
             <h2>Order Summary</h2>
-            <ul *ngIf="!carts[0]?.requestProduct">
+            <div class="coupon_code">
+              <input type="text" nz-input placeholder="Use coupon code" />
+              <button type="submit" nz-button>Apply</button>
+            </div>
+            <ul>
               <li>
                 <p>Subtotal (3 items)</p>
                 <p>{{ cartNewTotal() }} TK</p>
               </li>
               <li>
-                <p>Coupon Code</p>
-                <p><span>(-)</span> 50TK</p>
+                <p>
+                  Coupon Code
+                  <span style="font-size: 12px; color: #898989">
+                    ( <i class="las la-lg la-tags"></i> CAREME15 )
+                  </span>
+                </p>
+                <p style="color: #ff0000c7">(-) 50 TK</p>
               </li>
               <li>
-                <p>Shipping Fee</p>
-                <p>120TK</p>
+                <p>Shipping Cost</p>
+                <p>120 TK</p>
               </li>
               <li>
                 <div class="point_main" [(ngModel)]="pointsType">
@@ -148,12 +150,14 @@
                       <input type="radio" id="redeem" name="offer" value="50" />
                       <label for="redeem">
                         Redeem Points
-                        <span style="font-size: 11px; color: #898989">
-                          ({{ user?.points }} Available)
+                        <span style="font-size: 12px; color: #898989">
+                          ( {{ user?.points }} available )
                         </span>
                       </label>
                     </span>
-                    <h4>{{ redeemPointsTotal() }} TK</h4>
+                    <h4 style="color: #ff0000c7">
+                      (-) {{ redeemPointsTotal() }} TK
+                    </h4>
                   </div>
                 </div>
               </li>
@@ -166,21 +170,18 @@
               <li class="total_amount">
                 <h3>Total Amount = {{ cartTotal() }} TK</h3>
               </li>
-              <li class="total_advanch">
-                <h2>
-                  Advance to pay = <span>{{ advanceTotal() }} TK</span>
-                </h2>
-              </li>
-              <li class="order_summary_btn">
-                <button
-                  *ngIf="this.carts?.length > 0"
-                  type="submit"
-                  (click)="onContinueToShipping()"
-                >
-                  PROCEED TO CHECKOUT
-                </button>
-              </li>
             </ul>
+          </div>
+          <div class="order_summary_action_btn">
+            <h3 class="total_advanch">Advance to pay = <span>0.00 TK</span></h3>
+            <button
+              class="order_summary_btn"
+              type="submit"
+              (click)="onContinueToShipping()"
+            >
+              PROCEED TO CHECKOUT
+              <i class="las la-lg la-long-arrow-alt-right"></i>
+            </button>
           </div>
         </nz-card>
       </div>
