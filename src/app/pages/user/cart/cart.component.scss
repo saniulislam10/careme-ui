@@ -12,6 +12,9 @@
   align-items: center;
   justify-content: space-between;
   font-size: 14px;
+  span {
+    cursor: pointer;
+  }
 }
 .cart_single_vendor-head {
   border-bottom: 1px solid #ddd;
@@ -62,9 +65,10 @@ li.cart_vendor_single-items:last-child {
     border-radius: 100%;
     line-height: 32px;
     text-align: center;
-    display: none;
     float: right;
     transition: 0.3s;
+    visibility: hidden;
+    opacity: 0;
     i {
       font-size: 18px;
       color: #ff0000;
@@ -73,7 +77,8 @@ li.cart_vendor_single-items:last-child {
 }
 .cart_vendor_single-items:hover {
   .trash_item {
-    display: block;
+    visibility: visible;
+    opacity: 1;
   }
 }
 .vendor-items-total_price {
@@ -139,6 +144,8 @@ li.cart_vendor_single-items:last-child {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .redeems {
+    }
   }
   input {
     cursor: pointer;
@@ -285,7 +292,7 @@ li.cart_vendor_single-items:last-child {
   .advanch-price {
     h3 {
       min-width: 0px;
-      margin-left: 5px !important;
+      margin-left: 0px !important;
     }
   }
   .deskoff {

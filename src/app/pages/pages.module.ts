@@ -7,17 +7,14 @@ import { PagesComponent } from './pages.component';
 import { HeaderModule } from '../core/header/header.module';
 import { MatDialogModule } from '@angular/material/dialog';
 
-
 @NgModule({
-  declarations: [
-    PagesComponent
-  ],
+  declarations: [PagesComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,
     HeaderModule,
     FooterModule,
     MatDialogModule,
-  ]
+  ],
 })
-export class PagesModule { }
+export class PagesModule {}
