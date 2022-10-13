@@ -1,3 +1,296 @@
+<!-- Checkout page Design -->
+<div class="checkout_page">
+  <div class="container">
+    <div nz-row [nzGutter]="16">
+      <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 17 }">
+        <nz-card
+          class="checkout_address mb"
+          nzSize="small"
+          nzTitle="Delivery Address"
+          [nzExtra]="addressAction"
+        >
+          <div class="address_header">
+            <h3><i class="las la-suitcase"></i> Home</h3>
+            <ul>
+              <li class="trash"><i class="las la-trash"></i></li>
+              <li class="edit"><i class="lar la-edit"></i></li>
+              <li class="select"><i class="lar la-check-circle"></i></li>
+            </ul>
+          </div>
+          <div class="address_body">
+            <ul>
+              <li>
+                <span><i class="lar la-user"></i></span>
+                <p>Md. Al-Mamun</p>
+              </li>
+              <li>
+                <span><i class="las la-phone"></i></span>
+                <p>01917632421</p>
+              </li>
+              <li>
+                <span><i class="las la-map-marked"></i></span>
+                <p>
+                  Suite #1402 (Lift #14), Navana D.H. Tower, 6 Panthapath,
+                  Karwan Bazar, Dhaka-1215.
+                </p>
+              </li>
+            </ul>
+          </div>
+        </nz-card>
+        <nz-card
+          class="checkout_shipping"
+          nzSize="small"
+          nzTitle="Delivery Option"
+          [nzExtra]="vendorName"
+        >
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
+              <nz-card class="shipping_single" nzSize="small">
+                <h3>60 TK</h3>
+                <h4>Standard Shipping</h4>
+                <h5>
+                  Delivery within
+                  <span style="color: #ff9100">Fri 22 Jul - Sun 22 Aug</span>
+                </h5>
+                <i class="lar la-check-circle"></i>
+              </nz-card>
+            </div>
+            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
+              <nz-card class="shipping_single active" nzSize="small">
+                <h3>150 TK</h3>
+                <h4>Express Shipping</h4>
+                <h5>
+                  Delivery within
+                  <span style="color: green">Fri 22 Jul - Sun 24 Jul</span>
+                </h5>
+                <i class="lar la-check-circle"></i>
+              </nz-card>
+            </div>
+            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
+              <nz-card class="shipping_single" nzSize="small">
+                <h3>10 TK</h3>
+                <h4>Pick by own</h4>
+                <nz-radio-group class="pick_address" [(ngModel)]="pickAddress">
+                  <label nz-radio nzValue="A">
+                    D.H. Tower, 6 Panthapath, (01917654824)
+                  </label>
+                  <label nz-radio nzValue="B">
+                    D.H. Tower, 6 Panthapath, Dhaka (01917654824)
+                  </label>
+                </nz-radio-group>
+                <i class="lar la-check-circle"></i>
+              </nz-card>
+            </div>
+          </div>
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="mb" [nzSpan]="24">
+              <nz-card nzSize="small">
+                <div class="single_item">
+                  <div class="items_left">
+                    <img
+                      nz-image
+                      nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                      alt=""
+                    />
+                    <div class="descriptions">
+                      <h3>Remax TWS-29 Ultrathin Wireless Earbuds</h3>
+                      <h4>Balck / 23</h4>
+                    </div>
+                  </div>
+                  <div class="items_right">
+                    <div class="Product_qt">
+                      <h4>SKU: 56565-01</h4>
+                      <h4>Qty: 1</h4>
+                    </div>
+                    <div class="Product_price">
+                      <h4><span>(10% Advance)</span> 500 TK</h4>
+                      <h3>Total: 500 TK</h3>
+                    </div>
+                  </div>
+                </div>
+              </nz-card>
+            </div>
+            <div nz-col [nzSpan]="24">
+              <nz-card nzSize="small">
+                <div class="single_item">
+                  <div class="items_left">
+                    <img
+                      nz-image
+                      nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                      alt=""
+                    />
+                    <div class="descriptions">
+                      <h3>Remax TWS-29 Ultrathin Wireless Earbuds</h3>
+                      <h4>Balck / 23</h4>
+                    </div>
+                  </div>
+                  <div class="items_right">
+                    <div class="Product_qt">
+                      <h4>SKU: 56565-01</h4>
+                      <h4>Qty: 1</h4>
+                    </div>
+                    <div class="Product_price">
+                      <h4><span>(10% Advance)</span> 500 TK</h4>
+                      <h3>Total: 500 TK</h3>
+                    </div>
+                  </div>
+                </div>
+              </nz-card>
+            </div>
+          </div>
+        </nz-card>
+        <ng-template #vendorName>
+          <p>Shipped by: Care Me</p>
+        </ng-template>
+      </div>
+      <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 7 }">
+        <nz-card class="checkout_summary" nzSize="small">
+          <h3>Order Summary</h3>
+          <ul>
+            <li>
+              <h4>Subtotal ({{ carts?.length }} items)</h4>
+              <h4>0.00 TK</h4>
+            </li>
+            <li>
+              <p>
+                Coupon Code
+                <span style="font-size: 12px; color: #898989">
+                  ( <i class="las la-lg la-tags"></i> CAREME15 )
+                </span>
+              </p>
+              <p style="color: #ff0000c7">(-) 50 TK</p>
+            </li>
+            <li>
+              <p>Earn Point</p>
+              <p>0.00 TK</p>
+            </li>
+            <li>
+              <p>Redeem Point</p>
+              <p style="color: #ff0000c7">(-) 0.00 TK</p>
+            </li>
+            <li>
+              <p>Shipping Cost</p>
+              <p>120 TK</p>
+            </li>
+            <li>
+              <nz-divider></nz-divider>
+            </li>
+            <li>
+              <h5>Total = <span>0.00 TK</span></h5>
+            </li>
+          </ul>
+          <div class="order_submit">
+            <label nz-checkbox [(ngModel)]="agreeChecked">
+              I agree to the <span>Terms and conditions</span>,
+              <span>Return policy</span> & <span>Privacy Policy</span>.
+            </label>
+            <button nz-button>SUBMIT ORDER</button>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Area -->
+<ng-template #addressAction>
+  <div class="action_btn">
+    <button nz-button [nzType]="'primary'" (click)="showModal()">
+      <i class="las la-plus"></i> New
+    </button>
+    <button nz-button (click)="openDialog()">
+      <i class="las la-plus"></i> Old
+    </button>
+  </div>
+</ng-template>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Delivery Address"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  nzOkText="Save"
+>
+  <ng-container *nzModalContent>
+    <form nz-form>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="name">Name</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input
+            nz-input
+            name="username"
+            type="text"
+            id="name"
+            placeholder="Name"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="phone">Phone</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input
+            nz-input
+            name="userphone"
+            type="text"
+            id="phone"
+            placeholder="01XXXXXXXXX"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="locate">Address</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+          <nz-select ngModel="bangladesh">
+            <nz-option nzValue="bangladesh" nzLabel="Bangladesh"></nz-option>
+          </nz-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="12">
+          <nz-select ngModel="dhaka">
+            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+            <nz-option nzValue="khulna" nzLabel="Khulna"></nz-option>
+          </nz-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="12">
+          <nz-select ngModel="dhaka">
+            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+          </nz-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="12">
+          <nz-select ngModel="dhaka">
+            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24">Address</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <textarea
+            formControlName="Address"
+            nz-input
+            rows="2"
+            placeholder="Your address is here..."
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 <!-- Old Code -->
 <div class="new-shopping-info">
   <div class="container">
