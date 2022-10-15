@@ -226,7 +226,17 @@ li.cart_vendor_single-items:last-child {
   button {
     width: 30%;
     height: 100%;
+    background: #ebebeb;
+    border-color: #ebebeb;
   }
+  button:hover {
+    border-color: #da5894;
+    background: #da5894;
+    color: #fff;
+  }
+}
+.product_point {
+  font-size: 12px;
 }
 .total_advanch h2,
 .total_amount h3 {
