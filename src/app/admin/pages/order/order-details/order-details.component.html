@@ -71,7 +71,7 @@
             <div *ngIf="tab.name === 'Invoice'">
               <div class="invoice_dropdown" *ngFor="let data of invoices">
                 <div class="invoice_item">
-                  <h3 class="IVN_code_content" >{{data.invoiceId}}</h3>
+                  <a class="IVN_code_content" [routerLink]="['../../', 'invoice', data.invoiceId]">{{data.invoiceId}}</a>
                   <p>{{data.createdAt | date : 'short'}}</p>
                 </div>
                 <div class="invoice_item">
@@ -93,7 +93,7 @@
             <div *ngIf="tab.name === 'Return'">
               <div class="invoice_dropdown" *ngFor="let data of returns">
                 <div class="invoice_item">
-                  <h3 class="IVN_code_content" >{{data.returnId}}</h3>
+                  <a class="IVN_code_content" [routerLink]="['../../', 'return','details', data.returnId]" >{{data.returnId}}</a>
                   <p>{{data.createdAt | date : 'short'}}</p>
                 </div>
                 <div class="invoice_item">

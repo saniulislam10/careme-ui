@@ -58,7 +58,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'new-shipping-info',
+        path: 'checkout',
         loadChildren: () =>
           import('./user/new-shopping-info/new-shopping-info.module').then(
             (m) => m.NewShoppingInfoModule
