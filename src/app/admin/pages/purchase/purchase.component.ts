@@ -66,6 +66,7 @@ export class PurchaseComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private reloadService: ReloadService,
     private purchaseService: PurchaseService,
+    private productService: ProductService,
     private router: Router,
     private utilsService: UtilsService,
     private dialog: MatDialog,
@@ -127,25 +128,9 @@ export class PurchaseComponent implements OnInit {
   /**
    * Images
    */
-  setThumbnailImage(data) {
-    let images = this.getImages(data.medias, data.images);
+   setThumbnailImage(data) {
+    let images = this.productService.getImages(data.medias, data.images);
     return images[0];
-  }
-
-  getImages(medias, images) {
-    let allMedias = [];
-    if (medias && medias.length > 0) {
-      for (let i = 0, x = 0; i < medias.length; i++) {
-        if (medias[i] !== null && medias[i] !== '') {
-          allMedias.push(medias[i]);
-          x++;
-        }
-      }
-      allMedias = [...allMedias, ...images];
-    } else {
-      allMedias = images;
-    }
-    return allMedias;
   }
 
   getVariantName(i, x, product, index) {

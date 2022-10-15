@@ -1,9 +1,12 @@
+import { ProductService } from 'src/app/services/product.service';
 import { CarouselCntrlService } from './../../services/carousel-cntrl.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ProductCardOne } from 'src/app/interfaces/product-card-one';
 import { BannerCarousel } from 'src/app/interfaces/banner-carousel';
 import { MenuService } from 'src/app/services/menu.service';
 import { CategoryMenu } from 'src/app/interfaces/category-menu';
+import { Product } from 'src/app/interfaces/product';
+import { Pagination } from 'src/app/interfaces/pagination';
 
 @Component({
   selector: 'app-home',
@@ -13,15 +16,34 @@ import { CategoryMenu } from 'src/app/interfaces/category-menu';
 export class HomeComponent implements OnInit, AfterViewInit {
   id: any;
   category: CategoryMenu[] = [];
+  newProducts: Product[] = [];
+  currentPage = 1;
+  productsPerPage = 10;
   constructor(
     private CarouselCntrlService: CarouselCntrlService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private productService: ProductService,
   ) {}
 
   ngOnInit(): void {
     this.getAllCategoryMenus();
+    this.getNewProducts();
   }
   ngAfterViewInit(): void {}
+
+  getNewProducts(){
+    const pagination: Pagination = {
+      currentPage: this.currentPage.toString(),
+      pageSize: this.productsPerPage.toString(),
+    };
+
+    let sort = { createdAt : 1 };
+
+    this.productService.getAllProducts(pagination, null, sort)
+    .subscribe(res => {
+      this.newProducts = res.data;
+    })
+  }
 
   carouselData: BannerCarousel[] = [
     {
@@ -215,4 +237,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.category = res.data;
     });
   }
+
+  setThumbnailImage(data) {
+    let images = this.productService.getImages(data.medias, data.images);
+    return images[0];
+  }
+
+  // getImages(medias, images) {
+  //   let allMedias = [];
+  //   if (medias && medias.length > 0) {
+  //     for (let i = 0, x = 0; i < medias.length; i++) {
+  //       if (medias[i] !== null && medias[i] !== '') {
+  //         allMedias.push(medias[i]);
+  //         x++;
+  //       }
+  //     }
+  //     allMedias = [...allMedias, ...images];
+  //   } else {
+  //     allMedias = images;
+  //   }
+  //   return allMedias;
+  // }
 }

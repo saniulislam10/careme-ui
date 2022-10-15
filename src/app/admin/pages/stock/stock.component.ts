@@ -129,8 +129,8 @@ export class StockComponent implements OnInit {
   /**
    * Images
    */
-  setThumbnailImage(data) {
-    let images = this.getImages(data.medias, data.images);
+   setThumbnailImage(data) {
+    let images = this.productService.getImages(data.medias, data.images);
     return images[0];
   }
 

@@ -619,26 +619,10 @@ exportPopUpShow(){
    }
 
  //thumbnail
- setThumbnailImage(data){
-   let images = this.getImages(data.medias, data.images);
-   return images[0];
- }
-
- getImages(medias, images){
-   let allMedias = [];
-   if(medias && medias.length > 0){
-     for(let i =0, x=0;i<medias.length;i++){
-       if(medias[i] !==null && medias[i] !==""){
-         allMedias.push(medias[i]);
-         x++;
-       }
-     }
-     allMedias = [...allMedias, ...images];
-   }else{
-     allMedias = images;
-   }
-   return allMedias;
- }
+ setThumbnailImage(data) {
+  let images = this.productService.getImages(data.medias, data.images);
+  return images[0];
+}
 
  deleteBulkProducts() {
   let updatedList = [];

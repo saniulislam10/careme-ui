@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-order-details',
@@ -25,6 +26,7 @@ export class OrderDetailsComponent implements OnInit {
   thumbnailImage: any;
 
   constructor(
+    private productService: ProductService,
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
     private router: Router
@@ -68,7 +70,8 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   setThumbnailImage(data) {
-    this.thumbnailImage = data.images? data.images[0] : data.medias[0];
+    let images = this.productService.getImages(data.medias, data.images);
+    return images[0];
   }
 
   getImages(medias, images) {
