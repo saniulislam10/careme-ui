@@ -54,7 +54,7 @@ const materials = [
   NzTimelineModule,
   NzCollapseModule,
   NzRadioModule,
-  NzImageModule
+  NzImageModule,
 
   // SharedModule
 ];

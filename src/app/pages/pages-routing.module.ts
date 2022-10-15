@@ -67,7 +67,9 @@ const routes: Routes = [
       {
         path: 'success',
         loadChildren: () =>
-          import('./user/order-success/order-success.module').then((m) => m.OrderSuccessModule),
+          import('./user/order-success/order-success.module').then(
+            (m) => m.OrderSuccessModule
+          ),
       },
       {
         path: 'delivery-info',
@@ -84,7 +86,9 @@ const routes: Routes = [
       {
         path: 'new-payment',
         loadChildren: () =>
-          import('./user/new-payment/new-payment.module').then((m) => m.NewPaymentModule),
+          import('./user/new-payment/new-payment.module').then(
+            (m) => m.NewPaymentModule
+          ),
       },
       {
         path: 'confirm',
@@ -116,8 +120,9 @@ const routes: Routes = [
       },
       {
         path: 'dashboard',
-        canActivate : [UserAuthGuard],
-        loadChildren: () => import('./deshboard/deshboard.module').then((m) => m.DeshboardModule),
+        canActivate: [UserAuthGuard],
+        loadChildren: () =>
+          import('./deshboard/deshboard.module').then((m) => m.DeshboardModule),
       },
       {
         path: 'all-collection',

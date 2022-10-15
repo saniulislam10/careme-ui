@@ -1,28 +1,297 @@
-<!--order-process-system-->
-<div class="order-process-system">
+<!-- Checkout page Design -->
+<div class="checkout_page">
   <div class="container">
-    <div class="order-process-main">
-      <!---order-process-system-info-->
-      <div class="order-process-system-info complate-process">
-        <span><i class="fa fa-shopping-cart"></i></span>
-        <h3>My Cart</h3>
+    <div nz-row [nzGutter]="16">
+      <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 17 }">
+        <nz-card
+          class="checkout_address mb"
+          nzSize="small"
+          nzTitle="Delivery Address"
+          [nzExtra]="addressAction"
+        >
+          <div class="address_header">
+            <h3><i class="las la-suitcase"></i> Home</h3>
+            <ul>
+              <li class="trash"><i class="las la-trash"></i></li>
+              <li class="edit"><i class="lar la-edit"></i></li>
+              <li class="select"><i class="lar la-check-circle"></i></li>
+            </ul>
+          </div>
+          <div class="address_body">
+            <ul>
+              <li>
+                <span><i class="lar la-user"></i></span>
+                <p>Md. Al-Mamun</p>
+              </li>
+              <li>
+                <span><i class="las la-phone"></i></span>
+                <p>01917632421</p>
+              </li>
+              <li>
+                <span><i class="las la-map-marked"></i></span>
+                <p>
+                  Suite #1402 (Lift #14), Navana D.H. Tower, 6 Panthapath,
+                  Karwan Bazar, Dhaka-1215.
+                </p>
+              </li>
+            </ul>
+          </div>
+        </nz-card>
+        <nz-card
+          class="checkout_shipping"
+          nzSize="small"
+          nzTitle="Delivery Option"
+          [nzExtra]="vendorName"
+        >
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
+              <nz-card class="shipping_single" nzSize="small">
+                <h3>60 TK</h3>
+                <h4>Standard Shipping</h4>
+                <h5>
+                  Delivery within
+                  <span style="color: #ff9100">Fri 22 Jul - Sun 22 Aug</span>
+                </h5>
+                <i class="lar la-check-circle"></i>
+              </nz-card>
+            </div>
+            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
+              <nz-card class="shipping_single active" nzSize="small">
+                <h3>150 TK</h3>
+                <h4>Express Shipping</h4>
+                <h5>
+                  Delivery within
+                  <span style="color: green">Fri 22 Jul - Sun 24 Jul</span>
+                </h5>
+                <i class="lar la-check-circle"></i>
+              </nz-card>
+            </div>
+            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
+              <nz-card class="shipping_single" nzSize="small">
+                <h3>10 TK</h3>
+                <h4>Pick by own</h4>
+                <nz-radio-group class="pick_address" [(ngModel)]="pickAddress">
+                  <label nz-radio nzValue="A">
+                    D.H. Tower, 6 Panthapath, (01917654824)
+                  </label>
+                  <label nz-radio nzValue="B">
+                    D.H. Tower, 6 Panthapath, Dhaka (01917654824)
+                  </label>
+                </nz-radio-group>
+                <i class="lar la-check-circle"></i>
+              </nz-card>
+            </div>
+          </div>
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="mb" [nzSpan]="24">
+              <nz-card nzSize="small">
+                <div class="single_item">
+                  <div class="items_left">
+                    <img
+                      nz-image
+                      nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                      alt=""
+                    />
+                    <div class="descriptions">
+                      <h3>Remax TWS-29 Ultrathin Wireless Earbuds</h3>
+                      <h4>Balck / 23</h4>
+                    </div>
+                  </div>
+                  <div class="items_right">
+                    <div class="Product_qt">
+                      <h4>SKU: 56565-01</h4>
+                      <h4>Qty: 1</h4>
+                    </div>
+                    <div class="Product_price">
+                      <h4><span>(10% Advance)</span> 500 TK</h4>
+                      <h3>Total: 500 TK</h3>
+                    </div>
+                  </div>
+                </div>
+              </nz-card>
+            </div>
+            <div nz-col [nzSpan]="24">
+              <nz-card nzSize="small">
+                <div class="single_item">
+                  <div class="items_left">
+                    <img
+                      nz-image
+                      nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                      alt=""
+                    />
+                    <div class="descriptions">
+                      <h3>Remax TWS-29 Ultrathin Wireless Earbuds</h3>
+                      <h4>Balck / 23</h4>
+                    </div>
+                  </div>
+                  <div class="items_right">
+                    <div class="Product_qt">
+                      <h4>SKU: 56565-01</h4>
+                      <h4>Qty: 1</h4>
+                    </div>
+                    <div class="Product_price">
+                      <h4><span>(10% Advance)</span> 500 TK</h4>
+                      <h3>Total: 500 TK</h3>
+                    </div>
+                  </div>
+                </div>
+              </nz-card>
+            </div>
+          </div>
+        </nz-card>
+        <ng-template #vendorName>
+          <p>Shipped by: Care Me</p>
+        </ng-template>
       </div>
-      <!---order-process-system-info-->
-      <div class="order-process-system-info complate-process">
-        <span><i class="fa fa-map"></i></span>
-        <h3>Shipping Info</h3>
+      <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 7 }">
+        <nz-card class="checkout_summary" nzSize="small">
+          <h3>Order Summary</h3>
+          <ul>
+            <li>
+              <h4>Subtotal ({{ carts?.length }} items)</h4>
+              <h4>0.00 TK</h4>
+            </li>
+            <li>
+              <p>
+                Coupon Code
+                <span style="font-size: 12px; color: #898989">
+                  ( <i class="las la-lg la-tags"></i> CAREME15 )
+                </span>
+              </p>
+              <p style="color: #ff0000c7">(-) 50 TK</p>
+            </li>
+            <li>
+              <p>Earn Point</p>
+              <p>0.00 TK</p>
+            </li>
+            <li>
+              <p>Redeem Point</p>
+              <p style="color: #ff0000c7">(-) 0.00 TK</p>
+            </li>
+            <li>
+              <p>Shipping Cost</p>
+              <p>120 TK</p>
+            </li>
+            <li>
+              <nz-divider></nz-divider>
+            </li>
+            <li>
+              <h5>Total = <span>0.00 TK</span></h5>
+            </li>
+          </ul>
+          <div class="order_submit">
+            <label nz-checkbox [(ngModel)]="agreeChecked">
+              I agree to the <span>Terms and conditions</span>,
+              <span>Return policy</span> & <span>Privacy Policy</span>.
+            </label>
+            <button nz-button>SUBMIT ORDER</button>
+          </div>
+        </nz-card>
       </div>
-      <!---order-process-system-info-->
-      <div class="order-process-system-info">
-        <span><i class="fa fa-check-circle"></i></span>
-        <h3>Payment</h3>
-      </div>
-
     </div>
   </div>
 </div>
 
-<!-- //new-shopping-inf0 -->
+<!-- Modal Area -->
+<ng-template #addressAction>
+  <div class="action_btn">
+    <button nz-button [nzType]="'primary'" (click)="showModal()">
+      <i class="las la-plus"></i> New
+    </button>
+    <button nz-button (click)="openDialog()">
+      <i class="las la-plus"></i> Old
+    </button>
+  </div>
+</ng-template>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Delivery Address"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  nzOkText="Save"
+>
+  <ng-container *nzModalContent>
+    <form nz-form>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="name">Name</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input
+            nz-input
+            name="username"
+            type="text"
+            id="name"
+            placeholder="Name"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="phone">Phone</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input
+            nz-input
+            name="userphone"
+            type="text"
+            id="phone"
+            placeholder="01XXXXXXXXX"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="locate">Address</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+          <nz-select ngModel="bangladesh">
+            <nz-option nzValue="bangladesh" nzLabel="Bangladesh"></nz-option>
+          </nz-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="12">
+          <nz-select ngModel="dhaka">
+            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+            <nz-option nzValue="khulna" nzLabel="Khulna"></nz-option>
+          </nz-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="12">
+          <nz-select ngModel="dhaka">
+            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+          </nz-select>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="12">
+          <nz-select ngModel="dhaka">
+            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24">Address</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <textarea
+            formControlName="Address"
+            nz-input
+            rows="2"
+            placeholder="Your address is here..."
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<!-- Old Code -->
 <div class="new-shopping-info">
   <div class="container">
     <div class="new-shopping-info-main">
@@ -35,18 +304,23 @@
           <!---add-address-btn-->
           <!-- (click)="showPupUp()" -->
           <div class="add-address-btn">
-            <button (click)="openDialog()"><span>+</span> Add New Address</button>
+            <button (click)="openDialog()">
+              <span>+</span> Add New Address
+            </button>
           </div>
         </div>
-
 
         <div class="shipping-area">
           <div class="shipping-main-area">
             <!---shipping-main-->
             <div class="shipping-address-main">
               <!---shipping-info-->
-              <div class="shipping-info" [class]="clickActive[i] ? 'active-address' : 'inactive'"
-                (click)="onSelectAddress(data, i)" *ngFor="let data of addressInfo; let i=index">
+              <div
+                class="shipping-info"
+                [class]="clickActive[i] ? 'active-address' : 'inactive'"
+                (click)="onSelectAddress(data, i)"
+                *ngFor="let data of addressInfo; let i = index"
+              >
                 <!---shipping-place-->
                 <div class="shipping-place">
                   <!--shiping-place-left-->
@@ -55,8 +329,17 @@
                                         </div> -->
                   <div class="shipping-place-left">
                     <h3><i class="fa fa-briefcase"></i></h3>
-                    <span class="home">{{data?.addressType ? data?.addressType : 'Home'}}</span>
-                    <a class="default" *ngIf="data.addressType !== 'Work' && data.addressType !== 'Other'">Default</a>
+                    <span class="home">{{
+                      data?.addressType ? data?.addressType : "Home"
+                    }}</span>
+                    <a
+                      class="default"
+                      *ngIf="
+                        data.addressType !== 'Work' &&
+                        data.addressType !== 'Other'
+                      "
+                      >Default</a
+                    >
                   </div>
                   <!---shipping-place-right-->
                   <div class="shipping-place-right">
@@ -65,18 +348,23 @@
                       <mat-icon (click)="editAddress(data, i)">edit</mat-icon>
                     </span>
                     <span>
-                      <mat-icon (click)="deleteAddress(i)">delete_outline</mat-icon>
+                      <mat-icon (click)="deleteAddress(i)"
+                        >delete_outline</mat-icon
+                      >
                     </span>
                   </div>
                 </div>
                 <div class="shipping-contact-info">
                   <div class="shipping-contact-info-elm">
                     <small class="contact">Contact :</small>
-                    <span class="phone-no">{{data?.phone}}</span>
+                    <span class="phone-no">{{ data?.phone }}</span>
                   </div>
                   <div class="shipping-contact-info-elm">
                     <small class="ship-to">Ship to :</small>
-                    <span class="ship-address">{{data?.zila?.name}} {{data?.city?.name}} {{data?.thana?.name}}</span>
+                    <span class="ship-address"
+                      >{{ data?.zila?.name }} {{ data?.city?.name }}
+                      {{ data?.thana?.name }}</span
+                    >
                   </div>
                 </div>
               </div>
@@ -94,7 +382,7 @@
             </div>
             <div class="shopping-method-elm elm-child">
               <div class="pathao">
-                <mat-checkbox class="example-margin "></mat-checkbox>
+                <mat-checkbox class="example-margin"></mat-checkbox>
                 <span>Delivery By</span>
               </div>
               <span>1-3kg</span>
@@ -123,54 +411,71 @@
         <div class="new-shopping-content">
           <div class="right-elm right-elm-top">
             <h4>Order Summary</h4>
-            <a href="">{{carts?.length}} Items</a>
+            <a href="">{{ carts?.length }} Items</a>
           </div>
           <div class="right-elm earn-elm">
             <h4>Earn Point:</h4>
-            <span>{{user?.earnedPoints}}</span>
+            <span>{{ user?.earnedPoints }}</span>
           </div>
           <div class="right-elm product-total">
             <h4>Product</h4>
             <span>Total</span>
           </div>
-          <div class="right-elm product product-border" *ngFor="let data of carts; let index= i">
+          <div
+            class="right-elm product product-border"
+            *ngFor="let data of carts; let index = i"
+          >
             <div class="left">
-              <p>{{data?.product?.name}}</p>
-              <span>SKU {{data?.variant[0]?.variantSku}}.
+              <p>{{ data?.product?.name }}</p>
+              <span
+                >SKU {{ data?.variant[0]?.variantSku }}.
                 <small *ngIf="data?.variant[0]?.variantQuantity">(COD)</small>
-                <small *ngIf="data?.variant[0]?.variantQuantity == 0 || data?.variant[0]?.variantQuantity == null">
-                  <span *ngIf="data?.product?.partialPaymentType === 0">({{data?.product.partialPayment}}TK Pay)</span>
-                  <span *ngIf="data?.product?.partialPaymentType === 1">({{data?.product.partialPayment}}% Pay)</span>
+                <small
+                  *ngIf="
+                    data?.variant[0]?.variantQuantity == 0 ||
+                    data?.variant[0]?.variantQuantity == null
+                  "
+                >
+                  <span *ngIf="data?.product?.partialPaymentType === 0"
+                    >({{ data?.product.partialPayment }}TK Pay)</span
+                  >
+                  <span *ngIf="data?.product?.partialPaymentType === 1"
+                    >({{ data?.product.partialPayment }}% Pay)</span
+                  >
                 </small>
               </span>
             </div>
             <div class="right">
-<!--              <span>{{data?.variant[0]?.variantPrice}} TK</span>-->
-              <span>{{cartSubTotalS(data)}} TK</span>
+              <!--              <span>{{data?.variant[0]?.variantPrice}} TK</span>-->
+              <span>{{ cartSubTotalS(data) }} TK</span>
             </div>
           </div>
           <div class="discount-container">
             <div class="discount">
               <div class="discount-left">
-                <input type="text" [(ngModel)]="couponCode" placeholder="Use your coupon code">
-
+                <input
+                  type="text"
+                  [(ngModel)]="couponCode"
+                  placeholder="Use your coupon code"
+                />
               </div>
               <div class="discount-right">
                 <i class="fa-solid fa-xmark" (click)="disableCoupon()"></i>
                 <a class="apply" (click)="applyCoupon()">Apply</a>
               </div>
-
-
             </div>
           </div>
 
           <div class="right-elm sub-total">
             <h4>Sub Total</h4>
-            <span>{{cartNewTotal()}} TK</span>
+            <span>{{ cartNewTotal() }} TK</span>
           </div>
           <div class="right-elm cuppon-code">
-            <h4>Cuppon Code <span><i class="fa-solid fa-tags"></i> CAREME15%</span></h4>
-            <span> <small>(-)</small> {{getCouponAmount()}}Tk</span>
+            <h4>
+              Cuppon Code
+              <span><i class="fa-solid fa-tags"></i> CAREME15%</span>
+            </h4>
+            <span> <small>(-)</small> {{ getCouponAmount() }}Tk</span>
           </div>
           <div class="right-elm shipping">
             <h4>Shipping Charge</h4>
@@ -178,23 +483,34 @@
           </div>
           <div class="right-elm total-price">
             <h4>Total Price</h4>
-            <span>{{cartTotal()}} TK</span>
+            <span>{{ cartTotal() }} TK</span>
           </div>
           <div class="right-elm advance-pay">
-            <h4>Advance Pay </h4>
-            <span>{{advanceTotal()}} TK</span>
+            <h4>Advance Pay</h4>
+            <span>{{ advanceTotal() }} TK</span>
           </div>
-          <div class="agree" [class]="agreeConditions ? 'payment-check' : 'payment-check-error'">
-            <mat-checkbox class="example-margin" (click)="changeAgreeConditions()"></mat-checkbox>
-            <p> I agree to the <span>Trams and condition return policy </span> & <span>privecy policy.</span></p>
+          <div
+            class="agree"
+            [class]="agreeConditions ? 'payment-check' : 'payment-check-error'"
+          >
+            <mat-checkbox
+              class="example-margin"
+              (click)="changeAgreeConditions()"
+            ></mat-checkbox>
+            <p>
+              I agree to the <span>Trams and condition return policy </span> &
+              <span>privecy policy.</span>
+            </p>
           </div>
-          <div class="submit" (click)="onSubmit()">
-            Submit Order
-          </div>
+          <div class="submit" (click)="onSubmit()">Submit Order</div>
         </div>
       </div>
       <div class="cart-btn-left">
-        <button routerLink="/all-products"><i class="fa fa-arrow-left" routerLinkActive="router-link-active"></i> Return to shop</button>
+        <button routerLink="/all-products">
+          <i class="fa fa-arrow-left" routerLinkActive="router-link-active"></i>
+          Return to shop
+        </button>
       </div>
     </div>
   </div>
+</div>

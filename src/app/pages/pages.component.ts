@@ -4,13 +4,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
-  styleUrls: ['./pages.component.scss']
+  styleUrls: ['./pages.component.scss'],
 })
 export class PagesComponent implements OnInit {
-
-  constructor(
-    private router : Router
-  ) { }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.pageStartTopPositon();
@@ -19,14 +16,12 @@ export class PagesComponent implements OnInit {
   /***
    * Page start bottom problem solve code
    */
-  pageStartTopPositon(){
-    this.router.events.subscribe((evnt) =>{
-      if(!(evnt instanceof NavigationEnd)){
-          return;
+  pageStartTopPositon() {
+    this.router.events.subscribe((evnt) => {
+      if (!(evnt instanceof NavigationEnd)) {
+        return;
       }
-      window.scrollTo(0,0);
-    })
+      window.scrollTo(0, 0);
+    });
   }
-  
-
 }
