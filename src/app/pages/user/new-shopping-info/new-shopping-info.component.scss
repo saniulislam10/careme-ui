@@ -197,6 +197,44 @@ nz-select {
     }
   }
 }
+.descriptions {
+  h3 {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #585858;
+    margin-bottom: 10px !important;
+  }
+  h4 {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #585858;
+  }
+}
+.Product_qt h4 {
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  color: #585858;
+}
+.Product_price {
+  text-align: right;
+}
+.order_submit {
+  label {
+    span {
+      border-bottom: 1px solid #ffffff;
+      transition: 0.3s;
+    }
+    span:hover {
+      border-bottom: 1px solid #da5894;
+    }
+  }
+  label:hover {
+    color: #da5894;
+  }
+}
 
 @media (max-width: 500px) {
   .single_item {
