@@ -235,8 +235,10 @@ li.cart_vendor_single-items:last-child {
     color: #fff;
   }
 }
+.delivery_time,
 .product_point {
   font-size: 12px;
+  color: #6e6e6e;
 }
 .total_advanch h2,
 .total_amount h3 {
@@ -246,7 +248,12 @@ li.cart_vendor_single-items:last-child {
 .deskoff {
   display: none;
 }
-
+.shipping_cost {
+  span {
+    color: #afafaf;
+    font-size: 12px;
+  }
+}
 @media (max-width: 1024px) {
 }
 @media (max-width: 768px) {
