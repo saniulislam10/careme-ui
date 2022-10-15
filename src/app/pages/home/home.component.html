@@ -136,14 +136,14 @@
         </a>
       </div>
       <div class="grid-section-product">
-        <div class="single-product grid" *ngFor="let data of cardThreeData">
+        <div class="single-product grid" *ngFor="let data of newProducts">
           <nz-ribbon nzText="Big Offer" nzColor="red">
             <div class="product-top">
-              <a href="{{ data.routerLink }}"><img src="{{ data.image }}" /></a>
+              <a [routerLink]="['product-details', data.slug]"><img [src]="setThumbnailImage(data)" /></a>
             </div>
           </nz-ribbon>
           <div class="product-bottom">
-            <a href="{{ data.routerLink }}">{{ data.title }}</a>
+            <a [routerLink]="['product-details', data.slug]">{{ data.name }}</a>
             <div class="price_rating">
               <div class="price">
                 {{ data.price }} TK<span>{{ data.discount }} TK</span>
@@ -183,7 +183,7 @@
           <div class="product-bottom">
             <a [routerLink]="['product-details', data.slug]">{{ data.name }}</a>
             <div class="price">
-              {{ data.price }} TK<span *ngIf="data.discountAmount">{{ data.discountAmount }} TK</span>
+              {{ data.price | price: "variant":selectedQty:globalPrice }} TK<span *ngIf="data.discountAmount">{{ data.discountAmount }} TK</span>
             </div>
           </div>
         </div>
@@ -242,7 +242,7 @@
         [navigation]="true"
         class="mySwiper"
       >
-        <ng-template swiperSlide *ngFor="let data of cardThreeData">
+        <ng-template swiperSlide *ngFor="let data of newProducts">
           <app-product-card-two [data]="data"></app-product-card-two>
         </ng-template>
       </swiper>
