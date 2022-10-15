@@ -84,8 +84,7 @@
               ></td>
               <td>
                 <a
-                  [routerLink]="['../', 'details', data._id]"
-                  routerLink="details"
+                  [routerLink]="['../', 'details', data.returnId]"
                 >
                   {{ data.returnId }}
                   <h5>{{ data.createdAt | date: "short" }}</h5>
