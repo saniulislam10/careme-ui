@@ -11,6 +11,7 @@ import { ProductCardTwoModule } from 'src/app/shared/lazy-component/product-card
 import { ProductCardThreeModule } from 'src/app/shared/lazy-component/product-card-three/product-card-three.module';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { AntModule } from 'src/app/material/ant.module';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [HomeComponent, MenuHoverContentComponent],
@@ -24,6 +25,7 @@ import { AntModule } from 'src/app/material/ant.module';
     ProductCardThreeModule,
     NzStatisticModule,
     AntModule,
+    PipesModule
   ],
 })
 export class HomeModule {}

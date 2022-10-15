@@ -120,116 +120,116 @@ export class HomeComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  cardThreeData: ProductCardOne[] = [
-    {
-      _id: '1',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 500,
-      discount: 690,
-    },
-    {
-      _id: '2',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/files/20220519121901_480x480.png?v=1652946677',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 150,
-      discount: 278,
-    },
-    {
-      _id: '3',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 170,
-      discount: 300,
-    },
-    {
-      _id: '4',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 130,
-      discount: 139,
-    },
-    {
-      _id: '5',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 180,
-      discount: 300,
-    },
-    {
-      _id: '6',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 344,
-      discount: 566,
-    },
-    {
-      _id: '7',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 344,
-      discount: 566,
-    },
-    {
-      _id: '8',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 344,
-      discount: 566,
-    },
-    {
-      _id: '9',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 344,
-      discount: 566,
-    },
-    {
-      _id: '10',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 344,
-      discount: 566,
-    },
-    {
-      _id: '11',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 344,
-      discount: 566,
-    },
-    {
-      _id: '12',
-      image:
-        'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
-      title: "Men's Casual Shock Absorption Wear-resistant Shoes",
-      routerLink: '/product-details',
-      price: 344,
-      discount: 566,
-    },
-  ];
+  // cardThreeData: ProductCardOne[] = [
+  //   {
+  //     _id: '1',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 500,
+  //     discount: 690,
+  //   },
+  //   {
+  //     _id: '2',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/files/20220519121901_480x480.png?v=1652946677',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 150,
+  //     discount: 278,
+  //   },
+  //   {
+  //     _id: '3',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 170,
+  //     discount: 300,
+  //   },
+  //   {
+  //     _id: '4',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 130,
+  //     discount: 139,
+  //   },
+  //   {
+  //     _id: '5',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 180,
+  //     discount: 300,
+  //   },
+  //   {
+  //     _id: '6',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 344,
+  //     discount: 566,
+  //   },
+  //   {
+  //     _id: '7',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 344,
+  //     discount: 566,
+  //   },
+  //   {
+  //     _id: '8',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 344,
+  //     discount: 566,
+  //   },
+  //   {
+  //     _id: '9',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 344,
+  //     discount: 566,
+  //   },
+  //   {
+  //     _id: '10',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 344,
+  //     discount: 566,
+  //   },
+  //   {
+  //     _id: '11',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 344,
+  //     discount: 566,
+  //   },
+  //   {
+  //     _id: '12',
+  //     image:
+  //       'https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560',
+  //     title: "Men's Casual Shock Absorption Wear-resistant Shoes",
+  //     routerLink: '/product-details',
+  //     price: 344,
+  //     discount: 566,
+  //   },
+  // ];
 
   /* HTTP REQ */
   private getAllCategoryMenus() {

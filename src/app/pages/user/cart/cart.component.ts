@@ -99,7 +99,7 @@ export class CartComponent implements OnInit {
     );
 
     this.setUserOrderText();
-    this.router.navigate(['new-shipping-info']);
+    this.router.navigate(['checkout']);
   }
 
   //  isDisabled(value: boolean) {
