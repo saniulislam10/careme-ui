@@ -85,7 +85,7 @@
                     </div>
                     <div class="delivery_time">
                       <p>
-                        <i class="las la-shipping-fast"></i>
+                        Delivered within
                         <span style="color: #0e00d3">
                           {{ data?.deliveryDateFrom | date: "EEE, MMM d" }}
                           -
@@ -212,10 +212,6 @@
                 <p style="color: #ff0000c7">(-) 50 TK</p>
               </li>
               <li>
-                <p>Shipping Cost</p>
-                <p>120 TK</p>
-              </li>
-              <li>
                 <nz-radio-group
                   nzName="radiogroup"
                   class="point_main"
@@ -239,6 +235,10 @@
                     </h4>
                   </div>
                 </nz-radio-group>
+              </li>
+              <li class="shipping_cost">
+                <p>Shipping Cost</p>
+                <span>Calculate in next step</span>
               </li>
               <li>
                 <nz-divider
