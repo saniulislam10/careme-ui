@@ -190,7 +190,7 @@ openRecieved(id, recieved, index, poQty){
 
   //thumbnail
   setThumbnailImage(data) {
-    let images = this.getImages(data.medias, data.images);
+    let images = this.productService.getImages(data.medias, data.images);
     return images[0];
   }
 
