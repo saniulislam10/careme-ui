@@ -146,7 +146,7 @@
             <a [routerLink]="['product-details', data.slug]">{{ data.name }}</a>
             <div class="price_rating">
               <div class="price">
-                {{ data.price }} TK<span>{{ data.discount }} TK</span>
+                {{ data.sellingPrice }} TK<span>{{ data.discountAmount }} TK</span>
               </div>
               <ul>
                 <li><i class="las la-star"></i></li>
@@ -183,7 +183,7 @@
           <div class="product-bottom">
             <a [routerLink]="['product-details', data.slug]">{{ data.name }}</a>
             <div class="price">
-              {{ data.price | price: "variant":selectedQty:globalPrice }} TK<span *ngIf="data.discountAmount">{{ data.discountAmount }} TK</span>
+              {{ data.sellingPrice }} TK<span *ngIf="data.discountAmount">{{ data.discountAmount }} TK</span>
             </div>
           </div>
         </div>
