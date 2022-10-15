@@ -1,114 +1,137 @@
-<!--header-->
-<div class="vendor-header">
-  <!----header-main-->
-  <div class="vendor-header-main">
-    <!---title-->
-    <div class="title">
-      <h2>Collection</h2>
-    </div>
-    <!---search-->
-    <div class="vendor-search" (click)="onClickSearchArea($event)">
-      <button><i class="fa fa-search"></i></button>
-      <form #searchForm=ngForm  style="width: 100%;">
-        <input #searchInput id="searchInput" (focus)=handleFocus($event) name="searchTerm"
-        autocomplete="off" ngModel type="text" placeholder="Search">
-      </form>
-    </div>
-    <div class="vendor-create-btn">
-      <button (click)="showCreate()">+ Add Collection</button>
-    </div>
+<!-- Collection-area-->
+<div class="page-header">
+  <h2>All Collection</h2>
+  <div class="header-action">
+    <button class="create_btn" (click)="showCreate()">
+      <i class="las la-plus"></i> Add Collection
+    </button>
   </div>
 </div>
-
-<nz-table #basicTable [nzData]="collections">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Link</th>
-      <th>Logo</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of basicTable.data">
-      <td>{{data.name}}</td>
-      <td>{{data.link}}</td>
-      <td> <img style="width: 50px" [src]="data.logo ? data.logo : '/assets/images/placeholder/test.png'" [alt]="data.name"></td>
-      <td class="edit">
-        <button><i class="fa fa-edit" (click)="edit(data)"></i></button>
-      </td>
-    </tr>
-  </tbody>
-</nz-table>
-
-
-
+<nz-card nzSize="small">
+  <nz-tabset [nzTabBarExtraContent]="extraTemplate">
+    <nz-tab nzTitle="Collections">
+      <nz-table #basicTable [nzData]="collections" nzSize="small">
+        <thead>
+          <tr>
+            <th style="width: 80px">Image</th>
+            <th>Collection Name</th>
+            <th>Products</th>
+            <th>Link</th>
+            <th class="actions">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>
+              <img
+                style="width: 50px"
+                [src]="
+                  data.logo ? data.logo : '/assets/images/placeholder/test.png'
+                "
+                [alt]="data.name"
+              />
+            </td>
+            <td>{{ data.name }}</td>
+            <td>0</td>
+            <td>{{ data.link }}</td>
+            <td class="actions">
+              <span class="edit">
+                <button nz-radio-button nzValue="default">
+                  <i class="las la-trash"></i>
+                </button>
+                <button (click)="edit(data)" nz-radio-button nzValue="default">
+                  <i class="lar la-edit"></i>
+                </button>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-tab>
+  </nz-tabset>
+  <ng-template #extraTemplate>
+    <form class="collection-search" #searchForm="ngForm">
+      <input
+        #searchInput
+        id="searchInput"
+        nz-input
+        (focus)="handleFocus($event)"
+        name="searchTerm"
+        autocomplete="off"
+        ngModel
+        type="text"
+        placeholder="Search"
+      />
+    </form>
+  </ng-template>
+</nz-card>
 <!----create-area-->
 <div class="create-vendor" *ngIf="createCollection == true">
   <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
-
     <div class="create-vendor-main">
-      <!---create-header-->
       <div class="create-vendor-header">
         <h2>Create Collection</h2>
       </div>
-      <!---create-body-->
       <div class="create-vendor-body">
         <div class="input-area">
-          <!---input-infoo-->
           <div class="input-info">
-            <!--input-info-left--->
-            <div class="input-info-left">
-              <h3>Collection Name:</h3>
-            </div>
-            <!---input-info-right-->
             <div class="input-info-right">
               <div class="form-input">
                 <div class="field">
                   <mat-form-field appearance="outline" class="form-field">
                     <mat-label>Collection Name</mat-label>
-                    <input type="text" formControlName="name" matInput placeholder="Enter collection name" required>
-                    <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
+                    <input
+                      type="text"
+                      formControlName="name"
+                      matInput
+                      placeholder="Enter collection name"
+                      required
+                    />
+                    <mat-error *ngIf="dataForm.invalid">
+                      This field is required
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
             </div>
           </div>
-          <!---input-infoo-->
           <div class="input-info">
-            <!--input-info-left--->
-            <div class="input-info-left">
-              <h3>Image:</h3>
-            </div>
-            <!---input-info-right-->
             <div class="input-info-right">
               <div class="form-input">
                 <div class="field">
                   <button type="button" nz-button (click)="imagePicker.click()">
                     <span nz-icon nzType="upload"></span>
-                    Click to Upload
+                    Upload a Image
                   </button>
-                  <p *ngIf="this.url" class="upload-text">{{this.file.name}}</p>
-                  <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
+                  <p *ngIf="this.url" class="upload-text">
+                    {{ this.file.name }}
+                  </p>
+                  <input
+                    [hidden]="true"
+                    #imagePicker
+                    type="file"
+                    (change)="fileChangeEvent($event)"
+                    accept="image/*"
+                  />
                 </div>
               </div>
             </div>
           </div>
-
-
-
-
         </div>
         <!----check-box-end-->
         <div class="create-vendor-btn">
           <ul>
-            <li><button (click)="hideCreate()">Cancel</button></li>
-            <li><button type="submit" class="save-active">Save Collection</button></li>
+            <li>
+              <button nz-button nzType="default" (click)="hideCreate()">
+                Cancel
+              </button>
+            </li>
+            <li>
+              <button nz-button nzType="primary" type="submit">Save</button>
+            </li>
           </ul>
         </div>
-
       </div>
-
     </div>
   </form>
 </div>

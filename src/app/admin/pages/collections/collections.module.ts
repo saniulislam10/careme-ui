@@ -8,12 +8,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { MaterialModule } from 'src/app/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
-  declarations: [
-    CollectionsComponent
-  ],
+  declarations: [CollectionsComponent],
   imports: [
     CommonModule,
     CollectionsRoutingModule,
@@ -22,7 +20,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatProgressSpinnerModule,
     FormsModule,
     NzTableModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    AntModule,
+  ],
 })
-export class CollectionsModule { }
+export class CollectionsModule {}

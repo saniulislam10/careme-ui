@@ -14,12 +14,10 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
-
+import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
-  declarations: [
-    CountryComponent
-  ],
+  declarations: [CountryComponent],
   imports: [
     CommonModule,
     CountryRoutingModule,
@@ -34,7 +32,8 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
     NzModalModule,
     NzDividerModule,
     NzImageModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    AntModule,
+  ],
 })
-export class CountryModule { }
+export class CountryModule {}
