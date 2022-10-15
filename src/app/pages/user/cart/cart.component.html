@@ -46,19 +46,18 @@
                 <div class="items-details">
                   <h2>
                     {{ data?.product.name }}
-                    ( Balck / 23
-                    <i
-                      (click)="showModal(gi, di, data?.variant[0])"
-                      class="las la-lg la-edit"
-                    ></i>
-                    )
                   </h2>
                   <div class="items-details_info">
-                    <div
-                      class="product_point"
-                      *ngIf="data?.product?.canEarnPoints"
-                    >
-                      <p>
+                    <div class="product_point">
+                      <span>
+                        Balck / 23
+                        <i
+                          (click)="showModal(gi, di, data?.variant[0])"
+                          class="las la-lg la-edit"
+                        ></i>
+                      </span>
+                      <span *ngIf="data?.product?.canEarnPoints">, </span>
+                      <span *ngIf="data?.product?.canEarnPoints">
                         <i
                           style="color: #ff9100"
                           class="las la-lg la-coins"
@@ -82,7 +81,7 @@
                                 : data.variant[0].variantPrice
                           }}
                         </span>
-                      </p>
+                      </span>
                     </div>
                     <div class="delivery_time">
                       <p>
