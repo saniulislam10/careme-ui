@@ -176,14 +176,14 @@
         </a>
       </div>
       <div class="grid-section-product">
-        <div class="single-product grid" *ngFor="let data of cardThreeData">
+        <div class="single-product grid" *ngFor="let data of newProducts">
           <div class="product-top">
-            <a href="{{ data.routerLink }}"><img src="{{ data.image }}" /></a>
+            <a [routerLink]="['product-details', data.slug]"><img [src]="setThumbnailImage(data)" /></a>
           </div>
           <div class="product-bottom">
-            <a href="{{ data.routerLink }}">{{ data.title }}</a>
+            <a [routerLink]="['product-details', data.slug]">{{ data.name }}</a>
             <div class="price">
-              {{ data.price }} TK<span>{{ data.discount }} TK</span>
+              {{ data.price }} TK<span *ngIf="data.discountAmount">{{ data.discountAmount }} TK</span>
             </div>
           </div>
         </div>

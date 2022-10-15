@@ -53,13 +53,13 @@ export class ProductService {
     );
   }
 
-  getAllProducts(paginate: Pagination, filter?: ProductFilter) {
+  getAllProducts(paginate: Pagination, filter?: ProductFilter, sort?: any) {
     return this.http.post<{
       data: Product[];
       priceRange: any;
       count: number;
       message: string;
-    }>(API_PRODUCT + 'get-all-products', { paginate, filter });
+    }>(API_PRODUCT + 'get-all-products', { paginate, filter, sort });
   }
   getAllArchivedProducts(paginate: Pagination, filter?: ProductFilter) {
     return this.http.post<{
