@@ -58,6 +58,7 @@ export class CreateInvoiceComponent implements OnInit {
     }
     this.invoiceProducts.forEach(f => {
       let qty = f.quantity-f.invoicedQuantity;
+      f.totalOrderQty = f.quantity;
       f.quantity = qty;
       f.maxQty = qty;
       f.returnedQuantity = 0;
@@ -130,7 +131,7 @@ export class CreateInvoiceComponent implements OnInit {
       return;
     }
 
-    let invoice = {
+    let invoice: Invoice = {
       orderNumber: this.dataForm.value.orderNumber,
       invoiceDate: new Date(),
       customerName: this.order.name,
@@ -140,17 +141,20 @@ export class CreateInvoiceComponent implements OnInit {
       subTotal: this.calculateSubTotal(),
       deliveryFee: this.dataForm.value.deliveryFee,
       adjustment: this.dataForm.value.adjustment,
-      total:
-        this.calculateSubTotal() +
+      total: this.calculateSubTotal() +
         this.dataForm.value.deliveryFee,
       deliveryStatus: ProductOrderStatus.SHIPPING,
       paymentStatus: PaymentStatus.UNPAID,
+      // phoneNo: '',
+      // email: '',
+      // billingAddress: undefined,
+      shippingStatus: 0,
+      paidAmount: 0
     };
 
-    console.log('onSubmitInvoice', invoice);
     this.invoiceService.placeInvoice(invoice).subscribe(
       (res) => {
-        this.uiService.success(res.message);
+        this.msg.success(res.message);
         this.dialogRef.close();
       },
       (err) => {

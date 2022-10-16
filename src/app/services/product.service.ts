@@ -45,13 +45,7 @@ export class ProductService {
     );
   }
 
-  updateProductQuantityById(data: OrderItem) {
-    console.log(data);
-    return this.http.post<{ message: string }>(
-      API_PRODUCT + 'update-product-quantity-by-id',
-      data
-    );
-  }
+
 
   getAllProducts(paginate: Pagination, filter?: ProductFilter, sort?: any) {
     return this.http.post<{
@@ -330,5 +324,38 @@ export class ProductService {
       API_REQUEST_PRODUCT + 'get-walmart-product-data/' + id
     );
   }
+
+
+  /**
+   * Quanitity
+   */
+
+  decreaseCommitedProductQuantity(data: OrderItem, id: any) {
+    console.log("Service", data)
+    return this.http.post<{ message: string }>(
+      API_PRODUCT + 'decrease-commited-product-quantity/' + id,
+      {data}
+    );
+  }
+  increaseCommitedProductQuantity(data: OrderItem, id: any) {
+    return this.http.post<{ message: string }>(
+      API_PRODUCT + 'increase-commited-product-quantity/' + id,
+      {data}
+    );
+  }
+  decreaseAvailableProductQuantity(data: OrderItem, id: any) {
+    return this.http.post<{ message: string }>(
+      API_PRODUCT + 'decrease-available-product-quantity/' + id,
+      {data}
+    );
+  }
+  increaseAvailableProductQuantity(data: OrderItem, id: any) {
+    return this.http.post<{ message: string }>(
+      API_PRODUCT + 'increase-available-product-quantity/' + id,
+      {data}
+    );
+  }
+
+
 
 }

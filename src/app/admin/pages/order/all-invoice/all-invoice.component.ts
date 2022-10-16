@@ -100,11 +100,12 @@ export class AllInvoiceComponent implements OnInit {
 
   productOrderStatus: Select[] = [
     { value: OrderStatus.PENDING, viewValue: 'Pending' },
+    { value: OrderStatus.CANCEL, viewValue: 'Cancel' },
     { value: OrderStatus.CONFIRM, viewValue: 'Confirm' },
     { value: OrderStatus.PROCESSING, viewValue: 'Processing' },
     { value: OrderStatus.SHIPPING, viewValue: 'Shipping' },
     { value: OrderStatus.DELIVERED, viewValue: 'Delivered' },
-    { value: OrderStatus.CANCEL, viewValue: 'Cancel' },
+    { value: OrderStatus.RETURNING, viewValue: 'Returning' },
     { value: OrderStatus.REFUND, viewValue: 'Refund' },
   ];
 

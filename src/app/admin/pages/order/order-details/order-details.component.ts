@@ -117,6 +117,7 @@ export class OrderDetailsComponent implements OnInit {
   selectedIds: number[] = [];
   timelineStatus: any[];
   vProducts: any[];
+  success: boolean = true;
 
 
 
@@ -402,7 +403,6 @@ export class OrderDetailsComponent implements OnInit {
         (res) => {
           this.orders = res.data;
           this.spin = false;
-          console.log("orders ", this.orders);
 
         },
         (err) => {
@@ -451,73 +451,6 @@ export class OrderDetailsComponent implements OnInit {
       default: {
         return '-';
       }
-    }
-  }
-  onOrderStatusChange() {
-    if (this.selectedIds.length === 0) {
-      this.uiService.warn('Please Select the items first');
-      return;
-
-    } else {
-
-      // this.onStatusChange(this.dataForm.value.selected, this.order);
-
-      let dt0 = new Date();
-      let dt = this.utilsService.getCurrentDMY();
-      let sku = ""
-
-      this.selectedIds.forEach((element) => {
-        sku += (this.order.orderedItems[element].sku).toString()
-      });
-
-      this.selectedIds.forEach((element) => {
-        this.order.orderedItems[element].status = this.dataForm.value.selected;
-      });
-
-      let orderStatus = {
-        status: this.productOrderStatus[this.dataForm.value.selected].viewValue,
-        adminInfo: this.admin.name,
-        sku: sku,
-        time: dt,
-        dateTime: dt0,
-        statusNote: this.dataForm.value.statusNote,
-      };
-
-      // this.order.statusNote = this.dataForm.value.statusNote;
-      this.order.orderStatusTimeline.push(orderStatus);
-
-      this.orderService.updateOrderById(this.order).subscribe(
-        (res) => {
-          this.selectedIds.forEach(f => {
-            let tempQuantity = 0;
-            if (this.order.orderedItems[f].previousStatus == 1 && this.order.orderedItems[f].status != 1) {
-              tempQuantity = -this.order.orderedItems[f].quantity
-            } else if (this.order.orderedItems[f].previousStatus != 1 && this.order.orderedItems[f].status == 1) {
-              tempQuantity = this.order.orderedItems[f].quantity
-            } else {
-              tempQuantity = 0
-            }
-            this.order.orderedItems[f].tempQuantity = tempQuantity
-            this.productService
-              .updateProductQuantityById(this.order.orderedItems[f])
-              .subscribe(
-                (res) => {
-                  this.getOrderInfo(this.order._id)
-                },
-                (err) => {
-                  console.log(err);
-                }
-              );
-          });
-
-          this.selectedIds.splice(0,this.selectedIds.length)
-          this.uiService.success(res.message);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-      // this.spinner.show();
     }
   }
 
@@ -595,32 +528,98 @@ export class OrderDetailsComponent implements OnInit {
   }
 
 
-  onStatusChange(status, order, data:OrderItem) {
-    if (status === ProductOrderStatus.CANCEL) {
-        this.productService
-          .updateProductQuantityById(data)
-          .subscribe(
-            (res) => {
-              console.log(res.message);
-            },
-            (err) => {
-              console.log(err);
-            }
-          );
+  onStatusChange(currentStatus, previousStatus, order, data:OrderItem) {
+    data.deliveryStatus = currentStatus;
+
+    if (currentStatus === ProductOrderStatus.CANCEL) {
+      this.decreaseCommitted(data, data.productId._id);
+      this.increaseAvailable(data, data.productId._id);
+    }
+    else if (previousStatus === ProductOrderStatus.CANCEL && currentStatus=== ProductOrderStatus.CONFIRM ){
+      this.increaseCommitted(data, data.productId._id);
+      this.decreaseAvailable(data, data.productId._id);
+    }
+    else if (previousStatus === ProductOrderStatus.CANCEL && currentStatus=== ProductOrderStatus.PENDING ){
+      this.increaseCommitted(data, data.productId._id);
+      this.decreaseAvailable(data, data.productId._id);
     }
 
-    this.selectedIds.forEach((element) => {
-      order.orderedItems[element].deliveryStatus = status;
-    });
+    if(this.success){
+      this.updateOrder(order);
+    }
 
 
-    // call api
+
+  }
+
+  decreaseCommitted(data, id){
+    this.productService
+          .decreaseCommitedProductQuantity(data, id)
+          .subscribe(
+            (res) => {
+              this.msg.success(res.message);
+              this.success = true;
+            },
+            (err) => {
+              this.msg.error(err.message);
+              this.success = false;
+            }
+          );
+  }
+  increaseCommitted(data, id){
+    this.productService
+          .increaseCommitedProductQuantity(data, id)
+          .subscribe(
+            (res) => {
+              this.msg.success(res.message);
+              this.success = true;
+
+            },
+            (err) => {
+              this.msg.error(err.message);
+              this.success = false;
+            }
+          );
+  }
+  decreaseAvailable(data, id){
+    this.productService
+          .decreaseAvailableProductQuantity(data, id)
+          .subscribe(
+            (res) => {
+              this.msg.success(res.message);
+              this.success = true;
+
+            },
+            (err) => {
+              this.msg.error(err.message);
+              this.success = false;
+            }
+          );
+  }
+  increaseAvailable(data, id){
+    this.productService
+          .increaseAvailableProductQuantity(data, id)
+          .subscribe(
+            (res) => {
+              this.msg.success(res.message);
+              this.success = true;
+
+            },
+            (err) => {
+              this.msg.error(err.message);
+              this.success = false;
+            }
+          );
+  }
+
+  updateOrder(order){
     this.orderService.updateOrderById(order).subscribe(
       (res) => {
-        this.uiService.success(res.message);
+        this.msg.success(res.message);
       },
       (err) => {
-        console.log(err);
+        this.msg.error(err.message);
+        return
       }
       );
   }
@@ -714,7 +713,6 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   getReturnPercentage(userData){
-    console.log("User Data", userData);
     return 10
   }
 

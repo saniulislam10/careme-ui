@@ -44,4 +44,9 @@ export class InvoiceService {
     return this.httpClient.post<{ data: Invoice[], count: number }>(API_INVOICE + 'get-invoices-by-search', { filter }, { params });
   }
 
+  updateInvoiceById(data: Invoice){
+    console.log(data);
+    return this.httpClient.post<{ message: string; success: boolean }>(API_INVOICE + 'update-invoice-by-id', data);
+  }
+
 }
