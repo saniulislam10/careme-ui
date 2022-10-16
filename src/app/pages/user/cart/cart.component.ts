@@ -1,3 +1,4 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Variant } from './../../../interfaces/cart';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -57,8 +58,9 @@ export class CartComponent implements OnInit {
     private storageSession: StorageService,
     private fb: FormBuilder,
     private userDataService: UserDataService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private msg : NzMessageService
+  ) { }
 
   ngOnInit(): void {
     this.initFormGroup();
@@ -212,7 +214,7 @@ export class CartComponent implements OnInit {
     this.cartService.incrementCartQuantity(cartId).subscribe(
       (res) => {
         if (res.msg) {
-          this.uiService.warn(res.msg);
+          this.msg.warning(res.msg);
         }
         this.reloadService.needRefreshCart$();
       },
@@ -333,10 +335,9 @@ export class CartComponent implements OnInit {
   }
 
   decrementQty(cartId: string, index: number, sQty: number) {
-    console.log('this is index', index);
     if (this.userService.getUserStatus()) {
-      if (sQty === 1) {
-        this.uiService.warn('Minimum quantity is 1');
+      if (sQty <= 1) {
+        this.msg.warning('Minimum quantity is 1');
         return;
       }
       this.decrementCartQtyDB(cartId);
@@ -460,9 +461,7 @@ export class CartComponent implements OnInit {
           (f) => f.variantSku === this.carts[i].variant[0].variantSku
         );
         if (
-          this.carts[i].product.canPartialPayment &&
-          productVariant.variantQuantity === 0
-        ) {
+          this.carts[i].product.canPartialPayment        ) {
           this.advance += this.advanceForSingle(
             this.carts[i].product,
             this.carts[i].selectedQty,
