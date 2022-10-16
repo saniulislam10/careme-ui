@@ -80,14 +80,14 @@
                       <tr>
                         <td>Refund</td>
                         <td>:</td>
-                        <td>{{return.refundEligible ? 'Yes':'No'}}</td>
+                        <td>{{return?.refundEligible ? 'Yes':'No'}}</td>
                       </tr>
                       <tr>
                         <td>Amount</td>
                         <td>:</td>
                         <td><b>120 TK</b></td>
                       </tr>
-                      <tr *ngIf="return.refundEligible">
+                      <tr *ngIf="return?.refundEligible">
                         <td>Refund Way</td>
                         <td>:</td>
                         <td>bKash ( 01934548454 )</td>
@@ -95,17 +95,17 @@
                       <tr>
                         <td>Customer</td>
                         <td>:</td>
-                        <td>{{ return.customerName == null ? '01917632421' : return.customerName }}</td>
+                        <td>{{ return?.customerName == null ? '01917632421' : return?.customerName }}</td>
                       </tr>
                       <tr>
                         <td>Reason</td>
                         <td>:</td>
-                        <td>{{ return.reason }}</td>
+                        <td>{{ return?.reason }}</td>
                       </tr>
                       <tr>
                         <td>Notes</td>
                         <td>:</td>
-                        <td>{{ return.notes }}</td>
+                        <td>{{ return?.notes }}</td>
                       </tr>
                       </tbody>
                     </table>
@@ -116,12 +116,12 @@
                       <tr>
                         <td>Invoice#</td>
                         <td>:</td>
-                        <td><a>{{return.invoiceId}}</a></td>
+                        <td><a>{{return?.invoiceId}}</a></td>
                       </tr>
                       <tr>
                         <td>Sales Order</td>
                         <td>:</td>
-                        <td><a>{{return.orderNumber}}</a></td>
+                        <td><a>{{return?.orderNumber}}</a></td>
                       </tr>
                       <tr>
                         <td>Created By</td>

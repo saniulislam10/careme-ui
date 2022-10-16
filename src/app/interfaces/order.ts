@@ -28,6 +28,7 @@ export interface OrderItem {
   earnedAmount: number,
   invoicedQuantity: number,
   maxQty?: number,
+  totalOrderQty?: number,
   returnedQuantity: number,
   redeemedAmount: number,
 }

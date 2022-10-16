@@ -217,7 +217,7 @@
                             <td>Return</td>
                             <td>:</td>
                             <td>
-                              <span class="total-return"> {{getReturnPercentage(order.userId)}}% </span>
+                              <span class="total-return"> {{getReturnPercentage(order?.userId)}}% </span>
                             </td>
                           </tr>
                         </tbody>
@@ -266,7 +266,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let data of rowSelectProduct.data; let i = index">
-                      <td [nzDisabled]="data.quantity===data.invoicedQuantity"
+                      <td [nzDisabled]="data.quantity===data.invoicedQuantity || !(data.deliveryStatus === 2 || data.deliveryStatus === 3) "
                         [nzChecked]="setOfCheckedId.has(data._id)"
                         (nzCheckedChange)="onCheckChange($event, i, data._id)"></td>
                       <td>
@@ -281,13 +281,13 @@
                         {{ data.sku }}
                       </td>
                       <td>
-                        {{ data.quantity }}
-                        <div class="inv-qty">
+                        <p>{{ data.quantity }}</p>
+                        <p class="inv-qty" *ngIf="data?.invoicedQuantity">
                           INV-{{ data?.invoicedQuantity }}
-                        </div>
-                        <div class="rto-qty">
+                        </p>
+                        <p class="rto-qty" *ngIf="data?.returnedQuantity">
                           RTO-{{ data?.returnedQuantity }}
-                        </div>
+                        </p>
                       </td>
                       <td>{{ data.price }}</td>
                       <td>{{ data.tax ? data.tax : "0" }}</td>
@@ -302,22 +302,9 @@
                           {{ data.advanceAmount }}
                         </p>
                       </td>
-                      <!-- <td>
-                        <a class="btn confirm" nz-dropdown [nzDropdownMenu]="itemStatus" nzTrigger="click">
-                          Confirmed <i class="las la-angle-down"></i>
-                        </a>
-                        <nz-dropdown-menu #itemStatus="nzDropdownMenu">
-                          <ul nz-menu nzSelectable>
-                            <li nz-menu-item>Cancel</li>
-                            <li nz-menu-item>Confirmed</li>
-                            <li nz-menu-item [nzDisabled]="true">Shipped</li>
-                            <li nz-menu-item [nzDisabled]="true">Delivered</li>
-                          </ul>
-                        </nz-dropdown-menu>
-                      </td> -->
                       <td>
-                        <nz-select [(ngModel)]="data.deliveryStatus" nzPlaceHolder="Choose" [nzOptions]="productOrderStatus"
-                          (ngModelChange)="onStatusChange(data.deliveryStatus, order, data)"></nz-select>
+                        <nz-select [ngModel]="data.deliveryStatus" nzPlaceHolder="Choose" [nzOptions]="productOrderStatus"
+                          (ngModelChange)="onStatusChange($event, data.deliveryStatus, order, data)"></nz-select>
                       </td>
                     </tr>
                   </tbody>

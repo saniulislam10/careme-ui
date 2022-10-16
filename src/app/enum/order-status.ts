@@ -5,5 +5,7 @@ export enum OrderStatus {
   PROCESSING = 3,
   SHIPPING = 4,
   DELIVERED = 5,
-  REFUND = 6
+  RETURNING = 6,
+  RETURNED = 7,
+  REFUND = 8
 }

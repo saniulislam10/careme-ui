@@ -27,6 +27,12 @@ export class OrderStatusPipe implements PipeTransform {
       case OrderStatus.CANCEL : {
         return 'Cancel';
       }
+      case OrderStatus.RETURNING : {
+        return 'Returning';
+      }
+      case OrderStatus.RETURNED: {
+        return 'Returned';
+      }
       case OrderStatus.REFUND : {
         return 'Refund';
       }

@@ -16,6 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CreateReturnComponent } from 'src/app/shared/components/create-return/create-return.component';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { ReturnService } from 'src/app/services/return.service';
+import { OrderStatus } from 'src/app/enum/order-status';
 
 @Component({
   selector: 'app-invoice',
@@ -311,6 +312,16 @@ export class InvoiceComponent implements OnInit {
       console.log(err);
     })
   }
+
+  markDelivered(){
+    this.invoice.deliveryStatus = OrderStatus.DELIVERED;
+    this.invoiceService.updateInvoiceById(this.invoice)
+    .subscribe(res => {
+      this.msg.success(res.message)
+    }, err => {
+      this.msg.error(err.message)
+    }
+  )}
 
 
 }
