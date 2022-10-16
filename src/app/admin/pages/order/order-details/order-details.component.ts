@@ -108,15 +108,11 @@ export class OrderDetailsComponent implements OnInit {
   canceledOrderAmount: number;
 
   productOrderStatus: Select[] = [
-    { value: ProductOrderStatus.PENDING, label: 'Pending' },
+    { value: ProductOrderStatus.PENDING, label: 'Pending'},
     { value: ProductOrderStatus.CANCEL, label: 'Cancel' },
     { value: ProductOrderStatus.CONFIRM, label: 'Confirm' },
     { value: ProductOrderStatus.PARTIAL_SHIPPING, label: 'Partial Shipping' , disabled:true},
     { value: ProductOrderStatus.SHIPPING, label: 'Shipping'  , disabled:true},
-    { value: ProductOrderStatus.DELIVERED, label: 'Delivered'  , disabled:true},
-    { value: ProductOrderStatus.PARTIAL_DELIVERED, label: 'Partial Delivered' , disabled:true },
-    { value: ProductOrderStatus.RETURN, viewValue: 'Return' , label:true },
-    { value: ProductOrderStatus.PARTIAL_RETURN, viewValue: 'Partial Return' , label:true }
   ];
   selectedIds: number[] = [];
   timelineStatus: any[];
