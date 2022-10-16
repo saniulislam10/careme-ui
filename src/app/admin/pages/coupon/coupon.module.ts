@@ -4,9 +4,10 @@ import { CommonModule } from '@angular/common';
 
 import { CouponRoutingModule } from './coupon-routing.module';
 import { CouponComponent } from './coupon.component';
+import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
   declarations: [CouponComponent],
-  imports: [CommonModule, CouponRoutingModule, MaterialModule],
+  imports: [CommonModule, CouponRoutingModule, MaterialModule, AntModule],
 })
 export class CouponModule {}
