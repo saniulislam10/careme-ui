@@ -14,13 +14,10 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzImageModule } from 'ng-zorro-antd/image';
-
-
+import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
-  declarations: [
-    BrandComponent
-  ],
+  declarations: [BrandComponent],
   imports: [
     CommonModule,
     BrandRoutingModule,
@@ -35,7 +32,8 @@ import { NzImageModule } from 'ng-zorro-antd/image';
     NzModalModule,
     NzDividerModule,
     NzImageModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    AntModule,
+  ],
 })
-export class BrandModule { }
+export class BrandModule {}

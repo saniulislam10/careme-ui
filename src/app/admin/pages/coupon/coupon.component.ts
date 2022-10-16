@@ -3,25 +3,20 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-coupon',
   templateUrl: './coupon.component.html',
-  styleUrls: ['./coupon.component.scss']
+  styleUrls: ['./coupon.component.scss'],
 })
 export class CouponComponent implements OnInit {
-
-  
   searchProduct = false;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  searchProductActive(){
+  searchProductActive() {
     this.searchProduct = true;
   }
 
-  searchProductInactive(){
+  searchProductInactive() {
     this.searchProduct = false;
   }
-
-
 }

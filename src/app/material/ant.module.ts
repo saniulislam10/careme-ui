@@ -25,6 +25,7 @@ import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 
 const materials = [
   NzModalModule,
@@ -55,6 +56,7 @@ const materials = [
   NzCollapseModule,
   NzRadioModule,
   NzImageModule,
+  NzAnchorModule,
 
   // SharedModule
 ];

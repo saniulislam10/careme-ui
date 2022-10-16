@@ -1,57 +1,80 @@
-<!--vendor-header-->
-<div class="vendor-header">
-  <!---vendor-header-main-->
-  <div class="vendor-header-main">
-    <!---title-->
-    <div class="title">
-      <h2>Brand</h2>
-    </div>
-    <!---vendor-search-->
-    <div class="vendor-search" (click)="onClickSearchArea($event)">
-      <button><i class="fa fa-search"></i></button>
-      <form #searchForm=ngForm style="width: 100%;">
-        <input #searchInput id="searchInput" (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel
-          type="text" placeholder="Search">
-      </form>
-    </div>
-    <div class="vendor-create-btn">
-      <button (click)="showCreate()">+ Add Brand</button>
-    </div>
+<!-- Collection-area-->
+<div class="page-header">
+  <h2>Brands</h2>
+  <div class="header-action">
+    <button class="create_btn" (click)="showCreate()">
+      <i class="las la-plus"></i>
+      New Brand
+    </button>
   </div>
 </div>
 
-<nz-table #basicTable [nzData]="brands">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Link</th>
-      <th>Logo</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of basicTable.data">
-      <td>{{data.name}}</td>
-      <td>
-        <a [href]="data.link">{{data.link}}</a>
-      </td>
-      <td> <img nz-image style="width: 50px" [nzSrc]="data.logo ? data.logo : '/assets/images/placeholder/test.png'"
-          [alt]="data.name"></td>
-      <td >
-        <button nz-button nz-icon [nzType]="'edit'" (click)="edit(data)"></button>
-        <nz-divider nzType="vertical"></nz-divider>
-        <button nz-button nz-icon [nzType]="'delete'" nzDanger (click)="showDeleteConfirm(data._id)"></button>
-      </td>
-    </tr>
-  </tbody>
-</nz-table>
-
-
+<nz-card nzSize="small">
+  <nz-tabset [nzTabBarExtraContent]="countrySearch">
+    <nz-tab nzTitle="All Brand">
+      <nz-table #basicTable [nzData]="brands" nzSize="small">
+        <thead>
+          <tr>
+            <th style="width: 80px">Image</th>
+            <th>Name</th>
+            <th>Link</th>
+            <th style="width: 100px">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td style="width: 80px">
+              <img
+                nz-image
+                style="width: 100%"
+                [nzSrc]="
+                  data.logo ? data.logo : '/assets/images/placeholder/test.png'
+                "
+                [alt]="data.name"
+              />
+            </td>
+            <td>{{ data.name }}</td>
+            <td>
+              <a [href]="data.link" ng-target="_blank"> {{ data.link }} </a>
+            </td>
+            <td style="width: 100px">
+              <button nz-button nzType="default" (click)="edit(data)">
+                <i class="lar la-edit"></i>
+              </button>
+              <nz-divider nzType="vertical"></nz-divider>
+              <button
+                nz-button
+                nzType="default"
+                (click)="showDeleteConfirm(data._id)"
+              >
+                <i class="las la-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-tab>
+  </nz-tabset>
+  <ng-template #countrySearch>
+    <form #searchForm="ngForm" style="width: 100%">
+      <input
+        #searchInput
+        id="searchInput"
+        nz-input
+        (focus)="handleFocus($event)"
+        name="searchTerm"
+        autocomplete="off"
+        ngModel
+        type="text"
+        placeholder="Search"
+      />
+    </form>
+  </ng-template>
+</nz-card>
 
 <!----create-vendor-area-->
 <div class="create-vendor" *ngIf="createBrand == true">
   <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
-
     <div class="create-vendor-main">
       <!---create-vendor-header-->
       <div class="create-vendor-header">
@@ -72,8 +95,16 @@
                 <div class="field">
                   <mat-form-field appearance="outline" class="form-field">
                     <mat-label>Brand Name</mat-label>
-                    <input type="text" formControlName="name" matInput placeholder="Enter brand name" required>
-                    <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
+                    <input
+                      type="text"
+                      formControlName="name"
+                      matInput
+                      placeholder="Enter brand name"
+                      required
+                    />
+                    <mat-error *ngIf="dataForm.invalid"
+                      >This field is required</mat-error
+                    >
                   </mat-form-field>
                 </div>
               </div>
@@ -91,8 +122,15 @@
                 <div class="field">
                   <mat-form-field appearance="outline" class="form-field">
                     <mat-label>Link</mat-label>
-                    <input type="email" formControlName="link" matInput placeholder="Enter brand web link">
-                    <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
+                    <input
+                      type="email"
+                      formControlName="link"
+                      matInput
+                      placeholder="Enter brand web link"
+                    />
+                    <mat-error *ngIf="dataForm.invalid"
+                      >This field is required</mat-error
+                    >
                   </mat-form-field>
                 </div>
               </div>
@@ -112,27 +150,31 @@
                     <span nz-icon nzType="upload"></span>
                     Click to Upload
                   </button>
-                  <p *ngIf="this.url" class="upload-text">{{this.file.name}}</p>
-                  <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
+                  <p *ngIf="this.url" class="upload-text">
+                    {{ this.file.name }}
+                  </p>
+                  <input
+                    [hidden]="true"
+                    #imagePicker
+                    type="file"
+                    (change)="fileChangeEvent($event)"
+                    accept="image/*"
+                  />
                 </div>
               </div>
             </div>
           </div>
-
-
-
-
         </div>
         <!----check-box-end-->
         <div class="create-vendor-btn">
           <ul>
             <li><button (click)="hideCreate()">Cancel</button></li>
-            <li><button type="submit" class="save-active">Save Brand</button></li>
+            <li>
+              <button type="submit" class="save-active">Save Brand</button>
+            </li>
           </ul>
         </div>
-
       </div>
-
     </div>
   </form>
 </div>
