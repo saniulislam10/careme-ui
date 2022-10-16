@@ -4,7 +4,12 @@ import { FormGroup, NgForm, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription, EMPTY } from 'rxjs';
-import { pluck, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import {
+  pluck,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+} from 'rxjs/operators';
 import { Collection } from 'src/app/interfaces/collection';
 import { FileData } from 'src/app/interfaces/file-data';
 import { AdminService } from 'src/app/services/admin.service';
@@ -15,10 +20,9 @@ import { ImageCropperComponent } from 'src/app/shared/components/image-cropper/i
 @Component({
   selector: 'app-collections',
   templateUrl: './collections.component.html',
-  styleUrls: ['./collections.component.scss']
+  styleUrls: ['./collections.component.scss'],
 })
 export class CollectionsComponent implements OnInit {
-
   createCollection = false;
   editCollectionData = false;
   dataForm: FormGroup;
@@ -44,36 +48,36 @@ export class CollectionsComponent implements OnInit {
   url: string;
 
   constructor(
-    private fb : FormBuilder,
+    private fb: FormBuilder,
     private message: NzMessageService,
     private collectionService: CollectionService,
     private reloadService: ReloadService,
     private dialog: MatDialog,
     private fileUploadService: FileUploadService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-
-    this.reloadService.refreshCollections$
-      .subscribe(() => {
-        this.getAllCollections();
-      });
+    this.reloadService.refreshCollections$.subscribe(() => {
+      this.getAllCollections();
+    });
     this.getAllCollections();
 
-    if(this.createCollection){
+    if (this.createCollection) {
       this.initModule();
     }
   }
   getAllCollections() {
-    this.subRouteOne = this.collectionService.getAll()
-    .subscribe( res => {
-      this.collections = res.data;
-      console.log(this.collections);
-      this.holdPrevData = this.collections;
-    }, err => {
-      console.log(err);
-      this.message.create('error', err.error.message);
-    })
+    this.subRouteOne = this.collectionService.getAll().subscribe(
+      (res) => {
+        this.collections = res.data;
+        console.log(this.collections);
+        this.holdPrevData = this.collections;
+      },
+      (err) => {
+        console.log(err);
+        this.message.create('error', err.error.message);
+      }
+    );
   }
   initModule() {
     this.dataForm = this.fb.group({
@@ -85,66 +89,68 @@ export class CollectionsComponent implements OnInit {
   /***
    * Control Create Vendor
    */
-  hideCreate(){
+  hideCreate() {
     this.createCollection = false;
     this.id = null;
     this.editCollectionData = false;
   }
-  showCreate(){
+  showCreate() {
     this.editCollectionData = false;
     this.createCollection = true;
     this.initModule();
   }
 
-  onSubmit(){
+  onSubmit() {
     let collection = {
       name: this.dataForm.value.name,
       link: this.dataForm.value.link,
-    }
+    };
     console.log(this.id);
-    if(this.id && this.editCollectionData){
-      let finaldata = {...collection, ...{_id: this.id}};
+    if (this.id && this.editCollectionData) {
+      let finaldata = { ...collection, ...{ _id: this.id } };
       console.log(finaldata);
       this.editCollection(finaldata);
-    }
-    else if(this.dataForm.invalid){
+    } else if (this.dataForm.invalid) {
       this.message.create('warning', 'Please input the required fields');
-      return
-    }
-    else if(this.dataForm.value.password !== this.dataForm.value.confirmPassword){
+      return;
+    } else if (
+      this.dataForm.value.password !== this.dataForm.value.confirmPassword
+    ) {
       this.message.create('warning', 'Password Mismatch');
-      return
-    }else{
+      return;
+    } else {
       this.addCollection(collection);
     }
   }
 
-
-  editCollection(data : Collection){
-    this.collectionService.editById(data)
-      .subscribe( res => {
+  editCollection(data: Collection) {
+    this.collectionService.editById(data).subscribe(
+      (res) => {
         console.log(res.message);
         this.message.create('success', res.message);
         this.reloadService.needRefreshCollections$();
         this.createCollection = false;
-
-      }, err => {
+      },
+      (err) => {
         this.message.create('error', err.error.message);
-      })
+      }
+    );
   }
 
-  addCollection(data : Collection){
-    this.collectionService.add(data)
-      .subscribe( res => {
+  addCollection(data: Collection) {
+    this.collectionService.add(data).subscribe(
+      (res) => {
         console.log(res.message);
         this.message.create('success', res.message);
         this.reloadService.needRefreshCollections$();
-      }, err => {
+      },
+      (err) => {
         this.message.create('error', err.error.messase);
-      })
+      }
+    );
   }
 
-  edit(data){
+  edit(data) {
     this.id = data._id;
     this.initModule();
     this.createCollection = true;
@@ -152,7 +158,7 @@ export class CollectionsComponent implements OnInit {
     this.dataForm.patchValue(data);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subRouteOne.unsubscribe();
   }
 
@@ -171,7 +177,9 @@ export class CollectionsComponent implements OnInit {
           this.searchQuery = data.trim();
 
           if (this.searchQuery) {
-            return this.collectionService.getSearchCollections(this.searchQuery);
+            return this.collectionService.getSearchCollections(
+              this.searchQuery
+            );
           } else {
             this.collections = this.holdPrevData;
             this.searchQuery = null;
@@ -258,14 +266,18 @@ export class CollectionsComponent implements OnInit {
   async fileChangeEvent(event: any) {
     this.file = (event.target as HTMLInputElement).files[0];
     // File Name Modify...
-    const originalNameWithoutExt = this.file.name.toLowerCase().split(' ').join('-').split('.').shift();
+    const originalNameWithoutExt = this.file.name
+      .toLowerCase()
+      .split(' ')
+      .join('-')
+      .split('.')
+      .shift();
     const fileExtension = this.file.name.split('.').pop();
     // Generate new File Name..
     this.newFileName = `${Date.now().toString()}_${originalNameWithoutExt}.${fileExtension}`;
 
     const reader = new FileReader();
     reader.readAsDataURL(this.file);
-
 
     reader.onload = () => {
       // this.imgPlaceHolder = reader.result as string;
@@ -287,10 +299,10 @@ export class CollectionsComponent implements OnInit {
       disableClose: true,
       width: '600px',
       minHeight: '400px',
-      maxHeight: '600px'
+      maxHeight: '600px',
     });
 
-    dialogRef.afterClosed().subscribe(dialogResult => {
+    dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult) {
         if (dialogResult.imgBlob) {
           this.imgBlob = dialogResult.imgBlob;
@@ -304,18 +316,18 @@ export class CollectionsComponent implements OnInit {
     });
   }
   imageUploadOnServer() {
-
     const data: FileData = {
       fileName: this.newFileName,
       file: this.imgBlob,
-      folderPath: 'collections'
+      folderPath: 'collections',
     };
-    this.fileUploadService.uploadSingleImage(data)
-      .subscribe(res => {
+    this.fileUploadService.uploadSingleImage(data).subscribe(
+      (res) => {
         this.url = res.downloadUrl;
-      }, error => {
+      },
+      (error) => {
         console.log(error);
-      });
+      }
+    );
   }
-
 }

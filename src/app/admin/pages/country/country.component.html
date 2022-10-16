@@ -1,112 +1,136 @@
-<!--vendor-header-->
-<div class="vendor-header">
-  <!---vendor-header-main-->
-  <div class="vendor-header-main">
-    <!---title-->
-    <div class="title">
-      <h2>Country</h2>
-    </div>
-    <!---vendor-search-->
-    <div class="vendor-search" (click)="onClickSearchArea($event)">
-      <button><i class="fa fa-search"></i></button>
-      <form #searchForm=ngForm  style="width: 100%;">
-        <input #searchInput id="searchInput" (focus)=handleFocus($event) name="searchTerm"
-        autocomplete="off" ngModel type="text" placeholder="Search">
-      </form>
-    </div>
-    <div class="vendor-create-btn">
-      <button (click)="showCreate()">+ Add Country</button>
-    </div>
+<!-- Collection-area-->
+<div class="page-header">
+  <h2>All Country</h2>
+  <div class="header-action">
+    <button class="create_btn" (click)="showCreate()">
+      <i class="las la-plus"></i> Add Country
+    </button>
   </div>
 </div>
 
-<nz-table #basicTable [nzData]="countrys">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Flag</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of basicTable.data">
-      <td>{{data.name}}</td>
-      <td> <img nz-image style="width: 50px" [nzSrc]="data.flag ? data.flag : '/assets/images/placeholder/test.png'" [alt]="data.name"></td>
-      <td >
-        <button nz-button nz-icon [nzType]="'edit'" (click)="edit(data)"></button>
-        <nz-divider nzType="vertical"></nz-divider>
-        <button nz-button nz-icon [nzType]="'delete'" nzDanger (click)="showDeleteConfirm(data._id)"></button>
-      </td>
-    </tr>
-  </tbody>
-</nz-table>
-
-
-
+<nz-card nzSize="small">
+  <nz-tabset [nzTabBarExtraContent]="countrySearch">
+    <nz-tab nzTitle="Country">
+      <nz-table #basicTable [nzData]="countrys" nzSize="small">
+        <thead>
+          <tr>
+            <th style="width: 80px">Flag</th>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td style="width: 80px">
+              <img
+                nz-image
+                style="width: 100%"
+                [nzSrc]="
+                  data.flag ? data.flag : '/assets/images/placeholder/test.png'
+                "
+                [alt]="data.name"
+              />
+            </td>
+            <td>{{ data.name }}</td>
+            <td style="width: 100px">
+              <button nz-button nzType="default" (click)="edit(data)">
+                <i class="lar la-edit"></i>
+              </button>
+              <button
+                nz-button
+                nzType="default"
+                (click)="showDeleteConfirm(data._id)"
+              >
+                <i class="las la-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-tab>
+  </nz-tabset>
+  <ng-template #countrySearch>
+    <form #searchForm="ngForm" style="width: 100%">
+      <input
+        #searchInput
+        id="searchInput"
+        nz-input
+        (focus)="handleFocus($event)"
+        name="searchTerm"
+        autocomplete="off"
+        ngModel
+        type="text"
+        placeholder="Search"
+      />
+    </form>
+  </ng-template>
+</nz-card>
 <!----create-vendor-area-->
 <div class="create-vendor" *ngIf="createCountry == true">
   <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
-
     <div class="create-vendor-main">
-      <!---create-vendor-header-->
       <div class="create-vendor-header">
         <h2>Create Country</h2>
       </div>
-      <!---create-vendor-body-->
       <div class="create-vendor-body">
         <div class="input-area">
-          <!---input-infoo-->
           <div class="input-info">
-            <!--input-info-left--->
-            <div class="input-info-left">
-              <h3>Country Name:</h3>
-            </div>
-            <!---input-info-right-->
             <div class="input-info-right">
               <div class="form-input">
                 <div class="field">
                   <mat-form-field appearance="outline" class="form-field">
                     <mat-label>Country Name</mat-label>
-                    <input type="text" formControlName="name" matInput placeholder="Enter country name" required>
-                    <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
+                    <input
+                      type="text"
+                      formControlName="name"
+                      matInput
+                      placeholder="Enter country name"
+                      required
+                    />
+                    <mat-error *ngIf="dataForm.invalid">
+                      This field is required
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
             </div>
           </div>
           <div class="input-info">
-            <!--input-info-left--->
-            <div class="input-info-left">
-              <h3>Image:</h3>
-            </div>
-            <!---input-info-right-->
             <div class="input-info-right">
               <div class="form-input">
                 <div class="field">
                   <button type="button" nz-button (click)="imagePicker.click()">
                     <span nz-icon nzType="upload"></span>
-                    Click to Upload
+                    Upload a flag
                   </button>
-                  <p *ngIf="this.url" class="upload-text">{{this.file.name}}</p>
-                  <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*"/>
+                  <p *ngIf="this.url" class="upload-text">
+                    {{ this.file.name }}
+                  </p>
+                  <input
+                    [hidden]="true"
+                    #imagePicker
+                    type="file"
+                    (change)="fileChangeEvent($event)"
+                    accept="image/*"
+                  />
                 </div>
               </div>
             </div>
           </div>
-
-
-
         </div>
-        <!----check-box-end-->
         <div class="create-vendor-btn">
           <ul>
-            <li><button (click)="hideCreate()">Cancel</button></li>
-            <li><button type="submit" class="save-active">Save Country</button></li>
+            <li>
+              <button (click)="hideCreate()" nz-button nzType="default">
+                Cancel
+              </button>
+            </li>
+            <li>
+              <button type="submit" nz-button nzType="primary">Save</button>
+            </li>
           </ul>
         </div>
-
       </div>
-
     </div>
   </form>
 </div>
