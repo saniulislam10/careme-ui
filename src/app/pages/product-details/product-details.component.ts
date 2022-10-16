@@ -9,7 +9,6 @@ import { CarouselCntrlService } from 'src/app/services/carousel-cntrl.service';
 import { ProductService } from 'src/app/services/product.service';
 import { AddToCartPopupComponent } from './add-to-cart-popup/add-to-cart-popup.component';
 import { ReloadService } from 'src/app/services/reload.service';
-import { UiService } from 'src/app/services/ui.service';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { UserService } from 'src/app/services/user.service';
 import { SizeChartService } from 'src/app/services/size-chart.service';
@@ -22,8 +21,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { SearchService } from 'src/app/services/search.service';
 import { User } from 'src/app/interfaces/user';
 import { RegistrationDialogComponent } from '../../shared/dialog-view/registration-dialog/registration-dialog.component';
-import { UserStatus } from '../../enum/user-status';
 import { UtilsService } from '../../services/utils.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-product-details',
@@ -72,7 +71,6 @@ export class ProductDetailsComponent implements OnInit {
   details = true;
   review = false;
   shipping = false;
-  addToCartButton: boolean = true;
   globalPrice: any;
   clickVariant: boolean;
 
@@ -92,21 +90,21 @@ export class ProductDetailsComponent implements OnInit {
 
 
   constructor(
-    private carouselCntrService: CarouselCntrlService,
+    // private carouselCntrService: CarouselCntrlService,
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
     private userService: UserService,
     private cartService: CartService,
     private reloadService: ReloadService,
     private userDataService: UserDataService,
-    private uiService: UiService,
+    private msg: NzMessageService,
     private sizeChartService: SizeChartService,
     private spinner: NgxSpinnerService,
-    private stockControlService: StockControlService,
+    // private stockControlService: StockControlService,
     private productStatusPipe: ProductStatusPipe,
     private dialog: MatDialog,
     private searchService: SearchService,
-    private utilsService: UtilsService
+    // private utilsService: UtilsService
   ) { }
 
   ngOnInit(): void {
@@ -225,7 +223,7 @@ export class ProductDetailsComponent implements OnInit {
           } else {
             this.spinner.hide();
             let status = this.productStatusPipe.transform(res.data.status);
-            this.uiService.warn('This product is currently ' + status);
+            this.msg.warning('This product is currently ' + status);
           }
         },
         (error) => {
@@ -383,7 +381,7 @@ export class ProductDetailsComponent implements OnInit {
   addItemToCartDB(data: Cart) {
     this.userDataService.addItemToUserCart(data).subscribe(
       (res) => {
-        this.uiService.success(res.message);
+        this.msg.success(res.message);
         this.reloadService.needRefreshCart$();
       },
       (error) => {
@@ -403,7 +401,7 @@ export class ProductDetailsComponent implements OnInit {
       .subscribe(res => {
         let type = res.data;
         if (type === 'request') {
-          this.uiService.warn("Cannot add both regular and request product together in cart");
+          this.msg.warning("Cannot add both regular and request product together in cart");
           return
         } else {
           if (this.product?.hasVariant === true) {
@@ -411,7 +409,7 @@ export class ProductDetailsComponent implements OnInit {
               this.addToCarts();
               this.openCartDialog();
             } else {
-              this.uiService.warn('Please choose a variant first');
+              this.msg.warning('Please choose a variant first');
             }
           } else {
             if (this.isUserAuth) {
@@ -471,7 +469,6 @@ export class ProductDetailsComponent implements OnInit {
     this.variantSelected = true;
     this.clickActive[row] = [];
     this.clickActive[row][col] = !this.clickActive[row][col];
-    console.log(this.defaultVariantSelected, this.clickActive)
 
     // this.sku[i] = variantName.charAt(0) + index;
     this.sku[row] = col;
@@ -485,14 +482,11 @@ export class ProductDetailsComponent implements OnInit {
     this.getVariantInfo(this.variantSku);
 
     if (this.selectedQty > this.globalQuantity && this.globalQuantity > 0) {
-      this.addToCartButton = false;
-      this.uiService.warn(
-        'Your selected quantity is more than in stock quantity, Please select less.'
+      this.msg.warning(
+        'Your selected quantity is more than in stock quantity.'
       );
-    } else {
-      this.addToCartButton = true;
+      this.selectedQty = this.globalQuantity;
     }
-    console.log(this.defaultVariantSelected);
   }
 
   getVariantInfo(skuId) {
@@ -538,16 +532,19 @@ export class ProductDetailsComponent implements OnInit {
   incrementQty() {
     if (this.globalQuantity) {
       // If you have global quantity depends on product variants have or not
-      if (this.globalContinue === true) {
+      if (this.globalContinue) {
         if (this.globalQuantity > 0 && this.globalQuantity <= this.selectedQty) {
-          this.uiService.warn('Cannot add more than stock quantity');
+          this.msg.warning('Cannot add more than stock quantity');
+          return
         } else {
           this.selectedQty += 1;
         }
       } else if (this.globalQuantity > this.selectedQty) {
         this.selectedQty += 1;
+        return
       } else {
-        this.uiService.warn('Cannot add more than stock quantity');
+        this.msg.warning('Cannot add more than stock quantity');
+        return
       }
     } else {
       // If you have no global quantity
@@ -556,33 +553,17 @@ export class ProductDetailsComponent implements OnInit {
       } else if (this.product?.quantity > this.selectedQty) {
         this.selectedQty += 1;
       } else {
-        this.uiService.warn('Cannot add more that stock quantity');
+        this.msg.warning('Cannot add more that stock quantity');
       }
     }
-
-
-    // if(this.product?.quantity === this.selectedQty){
-    //   this.selectedQty += 1;
-    // }else if(this.product.continueSelling){
-    //   this.selectedQty += 1;
-    // }
-    // else{
-    //   this.uiService.warn("Cannot add more that stock quantity")
-    // }
   }
 
   decrementQty() {
     if (this.selectedQty === 1) {
-      this.uiService.warn('Minimum Quantity is selected');
+      this.msg.warning('Minimum Quantity is selected');
       return;
     }
     this.selectedQty -= 1;
-
-    if (this.globalQuantity) {
-      if (this.globalQuantity >= this.selectedQty) {
-        this.addToCartButton = true;
-      }
-    }
   }
 
   openRegistrationDialog() {
@@ -693,10 +674,7 @@ export class ProductDetailsComponent implements OnInit {
       );
     }
 
-    console.log(this.displaySku);
-    console.log(selectedVariantData);
-
-    if (selectedVariantData.variantDisplay !== false) {
+    if (selectedVariantData && selectedVariantData.variantDisplay) {
       if (selectedVariantData?.variantQuantity === 0 && selectedVariantData?.variantContinueSelling !== true ) {
         this.display = false;
         return false
@@ -724,14 +702,6 @@ export class ProductDetailsComponent implements OnInit {
     }else{
       return true
     }
-  }
-
-  get showAddToCart(){
-    console.log(this.globalQuantity);
-    console.log(this.addToCartButton);
-    console.log(this.existInCart);
-    console.log(this.globalDisplay);
-    return true
   }
 
   /*** Product Carde One Data */

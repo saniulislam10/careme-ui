@@ -50,7 +50,7 @@
                   <div class="items-details_info">
                     <div class="product_point">
                       <span>
-                        Balck / 23
+                        {{ data.variant[0].variant}}
                         <i
                           (click)="showModal(gi, di, data?.variant[0])"
                           class="las la-lg la-edit"
@@ -120,7 +120,7 @@
                 </div>
                 <div id="mb1" class="vendor-items-qt">
                   <div class="items-quantity">
-                    <button
+                    <button [disabled]="data.selectedQty <= 1"
                       nz-button
                       (click)="decrementQty(data?._id, i, data.selectedQty)"
                     >

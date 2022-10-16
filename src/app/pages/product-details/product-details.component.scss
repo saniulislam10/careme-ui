@@ -520,6 +520,7 @@ img {
 }
 
 .product-btn button {
+  height: auto;
   border: 1px solid #db5791;
   font-style: normal;
   font-family: $font-en-primary-2;
@@ -537,6 +538,11 @@ img {
     background-color: #db5791;
     color: #fff;
   }
+}
+
+.product-btn button:disabled{
+  background-color: #fff;
+  color: #db5791;
 }
 
 

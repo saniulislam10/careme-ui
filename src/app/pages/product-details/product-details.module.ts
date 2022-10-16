@@ -1,3 +1,4 @@
+import { AntModule } from 'src/app/material/ant.module';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { ProductCardOneModule } from './../../shared/lazy-component/product-card-one/product-card-one.module';
 import { SwiperModule } from 'swiper/angular';
@@ -31,7 +32,8 @@ import {RegistrationDialogModule} from "../../shared/dialog-view/registration-di
     PipesModule,
     NgxSpinnerModule,
     NzImageModule,
-    RegistrationDialogModule
+    RegistrationDialogModule,
+    AntModule
 
   ]
 })

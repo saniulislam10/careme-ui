@@ -232,22 +232,24 @@
         </div>
         <!---product-cart-btn-->
         <div class="product-btn">
-          <!-- <button *ngIf="showAddToCart" [class]="btnActive ? 'inactive-btn' : 'active-btn'" (click)="activeCartBtn()" type="button">Add to Cart</button> -->
-          <button *ngIf="globalQuantity > 0 && addToCartButton === true && existInCart !== true && globalDisplay===true"
+          <button nz-button [disabled]="!globalDisplay"  *ngIf="globalQuantity > 0  && existInCart !== true"
             [class]="btnActive ? 'inactive-btn' : 'active-btn'" (click)="activeCartBtn()" type="button">
             Add to Cart
           </button>
-
           <button
-            *ngIf="globalQuantity <= 0 && globalContinue === true && addToCartButton === true && existInCart !== true && globalDisplay===true"
-            [class]="btnActive ? 'inactive-btn' : 'active-btn'" (click)="activeCartBtn()" type="button">
+            nz-button
+            [disabled]="!globalDisplay"
+            [class]="btnActive ? 'inactive-btn' : 'active-btn'"
+            *ngIf="globalQuantity <= 0 && globalContinue === true && existInCart !== true"
+            (click)="activeCartBtn()" type="button">
             Add to Cart
           </button>
-          <button *ngIf="existInCart === true" [class]="btnActive ? 'active-btn' : 'inactive-btn'" routerLink="/cart"
+          <button nz-button *ngIf="existInCart === true"
+          [class]="btnActive ? 'active-btn' : 'inactive-btn'" routerLink="/cart"
             type="button">
             Go to Cart
           </button>
-          <button *ngIf="globalQuantity === 0 && globalContinue !== true"
+          <button nz-button *ngIf="globalQuantity === 0 && globalContinue !== true"
             [class]="btnActive ? 'active-btn' : 'inactive-btn'" type="button" disabled>
             Out of Stock
           </button>
