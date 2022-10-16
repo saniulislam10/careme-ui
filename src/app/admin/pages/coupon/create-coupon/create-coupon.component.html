@@ -1,1 +1,43 @@
-<p>create-coupon works!</p>
+<!---order-header-area-->
+<div class="page-header">
+  <h2><i class="las la-lg la-arrow-left"></i> Create product discount</h2>
+</div>
+<div nz-row [nzGutter]="16">
+  <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 15 }">
+    <nz-card class="mb" nzTitle="Amount off products" [nzExtra]="newcouponType">
+      <div class="method_choose">
+        <h4>Select a Method</h4>
+        <nz-radio-group [(ngModel)]="mathodValue">
+          <label nz-radio nzValue="A">Discount code</label>
+          <label nz-radio nzValue="B">Automatic discount</label>
+        </nz-radio-group>
+      </div>
+      <div class="coupon_code">
+        <form nz-form>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="couponcode">
+              Discount code
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+              <input
+                nz-input
+                name="couponcode"
+                type="text"
+                id="couponcode"
+                placeholder="Coupon Code"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </div>
+    </nz-card>
+    <ng-template #newcouponType>
+      <p>Product discount</p>
+    </ng-template>
+  </div>
+  <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 9 }">
+    <nz-card>
+      <h3>Summary</h3>
+    </nz-card>
+  </div>
+</div>
