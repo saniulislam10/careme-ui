@@ -211,7 +211,7 @@ export const menuItemsSuperAdmin: MenuAdmin[] = [
     icon: 'dashboard_customize',
     hasSubMenu: false,
     parentId: '12',
-    routerLink: 'tag',
+    routerLink: 'coupon/new',
     href: null,
     target: null,
   },
