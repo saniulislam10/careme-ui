@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { OrderStatus } from 'src/app/enum/order-status';
 import { ReturnService } from 'src/app/services/return.service';
 import { UiService } from 'src/app/services/ui.service';
 
@@ -82,6 +83,7 @@ export class CreateInvoiceReturnComponent implements OnInit {
       products: this.returnProducts,
       subTotal: this.calculateSubTotal(),
       deliveryFee: this.dataForm.value.deliveryFee,
+      deliveryStatus: OrderStatus.PENDING,
       adjustment: this.dataForm.value.adjustment,
       total: this.calculateSubTotal() + this.dataForm.value.deliveryFee - this.dataForm.value.adjustment,
     };

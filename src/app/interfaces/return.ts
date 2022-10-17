@@ -11,6 +11,7 @@ export interface Return {
   shippingAddress: string,
   adjustment: Number,
   deliveryFee: Number,
+  deliveryStatus: Number,
   subTotal: Number,
   total: Number,
   products: OrderItem | any,

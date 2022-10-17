@@ -1,3 +1,4 @@
+import { PipesModule } from './../../../../shared/pipes/pipes.module';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { AntModule } from 'src/app/material/ant.module';
 import { MaterialModule } from 'src/app/material/material.module';
@@ -21,7 +22,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ReturnPageRoutingModule,
     MaterialModule,
     AntModule,
-    SharedModule
+    SharedModule,
+    PipesModule
   ]
 })
 export class ReturnPageModule { }

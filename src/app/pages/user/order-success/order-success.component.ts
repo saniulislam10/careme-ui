@@ -123,9 +123,9 @@ export class OrderSuccessComponent implements OnInit {
         this.checkAllByDefault();
         this.orderData.orderedItems.map((item) => {
           this.totalFullPayment += (item.price+item.tax) * item.quantity;
-          if (item.advance > 0) {
+          if (item.advanceAmount > 0) {
             this.isAdvancePayment = true;
-            this.totalAdvancePayment += item.advance;
+            this.totalAdvancePayment += item.advanceAmount;
           }
         });
       },
@@ -192,7 +192,7 @@ export class OrderSuccessComponent implements OnInit {
       );
       this.orderData?.orderedItems.forEach((item) => {
         this.totalFullPayment += (item.price+item.tax) * item.quantity;
-        this.totalAdvancePayment += item.advance * item.quantity;
+        this.totalAdvancePayment += item.advanceAmount * item.quantity;
         item.select = true;
       });
     } else {
@@ -226,10 +226,10 @@ export class OrderSuccessComponent implements OnInit {
       this.selectedIds.push(id);
       console.log(this.selectedIds);
       this.totalFullPayment += (item.price+item.tax) * item.quantity;
-      this.totalAdvancePayment += item.advance * item.quantity;
+      this.totalAdvancePayment += item.advanceAmount * item.quantity;
     } else {
       this.totalFullPayment -= (item.price+item.tax) * item.quantity;
-      this.totalAdvancePayment -= item.advance * item.quantity;
+      this.totalAdvancePayment -= item.advanceAmount * item.quantity;
       const i = this.selectedIds.findIndex((f) => f === id);
       this.selectedIds.splice(i, 1);
       console.log(this.selectedIds);

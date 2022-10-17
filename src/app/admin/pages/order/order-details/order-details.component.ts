@@ -481,7 +481,7 @@ export class OrderDetailsComponent implements OnInit {
     this.order?.orderedItems.forEach((f) => {
       if(f.status === 1){
         total += ((f.price + f.tax))
-        // total += ((f.price + f.tax) - f.advance)
+        // total += ((f.price + f.tax) - f.advanceAmount)
 
       }
     })

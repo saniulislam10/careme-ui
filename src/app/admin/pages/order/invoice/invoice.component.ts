@@ -201,6 +201,7 @@ export class InvoiceComponent implements OnInit {
       subTotal: this.invoice.subTotal,
       adjustment: 0,
       deliveryFee: 120,
+      deliveryStatus: OrderStatus.PENDING,
       total: this.invoice.total,
       products: this.dataForm.value.products,
       refundEligible: this.checked,
