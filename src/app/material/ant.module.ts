@@ -26,6 +26,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzAnchorModule } from 'ng-zorro-antd/anchor';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 const materials = [
   NzModalModule,
@@ -57,6 +58,7 @@ const materials = [
   NzRadioModule,
   NzImageModule,
   NzAnchorModule,
+  NzDrawerModule,
 
   // SharedModule
 ];
