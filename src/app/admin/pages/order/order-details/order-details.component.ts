@@ -229,6 +229,7 @@ export class OrderDetailsComponent implements OnInit {
         restoreFocus: false,
         data: {
           order: this.order,
+
           canceledOrderSku: this.getCancelSKU(),
           canceledOrderAmount: this.calculateCancelTotal(),
           selectedIds: this.selectedIds,

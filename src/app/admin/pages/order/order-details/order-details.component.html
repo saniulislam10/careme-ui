@@ -142,8 +142,7 @@
                         <td>Note</td>
                         <td>:</td>
                         <td>
-                          Sunday office hour er moddhe amar product ta delivery
-                          dewar try korben. Thank you.
+                          {{order.orderNotes}}
                         </td>
                       </tr>
                     </tbody>
@@ -432,10 +431,10 @@
         </nz-tabset>
         <ng-template #extraTemplate>
           <button nz-button [routerLink]="['../../', 'edit-order', order?._id]">
-            <i class="lar la-edit"></i>
+            <i class="lar la-edit"></i>Edit
           </button>
           <button nz-button (click)="openDialog()">
-            <i class="las la-file-invoice"></i>
+            <i class="las la-file-invoice"></i> Create
           </button>
         </ng-template>
       </nz-content>

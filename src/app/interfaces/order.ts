@@ -58,6 +58,7 @@ export interface Order {
   paymentMethod?: string,
   userId: string | any,
   couponCode?: string,
+  couponAmount?: number,
   name: string,
   phoneNo: string,
   address: string,

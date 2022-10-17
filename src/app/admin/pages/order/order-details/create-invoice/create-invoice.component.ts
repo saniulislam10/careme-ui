@@ -31,6 +31,10 @@ export class CreateInvoiceComponent implements OnInit {
   DateToday: Date = new Date()
   canceledOrderSku: string;
   canceledOrderAmount: number;
+  redeemedPoints: number;
+  couponAmount: number;
+  adjustmentAmount: number;
+  shippingCharge: number;
   selectedIds: any[] = [];
 
   // invoice : any;
@@ -49,6 +53,10 @@ export class CreateInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.order = this.data.order;
+    this.redeemedPoints = this.order.redeemedPoints ? this.order.redeemedPoints : 0;
+    this.couponAmount = this.order.couponAmount ? this.order.couponAmount : 0;
+    this.adjustmentAmount = this.order.adjustmentAmount ? this.order.adjustmentAmount : 0;
+    this.shippingCharge = this.order.shippingCharge ? this.order.shippingCharge : 0;
     this.canceledOrderSku = this.data.canceledOrderSku;
     this.canceledOrderAmount = this.data.canceledOrderAmount;
     this.selectedIds = this.data.selectedIds;
@@ -105,7 +113,7 @@ export class CreateInvoiceComponent implements OnInit {
     return tax * quantity;
   }
 
-  calculateSubTotal() {
+  get calculateSubTotal() {
     let total: number = 0;
     for (let i = 0; i < this.invoiceProducts?.length; i++) {
       total +=
@@ -138,10 +146,10 @@ export class CreateInvoiceComponent implements OnInit {
       shippingAddress: this.order.shippingAddress,
       shippingCarrier: this.dataForm.value.shippingCarrier,
       products: this.invoiceProducts,
-      subTotal: this.calculateSubTotal(),
+      subTotal: this.calculateSubTotal,
       deliveryFee: this.dataForm.value.deliveryFee,
       adjustment: this.dataForm.value.adjustment,
-      total: this.calculateSubTotal() +
+      total: this.calculateSubTotal +
         this.dataForm.value.deliveryFee,
       deliveryStatus: ProductOrderStatus.SHIPPING,
       paymentStatus: PaymentStatus.UNPAID,
@@ -178,6 +186,11 @@ export class CreateInvoiceComponent implements OnInit {
   quantity(i) {
     this.dataForm.get('quantity').valueChanges;
     this.invoiceProducts[i].quantity = this.dataForm.get('quantity').value;
+  }
+
+  changeShippingCharge(event){
+    console.log(event.target.value);
+    this.shippingCharge = event.value;
   }
 
   // Decrement

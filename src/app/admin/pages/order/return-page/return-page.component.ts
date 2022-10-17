@@ -198,4 +198,12 @@ export class ReturnPageComponent implements OnInit {
     }
   }
 
+  totalRecieved(data){
+    let recieved = 0;
+    data.products.forEach(element => {
+      recieved += element.recievedQty;
+    });
+    return recieved
+  }
+
 }

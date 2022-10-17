@@ -95,7 +95,7 @@
               <td>PENDING</td>
               <td>{{ data.orderNumber }}</td>
               <td>Pending</td>
-              <td>{{data.products[0].recievedQty > 0 ? 'Accepted' :'Not Recieved'}}</td>
+              <td>{{totalRecieved(data)}}</td>
               <td>{{data.subTotal}}</td>
               <td>0</td>
             </tr>

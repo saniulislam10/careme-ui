@@ -1,4 +1,15 @@
 @import'../../../../../../theme/variables';
+
+.text-center{
+  text-align: center;
+}
+
+
+.smallInput{
+  width: 50px;
+  text-align: right;
+}
+
 .main_create_invoice{
   background-color: rgb(0 0 0 / 30%);
   position: fixed;
