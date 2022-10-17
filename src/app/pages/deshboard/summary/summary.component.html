@@ -1,134 +1,98 @@
-<ng-template #orderTemplate>
-  <p>{{ orders?.length }}</p>
-</ng-template>
-<ng-template #pointTemplate>
-  <p>{{ user?.points }} pts</p>
-</ng-template>
-<ng-template #returnTemplate>
-  <p>0</p>
-</ng-template>
-<ng-template #refundTemplate>
-  <p>0 Tk</p>
-</ng-template>
-<ng-template #reviewsTemplate>
-  <p>0</p>
-</ng-template>
-<div>
-  <div nz-row [nzGutter]="8">
-    <div nz-col [nzSpan]="5">
-      <nz-card nzTitle="Orders" [nzExtra]="orderTemplate">
-        <table style="width: 100%">
-          <tr>
-            <th>Order Pending</th>
-            <td>0</td>
-          </tr>
-          <tr>
-            <th>Order Delivered</th>
-            <td>0</td>
-          </tr>
-          <tr>
-            <th>Canceled Orders</th>
-            <td>0</td>
-          </tr>
-        </table>
-      </nz-card>
-    </div>
-    <div nz-col [nzSpan]="5">
-      <nz-card nzTitle="Points" [nzExtra]="pointTemplate">
-        <table style="width: 100%">
-          <tr>
-            <th>Lifetime Points</th>
-            <td>{{ user?.earnedPoints }}</td>
-          </tr>
-          <tr>
-            <th>Use Points</th>
-            <td>{{ user?.redeemedPoints }}</td>
-          </tr>
-          <tr>
-            <th>Pending Points</th>
-            <td>0</td>
-          </tr>
-        </table>
-      </nz-card>
-    </div>
-    <div nz-col [nzSpan]="5">
-      <nz-card nzTitle="Return" [nzExtra]="returnTemplate">
-        <table style="width: 100%">
-          <tr>
-            <th>Return Pending</th>
-            <td>0</td>
-          </tr>
-          <tr>
-            <th>Return Accepted</th>
-            <td>0</td>
-          </tr>
-          <tr>
-            <th>Return Cancelled</th>
-            <td>0</td>
-          </tr>
-        </table>
-      </nz-card>
-    </div>
-    <div nz-col [nzSpan]="5">
-      <nz-card nzTitle="Refund" [nzExtra]="refundTemplate">
-        <table style="width: 100%">
-          <tr>
-            <th>Pending</th>
-            <td>0</td>
-          </tr>
-          <tr>
-            <th>Accepted</th>
-            <td>0</td>
-          </tr>
-          <tr>
-            <th>Canceled</th>
-            <td>0</td>
-          </tr>
-        </table>
-      </nz-card>
-    </div>
-    <div nz-col [nzSpan]="4">
-      <nz-card nzTitle="Reviews" [nzExtra]="reviewsTemplate">
-        <table style="width: 100%">
-          <tr>
-            <th>Reviews Done</th>
-            <td>0</td>
-          </tr>
-          <tr>
-            <th>Reviews Pending</th>
-            <td>0</td>
-          </tr>
-        </table>
-      </nz-card>
+<div nz-row nzGutter="0" class="md">
+  <div nz-col nzSpan="24">
+    <div class="dash_welcome">
+      <h2>Hello Al-Mamun, Welcome to dashboard !</h2>
     </div>
   </div>
 </div>
-<nz-table
-  style="margin-top: 50px"
-  #headerTable
-  [nzSimple]="true"
-  [nzData]="orders"
-  [nzPageSize]="50"
-  [nzScroll]="{ y: '450px' }"
->
-  <thead>
-    <tr>
-      <th>Order</th>
-      <th>Placed On</th>
-      <th nzWidth="100px">Items</th>
-      <th>Total</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of headerTable.data">
-      <td class="routerLink" [routerLink]="['../../order-details', data._id]">
-        {{ data.orderId }}
-      </td>
-      <td>{{ data.createdAt | date: "short" }}</td>
-      <td>{{ data.orderedItems?.length }}</td>
-      <td>{{ data.totalAmount }}</td>
-      <td>{{ data.deliveryStatus | orderStatus }}</td>
-    </tr>
-  </tbody>
-</nz-table>
+<div nz-row nzGutter="8">
+  <div nz-col class="md" [nzXs]="{ span: 12 }" [nzMd]="{ span: 6 }">
+    <nz-card nzSize="small" nzHoverable>
+      <div class="dash_header">
+        <h2><i class="las la-box"></i> Order</h2>
+        <h1>{{ orders?.length }}</h1>
+      </div>
+      <div class="dash_body">
+        <h5>Order Pending <span style="color: orange">1</span></h5>
+        <h5>Order Delivered <span style="color: green">3</span></h5>
+        <h5>Canceled Orders <span style="color: red">2</span></h5>
+      </div>
+    </nz-card>
+  </div>
+  <div nz-col class="md" [nzXs]="{ span: 12 }" [nzMd]="{ span: 6 }">
+    <nz-card nzSize="small" nzHoverable>
+      <div class="dash_header">
+        <h2><i class="las la-coins"></i> Points</h2>
+        <h1>{{ user?.points }}</h1>
+      </div>
+      <div class="dash_body">
+        <h5>Lifetime Points <span style="color: orange">0</span></h5>
+        <h5>Use Points <span style="color: green">0</span></h5>
+        <h5>Pending Points <span style="color: red">0</span></h5>
+      </div>
+    </nz-card>
+  </div>
+  <div nz-col class="md" [nzXs]="{ span: 12 }" [nzMd]="{ span: 6 }">
+    <nz-card nzSize="small" nzHoverable>
+      <div class="dash_header">
+        <h2><i class="las la-wallet"></i> Refund</h2>
+        <h1>6</h1>
+      </div>
+      <div class="dash_body">
+        <h5>Accepted <span style="color: green">3</span></h5>
+        <h5>Pending <span style="color: orange">1</span></h5>
+        <h5>Cancelled <span style="color: red">2</span></h5>
+      </div>
+    </nz-card>
+  </div>
+  <div nz-col class="md" [nzXs]="{ span: 12 }" [nzMd]="{ span: 6 }">
+    <nz-card nzSize="small" nzHoverable>
+      <div class="dash_header">
+        <h2><i class="lar la-star"></i> Reviews</h2>
+        <h1>4</h1>
+      </div>
+      <div class="dash_body">
+        <h5 style="visibility: hidden">sani vai dont use it</h5>
+        <h5>Reviews Done <span style="color: green">3</span></h5>
+        <h5>Reviews Pending <span style="color: orange">1</span></h5>
+      </div>
+    </nz-card>
+  </div>
+</div>
+
+<div nz-row nzGutter="0">
+  <div nz-col nzSpan="24">
+    <nz-card nzSize="small">
+      <nz-table
+        #dashtable
+        [nzSimple]="true"
+        [nzData]="orders"
+        [nzPageSize]="50"
+        [nzScroll]="{ y: '450px' }"
+        nzsize="small"
+      >
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of dashtable.data">
+            <td class="routerLink">
+              <h4 [routerLink]="['../../order-details', data._id]">
+                {{ data.orderId }}
+              </h4>
+              <h5>{{ data.createdAt | date: "short" }}</h5>
+            </td>
+            <td>{{ data.orderedItems?.length }}</td>
+            <td>{{ data.totalAmount }}</td>
+            <td>{{ data.deliveryStatus | orderStatus }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+</div>
