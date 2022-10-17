@@ -33,6 +33,9 @@ export class OrderStatusPipe implements PipeTransform {
       case OrderStatus.RETURNED: {
         return 'Returned';
       }
+      case OrderStatus.PARTIAL_RETURNED: {
+        return 'Partial Returned';
+      }
       case OrderStatus.REFUND : {
         return 'Refund';
       }

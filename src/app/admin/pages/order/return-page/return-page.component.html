@@ -91,7 +91,7 @@
                 </a>
               </td>
               <td>SUPERADMIN</td>
-              <td>{{ data.invoiceId }}</td>
+              <td><a [routerLink]="['../', 'invoice', data.invoiceId]">{{ data.invoiceId }}</a></td>
               <td>PENDING</td>
               <td>{{ data.orderNumber }}</td>
               <td>Pending</td>

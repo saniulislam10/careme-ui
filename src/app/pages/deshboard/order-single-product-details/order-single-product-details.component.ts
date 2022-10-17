@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 import { ReviewService } from 'src/app/services/review.service';
 import { Return } from 'src/app/interfaces/return';
 import { ReturnService } from 'src/app/services/return.service';
+import { OrderStatus } from 'src/app/enum/order-status';
 
 
 interface ChildrenItemData {
@@ -239,6 +240,7 @@ export class OrderSingleProductDetailsComponent implements OnInit {
       subTotal: invoice.subTotal,
       adjustment: 0,
       deliveryFee: 120,
+      deliveryStatus: OrderStatus.PENDING,
       total: invoice.total,
       products: products,
       refundEligible: this.checked,

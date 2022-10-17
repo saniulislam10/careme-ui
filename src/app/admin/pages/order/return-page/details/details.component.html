@@ -74,7 +74,7 @@
                         <td>Return Status</td>
                         <td>:</td>
                         <td>
-                          <span> {{return.products[0].recievedQty > 0 ? 'Accepted': 'Pending'}} </span>
+                          <span> {{return.deliveryStatus | orderStatus}} </span>
                         </td>
                       </tr>
                       <tr>

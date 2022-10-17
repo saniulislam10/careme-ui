@@ -79,6 +79,10 @@
                   <p><span>BDT {{data.subTotal}}</span>
                 </div>
                 <div class="invoice_item">
+                  <h3>Delivery Status</h3>
+                  <p><span>BDT {{data.deliveryStatus | orderStatus}}</span>
+                </div>
+                <div class="invoice_item">
                   <h3>Items</h3>
                   <p>
                     <span>{{data.products.length}}</span>
@@ -112,8 +116,8 @@
                 </div>
               </div>
             </div>
-            <div class="refund_details_body">
-              <div nz-row [nzGutter]="16">
+            <div class="refund_details_body" >
+              <div nz-row [nzGutter]="16" *ngIf="tab.name === 'Overview'">
                 <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
                   <h2>Order Details</h2>
                   <table>
@@ -141,9 +145,7 @@
                       <tr>
                         <td>Note</td>
                         <td>:</td>
-                        <td>
-                          {{order.orderNotes}}
-                        </td>
+                        <td>{{order.orderNotes}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -231,7 +233,7 @@
                             Add Comment
                           </button>
                         </div>
-                        <div class="timeline timeline-items">
+                        <div class="timeline timeline-items" *ngIf="order?.comments.length">
                           <nz-timeline class="timeline">
                             <nz-timeline-item *ngFor="let comment of order?.comments.reverse()">
                               <p>{{comment.text}}</p>
@@ -250,8 +252,9 @@
                   (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
                   <thead>
                     <tr>
-                      <th [(nzChecked)]="allSelected" [nzIndeterminate]="indeterminate"
-                        (nzCheckedChange)="onAllCheck($event)"></th>
+                      <!-- <th [(nzChecked)]="allSelected" [nzIndeterminate]="indeterminate"
+                        (nzCheckedChange)="onAllCheck($event)"></th> -->
+                      <th></th>
                       <th>Image</th>
                       <th>Item Details</th>
                       <th>Qty</th>

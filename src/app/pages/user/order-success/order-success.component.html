@@ -82,12 +82,12 @@
               </span>
             </p>
           </div>
-          <div class="pay-condition" *ngIf="orderItem?.advance>0">
+          <div class="pay-condition" *ngIf="orderItem?.advanceAmount>0">
             <!-- <small>({{ orderItem?.advance}} TK)</small> -->
-            <h3 style="color:rgb(255, 0, 0);font-weight: 500;"> {{ orderItem?.advance }} TK Advance</h3>
+            <h3 style="color:rgb(255, 0, 0);font-weight: 500;"> {{ orderItem?.advanceAmount }} TK Advance</h3>
 
           </div>
-          <div class="pay-cash" *ngIf="orderItem?.advance<=0 || orderItem?.advance==null">
+          <div class="pay-cash" *ngIf="orderItem?.advanceAmount<=0 || orderItem?.advanceAmount==null">
             <p>Cash On Delivery</p>
             <!-- <h3 style="color:rgb(255, 0, 0);font-weight: 500;"> 0.00 TK</h3> -->
           </div>

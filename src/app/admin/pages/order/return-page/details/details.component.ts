@@ -1,3 +1,4 @@
+import { OrderStatus } from './../../../../../enum/order-status';
 import {Return} from './../../../../../interfaces/return';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
@@ -125,7 +126,14 @@ export class DetailsComponent implements OnInit {
   }
 
   updateReturn(){
-    console.log(this.return._id, this.return);
+    let status = 7;
+    this.return.products.forEach(element => {
+      if(element.recievedQty === 0){
+        status = 8;
+      }
+    });
+    this.return.deliveryStatus = status;
+    console.log(this.return.deliveryStatus);
     this.returnService.recieveReturnById(this.return._id, this.return)
     .subscribe(res => {
       this.msg.create('success', res.message);

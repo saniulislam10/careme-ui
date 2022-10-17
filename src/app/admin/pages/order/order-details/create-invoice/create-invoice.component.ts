@@ -31,10 +31,10 @@ export class CreateInvoiceComponent implements OnInit {
   DateToday: Date = new Date()
   canceledOrderSku: string;
   canceledOrderAmount: number;
-  redeemedPoints: number;
-  couponAmount: number;
-  adjustmentAmount: number;
-  shippingCharge: number;
+  redeemedPoints = 0;
+  couponAmount = 0;
+  adjustmentAmount = 0;
+  shippingCharge = 0;
   selectedIds: any[] = [];
 
   // invoice : any;
@@ -113,7 +113,7 @@ export class CreateInvoiceComponent implements OnInit {
     return tax * quantity;
   }
 
-  get calculateSubTotal() {
+  calculateSubTotal():number {
     let total: number = 0;
     for (let i = 0; i < this.invoiceProducts?.length; i++) {
       total +=
@@ -146,10 +146,10 @@ export class CreateInvoiceComponent implements OnInit {
       shippingAddress: this.order.shippingAddress,
       shippingCarrier: this.dataForm.value.shippingCarrier,
       products: this.invoiceProducts,
-      subTotal: this.calculateSubTotal,
+      subTotal: this.calculateSubTotal(),
       deliveryFee: this.dataForm.value.deliveryFee,
       adjustment: this.dataForm.value.adjustment,
-      total: this.calculateSubTotal +
+      total: this.calculateSubTotal() +
         this.dataForm.value.deliveryFee,
       deliveryStatus: ProductOrderStatus.SHIPPING,
       paymentStatus: PaymentStatus.UNPAID,
@@ -188,9 +188,12 @@ export class CreateInvoiceComponent implements OnInit {
     this.invoiceProducts[i].quantity = this.dataForm.get('quantity').value;
   }
 
-  changeShippingCharge(event){
-    console.log(event.target.value);
-    this.shippingCharge = event.value;
+
+  changeAdjust(value){
+    this.adjustmentAmount = Number(value);
+  }
+  changeShippingCharge(value){
+    this.shippingCharge = Number(value);
   }
 
   // Decrement
@@ -215,5 +218,12 @@ export class CreateInvoiceComponent implements OnInit {
   close(){
     this.invoiceProducts = null;
     this.order = null;
+  }
+
+  getDue(){
+    let due: Number = 0;
+    let subTotal = this.calculateSubTotal();
+    due =  subTotal + this.shippingCharge + this.adjustmentAmount - this.redeemedPoints - this.couponAmount;
+    return due;
   }
 }
