@@ -37,7 +37,6 @@ interface ItemData {
   address: string;
 }
 
-
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
@@ -45,6 +44,17 @@ interface ItemData {
   providers: [PricePipe],
 })
 export class OrderDetailsComponent implements OnInit {
+  editVisible = false;
+  showModal(): void {
+    this.editVisible = true;
+  }
+  editOk(): void {
+    this.editVisible = false;
+  }
+  editCancel(): void {
+    this.editVisible = false;
+  }
+
   invoices: Invoice[] = [];
   returns: Return[] = [];
   invoiceDisable: boolean = true;
@@ -52,23 +62,22 @@ export class OrderDetailsComponent implements OnInit {
   bodyTabs = [
     {
       name: 'Overview',
-      disabled: false
+      disabled: false,
     },
     {
       name: 'Invoice',
-      disabled: this.invoiceDisable
+      disabled: this.invoiceDisable,
     },
     {
       name: 'Return',
-      disabled: this.returnDisable
-    }
+      disabled: this.returnDisable,
+    },
   ];
   allSelected = false;
   indeterminate = false;
   listOfCurrentPageData: readonly ItemData[] = [];
   listOfData: readonly ItemData[] = [];
   setOfCheckedId = new Set<number>();
-
 
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
 
@@ -82,7 +91,7 @@ export class OrderDetailsComponent implements OnInit {
   commentEmpty: string = '';
   // calculation
   total = 0;
-  spin : boolean = false;
+  spin: boolean = false;
   inputValue: string = null;
 
   selectedDiv: boolean = false;
@@ -90,7 +99,7 @@ export class OrderDetailsComponent implements OnInit {
   ordersPerPage = 10;
   currentPage = 1;
   totalOrders = 0;
-  totalOrdersStore = 0
+  totalOrdersStore = 0;
   orderStatus: any;
   filter: any;
   // sort
@@ -108,18 +117,20 @@ export class OrderDetailsComponent implements OnInit {
   canceledOrderAmount: number;
 
   productOrderStatus: Select[] = [
-    { value: ProductOrderStatus.PENDING, label: 'Pending'},
+    { value: ProductOrderStatus.PENDING, label: 'Pending' },
     { value: ProductOrderStatus.CANCEL, label: 'Cancel' },
     { value: ProductOrderStatus.CONFIRM, label: 'Confirm' },
-    { value: ProductOrderStatus.PARTIAL_SHIPPING, label: 'Partial Shipping' , disabled:true},
-    { value: ProductOrderStatus.SHIPPING, label: 'Shipping'  , disabled:true},
+    {
+      value: ProductOrderStatus.PARTIAL_SHIPPING,
+      label: 'Partial Shipping',
+      disabled: true,
+    },
+    { value: ProductOrderStatus.SHIPPING, label: 'Shipping', disabled: true },
   ];
   selectedIds: number[] = [];
   timelineStatus: any[];
   vProducts: any[];
   success: boolean = true;
-
-
 
   constructor(
     private pricePipe: PricePipe,
@@ -136,8 +147,8 @@ export class OrderDetailsComponent implements OnInit {
     private reloadService: ReloadService,
     public router: Router,
     private spinner: NgxSpinnerService,
-    private msg: NzMessageService,
-  ) { }
+    private msg: NzMessageService
+  ) {}
 
   ngOnInit(): void {
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
@@ -153,26 +164,25 @@ export class OrderDetailsComponent implements OnInit {
     this.initFormValue();
     this.getAdminData();
     this.getAllOrders();
-
   }
 
-  getDisable(tab){
-    if(tab.name === 'Invoice'){
+  getDisable(tab) {
+    if (tab.name === 'Invoice') {
       return this.invoiceDisable;
     }
-    if(tab.name === 'Return'){
+    if (tab.name === 'Return') {
       return this.returnDisable;
     }
   }
 
-  getInvoicesByOrderId(id){
+  getInvoicesByOrderId(id) {
     this.invoiceService.getAllInvoicesByOrderNo(id).subscribe(
       (res) => {
         this.invoices = res.data;
-        if(this.invoices.length > 0){
+        if (this.invoices.length > 0) {
           this.invoiceDisable = false;
-        }else{
-          this.invoiceDisable  = true;
+        } else {
+          this.invoiceDisable = true;
         }
       },
       (err) => {
@@ -180,14 +190,14 @@ export class OrderDetailsComponent implements OnInit {
       }
     );
   }
-  getReturnsByOrderId(id){
+  getReturnsByOrderId(id) {
     this.returnService.getAllReturnsByOrderNo(id).subscribe(
       (res) => {
-        console.log("Returns",res.data)
+        console.log('Returns', res.data);
         this.returns = res.data;
-        if(this.returns.length){
+        if (this.returns.length) {
           this.returnDisable = false;
-        }else{
+        } else {
           this.returnDisable = true;
         }
       },
@@ -197,13 +207,12 @@ export class OrderDetailsComponent implements OnInit {
     );
   }
 
-  onRefresh(){
+  onRefresh() {
     this.spin = true;
     this.products = [];
     this.setOfCheckedId.clear();
     this.getOrderInfo(this.id);
     this.getAllOrders();
-
   }
 
   initFormValue() {
@@ -221,25 +230,24 @@ export class OrderDetailsComponent implements OnInit {
   // view child create invoice
   /*** Create Order Pop Up Controll */
   openDialog() {
-    if(this.selectedIds.length === 0){
+    if (this.selectedIds.length === 0) {
       this.msg.create('warning', 'Please select an item to create invoice');
-      return
+      return;
     }
-      const dialogRef = this.dialog.open(CreateInvoiceComponent, {
-        restoreFocus: false,
-        data: {
-          order: this.order,
+    const dialogRef = this.dialog.open(CreateInvoiceComponent, {
+      restoreFocus: false,
+      data: {
+        order: this.order,
 
-          canceledOrderSku: this.getCancelSKU(),
-          canceledOrderAmount: this.calculateCancelTotal(),
-          selectedIds: this.selectedIds,
-        },
-      });
-      dialogRef.afterClosed().subscribe(() => {
-        this.onRefresh();
-        this.menuTrigger.focus();
-
-      });
+        canceledOrderSku: this.getCancelSKU(),
+        canceledOrderAmount: this.calculateCancelTotal(),
+        selectedIds: this.selectedIds,
+      },
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.onRefresh();
+      this.menuTrigger.focus();
+    });
   }
 
   openReturn() {
@@ -258,16 +266,15 @@ export class OrderDetailsComponent implements OnInit {
       restoreFocus: false,
     });
     dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
-    this.router.navigate(['../../edit-order'])
+    this.router.navigate(['../../edit-order']);
   }
 
   showOrderDetails(id, i) {
-    this.selectedDiv[i] = true
-    console.log("data", id);
+    this.selectedDiv[i] = true;
+    console.log('data', id);
     this.spinner.show();
     this.getOrderInfo(id);
     this.spinner.hide();
-
   }
   /**
    * http req
@@ -283,11 +290,11 @@ export class OrderDetailsComponent implements OnInit {
       (res) => {
         this.order = res.data;
         this.getInvoicesByOrderId(this.order.orderId);
-        this.getReturnsByOrderId(this.order.orderId)
+        this.getReturnsByOrderId(this.order.orderId);
         this.selectedIds = [];
 
-        this.order.orderedItems.forEach(element => {
-          element.previousStatus = element.status
+        this.order.orderedItems.forEach((element) => {
+          element.previousStatus = element.status;
         });
 
         this.timelineStatus = this.order.orderStatusTimeline;
@@ -296,7 +303,7 @@ export class OrderDetailsComponent implements OnInit {
         this.products = this.order.orderedItems;
         console.log(this.products);
 
-        this.vProducts =  this.arrayGroupByField(this.products, 'vendorName');
+        this.vProducts = this.arrayGroupByField(this.products, 'vendorName');
 
         this.getInvoiceCount();
       },
@@ -306,9 +313,13 @@ export class OrderDetailsComponent implements OnInit {
     );
   }
 
-  private arrayGroupByField<T>(dataArray: T[], field: string, firstId?: string): any[] {
+  private arrayGroupByField<T>(
+    dataArray: T[],
+    field: string,
+    firstId?: string
+  ): any[] {
     const data = dataArray.reduce((group, product) => {
-      const uniqueField = product[field]
+      const uniqueField = product[field];
       group[uniqueField] = group[uniqueField] ?? [];
       group[uniqueField].push(product);
       return group;
@@ -320,29 +331,30 @@ export class OrderDetailsComponent implements OnInit {
       final.push({
         _id: key,
         select: false,
-        data: data[key]
-      })
+        data: data[key],
+      });
     }
 
     if (firstId) {
       // Rearrange Index
-      const fromIndex = final.findIndex(f => f._id === firstId);
+      const fromIndex = final.findIndex((f) => f._id === firstId);
       const toIndex = 0;
       const element = final.splice(fromIndex, 1)[0];
 
       final.splice(toIndex, 0, element);
 
       return final as any[];
-
     } else {
       return final as any[];
     }
-
-
   }
 
   //thumbnail
-  tabs: ({ name: string; disabled: boolean } | { name: string; disabled: boolean } | { name: string; disabled: boolean })[];
+  tabs: (
+    | { name: string; disabled: boolean }
+    | { name: string; disabled: boolean }
+    | { name: string; disabled: boolean }
+  )[];
   setThumbnailImage(data) {
     let images = this.productService.getImages(data.medias, data.images);
     return images[0];
@@ -386,8 +398,8 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   /**
-  * SORTING
-  */
+   * SORTING
+   */
   sortData(query: any, type: number) {
     this.sortQuery = query;
     this.activeSort = type;
@@ -397,14 +409,14 @@ export class OrderDetailsComponent implements OnInit {
   getAllOrders() {
     const pagination: Pagination = {
       pageSize: this.ordersPerPage.toString(),
-      currentPage: this.currentPage.toString()
+      currentPage: this.currentPage.toString(),
     };
-    this.orderService.getAllOrdersByAdmin(pagination, this.sortQuery, this.filter)
+    this.orderService
+      .getAllOrdersByAdmin(pagination, this.sortQuery, this.filter)
       .subscribe(
         (res) => {
           this.orders = res.data;
           this.spin = false;
-
         },
         (err) => {
           console.log(err);
@@ -456,13 +468,11 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   addNewComment() {
-    this.order.comments.push(
-      {
-        text: this.inputValue,
-        date: new Date(),
-        name: this.admin.name
-      }
-    );
+    this.order.comments.push({
+      text: this.inputValue,
+      date: new Date(),
+      name: this.admin.name,
+    });
     this.orderService.updateOrderById(this.order).subscribe(
       (res) => {
         console.log(res.message);
@@ -479,13 +489,12 @@ export class OrderDetailsComponent implements OnInit {
   calculateCancelTotal() {
     let total = 0;
     this.order?.orderedItems.forEach((f) => {
-      if(f.status === 1){
-        total += ((f.price + f.tax))
+      if (f.status === 1) {
+        total += f.price + f.tax;
         // total += ((f.price + f.tax) - f.advanceAmount)
-
       }
-    })
-    return total
+    });
+    return total;
   }
 
   getCancelSKU() {
@@ -494,8 +503,8 @@ export class OrderDetailsComponent implements OnInit {
       if (f.status === 1) {
         sku.push(f.sku);
       }
-    })
-    return sku.join(',')
+    });
+    return sku.join(',');
   }
 
   calculateTotalTax() {
@@ -514,7 +523,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   get calculateSubTotal() {
-    let subTotal:number = 0;
+    let subTotal: number = 0;
     for (let i = 0; i < this.order?.orderedItems?.length; i++) {
       subTotal += this.getAmount(this.order?.orderedItems[i]);
     }
@@ -522,122 +531,108 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   get calculateTotal() {
-    return (
-      this.calculateSubTotal +
-      this.calculateTotalTax()
-    );
+    return this.calculateSubTotal + this.calculateTotalTax();
   }
 
-
-  onStatusChange(currentStatus, previousStatus, order, data:OrderItem) {
+  onStatusChange(currentStatus, previousStatus, order, data: OrderItem) {
     data.deliveryStatus = currentStatus;
 
     if (currentStatus === ProductOrderStatus.CANCEL) {
       this.decreaseCommitted(data, data.productId._id);
       this.increaseAvailable(data, data.productId._id);
-    }
-    else if (previousStatus === ProductOrderStatus.CANCEL && currentStatus=== ProductOrderStatus.CONFIRM ){
+    } else if (
+      previousStatus === ProductOrderStatus.CANCEL &&
+      currentStatus === ProductOrderStatus.CONFIRM
+    ) {
       this.increaseCommitted(data, data.productId._id);
       this.decreaseAvailable(data, data.productId._id);
-    }
-    else if (previousStatus === ProductOrderStatus.CANCEL && currentStatus=== ProductOrderStatus.PENDING ){
+    } else if (
+      previousStatus === ProductOrderStatus.CANCEL &&
+      currentStatus === ProductOrderStatus.PENDING
+    ) {
       this.increaseCommitted(data, data.productId._id);
       this.decreaseAvailable(data, data.productId._id);
     }
 
-    if(this.success){
+    if (this.success) {
       this.updateOrder(order);
     }
-
-
-
   }
 
-  decreaseCommitted(data, id){
-    this.productService
-          .decreaseCommitedProductQuantity(data, id)
-          .subscribe(
-            (res) => {
-              this.msg.success(res.message);
-              this.success = true;
-            },
-            (err) => {
-              this.msg.error(err.message);
-              this.success = false;
-            }
-          );
+  decreaseCommitted(data, id) {
+    this.productService.decreaseCommitedProductQuantity(data, id).subscribe(
+      (res) => {
+        this.msg.success(res.message);
+        this.success = true;
+      },
+      (err) => {
+        this.msg.error(err.message);
+        this.success = false;
+      }
+    );
   }
-  increaseCommitted(data, id){
-    this.productService
-          .increaseCommitedProductQuantity(data, id)
-          .subscribe(
-            (res) => {
-              this.msg.success(res.message);
-              this.success = true;
-
-            },
-            (err) => {
-              this.msg.error(err.message);
-              this.success = false;
-            }
-          );
+  increaseCommitted(data, id) {
+    this.productService.increaseCommitedProductQuantity(data, id).subscribe(
+      (res) => {
+        this.msg.success(res.message);
+        this.success = true;
+      },
+      (err) => {
+        this.msg.error(err.message);
+        this.success = false;
+      }
+    );
   }
-  decreaseAvailable(data, id){
-    this.productService
-          .decreaseAvailableProductQuantity(data, id)
-          .subscribe(
-            (res) => {
-              this.msg.success(res.message);
-              this.success = true;
-
-            },
-            (err) => {
-              this.msg.error(err.message);
-              this.success = false;
-            }
-          );
+  decreaseAvailable(data, id) {
+    this.productService.decreaseAvailableProductQuantity(data, id).subscribe(
+      (res) => {
+        this.msg.success(res.message);
+        this.success = true;
+      },
+      (err) => {
+        this.msg.error(err.message);
+        this.success = false;
+      }
+    );
   }
-  increaseAvailable(data, id){
-    this.productService
-          .increaseAvailableProductQuantity(data, id)
-          .subscribe(
-            (res) => {
-              this.msg.success(res.message);
-              this.success = true;
-
-            },
-            (err) => {
-              this.msg.error(err.message);
-              this.success = false;
-            }
-          );
+  increaseAvailable(data, id) {
+    this.productService.increaseAvailableProductQuantity(data, id).subscribe(
+      (res) => {
+        this.msg.success(res.message);
+        this.success = true;
+      },
+      (err) => {
+        this.msg.error(err.message);
+        this.success = false;
+      }
+    );
   }
 
-  updateOrder(order){
+  updateOrder(order) {
     this.orderService.updateOrderById(order).subscribe(
       (res) => {
         this.msg.success(res.message);
       },
       (err) => {
         this.msg.error(err.message);
-        return
+        return;
       }
-      );
+    );
   }
 
   /**
    * ON Select Check
    */
 
-  onAllCheck(event: any){
-    for(let i=0; i<this.products.length; i++){
+  onAllCheck(event: any) {
+    for (let i = 0; i < this.products.length; i++) {
       this.onCheckChange(event, i, this.products[i]._id);
       this.onAllChecked(event);
     }
     this.allSelected = !this.allSelected;
   }
 
-  onCheckChange(event: any,index: number, id: any) {
+  onCheckChange(event: any, index: number, id: any) {
     this.onItemChecked(id, event);
     if (event) {
       const i = this.selectedIds.findIndex((f) => f === index);
@@ -651,19 +646,18 @@ export class OrderDetailsComponent implements OnInit {
       this.selectedIds.splice(i, 1);
     }
 
-    console.log(this.selectedIds)
-
-
-
-
-
+    console.log(this.selectedIds);
   }
 
   getAmount(item) {
     if (item.advanceAmount) {
-      return Math.round((item?.price * item?.quantity + item.tax * item?.quantity));
+      return Math.round(
+        item?.price * item?.quantity + item.tax * item?.quantity
+      );
     } else {
-      return Math.round(item?.price * item?.quantity + item.tax * item?.quantity);
+      return Math.round(
+        item?.price * item?.quantity + item.tax * item?.quantity
+      );
     }
   }
 
@@ -671,18 +665,18 @@ export class OrderDetailsComponent implements OnInit {
     let total: number = 0;
     this.order?.orderedItems.forEach((f) => {
       if (f.advanceAmount) {
-        total = total + Math.round((f?.price * f?.quantity + f.tax * f?.quantity) - f.advanceAmount);
+        total =
+          total +
+          Math.round(
+            f?.price * f?.quantity + f.tax * f?.quantity - f.advanceAmount
+          );
       } else {
-        total = total + Math.round(f?.price * f?.quantity + f.tax * f?.quantity);
+        total =
+          total + Math.round(f?.price * f?.quantity + f.tax * f?.quantity);
       }
-    })
+    });
     return Math.round(total);
   }
-
-
-
-
-
 
   // Mamun
   updateCheckedSet(id: any, checked: boolean): void {
@@ -699,7 +693,9 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   onAllChecked(value: boolean): void {
-    this.listOfCurrentPageData.forEach(item => this.updateCheckedSet(item.id, value));
+    this.listOfCurrentPageData.forEach((item) =>
+      this.updateCheckedSet(item.id, value)
+    );
     this.refreshCheckedStatus();
   }
 
@@ -709,12 +705,16 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   refreshCheckedStatus(): void {
-    this.allSelected = this.listOfCurrentPageData.every(item => this.setOfCheckedId.has(item.id));
-    this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.allSelected;
+    this.allSelected = this.listOfCurrentPageData.every((item) =>
+      this.setOfCheckedId.has(item.id)
+    );
+    this.indeterminate =
+      this.listOfCurrentPageData.some((item) =>
+        this.setOfCheckedId.has(item.id)
+      ) && !this.allSelected;
   }
 
-  getReturnPercentage(userData){
-    return 10
+  getReturnPercentage(userData) {
+    return 10;
   }
-
 }

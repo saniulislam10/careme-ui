@@ -10,7 +10,12 @@ import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { OrderService } from 'src/app/services/order.service';
 import { Order } from 'src/app/interfaces/order';
 import { Product } from 'src/app/interfaces/product';
-import { pluck, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import {
+  pluck,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+} from 'rxjs/operators';
 import { EMPTY, Subscription } from 'rxjs';
 import { Pagination } from 'src/app/interfaces/pagination';
 import { ProductService } from 'src/app/services/product.service';
@@ -21,11 +26,9 @@ import { timeStamp } from 'console';
 @Component({
   selector: 'app-edit-order',
   templateUrl: './edit-order.component.html',
-  styleUrls: ['./edit-order.component.scss']
+  styleUrls: ['./edit-order.component.scss'],
 })
 export class EditOrderComponent implements OnInit {
-
-
   private subRouteOne?: Subscription;
 
   @ViewChild('searchInput') searchInput: ElementRef;
@@ -49,7 +52,6 @@ export class EditOrderComponent implements OnInit {
   isPermited: Boolean = true;
 
   constructor(
-
     private fb: FormBuilder,
     private uiService: UiService,
     private spinner: NgxSpinnerService,
@@ -61,73 +63,67 @@ export class EditOrderComponent implements OnInit {
     private router: Router,
     private orderService: OrderService,
     private productService: ProductService,
-    private adminService: AdminService,
-  ) { }
+    private adminService: AdminService
+  ) {}
 
   ngOnInit(): void {
-
     // GET ID FORM PARAM
 
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
       this.id = param.get('id');
       if (this.id) {
-        this.getOrderDetailsById()
+        this.getOrderDetailsById();
       }
-    })
+    });
 
     this.initFormModule();
     this.getAdminData();
-
   }
 
   initFormModule() {
     this.dataForm = this.fb.group({
       statusNote: [null],
-    })
+    });
   }
 
   getAdminData() {
-    this.adminService.getAdminShortData()
-      .subscribe(res => {
-        this.admin = res.data
-        console.log("admin", this.admin);
-
-      })
+    this.adminService.getAdminShortData().subscribe((res) => {
+      this.admin = res.data;
+      console.log('admin', this.admin);
+    });
   }
 
   getOrderDetailsById() {
-    this.orderService.getOrderDetails(this.id)
-      .subscribe(
-        (res) => {
-          this.order = res.data;
-          this.orderAnother = res.data;
-          console.log("edit order details", this.order);
+    this.orderService.getOrderDetails(this.id).subscribe(
+      (res) => {
+        this.order = res.data;
+        this.orderAnother = res.data;
+        console.log('edit order details', this.order);
 
-          this.products = this.order.orderedItems;
+        this.products = this.order.orderedItems;
 
-          this.products.forEach((item) => {
-            item.product.variantFormArray.forEach((variant) => {
-              if (item.sku === variant.variantSku) {
-                item.maxQuantity = item.quantity + variant.variantQuantity;
-                item.oldQuantity = item.quantity;
-              }
-            })
-          })
+        this.products.forEach((item) => {
+          item.product.variantFormArray.forEach((variant) => {
+            if (item.sku === variant.variantSku) {
+              item.maxQuantity = item.quantity + variant.variantQuantity;
+              item.oldQuantity = item.quantity;
+            }
+          });
+        });
 
-          this.holdProducts = [...this.products];
+        this.holdProducts = [...this.products];
 
-          //console.log("holdProducts",this.holdProducts)
-          this.patchVariant();
-
-        }, (err) => {
-          console.log(err);
-        }
-      );
+        //console.log("holdProducts",this.holdProducts)
+        this.patchVariant();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
-
   getAmount(item) {
-    return Math.round((item?.price * item?.quantity + item.tax * item?.quantity))
+    return Math.round(item?.price * item?.quantity + item.tax * item?.quantity);
   }
 
   setThumbnailImage(data) {
@@ -139,8 +135,6 @@ export class EditOrderComponent implements OnInit {
     return option.split(',');
   }
 
-
-
   getVariantInfo(skuId) {
     // let array = this.product.variantFormArray;
     // this.selectedVariantData = array.find(
@@ -149,22 +143,19 @@ export class EditOrderComponent implements OnInit {
   }
 
   patchVariant() {
-
     for (let a = 0; a < this.order.orderedItems.length; a++) {
-
       this.clickActive[a] = [];
       let num = this.order.orderedItems[a].sku.split('-');
-      console.log("patch variat fun", num[1]);
+      console.log('patch variat fun', num[1]);
       for (let i = 0; i < num[1].length; i++) {
         this.clickActive[a][i] = Number(num[1][i]);
       }
-      console.log("this.clickActive",this.clickActive);
+      console.log('this.clickActive', this.clickActive);
     }
   }
 
-
   onSelectItem(data: Product): void {
-    console.log("Selected Product Data", data);
+    console.log('Selected Product Data', data);
     let product = {
       orderType: 'regular',
       price: data.sellingPrice,
@@ -190,11 +181,10 @@ export class EditOrderComponent implements OnInit {
       status: 0,
       tax: 0,
       delete: true,
-      variantStatus:false,
+      variantStatus: false,
     };
 
-
-    console.log("Selected Product product", product);
+    console.log('Selected Product product', product);
 
     this.products.push(product);
     this.clickActive.push([]);
@@ -202,31 +192,37 @@ export class EditOrderComponent implements OnInit {
   }
 
   getVariantQuantity(mainProduct, variant) {
-    console.log("this is tax",mainProduct)
+    console.log('this is tax', mainProduct);
 
     if (variant.variantContinueSelling == true) {
-
-      mainProduct.maxQuantity = variant.variantQuantity > 0 ? variant.variantQuantity : Number.MAX_VALUE
-      return [1,mainProduct.maxQuantity];
+      mainProduct.maxQuantity =
+        variant.variantQuantity > 0
+          ? variant.variantQuantity
+          : Number.MAX_VALUE;
+      return [1, mainProduct.maxQuantity];
     } else {
-      mainProduct.maxQuantity = variant.variantQuantity
-      const v = variant.variantQuantity > 0 ? 1 : 0
+      mainProduct.maxQuantity = variant.variantQuantity;
+      const v = variant.variantQuantity > 0 ? 1 : 0;
 
-      return [v,mainProduct.maxQuantity];
+      return [v, mainProduct.maxQuantity];
     }
   }
 
-
-
   calculateTax(data, quantity) {
-    if(data.product.hasTax){
-      if(data.product?.hasVariant ){
-        return Math.round((data.variant[0].variantPrice*data.product.tax)/100) * quantity;
-      }else{
-        return Math.round((data.product.sellingPrice*data.product.tax)/100) * quantity;
+    if (data.product.hasTax) {
+      if (data.product?.hasVariant) {
+        return (
+          Math.round((data.variant[0].variantPrice * data.product.tax) / 100) *
+          quantity
+        );
+      } else {
+        return (
+          Math.round((data.product.sellingPrice * data.product.tax) / 100) *
+          quantity
+        );
       }
     }
-    return 0
+    return 0;
   }
 
   // calculateTotalTax() {
@@ -240,26 +236,30 @@ export class EditOrderComponent implements OnInit {
   //   return Math.floor(this.tax);
   // }
 
-
   onSelectVariant(sku, name, index, row, col) {
     this.clickActive[index][row] = col;
     this.setSku();
     let pSku = this.products[index].sku;
     //console.log(pSku);
     let tempTax;
-    let variant = this.products[index].product.variantFormArray.filter(function (el) {
-      return el.variantSku === pSku
-    });
+    let variant = this.products[index].product.variantFormArray.filter(
+      function (el) {
+        return el.variantSku === pSku;
+      }
+    );
 
-    console.log(" this.products variant[0]", this.products[index].product);
+    console.log(' this.products variant[0]', this.products[index].product);
 
     this.products[index].price = variant[0].variantPrice;
     const tempV = this.getVariantQuantity(this.products, variant[0]);
-    this.products[index].quantity =tempV[0];
-    this.products[index].maxQuantity=tempV[1];
-    this.products[index].tax = Math.round((variant[0].variantPrice*(50))/100) * this.products[index].quantity
-    this.products[index].variantStockStatus = this.products[index].quantity ==0 ? false:true;
-    this.products[index].variantStatus=true;
+    this.products[index].quantity = tempV[0];
+    this.products[index].maxQuantity = tempV[1];
+    this.products[index].tax =
+      Math.round((variant[0].variantPrice * 50) / 100) *
+      this.products[index].quantity;
+    this.products[index].variantStockStatus =
+      this.products[index].quantity == 0 ? false : true;
+    this.products[index].variantStatus = true;
   }
 
   removeProduct(i) {
@@ -271,7 +271,7 @@ export class EditOrderComponent implements OnInit {
 
   setSku() {
     for (let i = 0; i < this.products.length; i++) {
-      let sku = this.products[i].product.sku + "-";
+      let sku = this.products[i].product.sku + '-';
       for (let x = 0; x < this.clickActive[i].length; x++) {
         sku += this.clickActive[i][x];
       }
@@ -280,53 +280,50 @@ export class EditOrderComponent implements OnInit {
   }
 
   onSubmit() {
-
-    this.products.forEach((p)=>{
-      if(p.variantStatus===false){
-        this.isPermited = false
-        this.uiService.warn("Please select a variant")
-
-      }else if(p.variantStockStatus===false){
-        this.isPermited = false
-        this.uiService.warn("Stock out, please select another variant/product")
-      }else{
-        this.isPermited = true
+    this.products.forEach((p) => {
+      if (p.variantStatus === false) {
+        this.isPermited = false;
+        this.uiService.warn('Please select a variant');
+      } else if (p.variantStockStatus === false) {
+        this.isPermited = false;
+        this.uiService.warn('Stock out, please select another variant/product');
+      } else {
+        this.isPermited = true;
       }
-    })
+    });
 
-    if(this.isPermited){
-    console.log("_-------------------------")
-    this.setSku();
-    this.order.orderedItems = this.products;
-    let dt0 = new Date();
-    let dt = this.utilsService.getCurrentDMY()
-    let sku = ""
+    if (this.isPermited) {
+      console.log('_-------------------------');
+      this.setSku();
+      this.order.orderedItems = this.products;
+      let dt0 = new Date();
+      let dt = this.utilsService.getCurrentDMY();
+      let sku = '';
 
-    let orderStatus = {
-      status: "Order Edited",
-      adminInfo: this.admin.name,
-      time: dt,
-      sku: this.order.orderedItems[0].sku,
-      dateTime: dt0,
-      statusNote: this.dataForm.value.statusNote
+      let orderStatus = {
+        status: 'Order Edited',
+        adminInfo: this.admin.name,
+        time: dt,
+        sku: this.order.orderedItems[0].sku,
+        dateTime: dt0,
+        statusNote: this.dataForm.value.statusNote,
+      };
+
+      this.order.orderStatusTimeline.push(orderStatus);
+
+      this.orderService.updateOrderById(this.order).subscribe(
+        (res) => {
+          this.order;
+          this.uiService.success(res.message);
+          this.getOrderDetailsById();
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    } else {
+      console.log('from else');
     }
-
-    this.order.orderStatusTimeline.push(orderStatus);
-
-
-    this.orderService.updateOrderById(this.order)
-      .subscribe(res => {
-        this.order
-        this.uiService.success(res.message);
-        this.getOrderDetailsById()
-      }, err => {
-        console.log(err);
-
-      })
-    }else{
-      console.log("from else")
-    }
-
   }
 
   incrementQty(i: number) {
@@ -343,7 +340,6 @@ export class EditOrderComponent implements OnInit {
     } else {
       this.products[i].quantity += 1;
     }
-
 
     // if (variantSku?.variantQuantity) {
     //   this.products[i].quantity += 1;
@@ -367,15 +363,7 @@ export class EditOrderComponent implements OnInit {
       return;
     }
     this.products[i].quantity -= 1;
-
   }
-
-
-
-
-
-
-
 
   /***Search */
 
@@ -481,6 +469,4 @@ export class EditOrderComponent implements OnInit {
   getDeliveryFee() {
     return 0;
   }
-
-
 }

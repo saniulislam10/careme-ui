@@ -14,8 +14,16 @@
       <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
         <div class="table-filter-area">
           <form class="search-form" #searchForm="ngForm">
-            <input #searchInput (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel nz-input
-              placeholder="Search here" nzSize="large">
+            <input
+              #searchInput
+              (focus)="handleFocus($event)"
+              name="searchTerm"
+              autocomplete="off"
+              ngModel
+              nz-input
+              placeholder="Search here"
+              nzSize="large"
+            />
           </form>
           <ul>
             <li>
@@ -37,28 +45,54 @@
               </button>
               <nz-dropdown-menu #sortMenu="nzDropdownMenu">
                 <ul nz-menu nzSelectable>
-                  <li nz-menu-item (click)="sortData({orderId: -1}, 1)"> Order Number(High to low) </li>
-                  <li nz-menu-item (click)="sortData({orderId: 1}, 2)"> Order Number(Low to High) </li>
-                  <li nz-menu-item (click)="sortData({createdAt: 1}, 3)"> Created (oldest first) </li>
-                  <li nz-menu-item (click)="sortData({createdAt: -1}, 4)"> Created (newest first) </li>
-                  <li nz-menu-item (click)="sortData({fullName: -1}, 5)"> Customer Name (A-Z) </li>
-                  <li nz-menu-item (click)="sortData({fullName: 1}, 6)"> Customer Name (Z-A) </li>
-                  <li nz-menu-item (click)="sortData({totalAmount: -1}, 5)"> Amount(High to low) </li>
-                  <li nz-menu-item (click)="sortData({totalAmount: 1}, 6)"> Amount (Low to High) </li>
+                  <li nz-menu-item (click)="sortData({ orderId: -1 }, 1)">
+                    Order Number(High to low)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ orderId: 1 }, 2)">
+                    Order Number(Low to High)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ createdAt: 1 }, 3)">
+                    Created (oldest first)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ createdAt: -1 }, 4)">
+                    Created (newest first)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ fullName: -1 }, 5)">
+                    Customer Name (A-Z)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ fullName: 1 }, 6)">
+                    Customer Name (Z-A)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ totalAmount: -1 }, 5)">
+                    Amount(High to low)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ totalAmount: 1 }, 6)">
+                    Amount (Low to High)
+                  </li>
                 </ul>
               </nz-dropdown-menu>
             </li>
           </ul>
         </div>
         <div class="table-data-area">
-          <nz-table #rowSelectionTable [nzData]="orders" [nzLoading]="loading" [nzPageIndex]="currentPage"
-            [nzFrontPagination]="false" [nzTotal]="totalNumbers" (nzQueryParams)="onPageChanged($event)"
-            nzSize="small">
+          <nz-table
+            #rowSelectionTable
+            [nzData]="orders"
+            [nzLoading]="loading"
+            [nzPageIndex]="currentPage"
+            [nzFrontPagination]="false"
+            [nzTotal]="totalNumbers"
+            (nzQueryParams)="onPageChanged($event)"
+            nzSize="small"
+          >
             <thead>
               <tr>
-                <th style="width: 50px;" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
-                  (nzCheckedChange)="onAllChecked($event)">
-                </th>
+                <th
+                  style="width: 50px"
+                  [(nzChecked)]="checked"
+                  [nzIndeterminate]="indeterminate"
+                  (nzCheckedChange)="onAllChecked($event)"
+                ></th>
                 <th>Order ID & Date</th>
                 <th>Order Status</th>
                 <th>Customer</th>
@@ -69,25 +103,31 @@
             </thead>
             <tbody>
               <tr *ngFor="let data of rowSelectionTable.data">
-                <td style="width: 50px;" [nzChecked]="setOfCheckedId.has(data._id)"
-                  (nzCheckedChange)="onItemChecked(data._id, $event)">
-                </td>
+                <td
+                  style="width: 50px"
+                  [nzChecked]="setOfCheckedId.has(data._id)"
+                  (nzCheckedChange)="onItemChecked(data._id, $event)"
+                ></td>
                 <td>
-                  <a [routerLink]="['../../','order-details', data._id ]">
+                  <a [routerLink]="['../../', 'order-details', data._id]">
                     <h4>{{ data.orderId }}</h4>
-                    <h5>{{data.checkoutDate | date : 'short'}}</h5>
+                    <h5>{{ data.checkoutDate | date: "short" }}</h5>
                   </a>
                 </td>
                 <td class="invoice_status">
-                  <img src="/assets/svg/bw-in.svg" alt="">
+                  <img src="/assets/svg/bw-in.svg" alt="" />
                 </td>
                 <td>
-                  <span [routerLink]="['../../','customer', data.userId._id ]">
-                    {{data.userId.fullName ? data.userId.fullName : data.userId.phoneNo}}
+                  <span [routerLink]="['../../', 'customer', data.userId._id]">
+                    {{
+                      data.userId.fullName
+                        ? data.userId.fullName
+                        : data.userId.phoneNo
+                    }}
                   </span>
                 </td>
-                <td>{{data.totalAmount}}</td>
-                <td>{{data.advanceTotal}}</td>
+                <td>{{ data.totalAmount }}</td>
+                <td>{{ data.advanceTotal }}</td>
                 <td>
                   <i class="las la-lg la-comment"></i>
                 </td>
@@ -101,5 +141,8 @@
 </div>
 
 <div class="export-popup-area">
-  <app-export-popup (valueChange)='exportToExcel($event)' #export></app-export-popup>
+  <app-export-popup
+    (valueChange)="exportToExcel($event)"
+    #export
+  ></app-export-popup>
 </div>
