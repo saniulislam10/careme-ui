@@ -3,26 +3,34 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-deshboard',
   templateUrl: './deshboard.component.html',
-  styleUrls: ['./deshboard.component.scss']
+  styleUrls: ['./deshboard.component.scss'],
 })
 export class DeshboardComponent implements OnInit {
   deshMenu = false;
   openMap: { [name: string]: boolean } = {
     sub1: false,
     sub2: false,
-    sub3: false
+    sub3: false,
   };
 
-  constructor() { }
+  visible = false;
 
-  ngOnInit(): void {
+  open(): void {
+    this.visible = true;
   }
 
+  close(): void {
+    this.visible = false;
+  }
 
-  sideMenuActive(){
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  sideMenuActive() {
     this.deshMenu = true;
   }
-  sideMenuInactive(){
+  sideMenuInactive() {
     this.deshMenu = false;
   }
 
@@ -33,5 +41,4 @@ export class DeshboardComponent implements OnInit {
       }
     }
   }
-
 }

@@ -1,50 +1,134 @@
-<!---deshboard-->
-<div class="deshboard">
-    <div class="container">
-        <div class="deshboard-main">
-            <ul nz-menu nzMode="inline" style="width: 240px;">
-              <li
-                nz-menu-item
-                nzTitle="Dashboard"
-                routerLink="./summary"
-              >Dashboard</li>
-              <li
-                nz-submenu
-                [(nzOpen)]="openMap.sub1"
-                (nzOpenChange)="openHandler('sub1')"
-                nzTitle="My Account"
+<div class="container">
+  <div nz-row [nzGutter]="16">
+    <div nz-col [nzSpan]="24">
+      <div class="dashboard_main">
+        <nz-card
+          nzSize="small"
+          class="dashboard_menu"
+          [nzBodyStyle]="{ padding: '0px' }"
+        >
+          <!-- Only for mobile -->
+          <div class="mobile_only">
+            <div class="md_profile">
+              <div class="user_thumb">
+                <img
+                  nz-image
+                  width="100%"
+                  nzSrc="https://pihr-bucket.s3.ap-southeast-1.amazonaws.com/Production/PihrDocument/Employee/EmployeeImages/69/2355.jpeg"
+                  alt="Al Mamun"
+                />
+              </div>
+              <h2>Md.Al-Mamun</h2>
+            </div>
+            <div class="md_menu">
+              <button nz-button nzType="primary" (click)="open()">
+                <i class="las la-bars"></i>
+              </button>
+              <nz-drawer
+                [nzClosable]="true"
+                [nzVisible]="visible"
+                nzPlacement="left"
+                nzTitle="Quick Menu"
+                (nzOnClose)="close()"
+                [nzBodyStyle]="{ padding: '0px' }"
               >
-                <ul>
+                <ng-container *nzDrawerContent>
+                  <ul nz-menu nzMode="inline">
+                    <li nz-menu-item nzTitle="Dashboard" routerLink="./summary">
+                      Dashboard
+                    </li>
+                    <li
+                      nz-submenu
+                      [(nzOpen)]="openMap.sub1"
+                      (nzOpenChange)="openHandler('sub1')"
+                      nzTitle="My Account"
+                    >
+                      <ul>
+                        <li nz-menu-item routerLink="./account">My Account</li>
+                        <li nz-menu-item>Notifications</li>
+                        <li nz-menu-item>Payment Options</li>
+                        <li nz-menu-item>Vouchers</li>
+                      </ul>
+                    </li>
+                    <li
+                      nz-submenu
+                      [(nzOpen)]="openMap.sub2"
+                      (nzOpenChange)="openHandler('sub2')"
+                      nzTitle="Orders"
+                    >
+                      <ul>
+                        <li nz-menu-item routerLink="./orders">My Orders</li>
+                        <li nz-menu-item routerLink="./my-return">My Return</li>
+                        <li nz-menu-item routerLink="./canceled-orders">
+                          Canceled Order
+                        </li>
+                      </ul>
+                    </li>
+                    <li nz-menu-item routerLink="./reviews">My Reviews</li>
+                    <li nz-menu-item routerLink="./tickets">Tickets</li>
+                    <li nz-menu-item routerLink="./setting">Settings</li>
+                  </ul>
+                </ng-container>
+              </nz-drawer>
+            </div>
+          </div>
+
+          <!-- Only for Desktop -->
+          <div class="desktop_only">
+            <div class="profile">
+              <div class="user_thumb">
+                <img
+                  nz-image
+                  width="100%"
+                  nzSrc="https://pihr-bucket.s3.ap-southeast-1.amazonaws.com/Production/PihrDocument/Employee/EmployeeImages/69/2355.jpeg"
+                  alt="Al Mamun"
+                />
+              </div>
+              <h2>Md.Al-Mamun</h2>
+            </div>
+            <div class="menu">
+              <ul nz-menu nzMode="inline">
+                <li nz-menu-item nzTitle="Dashboard" routerLink="./summary">
+                  Dashboard
+                </li>
+                <li
+                  nz-submenu
+                  [(nzOpen)]="openMap.sub1"
+                  (nzOpenChange)="openHandler('sub1')"
+                  nzTitle="My Account"
+                >
+                  <ul>
                     <li nz-menu-item routerLink="./account">My Account</li>
                     <li nz-menu-item>Notifications</li>
                     <li nz-menu-item>Payment Options</li>
                     <li nz-menu-item>Vouchers</li>
-                </ul>
-              </li>
-              <li
-                nz-submenu
-                [(nzOpen)]="openMap.sub2"
-                (nzOpenChange)="openHandler('sub2')"
-                nzTitle="Orders"
-              >
-                <ul>
-                  <li nz-menu-item routerLink="./orders">My Orders</li>
-                  <li nz-menu-item routerLink="./my-return">My Return</li>
-                  <li nz-menu-item routerLink="./canceled-orders">Canceled Order</li>
-                </ul>
-              </li>
-              <li nz-menu-item routerLink="./reviews">My Reviews</li>
-              <li nz-menu-item routerLink="./tickets">Tickets</li>
-              <li nz-menu-item routerLink="./setting">Settings</li>
-            </ul>
-            <!---deshboard-page-render-->
-            <div class="deshboard-page-render">
-                <!---menu-bar-->
-                <div class="menu-bar">
-                    <span (click)="sideMenuActive()"><i class="fa fa-bars"></i></span>
-                </div>
-                <router-outlet></router-outlet>
+                  </ul>
+                </li>
+                <li
+                  nz-submenu
+                  [(nzOpen)]="openMap.sub2"
+                  (nzOpenChange)="openHandler('sub2')"
+                  nzTitle="Orders"
+                >
+                  <ul>
+                    <li nz-menu-item routerLink="./orders">My Orders</li>
+                    <li nz-menu-item routerLink="./my-return">My Return</li>
+                    <li nz-menu-item routerLink="./canceled-orders">
+                      Canceled Order
+                    </li>
+                  </ul>
+                </li>
+                <li nz-menu-item routerLink="./reviews">My Reviews</li>
+                <li nz-menu-item routerLink="./tickets">Tickets</li>
+                <li nz-menu-item routerLink="./setting">Settings</li>
+              </ul>
             </div>
+          </div>
+        </nz-card>
+        <div class="dashboard_body">
+          <router-outlet></router-outlet>
         </div>
+      </div>
     </div>
+  </div>
 </div>
