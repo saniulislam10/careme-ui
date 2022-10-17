@@ -4,7 +4,13 @@
     <h3>Edit Order</h3>
   </div>
   <div class="create-order-header-right">
-    <span><i mat-dialog-close class="fa-solid fa-xmark" [routerLink]="['../../', 'order-details', order._id]"></i></span>
+    <span
+      ><i
+        mat-dialog-close
+        class="fa-solid fa-xmark"
+        [routerLink]="['../../', 'order-details', order._id]"
+      ></i
+    ></span>
   </div>
 </div>
 
@@ -13,11 +19,11 @@
     <div class="edit_order_left">
       <div class="edit_order_left_content">
         <h3>Name</h3>
-        <p>: {{order?.name}}</p>
+        <p>: {{ order?.name }}</p>
       </div>
       <div class="edit_order_left_content">
         <h3>Phone</h3>
-        <p>: {{order?.phoneNo}}</p>
+        <p>: {{ order?.phoneNo }}</p>
       </div>
       <!-- <div class="edit_order_left_content">
         <h3>Email</h3>
@@ -25,12 +31,12 @@
       </div> -->
       <div class="edit_order_left_content">
         <h3>Adress</h3>
-        <p>: {{order?.shippingAddress}}</p>
+        <p>: {{ order?.shippingAddress }}</p>
       </div>
     </div>
     <div class="edit_order_right">
       <div class="edit_person_image">
-        <img src="/assets/images/avatar/user-cmnt.png" alt="">
+        <img src="/assets/images/avatar/user-cmnt.png" alt="" />
       </div>
     </div>
   </div>
@@ -40,9 +46,19 @@
       <div class="search_inside_div" (click)="onClickSearchArea($event)">
         <mat-icon>search</mat-icon>
         <div>
-          <form class="form-field" #searchForm=ngForm>
-            <input #searchInput id="searchInput" class="form-inp" type="text" placeholder="Search in caremebd..."
-              (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel required>
+          <form class="form-field" #searchForm="ngForm">
+            <input
+              #searchInput
+              id="searchInput"
+              class="form-inp"
+              type="text"
+              placeholder="Search in caremebd..."
+              (focus)="handleFocus($event)"
+              name="searchTerm"
+              autocomplete="off"
+              ngModel
+              required
+            />
             <div *ngIf="isLoading" class="sk-fading-circle">
               <div class="sk-circle1 sk-circle"></div>
               <div class="sk-circle2 sk-circle"></div>
@@ -58,23 +74,36 @@
               <div class="sk-circle12 sk-circle"></div>
             </div>
           </form>
-
         </div>
         <div class="search_add_button">
           <button><span>+</span>Add</button>
         </div>
       </div>
-      <ul style="width: 400px;" id="auto-suggestion" class="auto-complete-box"
-        [ngClass]="searchProducts.length > 0 && isOpen ? 'active' : ''">
-        <li class="list-view" *ngFor="let data of searchProducts" (click)="onSelectItem(data)">
-          <img class="img-thumb"
-            [src]="data.images && data.images.length > 0 ? data.images[0] : '/assets/images/placeholder/test.png'"
-            [alt]="data?.productName">
+      <ul
+        style="width: 400px"
+        id="auto-suggestion"
+        class="auto-complete-box"
+        [ngClass]="searchProducts.length > 0 && isOpen ? 'active' : ''"
+      >
+        <li
+          class="list-view"
+          *ngFor="let data of searchProducts"
+          (click)="onSelectItem(data)"
+        >
+          <img
+            class="img-thumb"
+            [src]="
+              data.images && data.images.length > 0
+                ? data.images[0]
+                : '/assets/images/placeholder/test.png'
+            "
+            [alt]="data?.productName"
+          />
           <div class="desc">
-            <h3>{{data?.name}}</h3>
+            <h3>{{ data?.name }}</h3>
           </div>
           <div class="price">
-            <h5>৳{{data.sellingPrice}}</h5>
+            <h5>৳{{ data.sellingPrice }}</h5>
             <p class="discount">
               <!-- {{(data | price: 'discountPercentage') > 0 ? '(' + (data | price: 'discountPercentage') + '% OFF)' : ''}} -->
             </p>
@@ -95,7 +124,6 @@
       </mat-form-field>
     </div>
   </div>
-
 
   <!-- <div class="edit_order_table">
     <div class="main_table">
@@ -162,8 +190,6 @@
     </div>
   </div> -->
 
-
-
   <div class="order-table-main">
     <!---table-->
     <div class="table">
@@ -174,8 +200,14 @@
           <div class="table-heading id">
             <h3>Item name</h3>
           </div>
-          <div class="table-heading date"  *ngFor="let variant of products[0]?.product?.variants; let i=index">
-            <h3>{{variant}}</h3>
+          <div
+            class="table-heading date"
+            *ngFor="
+              let variant of products[0]?.product?.variants;
+              let i = index
+            "
+          >
+            <h3>{{ variant }}</h3>
           </div>
           <div class="table-heading item">
             <h3>Vendor</h3>
@@ -192,111 +224,136 @@
           <div class="table-heading pay-status">
             <h3>Total Price</h3>
           </div>
-          </div>
         </div>
       </div>
-      <!----table-body-->
-      <div class="table-body">
-        <div class="table-row second"
-        *ngFor="let data of products; let a=index">
+    </div>
+    <!----table-body-->
+    <div class="table-body">
+      <div
+        class="table-row second"
+        *ngFor="let data of products; let a = index"
+      >
         <!-- {{data | json}} -->
-          <div class="table-data id" >
-            <div class="product">
-              <div class="product-img">
-                <img [src]="data?.product ? setThumbnailImage(data.product) : '/assets/images/placeholder/test.png'"
-                  alt="item.product.name">
-              </div>
-              <div class="product-info">
-                <h3>{{data?.product?.name}}</h3>
-                <!--                      <h5>Earn <span>+50</span> or redeem <span>-50</span> <img src="./assets/svg/coin.svg" alt=""></h5>-->
-                <p>SKU: {{data?.product?.sku}}</p>
-              </div>
+        <div class="table-data id">
+          <div class="product">
+            <div class="product-img">
+              <img
+                [src]="
+                  data?.product
+                    ? setThumbnailImage(data.product)
+                    : '/assets/images/placeholder/test.png'
+                "
+                alt="item.product.name"
+              />
+            </div>
+            <div class="product-info">
+              <h3>{{ data?.product?.name }}</h3>
+              <!--                      <h5>Earn <span>+50</span> or redeem <span>-50</span> <img src="./assets/svg/coin.svg" alt=""></h5>-->
+              <p>SKU: {{ data?.product?.sku }}</p>
             </div>
           </div>
-          <div class="table-data date" *ngFor="let variant of data?.product?.variants; let i=index">
-            <div class="small_widht_select">
-              <mat-form-field appearance="outline">
-                <mat-label>Select </mat-label>
-                <mat-select [value]="this.clickActive[a][i]">
-                  <mat-option *ngFor="let option of getOptions(data?.product?.options[i]); let x=index" [value]="x"
-                    (click)="onSelectVariant(data.sku,data?.product?.variants[i],a,i, x)">{{option}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="table-data item">
-            <span>{{data?.product.vendor}}</span>
-          </div>
-          <div class="table-data item">
-            <span>{{data?.price}} </span>
-          </div>
-          <div class="table-data amount">
-            <h3>{{data?.tax}}</h3>
-          </div>
-          <div class="table-data pay-status">
-            <div class="table-input qty-input">
-              <button class="inc" (click)="decrementQty(a)">-</button>
-              <h2>{{data.quantity}}</h2>
-              <button class="inc" (click)="incrementQty(a)">+</button>
-            </div>
-          </div>
-          <div class="table-data order-status">
-            <span>{{getAmount(data)}}tk</span>
-          </div>
-          <div *ngIf="data.delete" class="table-data order-status delete" (click)="removeProduct(a)" >
-            <mat-icon>delete_forever</mat-icon>
+        </div>
+        <div
+          class="table-data date"
+          *ngFor="let variant of data?.product?.variants; let i = index"
+        >
+          <div class="small_widht_select">
+            <mat-form-field appearance="outline">
+              <mat-label>Select </mat-label>
+              <mat-select [value]="this.clickActive[a][i]">
+                <mat-option
+                  *ngFor="
+                    let option of getOptions(data?.product?.options[i]);
+                    let x = index
+                  "
+                  [value]="x"
+                  (click)="
+                    onSelectVariant(
+                      data.sku,
+                      data?.product?.variants[i],
+                      a,
+                      i,
+                      x
+                    )
+                  "
+                  >{{ option }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
           </div>
         </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- invoice custom notes -->
-  <div class="custom_notes_field">
-    <div class="custom_note">
-      <h1>Reason for edit:</h1>
-      <form [formGroup]="dataForm">
-
-        <mat-form-field class="example-full-width" appearance="outline">
-          <textarea matInput formControlName="statusNote"></textarea>
-        </mat-form-field>
-      </form>
-    </div>
-    <div class="invoice_total">
-      <div class="all_invoice_field">
-        <div class="invoice_total_main subtotal">
-          <p>Subtotal:</p>
-          <p>{{calculateSubTotal()}}tk</p>
+        <div class="table-data item">
+          <span>{{ data?.product.vendor }}</span>
         </div>
-        <div class="invoice_total_main ">
-          <p>Delivery Fee:</p>
-          <!-- <p>{{getDeliveryFee()}}</p> -->
-          <p>{{120}} TK</p>
+        <div class="table-data item">
+          <span>{{ data?.price }} </span>
         </div>
-        <div class="total_horizontal_line "></div>
-        <div class="total">
-          <p>Total(BDT):</p>
-          <p>{{calculateSubTotal() + 120}}tK</p>
+        <div class="table-data amount">
+          <h3>{{ data?.tax }}</h3>
         </div>
-        <div class="paid">
-          <p>Paid(BDT):</p>
-          <p class="paid_taka">0tk</p>
+        <div class="table-data pay-status">
+          <div class="table-input qty-input">
+            <button class="inc" (click)="decrementQty(a)">-</button>
+            <h2>{{ data.quantity }}</h2>
+            <button class="inc" (click)="incrementQty(a)">+</button>
+          </div>
         </div>
-        <div class="total_horizontal_line"></div>
-        <div class="due">
-          <p>Due(BDT):</p>
-          <p class="due_taka">{{calculateSubTotal() + 120}}tk</p>
+        <div class="table-data order-status">
+          <span>{{ getAmount(data) }}tk</span>
+        </div>
+        <div
+          *ngIf="data.delete"
+          class="table-data order-status delete"
+          (click)="removeProduct(a)"
+        >
+          <mat-icon>delete_forever</mat-icon>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="invoice_buttons">
-    <div class="save_print_button">
-      <button mat-stroked-button type="button" (click)="onSubmit()">Save </button>
-    </div>
-
-
-
+<!-- invoice custom notes -->
+<div class="custom_notes_field">
+  <div class="custom_note">
+    <h1>Reason for edit:</h1>
+    <form [formGroup]="dataForm">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <textarea matInput formControlName="statusNote"></textarea>
+      </mat-form-field>
+    </form>
   </div>
+  <div class="invoice_total">
+    <div class="all_invoice_field">
+      <div class="invoice_total_main subtotal">
+        <p>Subtotal:</p>
+        <p>{{ calculateSubTotal() }}tk</p>
+      </div>
+      <div class="invoice_total_main">
+        <p>Delivery Fee:</p>
+        <!-- <p>{{getDeliveryFee()}}</p> -->
+        <p>{{ 120 }} TK</p>
+      </div>
+      <div class="total_horizontal_line"></div>
+      <div class="total">
+        <p>Total(BDT):</p>
+        <p>{{ calculateSubTotal() + 120 }}tK</p>
+      </div>
+      <div class="paid">
+        <p>Paid(BDT):</p>
+        <p class="paid_taka">0tk</p>
+      </div>
+      <div class="total_horizontal_line"></div>
+      <div class="due">
+        <p>Due(BDT):</p>
+        <p class="due_taka">{{ calculateSubTotal() + 120 }}tk</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="invoice_buttons">
+  <div class="save_print_button">
+    <button mat-stroked-button type="button" (click)="onSubmit()">Save</button>
+  </div>
+</div>
