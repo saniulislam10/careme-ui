@@ -150,6 +150,9 @@
                       TK
                     </h3>
                   </div>
+                  <div class="advanch-price" *ngIf="!data?.product.canPartialPayment">
+                    <h3 style="color:#016d01">Cash on Delivery</h3>
+                  </div>
                   <div class="total-price">
                     <span>Total:</span>
                     <h3>{{ cartSubTotal(data) }} TK</h3>
