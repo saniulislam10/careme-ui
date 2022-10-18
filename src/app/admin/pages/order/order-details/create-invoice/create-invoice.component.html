@@ -277,7 +277,7 @@
                   <h3>Adjustment</h3>
                 </div>
                 <div class="total-price">
-                  <input nz-input class="color-red smallInput"  [(ngModel)]="adjustmentAmount" type="number" [value]="adjustmentAmount"/>
+                  <input nz-input class="color-red smallInput"  [(ngModel)]="adjustmentAmount" type="number" [value]="adjustmentAmount" (change)="changeAdjust($event.target.value)"/>
                 </div>
               </li>
 
@@ -291,7 +291,7 @@
                   <h3>Total Due =</h3>
                 </div>
                 <div class="total-price">
-                  <h4>{{calculateSubTotal() + shippingCharge+adjustmentAmount-redeemedPoints-couponAmount}} TK</h4>
+                  <h4>{{getTotalDue() }} TK</h4>
                 </div>
               </li>
             </ul>

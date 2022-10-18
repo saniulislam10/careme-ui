@@ -1,5 +1,11 @@
 @import "./../../../../../theme/variables";
 
+nz-table{
+  overflow-x: scroll;
+  
+}
+
+
 .header-left{
   display: flex;
   align-items: center;

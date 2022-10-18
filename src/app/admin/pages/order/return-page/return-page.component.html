@@ -47,58 +47,46 @@
           </ul>
         </div>
         <div class="table-data-area">
-          <nz-table
-            nzSize="small"
-            #rowSelectionTable
-            nzShowSizeChanger
-            [nzLoading]="isLoading"
-            [nzData]="returns"
-            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
-          >
+          <nz-table nzSize="small" #rowSelectionTable nzShowSizeChanger [nzLoading]="isLoading" [nzData]="returns"
+            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
             <thead>
-            <tr>
-              <th
-                style="width: 50px"
-                [(nzChecked)]="checked"
-                [nzIndeterminate]="indeterminate"
-                [nzLoading]="isLoading"
-                (nzCheckedChange)="onAllChecked($event)"
-              ></th>
-              <th>Return ID & Date</th>
-              <th>Initiated By</th>
-              <th>Invoice ID</th>
-              <th>Return Status</th>
-              <th>Sales Order</th>
-              <th>Customer</th>
-              <th>Received Qty</th>
-              <th>Return (TK)</th>
-              <th>Refund (TK)</th>
-            </tr>
+              <tr>
+                <th style="width: 50px" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
+                  [nzLoading]="isLoading" (nzCheckedChange)="onAllChecked($event)"></th>
+                <th>Return ID & Date</th>
+                <th>Initiated By</th>
+                <th>Invoice ID</th>
+                <th>Return Status</th>
+                <th>Sales Order</th>
+                <th>Customer</th>
+                <th>Received Qty</th>
+                <th>Return (TK)</th>
+                <th>Refund (TK)</th>
+              </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let data of rowSelectionTable.data">
-              <td
-                style="width: 50px"
-                [nzChecked]="setOfCheckedId.has(data.id)"
-                (nzCheckedChange)="onItemChecked(data.id, $event)"
-              ></td>
-              <td>
-                <a
-                  [routerLink]="['../', 'details', data.returnId]"
-                >
-                  {{ data.returnId }}
-                  <h5>{{ data.createdAt | date: "short" }}</h5>
-                </a>
-              </td>
-              <td>SUPERADMIN</td>
-              <td><a [routerLink]="['../', 'invoice', data.invoiceId]">{{ data.invoiceId }}</a></td>
-              <td>PENDING</td>
-              <td>{{ data.orderNumber }}</td>
-              <td>Pending</td>
-              <td>{{totalRecieved(data)}}</td>
-              <td>{{data.subTotal}}</td>
-              <td>0</td>
-            </tr>
+              <tr *ngFor="let data of rowSelectionTable.data">
+                <td style="width: 50px" [nzChecked]="setOfCheckedId.has(data.id)"
+                  (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+                <td>
+                  <a [routerLink]="['../', 'details', data.returnId]">
+                    {{ data.returnId }}
+                    <h5>{{ data.createdAt | date: "short" }}</h5>
+                  </a>
+                </td>
+                <td>SUPERADMIN</td>
+                <td><a [routerLink]="['../../', 'invoice', data.invoiceId]">{{ data.invoiceId }}</a></td>
+                <td>PENDING</td>
+                <td>
+                  <a [routerLink]="['../../', 'order', data.orderNumber]">
+                    {{ data.orderNumber }}
+                  </a>
+                </td>
+                <td>Pending</td>
+                <td>{{totalRecieved(data)}}</td>
+                <td>{{data.subTotal}}</td>
+                <td>0</td>
+              </tr>
             </tbody>
           </nz-table>
         </div>

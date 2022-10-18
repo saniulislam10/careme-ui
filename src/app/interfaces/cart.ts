@@ -18,6 +18,7 @@ export interface Cart {
   deliveryDateFrom?: any;
   deliveryDateTo?: any;
   variantName?: string;
+  vendor?: any;
 }
 export interface Variant {
   variantVendorName?: any;

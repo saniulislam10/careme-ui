@@ -364,6 +364,7 @@ export class ProductDetailsComponent implements OnInit {
       product: this.product?._id,
       selectedQty: this.selectedQty,
       variant: this.selectedVariantData,
+      vendor: this.product.hasVariant ? this.selectedVariantData.variantVendorName.name : this.product.vendor.name,
       selectedGlobalVariants: this.globalQuantity ? this.globalQuantity : null,
       deliveryDateFrom: this.deliveryDateFrom,
       deliveryDateTo: this.deliveryDateTo,
@@ -392,7 +393,6 @@ export class ProductDetailsComponent implements OnInit {
 
   // add to cart button
   activeCartBtn() {
-    console.log("USer Auth", this.isUserAuth)
     if (!this.isUserAuth) {
       this.openRegistrationDialog();
       return

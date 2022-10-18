@@ -171,12 +171,11 @@ export class CartComponent implements OnInit {
         this.carts = this.mCarts.filter((m) => m.isSelected);
         console.log(this.mCarts);
         const fCarts = this.mCarts.map((m) => {
+          console.log(m.vendor);
           return {
             ...m,
             // variant: m.variant[0],
-            vendorName: m.product.hasVariant
-              ? m.variant[0].variantVendorName.name
-              : m.product.vendor.name,
+            vendorName: m.vendor,
           };
         });
 

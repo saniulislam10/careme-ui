@@ -5,43 +5,26 @@
       <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 17 }">
         <nz-card class="cart_page_actions" nzSize="small">
           <div class="cart_actions">
-            <label
-              nz-checkbox
-              [(ngModel)]="isCheckedButton"
-              [nzDisabled]="isDisabledButton"
-            >
+            <label nz-checkbox [(ngModel)]="isCheckedButton" [nzDisabled]="isDisabledButton">
               Select all Items
             </label>
-            <span
-              [style]="isCheckedButton ? 'display: Block' : 'display: None'"
-              (click)="deleteUserCartList()"
-            >
+            <span [style]="isCheckedButton ? 'display: Block' : 'display: None'" (click)="deleteUserCartList()">
               <i style="color: #e62e04" class="las la-lg la-trash-alt"></i>
               DELETE
             </span>
           </div>
         </nz-card>
-        <nz-card
-          class="cart_single_vendor"
-          nzSize="small"
-          *ngFor="let group of vCarts; let gi = index"
-        >
+        <nz-card class="cart_single_vendor" nzSize="small" *ngFor="let group of vCarts; let gi = index">
           <div class="cart_single_vendor-head">
-            <label nz-checkbox [(ngModel)]="isCheckedButton"> Care Me </label>
+
+            <label nz-checkbox [(ngModel)]="isCheckedButton"> {{group._id}} </label>
           </div>
           <ul class="cart_vendor-items">
-            <li
-              class="cart_vendor_single-items"
-              *ngFor="let data of group.data; let di = index"
-            >
+            <li class="cart_vendor_single-items" *ngFor="let data of group.data; let di = index">
               <div class="cart_single_vendor-items-details">
                 <div class="items-thumb">
                   <label nz-checkbox [(ngModel)]="isCheckedButton"></label>
-                  <img
-                    nz-image
-                    [nzSrc]="getThumbImage(data)"
-                    [alt]="data.product?.name"
-                  />
+                  <img nz-image [nzSrc]="getThumbImage(data)" [alt]="data.product?.name" />
                 </div>
                 <div class="items-details">
                   <h2>
@@ -49,36 +32,48 @@
                   </h2>
                   <div class="items-details_info">
                     <div class="product_point">
-                      <span>
-                        {{ data.variant[0].variant}}
-                        <i
-                          (click)="showModal(gi, di, data?.variant[0])"
-                          class="las la-lg la-edit"
-                        ></i>
+                      <span *ngIf="data?.variant.length">
+                        {{ data?.variant[0].variant}}
+                        <i (click)="showModal(gi, di, data?.variant[0])" class="las la-lg la-edit"></i>
                       </span>
                       <span *ngIf="data?.product?.canEarnPoints">, </span>
                       <span *ngIf="data?.product?.canEarnPoints">
-                        <i
-                          style="color: #ff9100"
-                          class="las la-lg la-coins"
-                        ></i>
-                        <span style="color: #016d01">
+                        <i style="color: #ff9100" class="las la-lg la-coins"></i>
+                        <span style="color: #016d01" *ngIf="data?.variant.length">
                           {{
-                            data?.product
-                              | coin
-                                : "earn"
-                                : data?.selectedQty
-                                : data.variant[0].variantPrice
+                          data?.product
+                          | coin
+                          : "earn"
+                          : data?.selectedQty
+                          : data.variant[0].variantPrice
+                          }}
+                        </span>
+                        <span style="color: #016d01" *ngIf="!data?.variant.length">
+                          {{
+                          data?.product
+                          | coin
+                          : "earn"
+                          : data?.selectedQty
+                          : data.product.sellingPrice
                           }}
                         </span>
                         <span> / </span>
-                        <span style="color: #ff7300">
+                        <span style="color: #ff7300" *ngIf="data?.variant.length">
                           {{
-                            data?.product
-                              | coin
-                                : "redeem"
-                                : data?.selectedQty
-                                : data.variant[0].variantPrice
+                          data?.product
+                          | coin
+                          : "redeem"
+                          : data?.selectedQty
+                          : data.variant[0].variantPrice
+                          }}
+                        </span>
+                        <span style="color: #ff7300" *ngIf="!data?.variant.length">
+                          {{
+                          data?.product
+                          | coin
+                          : "redeem"
+                          : data?.selectedQty
+                          : data.product.sellingPrice
                           }}
                         </span>
                       </span>
@@ -99,20 +94,25 @@
               <div class="cart_single_vendor-items-price">
                 <div id="mb2" class="vendor-items-price">
                   <div class="unit_charge">
-                    <p>
+                    <p *ngIf="data?.variant.length">
                       Price:
                       {{
-                        data?.product
-                          | price: "variant":1:data?.variant[0]?.variantPrice
+                      data?.product
+                      | price: "variant":1:data?.variant[0]?.variantPrice
                       }}
+                      TK
+                    </p>
+                    <p *ngIf="!data?.variant.length">
+                      Price:
+                      {{data?.product.sellingPrice}}
                       TK
                     </p>
                     <p>
                       Tax:
                       {{
-                        data?.product?.hasTax
-                          ? getTax(data?.product?.tax, data, data?.selectedQty)
-                          : "0"
+                      data?.product?.hasTax
+                      ? getTax(data?.product?.tax, data, data?.selectedQty)
+                      : "0"
                       }}
                       TK
                     </p>
@@ -120,10 +120,8 @@
                 </div>
                 <div id="mb1" class="vendor-items-qt">
                   <div class="items-quantity">
-                    <button [disabled]="data.selectedQty <= 1"
-                      nz-button
-                      (click)="decrementQty(data?._id, i, data.selectedQty)"
-                    >
+                    <button [disabled]="data.selectedQty <= 1" nz-button
+                      (click)="decrementQty(data?._id, i, data.selectedQty)">
                       <i class="las la-minus"></i>
                     </button>
                     <input nz-input [value]="data.selectedQty" />
@@ -135,13 +133,23 @@
                 <div id="mb3" class="moboff vendor-items-total_price">
                   <div class="advanch-price">
                     <span>({{ data?.product.partialPayment }}% Advance)</span>
-                    <h3>
+                    <h3 *ngIf="data?.variant.length">
                       {{
-                        advanceForSingle(
-                          data.product,
-                          data.selectedQty,
-                          data.variant[0].variantPrice
-                        )
+                      advanceForSingle(
+                      data.product,
+                      data.selectedQty,
+                      data.variant[0].variantPrice
+                      )
+                      }}
+                      TK
+                    </h3>
+                    <h3 *ngIf="!data?.variant.length">
+                      {{
+                      advanceForSingle(
+                      data.product,
+                      data.selectedQty,
+                      data.product.sellingPrice
+                      )
                       }}
                       TK
                     </h3>
@@ -150,21 +158,15 @@
                     <span>Total:</span>
                     <h3>{{ cartSubTotal(data) }} TK</h3>
                   </div>
-                  <div
-                    class="trash_item"
-                    (click)="
+                  <div class="trash_item" (click)="
                       onDeleteCartItem(data?._id, data, data?.product._id)
-                    "
-                  >
+                    ">
                     <i class="las la-lg la-trash-alt"></i>
                   </div>
                 </div>
               </div>
               <div class="deskoff">
-                <div
-                  class="trash_item"
-                  (click)="onDeleteCartItem(data?._id, data, data?.product._id)"
-                >
+                <div class="trash_item" (click)="onDeleteCartItem(data?._id, data, data?.product._id)">
                   <i class="las la-lg la-trash-alt"></i>
                 </div>
                 <div class="advanch-price">
@@ -173,13 +175,23 @@
                 </div>
                 <div class="total-price">
                   <span>Total:</span>
-                  <h3>
+                  <h3 *ngIf="data?.variant.length">
                     {{
-                      advanceForSingle(
-                        data.product,
-                        data.selectedQty,
-                        data.variant[0].variantPrice
-                      )
+                    advanceForSingle(
+                    data.product,
+                    data.selectedQty,
+                    data.variant[0].variantPrice
+                    )
+                    }}
+                    TK
+                  </h3>
+                  <h3 *ngIf="!data?.variant.length">
+                    {{
+                    advanceForSingle(
+                    data.product,
+                    data.selectedQty,
+                    data.product.sellingPrice
+                    )
                     }}
                     TK
                   </h3>
@@ -212,11 +224,7 @@
                 <p style="color: #ff0000c7">(-) 50 TK</p>
               </li>
               <li>
-                <nz-radio-group
-                  nzName="radiogroup"
-                  class="point_main"
-                  [(ngModel)]="pointsType"
-                >
+                <nz-radio-group nzName="radiogroup" class="point_main" [(ngModel)]="pointsType">
                   <div class="earn_point">
                     <label nz-radio id="earn" nzValue="A"> Earn Points </label>
                     <h4>{{ earnPointsTotal() }} TK</h4>
@@ -241,30 +249,19 @@
                 <span>Calculate in next step</span>
               </li>
               <li>
-                <nz-divider
-                  nzType="horizontal"
-                  style="margin: 5px 0"
-                ></nz-divider>
+                <nz-divider nzType="horizontal" style="margin: 5px 0"></nz-divider>
               </li>
               <li class="total_amount">
                 <h3>Total Amount = {{ cartTotal() }} TK</h3>
               </li>
             </ul>
           </div>
-          <div
-            class="order_summary_action_btn"
-            [formGroup]="dataForm"
-            (ngSubmit)="setUserOrderText()"
-          >
+          <div class="order_summary_action_btn" [formGroup]="dataForm" (ngSubmit)="setUserOrderText()">
             <h3 class="total_advanch">
               Advance to pay = <span> {{ advanceTotal() }} TK</span>
             </h3>
-            <button
-              class="order_summary_btn"
-              type="submit"
-              *ngIf="this.carts?.length > 0"
-              (click)="onContinueToShipping()"
-            >
+            <button class="order_summary_btn" type="submit" *ngIf="this.carts?.length > 0"
+              (click)="onContinueToShipping()">
               PROCEED TO CHECKOUT
               <i class="las la-lg la-long-arrow-alt-right"></i>
             </button>
@@ -275,10 +272,7 @@
 
     <div nz-row [nzGutter]="0">
       <div nz-col [nzXs]="{ span: 24 }">
-        <a
-          routerLink="/all-products"
-          style="display: inline-block; color: #2d2d2d"
-        >
+        <a routerLink="/all-products" style="display: inline-block; color: #2d2d2d">
           <i class="las la-lg la-long-arrow-alt-left"></i> Return to shop
         </a>
       </div>
@@ -287,21 +281,10 @@
 </div>
 
 <!-- Variation Edit Popup Modal -->
-<nz-modal
-  [(nzVisible)]="isVisible"
-  nzTitle="Edit Option"
-  okText="ok"
-  cancelText="cancel"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()"
-  [nzWidth]="1000"
->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Edit Option" okText="ok" cancelText="cancel" (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()" [nzWidth]="1000">
   <ng-container *nzModalContent>
-    <nz-table
-      [nzFrontPagination]="false"
-      #basicTable
-      [nzData]="vCarts[sGI].data"
-    >
+    <nz-table [nzFrontPagination]="false" #basicTable [nzData]="vCarts[sGI].data">
       <thead>
         <tr>
           <th>Name</th>
@@ -317,15 +300,11 @@
       <tbody>
         <tr>
           <td>{{ basicTable.data[sPI]?.product.name }}</td>
-          <td
-            *ngFor="
+          <td *ngFor="
               let variant of basicTable.data[sPI]?.product?.variants;
               let i = index
-            "
-          >
-            <nz-select
-              [ngModel]="this.clickActive[i]"
-              (ngModelChange)="
+            ">
+            <nz-select [ngModel]="this.clickActive[i]" (ngModelChange)="
                 onSelectVariant(
                   basicTable.data[sPI].product,
                   basicTable.data[sPI].product.sku,
@@ -334,38 +313,33 @@
                   i,
                   $event
                 )
-              "
-            >
-              <nz-option
-                [nzValue]="x"
-                [nzLabel]="option"
-                *ngFor="
+              ">
+              <nz-option [nzValue]="x" [nzLabel]="option" *ngFor="
                   let option of getOptions(
                     basicTable.data[sPI]?.product?.options[i]
                   );
                   let x = index
-                "
-              ></nz-option>
+                "></nz-option>
             </nz-select>
           </td>
           <td>{{ selectedVariant?.variantPrice }}</td>
           <td>
             {{
-              basicTable.data[sPI]?.product.tax
-                ? basicTable.data[sPI]?.product.tax
-                : 0
+            basicTable.data[sPI]?.product.tax
+            ? basicTable.data[sPI]?.product.tax
+            : 0
             }}
           </td>
           <td>
             {{
-              basicTable.data[sPI]?.product.tax + selectedVariant?.variantPrice
+            basicTable.data[sPI]?.product.tax + selectedVariant?.variantPrice
             }}
           </td>
           <td>
             {{
-              selectedVariant?.variantQuantity === 0
-                ? basicTable.data[sPI]?.product.partialPayment
-                : "0"
+            selectedVariant?.variantQuantity === 0
+            ? basicTable.data[sPI]?.product.partialPayment
+            : "0"
             }}
           </td>
         </tr>
@@ -375,13 +349,8 @@
   <div *nzModalFooter>
     <span></span>
     <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
-    <button
-      [disabled]="disableApplyButton"
-      nz-button
-      nzType="primary"
-      (click)="handleOk(data)"
-      [nzLoading]="isConfirmLoading"
-    >
+    <button [disabled]="disableApplyButton" nz-button nzType="primary" (click)="handleOk(data)"
+      [nzLoading]="isConfirmLoading">
       {{ disableApplyButton ? "Out of Stock" : "Apply" }}
     </button>
   </div>

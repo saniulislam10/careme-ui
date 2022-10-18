@@ -35,7 +35,7 @@ export class CartService {
   }
 
   getCartItemList() {
-    return this.httpClient.get<{ data: any[], message: string }>(API_CART + 'get-cart-items-by-user');
+    return this.httpClient.get<{ data: Cart[], message: string }>(API_CART + 'get-cart-items-by-user');
   }
 
   incrementCartQuantity(cartId: string) {

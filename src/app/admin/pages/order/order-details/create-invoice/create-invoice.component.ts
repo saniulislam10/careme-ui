@@ -33,7 +33,7 @@ export class CreateInvoiceComponent implements OnInit {
   canceledOrderAmount: number;
   redeemedPoints = 0;
   couponAmount = 0;
-  adjustmentAmount = 0;
+  adjustmentAmount: number = 0;
   shippingCharge = 0;
   selectedIds: any[] = [];
 
@@ -146,18 +146,17 @@ export class CreateInvoiceComponent implements OnInit {
       shippingAddress: this.order.shippingAddress,
       shippingCarrier: this.dataForm.value.shippingCarrier,
       products: this.invoiceProducts,
-      subTotal: this.calculateSubTotal(),
-      deliveryFee: this.dataForm.value.deliveryFee,
-      adjustment: this.dataForm.value.adjustment,
-      total: this.calculateSubTotal() +
-        this.dataForm.value.deliveryFee,
+      subTotal: this.getDue(),
+      deliveryFee: this.shippingCharge,
+      adjustment: this.adjustmentAmount,
+      total: this.getTotalDue(),
       deliveryStatus: ProductOrderStatus.SHIPPING,
       paymentStatus: PaymentStatus.UNPAID,
       // phoneNo: '',
       // email: '',
       // billingAddress: undefined,
       shippingStatus: 0,
-      paidAmount: 0
+      paidAmount: this.order.paidAmount
     };
 
     this.invoiceService.placeInvoice(invoice).subscribe(
@@ -221,9 +220,15 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   getDue(){
-    let due: Number = 0;
+    let due: number = 0;
     let subTotal = this.calculateSubTotal();
-    due =  subTotal + this.shippingCharge + this.adjustmentAmount - this.redeemedPoints - this.couponAmount;
+    due =  subTotal + this.shippingCharge - this.redeemedPoints - this.couponAmount;
     return due;
+  }
+
+  getTotalDue(){
+    let due = this.getDue()
+    let totalDue = due + this.adjustmentAmount;
+    return totalDue;
   }
 }
