@@ -611,8 +611,38 @@
   (nzOnCancel)="editCancel()"
   (nzOnOk)="editOk()"
   [nzBodyStyle]="{ padding: '0px' }"
+  nzWidth="700px"
 >
   <ng-container *nzModalContent>
+    <div class="add_product">
+      <input
+        nz-input
+        placeholder="Add new product"
+        nz-dropdown
+        nzTrigger="click"
+        [nzDropdownMenu]="menu"
+      />
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu nzSelectable class="search_items">
+          <li nz-menu-item>
+            <div class="left">
+              <img
+                nz-image
+                width="50px"
+                height="50px"
+                nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                alt=""
+              />
+              <div class="left_details">
+                <h4>Puma T-shirt</h4>
+                <p>instaT-0</p>
+              </div>
+            </div>
+            <div class="right">8768 TK</div>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
     <div class="entry_edit">
       <nz-table
         #basicTable
@@ -622,6 +652,7 @@
       >
         <thead>
           <tr>
+            <th>SKU</th>
             <th>Color</th>
             <th>Size</th>
             <th>Qty</th>
@@ -630,6 +661,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let data of basicTable.data">
+            <td>JHGJHJ</td>
             <td>
               <nz-select ngModel="lucy">
                 <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
