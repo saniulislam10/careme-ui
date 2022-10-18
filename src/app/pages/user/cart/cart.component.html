@@ -5,7 +5,7 @@
       <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 17 }">
         <nz-card class="cart_page_actions" nzSize="small">
           <div class="cart_actions">
-            <label nz-checkbox [(ngModel)]="isCheckedButton" [nzDisabled]="isDisabledButton">
+            <label nz-checkbox [(ngModel)]="isCheckedButton" (click)="checkButton()" [nzDisabled]="isDisabledButton">
               Select all Items
             </label>
             <span [style]="isCheckedButton ? 'display: Block' : 'display: None'" (click)="deleteUserCartList()">
@@ -17,13 +17,13 @@
         <nz-card class="cart_single_vendor" nzSize="small" *ngFor="let group of vCarts; let gi = index">
           <div class="cart_single_vendor-head">
 
-            <label nz-checkbox [(ngModel)]="isCheckedButton"> {{group._id}} </label>
+            <label nz-checkbox > {{group._id}} </label>
           </div>
           <ul class="cart_vendor-items">
             <li class="cart_vendor_single-items" *ngFor="let data of group.data; let di = index">
               <div class="cart_single_vendor-items-details">
                 <div class="items-thumb">
-                  <label nz-checkbox [(ngModel)]="isCheckedButton"></label>
+                  <label nz-checkbox [(ngModel)]="data.isSelected" (change)="onCheckChange(data.isSelected, di, data._id)"></label>
                   <img nz-image [nzSrc]="getThumbImage(data)" [alt]="data.product?.name" />
                 </div>
                 <div class="items-details">
@@ -44,7 +44,7 @@
                           data?.product
                           | coin
                           : "earn"
-                          : data?.selectedQty
+                          : 1
                           : data.variant[0].variantPrice
                           }}
                         </span>
@@ -53,7 +53,7 @@
                           data?.product
                           | coin
                           : "earn"
-                          : data?.selectedQty
+                          : 1
                           : data.product.sellingPrice
                           }}
                         </span>
@@ -63,7 +63,7 @@
                           data?.product
                           | coin
                           : "redeem"
-                          : data?.selectedQty
+                          : 1
                           : data.variant[0].variantPrice
                           }}
                         </span>
@@ -72,7 +72,7 @@
                           data?.product
                           | coin
                           : "redeem"
-                          : data?.selectedQty
+                          : 1
                           : data.product.sellingPrice
                           }}
                         </span>
@@ -205,32 +205,32 @@
           <div class="cart_page_summary">
             <h2>Order Summary</h2>
             <div class="coupon_code">
-              <input type="text" nz-input placeholder="Use coupon code" />
-              <button type="submit" nz-button>Apply</button>
+              <input type="text" nz-input [(ngModel)]="couponCode" placeholder="Use coupon code" />
+              <button type="button" nz-button (click)="applyCoupon()">Apply</button>
             </div>
-            <ul *ngIf="!carts[0]?.requestProduct">
+            <ul>
               <li>
                 <p>Subtotal ({{ carts?.length }} items)</p>
                 <p>{{ cartNewTotal() }} TK</p>
               </li>
-              <li>
+              <li *ngIf="couponApplied">
                 <p>
                   Coupon Code
                   <span style="font-size: 12px; color: #898989">
                     ( <i class="las la-lg la-tags"></i> CAREME15 )
                   </span>
                 </p>
-                <p style="color: #ff0000c7">(-) 50 TK</p>
+                <p style="color: #ff0000c7">(-) {{getCouponAmount()}} TK</p>
               </li>
               <li>
                 <nz-radio-group nzName="radiogroup" class="point_main" [(ngModel)]="pointsType">
                   <div class="earn_point">
-                    <label nz-radio id="earn" nzValue="A"> Earn Points </label>
-                    <h4>{{ earnPointsTotal() }} TK</h4>
+                    <label nz-radio id="earn" nzValue="2"> Earn Points </label>
+                    <h4>{{ earnPointsTotal() }}</h4>
                   </div>
                   <div class="earn_point">
                     <div class="redeems">
-                      <label nz-radio id="redeem" nzValue="B">
+                      <label nz-radio id="redeem" nzValue="1" [nzDisabled]="user?.points < redeemPointsTotal()">
                         Redeem Points
                         <span style="font-size: 12px; color: #898989">
                           ( {{ user?.points }} available )
@@ -238,7 +238,7 @@
                       </label>
                     </div>
                     <h4 style="color: #ff0000c7">
-                      (-) {{ redeemPointsTotal() }} TK
+                      (-) {{ redeemPointsTotal() }}
                     </h4>
                   </div>
                 </nz-radio-group>

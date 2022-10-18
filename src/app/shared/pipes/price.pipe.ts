@@ -95,7 +95,9 @@ export class PricePipe implements PipeTransform {
                     }
                   } else {
                     if (quantity) {
-                      return Math.round(variantPrice * quantity);
+                      return Math.round(variantPrice * quantity *
+                        product.partialPayment /
+                        100);
                     } else {
                       return 0;
                     }
