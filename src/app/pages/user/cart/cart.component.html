@@ -36,7 +36,7 @@
                         {{ data?.variant[0].variant}}
                         <i (click)="showModal(gi, di, data?.variant[0])" class="las la-lg la-edit"></i>
                       </span>
-                      <span *ngIf="data?.product?.canEarnPoints">, </span>
+                      <span *ngIf="data?.variant.length && (data?.product?.canEarnPoints || data?.product?.canRedeemPoints)">, </span>
                       <span *ngIf="data?.product?.canEarnPoints">
                         <i style="color: #ff9100" class="las la-lg la-coins"></i>
                         <span style="color: #016d01" *ngIf="data?.variant.length">
@@ -107,13 +107,9 @@
                       {{data?.product.sellingPrice}}
                       TK
                     </p>
-                    <p>
+                    <p *ngIf="data?.product?.hasTax">
                       Tax:
-                      {{
-                      data?.product?.hasTax
-                      ? getTax(data?.product?.tax, data, data?.selectedQty)
-                      : "0"
-                      }}
+                      {{getTax(data?.product?.tax, data, data?.selectedQty)}}
                       TK
                     </p>
                   </div>
@@ -131,8 +127,8 @@
                   </div>
                 </div>
                 <div id="mb3" class="moboff vendor-items-total_price">
-                  <div class="advanch-price">
-                    <span>({{ data?.product.partialPayment }}% Advance)</span>
+                  <div class="advanch-price" *ngIf="data?.product.canPartialPayment">
+                    <span >({{ data?.product.partialPayment }}% Advance)</span>
                     <h3 *ngIf="data?.variant.length">
                       {{
                       advanceForSingle(
