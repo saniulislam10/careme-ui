@@ -19,15 +19,23 @@ import { CreateNewPurchaseComponent } from './create-new-purchase/create-new-pur
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Purchase } from 'src/app/interfaces/purchase';
-import { debounceTime, distinctUntilChanged, pluck, switchMap } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  pluck,
+  switchMap,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-purchase',
   templateUrl: './purchase.component.html',
-  styleUrls: ['./purchase.component.scss']
+  styleUrls: ['./purchase.component.scss'],
 })
 export class PurchaseComponent implements OnInit {
-  tabs = ['All', 'Draft', 'Issued', 'Closed', 'Canceled'];
+  tabs = ['All PO ', 'Draft', 'Issued', 'Closed', 'Canceled'];
+
+  // New PO Create
+  ponewVisible = false;
 
   @ViewChild('export') exportStock: ExportPopupComponent;
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
@@ -41,7 +49,7 @@ export class PurchaseComponent implements OnInit {
   public sortQuery;
   public activeSort = null;
   private holdPrevData: any[] = [];
-  pagination : any;
+  pagination: any;
   searchProducts: Product[] = [];
   purchases: Purchase[] = [];
   selectedIds: string[] = [];
@@ -71,14 +79,12 @@ export class PurchaseComponent implements OnInit {
     private utilsService: UtilsService,
     private dialog: MatDialog,
     private uiService: UiService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-
-    this.reloadService.refreshPurchase$
-      .subscribe(() => {
-        this.getAllPurchase();
-      });
+    this.reloadService.refreshPurchase$.subscribe(() => {
+      this.getAllPurchase();
+    });
 
     this.getAllPurchase();
   }
@@ -97,9 +103,8 @@ export class PurchaseComponent implements OnInit {
 
     this.pagination = pagination;
 
-
-
-    this.subProduct = this.purchaseService.getAll(this.pagination, this.query, this.sortQuery)
+    this.subProduct = this.purchaseService
+      .getAll(this.pagination, this.query, this.sortQuery)
       .subscribe(
         (res) => {
           this.purchases = res.data;
@@ -128,18 +133,17 @@ export class PurchaseComponent implements OnInit {
   /**
    * Images
    */
-   setThumbnailImage(data) {
+  setThumbnailImage(data) {
     let images = this.productService.getImages(data.medias, data.images);
     return images[0];
   }
 
   getVariantName(i, x, product, index) {
     if (index !== 0) {
-      return "/" + product.variantDataArray[i][x];
+      return '/' + product.variantDataArray[i][x];
     }
     return product.variantDataArray[i][x];
   }
-
 
   // private checkSelectionData() {
   //   let isAllSelect = true;
@@ -151,8 +155,6 @@ export class PurchaseComponent implements OnInit {
 
   //   this.matCheckbox.checked = isAllSelect;
   // }
-
-
 
   /**** export pop up */
   exportPopUpShow() {
@@ -173,11 +175,9 @@ export class PurchaseComponent implements OnInit {
       this.exportData(this.purchases, value.SelectedType);
     } else if (value.selectedAmount === ExportType.SELECTED) {
       //this.
-      this.purchaseService
-        .getAll(null)
-        .subscribe((res) => {
-          this.exportData(res.data, value.SelectedType);
-        });
+      this.purchaseService.getAll(null).subscribe((res) => {
+        this.exportData(res.data, value.SelectedType);
+      });
     } else if (value.selectedAmount === ExportType.BY_SEARCH_RESULT) {
       this.exportData(this.searchProducts, value.SelectedType);
     } else if (value.selectedAmount === ExportType.BY_DATE) {
@@ -235,21 +235,26 @@ export class PurchaseComponent implements OnInit {
     }
   }
 
-
   sortData(query: any, type: number) {
     this.sortQuery = query;
     this.activeSort = type;
-    if(this.searchQuery){
-      this.purchaseService.getBySearch(this.pagination, this.searchQuery, this.sortQuery, this.query)
-      .subscribe(
-        (res) => {
-          this.purchases = res.data;
-        },
-        () => {
-          this.isLoading = false;
-        }
-      );
-    }else{
+    if (this.searchQuery) {
+      this.purchaseService
+        .getBySearch(
+          this.pagination,
+          this.searchQuery,
+          this.sortQuery,
+          this.query
+        )
+        .subscribe(
+          (res) => {
+            this.purchases = res.data;
+          },
+          () => {
+            this.isLoading = false;
+          }
+        );
+    } else {
       this.getAllPurchase();
     }
   }
@@ -281,8 +286,8 @@ export class PurchaseComponent implements OnInit {
   }
 
   /*
-  * Search
-  */
+   * Search
+   */
 
   onClickSearchArea(event: MouseEvent): void {
     event.stopPropagation();
@@ -355,8 +360,8 @@ export class PurchaseComponent implements OnInit {
       restoreFocus: false,
       data: {
         order: {},
-        canceledOrderSku: "sku001",
-        canceledOrderAmount: "100tk",
+        canceledOrderSku: 'sku001',
+        canceledOrderAmount: '100tk',
         selectedIds: this.selectedIds,
       },
     });
@@ -380,7 +385,12 @@ export class PurchaseComponent implements OnInit {
           console.log(this.searchQuery);
 
           if (this.searchQuery) {
-            return this.purchaseService.getBySearch(this.pagination, this.searchQuery, this.sortQuery, this.query );
+            return this.purchaseService.getBySearch(
+              this.pagination,
+              this.searchQuery,
+              this.sortQuery,
+              this.query
+            );
           } else {
             this.purchases = this.holdPrevData;
             this.searchQuery = null;
@@ -398,4 +408,14 @@ export class PurchaseComponent implements OnInit {
       );
   }
 
+  // New PO Open by Mamun
+  showNewPurchase(): void {
+    this.ponewVisible = true;
+  }
+  purchaseOk(): void {
+    this.ponewVisible = false;
+  }
+  purchaseCancel(): void {
+    this.ponewVisible = false;
+  }
 }

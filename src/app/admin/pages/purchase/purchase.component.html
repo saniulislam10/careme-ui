@@ -2,8 +2,8 @@
   <h2>Purchase Order</h2>
   <div class="header-action">
     <button type="button" (click)="exportPopUpShow()">Export</button>
-    <button type="button" >Import</button>
-    <button class="create_btn" (click)="openDialog()">Create Purchase</button>
+    <button type="button">Import</button>
+    <button class="create_btn" (click)="showNewPurchase()">New Purchase</button>
   </div>
 </div>
 
@@ -13,7 +13,16 @@
       <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
         <div class="table-filter-area">
           <form class="search-form" #searchForm="ngForm">
-              <input #searchInput (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel nz-input placeholder="Search here" nzSize="large">
+            <input
+              #searchInput
+              (focus)="handleFocus($event)"
+              name="searchTerm"
+              autocomplete="off"
+              ngModel
+              nz-input
+              placeholder="Search here"
+              nzSize="large"
+            />
           </form>
           <ul>
             <li>
@@ -22,24 +31,35 @@
               </button>
               <nz-dropdown-menu #sortMenu="nzDropdownMenu">
                 <ul nz-menu nzSelectable>
-                  <li nz-menu-item (click)="sortData({purchaseId: -1}, 1)"> Order Number(High to low) </li>
-                  <li nz-menu-item (click)="sortData({purchaseId: 1}, 2)"> Order Number(Low to High) </li>
-                  <li nz-menu-item (click)="sortData({createdAt: -1}, 3)"> Created (oldest first) </li>
-                  <li nz-menu-item (click)="sortData({createdAt: 1}, 4)"> Created (newest first) </li>
-                  <li nz-menu-item (click)="sortData({totalAmount: -1}, 5)"> Amount(High to low)  </li>
-                  <li nz-menu-item (click)="sortData({totalAmount: 1}, 6)"> Amount (Low to High) </li>
+                  <li nz-menu-item (click)="sortData({ purchaseId: -1 }, 1)">
+                    Order Number(High to low)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ purchaseId: 1 }, 2)">
+                    Order Number(Low to High)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ createdAt: -1 }, 3)">
+                    Created (oldest first)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ createdAt: 1 }, 4)">
+                    Created (newest first)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ totalAmount: -1 }, 5)">
+                    Amount(High to low)
+                  </li>
+                  <li nz-menu-item (click)="sortData({ totalAmount: 1 }, 6)">
+                    Amount (Low to High)
+                  </li>
                 </ul>
               </nz-dropdown-menu>
             </li>
           </ul>
         </div>
         <div class="table-data-area">
-          <nz-table [nzData]="purchases" #bodyData>
+          <nz-table nzSize="small" [nzData]="purchases" #bodyData>
             <thead>
               <tr>
                 <!-- <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllSelectChange($event)"></th> -->
-                <th>Date</th>
-                <th>Purchase Order</th>
+                <th>ID & Date</th>
                 <th>Status</th>
                 <th>Reference</th>
                 <th>Supplier Name</th>
@@ -47,25 +67,39 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let data of bodyData.data">
+              <tr
+                *ngFor="let data of bodyData.data"
+                [routerLink]="['details', data._id]"
+                style="cursor: pointer"
+              >
                 <!-- <td [nzChecked]="setOfCheckedId.has(data._id)" (nzCheckedChange)="onCheckChange($event, i, data._id)"></td> -->
-                <td >
-                  {{ data?.dateTime | date: "short" }}
-                </td>
-                <td >
-                  <a [routerLink]="['details', data._id]">{{ data?.purchaseId }}</a>
+                <td>
+                  <h3>
+                    {{ data?.purchaseId }}
+                  </h3>
+                  <p>
+                    {{ data?.dateTime | date: "short" }}
+                  </p>
                 </td>
                 <td>
-                  {{ data.status ? data.status : "Draft" }}
+                  <p>
+                    {{ data.status ? data.status : "Draft" }}
+                  </p>
                 </td>
                 <td>
-                  {{ data?.reference }}
+                  <p>
+                    {{ data?.reference }}
+                  </p>
                 </td>
                 <td>
-                  {{ data?.supplier?.name }}
+                  <p>
+                    {{ data?.supplier?.name }}
+                  </p>
                 </td>
-                <td >
-                  {{ data?.recieved ? "yes" : "no" }}
+                <td>
+                  <p>
+                    {{ data?.recieved ? "yes" : "no" }}
+                  </p>
                 </td>
               </tr>
             </tbody>
@@ -77,12 +111,156 @@
   </nz-card>
 </div>
 
-
-
-
 <div class="export-popup-area">
-  <app-export-popup (valueChange)="exportToExcel($event)" #export></app-export-popup>
+  <app-export-popup
+    (valueChange)="exportToExcel($event)"
+    #export
+  ></app-export-popup>
 </div>
 
-
-
+<nz-modal
+  [(nzVisible)]="ponewVisible"
+  nzTitle="New Purchase Order"
+  (nzOnCancel)="purchaseCancel()"
+  (nzOnOk)="purchaseOk()"
+  nzOkText="Save"
+  nzWidth="800px"
+>
+  <ng-container *nzModalContent>
+    <div nz-row [nzGutter]="16" class="mb40">
+      <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 12 }">
+        <table class="purchase_info">
+          <tbody>
+            <tr>
+              <td>Reference #</td>
+              <td style="width: 15px; text-align: center">:</td>
+              <td>
+                <input nz-input placeholder="PK-131 INDIA" />
+              </td>
+            </tr>
+            <tr>
+              <td>Supplier</td>
+              <td style="width: 15px; text-align: center">:</td>
+              <td>
+                <nz-select ngModel="careme">
+                  <nz-option nzValue="careme" nzLabel="Care Me"></nz-option>
+                  <nz-option
+                    nzValue="careglobal"
+                    nzLabel="Care Me Global"
+                  ></nz-option>
+                </nz-select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 12 }">
+        <table class="purchase_info">
+          <tbody>
+            <tr>
+              <td>Supplier Link</td>
+              <td style="width: 15px; text-align: center">:</td>
+              <td>
+                <input nz-input placeholder="Phttps://" />
+              </td>
+            </tr>
+            <tr>
+              <td>Manufacturer</td>
+              <td style="width: 15px; text-align: center">:</td>
+              <td>
+                <input nz-input placeholder="China" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="16">
+      <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 24 }">
+        <nz-table
+          #purchaseTable
+          [nzShowPagination]="false"
+          [nzData]="[1]"
+          nzSize="small"
+          class="purchase_product"
+        >
+          <thead>
+            <tr>
+              <th style="width: 50px">Image</th>
+              <th>Item Details</th>
+              <th>Unit Cost</th>
+              <th>Price</th>
+              <th>PO Quantity</th>
+              <th>Tax(%)</th>
+              <th>Amount</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of purchaseTable.data">
+              <td style="width: 50px">
+                <img
+                  nz-image
+                  width="50px"
+                  nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                  alt=""
+                />
+              </td>
+              <td>
+                <h3>Item Details</h3>
+                <h5>IUIUHI</h5>
+              </td>
+              <td>
+                <input nz-input placeholder="0" />
+              </td>
+              <td>
+                <input nz-input placeholder="0" />
+              </td>
+              <td>
+                <input nz-input placeholder="0" />
+              </td>
+              <td>
+                <p>15%</p>
+              </td>
+              <td>
+                <h3>6565 TK</h3>
+              </td>
+              <td>
+                <span><i class="las la-lg la-trash"></i></span>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+        <div class="add_product">
+          <input
+            nz-input
+            placeholder="Add new product"
+            nz-dropdown
+            nzTrigger="click"
+            [nzDropdownMenu]="menu"
+          />
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable class="search_items">
+              <li nz-menu-item>
+                <div class="left">
+                  <img
+                    nz-image
+                    width="50px"
+                    height="50px"
+                    nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    alt=""
+                  />
+                  <div class="left_details">
+                    <h4>Puma T-shirt</h4>
+                    <p>instaT-0</p>
+                  </div>
+                </div>
+                <div class="right">8768 TK</div>
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>
