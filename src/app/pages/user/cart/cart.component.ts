@@ -34,6 +34,8 @@ export class CartComponent implements OnInit {
   dataForm: FormGroup;
   public images: any;
   vCarts: any[] = [];
+  couponCode: string;
+  couponApplied: boolean = false;
 
   // User
   user: User = null;
@@ -47,6 +49,8 @@ export class CartComponent implements OnInit {
   selectedGroupIndex: any;
   selectedIndex: any;
   disableApplyButton: boolean = false;
+  isCheckedButton: boolean;
+  isDisabledButton: boolean;
   constructor(
     private reloadService: ReloadService,
     private userService: UserService,
@@ -169,20 +173,14 @@ export class CartComponent implements OnInit {
       (res) => {
         this.mCarts = res.data;
         this.carts = this.mCarts.filter((m) => m.isSelected);
-        console.log(this.mCarts);
         const fCarts = this.mCarts.map((m) => {
-          console.log(m.vendor);
           return {
             ...m,
             // variant: m.variant[0],
             vendorName: m.vendor,
           };
         });
-
-        console.log('fCarts', fCarts);
-
         this.vCarts = this.arrayGroupByField(fCarts, 'vendorName');
-        console.log('this.vCarts', this.vCarts);
         this.vCarts.forEach((f) => {
           // if (f._id === 'careme') {
           const selected = f.data.filter((g) => g.isSelected === true);
@@ -193,9 +191,10 @@ export class CartComponent implements OnInit {
           }
           // }
         });
+        this.checkForAll();
       },
-      (error) => {
-        console.log(error);
+      (err) => {
+        this.msg.error(err.message);
       }
     );
   }
@@ -395,17 +394,23 @@ export class CartComponent implements OnInit {
 
   cartNewTotal() {
     this.total = 0;
+    let selectedProducts = [];
     for (let i = 0; i < this.carts?.length; i++) {
-      if (this.carts[i].variant.length > 0) {
+      if(this.carts[i].isSelected){
+        selectedProducts.push(this.carts[i]);
+      }
+    }
+    for (let i = 0; i < selectedProducts?.length; i++) {
+      if (selectedProducts[i].variant.length > 0) {
         this.total += this.cartSubTotalForTotal(
-          this.carts[i].product,
-          this.carts[i].selectedQty,
-          this.carts[i].variant[0].variantPrice
+          selectedProducts[i].product,
+          selectedProducts[i].selectedQty,
+          selectedProducts[i].variant[0].variantPrice
         );
       } else {
         this.total += this.cartSubTotalForTotal(
-          this.carts[i].product,
-          this.carts[i].selectedQty
+          selectedProducts[i].product,
+          selectedProducts[i].selectedQty
         );
       }
     }
@@ -431,6 +436,9 @@ export class CartComponent implements OnInit {
     if (this.pointsType === '1') {
       this.total -= this.redeemPointsTotal();
     }
+    if(this.couponApplied){
+      this.total -= this.getCouponAmount();
+    }
     return this.total;
   }
 
@@ -442,12 +450,12 @@ export class CartComponent implements OnInit {
     return Math.floor(this.total);
   }
 
-  advanceForSingle(product, quantity, variantPrice?): number {
+  advanceForSingle(product, quantity, price?): number {
     let advance = this.pricePipe.transform(
       product as Product,
       'advance',
       quantity,
-      variantPrice
+      price
     ) as number;
     return advance;
   }
@@ -551,26 +559,40 @@ export class CartComponent implements OnInit {
     }
   }
 
-  onCheckChange(event: any, index: number, id: string) {
-    if (event) {
+  onCheckChange(value: boolean, index: number, id: string) {
+    console.log(value)
+    if (value) {
       this.cartService
         .updateCart({ cartId: id, isSelected: true })
         .subscribe((res) => {
           if (res.success) {
             this.getCartItemList();
-            console.log('updated');
           }
         });
+
+
     } else {
-      this.cartService
-        .updateCart({ cartId: id, isSelected: false })
+      this.cartService.updateCart({ cartId: id, isSelected: false })
         .subscribe((res) => {
           if (res.success) {
             this.getCartItemList();
-            console.log('updated');
           }
         });
     }
+
+  }
+
+  checkForAll(){
+    let checked:boolean = true;
+    for(let i=0; i < this.carts.length; i++){
+      let c = this.carts[i].isSelected;
+      if(c === false){
+        checked = false;
+        // break
+      }
+    };
+    console.log(checked)
+    this.isCheckedButton = checked;
   }
 
   private checkSelectionData() {
@@ -683,9 +705,27 @@ export class CartComponent implements OnInit {
     }
   }
 
+  getCouponAmount() {
+    if (this.couponApplied) {
+      let amount = this.cartNewTotal();
+      return Math.floor(amount * 0.15);
+    } else {
+      return 0;
+    }
+  }
+
+  applyCoupon() {
+    let coupon = 'CAREME15';
+    if (this.couponCode.toUpperCase() === coupon.toUpperCase()) {
+      this.couponApplied = true;
+    } else {
+      this.couponApplied = false;
+    }
+  }
+
+
+
   // Mamun New Cart
-  isCheckedButton = false;
-  isDisabledButton = false;
 
   checkButton(): void {
     this.isCheckedButton = !this.isCheckedButton;

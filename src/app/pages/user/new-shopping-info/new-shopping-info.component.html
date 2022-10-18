@@ -9,32 +9,34 @@
           nzTitle="Delivery Address"
           [nzExtra]="addressAction"
         >
-          <div class="address_header">
-            <h3><i class="las la-suitcase"></i> Home</h3>
-            <ul>
-              <li class="trash"><i class="las la-trash"></i></li>
-              <li class="edit"><i class="lar la-edit"></i></li>
-              <li class="select"><i class="lar la-check-circle"></i></li>
-            </ul>
-          </div>
-          <div class="address_body">
-            <ul>
-              <li>
-                <span><i class="lar la-user"></i></span>
-                <p>Md. Al-Mamun</p>
-              </li>
-              <li>
-                <span><i class="las la-phone"></i></span>
-                <p>01917632421</p>
-              </li>
-              <li>
-                <span><i class="las la-map-marked"></i></span>
-                <p>
-                  Suite #1402 (Lift #14), Navana D.H. Tower, 6 Panthapath,
-                  Karwan Bazar, Dhaka-1215.
-                </p>
-              </li>
-            </ul>
+          <div class="newAddress" *ngFor="let data of [1]">
+            <div class="address_header">
+              <h3><i class="las la-suitcase"></i> Home</h3>
+              <ul>
+                <li class="trash"><i class="las la-trash"></i></li>
+                <li class="edit"><i class="lar la-edit"></i></li>
+                <li class="select"><i class="lar la-check-circle"></i></li>
+              </ul>
+            </div>
+            <div class="address_body">
+              <ul>
+                <li>
+                  <span><i class="lar la-user"></i></span>
+                  <p>Md. Al-Mamun</p>
+                </li>
+                <li>
+                  <span><i class="las la-phone"></i></span>
+                  <p>01917632421</p>
+                </li>
+                <li>
+                  <span><i class="las la-map-marked"></i></span>
+                  <p>
+                    Suite #1402 (Lift #14), Navana D.H. Tower, 6 Panthapath,
+                    Karwan Bazar, Dhaka-1215.
+                  </p>
+                </li>
+              </ul>
+            </div>
           </div>
         </nz-card>
         <nz-card
@@ -83,55 +85,67 @@
             </div>
           </div>
           <div nz-row [nzGutter]="16">
-            <div nz-col class="mb" [nzSpan]="24">
+            <div
+              nz-col
+              class="mb"
+              [nzSpan]="24"
+              *ngFor="let data of carts; let index = i"
+            >
               <nz-card nzSize="small">
                 <div class="single_item">
                   <div class="items_left">
                     <img
                       nz-image
-                      nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                      alt=""
+                      [nzSrc]="getThumbImage(data?.product)"
+                      [alt]="data?.product.name"
                     />
                     <div class="descriptions">
-                      <h3>Remax TWS-29 Ultrathin Wireless Earbuds</h3>
-                      <h4>Balck / 23</h4>
+                      <h3>{{ data?.product.name }}</h3>
+                      <h4 *ngIf="data?.variant.length">
+                        {{ data?.variant[0]?.variant }}
+                      </h4>
                     </div>
                   </div>
                   <div class="items_right">
                     <div class="Product_qt">
-                      <h4>SKU: 56565-01</h4>
-                      <h4>Qty: 1</h4>
+                      <h4>
+                        SKU:
+                        {{
+                          data?.variant[0]
+                            ? data?.variant[0].variantSku
+                            : data.sku
+                        }}
+                      </h4>
+                      <h4>Qty: {{ data.selectedQty }}</h4>
                     </div>
                     <div class="Product_price">
-                      <h4><span>(10% Advance)</span> 500 TK</h4>
-                      <h3>Total: 500 TK</h3>
-                    </div>
-                  </div>
-                </div>
-              </nz-card>
-            </div>
-            <div nz-col [nzSpan]="24">
-              <nz-card nzSize="small">
-                <div class="single_item">
-                  <div class="items_left">
-                    <img
-                      nz-image
-                      nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                      alt=""
-                    />
-                    <div class="descriptions">
-                      <h3>Remax TWS-29 Ultrathin Wireless Earbuds</h3>
-                      <h4>Balck / 23</h4>
-                    </div>
-                  </div>
-                  <div class="items_right">
-                    <div class="Product_qt">
-                      <h4>SKU: 56565-01</h4>
-                      <h4>Qty: 1</h4>
-                    </div>
-                    <div class="Product_price">
-                      <h4><span>(10% Advance)</span> 500 TK</h4>
-                      <h3>Total: 500 TK</h3>
+                      <h4 *ngIf="data?.product.canPartialPayment">
+                        <span
+                          >({{ data?.product.partialPayment }}% Advance)</span
+                        >
+                        <span *ngIf="data?.variant.length">
+                          {{
+                            advanceForSingle(
+                              data.product,
+                              data.selectedQty,
+                              data.variant[0].variantPrice
+                            )
+                          }}
+                          TK
+                        </span>
+                        <span *ngIf="!data?.variant.length">
+                          {{
+                            advanceForSingle(
+                              data.product,
+                              data.selectedQty,
+                              data.product.sellingPrice
+                            )
+                          }}
+                          TK
+                        </span>
+                      </h4>
+                      <h4 style="color:#016d01" *ngIf="!data?.product.canPartialPayment">Cash on Delivery</h4>
+                      <h3>Total: {{ cartSubTotalProduct(data) }} TK</h3>
                     </div>
                   </div>
                 </div>
@@ -149,7 +163,7 @@
           <ul>
             <li>
               <h4>Subtotal ({{ carts?.length }} items)</h4>
-              <h4>0.00 TK</h4>
+              <h4>{{ cartNewTotal() }} TK</h4>
             </li>
             <li>
               <p>
@@ -158,15 +172,15 @@
                   ( <i class="las la-lg la-tags"></i> CAREME15 )
                 </span>
               </p>
-              <p style="color: #ff0000c7">(-) 50 TK</p>
+              <p style="color: #ff0000c7">(-) {{ getCouponAmount() }} TK</p>
             </li>
-            <li>
+            <li *ngIf="selectedPointsType === '2'">
               <p>Earn Point</p>
-              <p>0.00 TK</p>
+              <p>{{ earnPointsTotal() }} TK</p>
             </li>
-            <li>
+            <li *ngIf="selectedPointsType === '1'">
               <p>Redeem Point</p>
-              <p style="color: #ff0000c7">(-) 0.00 TK</p>
+              <p style="color: #ff0000c7">(-) {{ redeemPointsTotal() }} TK</p>
             </li>
             <li>
               <p>Shipping Cost</p>
@@ -176,7 +190,9 @@
               <nz-divider></nz-divider>
             </li>
             <li>
-              <h5>Total = <span>0.00 TK</span></h5>
+              <h5>
+                Total = <span>{{ cartTotal() }} TK</span>
+              </h5>
             </li>
           </ul>
           <div class="order_submit">
@@ -184,7 +200,7 @@
               I agree to the <span>Terms and conditions</span>,
               <span>Return policy</span> & <span>Privacy Policy</span>.
             </label>
-            <button nz-button>SUBMIT ORDER</button>
+            <button nz-button (click)="onSubmit()">SUBMIT ORDER</button>
           </div>
         </nz-card>
       </div>
@@ -431,7 +447,7 @@
             </div>
             <div class="right">
               <!--              <span>{{data?.variant[0]?.variantPrice}} TK</span>-->
-              <span>{{ cartSubTotalS(data) }} TK</span>
+              <span>{{ cartSubTotal(data) }} TK</span>
             </div>
           </div>
           <div class="discount-container">

@@ -166,6 +166,14 @@ export class NewShoppingInfoComponent implements OnInit {
     });
   }
 
+  getThumbImage(product) {
+    let images = this.productService.getImages(
+      product.medias,
+      product.images
+    );
+    return images.length ? images[0] : '/assets/images/placeholder/test.png';
+  }
+
   onSelectAddress(address, i) {
     this.selectedAddress = address;
     console.log(this.selectedAddress);
@@ -285,7 +293,7 @@ export class NewShoppingInfoComponent implements OnInit {
     ) as number;
   }
 
-  cartSubTotalS(data): any {
+  cartSubTotalProduct(data): any {
     if (data.product.hasVariant === true) {
       return Math.floor(
         this.pricePipe.transform(
@@ -424,7 +432,6 @@ export class NewShoppingInfoComponent implements OnInit {
             this.carts[i].variant[0].variantPrice
           );
         }
-        console.log(this.advance);
       } else {
         this.advance += this.advanceForSingle(
           this.carts[i].product,
@@ -699,7 +706,7 @@ export class NewShoppingInfoComponent implements OnInit {
     if (!this.selectedAddress) {
       this.msg.create('warning', 'Please Select an Address');
       return;
-    } else if (!this.agreeConditions) {
+    } else if (!this.agreeChecked) {
       this.msg.create('warning', 'Please agree to terms and conditions');
       return;
     } else {
