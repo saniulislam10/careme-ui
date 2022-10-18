@@ -55,15 +55,20 @@
           </ul>
         </div>
         <div class="table-data-area">
-          <nz-table nzSize="small" [nzData]="purchases" #bodyData>
+          <nz-table
+            nzSize="small"
+            [nzData]="purchases"
+            #bodyData
+            [nzScroll]="{ x: '750px' }"
+          >
             <thead>
               <tr>
                 <!-- <th [nzChecked]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllSelectChange($event)"></th> -->
                 <th>ID & Date</th>
-                <th>Status</th>
-                <th>Reference</th>
-                <th>Supplier Name</th>
-                <th>Recieved</th>
+                <th style="width: 100px">Status</th>
+                <th style="width: 100px">Reference</th>
+                <th style="width: 200px">Supplier Name</th>
+                <th style="width: 100px">Recieved</th>
               </tr>
             </thead>
             <tbody>
@@ -77,14 +82,14 @@
                   <h3>
                     {{ data?.purchaseId }}
                   </h3>
-                  <p>
+                  <p style="color: #838383">
                     {{ data?.dateTime | date: "short" }}
                   </p>
                 </td>
                 <td>
-                  <p>
+                  <span>
                     {{ data.status ? data.status : "Draft" }}
-                  </p>
+                  </span>
                 </td>
                 <td>
                   <p>
@@ -183,22 +188,23 @@
           [nzData]="[1]"
           nzSize="small"
           class="purchase_product"
+          [nzScroll]="{ x: '750px' }"
         >
           <thead>
             <tr>
-              <th style="width: 50px">Image</th>
-              <th>Item Details</th>
-              <th>Unit Cost</th>
-              <th>Price</th>
-              <th>PO Quantity</th>
-              <th>Tax(%)</th>
-              <th>Amount</th>
-              <th></th>
+              <th style="width: 70px">Image</th>
+              <th>Details</th>
+              <th style="width: 80px">Unit Cost</th>
+              <th style="width: 80px">Price</th>
+              <th style="width: 80px">Qty</th>
+              <th style="width: 80px">Tax</th>
+              <th style="width: 80px">Amount</th>
+              <th style="width: 50px"></th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let data of purchaseTable.data">
-              <td style="width: 50px">
+              <td style="width: 70px">
                 <img
                   nz-image
                   width="50px"
@@ -207,7 +213,7 @@
                 />
               </td>
               <td>
-                <h3>Item Details</h3>
+                <h4>Item Details Item Details Item</h4>
                 <h5>IUIUHI</h5>
               </td>
               <td>
@@ -223,9 +229,9 @@
                 <p>15%</p>
               </td>
               <td>
-                <h3>6565 TK</h3>
+                <p>6565 TK</p>
               </td>
-              <td>
+              <td style="text-align: center">
                 <span><i class="las la-lg la-trash"></i></span>
               </td>
             </tr>
