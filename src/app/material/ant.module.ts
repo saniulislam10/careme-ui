@@ -27,6 +27,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzAffixModule } from 'ng-zorro-antd/affix';
 
 const materials = [
   NzModalModule,
@@ -59,6 +60,7 @@ const materials = [
   NzImageModule,
   NzAnchorModule,
   NzDrawerModule,
+  NzAffixModule,
 
   // SharedModule
 ];

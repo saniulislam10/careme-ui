@@ -2,14 +2,11 @@
 
 nz-table{
   overflow-x: scroll;
-  
 }
-
-
 .header-left{
   display: flex;
   align-items: center;
-  .arrow{
+  .arrow {
     margin-right: 20px;
   }
 }
@@ -35,7 +32,7 @@ nz-table{
   box-sizing: border-box;
 }
 
-.timeline-items{
+.timeline-items {
   height: 250px;
   width: auto;
   overflow-y: scroll;
@@ -44,10 +41,10 @@ nz-table{
 
 @keyframes spin {
   from {
-      transform:rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-      transform:rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
@@ -281,10 +278,9 @@ nz-table{
   height: 25px;
   line-height: 25px;
   text-align: center;
-  background: green;
-  color: #fff;
+  border-bottom: 2px solid #00a500;
+  color: #00a500;
   display: block;
-  border-radius: 50px;
   font-size: 12px;
 }
 .total-return {
@@ -292,10 +288,9 @@ nz-table{
   height: 25px;
   line-height: 25px;
   text-align: center;
-  background: red;
-  color: #fff;
+  border-bottom: 2px solid #ff0000;
+  color: #ff0000;
   display: block;
-  border-radius: 50px;
   font-size: 12px;
 }
 .customadmin_note {
@@ -344,8 +339,28 @@ nz-table{
     margin-left: 5px;
   }
 }
-
+.customer_details {
+  margin-right: 15px !important;
+}
+.entry_edit {
+  .qty {
+    display: flex;
+    align-items: center;
+    input {
+      width: 50px;
+      text-align: center;
+    }
+  }
+}
 @media (max-width: 500px) {
+  .entry_edit {
+    .qty {
+      flex-direction: column;
+    }
+  }
+  .customer_details {
+    margin-right: 0px !important;
+  }
   .main-layout {
     flex-direction: column !important;
   }

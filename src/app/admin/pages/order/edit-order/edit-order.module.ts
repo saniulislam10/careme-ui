@@ -7,12 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MaterialModule } from 'src/app/material/material.module';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
-
+import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
-  declarations: [
-    EditOrderComponent
-  ],
+  declarations: [EditOrderComponent],
   imports: [
     CommonModule,
     EditOrderRoutingModule,
@@ -20,7 +18,8 @@ import { PipesModule } from 'src/app/shared/pipes/pipes.module';
     PipesModule,
     MatFormFieldModule,
     FormsModule,
-    PipesModule
-  ]
+    PipesModule,
+    AntModule,
+  ],
 })
-export class EditOrderModule { }
+export class EditOrderModule {}

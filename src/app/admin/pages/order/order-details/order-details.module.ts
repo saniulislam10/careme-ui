@@ -16,15 +16,14 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import {AntModule} from "../../../../material/ant.module";
-
+import { AntModule } from '../../../../material/ant.module';
 
 @NgModule({
   declarations: [
     OrderDetailsComponent,
     CreateInvoiceComponent,
     CreateInvoiceReturnComponent,
-    EditOrderComponent
+    EditOrderComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +39,6 @@ import {AntModule} from "../../../../material/ant.module";
     NzInputModule,
     NgxPaginationModule,
     AntModule,
-  ]
+  ],
 })
-export class OrderDetailsModule { }
+export class OrderDetailsModule {}

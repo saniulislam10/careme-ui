@@ -1,8 +1,14 @@
 <!-- order-header-area-->
 <div class="page-header">
   <div class="header-left">
-    <span class="arrow"><i routerLink="../../regular-orders" class="fa fa-arrow-left"></i></span>
-    <h2>Sales Order <span (click)="onRefresh()"><i [class]="spin ? 'fa fa-refresh fa-spin': 'fa fa-refresh'"></i></span>
+    <span class="arrow"
+      ><i routerLink="../../regular-orders" class="fa fa-arrow-left"></i
+    ></span>
+    <h2>
+      Sales Order
+      <span (click)="onRefresh()"
+        ><i [class]="spin ? 'fa fa-refresh fa-spin' : 'fa fa-refresh'"></i
+      ></span>
     </h2>
   </div>
   <div class="header-action">
@@ -34,7 +40,12 @@
             </a>
 
             <nz-button-group>
-              <button nz-button nz-dropdown [nzDropdownMenu]="actionMenu" nzPlacement="bottomRight">
+              <button
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="actionMenu"
+                nzPlacement="bottomRight"
+              >
                 <span nz-icon nzType="ellipsis"></span>
               </button>
               <nz-dropdown-menu #actionMenu="nzDropdownMenu">
@@ -49,7 +60,11 @@
           <input nz-input placeholder="Basic usage" />
         </div>
         <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
-          <li nz-menu-item *ngFor="let data of orders" [routerLink]="['../../', 'order-details', data._id]">
+          <li
+            nz-menu-item
+            *ngFor="let data of orders"
+            [routerLink]="['../../', 'order-details', data._id]"
+          >
             <div class="left">
               <h4>{{ data?.orderId }}</h4>
               <h5>{{ data?.checkoutDate | date: "short" }}</h5>
@@ -67,25 +82,37 @@
           <h5>{{ order?.checkoutDate | date: "short" }}</h5>
         </div>
         <nz-tabset [nzTabBarExtraContent]="extraTemplate">
-          <nz-tab *ngFor="let tab of bodyTabs" [nzTitle]="tab.name" [nzDisabled]="getDisable(tab)">
+          <nz-tab
+            *ngFor="let tab of bodyTabs"
+            [nzTitle]="tab.name"
+            [nzDisabled]="getDisable(tab)"
+          >
             <div *ngIf="tab.name === 'Invoice'">
               <div class="invoice_dropdown" *ngFor="let data of invoices">
                 <div class="invoice_item">
-                  <a class="IVN_code_content" [routerLink]="['../../', 'invoice', data.invoiceId]">{{data.invoiceId}}</a>
-                  <p>{{data.createdAt | date : 'short'}}</p>
+                  <a
+                    class="IVN_code_content"
+                    [routerLink]="['../../', 'invoice', data.invoiceId]"
+                    >{{ data.invoiceId }}</a
+                  >
+                  <p>{{ data.createdAt | date: "short" }}</p>
                 </div>
                 <div class="invoice_item">
                   <h3>Amount</h3>
-                  <p><span>BDT {{data.subTotal}}</span>
+                  <p>
+                    <span>BDT {{ data.subTotal }}</span>
+                  </p>
                 </div>
+
                 <div class="invoice_item">
                   <h3>Delivery Status</h3>
                   <p><span>{{data.deliveryStatus | orderStatus}}</span>
                 </div>
+
                 <div class="invoice_item">
                   <h3>Items</h3>
                   <p>
-                    <span>{{data.products.length}}</span>
+                    <span>{{ data.products.length }}</span>
                     <!-- <span *ngIf="data.refundEligible">{{getRefundId(data?.returnId)}}</span> -->
                   </p>
                 </div>
@@ -97,17 +124,30 @@
             <div *ngIf="tab.name === 'Return'">
               <div class="invoice_dropdown" *ngFor="let data of returns">
                 <div class="invoice_item">
-                  <a class="IVN_code_content" [routerLink]="['../../', 'return','details', data.returnId]" >{{data.returnId}}</a>
-                  <p>{{data.createdAt | date : 'short'}}</p>
+                  <a
+                    class="IVN_code_content"
+                    [routerLink]="[
+                      '../../',
+                      'return',
+                      'details',
+                      data.returnId
+                    ]"
+                  >
+                    {{ data.returnId }}
+                  </a>
+                  <p>{{ data.createdAt | date: "short" }}</p>
                 </div>
                 <div class="invoice_item">
                   <h3>Amount</h3>
-                  <p><span>BDT {{data.subTotal}}</span>
+                  <p>
+                    <span>BDT {{ data.subTotal }}</span>
+                  </p>
                 </div>
+
                 <div class="invoice_item">
                   <h3>Items</h3>
                   <p>
-                    <span>{{data.products.length}}</span>
+                    <span>{{ data.products.length }}</span>
                     <!-- <span *ngIf="data.refundEligible">{{getRefundId(data?.returnId)}}</span> -->
                   </p>
                 </div>
@@ -116,7 +156,7 @@
                 </div>
               </div>
             </div>
-            <div class="refund_details_body" >
+            <div class="refund_details_body">
               <div nz-row [nzGutter]="16" *ngIf="tab.name === 'Overview'">
                 <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
                   <h2>Order Details</h2>
@@ -145,7 +185,32 @@
                       <tr>
                         <td>Note</td>
                         <td>:</td>
-                        <td>{{order.orderNotes}}</td>
+                        <td>{{ order.orderNotes }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <h2>Delivery Details</h2>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <td>:</td>
+                        <td>{{ order?.name }}</td>
+                      </tr>
+                      <tr>
+                        <td>Phone No</td>
+                        <td>:</td>
+                        <td>
+                          {{ order?.shippingPhoneNo }}
+                          <i class="las la-lg la-sms"></i>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Shipping to</td>
+                        <td>:</td>
+                        <td>
+                          {{ order?.shippingAddress }}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -153,30 +218,6 @@
                 <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 16 }">
                   <div nz-row [nzGutter]="0">
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 16 }">
-                      <h2>Delivery Details</h2>
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td>Name</td>
-                            <td>:</td>
-                            <td>{{order?.name}}</td>
-                          </tr>
-                          <tr>
-                            <td>Phone No</td>
-                            <td>:</td>
-                            <td>
-                              {{order?.shippingPhoneNo}} <i class="las la-lg la-sms"></i>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Shipping to</td>
-                            <td>:</td>
-                            <td>
-                              {{order?.shippingAddress}}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
                       <h2>Customer Details</h2>
                       <table class="customer_details">
                         <tbody>
@@ -185,7 +226,7 @@
                             <td>:</td>
                             <td>
                               <a href="#">
-                                {{order?.userId.fullName}}
+                                {{ order?.userId.fullName }}
                                 <i class="las la-medal"></i>
                               </a>
                             </td>
@@ -193,32 +234,36 @@
                           <tr>
                             <td>Phone No</td>
                             <td>:</td>
-                            <td>{{order?.userId.phoneNo}}</td>
+                            <td>{{ order?.userId.phoneNo }}</td>
                           </tr>
                           <tr>
                             <td>Email</td>
                             <td>:</td>
-                            <td>{{order?.userId.email}}</td>
+                            <td>{{ order?.userId.email }}</td>
                           </tr>
                           <tr>
                             <td>Shipping to</td>
                             <td>:</td>
                             <td>
-                              {{order?.userId.address}}
+                              {{ order?.userId.address }}
                             </td>
                           </tr>
                           <tr>
                             <td>Total Orders</td>
                             <td>:</td>
                             <td>
-                              <span class="total-order"> {{order?.userId.checkouts.length}} </span>
+                              <span class="total-order">
+                                {{ order?.userId.checkouts.length }}
+                              </span>
                             </td>
                           </tr>
                           <tr>
                             <td>Return</td>
                             <td>:</td>
                             <td>
-                              <span class="total-return"> {{getReturnPercentage(order?.userId)}}% </span>
+                              <span class="total-return">
+                                {{ getReturnPercentage(order?.userId) }}%
+                              </span>
                             </td>
                           </tr>
                         </tbody>
@@ -227,17 +272,33 @@
                     <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
                       <div class="customadmin_note">
                         <div class="text_area">
-                          <textarea rows="2" nz-input [(ngModel)]="inputValue"
-                            placeholder="this comment only for admin ..."></textarea>
-                          <button nz-button nzType="default" (click)="addNewComment()">
+                          <textarea
+                            rows="2"
+                            nz-input
+                            [(ngModel)]="inputValue"
+                            placeholder="this comment only for admin ..."
+                          ></textarea>
+                          <button
+                            nz-button
+                            nzType="default"
+                            (click)="addNewComment()"
+                          >
                             Add Comment
                           </button>
                         </div>
-                        <div class="timeline timeline-items" *ngIf="order?.comments.length">
+                        <div
+                          class="timeline timeline-items"
+                          *ngIf="order?.comments.length"
+                        >
                           <nz-timeline class="timeline">
-                            <nz-timeline-item *ngFor="let comment of order?.comments.reverse()">
-                              <p>{{comment.text}}</p>
-                              <span>{{comment.date | date:'short'}} by {{comment.name}}</span>
+                            <nz-timeline-item
+                              *ngFor="let comment of order?.comments.reverse()"
+                            >
+                              <p>{{ comment.text }}</p>
+                              <span
+                                >{{ comment.date | date: "short" }} by
+                                {{ comment.name }}</span
+                              >
                             </nz-timeline-item>
                           </nz-timeline>
                         </div>
@@ -248,8 +309,14 @@
               </div>
 
               <nz-card class="refund_details_body-product" nzSize="small">
-                <nz-table #rowSelectProduct [nzFrontPagination]="false" [nzData]="products" [nzLoading]="loading"
-                  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+                <nz-table
+                  #rowSelectProduct
+                  [nzFrontPagination]="false"
+                  [nzData]="products"
+                  [nzLoading]="loading"
+                  (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+                  nzSize="small"
+                >
                   <thead>
                     <tr>
                       <!-- <th [(nzChecked)]="allSelected" [nzIndeterminate]="indeterminate"
@@ -267,20 +334,39 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let data of rowSelectProduct.data; let i = index">
-                      <td [nzDisabled]="data.quantity===data.invoicedQuantity || !(data.deliveryStatus === 2 || data.deliveryStatus === 3) "
+                    <tr
+                      *ngFor="let data of rowSelectProduct.data; let i = index"
+                    >
+                      <td
+                        [nzDisabled]="
+                          data.quantity === data.invoicedQuantity ||
+                          !(
+                            data.deliveryStatus === 2 ||
+                            data.deliveryStatus === 3
+                          )
+                        "
                         [nzChecked]="setOfCheckedId.has(data._id)"
-                        (nzCheckedChange)="onCheckChange($event, i, data._id)"></td>
+                        (nzCheckedChange)="onCheckChange($event, i, data._id)"
+                      ></td>
                       <td>
-                        <img nz-image width="50px" [nzSrc]="
+                        <img
+                          nz-image
+                          width="50px"
+                          [nzSrc]="
                             data.productId
                               ? setThumbnailImage(data.productId)
                               : '/assets/images/placeholder/test.png'
-                          " [alt]="data.productId.name" />
+                          "
+                          [alt]="data.productId.name"
+                        />
                       </td>
                       <td>
-                        {{ data.name }}
-                        {{ data.sku }}
+                        <p>
+                          {{ data.name }}
+                        </p>
+                        <p>
+                          {{ data.sku }}
+                        </p>
                       </td>
                       <td>
                         <p>{{ data.quantity }}</p>
@@ -296,17 +382,30 @@
                       <td>0</td>
                       <td>{{ getAmount(data) }}</td>
                       <td>
-                        <p [style]="
+                        <p
+                          [style]="
                             data.paymentStatus === 2
                               ? 'color:orange'
                               : 'color:green'
-                          ">
+                          "
+                        >
                           {{ data.advanceAmount }}
                         </p>
                       </td>
                       <td>
-                        <nz-select [ngModel]="data.deliveryStatus" nzPlaceHolder="Choose" [nzOptions]="productOrderStatus"
-                          (ngModelChange)="onStatusChange($event, data.deliveryStatus, order, data)"></nz-select>
+                        <nz-select
+                          [ngModel]="data.deliveryStatus"
+                          nzPlaceHolder="Choose"
+                          [nzOptions]="productOrderStatus"
+                          (ngModelChange)="
+                            onStatusChange(
+                              $event,
+                              data.deliveryStatus,
+                              order,
+                              data
+                            )
+                          "
+                        ></nz-select>
                       </td>
                     </tr>
                   </tbody>
@@ -316,57 +415,114 @@
                     <nz-card nzSize="small" class="ammount_summary">
                       <div class="ammount_summary_single">
                         <h4><b>Sub-Total</b></h4>
-                        <span><b>{{order?.totalAmount - order?.shippingCharge}} TK</b></span>
+                        <span
+                          ><b
+                            >{{
+                              order?.totalAmount - order?.shippingCharge
+                            }}
+                            TK</b
+                          ></span
+                        >
                       </div>
-                      <div class="ammount_summary_single" *ngIf="order?.couponCode">
+                      <div
+                        class="ammount_summary_single"
+                        *ngIf="order?.couponCode"
+                      >
                         <h4 class="cuppon">
                           Coupon Code
-                          <span><i class="las la-lg la-tag"></i>{{order?.couponCode}}</span>
+                          <span
+                            ><i class="las la-lg la-tag"></i
+                            >{{ order?.couponCode }}</span
+                          >
                         </h4>
                         <span style="color: red">- 0.00 TK</span>
                       </div>
-                      <div class="ammount_summary_single" *ngIf="order?.redeemedPoints">
+                      <div
+                        class="ammount_summary_single"
+                        *ngIf="order?.redeemedPoints"
+                      >
                         <h4>Points Redeem</h4>
-                        <span style="color: red">{{order?.redeemedPoints}}TK</span>
+                        <span style="color: red"
+                          >{{ order?.redeemedPoints }}TK</span
+                        >
                       </div>
                       <div class="ammount_summary_single">
                         <h4>Shipping</h4>
-                        <span>{{order?.shippingCharge}} TK</span>
+                        <span>{{ order?.shippingCharge }} TK</span>
                       </div>
-                      <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
+                      <nz-divider
+                        style="margin: 10px 0"
+                        nzType="horizontal"
+                      ></nz-divider>
                       <div class="ammount_summary_single">
                         <h4></h4>
-                        <span> Amount to pay = <b>{{order?.totalAmount}} TK</b></span>
+                        <span>
+                          Amount to pay =
+                          <b>{{ order?.totalAmount }} TK</b></span
+                        >
                       </div>
                       <div class="ammount_summary_single mt15">
                         <h4>Paid</h4>
-                        <span style="color: green">{{order?.paidAmount}} TK</span>
+                        <span style="color: green"
+                          >{{ order?.paidAmount }} TK</span
+                        >
                       </div>
-                      <div class="ammount_summary_single mt15" *ngIf="order?.adjustmentAmount">
+                      <div
+                        class="ammount_summary_single mt15"
+                        *ngIf="order?.adjustmentAmount"
+                      >
                         <h4>Adjustment</h4>
-                        <span style="color: red">{{order?.adjustmentAmount}} TK</span>
+                        <span style="color: red"
+                          >{{ order?.adjustmentAmount }} TK</span
+                        >
                       </div>
-                      <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
+                      <nz-divider
+                        style="margin: 10px 0"
+                        nzType="horizontal"
+                      ></nz-divider>
                       <div class="ammount_summary_single">
                         <h4></h4>
-                        <span> Due Amount = {{order?.totalAmount - order?.paidAmount}} TK</span>
+                        <span>
+                          Due Amount =
+                          {{ order?.totalAmount - order?.paidAmount }} TK</span
+                        >
                       </div>
-                      <div class="ammount_summary_single mt15" *ngIf="order?.canceledAmount">
+                      <div
+                        class="ammount_summary_single mt15"
+                        *ngIf="order?.canceledAmount"
+                      >
                         <h4>Cancelled (SKU: 5045844)</h4>
                         <span style="color: red">0.00 TK</span>
                       </div>
-                      <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
-                      <div class="ammount_summary_single" *ngIf="order?.canceledAmount">
+                      <nz-divider
+                        style="margin: 10px 0"
+                        nzType="horizontal"
+                      ></nz-divider>
+                      <div
+                        class="ammount_summary_single"
+                        *ngIf="order?.canceledAmount"
+                      >
                         <h4></h4>
                         <span style="color: red">
-                          Refundable Amount = 0.00 TK</span>
+                          Refundable Amount = 0.00 TK</span
+                        >
                       </div>
-                      <div class="ammount_summary_single mt15" *ngIf="order?.canceledAmount">
+                      <div
+                        class="ammount_summary_single mt15"
+                        *ngIf="order?.canceledAmount"
+                      >
                         <h4>Refund (SKU: 5045844)</h4>
                         <span style="color: red">0.00 TK</span>
                       </div>
-                      <nz-divider style="margin: 10px 0" nzType="horizontal" *ngIf="order?.canceledAmount"></nz-divider>
-                      <div class="ammount_summary_single" *ngIf="order?.canceledAmount">
+                      <nz-divider
+                        style="margin: 10px 0"
+                        nzType="horizontal"
+                        *ngIf="order?.canceledAmount"
+                      ></nz-divider>
+                      <div
+                        class="ammount_summary_single"
+                        *ngIf="order?.canceledAmount"
+                      >
                         <h4></h4>
                         <span> Due Amount = 0 TK</span>
                       </div>
@@ -433,14 +589,68 @@
           </nz-tab>
         </nz-tabset>
         <ng-template #extraTemplate>
-          <button nz-button [routerLink]="['../../', 'edit-order', order?._id]">
-            <i class="lar la-edit"></i>Edit
-          </button>
-          <button nz-button (click)="openDialog()">
-            <i class="las la-file-invoice"></i> Create
-          </button>
+          <nz-affix [nzOffsetTop]="offsetTop">
+            <button nz-button (click)="showModal()">
+              <i class="lar la-edit"></i> Edit
+            </button>
+            <button nz-button (click)="openDialog()">
+              <i class="las la-file-invoice"></i> Create
+            </button>
+          </nz-affix>
         </ng-template>
       </nz-content>
     </nz-layout>
   </nz-card>
 </div>
+
+<nz-modal
+  [(nzVisible)]="editVisible"
+  nzTitle="Edit Product"
+  (nzOnCancel)="editCancel()"
+  (nzOnOk)="editOk()"
+  [nzBodyStyle]="{ padding: '0px' }"
+>
+  <ng-container *nzModalContent>
+    <div class="entry_edit">
+      <nz-table
+        #basicTable
+        nzShowPagination="false"
+        nzSmall="small"
+        [nzData]="[1, 2]"
+      >
+        <thead>
+          <tr>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Qty</th>
+            <th rowspan="4"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>
+              <nz-select ngModel="lucy">
+                <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+                <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+              </nz-select>
+            </td>
+            <td>
+              <nz-select ngModel="lucy">
+                <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+                <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+              </nz-select>
+            </td>
+            <td>
+              <div class="qty">
+                <button nz-button><i class="las la-minus"></i></button>
+                <input nz-input value="1" />
+                <button nz-button><i class="las la-plus"></i></button>
+              </div>
+            </td>
+            <td><i class="las la-lg la-trash"></i></td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </ng-container>
+</nz-modal>
