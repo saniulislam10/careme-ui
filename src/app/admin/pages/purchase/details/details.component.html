@@ -133,10 +133,11 @@
                 <tr>
                   <th style="width: 100px">Image</th>
                   <th>Item</th>
-                  <th>Shipped</th>
-                  <th>Amount (TK)</th>
-                  <th>Recived QTY</th>
-                  <th>Refund Amount (TK)</th>
+                  <th>Unit Price</th>
+                  <th>Tax</th>
+                  <th>Quantity</th>
+                  <th>Amount</th>
+                  <th>Recieved</th>
                 </tr>
               </thead>
 
@@ -158,6 +159,12 @@
                   <td>1200</td>
                   <td>1</td>
                   <td>1200</td>
+                  <td>
+                    <div class="recived_qt">
+                      <p>0</p>
+                      <i class="lar la-plus-square"></i>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </nz-table>
@@ -181,17 +188,6 @@
                   </div>
                 </nz-card>
               </div>
-
-              <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-                <div class="action_btn">
-                  <button nzSize="large" nz-button nzType="default">
-                    Reject
-                  </button>
-                  <button nzSize="large" nz-button nzType="primary">
-                    Save
-                  </button>
-                </div>
-              </div>
             </div>
           </nz-card>
         </div>
@@ -201,7 +197,7 @@
 </div>
 
 <!-- Old Code -->
-<!-- <div>
+<div>
   <div class="order-header-top">
     <div class="order-title">
       <h3>Purchase Order Details</h3>
@@ -390,9 +386,9 @@
                       <span>{{ getAmount(item) }}</span>
                     </td>
                     <td class="price">
-                      <span
-                        >{{ item.recieved ? item.recieved : 0
-                        }}<a
+                      <span>
+                        {{ item.recieved ? item.recieved : 0 }}
+                        <a
                           (click)="
                             openRecieved(
                               item.productData._id,
@@ -401,9 +397,10 @@
                               item?.purchaseQuantity
                             )
                           "
-                          >+</a
-                        ></span
-                      >
+                        >
+                          +
+                        </a>
+                      </span>
                     </td>
                     <td class="quantity">
                       <span>{{ getRecievedAmount(item) }} TK</span>
@@ -458,4 +455,4 @@
       </div>
     </form>
   </div>
-</div> -->
+</div>
