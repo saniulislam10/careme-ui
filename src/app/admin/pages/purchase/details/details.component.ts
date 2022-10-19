@@ -30,6 +30,9 @@ import { RecievedComponent } from '../recieved/recieved.component';
 export class DetailsComponent implements OnInit {
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
 
+  // Qty Recived
+  recivedQty = false;
+
   dataForm: FormGroup;
   id: any;
   products: any[] = [];
@@ -371,5 +374,16 @@ export class DetailsComponent implements OnInit {
       total += Math.round(f?.price * f?.quantity + f.tax * f?.quantity);
     });
     return Math.round(total);
+  }
+
+  // Quantity Recived
+  showModal(): void {
+    this.recivedQty = true;
+  }
+  recivedOk(): void {
+    this.recivedQty = false;
+  }
+  recivedCancel(): void {
+    this.recivedQty = false;
   }
 }

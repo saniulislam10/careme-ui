@@ -45,25 +45,32 @@
           <input nz-input placeholder="Use Purchase Order id" />
         </div>
         <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
-          <li nz-menu-item>
+          <li
+            nz-menu-item
+            *ngFor="let data of purchases"
+            [routerLink]="['../../', 'details', data._id]"
+          >
             <div class="left">
-              <h4>PO00101</h4>
-              <h5>05 Jul 2022 | 11:30 PM</h5>
+              <h4>{{ data?.purchaseId }}</h4>
+              <h5>{{ data?.dateTime | date }}</h5>
             </div>
             <div class="right">
               <h4 style="color: #ff8800">Draft</h4>
               <h5>
-                <span>1 / 0</span>
-                <span>846 TK</span>
+                <span>{{ data?.totalAmount }} TK</span>
               </h5>
             </div>
           </li>
         </ul>
       </nz-sider>
-      <nz-content class="refund_body_main" style="background: #fff">
+      <nz-content
+        [formGroup]="dataForm"
+        class="refund_body_main"
+        style="background: #fff"
+      >
         <div class="refund_details_header">
-          <h4>PO00101</h4>
-          <h5>05 Jul 2022 | 11:30 PM</h5>
+          <h4>{{ purchase?.purchaseId }}</h4>
+          <h5>{{ purchase?.dateTime | date: "short" }}</h5>
         </div>
         <div class="refund_details_body">
           <div nz-row [nzGutter]="16">
@@ -74,7 +81,9 @@
                   <tr>
                     <td>PO ID #</td>
                     <td>:</td>
-                    <td><b>PO00101</b></td>
+                    <td>
+                      <b>{{ purchase?.purchaseId }}</b>
+                    </td>
                   </tr>
                   <tr>
                     <td>Purchase Status</td>
@@ -86,12 +95,15 @@
                   <tr>
                     <td>Date & Time</td>
                     <td>:</td>
-                    <td>05 Jul 2022 | 11:30 PM</td>
+                    <td style="text-transform: uppercase">
+                      {{ purchase?.dateTime | date: "short" }}
+                      <i class="lar la-lg la-clock"></i>
+                    </td>
                   </tr>
                   <tr>
                     <td>Total Amount</td>
                     <td>:</td>
-                    <td>50000 TK</td>
+                    <td>{{ purchase?.totalAmount }} TK</td>
                   </tr>
                   <tr>
                     <td>Inishete By</td>
@@ -107,13 +119,13 @@
                   <tr>
                     <td>Manufacturer</td>
                     <td>:</td>
-                    <td>Bata</td>
+                    <td>{{ purchase?.manufacturer }}</td>
                   </tr>
                   <tr>
                     <td>Supplier Link</td>
                     <td>:</td>
                     <td>
-                      <a href="#" target="_blank">
+                      <a href="{{ purchase?.supplier_link }}" target="_blank">
                         <i class="las la-lg la-external-link-alt"></i>
                       </a>
                     </td>
@@ -133,37 +145,62 @@
                 <tr>
                   <th style="width: 100px">Image</th>
                   <th>Item</th>
-                  <th>Unit Price</th>
-                  <th>Tax</th>
-                  <th>Quantity</th>
-                  <th>Amount</th>
-                  <th>Recieved</th>
+                  <th class="w100">Unit Price</th>
+                  <th class="w100">Tax</th>
+                  <th class="w100">Quantity</th>
+                  <th class="w100">Amount</th>
+                  <th class="w100">Recieved Qty</th>
+                  <th class="w100">Recieved Amount</th>
                 </tr>
               </thead>
-
               <tbody>
-                <tr>
+                <tr *ngFor="let item of products; let i = index">
                   <td style="width: 100px">
                     <img
                       style="max-width: 100%"
-                      src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
-                      alt=""
+                      nz-image
+                      [nzSrc]="
+                        item.image
+                          ? item.image
+                          : '/assets/images/placeholder/test.png'
+                      "
+                      alt="item.product.name"
                     />
                   </td>
                   <td>
-                    <h3>Men's casual shirt</h3>
-                    <h5>Yellow / XXL</h5>
-                    <h5>SKU: 5072036</h5>
+                    <h3>{{ item?.productData?.name }}</h3>
+                    <h5>SKU: {{ item?.sku }}</h5>
                   </td>
-                  <td>1</td>
-                  <td>1200</td>
-                  <td>1</td>
-                  <td>1200</td>
+                  <td>
+                    <input
+                      nz-input
+                      placeholder="0"
+                      value="{{ item?.purchasePrice }}"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      nz-input
+                      placeholder="0"
+                      value="{{ item.purchaseTax }}"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      nz-input
+                      placeholder="0"
+                      value="{{ item?.purchaseQuantity }}"
+                    />
+                  </td>
+                  <td>{{ getAmount(item) }} TK</td>
                   <td>
                     <div class="recived_qt">
-                      <p>0</p>
-                      <i class="lar la-plus-square"></i>
+                      <p>{{ item.recieved ? item.recieved : 0 }}</p>
+                      <i (click)="showModal()" class="lar la-plus-square"></i>
                     </div>
+                  </td>
+                  <td>
+                    <b>{{ getRecievedAmount(item) }} TK</b>
                   </td>
                 </tr>
               </tbody>
@@ -173,20 +210,33 @@
                 <nz-card nzSize="small" class="ammount_summary">
                   <div class="ammount_summary_single">
                     <h4>Sub Total</h4>
-                    <span>1200 TK</span>
+                    <span>{{ purchase?.subTotal }} TK</span>
                   </div>
                   <div class="ammount_summary_single">
                     <span>Tax (10%)</span>
                     <span>120 TK</span>
+                  </div>
+                  <div class="ammount_summary_single">
+                    <span>Shipping Cost</span>
+                    <span>{{ purchase?.purchaseShippingCharge }} TK</span>
                   </div>
                   <nz-divider
                     style="margin: 5px 0"
                     nzType="horizontal"
                   ></nz-divider>
                   <div class="summary_total">
-                    <h2>Refundable Amount = 1200 TK</h2>
+                    <h2>Total = {{ purchase?.totalAmount }} TK</h2>
                   </div>
                 </nz-card>
+              </div>
+            </div>
+            <div class="purchase_edit" nz-row [nzGutter]="0">
+              <div nz-col [nzXs]="{ span: 24 }">
+                <div class="purchase_edit_btn">
+                  <button nz-button nzSize="large" nzType="primary">
+                    Save
+                  </button>
+                </div>
               </div>
             </div>
           </nz-card>
@@ -195,6 +245,39 @@
     </nz-layout>
   </nz-card>
 </div>
+<!-- Recived Modal -->
+<nz-modal
+  [(nzVisible)]="recivedQty"
+  nzTitle="Recived Quantity"
+  (nzOnCancel)="recivedCancel()"
+  (nzOnOk)="recivedOk()"
+  nzWidth="300px"
+  nzSize="small"
+>
+  <ng-container *nzModalContent>
+    <form nz-form>
+      <nz-form-item class="mb">
+        <nz-form-label [nzSpan]="24" nzFor="proqty">
+          Product Quantity
+        </nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input name="proqty" type="text" id="proqty" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24" nzFor="comment">Comment</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <textarea
+            formControlName="comment"
+            nz-input
+            rows="2"
+            placeholder="write any thing"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
 
 <!-- Old Code -->
 <div>
@@ -275,12 +358,10 @@
         <div class="order-id-area">
           <div class="req-id-title">
             <h4>{{ purchase?.purchaseId }}</h4>
-            <span
-              >{{ purchase?.timeline?.purchasePlacedDate | date }}
-              {{
-                purchase?.timeline?.purchasePlacedDate | date: "mediumTime"
-              }}</span
-            >
+            <span>
+              {{ purchase?.timeline?.purchasePlacedDate | date }}
+              {{ purchase?.timeline?.purchasePlacedDate | date: "mediumTime" }}
+            </span>
           </div>
         </div>
 

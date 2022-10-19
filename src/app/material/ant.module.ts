@@ -29,6 +29,7 @@ import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 const materials = [
   NzModalModule,
@@ -63,6 +64,7 @@ const materials = [
   NzDrawerModule,
   NzAffixModule,
   NzDescriptionsModule,
+  NzPopoverModule,
 
   // SharedModule
 ];

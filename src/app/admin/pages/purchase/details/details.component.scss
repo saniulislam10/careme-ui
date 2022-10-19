@@ -1,6 +1,12 @@
 @import "src/theme/variables";
 
 // New Css
+.w100 {
+  width: 100px;
+}
+.mb {
+  margin-bottom: 15px !important;
+}
 .page-header {
   display: flex;
   align-items: center;
@@ -200,7 +206,20 @@
     color: green;
     font-size: 25px;
     line-height: 25px;
+    margin-left: 10px !important;
   }
+}
+tbody {
+  input {
+    width: 50px;
+    border: none;
+    text-align: center;
+    background: transparent;
+    border-bottom: 1px solid #ddd;
+  }
+}
+.purchase_edit_btn {
+  text-align: right;
 }
 @media (max-width: 768px) {
   .table-samary {
@@ -231,6 +250,14 @@
   }
   .refund_details_body {
     padding: 0;
+  }
+  tbody {
+    input {
+      width: 80px;
+    }
+  }
+  .w100 {
+    width: 140px;
   }
 }
 
