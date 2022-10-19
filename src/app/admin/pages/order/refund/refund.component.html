@@ -1,81 +1,104 @@
 <!---order-header-area-->
 <div class="page-header">
-    <h2>All Refund</h2>
-    <div class="header-action">
-        <button type="button">Export</button>
-        <button type="button">Import</button>
-    </div>
+  <h2>All Refund</h2>
+  <div class="header-action">
+    <button type="button">Export</button>
+    <button type="button">Import</button>
+  </div>
 </div>
 <div class="table-samary">
-    <nz-card nzSize="small">
-        <nz-tabset>
-            <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
-                <div class="table-filter-area">
-                  <form #searchForm=ngForm>
-                    <input #searchInput nz-input id="searchInput" class="tw" type="text" placeholder="Filter Refund"
-                      (focus)=handleFocus($event) name="searchTerm" nzSize="large" autocomplete="off" ngModel required>
-                  </form>
-                    <ul>
-                        <li>
-                            <button [matMenuTriggerFor]="paymentStatus">
-                                Payment Status <i class="las la-angle-down"></i>
-                            </button>
-                        </li>
-                        <li>
-                            <button [matMenuTriggerFor]="orderStatus">
-                                Order Status <i class="las la-angle-down"></i>
-                            </button>
-                        </li>
-                        <li>
-                            <button [matMenuTriggerFor]="vendor">
-                                Vendor <i class="las la-angle-down"></i>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-                <div class="table-data-area">
-                    <nz-table nzSize="small" #rowSelectionTable nzShowSizeChanger [nzLoading]="loading" [nzData]="refunds"
-                        (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
-                        <thead>
-                            <tr>
-                                <th style="width: 50px;" [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
-                                    (nzCheckedChange)="onAllChecked($event)">
-                                </th>
-                                <th>ID & Date</th>
-                                <th>Initiated By</th>
-                                <th>Return ID</th>
-                                <th>Return Status</th>
-                                <th>Sales Order</th>
-                                <th>Refund Status</th>
-                                <th>Returned</th>
-                                <th>Return Amount</th>
-                                <th>Refunded Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let data of rowSelectionTable.data">
-                                <td style="width: 50px;" [nzChecked]="setOfCheckedId.has(data.id)"
-                                    (nzCheckedChange)="onItemChecked(data.id, $event)">
-                                </td>
-                                <td>
-                                    <a routerLink="details">
-                                        <h4>{{ data.refundId }}</h4>
-                                    </a>
-                                    <h5>{{ data.createdAt | date:'short' }}</h5>
-                                </td>
-                                <td>SUPERADMIN</td>
-                                <td>{{data.returnId}}</td>
-                                <td>PENDING</td>
-                                <td>{{ data.orderNumber }}</td>
-                                <td>Pending</td>
-                                <td>Accepted</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                        </tbody>
-                    </nz-table>
-                </div>
-            </nz-tab>
-        </nz-tabset>
-    </nz-card>
+  <nz-card nzSize="small">
+    <nz-tabset>
+      <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
+        <div class="table-filter-area">
+          <form #searchForm="ngForm">
+            <input
+              #searchInput
+              nz-input
+              id="searchInput"
+              class="tw"
+              type="text"
+              placeholder="Filter Refund"
+              (focus)="handleFocus($event)"
+              name="searchTerm"
+              nzSize="large"
+              autocomplete="off"
+              ngModel
+              required
+            />
+          </form>
+          <ul>
+            <li>
+              <button [matMenuTriggerFor]="paymentStatus">
+                Payment Status <i class="las la-angle-down"></i>
+              </button>
+            </li>
+            <li>
+              <button [matMenuTriggerFor]="orderStatus">
+                Order Status <i class="las la-angle-down"></i>
+              </button>
+            </li>
+            <li>
+              <button [matMenuTriggerFor]="vendor">
+                Vendor <i class="las la-angle-down"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="table-data-area">
+          <nz-table
+            nzSize="small"
+            #rowSelectionTable
+            nzShowSizeChanger
+            [nzLoading]="loading"
+            [nzData]="refunds"
+            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+          >
+            <thead>
+              <tr>
+                <th
+                  style="width: 50px"
+                  [(nzChecked)]="checked"
+                  [nzIndeterminate]="indeterminate"
+                  (nzCheckedChange)="onAllChecked($event)"
+                ></th>
+                <th>ID & Date</th>
+                <th>Initiated By</th>
+                <th>Return ID</th>
+                <th>Return Status</th>
+                <th>Sales Order</th>
+                <th>Refund Status</th>
+                <th>Returned</th>
+                <th>Return Amount</th>
+                <th>Refunded Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of rowSelectionTable.data">
+                <td
+                  style="width: 50px"
+                  [nzChecked]="setOfCheckedId.has(data.id)"
+                  (nzCheckedChange)="onItemChecked(data.id, $event)"
+                ></td>
+                <td>
+                  <a routerLink="details">
+                    <h4>{{ data.refundId }}</h4>
+                  </a>
+                  <h5>{{ data.createdAt | date: "short" }}</h5>
+                </td>
+                <td>SUPERADMIN</td>
+                <td>{{ data.returnId }}</td>
+                <td>PENDING</td>
+                <td>{{ data.orderNumber }}</td>
+                <td>Pending</td>
+                <td>Accepted</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
 </div>

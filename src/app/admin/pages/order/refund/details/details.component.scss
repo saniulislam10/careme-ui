@@ -152,15 +152,19 @@
     margin-left: 15px;
   }
 }
-.return_action{
-  ul{
-    li{
-
-    }
+.table-samary {
+  nz-layout {
+    max-height: 100vh;
   }
 }
-@media (max-width: 500px) {
-  .main-layout{
+@media (max-width: 768px) {
+  .table-samary {
+    nz-layout {
+      max-height: unset;
+      flex-direction: column;
+    }
+  }
+  .main-layout {
     flex-direction: column !important;
   }
   .left_navbar {
@@ -168,19 +172,19 @@
     width: 100% !important;
     border: none;
   }
-  .thumb_img{
+  .thumb_img {
     width: 80px;
   }
   .ammount_summary {
     margin: 10px 0;
     width: 300px;
   }
-  .refund_body_main{
+  .refund_body_main {
     width: 100% !important;
     margin: 20px 0;
     padding: 0;
   }
-  .refund_details_body{
+  .refund_details_body {
     padding: 0;
   }
 }

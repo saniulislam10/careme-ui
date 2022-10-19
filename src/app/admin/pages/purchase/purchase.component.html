@@ -103,7 +103,7 @@
                 </td>
                 <td>
                   <p>
-                    {{ data?.recieved ? "yes" : "no" }}
+                    {{ data?.recieved ? "Yes" : "No" }}
                   </p>
                 </td>
               </tr>
@@ -197,7 +197,7 @@
               <th style="width: 80px">Unit Cost</th>
               <th style="width: 80px">Price</th>
               <th style="width: 80px">Qty</th>
-              <th style="width: 80px">Tax</th>
+              <th style="width: 80px">Tax (%)</th>
               <th style="width: 80px">Amount</th>
               <th style="width: 50px"></th>
             </tr>
@@ -226,7 +226,7 @@
                 <input nz-input placeholder="0" />
               </td>
               <td>
-                <p>15%</p>
+                <input nz-input placeholder="0" />
               </td>
               <td>
                 <p>6565 TK</p>
@@ -237,6 +237,10 @@
             </tr>
           </tbody>
         </nz-table>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="16">
+      <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 12 }">
         <div class="add_product">
           <input
             nz-input
@@ -265,6 +269,26 @@
               </li>
             </ul>
           </nz-dropdown-menu>
+        </div>
+      </div>
+      <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 12 }">
+        <div class="order_summery">
+          <nz-card nzSize="small">
+            <nz-list>
+              <nz-list-item>
+                <h4>Sub Total</h4>
+                <h4>6565Tk</h4>
+              </nz-list-item>
+              <nz-list-item>
+                <p>Tax (0%)</p>
+                <p>565Tk</p>
+              </nz-list-item>
+              <nz-divider nzSize="small"></nz-divider>
+              <nz-list-item>
+                <h2>Total = 6565 TK</h2>
+              </nz-list-item>
+            </nz-list>
+          </nz-card>
         </div>
       </div>
     </div>

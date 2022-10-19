@@ -1,193 +1,212 @@
-<!---order-header-area-->
 <div class="page-header">
-    <h2><i class="las la-arrow-left"></i> All Refund</h2>
-    <div class="header-action">
-        <button type="button">Export</button>
-        <button type="button">Import</button>
-    </div>
+  <h2><i class="las la-arrow-left"></i> All Refund</h2>
+  <div class="header-action">
+    <button type="button">Export</button>
+    <button type="button">Import</button>
+  </div>
 </div>
 <div class="table-samary">
-    <nz-card nzSize="small">
-        <nz-layout style="min-height: 50vh">
-            <nz-sider class="left_navbar">
-                <div class="inner_nav_header">
-                    <div class="header_action">
-                        <a nz-dropdown [nzDropdownMenu]="statusMenu">
-                            All Refund <i class="las la-angle-down"></i>
-                            <nz-dropdown-menu #statusMenu="nzDropdownMenu">
-                                <ul nz-menu nzSelectable>
-                                    <li nz-menu-item>Close</li>
-                                    <li nz-menu-item>Pending</li>
-                                    <li nz-menu-item>Reject</li>
-                                </ul>
-                            </nz-dropdown-menu>
-                        </a>
-                        <nz-button-group>
-                            <button nz-button nz-dropdown [nzDropdownMenu]="actionMenu" nzPlacement="bottomRight">
-                                <span nz-icon nzType="ellipsis"></span>
-                            </button>
-                            <nz-dropdown-menu #actionMenu="nzDropdownMenu">
-                                <ul nz-menu nzSelectable>
-                                    <li nz-menu-item>Delete</li>
-                                    <li nz-menu-item>Pending</li>
-                                    <li nz-menu-item>Reject</li>
-                                </ul>
-                            </nz-dropdown-menu>
-                        </nz-button-group>
-                    </div>
-                    <input nz-input placeholder="Basic usage" />
-                </div>
-                <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
-                    <li nz-menu-item>
-                        <div class="left">
-                            <h4>RFD-16767</h4>
-                            <h5>05 Jul 2022 | 11:30 PM</h5>
-                        </div>
-                        <div class="right">
-                            <h4>Pending</h4>
-                            <h5>
-                                <span>1 / 0</span>
-                                <span>846 TK</span>
-                            </h5>
-                        </div>
-                    </li>
+  <nz-card nzSize="small">
+    <nz-layout>
+      <nz-sider class="left_navbar">
+        <div class="inner_nav_header">
+          <div class="header_action">
+            <a nz-dropdown [nzDropdownMenu]="statusMenu">
+              All Refund <i class="las la-angle-down"></i>
+              <nz-dropdown-menu #statusMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Close</li>
+                  <li nz-menu-item>Pending</li>
+                  <li nz-menu-item>Reject</li>
                 </ul>
-            </nz-sider>
-            <nz-content class="refund_body_main" style="background: #fff">
-                <div class="refund_details_header">
-                    <h4><b>RFD-16767</b></h4>
-                    <h5>05 Jul 2022 | 11:30 PM</h5>
-                </div>
-                <div class="refund_details_body">
-                    <div nz-row [nzGutter]="16">
-                        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
-                            <h2>Refund Details</h2>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>Refund Status</td>
-                                        <td>:</td>
-                                        <td>
-                                            <span> Pending </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Refund</td>
-                                        <td>:</td>
-                                        <td>Yes</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Amount</td>
-                                        <td>:</td>
-                                        <td><b>120 TK</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Refund Way</td>
-                                        <td>:</td>
-                                        <td>bKash ( 01934548454 )</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Customer</td>
-                                        <td>:</td>
-                                        <td>01917635242</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>Invoice#</td>
-                                        <td>:</td>
-                                        <td><a>INV-195212</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sales Order</td>
-                                        <td>:</td>
-                                        <td><a>SO-195212</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Crated By</td>
-                                        <td>:</td>
-                                        <td>Customer</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <nz-card class="refund_details_body-product" nzSize="small">
-                        <nz-table nzSize="small" nzShowPagination="false" [nzData]="[1, 2, 3]">
-                            <thead>
-                                <tr>
-                                    <th style="width: 100px">Image</th>
-                                    <th>Item</th>
-                                    <th>Shipped</th>
-                                    <th>Amount (TK)</th>
-                                    <th>Recived QTY</th>
-                                    <th>Refund Amount (TK)</th>
-                                </tr>
-                            </thead>
+              </nz-dropdown-menu>
+            </a>
+            <nz-button-group>
+              <button
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="actionMenu"
+                nzPlacement="bottomRight"
+              >
+                <span nz-icon nzType="ellipsis"></span>
+              </button>
+              <nz-dropdown-menu #actionMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Delete</li>
+                  <li nz-menu-item>Pending</li>
+                  <li nz-menu-item>Reject</li>
+                </ul>
+              </nz-dropdown-menu>
+            </nz-button-group>
+          </div>
+          <input nz-input placeholder="Basic usage" />
+        </div>
+        <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
+          <li nz-menu-item>
+            <div class="left">
+              <h4>RFD-16767</h4>
+              <h5>05 Jul 2022 | 11:30 PM</h5>
+            </div>
+            <div class="right">
+              <h4>Pending</h4>
+              <h5>
+                <span>1 / 0</span>
+                <span>846 TK</span>
+              </h5>
+            </div>
+          </li>
+        </ul>
+      </nz-sider>
+      <nz-content class="refund_body_main" style="background: #fff">
+        <div class="refund_details_header">
+          <h4><b>RFD-16767</b></h4>
+          <h5>05 Jul 2022 | 11:30 PM</h5>
+        </div>
+        <div class="refund_details_body">
+          <div nz-row [nzGutter]="16">
+            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+              <h2>Refund Details</h2>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Refund Status</td>
+                    <td>:</td>
+                    <td>
+                      <span> Pending </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Refund</td>
+                    <td>:</td>
+                    <td>Yes</td>
+                  </tr>
+                  <tr>
+                    <td>Amount</td>
+                    <td>:</td>
+                    <td><b>120 TK</b></td>
+                  </tr>
+                  <tr>
+                    <td>Refund Way</td>
+                    <td>:</td>
+                    <td>bKash ( 01934548454 )</td>
+                  </tr>
+                  <tr>
+                    <td>Customer</td>
+                    <td>:</td>
+                    <td>01917635242</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Invoice#</td>
+                    <td>:</td>
+                    <td><a>INV-195212</a></td>
+                  </tr>
+                  <tr>
+                    <td>Sales Order</td>
+                    <td>:</td>
+                    <td><a>SO-195212</a></td>
+                  </tr>
+                  <tr>
+                    <td>Crated By</td>
+                    <td>:</td>
+                    <td>Customer</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <nz-card class="refund_details_body-product" nzSize="small">
+            <nz-table
+              nzSize="small"
+              nzShowPagination="false"
+              [nzData]="[1, 2, 3]"
+              [nzScroll]="{ x: '1000px' }"
+            >
+              <thead>
+                <tr>
+                  <th style="width: 100px">Image</th>
+                  <th>Item</th>
+                  <th>Shipped</th>
+                  <th>Amount (TK)</th>
+                  <th>Recived QTY</th>
+                  <th>Refund Amount (TK)</th>
+                </tr>
+              </thead>
 
-                            <tbody>
-                                <tr>
-                                    <td style="width: 100px">
-                                        <img style="max-width: 100%"
-                                            src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
-                                            alt="" />
-                                    </td>
-                                    <td>
-                                        <h3>Men's casual shirt</h3>
-                                        <h5>Yellow / XXL</h5>
-                                        <h5>SKU: 5072036</h5>
-                                    </td>
-                                    <td>1</td>
-                                    <td>1200</td>
-                                    <td>1</td>
-                                    <td>1200</td>
-                                </tr>
-                            </tbody>
-                        </nz-table>
-                        <div nz-row [nzGutter]="0">
-                            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-                                <nz-card nzSize="small" class="ammount_summary">
-                                    <div class="ammount_summary_single">
-                                        <h4>Sub-Total</h4>
-                                        <span>1200 TK</span>
-                                    </div>
-                                    <div class="ammount_summary_single">
-                                        <h4>Shipping</h4>
-                                        <span>120 TK</span>
-                                    </div>
-                                    <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
-                                    <div class="ammount_summary_single">
-                                        <h4></h4>
-                                        <span> Refundable Amount = 1200 TK</span>
-                                    </div>
-                                    <div class="ammount_summary_single mt15">
-                                        <h4>Refund Amount</h4>
-                                        <span>
-                                            <input nz-input value="1200" />TK
-                                        </span>
-                                    </div>
-                                    <nz-divider style="margin: 10px 0" nzType="horizontal"></nz-divider>
-                                    <div class="ammount_summary_single">
-                                        <h4></h4>
-                                        <span> Refundable Amount = 0 TK</span>
-                                    </div>
-                                </nz-card>
-                            </div>
+              <tbody>
+                <tr>
+                  <td style="width: 100px">
+                    <img
+                      style="max-width: 100%"
+                      src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
+                      alt=""
+                    />
+                  </td>
+                  <td>
+                    <h3>Men's casual shirt</h3>
+                    <h5>Yellow / XXL</h5>
+                    <h5>SKU: 5072036</h5>
+                  </td>
+                  <td>1</td>
+                  <td>1200</td>
+                  <td>1</td>
+                  <td>1200</td>
+                </tr>
+              </tbody>
+            </nz-table>
+            <div nz-row [nzGutter]="0">
+              <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+                <nz-card nzSize="small" class="ammount_summary">
+                  <div class="ammount_summary_single">
+                    <h4>Sub-Total</h4>
+                    <span>1200 TK</span>
+                  </div>
+                  <div class="ammount_summary_single">
+                    <h4>Shipping</h4>
+                    <span>120 TK</span>
+                  </div>
+                  <nz-divider
+                    style="margin: 10px 0"
+                    nzType="horizontal"
+                  ></nz-divider>
+                  <div class="ammount_summary_single">
+                    <h4></h4>
+                    <span> Refundable Amount = 1200 TK</span>
+                  </div>
+                  <div class="ammount_summary_single mt15">
+                    <h4>Refund Amount</h4>
+                    <span> <input nz-input value="1200" />TK </span>
+                  </div>
+                  <nz-divider
+                    style="margin: 10px 0"
+                    nzType="horizontal"
+                  ></nz-divider>
+                  <div class="ammount_summary_single">
+                    <h4></h4>
+                    <span> Refundable Amount = 0 TK</span>
+                  </div>
+                </nz-card>
+              </div>
 
-                            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-                                <div class="action_btn">
-                                    <button nzSize="large" nz-button nzType="default">Reject</button>
-                                    <button nzSize="large" nz-button nzType="primary">Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </nz-card>
+              <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+                <div class="action_btn">
+                  <button nzSize="large" nz-button nzType="default">
+                    Reject
+                  </button>
+                  <button nzSize="large" nz-button nzType="primary">
+                    Save
+                  </button>
                 </div>
-            </nz-content>
-        </nz-layout>
-    </nz-card>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+      </nz-content>
+    </nz-layout>
+  </nz-card>
 </div>

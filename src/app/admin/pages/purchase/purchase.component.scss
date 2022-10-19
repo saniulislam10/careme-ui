@@ -88,12 +88,32 @@ nz-select {
     }
   }
 }
-.add_product {
+.add_product,
+.order_summery {
   padding: 15px 0 0 0;
+}
+.add_product {
   input {
-    width: 50%;
+    width: 80%;
   }
 }
+.order_summery {
+  nz-divider {
+    margin: 5px 0;
+  }
+  nz-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #585858;
+    h2 {
+      width: 100%;
+      font-size: 16px;
+      text-align: right;
+    }
+  }
+}
+
 .search_items {
   margin: 0;
   padding: 0;
