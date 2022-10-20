@@ -30,6 +30,8 @@ import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 const materials = [
   NzModalModule,
@@ -69,6 +71,9 @@ const materials = [
     NzStepsModule,
     NzTimelineModule,
     NzIconModule,
+  NzDescriptionsModule,
+  NzPopoverModule,
+>>>>>>> f58893ac8ec8dc931bda4a1aa4a776b160a4771d
 
   // SharedModule
 ];

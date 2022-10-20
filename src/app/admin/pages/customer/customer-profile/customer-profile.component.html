@@ -1,829 +1,212 @@
-<!--customer-profile-header--->
-<div class="customer-profile-header">
-  <div class="customer-profile-header-main">
-    <h2>Customer Profile</h2>
+<div class="page-header">
+  <h2><i class="las la-arrow-left"></i> All Refund</h2>
+  <div class="header-action">
+    <button type="button">Export</button>
+    <button type="button">Import</button>
   </div>
 </div>
-<!--customer-profile--->
-<div class="customer-profile-area">
-  <div class="customer-profile-main">
-    <!--customer-profile-left-->
-    <div class="customer-profile-left">
-      <!---profile-info-->
-      <div class="profile-info-main">
-        <!--profile-info-->
-        <div class="customer-profile-info">
-
-          <div class="profile-info-left">
-            <!---profile-img-->
-            <div class="profile-img">
-              <img src="./assets/images/junk/1218NP_economicoutlook_img1.jpg" alt="">
-            </div>
-            <!---profile-text-info-->
-            <div class="profile-text-info">
-              <!--name-->
-              <div class="customer-name d-flex-customer">
-                <div class="name-left">
-                  <h3>Name:</h3>
-                </div>
-                <div class="name-right">
-                  <a href="#">{{user?.fullName ? user.fullName : 'No name is given'}}</a>
-                </div>
-              </div>
-              <!--phone-->
-              <div class="phone-no d-flex-customer">
-                <div class="phone-left">
-                  <h3>Phone No:</h3>
-                </div>
-                <div class="phone-right ">
-                  <ul>
-                    <li><a>+{{user?.phoneNo}}</a></li>
-                  </ul>
-                  <div class="message">
-                    <span><i class="fa fa-envelope"></i></span>
-                  </div>
-                </div>
-              </div>
-              <!---email-->
-              <div class="email d-flex-customer">
-                <div class="email-left">
-                  <h3>Email:</h3>
-                </div>
-                <div class="email-right">
-                  <a (click)="emailEditorShow()">{{user?.email ? user.email : 'email@gmail.com'}} <i
-                      class="fa fa-copy"></i></a>
-                </div>
-              </div>
-              <div class="address d-flex-customer">
-                <div class="address-left">
-                  <h3>Address:</h3>
-                </div>
-                <div class="address-right">
-                  <p>{{user?.shippingAddress ? user.shippingAddress : 'No address is given'}}</p>
-                </div>
-              </div>
-
-            </div>
-
+<div class="table-samary">
+  <nz-card nzSize="small">
+    <nz-layout>
+      <nz-sider class="left_navbar">
+        <div class="inner_nav_header">
+          <div class="header_action">
+            <a nz-dropdown [nzDropdownMenu]="statusMenu">
+              All Refund <i class="las la-angle-down"></i>
+              <nz-dropdown-menu #statusMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Close</li>
+                  <li nz-menu-item>Pending</li>
+                  <li nz-menu-item>Reject</li>
+                </ul>
+              </nz-dropdown-menu>
+            </a>
+            <nz-button-group>
+              <button
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="actionMenu"
+                nzPlacement="bottomRight"
+              >
+                <span nz-icon nzType="ellipsis"></span>
+              </button>
+              <nz-dropdown-menu #actionMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Delete</li>
+                  <li nz-menu-item>Pending</li>
+                  <li nz-menu-item>Reject</li>
+                </ul>
+              </nz-dropdown-menu>
+            </nz-button-group>
           </div>
-          <!--profile-left-->
-
-          <div class="profile-info-right">
-            <!---order-create-->
-            <div class="create-order">
-              <button (click)="createOrderShow()">Create Order</button>
-            </div>
-            <!---available-->
-            <div class="available-pts">
-              <h3>Available</h3>
-              <h2>{{user?.points ? user?.points : '0'}} <sub>Pts</sub></h2>
-            </div>
-            <div class="redeem">
-              <span>Redeem</span>
-              <h3>{{user?.redeemedPoints ? user?.redeemedPoints : '0'}} <span>Pts</span></h3>
-            </div>
-            <div class="redeem to-get">
-              <span>To Get</span>
-              <h3>{{user?.earnedPoints ? user?.earnedPoints : '0'}} <span>Pts</span></h3>
-            </div>
-
-          </div>
-
+          <input nz-input placeholder="Basic usage" />
         </div>
-        <!--profile-info-end-->
-
-        <!---customer-profile-bottom-area-->
-        <div class="customer-profile-bottom">
-          <!---customer-profile-bottom-info-->
-          <div class="customer-profile-bottom-info">
-            <a href="#">Last Order</a>
-            <h3>{{user?.checkouts ? (user.checkouts[user.checkouts.length-1].checkoutDate | date) :
-              'No order' }}</h3>
-            <h4>From Draft orders</h4>
-          </div>
-          <!---customer-profile-bottom-info-->
-          <div class="customer-profile-bottom-info">
-            <a href="#">All Orders</a>
-            <h3>{{user?.checkouts?.length}} order</h3>
-            <a href="#"> View all request</a>
-          </div>
-          <!---customer-profile-bottom-info-->
-          <div class="customer-profile-bottom-info">
-            <h4>Total Spent</h4>
-            <h3>{{ user?.checkouts? getTotalSpent() : '0' }}</h3>
-          </div>
-          <!---customer-profile-bottom-info-->
-          <div class="customer-profile-bottom-info">
-            <h4>Avg order value </h4>
-            <h3>{{ user?.checkouts ? getAverageOrderValue() : '0'}}</h3>
-          </div>
-          <!---customer-profile-bottom-info-->
-          <div class="customer-profile-bottom-info">
-            <h4>Total return</h4>
-            <h3>{{user?.totalReturn}}</h3>
-            <a href="#">Return value {{user?.totalReturnAmount}}</a>
-          </div>
-        </div>
-
-      </div>
-      <!--profile-main-end-->
-
-      <!---profile-details-area-->
-      <div class="profile-details-area">
-
-        <!---profile-details-header-->
-        <div class="profile-details-header">
-          <ul>
-            <li><button [ngClass]="subComponent === 'regular-order' ? 'active-btn' : ''"
-                (click)="activeSubComponent('regular-order')">Regular Order</button></li>
-            <li><button [ngClass]="subComponent === 'request-order' ? 'active-btn' : ''"
-                (click)="activeSubComponent('request-order')">Request Order</button></li>
-            <li><button [ngClass]="subComponent === 'subscription' ? 'active-btn' : ''"
-                (click)="activeSubComponent('subscription')">Subscription</button></li>
-            <li><button [ngClass]="subComponent === 'points-history' ? 'active-btn' : ''"
-                (click)="activeSubComponent('points-history')">Points History</button></li>
-          </ul>
-        </div>
-        <!---profile-details-header-end-->
-        <!---profile-details-body-->
-        <div class="profile-details-body">
-          <!---regular-order-area-->
-          <div class="regular-order-area">
-            <ul *ngIf="subComponent==='regular-order'">
-              <li *ngFor="let data of orders">
-                <div class="regular-order-check">
-                  <span><i class="fa fa-check"></i></span>
-                </div>
-                <div class="regular-order-text-info">
-                  <h3>Order {{data?.orderId}} is shipped</h3>
-                  <p>SKU 46567 is shipped from china</p>
-                  <p>15 September 2021, 03.32 PM - Mohmmad Shakib </p>
-                </div>
-              </li>
-
-            </ul>
-
-          </div>
-          <!---regular-order-area-end-->
-          <div class="regular-order-area">
-            <ul *ngIf="subComponent==='request-order'">
-              <li *ngFor="let data of orders">
-                <div class="regular-order-check">
-                  <span><i class="fa fa-check"></i></span>
-                </div>
-                <div class="regular-order-text-info">
-                  <h3>Order #D2475 is shipped</h3>
-                  <p>SKU 4656746567 is shipped from china</p>
-                  <p>15 September 2021, 03.32 PM - Mohmmad Shakib </p>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="regular-order-area">
-            <ul *ngIf="subComponent==='subscription'">
-              <li *ngFor="let data of orders">
-                <div class="regular-order-check">
-                  <span><i class="fa fa-check"></i></span>
-                </div>
-                <div class="regular-order-text-info">
-                  <h3>Order #D2475 is shipped</h3>
-                  <p>SKU 465674656746567 is shipped from china</p>
-                  <p>15 September 2021, 03.32 PM - Mohmmad Shakib </p>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="regular-order-area">
-            <ul *ngIf="subComponent==='points-history'">
-              <li *ngFor="let data of orders">
-                <div class="regular-order-check">
-                  <span><i class="fa fa-check"></i></span>
-                </div>
-                <div class="regular-order-text-info">
-                  <h3>Order #D2475 is shipped</h3>
-                  <p>SKU D2475D2475D2475 is shipped from china</p>
-                  <p>15 September 2021, 03.32 PM - Mohmmad Shakib </p>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-        <!---profile-details-body-end-->
-
-      </div>
-      <!---profile-details-area-end-->
-
-
-
-
-    </div>
-    <!--customer-profile-left-end-->
-
-
-
-    <!--customer-profile-right-->
-    <div class="customer-profile-right">
-      <!---active-area-->
-      <div class="activ-area">
-        <!---active-header-->
-        <div class="active-header">
-          <!--active-header-left-->
-          <div class="active-header-left">
-            <h3>BLOCK</h3>
-          </div>
-          <!--active-header-left-->
-          <div class="active-header-right">
-            <h3>ACTIVE</h3>
-          </div>
-        </div>
-        <!---active-header-end-->
-
-        <div class="active-toggle">
-          <mat-slide-toggle class="active-toggle-box" (click)="blockUserSubmit(isChecked)" [checked]="isChecked">
-          </mat-slide-toggle>
-        </div>
-
-        <!-- </form> -->
-
-      </div>
-      <!---vip-area-->
-      <div class="vip-area">
-        <!---vip-header-->
-        <div class="vip-header">
-          <div class="standard-form-input">
-            <h3>Select Tag</h3>
-            <form [formGroup]="tagForm">
-              <!--form-input-main-->
-              <mat-form-field appearance="outline" class="form-field">
-                <mat-select formControlName="tag" (selectionChange)="onSelectTag($event)">
-                  <mat-option *ngFor="let tag of tags" [value]="tag">
-                    {{ tag?.name }}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="">This field is required</mat-error>
-              </mat-form-field>
-            </form>
-          </div>
-        </div>
-
-        <div class="scrollable-tag">
-          <ul>
-            <li *ngFor="let tag of user?.tag.reverse()">
-              <div class="vip-check">
-                <span><i class="fa fa-check"></i></span>
-              </div>
-              <div class="vip-text">
-                <h3>{{tag?.tag?.name}}</h3>
-                <p>He become a {{tag?.tag?.name}} from {{tag?.activationdate}}</p>
-              </div>
-            </li>
-
-          </ul>
-        </div>
-      </div>
-      <!---subscribe-->
-      <div class="subscrive">
-        <h3>Subscribed</h3>
-        <p>Yes / No unsubscribe</p>
-      </div>
-
-    </div>
-    <!--customer-profile-right-end-->
-
-  </div>
-</div>
-
-<!--------------------------create-order-area---------------------->
-<div class="create-order-area" [class]="createOrder?'active-create-order-area':'in-active'">
-  <div class="create-order-main">
-    <form [formGroup]="dataForm!!" (ngSubmit)="onSubmitForm()" #formTemplate="ngForm">
-
-      <!--create-order-header-->
-      <div class="create-order-header">
-        <div class="create-order-header-left">
-          <h3>Create Order</h3>
-        </div>
-        <div class="create-order-header-right">
-          <span (click)="createOrderHide()">X</span>
-        </div>
-      </div>
-      <!----create-order-body-->
-      <div class="create-order-body">
-        <!---create-order-body-top-->
-        <div class="create-order-body-top">
-          <!---create-order-top-form-input-->
-          <div class="create-order-top-form-input">
-            <div class="create-order-top-form-input-left">
-              <h3>Customer Name:</h3>
+        <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
+          <li nz-menu-item>
+            <div class="left">
+              <h4>RFD-16767</h4>
+              <h5>05 Jul 2022 | 11:30 PM</h5>
             </div>
-            <div class="create-order-top-form-input-right">
-              <div class="form-input order-flex">
-                <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
-                  <mat-label>Customer Name</mat-label>
-                  <input formControlName="fullName" matInput placeholder="Enter your name ">
-                </mat-form-field>
-              </div>
+            <div class="right">
+              <h4>Pending</h4>
+              <h5>
+                <span>1 / 0</span>
+                <span>846 TK</span>
+              </h5>
             </div>
-          </div>
-          <!---create-order-top-form-input-end-->
-          <!---create-order-top-form-input-->
-          <div class="create-order-top-form-input">
-            <div class="create-order-top-form-input-left">
-              <h3>Email</h3>
-            </div>
-            <div class="create-order-top-form-input-right">
-              <div class="form-input">
-                <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
-                  <mat-label>Email</mat-label>
-                  <input type="email" matInput formControlName="email" placeholder="Enter your email id" value="">
-                  <mat-error *ngIf="">This field is required</mat-error>
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-          <!---create-order-top-form-input-end-->
-          <!---create-order-top-form-input-->
-          <div class="create-order-top-form-input">
-            <div class="create-order-top-form-input-left">
-              <h3>Phone</h3>
-            </div>
-            <div class="create-order-top-form-input-right">
-              <div class="form-input">
-                <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
-                  <mat-label>Phone no</mat-label>
-                  <input formControlName="phoneNo" type="text" matInput placeholder="Enter your phone no" value="">
-                  <mat-error *ngIf="">This field is required</mat-error>
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-          <!---create-order-top-form-input-end-->
-          <!---create-order-top-form-input-->
-          <div class="create-order-top-form-input">
-            <div class="create-order-top-form-input-left">
-              <h3>Address</h3>
-            </div>
-            <div class="create-order-top-form-input-right">
-              <div class="form-input">
-                <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
-                  <mat-label>Address</mat-label>
-                  <input formControlName="shippingAddress" type="text" matInput placeholder="Enter your address"
-                    value="">
-                  <mat-error *ngIf="">This field is required</mat-error>
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-          <!---create-order-top-form-input-end-->
-          <!---create-order-top-form-input-->
-          <div class="create-order-top-form-input">
-            <div class="create-order-top-form-input-left">
-              <h3>Delivery Method:</h3>
-            </div>
-            <div class="create-order-top-form-input-right">
-              <div class="form-input ">
-                <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
-                  <mat-label> Select delivery method</mat-label>
-                  <mat-select formControlName="deliveryOption">
-                    <mat-option *ngFor="let option of deliveryOptions" [value]="option.value">
-                      {{option.viewValue}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-hint>Inside Dhaka : Pathao, REDX , Outside Dhaka : Sa Paribahan Sundarban</mat-hint>
-                  <mat-error *ngIf="">This field is required</mat-error>
-                </mat-form-field>
-
-              </div>
-            </div>
-          </div>
-          <!---create-order-top-form-input-end-->
-
-
-        </div>
-        <!---create-order-body-top-end-->
-        <!---create-order-body-main-->
-        <div class="create-order-body-main">
-          <!---item-details-->
-          <div class="item-details">
-            <!---item-details-header-->
-            <div class="item-details-header">
-              <h3>Item Details</h3>
-            </div>
-            <!--product-info-->
-            <div class="product-info" *ngFor="let data of selectedProducts;let y=index">
-              <!-- " -->
-              <!---product-img-->
-              <div class="product-img">
-                <img [src]="data?.medias ? data.medias[0] : '/assets/images/placeholder/test.png'"
-                  [alt]="data?.name">
-              </div>
-              <!---product-text-details-->
-              <div class="product-text-details">
-                <!--product-header-->
-                <div class="product-header">
-                  <div>
-                    <a href="#">{{data.name}}</a>
-                  </div>
-                  <div (click)="onDeleteCartItem(data._id)">
-                    <span><i class="fa fa-trash"></i></span>
-                  </div>
-                </div>
-                <!---product-point-->
-                <div class="product-point">
-                  <h3>Earn <span class="earn">+50</span> or redeem <span class="redeem-pts">-50</span> pts</h3>
-                </div>
-                <!---product-sku-->
-                <div class="product-sku">
-                  <h3>SKU: 23456</h3>
-                </div>
-                <!-- VARIANT -->
-                <div class="product-quantity-size-info-main" *ngFor="let varName of data?.variants; let i = index">
-                  <!---size-info-->
-                  <div class="product-quantity-size-info">
-                    <!-- size/ color-->
-                    <div *ngIf="data?.hasVariant === true" class="product-quantity-size-info-left">
-                      <span>{{varName}}:</span>
-                    </div>
-                    <div *ngIf="varName && varName.options" class="product-quantity-size-info-left">
-                      <span>{{varName.options[i]}}:</span>
-                    </div>
-                    <!--right-->
-                    <div class="product-quantity-size-info-right">
-                      <ul class="size">
-                        <li *ngFor="let option of variantOptions[y][i]; let x = index"><button type="button"
-                            [class]="clickActive[i][x] ? 'active' : 'inactive'"
-                            (click)="selectedVariant(data?.variants[i],i, x)">{{this.variantOptions[y][i][x]}}</button></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <!---end-->
-
-                </div>
-                <!---product-bottom-->
-                <div class="product-bottom">
-                  <div>
-                    <h3>Delivery within 30 Days</h3>
-                  </div>
-                  <div>
-                    <span>( 10% advance )</span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <!---product-end-->
-            <!----add-product-img-->
-            <div class="add-product">
-              <!---add-btn-->
-              <div class="add-btn">
-                <button><i class="fa fa-images"></i></button>
-              </div>
-              <div class="add-form-input">
-                <div class="form-input" (click)="onClickSearchArea($event)">
-                  <form class="form-field" #searchForm=ngForm>
-                    <input #searchInput id="searchInput" class="form-inp" type="text"
-                      placeholder="Search in caremebd..." (focus)=handleFocus($event) name="searchTerm"
-                      autocomplete="off" ngModel required>
-                    <div *ngIf="isLoading" class="sk-fading-circle">
-                      <div class="sk-circle1 sk-circle"></div>
-                      <div class="sk-circle2 sk-circle"></div>
-                      <div class="sk-circle3 sk-circle"></div>
-                      <div class="sk-circle4 sk-circle"></div>
-                      <div class="sk-circle5 sk-circle"></div>
-                      <div class="sk-circle6 sk-circle"></div>
-                      <div class="sk-circle7 sk-circle"></div>
-                      <div class="sk-circle8 sk-circle"></div>
-                      <div class="sk-circle9 sk-circle"></div>
-                      <div class="sk-circle10 sk-circle"></div>
-                      <div class="sk-circle11 sk-circle"></div>
-                      <div class="sk-circle12 sk-circle"></div>
-                    </div>
-                  </form>
-
-                  <!-- Suggestion View -->
-                  <ul id="auto-suggestion" class="auto-complete-box"
-                    [ngClass]="searchProducts.length > 0 && isOpen ? 'active' : ''">
-                    <li class="list-view" *ngFor="let data of searchProducts" (click)="onSelectItem(data)">
-                      <img class="img-thumb"
-                        [src]="data.images && data.images.length > 0 ? data.images[0] : '/assets/images/placeholder/test.png'"
-                        [alt]="data?.productName">
-                      <div class="desc">
-                        <h3>{{data?.name}}</h3>
-                      </div>
-                      <div class="price">
-                        <h5>৳{{data.sellingPrice}}</h5>
-                        <p class="discount">
-                          <!-- {{(data | price: 'discountPercentage') > 0 ? '(' + (data | price: 'discountPercentage') + '% OFF)' : ''}} -->
-                        </p>
-                      </div>
-
-                    </li>
-                  </ul>
-                  <!-- END SEARCH -->
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-          <!--item-details-end-->
-          <!---table-area-->
-          <div class="product-table-area">
-
-            <div class="product-table-area-main">
-              <!----table-->
-              <div class="table">
-
-                <div class="table-head">
-                  <div class="table-row">
-                    <div class="table-heading">
-                      <h3>Vendor</h3>
-                    </div>
-                    <div class="table-heading">
-                      <h3>Quantity</h3>
-                    </div>
-                    <div class="table-heading">
-                      <h3>Price</h3>
-                    </div>
-                    <div class="table-heading">
-                      <h3>Discount</h3>
-                    </div>
-                    <div class="table-heading amount">
-                      <h3>Amount</h3>
-                    </div>
-
-                  </div>
-                </div>
-                <!---table-body-area-->
-                <div class="table-body">
-                  <div class="table-row" *ngFor="let data of productCart;let i=index">
-                    <!---table-data-->
-                    <div class="table-data">
-                      <div class="table-input">
-                        <select name="#" id="">
-                          <option value="global">Global</option>
-                          <option value="careme">Careme</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!---table-data-->
-                    <div class="table-data">
-                      <div class="table-input">
-                        <select name="#" id="">
-                          <option value="global">Global</option>
-                          <option value="careme">Careme</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!---table-data-->
-                    <div class="table-data">
-                      <div class="table-input">
-                        <select name="#" id="">
-                          <option value="global">Global</option>
-                          <option value="careme">Careme</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!---table-data-->
-                    <div class="table-data">
-                      <div class="table-input qty-input">
-                        <div class="inc" (click)="decrementQty(data?._id, i, data?.selectedQty)">-</div>
-                        <input readonly type="text" value={{data.selectedQty}}>
-                        <div class="inc" (click)="incrementQty(data?._id, i)">+</div>
-                      </div>
-                    </div>
-                    <!---table-data-->
-                    <div class="table-data">
-                      <div class="table-input">
-                        <input type="text" value={{data.product.sellingPrice}}>
-                      </div>
-                    </div>
-                    <!---table-data-->
-                    <div class="table-data">
-                      <div class="table-input">
-                        <input type="text" value='0'>
-                      </div>
-                    </div>
-                    <!---table-data-->
-                    <div class="table-data amount">
-                      <!---price-->
-                      <div class="price">
-                        <!-- <del>2000</del> -->
-                        <h3>{{getTotal(data)}}</h3>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-                <!---discount-area-->
-                <div class="discount-area">
-                  <!--discount-info--->
-                  <div class="discount-info">
-                    <!---discount-left-->
-                    <div class="discount-left">
-                      <div>
-                        <h3>Total Discount:</h3>
-                      </div>
-                      <div>
-                        <input #discountInput (keyup)="handleDiscountChange(discountInput.value)" type="number"
-                          value="">
-                      </div>
-                    </div>
-                    <!---discount-right-->
-                    <div class="discount-right">
-                      <span>{{totalDiscount>0?totalDiscount:"0.00"}}</span>
-                    </div>
-                  </div>
-                  <!--discount-info--->
-                  <div class="discount-info">
-                    <!---discount-left-->
-                    <div class="discount-left">
-                      <div>
-                        <h3>Delivery fees:</h3>
-                      </div>
-                      <div>
-                        <input #deliveryFees (keyup)="handleDeliveryChange(deliveryFees.value)" type="number" value="">
-                      </div>
-                    </div>
-                    <!---discount-right-->
-                    <div class="discount-right">
-                      <span>{{totalDeliveryFee>0?totalDeliveryFee:'0.00'}}</span>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <!----table-end-->
-            </div>
-            <!----table-area-main-end-->
-          </div>
-        </div>
-        <!---create-order-body-main-end-->
-
-        <!---summery-area-->
-        <div class="summery-area">
-          <!---summery-info-->
-          <div class="summery-info">
-            <div class="summery-info-left">
-              <h3>Total:</h3>
-            </div>
-            <!--summery-info-right-->
-            <div class="summery-info-right">
-              <h3>{{cartSubtotal}}</h3>
-            </div>
-          </div>
-          <!---summery-info-->
-          <div class="summery-info">
-            <div class="summery-info-left">
-              <h3>Need to pay:</h3>
-            </div>
-            <!--summery-info-right-->
-            <div class="summery-info-right">
-              <h3 style="color: #e62e04;">{{cartSubtotal}}</h3>
-            </div>
-          </div>
-          <!---pts-->
-          <div class="point">
-            <mat-checkbox class="mat-check">50 Pts (-)</mat-checkbox>
-            <mat-checkbox class="mat-check">100 Pts (+)</mat-checkbox>
-          </div>
-          <!---summery-info-->
-          <div class="summery-info due">
-            <div class="summery-info-left">
-              <h3>Due:</h3>
-            </div>
-            <!--summery-info-right-->
-            <div class="summery-info-right">
-              <h3>{{cartSubtotal}}</h3>
-            </div>
-          </div>
-        </div>
-        <!--message-area-->
-        <div class="messsage-area">
-          <div class="form-input">
-            <h3>Message from customer:</h3>
-            <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
-              <mat-label>Your Message...</mat-label>
-              <textarea formControlName="message" matInput rows="7" cols="10"
-                placeholder="write your message.."></textarea>
-            </mat-form-field>
-
-          </div>
-        </div>
-      </div>
-      <!----create-order-body-end-->
-      <div class="create-order-btn">
-        <ul>
-          <li><button type="button" (click)="createOrderHide()">Cancel</button></li>
-          <li><button type="submit" class="save-active">Send</button></li>
+          </li>
         </ul>
-      </div>
+      </nz-sider>
+      <nz-content class="refund_body_main" style="background: #fff">
+        <div class="refund_details_header">
+          <h4><b>RFD-16767</b></h4>
+          <h5>05 Jul 2022 | 11:30 PM</h5>
+        </div>
+        <div class="refund_details_body">
+          <div nz-row [nzGutter]="16">
+            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+              <h2>Refund Details</h2>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Refund Status</td>
+                    <td>:</td>
+                    <td>
+                      <span> Pending </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Refund</td>
+                    <td>:</td>
+                    <td>Yes</td>
+                  </tr>
+                  <tr>
+                    <td>Amount</td>
+                    <td>:</td>
+                    <td><b>120 TK</b></td>
+                  </tr>
+                  <tr>
+                    <td>Refund Way</td>
+                    <td>:</td>
+                    <td>bKash ( 01934548454 )</td>
+                  </tr>
+                  <tr>
+                    <td>Customer</td>
+                    <td>:</td>
+                    <td>01917635242</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Invoice#</td>
+                    <td>:</td>
+                    <td><a>INV-195212</a></td>
+                  </tr>
+                  <tr>
+                    <td>Sales Order</td>
+                    <td>:</td>
+                    <td><a>SO-195212</a></td>
+                  </tr>
+                  <tr>
+                    <td>Crated By</td>
+                    <td>:</td>
+                    <td>Customer</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <nz-card class="refund_details_body-product" nzSize="small">
+            <nz-table
+              nzSize="small"
+              nzShowPagination="false"
+              [nzData]="[1, 2, 3]"
+              [nzScroll]="{ x: '1000px' }"
+            >
+              <thead>
+                <tr>
+                  <th style="width: 100px">Image</th>
+                  <th>Item</th>
+                  <th>Shipped</th>
+                  <th>Amount (TK)</th>
+                  <th>Recived QTY</th>
+                  <th>Refund Amount (TK)</th>
+                </tr>
+              </thead>
 
-    </form>
-  </div>
+              <tbody>
+                <tr>
+                  <td style="width: 100px">
+                    <img
+                      style="max-width: 100%"
+                      src="https://cdn.shopify.com/s/files/1/0464/2281/8974/products/O1CN015QAr4e2Jn1Wi9H9C2__1762329465-0-cib.jpg?v=1662883560"
+                      alt=""
+                    />
+                  </td>
+                  <td>
+                    <h3>Men's casual shirt</h3>
+                    <h5>Yellow / XXL</h5>
+                    <h5>SKU: 5072036</h5>
+                  </td>
+                  <td>1</td>
+                  <td>1200</td>
+                  <td>1</td>
+                  <td>1200</td>
+                </tr>
+              </tbody>
+            </nz-table>
+            <div nz-row [nzGutter]="0">
+              <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+                <nz-card nzSize="small" class="ammount_summary">
+                  <div class="ammount_summary_single">
+                    <h4>Sub-Total</h4>
+                    <span>1200 TK</span>
+                  </div>
+                  <div class="ammount_summary_single">
+                    <h4>Shipping</h4>
+                    <span>120 TK</span>
+                  </div>
+                  <nz-divider
+                    style="margin: 10px 0"
+                    nzType="horizontal"
+                  ></nz-divider>
+                  <div class="ammount_summary_single">
+                    <h4></h4>
+                    <span> Refundable Amount = 1200 TK</span>
+                  </div>
+                  <div class="ammount_summary_single mt15">
+                    <h4>Refund Amount</h4>
+                    <span> <input nz-input value="1200" />TK </span>
+                  </div>
+                  <nz-divider
+                    style="margin: 10px 0"
+                    nzType="horizontal"
+                  ></nz-divider>
+                  <div class="ammount_summary_single">
+                    <h4></h4>
+                    <span> Refundable Amount = 0 TK</span>
+                  </div>
+                </nz-card>
+              </div>
+
+              <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+                <div class="action_btn">
+                  <button nzSize="large" nz-button nzType="default">
+                    Reject
+                  </button>
+                  <button nzSize="large" nz-button nzType="primary">
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+      </nz-content>
+    </nz-layout>
+  </nz-card>
 </div>
-
-
-<!-------------------------------------email-editor-area--------------------------------->
-<div class="email-editor-area" [class]="emailEditor?'email-editor-area-active':'in-active'">
-
-  <div class="email-editor-main">
-    <!--email-editor-header-->
-    <div class="emailt-editor-header">
-      <!---email-editor-header-left-->
-      <div class="email-editor-header-left">
-        <h3>Contact Customer</h3>
-      </div>
-      <div class="email-editor-header-right">
-        <span (click)="emailEditorHide()">X</span>
-      </div>
-    </div>
-    <!---email-editor-body-->
-    <div class="email-editor-body">
-      <!--email-editor-body-top-->
-      <div class="email-editor-body-top">
-        <div class="to">
-          <div class="form-input">
-            <h3>To</h3>
-            <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
-              <mat-label> Select To Email</mat-label>
-              <mat-select>
-                <mat-option value="option">Option1</mat-option>
-                <mat-option value="option">Option2</mat-option>
-              </mat-select>
-              <mat-error *ngIf="">This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="form">
-          <div class="form-input">
-            <h3>Form</h3>
-            <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
-              <mat-label> Select Form Email</mat-label>
-              <mat-select>
-                <mat-option value="option">Option1</mat-option>
-                <mat-option value="option">Option2</mat-option>
-              </mat-select>
-              <mat-error *ngIf="">This field is required</mat-error>
-            </mat-form-field>
-          </div>
-
-        </div>
-      </div>
-      <!---top-end-->
-      <!---email-editor-checkk-->
-      <div class="email-editor-check">
-        <h3>Send to bcc:</h3>
-        <div class="check-area">
-          <mat-checkbox class="mat-check">Info@caremebd.com</mat-checkbox>
-          <mat-checkbox class="mat-check">autanber111@gmail.com</mat-checkbox>
-          <mat-checkbox class="mat-check">global111@gmail.com</mat-checkbox>
-        </div>
-      </div>
-      <!---email-editor-bottom-->
-      <div class="email-editor-bottom">
-
-        <div class="sub">
-          <div class="form-input">
-            <h3>Subject</h3>
-            <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
-              <!-- <mat-label>Wholesale Price</mat-label> -->
-              <input type="text" matInput placeholder="Enter your subject name" value="">
-              <mat-error *ngIf="">This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="comment">
-          <div class="form-input">
-            <h3>Custom Message (optional)</h3>
-            <mat-form-field appearance="outline" class="form-field" [floatLabel]="false">
-              <!-- <mat-label>Textarea</mat-label> -->
-              <textarea matInput rows="5" cols="10"></textarea>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-
-      <div class="email-editor-btn">
-        <ul>
-          <li><button type="button" (click)="emailEditorHide()">Cancel</button></li>
-          <li><button class="save-active">Send</button></li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-
-</div>
-
-
-<!-- TEMPLATE NGX SPINNER-->
-<ngx-spinner style="width: 100vw; height: 100vh" bdColor="rgba(0,0,0,0.25)" size="medium" color="#fff"
-  type="ball-clip-rotate" [fullScreen]="true">
-  <p style="color: white"> Loading... </p>
-</ngx-spinner>

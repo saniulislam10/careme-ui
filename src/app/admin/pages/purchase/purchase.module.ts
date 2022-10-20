@@ -14,14 +14,13 @@ import { RecievedComponent } from './recieved/recieved.component';
 import { CreateNewComponent } from '../adjustment/create-new/create-new.component';
 import { CreateNewPurchaseComponent } from './create-new-purchase/create-new-purchase.component';
 
-
 @NgModule({
   declarations: [
     PurchaseComponent,
     ExportPopupComponent,
     CreateNewPurchaseComponent,
     DetailsComponent,
-    RecievedComponent
+    RecievedComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +29,7 @@ import { CreateNewPurchaseComponent } from './create-new-purchase/create-new-pur
     FormsModule,
     AntModule,
     NgxPaginationModule,
-    PipesModule
-  ]
+    PipesModule,
+  ],
 })
-export class PurchaseModule { }
+export class PurchaseModule {}

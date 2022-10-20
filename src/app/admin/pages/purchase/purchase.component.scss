@@ -12,19 +12,22 @@
       background: transparent;
       margin-left: 25px;
     }
-    .create_btn{
+    .create_btn {
       background: #1b75bb;
       color: #fff;
       border: 1px solid #1b75bb;
       padding: 10px 20px;
       transition: 0.3s;
-      border-radius: 5px;
+      border-radius: 3px;
     }
-    .create_btn:hover{
+    .create_btn:hover {
       background: #8bc53f;
       border: 1px solid #8bc53f;
     }
   }
+}
+.mb40 {
+  margin-bottom: 30px !important;
 }
 .table-samary {
   margin-bottom: 30px;
@@ -51,19 +54,97 @@
         border: 1px solid #1b75bb;
         transition: 0.3s;
       }
-      button:hover{
+      button:hover {
         background: #589b00;
         border: 1px solid #589b00;
       }
     }
   }
 }
-.invoice_status{
-  img{
+.invoice_status {
+  img {
     width: 10px;
   }
 }
+nz-select {
+  width: 100%;
+}
+.purchase_info {
+  width: 100%;
+  tr {
+    height: 40px;
+  }
+}
+.purchase_product {
+  tr {
+    td {
+      input {
+        width: 60px;
+        border: none;
+        background: transparent;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+      }
+    }
+  }
+}
+.add_product,
+.order_summery {
+  padding: 15px 0 0 0;
+}
+.add_product {
+  input {
+    width: 80%;
+  }
+}
+.order_summery {
+  nz-divider {
+    margin: 5px 0;
+  }
+  nz-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #585858;
+    h2 {
+      width: 100%;
+      font-size: 16px;
+      text-align: right;
+    }
+  }
+}
+
+.search_items {
+  margin: 0;
+  padding: 0;
+  li {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    .left {
+      display: flex;
+      align-items: flex-start;
+      .left_details {
+        margin-left: 10px;
+        h4 {
+          font-size: 14px;
+        }
+        p {
+          font-size: 12px;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}
 @media (max-width: 768px) {
+  .add_product {
+    input {
+      width: 100%;
+    }
+  }
   .table-filter-area {
     flex-direction: column;
     form {

@@ -1,6 +1,11 @@
 <!---header-area-->
 <div class="page-header">
-  <h2>All Stock <span (click)="onRefresh()"><i [class]="isLoading ? 'fa fa-refresh fa-spin': 'fa fa-refresh'"></i></span></h2>
+  <h2>
+    All Stock
+    <span (click)="onRefresh()"
+      ><i [class]="isLoading ? 'fa fa-refresh fa-spin' : 'fa fa-refresh'"></i
+    ></span>
+  </h2>
   <div class="header-action">
     <button type="button" (click)="exportPopUpShow()">Export</button>
     <button type="button" (click)="exportPopUpShow()">Import</button>
@@ -13,9 +18,20 @@
     <nz-tabset>
       <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
         <div class="table-filter-area">
-          <form #searchForm=ngForm >
-            <input nz-input #searchInput id="searchInput" class="tw" type="text" placeholder="Filter Products"
-              (focus)=handleFocus($event) name="searchTerm" autocomplete="off" ngModel required>
+          <form #searchForm="ngForm">
+            <input
+              nz-input
+              #searchInput
+              id="searchInput"
+              class="tw"
+              type="text"
+              placeholder="Filter Products"
+              (focus)="handleFocus($event)"
+              name="searchTerm"
+              autocomplete="off"
+              ngModel
+              required
+            />
           </form>
           <ul>
             <li>
@@ -34,21 +50,40 @@
               </button>
             </li>
             <mat-menu #productSort="matMenu">
-              <button mat-menu-item (click)="sortData({ name: 1 }, 1)" [class.dropdown-active]="activeSort === 1">
+              <button
+                mat-menu-item
+                (click)="sortData({ name: 1 }, 1)"
+                [class.dropdown-active]="activeSort === 1"
+              >
                 Product Title (A-Z)
               </button>
-              <button mat-menu-item (click)="sortData({ createdAt: 1 }, 2)" [class.dropdown-active]="activeSort === 2">
+              <button
+                mat-menu-item
+                (click)="sortData({ createdAt: 1 }, 2)"
+                [class.dropdown-active]="activeSort === 2"
+              >
                 Created (Oldest First)
               </button>
-              <button mat-menu-item (click)="sortData({ quantity: -1 }, 3)" [class.dropdown-active]="activeSort === 3">
+              <button
+                mat-menu-item
+                (click)="sortData({ quantity: -1 }, 3)"
+                [class.dropdown-active]="activeSort === 3"
+              >
                 High Inventory
               </button>
               <!-- need to change -->
-              <button mat-menu-item (click)="sortData({ categoryName: -1 }, 4)"
-                [class.dropdown-active]="activeSort === 4">
+              <button
+                mat-menu-item
+                (click)="sortData({ categoryName: -1 }, 4)"
+                [class.dropdown-active]="activeSort === 4"
+              >
                 Product Type (A-Z)
               </button>
-              <button mat-menu-item (click)="sortData({ vendor: 1 }, 5)" [class.dropdown-active]="activeSort === 5">
+              <button
+                mat-menu-item
+                (click)="sortData({ vendor: 1 }, 5)"
+                [class.dropdown-active]="activeSort === 5"
+              >
                 Vendor (A-Z)
               </button>
             </mat-menu>
@@ -56,40 +91,59 @@
           </ul>
         </div>
 
-        <nz-table [nzData]="products" [nzLoading]="isLoading" #basicTable nzSize="small">
+        <nz-table
+          [nzData]="products"
+          [nzLoading]="isLoading"
+          #basicTable
+          nzSize="small"
+          [nzScroll]="{ x: '1100px' }"
+        >
           <thead>
             <tr>
               <th style="width: 50px; text-align: center">
-                <mat-checkbox #matCheckbox class="mat-check" (change)="onAllSelectChange($event)">
+                <mat-checkbox
+                  #matCheckbox
+                  class="mat-check"
+                  (change)="onAllSelectChange($event)"
+                >
                 </mat-checkbox>
               </th>
-              <th style="width: 50px; text-align: center">Image</th>
+              <th style="width: 70px; text-align: center">Image</th>
               <th>Product Details</th>
-              <th>SKU</th>
-              <th>Instock</th>
-              <th>Committed</th>
-              <th>Available</th>
-              <th>Unit Cost</th>
-              <th>Pre-Order</th>
+              <th style="width: 150px">SKU</th>
+              <th style="width: 100px">Instock</th>
+              <th style="width: 100px">Committed</th>
+              <th style="width: 100px">Available</th>
+              <th style="width: 100px">Unit Cost</th>
+              <th style="width: 100px">Pre-Order</th>
             </tr>
           </thead>
           <tbody *ngFor="let data of basicTable.data">
             <tr *ngIf="!data.hasVariant">
               <td style="width: 50px; text-align: center">
-                <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data?._id)"
-                  [(ngModel)]="data.select"></mat-checkbox>
+                <mat-checkbox
+                  class="mat-check"
+                  (ngModelChange)="onCheckChange($event, i, data?._id)"
+                  [(ngModel)]="data.select"
+                ></mat-checkbox>
               </td>
               <td>
-                <img style="width: 50px" [src]="
+                <img
+                  style="width: 50px"
+                  [src]="
                     setThumbnailImage(data)
                       ? setThumbnailImage(data)
                       : '/assets/images/placeholder/test.png'
-                  " alt="data.name" />
+                  "
+                  alt="data.name"
+                />
               </td>
               <td class="produc-details">
                 <h2>
                   {{ data.name }}
-                  <a [routerLink]="['../../', 'add-product', data._id]"><i class="eyeButton" class="fa fa-eye"></i></a>
+                  <a [routerLink]="['../../', 'add-product', data._id]"
+                    ><i class="eyeButton" class="fa fa-eye"></i
+                  ></a>
                 </h2>
               </td>
               <td>
@@ -106,15 +160,22 @@
 
             <tr *ngFor="let variant of data?.variantFormArray; let i = index">
               <td style="width: 50px; text-align: center">
-                <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data?._id)"
-                  [(ngModel)]="data.select"></mat-checkbox>
+                <mat-checkbox
+                  class="mat-check"
+                  (ngModelChange)="onCheckChange($event, i, data?._id)"
+                  [(ngModel)]="data.select"
+                ></mat-checkbox>
               </td>
               <td>
-                <img style="width: 50px" [src]="
+                <img
+                  style="width: 50px"
+                  [src]="
                     setThumbnailImage(data)
                       ? setThumbnailImage(data)
                       : '/assets/images/placeholder/test.png'
-                  " alt="data.name" />
+                  "
+                  alt="data.name"
+                />
               </td>
               <td class="produc-details">
                 <h2>
@@ -132,7 +193,7 @@
               </td>
               <td style="color: blue">
                 {{
-                variant?.variantQuantity + variant?.variantCommittedQuantity
+                  variant?.variantQuantity + variant?.variantCommittedQuantity
                 }}
               </td>
               <td style="color: orange">
@@ -150,5 +211,8 @@
 </div>
 
 <div class="export-popup-area">
-  <app-export-popup (valueChange)="exportToExcel($event)" #export></app-export-popup>
+  <app-export-popup
+    (valueChange)="exportToExcel($event)"
+    #export
+  ></app-export-popup>
 </div>

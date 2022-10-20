@@ -4,14 +4,12 @@ import { CommonModule } from '@angular/common';
 
 import { CustomerProfileRoutingModule } from './customer-profile-routing.module';
 import { CustomerProfileComponent } from './customer-profile.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
-  declarations: [
-    CustomerProfileComponent
-  ],
+  declarations: [CustomerProfileComponent],
   imports: [
     CommonModule,
     CustomerProfileRoutingModule,
@@ -19,7 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSlideToggleModule,
     ReactiveFormsModule,
     FormsModule,
-    
-  ]
+    AntModule,
+  ],
 })
-export class CustomerProfileModule { }
+export class CustomerProfileModule {}

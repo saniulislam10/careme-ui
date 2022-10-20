@@ -25,11 +25,13 @@ import { RecievedComponent } from '../recieved/recieved.component';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
+  styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
-
   @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
+
+  // Qty Recived
+  recivedQty = false;
 
   dataForm: FormGroup;
   id: any;
@@ -45,7 +47,7 @@ export class DetailsComponent implements OnInit {
   ordersPerPage = 10;
   currentPage = 1;
   totalOrders = 0;
-  totalOrdersStore = 0
+  totalOrdersStore = 0;
   orderStatus: any;
   filter: any;
   // sort
@@ -67,12 +69,18 @@ export class DetailsComponent implements OnInit {
     { value: ProductOrderStatus.PENDING, viewValue: 'Pending' },
     { value: ProductOrderStatus.CANCEL, viewValue: 'Cancel' },
     { value: ProductOrderStatus.CONFIRM, viewValue: 'Confirm' },
-    { value: ProductOrderStatus.PARTIAL_SHIPPING, viewValue: 'Partial Invoiced' },
+    {
+      value: ProductOrderStatus.PARTIAL_SHIPPING,
+      viewValue: 'Partial Invoiced',
+    },
     { value: ProductOrderStatus.SHIPPING, viewValue: 'Shipping' },
     { value: ProductOrderStatus.DELIVERED, viewValue: 'Delivered' },
-    { value: ProductOrderStatus.PARTIAL_DELIVERED, viewValue: 'Partial Delivered' },
+    {
+      value: ProductOrderStatus.PARTIAL_DELIVERED,
+      viewValue: 'Partial Delivered',
+    },
     { value: ProductOrderStatus.RETURN, viewValue: 'Return' },
-    { value: ProductOrderStatus.PARTIAL_RETURN, viewValue: 'Partial Return' }
+    { value: ProductOrderStatus.PARTIAL_RETURN, viewValue: 'Partial Return' },
   ];
   selectedIds: number[] = [];
   timelineStatus: any[];
@@ -89,8 +97,8 @@ export class DetailsComponent implements OnInit {
     private productService: ProductService,
     private reloadService: ReloadService,
     public router: Router,
-    private spinner: NgxSpinnerService,
-  ) { }
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
@@ -121,28 +129,28 @@ export class DetailsComponent implements OnInit {
       restoreFocus: false,
       data: {
         order: {},
-        canceledOrderSku: "sku001",
-        canceledOrderAmount: "100tk",
+        canceledOrderSku: 'sku001',
+        canceledOrderAmount: '100tk',
         selectedIds: this.selectedIds,
       },
     });
     dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
-}
+  }
 
-openRecieved(id, recieved, index, poQty){
-  const dialogRef = this.dialog.open(RecievedComponent, {
-    restoreFocus: false,
-    data: {
-      id: this.id,
-      productId: id,
-      index: index,
-      purchaseQuantity: poQty,
-      recieved: recieved,
-    },
-  });
+  openRecieved(id, recieved, index, poQty) {
+    const dialogRef = this.dialog.open(RecievedComponent, {
+      restoreFocus: false,
+      data: {
+        id: this.id,
+        productId: id,
+        index: index,
+        purchaseQuantity: poQty,
+        recieved: recieved,
+      },
+    });
 
-  dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
-}
+    dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
+  }
 
   // view child create invoice
   /*** Create Order Pop Up Controll */
@@ -153,16 +161,15 @@ openRecieved(id, recieved, index, poQty){
       restoreFocus: false,
     });
     dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
-    this.router.navigate(['../edit',id])
+    this.router.navigate(['../edit', id]);
   }
 
   showPurchaseDetails(id, i) {
-    this.selectedDiv[i] = true
-    console.log("data", id);
+    this.selectedDiv[i] = true;
+    console.log('data', id);
     this.spinner.show();
     this.getPurchaseInfo(id);
     this.spinner.hide();
-
   }
   /**
    * http req
@@ -180,7 +187,6 @@ openRecieved(id, recieved, index, poQty){
         this.purchase = res.data;
         this.products = this.purchase.products;
         console.log(res.data);
-
       },
       (err) => {
         console.log(err);
@@ -210,8 +216,6 @@ openRecieved(id, recieved, index, poQty){
     return allMedias;
   }
 
-
-
   getPurchaseDetails() {
     this.clickActive = [];
     this.clickActive[0] = true;
@@ -223,8 +227,8 @@ openRecieved(id, recieved, index, poQty){
   }
 
   /**
-  * SORTING
-  */
+   * SORTING
+   */
   sortData(query: any, type: number) {
     this.sortQuery = query;
     this.activeSort = type;
@@ -234,17 +238,16 @@ openRecieved(id, recieved, index, poQty){
   getAllPurchase() {
     const pagination: Pagination = {
       pageSize: this.ordersPerPage.toString(),
-      currentPage: this.currentPage.toString()
+      currentPage: this.currentPage.toString(),
     };
-    this.purchaseService.getAll(pagination, this.filter)
-      .subscribe(
-        (res) => {
-          this.purchases = res.data;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+    this.purchaseService.getAll(pagination, this.filter).subscribe(
+      (res) => {
+        this.purchases = res.data;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
   /**
    * NG CLASS
@@ -325,26 +328,20 @@ openRecieved(id, recieved, index, poQty){
     this.total = 0;
     for (let i = 0; i < this.purchase.products?.length; i++) {
       this.total +=
-        this.purchase.products[i].price *
-        this.purchase.products[i].quantity;
+        this.purchase.products[i].price * this.purchase.products[i].quantity;
     }
     return this.total;
   }
 
   get calculateTotal() {
-    return (
-      this.calculateSubTotal() +
-      this.calculateTotalTax()
-    );
+    return this.calculateSubTotal() + this.calculateTotalTax();
   }
-
 
   /**
    * ON Select Check
    */
 
   onCheckChange(event: MatCheckboxChange, index: number) {
-
     if (event.checked) {
       const i = this.selectedIds.findIndex((f) => f === index);
       if (i >= 0) {
@@ -355,31 +352,38 @@ openRecieved(id, recieved, index, poQty){
     } else {
       this.selectedIds.splice(index, 1);
     }
-
-
-
   }
 
   getAmount(item) {
     let purchasePrice = item?.purchasePrice;
-    let tax = Math.round((purchasePrice * item?.purchaseTax)/100);
+    let tax = Math.round((purchasePrice * item?.purchaseTax) / 100);
     let quantity = item?.purchaseQuantity;
-    return Math.round((purchasePrice+tax)*quantity);
+    return Math.round((purchasePrice + tax) * quantity);
   }
 
-  getRecievedAmount(item){
+  getRecievedAmount(item) {
     let purchasePrice = item?.purchasePrice;
-    let tax = Math.round((purchasePrice * item?.purchaseTax)/100);
+    let tax = Math.round((purchasePrice * item?.purchaseTax) / 100);
     let quantity = item?.recieved ? item?.recieved : 0;
-    return Math.round((purchasePrice+tax)*quantity);
+    return Math.round((purchasePrice + tax) * quantity);
   }
-
 
   orderSubTotal() {
     let total = 0;
     this.purchase.products.forEach((f) => {
-        total += Math.round(f?.price * f?.quantity + f.tax * f?.quantity)
-    })
+      total += Math.round(f?.price * f?.quantity + f.tax * f?.quantity);
+    });
     return Math.round(total);
+  }
+
+  // Quantity Recived
+  showModal(): void {
+    this.recivedQty = true;
+  }
+  recivedOk(): void {
+    this.recivedQty = false;
+  }
+  recivedCancel(): void {
+    this.recivedQty = false;
   }
 }
