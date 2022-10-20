@@ -36,7 +36,6 @@
               <i
                 style="font-size: 20px; margin-right: 10px"
                 class="las la-list"
-
               ></i>
               Add New Products
             </li>
@@ -59,7 +58,14 @@
       >
         <i class="las la-store"></i>
       </a>
-      <button class="notifibell" mat-icon-button>
+      <button
+        class="notifibell"
+        mat-icon-button
+        nz-dropdown
+        [nzDropdownMenu]="menu"
+        nzTrigger="click"
+        nzPlacement="bottomRight"
+      >
         <i class="las la-bell"></i>
         <span>99</span>
       </button>
@@ -91,3 +97,26 @@
     </div>
   </div>
 </mat-toolbar>
+
+<!--  notification bell items-->
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu nzSelectable class="notification_area">
+    <li
+      nz-menu-item
+      class="single_items"
+      *ngFor="let notifilist of notification"
+    >
+      <img
+        nz-image
+        width="50px"
+        height="50px"
+        nzSrc="{{ notifilist.image }}"
+        alt=""
+      />
+      <div class="bell_des">
+        <p>{{ notifilist.notification }}</p>
+        <span><i class="lar la-clock"></i> {{ notifilist.time }}</span>
+      </div>
+    </li>
+  </ul>
+</nz-dropdown-menu>

@@ -8,6 +8,33 @@ import { Admin } from '../../../../interfaces/admin';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  notification = [
+    {
+      notification: 'New order (#SO009) place successfully',
+      image:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      time: '5m ago',
+    },
+    {
+      notification: 'Invoice (#INV0045) create successfully',
+      image:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      time: '11m ago',
+    },
+    {
+      notification: 'New return (#INV0045) created by Rahul',
+      image:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      time: '5m ago',
+    },
+    {
+      notification: 'This is notification text',
+      image:
+        'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      time: '5m ago',
+    },
+  ];
+
   @Output() sidenavNavToggle = new EventEmitter();
 
   adminData: Admin = null;

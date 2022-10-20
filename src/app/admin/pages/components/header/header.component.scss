@@ -78,6 +78,30 @@ mat-toolbar {
     color: #00ff00;
   }
 }
+.single_items {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  .bell_des {
+    padding: 0 10px;
+    font-size: 12px;
+    line-height: 16px;
+    p {
+      margin-bottom: 5px;
+    }
+    span {
+      display: flex;
+      align-items: center;
+      i {
+        font-size: 14px;
+        margin-right: 3px;
+      }
+    }
+  }
+}
+.notification_area {
+  width: 320px;
+}
 @media (max-width: 500px) {
   .brand {
     display: none;
