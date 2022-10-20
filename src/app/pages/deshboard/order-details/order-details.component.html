@@ -41,13 +41,13 @@
               <tr>
                 <td>Name</td>
                 <td>:</td>
-                <td>{{ order?.name ? order.name : order?.user?.fullName }}</td>
+                <td>{{ order?.name ? order?.name : order?.user?.fullName }}</td>
               </tr>
               <tr>
                 <td>Phone No</td>
                 <td>:</td>
                 <td>
-                  {{ order?.phoneNo ? order.phoneNo : order?.user?.phoneNo }}
+                  {{ order?.phoneNo ? order?.phoneNo : order?.user?.phoneNo }}
                 </td>
               </tr>
               <tr>
@@ -67,15 +67,11 @@
     </nz-card>
   </div>
 </div>
+<a [routerLink]="['../../../', 'success', order?.orderId]" nz-button nzType="primary" >Pay Now</a>
 <div class="order-list" nz-row [nzGutter]="16">
   <div nz-col nzSpan="24">
     <nz-card nzSize="small">
-      <nz-table
-        #innerTable
-        [nzData]="listOfChildrenData"
-        [nzShowPagination]="false"
-        nzSize="small"
-      >
+      <nz-table #innerTable [nzData]="listOfChildrenData" [nzShowPagination]="false" nzSize="small">
         <thead style="background: transparent">
           <tr>
             <th class="orderid">
@@ -88,19 +84,18 @@
             <th>Advance Amount</th>
             <th>Payment Status</th>
             <th></th>
-            <th><a [routerLink]="['../../', 'order-single-product-details', order.orderId]" class="track-order">Track Order</a></th>
+            <th><a [routerLink]="['../../', 'track-order', order?.orderId]" class="track-order">Track
+                Order</a></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of innerTable.data; let i = index">
+          <tr *ngFor="let data of innerTable?.data; let i = index">
             <td>
               <div class="product-details">
-                <img
-                  nz-image
-                  style="width: 80px"
-                  [nzSrc]="thumbnailImage ? thumbnailImage : '/assets/image/placeholder/test.png'"
-                  [alt]="data.name"
-                />
+                <img nz-image style="width: 80px"
+                  [nzSrc]="getThumbnailImage(data.productId) ? getThumbnailImage(data.productId) : '/assets/image/placeholder/test.png'"
+                  [alt]="data.name" />
                 <div class="producttitle">
                   <h4>{{ data.name }}</h4>
                   <span> SKU: {{ data.sku }} </span>
@@ -108,14 +103,15 @@
               </div>
             </td>
             <td>
-              {{ data.quantity }} X {{ data.price }} =
-              {{ data.price * data.quantity }}
+              {{ data.quantity }} X {{ data.price + data.tax}}
+              = {{ data.quantity * (data.price + data.tax)}}
             </td>
             <td>{{ data.advanceAmount }}TK</td>
             <td>
               <span class="payment paid unpaid">
-                {{ data?.paymentStatus }}
+                {{ data?.paymentStatus | paymentStatus}}
               </span>
+
             </td>
             <td class="estimated-time instock">
               <h3>
@@ -125,28 +121,21 @@
             </td>
             <td class="order-status">
               <!-- <span>{{ data.status | orderStatus }}</span> -->
-              <span>Pending</span>
+              <span>{{data.deliveryStatus | orderStatus}}</span>
+            </td>
+            <td>
+              <button nz-button nzType="danger" nzDanger *ngIf="data.deliveryStatus === 0"><i class="las la-trash"></i></button>
             </td>
           </tr>
         </tbody>
       </nz-table>
       <div class="single-order-summary">
         <div>
-          <button
-            nz-button
-            nzType="outline"
-            nzSize="large"
-            (click)="showModal()"
-          >
+          <button nz-button nzType="outline" nzSize="large" (click)="showModal()">
             Raise an Issue
           </button>
-          <nz-modal
-            [(nzVisible)]="isVisible"
-            nzTitle="Raise an Issue"
-            (nzOnCancel)="handleCancel()"
-            (nzOnOk)="handleOk()"
-            nzOkText="Send"
-          >
+          <nz-modal [(nzVisible)]="isVisible" nzTitle="Raise an Issue" (nzOnCancel)="handleCancel()"
+            (nzOnOk)="handleOk()" nzOkText="Send">
             <ng-container *nzModalContent>
               <div class="ticketinfo"></div>
               <div class="issue-form">
@@ -167,7 +156,7 @@
             </nz-list-item>
             <nz-list-item>
               <span>Coupon Code</span>
-              <p>(-) 183 TK</p>
+              <p>(-) 0 TK</p>
             </nz-list-item>
             <nz-list-item>
               <span>Points Redeem</span>
@@ -181,7 +170,7 @@
           <nz-list>
             <nz-list-item>
               <h2>Amount to pay</h2>
-              <h3>3157 TK</h3>
+              <h3>{{getSubTotal() + 120}} TK</h3>
             </nz-list-item>
           </nz-list>
         </div>

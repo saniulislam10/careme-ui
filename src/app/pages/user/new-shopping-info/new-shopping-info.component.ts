@@ -29,6 +29,14 @@ import { Order, OrderItem } from 'src/app/interfaces/order';
 import { OrderStatus } from 'src/app/enum/order-status';
 import { PaymentStatus } from 'src/app/enum/payment-status';
 import { filter, map } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ZilaService } from 'src/app/services/zila.service';
+import { ThanaService } from 'src/app/services/thana.service';
+import { Zila } from 'src/app/interfaces/zila';
+import { City } from 'src/app/interfaces/city';
+import { Thana } from 'src/app/interfaces/thana';
+import { CityService } from 'src/app/services/city.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-new-shopping-info',
@@ -40,11 +48,17 @@ export class NewShoppingInfoComponent implements OnInit {
   isVisible = false;
   agreeChecked = false;
   pickAddress = 'A';
+  zilla: Zila[] = [];
+  city: City[] = [];
+  thana: Thana[] = [];
+  id: any;
 
   couponApplied: boolean;
   couponCode: any;
   v: string;
+  dataForm?: FormGroup;
   constructor(
+    private fb: FormBuilder,
     private userDataService: UserDataService,
     private reloadService: ReloadService,
     private storageService: StorageService,
@@ -59,11 +73,15 @@ export class NewShoppingInfoComponent implements OnInit {
     private orderService: OrderService,
     private storageSession: StorageService,
     private bulkSmsService: BulkSmsService,
+    private zilaService: ZilaService,
+    private cityService: CityService,
+    private thanaService: ThanaService,
     private utilsService: UtilsService,
     private paymentSslService: PaymentSslService,
+    private modal: NzModalService,
     private msg: NzMessageService,
     @Inject(DOCUMENT) private document: Document
-  ) {}
+  ) { }
 
   user: User;
   addressInfo: Address[] = [];
@@ -100,6 +118,22 @@ export class NewShoppingInfoComponent implements OnInit {
     this.getSelectedAddress();
     this.getSelectedPointsType();
     this.getLoggedInUserInfo();
+    this.initFormGroup();
+  }
+
+  private initFormGroup() {
+
+    this.dataForm = this.fb.group({
+      name: [null, Validators.required],
+      addressType: [null],
+      country: ['bangladesh', Validators.required],
+      city: [null, Validators.required],
+      thana: [null, Validators.required],
+      zila: [null, Validators.required],
+      phone: [null, Validators.required],
+      address: [null],
+    });
+
   }
 
   openDialog() {
@@ -142,28 +176,29 @@ export class NewShoppingInfoComponent implements OnInit {
   }
 
   deleteAddress(index) {
-    this.userDataService.deleteAddress(this.addressInfo[index]._id).subscribe(
-      (res) => {
-        console.log(res.message);
-        this.reloadService.needRefreshAddress$();
-      },
-      (err) => {
-        console.log(err);
+    this.modal.warning({
+      nzTitle: 'Are you sure ?',
+      nzContent: 'You cannot undo this action anymore ',
+      nzOnOk: () => {
+        this.userDataService.deleteAddress(this.addressInfo[index]._id).subscribe(
+          (res) => {
+            console.log(res.message);
+            this.reloadService.needRefreshAddress$();
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
       }
-    );
+    });
+
   }
 
-  editAddress(data: Address) {
-    const dialogRef = this.dialog.open(AddAddressComponent, {
-      data,
-    });
-    dialogRef.afterClosed().subscribe((dialogResult) => {
-      this.clickActive = [];
-      this.storageService.removeSessionData(
-        DATABASE_KEY.selectedShippingAddress
-      );
-      this.selectedAddress = null;
-    });
+  editAddressButton(data: Address) {
+    this.showModal();
+    this.selectedAddress = data;
+    this.id = this.selectedAddress._id;
+    this.dataForm.patchValue(data);
   }
 
   getThumbImage(product) {
@@ -510,8 +545,6 @@ export class NewShoppingInfoComponent implements OnInit {
   }
   placeOrder() {
     const orderItem = this.getProductsFromCart();
-    console.log(orderItem);
-
     let order: Order = {
       checkoutDate: new Date(),
       orderedItems: orderItem,
@@ -524,7 +557,7 @@ export class NewShoppingInfoComponent implements OnInit {
       refundedAmount: 0,
       paidAmount: 0,
       userId: this.user._id,
-      name: this.user.fullName ? this.user.fullName : 'No Name',
+      name: this.selectedAddress.name,
       phoneNo: this.user.phoneNo,
       address: this.user.address,
       email: this.user.email ? this.user.email : 'No Email',
@@ -740,12 +773,110 @@ export class NewShoppingInfoComponent implements OnInit {
 
   // Mamun new Function
   showModal(): void {
+    this.getAllZila();
     this.isVisible = true;
   }
   handleOk(): void {
-    this.isVisible = false;
+    if (this.dataForm.invalid) {
+      this.msg.warning("Please Complete All the required fields");
+      return
+
+    }
+    let address = this.dataForm.value;
+    if (this.id) {
+      let finalData = {...address, ...{_id: this.id}}
+      this.editAddress(finalData);
+    }else{
+      this.addAddress(address);
+    }
+
   }
+
+  addAddress(data: Address) {
+
+    this.userDataService.addToAddress(data)
+      .subscribe((res) => {
+        this.uiService.success(res.message);
+        this.reloadService.needRefreshAddress$();
+        this.isVisible = false;
+      }, err => {
+        console.log(err.message);
+        this.msg.error("Add new address failed");
+      });
+  }
+
   handleCancel(): void {
     this.isVisible = false;
   }
+
+  editAddress(address) {
+    this.userDataService.editAddress(address)
+      .subscribe((res) => {
+        this.uiService.success(res.message);
+        this.reloadService.needRefreshAddress$();
+        this.isVisible = false;
+      }, error => {
+        this.msg.error("Edit address failed");
+      });
+  }
+
+  getAllZila() {
+    this.zilaService.getAllZila()
+      .subscribe(res => {
+        this.zilla = res.data;
+      }, error => {
+        console.log(error);
+      });
+  }
+
+  getAllCityByZilaId() {
+    let zilaId;
+    if(this.id){
+      zilaId = this.selectedAddress.zila._id;
+      console.log(zilaId);
+    }else{
+      zilaId = this.dataForm.value.zila;
+    }
+    if (zilaId) {
+      this.cityService.getAllCityByZilaId(zilaId)
+        .subscribe(res => {
+          this.city = res.data;
+          // if(this.id){
+          //   this.dataForm.patchValue({
+          //     city: this.city._id,
+          //   })
+          // };
+          // this.filtercity = this.city.slice();
+        }, err => {
+          this.msg.error(err.message);
+        });
+    }
+  }
+
+  getAllThanaByCityId() {
+    let cityId;
+    if(this.id){
+      cityId = this.selectedAddress.city._id;
+    }else{
+      cityId = this.dataForm.value.city;
+    }
+    if (cityId){
+      this.thanaService.getAllThanasByCityId(cityId)
+      .subscribe(res => {
+        this.thana = res.data;
+        // if(this.id){
+        //   this.dataForm.patchValue({
+        //     thana: this.data.thana._id,
+        //   })
+        // };
+      }, err => {
+        this.msg.error(err.message)
+      });
+    }
+
+  }
+
+
+
+
 }

@@ -80,6 +80,11 @@ nz-select {
           background: #ffffff;
           .image {
             flex: 1;
+            img{
+              width: 100%;
+              padding: 10px;
+              cursor: zoom-in;
+            }
           }
           .details {
             flex: 3;

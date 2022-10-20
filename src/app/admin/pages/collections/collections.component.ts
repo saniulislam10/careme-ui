@@ -82,7 +82,6 @@ export class CollectionsComponent implements OnInit {
   initModule() {
     this.dataForm = this.fb.group({
       name: [null, Validators.required],
-      link: [null, Validators.required],
       logo: [null],
     });
   }

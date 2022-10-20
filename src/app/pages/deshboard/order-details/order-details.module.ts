@@ -1,3 +1,4 @@
+import { AntModule } from 'src/app/material/ant.module';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,18 +22,9 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
   imports: [
     CommonModule,
     MatTooltipModule,
-    NzTableModule,
-    NzListModule,
-    NzGridModule,
-    NzDividerModule,
-    NzImageModule,
     PipesModule,
     OrderDetailsRoutingModule,
-    NzCardModule,
-    NzButtonModule,
-    NzModalModule,
-    NzFormModule,
-    NzSelectModule,
+    AntModule
   ],
 })
 export class OrderDetailsModule {}

@@ -85,6 +85,7 @@ export class AddAddressComponent implements OnInit,OnDestroy {
   private initFormGroup() {
 
     this.dataForm = this.fb.group({
+      name: [null, Validators.required],
       addressType: [null],
       city: [null, Validators.required],
       thana: [null, Validators.required],

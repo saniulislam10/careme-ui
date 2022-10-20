@@ -9,12 +9,12 @@
           nzTitle="Delivery Address"
           [nzExtra]="addressAction"
         >
-          <div class="newAddress" *ngFor="let data of [1]">
+          <div [class]="clickActive[i] ? 'active-address' : 'inactive-address'" (click)="onSelectAddress(data, i)" *ngFor="let data of addressInfo; let i = index">
             <div class="address_header">
               <h3><i class="las la-suitcase"></i> Home</h3>
-              <ul>
-                <li class="trash"><i class="las la-trash"></i></li>
-                <li class="edit"><i class="lar la-edit"></i></li>
+              <ul class="icons">
+                <li class="trash" (click)="deleteAddress(i)" ><i class="las la-trash"></i></li>
+                <li class="edit" (click)="editAddressButton(data)" ><i class="lar la-edit"></i></li>
                 <li class="select"><i class="lar la-check-circle"></i></li>
               </ul>
             </div>
@@ -22,17 +22,17 @@
               <ul>
                 <li>
                   <span><i class="lar la-user"></i></span>
-                  <p>Md. Al-Mamun</p>
+                  <p>{{data?.name}}</p>
                 </li>
                 <li>
                   <span><i class="las la-phone"></i></span>
-                  <p>01917632421</p>
+                  <p>{{data?.phone}}</p>
                 </li>
                 <li>
                   <span><i class="las la-map-marked"></i></span>
                   <p>
-                    Suite #1402 (Lift #14), Navana D.H. Tower, 6 Panthapath,
-                    Karwan Bazar, Dhaka-1215.
+                    {{data.address}}, {{data?.thana.name}}, {{data?.city.name}},
+                    {{data?.zila.name}}, Bangladesh
                   </p>
                 </li>
               </ul>
@@ -225,7 +225,7 @@
   nzOkText="Save"
 >
   <ng-container *nzModalContent>
-    <form nz-form>
+    <form nz-form [formGroup]="dataForm" (ngSubmit)="handleOk()">
       <nz-form-item>
         <nz-form-label [nzSpan]="24" nzFor="name">Name</nz-form-label>
         <nz-form-control [nzSpan]="24">
@@ -235,6 +235,7 @@
             type="text"
             id="name"
             placeholder="Name"
+            formControlName="name"
           />
         </nz-form-control>
       </nz-form-item>
@@ -247,32 +248,33 @@
             type="text"
             id="phone"
             placeholder="01XXXXXXXXX"
+            formControlName="phone"
           />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="24" nzFor="locate">Address</nz-form-label>
         <nz-form-control [nzSpan]="12">
-          <nz-select ngModel="bangladesh">
-            <nz-option nzValue="bangladesh" nzLabel="Bangladesh"></nz-option>
+          <nz-select  formControlName="country">
+            <nz-option nzValue="bangladesh" nzLabel="Bangladesh" ></nz-option>
           </nz-select>
         </nz-form-control>
         <nz-form-control [nzSpan]="12">
-          <nz-select ngModel="dhaka">
-            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
-            <nz-option nzValue="khulna" nzLabel="Khulna"></nz-option>
+          <nz-select formControlName="zila" ngModel (ngModelChange)="getAllCityByZilaId()" >
+            <!-- <nz-option  on nzValue="disabled" nzLabel="Select Zila" nzDisabled selected></nz-option> -->
+            <nz-option [nzValue]="data._id" [nzLabel]="data.name" *ngFor="let data of zilla"></nz-option>
           </nz-select>
         </nz-form-control>
         <nz-form-control [nzSpan]="12">
-          <nz-select ngModel="dhaka">
-            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
-            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+          <nz-select formControlName="city" ngModel (ngModelChange)="getAllThanaByCityId()">
+            <!-- <nz-option nzValue="disabled" nzLabel="Select city" nzDisabled selected></nz-option> -->
+            <nz-option [nzValue]="data._id" [nzLabel]="data.name" *ngFor="let data of city"></nz-option>
           </nz-select>
         </nz-form-control>
         <nz-form-control [nzSpan]="12">
-          <nz-select ngModel="dhaka">
-            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
-            <nz-option nzValue="dhaka" nzLabel="Dhaka"></nz-option>
+          <nz-select formControlName="thana" ngModel nzPlaceholder="Select">
+            <!-- <nz-option nzValue="disabled" nzLabel="Select thana" nzDisabled selected></nz-option> -->
+            <nz-option [nzValue]="data._id" [nzLabel]="data.name" *ngFor="let data of thana"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -280,104 +282,16 @@
         <nz-form-label [nzSpan]="24">Address</nz-form-label>
         <nz-form-control [nzSpan]="24">
           <textarea
-            formControlName="Address"
+            formControlName="address"
             nz-input
             rows="2"
             placeholder="Your address is here..."
           ></textarea>
         </nz-form-control>
       </nz-form-item>
+      <!-- <nz-form-item>
+        <button type="submit">Save</button>
+      </nz-form-item> -->
     </form>
   </ng-container>
 </nz-modal>
-
-<!-- Old Code -->
-<div class="new-shopping-info">
-  <div class="container">
-    <div class="new-shopping-info-main">
-      <div class="new-shopping-info-left">
-        <div class="shipping-top-area">
-          <!---title-->
-          <div class="title">
-            <h3>Delivery Address</h3>
-          </div>
-          <!---add-address-btn-->
-          <!-- (click)="showPupUp()" -->
-          <div class="add-address-btn">
-            <button (click)="openDialog()">
-              <span>+</span> Add New Address
-            </button>
-          </div>
-        </div>
-
-        <div class="shipping-area">
-          <div class="shipping-main-area">
-            <!---shipping-main-->
-            <div class="shipping-address-main">
-              <!---shipping-info-->
-              <div
-                class="shipping-info"
-                [class]="clickActive[i] ? 'active-address' : 'inactive'"
-                (click)="onSelectAddress(data, i)"
-                *ngFor="let data of addressInfo; let i = index"
-              >
-                <!---shipping-place-->
-                <div class="shipping-place">
-                  <!--shiping-place-left-->
-                  <!-- <div class="shipping-place-left">
-                                            <h3><i class="fa fa-briefcase"></i> {{data.addressType}}</h3>
-                                        </div> -->
-                  <div class="shipping-place-left">
-                    <h3><i class="fa fa-briefcase"></i></h3>
-                    <span class="home">{{
-                      data?.addressType ? data?.addressType : "Home"
-                    }}</span>
-                    <a
-                      class="default"
-                      *ngIf="
-                        data.addressType !== 'Work' &&
-                        data.addressType !== 'Other'
-                      "
-                      >Default</a
-                    >
-                  </div>
-                  <!---shipping-place-right-->
-                  <div class="shipping-place-right">
-                    <span><i class="fa fa-check"></i></span>
-                    <span>
-                      <mat-icon (click)="editAddress(data, i)">edit</mat-icon>
-                    </span>
-                    <span>
-                      <mat-icon (click)="deleteAddress(i)"
-                        >delete_outline</mat-icon
-                      >
-                    </span>
-                  </div>
-                </div>
-                <div class="shipping-contact-info">
-                  <div class="shipping-contact-info-elm">
-                    <small class="contact">Contact :</small>
-                    <span class="phone-no">{{ data?.phone }}</span>
-                  </div>
-                  <div class="shipping-contact-info-elm">
-                    <small class="ship-to">Ship to :</small>
-                    <span class="ship-address"
-                      >{{ data?.zila?.name }} {{ data?.city?.name }}
-                      {{ data?.thana?.name }}</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="cart-btn-left">
-        <button routerLink="/all-products">
-          <i class="fa fa-arrow-left" routerLinkActive="router-link-active"></i>
-          Return to shop
-        </button>
-      </div>
-    </div>
-  </div>
-</div>

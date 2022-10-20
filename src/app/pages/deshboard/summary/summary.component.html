@@ -1,7 +1,7 @@
 <div nz-row nzGutter="0" class="md">
   <div nz-col nzSpan="24">
     <div class="dash_welcome">
-      <h2>Hello Al-Mamun, Welcome to dashboard !</h2>
+      <h2>Hello {{user?.fullName}}, Welcome to dashboard !</h2>
     </div>
   </div>
 </div>
@@ -76,20 +76,18 @@
             <th>Order</th>
             <th>Items</th>
             <th>Total</th>
-            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of dashtable.data">
             <td class="routerLink">
-              <h4 [routerLink]="['../../order-details', data._id]">
+              <a [routerLink]="['../../order-details', data._id]">
                 {{ data.orderId }}
-              </h4>
+              </a>
               <h5>{{ data.createdAt | date: "short" }}</h5>
             </td>
             <td>{{ data.orderedItems?.length }}</td>
             <td>{{ data.totalAmount }}</td>
-            <td>{{ data.deliveryStatus | orderStatus }}</td>
           </tr>
         </tbody>
       </nz-table>
