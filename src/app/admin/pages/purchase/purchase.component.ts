@@ -34,6 +34,10 @@ import {
 export class PurchaseComponent implements OnInit {
   tabs = ['All PO ', 'Draft', 'Issued', 'Closed', 'Canceled'];
 
+  // Table Check
+  allChecked = false;
+  checkOptionsOne = false;
+
   // New PO Create
   ponewVisible = false;
 

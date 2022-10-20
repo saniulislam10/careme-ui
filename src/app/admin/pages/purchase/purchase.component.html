@@ -72,13 +72,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                *ngFor="let data of bodyData.data"
-                [routerLink]="['details', data._id]"
-                style="cursor: pointer"
-              >
+              <tr *ngFor="let data of bodyData.data">
                 <!-- <td [nzChecked]="setOfCheckedId.has(data._id)" (nzCheckedChange)="onCheckChange($event, i, data._id)"></td> -->
-                <td>
+                <td
+                  [routerLink]="['details', data._id]"
+                  style="cursor: pointer"
+                >
                   <h3>
                     {{ data?.purchaseId }}
                   </h3>
@@ -144,6 +143,26 @@
               </td>
             </tr>
             <tr>
+              <td>Manufacturer</td>
+              <td style="width: 15px; text-align: center">:</td>
+              <td>
+                <input nz-input placeholder="Bangladesh, China, India" />
+              </td>
+            </tr>
+            <tr>
+              <td>Shipping Charge</td>
+              <td style="width: 15px; text-align: center">:</td>
+              <td>
+                <input nz-input placeholder="0.00" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 12 }">
+        <table class="purchase_info">
+          <tbody>
+            <tr>
               <td>Supplier</td>
               <td style="width: 15px; text-align: center">:</td>
               <td>
@@ -156,24 +175,11 @@
                 </nz-select>
               </td>
             </tr>
-          </tbody>
-        </table>
-      </div>
-      <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 12 }">
-        <table class="purchase_info">
-          <tbody>
             <tr>
               <td>Supplier Link</td>
               <td style="width: 15px; text-align: center">:</td>
               <td>
-                <input nz-input placeholder="Phttps://" />
-              </td>
-            </tr>
-            <tr>
-              <td>Manufacturer</td>
-              <td style="width: 15px; text-align: center">:</td>
-              <td>
-                <input nz-input placeholder="China" />
+                <input nz-input type="link" placeholder="https://" />
               </td>
             </tr>
           </tbody>
