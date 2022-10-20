@@ -73,7 +73,6 @@ const materials = [
     NzIconModule,
   NzDescriptionsModule,
   NzPopoverModule,
->>>>>>> f58893ac8ec8dc931bda4a1aa4a776b160a4771d
 
   // SharedModule
 ];
