@@ -1,3 +1,5 @@
+import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzListModule } from 'ng-zorro-antd/list';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -33,20 +35,16 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 const materials = [
   NzModalModule,
-  NzTableModule,
   NzInputModule,
   NzMessageModule,
-  NzSelectModule,
   OverlayModule,
   DragDropModule,
-  ReactiveFormsModule,
   FormsModule,
   ReactiveFormsModule,
   NzLayoutModule,
   NzIconModule,
   NzButtonModule,
   NzCheckboxModule,
-  NzCardModule,
   NzTabsModule,
   NzMenuModule,
   NzDropDownModule,
@@ -63,6 +61,16 @@ const materials = [
   NzAnchorModule,
   NzDrawerModule,
   NzAffixModule,
+    NzSelectModule,
+    NzTableModule,
+    NzGridModule,
+    NzDividerModule,
+    NzImageModule,
+    NzListModule,
+    NzCardModule,
+    NzStepsModule,
+    NzTimelineModule,
+    NzIconModule,
   NzDescriptionsModule,
   NzPopoverModule,
 

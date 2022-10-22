@@ -59,7 +59,7 @@ const routes: Routes = [
         loadChildren: () => import('./order-details/order-details.module').then(m => m.OrderDetailsModule)
       },
       {
-        path:"order-single-product-details",
+        path:"track-order",
         loadChildren: () => import('./order-single-product-details/order-single-product-details.module').then(m => m.OrderSingleProductDetailsModule)
       },
       {

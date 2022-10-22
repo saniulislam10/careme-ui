@@ -15,6 +15,7 @@ import { ReviewService } from 'src/app/services/review.service';
 import { Return } from 'src/app/interfaces/return';
 import { ReturnService } from 'src/app/services/return.service';
 import { OrderStatus } from 'src/app/enum/order-status';
+import { ProductService } from 'src/app/services/product.service';
 
 
 interface ChildrenItemData {
@@ -65,6 +66,7 @@ export class OrderSingleProductDetailsComponent implements OnInit {
   products: FormArray;
   constructor(
     private activatedRoute: ActivatedRoute,
+    private productService: ProductService,
     private invoiceService: InvoiceService,
     private userDataService: UserDataService,
     private reviewService: ReviewService,
@@ -84,6 +86,11 @@ export class OrderSingleProductDetailsComponent implements OnInit {
 
     this.getUserInfo();
 
+  }
+
+  getThumbnailImage(data) {
+    let images = this.productService.getImages(data.medias, data.images);
+    return images[0];
   }
 
   initReturnForm() {

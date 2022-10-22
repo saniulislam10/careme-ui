@@ -15,8 +15,8 @@ export class OrderStatusPipe implements PipeTransform {
       case OrderStatus.CONFIRM : {
         return 'Confirm';
       }
-      case OrderStatus.PROCESSING : {
-        return 'Processing';
+      case OrderStatus.PARTIAL_SHIPPING : {
+        return 'Partial Shipped';
       }
       case OrderStatus.SHIPPING : {
         return 'Shipped';

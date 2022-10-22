@@ -1,3 +1,4 @@
+<!-- Track Order -->
 <div class="single-inv">
   <h2>Track Order</h2>
   <div class="invoice-card">
@@ -9,19 +10,19 @@
               <h3>{{ data.invoiceId }}</h3>
               <span>26 Aug 2022 | 12.20 PM</span>
             </div>
-            <h3>Shipped</h3>
+            <h3>{{data.deliveryStatus | orderStatus}}</h3>
           </div>
           <div class="invoice-progress">
             <div class="invoice-progress_step">
               <h1>
                 Estimated Delivery By <span>Fri 22 Jul - Sun 22 Aug</span>
               </h1>
-              <nz-steps [nzCurrent]="3" [nzProgressDot]="progressTemplate">
+              <nz-steps [nzCurrent]="data.deliveryStatus-3" [nzProgressDot]="progressTemplate">
                 <nz-step nzTitle="Pending"></nz-step>
-                <nz-step nzTitle="Confirmed"></nz-step>
-                <nz-step nzTitle="Processing"></nz-step>
                 <nz-step nzTitle="Shipped"></nz-step>
-                <nz-step nzTitle="Deliverd"></nz-step>
+                <nz-step nzTitle="Delivered"></nz-step>
+                <nz-step nzTitle="Returning"></nz-step>
+                <nz-step nzTitle="Returned"></nz-step>
               </nz-steps>
               <ng-template
                 #progressTemplate
@@ -67,7 +68,9 @@
             </div>
           </div>
           <div *ngFor="let product of data.products" class="invoice-product">
-            <div class="image">Image</div>
+            <div class="image">
+              <img nz-image [nzSrc]="getThumbnailImage(product.productId)" />
+            </div>
             <div class="details">
               <h3>{{ product.name }}</h3>
               <span>SKU: {{ product.sku }}</span>
@@ -78,7 +81,7 @@
             </div>
             <div class="advanch">Cash On Delivery</div>
             <div class="paystatus">COD</div>
-            <div class="status">Shipped</div>
+            <div class="status">{{data.deliveryStatus | orderStatus}}</div>
             <div class="returnpreiod">
               <a (click)="showReturn(data, product)">
                 Return

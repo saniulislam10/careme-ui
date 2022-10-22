@@ -1,3 +1,4 @@
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { AntModule } from 'src/app/material/ant.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,11 +16,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   imports: [
     CommonModule,
     OrderSingleProductDetailsRoutingModule,
-    NzCardModule,
-    NzTableModule,
-    NzStepsModule,
-    NzTimelineModule,
-    NzIconModule,
+
+    PipesModule,
     AntModule
   ],
 })

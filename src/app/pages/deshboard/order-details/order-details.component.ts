@@ -69,7 +69,7 @@ export class OrderDetailsComponent implements OnInit {
     );
   }
 
-  setThumbnailImage(data) {
+  getThumbnailImage(data) {
     let images = this.productService.getImages(data.medias, data.images);
     return images[0];
   }
@@ -93,9 +93,8 @@ export class OrderDetailsComponent implements OnInit {
   getSubTotal(){
     let total = 0;
      this.listOfChildrenData.forEach(m => {
-      total += m.price
+      total += (m.price+m.tax) * m.quantity
     })
-    console.log(total);
     return total;
   }
 
