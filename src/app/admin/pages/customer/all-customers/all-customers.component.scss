@@ -13,6 +13,18 @@
       background: transparent;
       margin-left: 25px;
     }
+    .create_btn {
+      background: #1b75bb;
+      color: #fff;
+      border: 1px solid #1b75bb;
+      padding: 10px 20px;
+      transition: 0.3s;
+      border-radius: 3px;
+    }
+    .create_btn:hover {
+      background: #8bc53f;
+      border: 1px solid #8bc53f;
+    }
   }
 }
 .table-samary {

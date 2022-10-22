@@ -1,103 +1,134 @@
-<div class="shipping-title">
-    <h3>Shipping</h3>
+<!---order-header-area-->
+<div class="page-header">
+  <h2>All Shipping</h2>
+  <div class="header-action">
+    <button class="create_btn" type="button">
+      <i class="las la-plus"></i> Add New Shipping
+    </button>
+  </div>
 </div>
-<!---shipping-area-->
-<div class="shpping-area">
-    <div class="shipping-area-main">
-        <!--shipping-top-->
-        <div class="shipping-from">
-            <div class="shipping-from-title">
-                <h3>Shipping From</h3>
-            </div>
-            <div class="shipping-form-main">
-                <!---location-->
-                <div class="shipping-location">
-                    <div class="location-icon">
-                        <button><i class="fa fa-map-marker-alt"></i></button>
-                    </div>
-                    <div class="location-text-area">
-                        <h4>Suite #1402 (Life #14), Navana D.H. Tower </h4>
-                        <p>Suite #1402 (Life #14), Navana D.H. Tower, 6 Panthapath Karwan Bazar,Dhaka 1215, banglandesh</p>
-                    </div>
-                </div>
-                <div class="shipping-manage">
-                    <a href="#">Manage</a>
-                </div>
-            </div>
-        </div><!--end-->
-        <!---shipping-to-->
-        <div class="shipping-to">
-            <div class="shipping-to-top">
-                <div class="shipping-to-top-left">
-                    <h3>Shipping To</h3>
-                </div>
-                <div class="shipping-to-top-right">
-                    <a  (click)="showZone()">Create Shipping Zone</a>
-                </div>
-            </div>
-            <div class="shipping-to-bottom">
-                <div class="country">
-                    <div>
-                        <img src="./assets/images/flag/bangladesh-flag.png" alt="">
-                    </div>
-                    <div>
-                        <span>Inside Dhaka</span>
-                    </div>
-                </div>
-                <div class="dotted">
-                    <span><i class="fa-solid fa-ellipsis"></i></span>
-                </div>
-            </div>
-        </div><!---end-->
-
-        <!---shipping-form-area-->
-        <div class="shipping-table-area">
-            <div class="table">
-                <!---table-head-->
-                <div class="table-head">
-                    <div class="row">
-                        <div class="table-heading name">
-                            <h3>Curier Name</h3>
-                        </div>
-                        <div class="table-heading condition">
-                            <h3>Condition</h3>
-                        </div>
-                        <div class="table-heading price">
-                            <h3>Price</h3>
-                        </div>
-                        <div class="table-heading dot">
-                        </div>
-                    </div>
-                </div>
-                <!---table-body-->
-                <div class="table-body">
-                    <div class="row" *ngFor="let data of [1,2,3,4,5,6]">
-                        <div class="table-data name">
-                            <h3>Paper Fly</h3>
-                        </div>
-                        <div class="table-data condition">
-                            <h3>0-2kg</h3>
-                        </div>
-                        <div class="table-data price">
-                            <h3>BDT 5000</h3>
-                        </div>
-                        <div class="table-data dot">
-                            <span><i class="fa-solid fa-ellipsis"></i></span>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div><!--table-end-->
-        <div class="add-btn">
-            <button (click)="showCurier()">Add Curier</button>
+<div class="table-samary">
+  <nz-card>
+    <nz-tabset>
+      <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
+        <div class="table-filter-area">
+          <form>
+            <input
+              #searchInput
+              nz-input
+              id="searchInput"
+              class="tw"
+              type="text"
+              placeholder="Filter Refund"
+              (focus)="handleFocus($event)"
+              name="searchTerm"
+              nzSize="large"
+              autocomplete="off"
+              ngModel
+              required
+            />
+          </form>
+          <ul>
+            <li>
+              <button nz-button>
+                Payment Status
+                <i class="las la-angle-down"></i>
+              </button>
+            </li>
+          </ul>
         </div>
+        <div class="table-data-area">
+          <nz-table
+            nzSize="small"
+            #rowSelectionTable
+            [nzShowPagination]="false"
+            [nzLoading]="loading"
+            [nzData]="shipedTable"
+            [nzScroll]="{ x: '800px' }"
+          >
+            <thead>
+              <tr>
+                <th style="width: 50px; text-align: center">
+                  <label nz-checkbox [(ngModel)]="checkedAll"></label>
+                </th>
+                <th>Name</th>
+                <th>Products</th>
+                <th>Rates for</th>
+                <th>Condition</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of rowSelectionTable.data">
+                <td style="text-align: center">
+                  <label nz-checkbox [(ngModel)]="checkedAll"></label>
+                </td>
+                <td>{{ data.name }}</td>
+                <td>All products</td>
+                <td>Bangladesh</td>
+                <td>0kg–45kg</td>
+                <td>120 - 180 TK</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</div>
 
+<!-- Details Page  -->
+<div class="page-header">
+  <h2>
+    <i class="las la-long-arrow-alt-left"></i>
+    Add New Shipping
+  </h2>
+</div>
+<nz-card class="mb" nzTitle="Profile">
+  <div nz-row [nzGutter]="16">
+    <div
+      class="profile_left"
+      nz-col
+      [nzXs]="{ span: 24 }"
+      [nzLg]="{ span: 12 }"
+    >
+      <form nz-row [nzGutter]="16">
+        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+          <nz-form-label [nzSpan]="24">Name</nz-form-label>
+          <input nz-input name="name" type="text" id="email" />
+        </div>
+        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+          <nz-form-label [nzSpan]="24">Name</nz-form-label>
+          <input nz-input name="name" type="text" id="email" />
+        </div>
+        <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+          <nz-form-label [nzSpan]="24">Name</nz-form-label>
+          <input nz-input name="name" type="text" id="email" />
+        </div>
+        <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+          <nz-form-label [nzSpan]="24">Name</nz-form-label>
+          <input nz-input name="name" type="text" id="email" />
+        </div>
+      </form>
     </div>
-</div>
+    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">Choose Product</div>
+  </div>
+</nz-card>
 
-<!---add-curier-->
-<div class="component">
-    <app-add-courier #addCourier></app-add-courier>
-    <app-create-shipping-zone #createZone></app-create-shipping-zone>
-</div>
+<nz-card class="mb" nzTitle="Shipping To" [nzExtra]="shipZone"> ok </nz-card>
+
+<ng-template #shipZone>
+  <button nz-button (click)="showZoneModal()">
+    <i class="las la-plus"></i> Add Zone
+  </button>
+  <nz-modal
+    [(nzVisible)]="zoneVisible"
+    nzTitle="The first Modal"
+    (nzOnCancel)="zoneCancel()"
+    (nzOnOk)="zoneOk()"
+  >
+    <ng-container *nzModalContent>
+      <p>Content one</p>
+    </ng-container>
+  </nz-modal>
+</ng-template>

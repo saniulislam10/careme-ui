@@ -7,17 +7,14 @@ import { ShippingRoutingModule } from './shipping-routing.module';
 import { ShippingComponent } from './shipping.component';
 import { AddCourierComponent } from './add-courier/add-courier.component';
 import { CreateShippingZoneComponent } from './create-shipping-zone/create-shipping-zone.component';
+import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
   declarations: [
     ShippingComponent,
     AddCourierComponent,
-    CreateShippingZoneComponent
+    CreateShippingZoneComponent,
   ],
-  imports: [
-    CommonModule,
-    ShippingRoutingModule,
-    MaterialModule,
-  ]
+  imports: [CommonModule, ShippingRoutingModule, MaterialModule, AntModule],
 })
-export class ShippingModule { }
+export class ShippingModule {}
