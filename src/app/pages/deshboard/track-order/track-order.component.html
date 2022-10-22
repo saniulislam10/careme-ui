@@ -7,17 +7,17 @@
         <li *ngFor="let data of invoices">
           <div class="invoice-header">
             <div class="invoice-id">
-              <h3>{{ data.invoiceId }}</h3>
-              <span>26 Aug 2022 | 12.20 PM</span>
+              <h3>{{ data?.invoiceId }}</h3>
+              <span>{{data?.createdAt | date : 'short'}}</span>
             </div>
-            <h3>{{data.deliveryStatus | orderStatus}}</h3>
+            <h3>{{data?.deliveryStatus | orderStatus}}</h3>
           </div>
           <div class="invoice-progress">
             <div class="invoice-progress_step">
               <h1>
                 Estimated Delivery By <span>Fri 22 Jul - Sun 22 Aug</span>
               </h1>
-              <nz-steps [nzCurrent]="data.deliveryStatus-3" [nzProgressDot]="progressTemplate">
+              <nz-steps [nzCurrent]="data?.deliveryStatus-3" [nzProgressDot]="progressTemplate">
                 <nz-step nzTitle="Pending"></nz-step>
                 <nz-step nzTitle="Shipped"></nz-step>
                 <nz-step nzTitle="Delivered"></nz-step>
@@ -83,7 +83,7 @@
             <div class="paystatus">COD</div>
             <div class="status">{{data.deliveryStatus | orderStatus}}</div>
             <div class="returnpreiod">
-              <a (click)="showReturn(data, product)">
+              <a *ngIf="product.productId.canReturn" (click)="showReturn(data, product)">
                 Return
                 <h5>( 09:12:11 )</h5>
               </a>
@@ -137,35 +137,9 @@
         </div>
       </div>
     </div>
-    <div class="return">
-      <div class="box">
-        <h4>Payment By</h4>
-        <nz-select [(ngModel)]="paymentBy">
-          <nz-option
-            nzValue="damage"
-            nzLabel="Same as Payment"
-            selected
-          ></nz-option>
-          <nz-option nzValue="mismatch" nzLabel="Others"></nz-option>
-        </nz-select>
-      </div>
-      <div class="box">
-        <h4>Payment Options</h4>
-        <nz-select [(ngModel)]="paymentOption" placeholder="Payment Method">
-          <nz-option nzValue="bkash" nzLabel="Bkash" selected></nz-option>
-          <nz-option nzValue="rocket" nzLabel="Rocket"></nz-option>
-          <nz-option nzValue="visa" nzLabel="Visa/Master"></nz-option>
-        </nz-select>
-      </div>
-      <div class="box">
-        <h4>Phone</h4>
-        <input
-          nz-input
-          [(ngModel)]="phone"
-          type="text"
-          placeholder="01X-XXX-XXXX"
-        />
-      </div>
+    <div class="box">
+      <h4>Notes</h4>
+      <textarea nz-input [(ngModel)]="notes" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
     </div>
     <form [formGroup]="dataForm">
       <nz-table [nzData]="returnProducts" [nzShowPagination]="false">

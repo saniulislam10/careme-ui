@@ -47,6 +47,7 @@ export class InvoiceComponent implements OnInit {
   returnProducts: any[] = [];
   loading: boolean;
   file: FileList | any;
+  markDisabled: Boolean = false;
 
   returns: Return[] = [];
 
@@ -137,6 +138,9 @@ export class InvoiceComponent implements OnInit {
     this.invoiceService.getInvoiceById(this.id).subscribe(
       (res) => {
         this.invoice = res.data;
+        if(this.invoice.deliveryStatus === OrderStatus.DELIVERED){
+          this.markDisabled = true;
+        }
         this.getAllReturns(this.invoice.invoiceId);
         this.loading = false;
         this.initReturnForm();
@@ -319,6 +323,7 @@ export class InvoiceComponent implements OnInit {
     this.invoiceService.updateInvoiceById(this.invoice)
     .subscribe(res => {
       this.msg.success(res.message)
+      this.markDisabled = true;
     }, err => {
       this.msg.error(err.message)
     }

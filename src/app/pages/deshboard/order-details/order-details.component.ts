@@ -1,3 +1,5 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { OrderStatus } from 'src/app/enum/order-status';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -25,12 +27,14 @@ export class OrderDetailsComponent implements OnInit {
   subRouteOne: any;
   index: string;
   thumbnailImage: any;
+  success: boolean = true;
 
   constructor(
     private productService: ProductService,
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private msg : NzMessageService
   ) {}
 
   isVisible = false;
@@ -98,5 +102,56 @@ export class OrderDetailsComponent implements OnInit {
     })
     return total;
   }
+
+  onCancel(data, i){
+    this.order.orderedItems[i].deliveryStatus = OrderStatus.CANCEL;
+    this.decreaseCommitted(data, data.productId._id);
+    this.increaseAvailable(data, data.productId._id);
+    if (this.success) {
+      this.updateOrder(this.order);
+    }else{
+      this.msg.error('Order Could not be Canceled');
+    }
+  }
+
+  updateOrder(order) {
+    this.orderService.updateOrderById(order).subscribe(
+      (res) => {
+        this.msg.success(res.message);
+      },
+      (err) => {
+        this.msg.error(err.message);
+        return;
+      }
+    );
+  }
+
+  decreaseCommitted(data, id) {
+    this.productService.decreaseCommitedProductQuantity(data, id).subscribe(
+      (res) => {
+        // this.msg.success(res.message);
+        this.success = true;
+      },
+      (err) => {
+        // this.msg.error(err.message);
+        this.success = false;
+      }
+    );
+  }
+
+  increaseAvailable(data, id) {
+    this.productService.increaseAvailableProductQuantity(data, id).subscribe(
+      (res) => {
+        this.msg.success(res.message);
+        this.success = true;
+      },
+      (err) => {
+        this.msg.error(err.message);
+        this.success = false;
+      }
+    );
+  }
+
+
 
 }

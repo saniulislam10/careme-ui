@@ -127,7 +127,12 @@
               <span *ngIf="data.deliveryStatus === 3">({{data.invoicedQuantity}})</span>
             </td>
             <td>
-              <button nz-button nzType="danger" nzDanger *ngIf="data.deliveryStatus === 0"><i class="las la-trash"></i></button>
+              <div class="tooltip"><i class="las la-2x la-times-circle " style="color: red" (click)="onCancel(data, i)" *ngIf="data.deliveryStatus === 0"></i>
+                <span class="tooltiptext">Cancel</span>
+              </div>
+              <!-- <span tooltip nzTooltipTitle="Cancel">
+                <i class="las la-2x la-times-circle " style="color: red" (click)="onCancel()" *ngIf="data.deliveryStatus === 0"></i>
+              </span> -->
             </td>
           </tr>
         </tbody>

@@ -18,20 +18,6 @@ import { OrderStatus } from 'src/app/enum/order-status';
 import { ProductService } from 'src/app/services/product.service';
 
 
-interface ChildrenItemData {
-  name: string;
-  sku: string;
-  variantName: string;
-  qty: number;
-  total: number;
-  advance: number;
-  advanceType: number;
-  advanceInTaka: number;
-  paymentStatus: string;
-  orderStatus: string;
-  deliveryDate: Date;
-}
-
 
 @Component({
   selector: 'app-track-order',
@@ -62,6 +48,7 @@ export class TrackOrderComponent implements OnInit {
   returnProducts: any[] = [];
   reason: string;
   images: string [] = [];
+  notes: string;
   dataForm: FormGroup;
   products: FormArray;
   constructor(
@@ -119,6 +106,7 @@ export class TrackOrderComponent implements OnInit {
     this.invoiceService.getAllInvoicesByOrderNo(id)
     .subscribe( res => {
       this.invoices = res.data;
+      console.log(this.invoices)
     }, err => {
       console.log(err);
     })
@@ -250,9 +238,10 @@ export class TrackOrderComponent implements OnInit {
       deliveryStatus: OrderStatus.PENDING,
       total: invoice.total,
       products: products,
-      refundEligible: this.checked,
+      refundEligible: false,
       reason: this.reason,
-      images: this.images
+      images: this.images,
+      notes: this.notes,
     }
 
     console.log(data);

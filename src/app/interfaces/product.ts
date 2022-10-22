@@ -52,4 +52,6 @@ export interface Product {
   advance?: number;
   productType?: ProductType[] | any[];
   expand?: boolean;
+  canReturn: boolean;
+  returnPeriod?: number;
 }
