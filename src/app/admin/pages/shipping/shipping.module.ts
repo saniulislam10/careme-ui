@@ -5,14 +5,12 @@ import { CommonModule } from '@angular/common';
 
 import { ShippingRoutingModule } from './shipping-routing.module';
 import { ShippingComponent } from './shipping.component';
-import { AddCourierComponent } from './add-courier/add-courier.component';
 import { CreateShippingZoneComponent } from './create-shipping-zone/create-shipping-zone.component';
 import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
   declarations: [
     ShippingComponent,
-    AddCourierComponent,
     CreateShippingZoneComponent,
   ],
   imports: [CommonModule, ShippingRoutingModule, MaterialModule, AntModule],
