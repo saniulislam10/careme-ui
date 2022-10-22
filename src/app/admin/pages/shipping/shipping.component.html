@@ -3,7 +3,7 @@
 <div class="page-header">
   <h2>All Shipping</h2>
   <div class="header-action">
-    <button class="create_btn" type="button" routerLink="add">
+    <button class="create_btn" type="button">
       <i class="las la-plus"></i> Add New Shipping
     </button>
   </div>
@@ -80,40 +80,58 @@
 
 <!-- Details Page  -->
 <div class="page-header">
-  <h2 >
-    <i class="las la-long-arrow-alt-left" ></i>
+  <h2>
+    <i class="las la-long-arrow-alt-left"></i>
     Add New Shipping
   </h2>
 </div>
 <nz-card class="mb" nzTitle="Profile">
-  <div nz-row [nzGutter]="16">
+  <form nz-row [nzGutter]="16">
     <div
       class="profile_left"
       nz-col
       [nzXs]="{ span: 24 }"
       [nzLg]="{ span: 12 }"
     >
-      <form nz-row [nzGutter]="16">
+      <div nz-row [nzGutter]="16">
         <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
           <nz-form-label [nzSpan]="24">Name</nz-form-label>
           <input nz-input name="name" type="text" id="email" />
         </div>
+      </div>
+      <div nz-row [nzGutter]="16">
         <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
-          <nz-form-label [nzSpan]="24">Name</nz-form-label>
-          <input nz-input name="name" type="text" id="email" />
+          <nz-form-label [nzSpan]="24">InStock</nz-form-label>
+          <input nz-input name="instock" type="text" id="instock" />
         </div>
         <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
-          <nz-form-label [nzSpan]="24">Name</nz-form-label>
-          <input nz-input name="name" type="text" id="email" />
+          <nz-form-label [nzSpan]="24">Minimum</nz-form-label>
+          <nz-select ngModel="lucy">
+            <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+            <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+          </nz-select>
         </div>
         <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
-          <nz-form-label [nzSpan]="24">Name</nz-form-label>
-          <input nz-input name="name" type="text" id="email" />
+          <nz-form-label [nzSpan]="24">Maximum</nz-form-label>
+          <nz-select ngModel="lucy">
+            <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+            <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+          </nz-select>
         </div>
-      </form>
+      </div>
     </div>
-    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">Choose Product</div>
-  </div>
+    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+      <div nz-row [nzGutter]="16">
+        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+          <nz-form-label [nzSpan]="24">Name</nz-form-label>
+          <form action="/action_page.php">
+            <label for="html">HTML</label>
+            <input type="radio" id="css" name="fav_language" value="CSS" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </form>
 </nz-card>
 
 <nz-card class="mb" nzTitle="Shipping To" [nzExtra]="shipZone"> ok </nz-card>
