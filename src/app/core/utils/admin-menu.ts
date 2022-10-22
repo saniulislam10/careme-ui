@@ -247,6 +247,16 @@ export const menuItemsSuperAdmin: MenuAdmin[] = [
   },
   {
     id: '1212ll',
+    title: 'Shipping',
+    icon: null,
+    hasSubMenu: false,
+    parentId: '14',
+    routerLink: 'shipping',
+    href: null,
+    target: null
+  },
+  {
+    id: '1212ll',
     title: 'Zila',
     icon: null,
     hasSubMenu: false,

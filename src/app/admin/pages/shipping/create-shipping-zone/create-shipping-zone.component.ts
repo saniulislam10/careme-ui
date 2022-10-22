@@ -7,14 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateShippingZoneComponent implements OnInit {
 
-  createZonePopUp = false;
   constructor() { }
 
   ngOnInit(): void {
   }
-  ZonepopUpHide(){
-    this.  createZonePopUp  = false;
-  }
-  
+
 
 }
