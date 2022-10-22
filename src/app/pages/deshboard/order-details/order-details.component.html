@@ -41,19 +41,19 @@
               <tr>
                 <td>Name</td>
                 <td>:</td>
-                <td>{{ order?.name ? order?.name : order?.user?.fullName }}</td>
+                <td>{{ order?.name }}</td>
               </tr>
               <tr>
                 <td>Phone No</td>
                 <td>:</td>
                 <td>
-                  {{ order?.phoneNo ? order?.phoneNo : order?.user?.phoneNo }}
+                  {{ order?.phoneNo }}
                 </td>
               </tr>
               <tr>
                 <td>Email</td>
                 <td>:</td>
-                <td>{{ order?.user?.email }}</td>
+                <td>{{ order?.email }}</td>
               </tr>
               <tr>
                 <td>Address</td>
@@ -77,7 +77,7 @@
             <th class="orderid">
               <a>
                 <h2>{{ order?.orderId }}</h2>
-                <h4>{{ order?.createdAt | date: "short" }}</h4>
+                <h4>{{ order?.checkoutDate | date: "short" }}</h4>
               </a>
             </th>
             <th>Total Amount</th>
@@ -121,7 +121,10 @@
             </td>
             <td class="order-status">
               <!-- <span>{{ data.status | orderStatus }}</span> -->
-              <span>{{data.deliveryStatus | orderStatus}}</span>
+              <span>
+                {{data.deliveryStatus | orderStatus}}
+              </span>
+              <span *ngIf="data.deliveryStatus === 3">({{data.invoicedQuantity}})</span>
             </td>
             <td>
               <button nz-button nzType="danger" nzDanger *ngIf="data.deliveryStatus === 0"><i class="las la-trash"></i></button>

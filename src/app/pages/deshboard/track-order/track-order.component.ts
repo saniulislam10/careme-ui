@@ -1,6 +1,6 @@
-import { products } from './../../../core/utils/dashboard.data';
-import { Invoice } from './../../../interfaces/invoice';
-import { InvoiceService } from './../../../services/invoice.service';
+import { products } from '../../../core/utils/dashboard.data';
+import { Invoice } from '../../../interfaces/invoice';
+import { InvoiceService } from '../../../services/invoice.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { FormArray, FormBuilder } from '@angular/forms';
@@ -34,11 +34,11 @@ interface ChildrenItemData {
 
 
 @Component({
-  selector: 'app-order-single-product-details',
-  templateUrl: './order-single-product-details.component.html',
-  styleUrls: ['./order-single-product-details.component.scss']
+  selector: 'app-track-order',
+  templateUrl: './track-order.component.html',
+  styleUrls: ['./track-order.component.scss']
 })
-export class OrderSingleProductDetailsComponent implements OnInit {
+export class TrackOrderComponent implements OnInit {
 
   listOfChildrenData: any[] = [];
   currentDate : Date = new Date();

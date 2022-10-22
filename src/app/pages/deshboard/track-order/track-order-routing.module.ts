@@ -1,11 +1,11 @@
-import { OrderSingleProductDetailsComponent } from './order-single-product-details.component';
+import { TrackOrderComponent } from './track-order.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
     path:":id",
-    component: OrderSingleProductDetailsComponent
+    component: TrackOrderComponent
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class OrderSingleProductDetailsRoutingModule { }
+export class TrackOrderRoutingModule { }

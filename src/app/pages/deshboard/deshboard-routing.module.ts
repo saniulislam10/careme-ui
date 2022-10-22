@@ -60,7 +60,7 @@ const routes: Routes = [
       },
       {
         path:"track-order",
-        loadChildren: () => import('./order-single-product-details/order-single-product-details.module').then(m => m.OrderSingleProductDetailsModule)
+        loadChildren: () => import('./track-order/track-order.module').then(m => m.TrackOrderModule)
       },
       {
         path:"canceled-orders",

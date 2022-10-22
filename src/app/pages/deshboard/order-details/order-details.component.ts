@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
+import { Order } from 'src/app/interfaces/order';
 
 @Component({
   selector: 'app-order-details',
@@ -19,7 +20,7 @@ export class OrderDetailsComponent implements OnInit {
   ];
 
   listOfChildrenData: any[] = [];
-  order: any;
+  order: Order;
   id: any;
   subRouteOne: any;
   index: string;
