@@ -43,3 +43,31 @@
 nz-select {
   width: 100%;
 }
+nz-radio-group {
+  padding: 5px 0 0 0;
+  label {
+    line-height: 0;
+    cursor: pointer;
+  }
+}
+.shipping_zone {
+  display: inline-flex;
+  align-items: center;
+  .zone_thumb {
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-right: 15px;
+    i {
+      font-size: 50px;
+    }
+  }
+  .zone_name {
+    ul {
+      li {
+        float: left;
+        list-style: none;
+        margin-right: 10px;
+      }
+    }
+  }
+}

@@ -9,10 +9,7 @@ import { CreateShippingZoneComponent } from './create-shipping-zone/create-shipp
 import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
-  declarations: [
-    ShippingComponent,
-    CreateShippingZoneComponent,
-  ],
+  declarations: [ShippingComponent, CreateShippingZoneComponent],
   imports: [CommonModule, ShippingRoutingModule, MaterialModule, AntModule],
 })
 export class ShippingModule {}

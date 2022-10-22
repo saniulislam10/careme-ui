@@ -5,17 +5,17 @@ import { CreateShippingZoneComponent } from './create-shipping-zone/create-shipp
 
 const routes: Routes = [
   {
-    path:"",
-    component:ShippingComponent
+    path: '',
+    component: ShippingComponent,
   },
   {
-    path:"add",
-    component: CreateShippingZoneComponent
+    path: 'add',
+    component: CreateShippingZoneComponent,
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ShippingRoutingModule { }
+export class ShippingRoutingModule {}

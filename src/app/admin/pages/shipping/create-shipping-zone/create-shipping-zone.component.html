@@ -6,8 +6,9 @@
   </h2>
 </div>
 <nz-card class="mb" nzTitle="Profile">
-  <form nz-row [nzGutter]="16">
+  <div nz-row [nzGutter]="16">
     <div
+      nz-form
       class="profile_left"
       nz-col
       [nzXs]="{ span: 24 }"
@@ -15,7 +16,7 @@
     >
       <div nz-row [nzGutter]="16">
         <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-          <label>Name</label>
+          <label>Profile Name</label>
           <input
             nz-input
             name="name"
@@ -77,22 +78,103 @@
           </nz-select>
         </div>
       </div>
-    </div>
-    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
       <div nz-row [nzGutter]="16">
-        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-          <label>Name</label>
-          <form action="/action_page.php">
-            <input type="radio" id="css" name="fav_language" value="CSS" />
-            <label for="html">HTML</label>
-          </form>
+        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+          <label>Pre Order</label>
+          <input
+            nz-input
+            name="instock"
+            type="text"
+            id="instock"
+            placeholder="Ex: Delivery within"
+          />
+        </div>
+        <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+          <label>Minimum</label>
+          <nz-select ngModel="13">
+            <nz-option nzValue="1" nzLabel="1 hour"></nz-option>
+            <nz-option nzValue="2" nzLabel="2 hour"></nz-option>
+            <nz-option nzValue="3" nzLabel="3 hour"></nz-option>
+            <nz-option nzValue="4" nzLabel="4 hour"></nz-option>
+            <nz-option nzValue="5" nzLabel="5 hour"></nz-option>
+            <nz-option nzValue="6" nzLabel="6 hour"></nz-option>
+            <nz-option nzValue="7" nzLabel="12 hour"></nz-option>
+            <nz-option nzValue="8" nzLabel="1 day"></nz-option>
+            <nz-option nzValue="9" nzLabel="2 days"></nz-option>
+            <nz-option nzValue="10" nzLabel="3 days"></nz-option>
+            <nz-option nzValue="11" nzLabel="4 days"></nz-option>
+            <nz-option nzValue="12" nzLabel="5 days"></nz-option>
+            <nz-option nzValue="13" nzLabel="15 days"></nz-option>
+            <nz-option nzValue="14" nzLabel="25 days"></nz-option>
+            <nz-option nzValue="15" nzLabel="30 days"></nz-option>
+          </nz-select>
+        </div>
+        <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+          <nz-form-label [nzSpan]="24">Maximum</nz-form-label>
+          <nz-select ngModel="15">
+            <nz-option nzValue="1" nzLabel="1 hour"></nz-option>
+            <nz-option nzValue="2" nzLabel="2 hour"></nz-option>
+            <nz-option nzValue="3" nzLabel="3 hour"></nz-option>
+            <nz-option nzValue="4" nzLabel="4 hour"></nz-option>
+            <nz-option nzValue="5" nzLabel="5 hour"></nz-option>
+            <nz-option nzValue="6" nzLabel="6 hour"></nz-option>
+            <nz-option nzValue="7" nzLabel="12 hour"></nz-option>
+            <nz-option nzValue="8" nzLabel="1 day"></nz-option>
+            <nz-option nzValue="9" nzLabel="2 days"></nz-option>
+            <nz-option nzValue="10" nzLabel="3 days"></nz-option>
+            <nz-option nzValue="11" nzLabel="4 days"></nz-option>
+            <nz-option nzValue="12" nzLabel="5 days"></nz-option>
+            <nz-option nzValue="13" nzLabel="15 days"></nz-option>
+            <nz-option nzValue="14" nzLabel="25 days"></nz-option>
+            <nz-option nzValue="15" nzLabel="30 days"></nz-option>
+          </nz-select>
         </div>
       </div>
     </div>
-  </form>
+    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+      <label>Choose Product</label>
+      <div nz-row [nzGutter]="16">
+        <div class="mb" nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+          <nz-radio-group [(ngModel)]="chooseProduct" nzName="radio-group">
+            <label nz-radio nzValue="all">All Product</label>
+            <label nz-radio nzValue="category">Category</label>
+            <label nz-radio nzValue="products">Products</label>
+          </nz-radio-group>
+        </div>
+        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+          <label>Choose Category</label>
+          <nz-select
+            nzMode="tags"
+            nzPlaceHolder="Choose a category"
+            [(ngModel)]="listOfTagOptions"
+          >
+            <nz-option
+              *ngFor="let option of listOfOption"
+              [nzLabel]="option.label"
+              [nzValue]="option.value"
+            ></nz-option>
+          </nz-select>
+        </div>
+      </div>
+    </div>
+  </div>
 </nz-card>
 
-<nz-card class="mb" nzTitle="Shipping To" [nzExtra]="shipZone"> ok </nz-card>
+<nz-card class="mb" nzTitle="Shipping To" [nzExtra]="shipZone">
+  <div class="shipping_zone">
+    <div class="zone_thumb">
+      <i class="las la-globe-europe"></i>
+    </div>
+    <div class="zone_name">
+      <ul>
+        <li>Dhaka,</li>
+        <li>Dhaka,</li>
+        <li>Dhaka,</li>
+        <li>Dhaka</li>
+      </ul>
+    </div>
+  </div>
+</nz-card>
 
 <ng-template #shipZone>
   <button nz-button (click)="showZoneModal()">
@@ -105,7 +187,7 @@
     (nzOnOk)="zoneOk()"
   >
     <ng-container *nzModalContent>
-      <p>Content one</p>
+      <div class="shipping_zone">ok</div>
     </ng-container>
   </nz-modal>
 </ng-template>

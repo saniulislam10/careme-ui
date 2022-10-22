@@ -10,14 +10,17 @@
               <h3>{{ data.invoiceId }}</h3>
               <span>26 Aug 2022 | 12.20 PM</span>
             </div>
-            <h3>{{data.deliveryStatus | orderStatus}}</h3>
+            <h3>{{ data.deliveryStatus | orderStatus }}</h3>
           </div>
           <div class="invoice-progress">
             <div class="invoice-progress_step">
               <h1>
                 Estimated Delivery By <span>Fri 22 Jul - Sun 22 Aug</span>
               </h1>
-              <nz-steps [nzCurrent]="data.deliveryStatus-3" [nzProgressDot]="progressTemplate">
+              <nz-steps
+                [nzCurrent]="data.deliveryStatus - 3"
+                [nzProgressDot]="progressTemplate"
+              >
                 <nz-step nzTitle="Pending"></nz-step>
                 <nz-step nzTitle="Shipped"></nz-step>
                 <nz-step nzTitle="Delivered"></nz-step>
@@ -81,7 +84,7 @@
             </div>
             <div class="advanch">Cash On Delivery</div>
             <div class="paystatus">COD</div>
-            <div class="status">{{data.deliveryStatus | orderStatus}}</div>
+            <div class="status">{{ data.deliveryStatus | orderStatus }}</div>
             <div class="returnpreiod">
               <a (click)="showReturn(data, product)">
                 Return
