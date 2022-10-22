@@ -31,18 +31,4 @@ export class ShippingComponent implements OnInit {
     }
     this.listOfOption = children;
   }
-
-  // For Details
-  zoneVisible = false;
-  showZoneModal(): void {
-    this.zoneVisible = true;
-  }
-  zoneOk(): void {
-    console.log('Button ok clicked!');
-    this.zoneVisible = false;
-  }
-  zoneCancel(): void {
-    console.log('Button cancel clicked!');
-    this.zoneVisible = false;
-  }
 }
