@@ -1,6 +1,7 @@
+import { products } from 'src/app/core/utils/dashboard.data';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Order } from 'src/app/interfaces/order';
+import { Order, OrderItem } from 'src/app/interfaces/order';
 import { User } from 'src/app/interfaces/user';
 import { OrderService } from 'src/app/services/order.service';
 import { UserDataService } from 'src/app/services/user-data.service';
@@ -12,6 +13,7 @@ interface ParentItemData {
   orderId: string;
   date: Date;
   expand?: boolean;
+  products?: OrderItem[];
 }
 
 interface ChildrenItemData {
@@ -38,7 +40,7 @@ export class MyOrdersComponent implements OnInit {
 
   tabs = ['All', 'To Pay', 'To Ship', 'To Receive'];
   listOfParentData: ParentItemData[] = [];
-  listOfChildrenData: ChildrenItemData[] = [];
+  // listOfChildrenData: ChildrenItemData[] = [];
 
   user: User;
   id: string;
@@ -55,36 +57,20 @@ export class MyOrdersComponent implements OnInit {
   ngOnInit(): void {
     this.getUser();
     this.getAllOrders();
-    console.log(this.listOfParentData);
-    console.log(this.listOfChildrenData);
+
   }
   setItems() {
-    console.log(this.orders);
     for (let i = 0; i < this.orders?.length; i++) {
       this.listOfParentData.push({
         key: i,
         id: this.orders[i]._id,
         orderId: this.orders[i].orderId,
         date: this.orders[i].checkoutDate,
+        products: this.orders[i].orderedItems,
         expand: i === 0 ? true : false,
       });
-      for (let j = 0; j < this.orders[i].orderedItems.length; j++) {
-        let data = this.orders[i].orderedItems;
-        this.listOfChildrenData.push({
-          name: 'Product Name',
-          sku: data[j].sku,
-          variantName: data[j].variant,
-          qty: data[j].quantity,
-          total: data[j].quantity * data[j].price,
-          advance: data[j].advanceAmount,
-          advanceType: 1,
-          advanceInTaka: data[j].advanceAmount,
-          paymentStatus: 'Payment Status',
-          orderStatus: 'Pending',
-          deliveryDate: data[j].deliveryDateTo,
-        });
-      }
     }
+    console.log(this.listOfParentData);
   }
 
   getUser() {

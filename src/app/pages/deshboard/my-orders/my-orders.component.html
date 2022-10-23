@@ -48,12 +48,12 @@
           <tr [nzExpand]="data.expand">
             <nz-table
               #innerTable
-              [nzData]="listOfChildrenData"
+              [nzData]="data.products"
               nzSize="middle"
               [nzShowPagination]="false"
             >
               <tbody>
-                <tr *ngFor="let data of innerTable.data">
+                <tr *ngFor="let d of data.products">
                   <td style="width: 60px">
                     <img
                       style="width: 60px"
@@ -62,25 +62,25 @@
                     />
                   </td>
                   <td>
-                    <h3>{{ data?.name }}</h3>
-                    <span>{{ data?.sku }}</span>
+                    <h3>{{ d?.name }}</h3>
+                    <span>{{ d?.sku }}</span>
                   </td>
-                  <td>Total: {{ data?.total }} TK</td>
-                  <td>Advance: {{ data?.advanceAmount }} TK</td>
+                  <td>Total: {{ d?.price * d?.quantity }} TK</td>
+                  <td>Advance: {{ d?.advanceAmount }} TK</td>
                   <td>
                     <span class="payment paid unpaid">
-                      {{ data?.paymentStatus }}
+                      {{ d?.paymentStatus | paymentStatus}}
                     </span>
                   </td>
                   <td class="estimated-time instock">
                     <h3>
                       Estimated Delivery by
-                      <span>{{ data?.deliveryDate | date: "short" }}</span>
+                      <span>{{ d?.deliveryDate | date: "short" }}</span>
                     </h3>
                   </td>
                   <td>
                     <span class="order-status pending">{{
-                      data?.orderStatus
+                      d?.orderStatus
                     }}</span>
                   </td>
                 </tr>
