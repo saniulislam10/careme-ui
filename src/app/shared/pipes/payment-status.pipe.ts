@@ -19,7 +19,7 @@ export class PaymentStatusPipe implements PipeTransform {
         return 'Partial Paid';
       }
       case PaymentStatus.PENDING : {
-        return 'Unpaid';
+        return 'Payment Pending';
       }
       case PaymentStatus.REFUNDED : {
         return 'Refunded';
