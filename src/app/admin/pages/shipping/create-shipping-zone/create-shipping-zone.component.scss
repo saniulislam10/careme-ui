@@ -52,13 +52,15 @@ nz-radio-group {
 }
 .shipping_zone {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
+
   .zone_thumb {
-    padding: 15px;
+    padding: 5px;
     border: 1px solid #ddd;
     margin-right: 15px;
     i {
       font-size: 50px;
+      color: #3f3f3f;
     }
   }
   .zone_name {
