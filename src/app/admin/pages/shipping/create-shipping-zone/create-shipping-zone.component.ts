@@ -10,15 +10,17 @@ export class CreateShippingZoneComponent implements OnInit {
   zoneVisible = false;
   chooseProduct = 'all';
 
+  // Choose Category
   listOfOption: Array<{ label: string; value: string }> = [];
   listOfTagOptions = [];
 
   constructor() {}
 
   ngOnInit(): void {
+    // Choose Category
     const children: Array<{ label: string; value: string }> = [];
-    for (let i = 10; i < 36; i++) {
-      children.push({ label: i.toString(36) + i, value: i.toString(36) + i });
+    for (let i = 0; i < 100; i++) {
+      children.push({ label: 'Category' + i, value: 'value' + i });
     }
     this.listOfOption = children;
   }
