@@ -51,11 +51,12 @@
         </div>
 
         <div class="order-elm" *ngFor="let orderItem of orderData?.orderedItems; let i=index">
-          <div class="price-calculation">
-            <mat-checkbox
+          <div class="price-calculation" >
+            <mat-checkbox *ngIf="orderItem.paymentStatus !== 0"
+
             class="mat-check"
             [checked]= "allComplete"
-            (change)="onCheckChange($event, i, orderItem?._id)"
+            (change)="onCheckChange($event, i, orderItem?._id, orderItem.sku)"
             [(ngModel)]="orderItem.select" >
           </mat-checkbox>
           </div>
@@ -102,7 +103,7 @@
         <div class="procced-payment-container">
           <div class="procced-payment">
 
-            <div class *ngIf="isAdvancePayment==false">
+            <div class *ngIf="totalAdvancePayment === 0">
               <div class="payment-elm">
                 <div class="payment-elm-left">
                   <mat-checkbox  class="example-margin" disabled="true"></mat-checkbox>
@@ -115,7 +116,7 @@
               </div>
             </div>
 
-            <div class="payment-elm" *ngIf="isAdvancePayment">
+            <div class="payment-elm" *ngIf="totalAdvancePayment > 0">
               <div class="payment-elm-left">
                 <mat-checkbox class="example-margin" #matCheckboxAdvancePay checked="true" (change)="onSelectAdvancePay($event)"></mat-checkbox>
                 <p>Advance Pay</p>
@@ -131,7 +132,7 @@
                 <p>Full Pay</p>
               </div>
               <div class="payment-elm-right">
-                <p>{{totalFullPayment}} TK</p>
+                <p>{{totalFullPayment - orderData.paidAmount}} TK</p>
               </div>
 
             </div>

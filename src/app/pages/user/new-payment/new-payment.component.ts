@@ -1,3 +1,4 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -16,6 +17,7 @@ export class NewPaymentComponent implements OnInit {
 
   amount: number=0;
   orderId: string;
+  selectedSkus: any[] = [];
   paymentStatus: number;
   private subRouteOne?: Subscription;
 
@@ -28,6 +30,7 @@ export class NewPaymentComponent implements OnInit {
     private uiService: UiService,
     private sessionStorage: StorageService,
     private router: Router,
+    private msg: NzMessageService
 
   ) { }
 
@@ -36,12 +39,16 @@ export class NewPaymentComponent implements OnInit {
     this.subRouteOne = this.activatedRoute.queryParamMap.subscribe((param) => {
       this.orderId = param.get('orderId');
       if (this.orderId) {
-        this.amount = this.sessionStorage.getDataFromSessionStorage('amount');
-        this.paymentStatus = this.sessionStorage.getDataFromSessionStorage('paymentStatus');
-        console.log("this is payment",this.paymentStatus)
-
+        this.selectedSkus = this.sessionStorage.getDataFromSessionStorage('selectedSkus');
+        if(this.selectedSkus.length){
+          this.amount = Number(this.sessionStorage.getDataFromSessionStorage('amount'));
+          this.paymentStatus = this.sessionStorage.getDataFromSessionStorage('paymentStatus');
+        }else{
+          this.router.navigate(['success', this.orderId]);
+          this.msg.error('Please select items first');
+        }
       } else {
-        console.log('Error');
+        this.msg.error('No Order Id found');
       }
     });
 
@@ -55,16 +62,18 @@ export class NewPaymentComponent implements OnInit {
     let order = {
       orderId:this.orderId,
       paidAmount:this.amount,
-      paymentStatus: this.paymentStatus
+      paymentStatus: this.paymentStatus,
+      selectedSkus: this.selectedSkus
     }
-    console.log(order);
-      this.orderService.updateOrder(order).subscribe((res)=>{
+      this.orderService.payPayment(order).subscribe((res)=>{
         if(res.success){
           this.uiService.success("Your Payment is successful")
-          this.router.navigate([''],);
+          // this.router.navigate([''],);
         }else{
           this.uiService.warn("Something went wrong")
         }
+      }, err=>{
+        this.msg.error("Something went wrong")
       })
     }
 

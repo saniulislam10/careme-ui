@@ -200,4 +200,8 @@ export class OrderService {
 
   // router.get('/sent-test-ssl-message', controller.testSslSmsApi);
 
+  payPayment(data){
+    return this.httpClient.post<{message: string, success: boolean}>(API_ORDER + 'pay-payment', data);
+  }
+
 }

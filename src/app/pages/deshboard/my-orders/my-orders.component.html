@@ -28,13 +28,12 @@
             <td></td>
             <td></td>
             <td></td>
-            <td class="pay-order">
-              <a [routerLink]="['../../../', 'success', data?.orderId]">
+            <td class="pay-order" >
+              <a *ngIf="data.paidAmount < data.totalAmount" [routerLink]="['../../../', 'success', data?.orderId]">
                 Pay Now
-                <span *ngIf="displayPayNow(data?.date) > 0">(<nz-countdown
-                    [nzValueStyle]="{ fontSize: '14px', color: '#da5894' }" [nzValue]="startTimer(data?.date)">
-                  </nz-countdown>)
-                </span>
+                <div *ngIf="displayPayNow(data?.date) > 0">
+                  <nz-countdown [nzValueStyle]="{ fontSize: '14px', color: '#da5894' }" [nzValue]="startTimer(data?.date)"></nz-countdown>
+                </div>
               </a>
             </td>
           </tr>

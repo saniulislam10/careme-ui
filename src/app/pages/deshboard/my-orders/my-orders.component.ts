@@ -15,6 +15,8 @@ interface ParentItemData {
   orderId: string;
   date: Date;
   expand?: boolean;
+  paidAmount: number;
+  totalAmount: number;
   products?: OrderItem[];
 }
 
@@ -71,6 +73,8 @@ export class MyOrdersComponent implements OnInit {
         orderId: this.orders[i].orderId,
         date: this.orders[i].checkoutDate,
         products: this.orders[i].orderedItems,
+        paidAmount: this.orders[i].paidAmount,
+        totalAmount: this.orders[i].totalAmount,
         expand: i === 0 ? true : false,
       });
     }

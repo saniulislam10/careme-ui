@@ -9,9 +9,9 @@ import { Order } from 'src/app/interfaces/order';
 import { UiService } from 'src/app/services/ui.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
-import {Product} from '../../../interfaces/product';
-import {PricePipe} from '../../../shared/pipes/price.pipe';
-import {CoinPipe} from '../../../shared/pipes/coin.pipe';
+import { Product } from '../../../interfaces/product';
+import { PricePipe } from '../../../shared/pipes/price.pipe';
+import { CoinPipe } from '../../../shared/pipes/coin.pipe';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ThemePalette } from '@angular/material/core';
 
@@ -38,6 +38,7 @@ export class OrderSuccessComponent implements OnInit {
   orderData: Order;
   isAdvancePayment: boolean = false;
   selectedIds: string[] = [];
+  selectedSkus: string[] = [];
 
   @ViewChild('matCheckboxAdvancePay') matCheckboxAdvancePay: MatCheckbox;
   @ViewChild('matCheckboxFullPay') matCheckboxFullPay: MatCheckbox;
@@ -60,7 +61,7 @@ export class OrderSuccessComponent implements OnInit {
     private router: Router,
     private pricePipe: PricePipe,
     private utilsService: UtilsService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
@@ -122,7 +123,7 @@ export class OrderSuccessComponent implements OnInit {
         this.orderData = res.data[0];
         this.checkAllByDefault();
         this.orderData.orderedItems.map((item) => {
-          this.totalFullPayment += (item.price+item.tax) * item.quantity;
+          this.totalFullPayment += (item.price + item.tax) * item.quantity;
           if (item.advanceAmount > 0) {
             this.isAdvancePayment = true;
             this.totalAdvancePayment += item.advanceAmount;
@@ -136,24 +137,26 @@ export class OrderSuccessComponent implements OnInit {
   }
 
   onSubmit() {
-    if(!this.isAdvancePayment && !this.isPaidFull){
-        this.uiService.warn('Please select a payment option');
-    }
-    else if(!this.isPaidAdvance && !this.isPaidFull){
+    if (!this.isAdvancePayment && !this.isPaidFull) {
       this.uiService.warn('Please select a payment option');
-  }
+    }
+    else if (!this.isPaidAdvance && !this.isPaidFull) {
+      this.uiService.warn('Please select a payment option');
+    }
 
-    else if(this.isPaidFull){
+    else if (this.isPaidFull) {
 
-      this.sessionStorage.storeDataToSessionStorage('amount',this.totalFullPayment.toString())
-      this.sessionStorage.storeDataToSessionStorage('paymentStatus','0')
-      this.router.navigate(['new-payment'], {queryParams: {orderId: this.id}});
+      this.sessionStorage.storeDataToSessionStorage('amount', this.totalFullPayment.toString())
+      this.sessionStorage.storeDataToSessionStorage('paymentStatus', '0');
+      this.sessionStorage.storeDataToSessionStorage('selectedSkus', this.selectedSkus);
+      this.router.navigate(['new-payment'], { queryParams: { orderId: this.id, selectedSkus: this.selectedSkus } });
 
-    }else if(this.isPaidAdvance && !this.isPaidFull){
+    } else if (this.isPaidAdvance && !this.isPaidFull) {
 
-      this.sessionStorage.storeDataToSessionStorage('amount',this.totalAdvancePayment.toString())
-      this.sessionStorage.storeDataToSessionStorage('paymentStatus','3')
-      this.router.navigate(['new-payment'], {queryParams: {orderId: this.id}});
+      this.sessionStorage.storeDataToSessionStorage('amount', this.totalAdvancePayment.toString())
+      this.sessionStorage.storeDataToSessionStorage('paymentStatus', 3);
+      this.sessionStorage.storeDataToSessionStorage('selectedSkus', this.selectedSkus);
+      this.router.navigate(['new-payment'], { queryParams: { orderId: this.id, selectedSkus: this.selectedSkus } });
 
     }
   }
@@ -161,11 +164,11 @@ export class OrderSuccessComponent implements OnInit {
   onSelectAdvancePay(event: MatCheckboxChange) {
 
     if (event.checked) {
-      this.isPaidAdvance=true
-      this.matCheckboxFullPay.checked=false
-      this.isPaidFull=false
+      this.isPaidAdvance = true
+      this.matCheckboxFullPay.checked = false
+      this.isPaidFull = false
     } else {
-      this.isPaidAdvance=false
+      this.isPaidAdvance = false
     }
 
   }
@@ -173,11 +176,11 @@ export class OrderSuccessComponent implements OnInit {
   onSelectFullPay(event: MatCheckboxChange) {
 
     if (event.checked) {
-      this.isPaidFull=true
-      this.matCheckboxAdvancePay.checked=false
-      this.isPaidAdvance=false
+      this.isPaidFull = true
+      this.matCheckboxAdvancePay.checked = false
+      this.isPaidAdvance = false
     } else {
-      this.isPaidFull=false
+      this.isPaidFull = false
     }
 
   }
@@ -186,53 +189,61 @@ export class OrderSuccessComponent implements OnInit {
     const currentPageIds = this.orderData.orderedItems.map((m) => m._id);
     this.allComplete = !this.allComplete;
     if (event.checked) {
+      this.totalFullPayment = 120;
+      this.totalAdvancePayment = 0;
       this.selectedIds = this.utilsService.mergeArrayString(
         this.selectedIds,
         currentPageIds
       );
       this.orderData?.orderedItems.forEach((item) => {
-        this.totalFullPayment += (item.price+item.tax) * item.quantity;
-        this.totalAdvancePayment += item.advanceAmount * item.quantity;
+        this.selectedSkus.push(item.sku);
+        this.totalFullPayment += (item.price + item.tax) * item.quantity;
+        this.totalAdvancePayment += item.advanceAmount;
         item.select = true;
       });
     } else {
-      this.totalFullPayment = 120;
-        this.totalAdvancePayment = 0;
+      this.totalFullPayment = 0;
+      this.totalAdvancePayment = 0;
       currentPageIds.forEach((m) => {
         this.orderData.orderedItems.find((f) => f._id === m).select = false;
         const i = this.selectedIds.findIndex((f) => f === m);
         this.selectedIds.splice(i, 1);
       });
+      this.selectedSkus = [];
     }
     console.log(this.selectedIds);
 
   }
 
-  checkAllByDefault(){
+  checkAllByDefault() {
     console.log(this.orderData?.orderedItems?.length);
 
-    for(let i=0; i< this.orderData.orderedItems.length; i++){
+    for (let i = 0; i < this.orderData.orderedItems.length; i++) {
       this.selectedIds.push(this.orderData?.orderedItems[i]._id);
+      this.selectedSkus.push(this.orderData?.orderedItems[i].sku);
     }
     console.log(this.selectedIds);
+    console.log(this.selectedSkus);
 
   }
 
-  onCheckChange(event: any, index: number, id: string) {
-    console.log(id);
+  onCheckChange(event: any, index: number, id: string, sku: string) {
 
     let item = this.orderData.orderedItems[index];
     if (event.checked) {
       this.selectedIds.push(id);
+      this.selectedSkus.push(sku);
       console.log(this.selectedIds);
-      this.totalFullPayment += (item.price+item.tax) * item.quantity;
-      this.totalAdvancePayment += item.advanceAmount * item.quantity;
+      this.totalFullPayment += (item.price + item.tax) * item.quantity;
+      this.totalAdvancePayment += item.advanceAmount;
     } else {
-      this.totalFullPayment -= (item.price+item.tax) * item.quantity;
-      this.totalAdvancePayment -= item.advanceAmount * item.quantity;
+      this.totalFullPayment -= (item.price + item.tax) * item.quantity;
+      this.totalAdvancePayment -= item.advanceAmount;
       const i = this.selectedIds.findIndex((f) => f === id);
       this.selectedIds.splice(i, 1);
-      console.log(this.selectedIds);
+      const j = this.selectedSkus.findIndex((f) => f === sku);
+      this.selectedSkus.splice(j, 1);
+      console.log(this.selectedSkus);
     }
 
   }
