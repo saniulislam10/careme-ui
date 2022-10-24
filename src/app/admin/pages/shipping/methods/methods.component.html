@@ -2,7 +2,7 @@
 <div class="page-header">
   <h2>All Method</h2>
   <div class="header-action">
-    <button class="create_btn" type="button">
+    <button class="create_btn" type="button" (click)="showMathod()">
       <i class="las la-plus"></i> Add Shipping Method
     </button>
   </div>
@@ -76,3 +76,16 @@
     </nz-tabset>
   </nz-card>
 </div>
+
+<nz-modal
+  [(nzVisible)]="isMethodVisible"
+  nzTitle="The first Modal"
+  (nzOnCancel)="mathodCancel()"
+  (nzOnOk)="mathodOk()"
+  nzOkText="Save Method"
+>
+  <ng-container *nzModalContent>
+    <p>Content one</p>
+    <p>Content two</p>
+  </ng-container>
+</nz-modal>

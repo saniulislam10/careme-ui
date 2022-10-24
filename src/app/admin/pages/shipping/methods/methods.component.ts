@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MethodsComponent implements OnInit {
   tabs = ['All Invoice', 'Closed', 'Pending'];
+  isMethodVisible = false;
   shipedTable = [
     {
       name: 'Standard Shipping',
@@ -25,4 +26,16 @@ export class MethodsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  showMathod(): void {
+    this.isMethodVisible = true;
+  }
+  mathodOk(): void {
+    console.log('Button ok clicked!');
+    this.isMethodVisible = false;
+  }
+  mathodCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isMethodVisible = false;
+  }
 }
