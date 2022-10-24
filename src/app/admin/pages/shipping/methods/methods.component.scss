@@ -1,0 +1,76 @@
+@import "./../../../../../theme/variables";
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 0 15px 0;
+  .header-action {
+    display: flex;
+    align-items: center;
+    button {
+      border: none;
+      background: transparent;
+      margin-left: 25px;
+    }
+    .create_btn {
+      background: #1b75bb;
+      color: #fff;
+      border: 1px solid #1b75bb;
+      padding: 10px 20px;
+      transition: 0.3s;
+      border-radius: 3px;
+    }
+    .create_btn:hover {
+      background: #8bc53f;
+      border: 1px solid #8bc53f;
+    }
+  }
+}
+.table-samary {
+  margin-bottom: 30px;
+}
+.table-filter-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  form {
+    width: 50%;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      float: left;
+      list-style: none;
+      border: 1px solid #ddd;
+      button {
+        i {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
+.table-data-area {
+  td {
+    color: #585858;
+  }
+}
+@media (max-width: 768px) {
+  .table-filter-area {
+    flex-direction: column;
+    input {
+      width: 100%;
+    }
+    ul {
+      padding: 10px 0 0 0;
+      li {
+        button {
+          padding: 5px;
+        }
+      }
+    }
+  }
+}

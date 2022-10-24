@@ -1,1 +1,78 @@
-<p>methods works!</p>
+<!---order-header-area-->
+<div class="page-header">
+  <h2>All Method</h2>
+  <div class="header-action">
+    <button class="create_btn" type="button">
+      <i class="las la-plus"></i> Add Shipping Method
+    </button>
+  </div>
+</div>
+<div class="table-samary">
+  <nz-card nzSize="small">
+    <nz-tabset>
+      <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
+        <div class="table-filter-area">
+          <form>
+            <input
+              #searchInput
+              nz-input
+              id="searchInput"
+              class="tw"
+              type="text"
+              placeholder="Filter Refund"
+              (focus)="handleFocus($event)"
+              name="searchTerm"
+              nzSize="large"
+              autocomplete="off"
+              ngModel
+              required
+            />
+          </form>
+          <ul>
+            <li>
+              <button nz-button>
+                Payment Status
+                <i class="las la-angle-down"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="table-data-area">
+          <nz-table
+            nzSize="small"
+            #rowSelectionTable
+            [nzShowPagination]="false"
+            [nzLoading]="loading"
+            [nzData]="shipedTable"
+            [nzScroll]="{ x: '800px' }"
+          >
+            <thead>
+              <tr>
+                <th style="width: 50px; text-align: center">
+                  <label nz-checkbox [(ngModel)]="checkedAll"></label>
+                </th>
+                <th>Name</th>
+                <th>Products</th>
+                <th>Rates for</th>
+                <th>Condition</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of rowSelectionTable.data">
+                <td style="text-align: center">
+                  <label nz-checkbox [(ngModel)]="checkedAll"></label>
+                </td>
+                <td>{{ data.name }}</td>
+                <td>All products</td>
+                <td>Bangladesh</td>
+                <td>0kg–45kg</td>
+                <td>120 - 180 TK</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</div>
