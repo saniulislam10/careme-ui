@@ -1,3 +1,4 @@
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -16,8 +17,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
     CommonModule,
     OrderSuccessRoutingModule,
     MatCheckboxModule,
-    NzTableModule,
-    NzCheckboxModule
+    PipesModule
   ]
 })
 export class OrderSuccessModule { }

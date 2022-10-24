@@ -16,7 +16,7 @@ export class NewPaymentComponent implements OnInit {
 
   amount: number=0;
   orderId: string;
-  paymentStatus: string;
+  paymentStatus: number;
   private subRouteOne?: Subscription;
 
 
@@ -35,15 +35,11 @@ export class NewPaymentComponent implements OnInit {
 
     this.subRouteOne = this.activatedRoute.queryParamMap.subscribe((param) => {
       this.orderId = param.get('orderId');
-      
-
-      
-
       if (this.orderId) {
         this.amount = this.sessionStorage.getDataFromSessionStorage('amount');
         this.paymentStatus = this.sessionStorage.getDataFromSessionStorage('paymentStatus');
-        console.log("this is payemnet",this.paymentStatus)
-        
+        console.log("this is payment",this.paymentStatus)
+
       } else {
         console.log('Error');
       }
@@ -55,7 +51,14 @@ export class NewPaymentComponent implements OnInit {
 
   payPayment(){
 
-      this.orderService.updateOrder({orderId:this.orderId,paidAmount:this.amount,paymentStatus:this.paymentStatus}).subscribe((res)=>{
+
+    let order = {
+      orderId:this.orderId,
+      paidAmount:this.amount,
+      paymentStatus: this.paymentStatus
+    }
+    console.log(order);
+      this.orderService.updateOrder(order).subscribe((res)=>{
         if(res.success){
           this.uiService.success("Your Payment is successful")
           this.router.navigate([''],);

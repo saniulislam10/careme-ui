@@ -1,3 +1,4 @@
+import { ProductService } from 'src/app/services/product.service';
 import { products } from 'src/app/core/utils/dashboard.data';
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -6,6 +7,7 @@ import { User } from 'src/app/interfaces/user';
 import { OrderService } from 'src/app/services/order.service';
 import { UserDataService } from 'src/app/services/user-data.service';
 import { UserService } from 'src/app/services/user.service';
+import * as moment from 'moment';
 
 interface ParentItemData {
   id: any;
@@ -16,31 +18,18 @@ interface ParentItemData {
   products?: OrderItem[];
 }
 
-interface ChildrenItemData {
-  name: string;
-  sku: string;
-  variantName: string;
-  qty: number;
-  total: number;
-  advance: number;
-  advanceType: number;
-  advanceInTaka: number;
-  paymentStatus: string;
-  orderStatus: string;
-  deliveryDate: Date;
-}
-
 @Component({
   selector: 'app-my-orders',
   templateUrl: './my-orders.component.html',
   styleUrls: ['./my-orders.component.scss'],
 })
 export class MyOrdersComponent implements OnInit {
-  deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
+  currentDate = Date.now();
+  timeLeft: number = 60;
+  interval;
 
   tabs = ['All', 'To Pay', 'To Ship', 'To Receive'];
   listOfParentData: ParentItemData[] = [];
-  // listOfChildrenData: ChildrenItemData[] = [];
 
   user: User;
   id: string;
@@ -51,7 +40,8 @@ export class MyOrdersComponent implements OnInit {
     private orderService: OrderService,
     private userService: UserService,
     private message: NzMessageService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +49,20 @@ export class MyOrdersComponent implements OnInit {
     this.getAllOrders();
 
   }
+
+  startTimer(date) {
+    var checkOutDate = new Date(date);
+    var seconds = checkOutDate.getTime(); //1440516958
+    let deadline = seconds + 1000 * 60 * 60 * 3 * 1 ;
+    return deadline;
+  }
+
+  displayPayNow(date){
+    let deadline = this.startTimer(date);
+    let diff = deadline - Date.now();
+    return diff;
+  }
+
   setItems() {
     for (let i = 0; i < this.orders?.length; i++) {
       this.listOfParentData.push({
@@ -71,6 +75,11 @@ export class MyOrdersComponent implements OnInit {
       });
     }
     console.log(this.listOfParentData);
+  }
+
+  setThumbnailImage(data) {
+    let images = this.productService.getImages(data.medias, data.images);
+    return images[0];
   }
 
   getUser() {
@@ -102,6 +111,7 @@ export class MyOrdersComponent implements OnInit {
       (res) => {
         this.orders = res.data;
         this.setItems();
+        this.startTimer(this.orders[0].checkoutDate)
         console.log(res.data);
       },
       (err) => {

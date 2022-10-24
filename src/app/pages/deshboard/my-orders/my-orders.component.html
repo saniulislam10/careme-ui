@@ -1,11 +1,6 @@
 <nz-tabset [nzTabBarExtraContent]="orderTemplate">
   <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab" (nzClick)="onTabSelect(tab)">
-    <nz-table
-      #nestedTable
-      [nzData]="listOfParentData"
-      [nzPageSize]="10"
-      nzSize="small"
-    >
+    <nz-table #nestedTable [nzData]="listOfParentData" [nzPageSize]="10" nzSize="small">
       <thead>
         <tr style="display: none">
           <th></th>
@@ -23,72 +18,62 @@
           <tr>
             <td [(nzExpand)]="data.expand" style="width: 50px"></td>
             <td>
-              <a
-                class="order-id"
-                matTooltip="Click to view order details"
-                [routerLink]="['../../order-details', data.id]"
-              >
-                <h2>{{ data.orderId }}</h2>
-                <h5>{{ data.date | date: "short" }}</h5>
+              <a class="order-id" matTooltip="Click to view order details"
+                [routerLink]="['../../order-details', data.id]">
+                <h2>{{ data?.orderId }}</h2>
+                <h5>{{ data?.date | date: "short" }}</h5>
               </a>
             </td>
-            <td>
-              <nz-countdown
-                [nzValueStyle]="{ fontSize: '18px', color: 'orange' }"
-                [nzValue]="deadline"
-              ></nz-countdown>
-            </td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td class="pay-order">
-              <a href="#">Pay To Confirmed!</a>
+              <a [routerLink]="['../../../', 'success', data?.orderId]">
+                Pay Now
+                <span *ngIf="displayPayNow(data?.date) > 0">(<nz-countdown
+                    [nzValueStyle]="{ fontSize: '14px', color: '#da5894' }" [nzValue]="startTimer(data?.date)">
+                  </nz-countdown>)
+                </span>
+              </a>
             </td>
           </tr>
           <tr [nzExpand]="data.expand">
-            <nz-table
-              #innerTable
-              [nzData]="data.products"
-              nzSize="middle"
-              [nzShowPagination]="false"
-            >
-              <tbody>
-                <tr *ngFor="let d of data.products">
-                  <td style="width: 60px">
-                    <img
-                      style="width: 60px"
-                      src="/assets/images/placeholder/test.png"
-                      alt=""
-                    />
-                  </td>
-                  <td>
-                    <h3>{{ d?.name }}</h3>
-                    <span>{{ d?.sku }}</span>
-                  </td>
-                  <td>Total: {{ d?.price * d?.quantity }} TK</td>
-                  <td>Advance: {{ d?.advanceAmount }} TK</td>
-                  <td>
-                    <span class="payment paid unpaid">
-                      {{ d?.paymentStatus | paymentStatus}}
-                    </span>
-                  </td>
-                  <td class="estimated-time instock">
-                    <h3>
-                      Estimated Delivery by
-                      <span>{{ d?.deliveryDate | date: "short" }}</span>
-                    </h3>
-                  </td>
-                  <td>
-                    <span class="order-status pending">{{
-                      d?.orderStatus
-                    }}</span>
-                  </td>
-                </tr>
-              </tbody>
-            </nz-table>
-          </tr>
-        </ng-template>
+            <nz-table #innerTable [nzData]="data.products" nzSize="middle" [nzShowPagination]="false">
+      <tbody>
+        <tr *ngFor="let d of data.products">
+          <td style="width: 60px">
+            <img style="width: 60px" [src]="d?.image" [alt]="d?.name" />
+          </td>
+          <td>
+            <h3>{{ d?.name }}</h3>
+            <span>{{ d?.sku }}</span>
+          </td>
+          <td>Total: {{ d?.price * d?.quantity }} TK</td>
+          <td>Advance: {{ d?.advanceAmount }} TK</td>
+          <td>
+            <button [class]="d?.paymentStatus === 0 ? 'payment paid' : 'payment unpaid'">
+              {{ d?.paymentStatus | paymentStatus}}
+            </button>
+          </td>
+          <td class="estimated-time instock">
+            <h3>
+              Estimated Delivery by
+              <span>{{ d?.deliveryDateFrom | date }} - </span>
+              <span>{{ d?.deliveryDateTo | date }}</span>
+            </h3>
+          </td>
+          <td>
+            <span class="order-status pending">{{
+              d?.deliveryStatus | orderStatus
+              }}</span>
+          </td>
+        </tr>
       </tbody>
+    </nz-table>
+    </tr>
+    </ng-template>
+    </tbody>
     </nz-table>
   </nz-tab>
 </nz-tabset>
