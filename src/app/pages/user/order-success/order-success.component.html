@@ -116,6 +116,7 @@
               </div>
             </div>
 
+
             <div class="payment-elm" *ngIf="totalAdvancePayment > 0">
               <div class="payment-elm-left">
                 <mat-checkbox class="example-margin" #matCheckboxAdvancePay checked="true" (change)="onSelectAdvancePay($event)"></mat-checkbox>
@@ -132,10 +133,11 @@
                 <p>Full Pay</p>
               </div>
               <div class="payment-elm-right">
-                <p>{{totalFullPayment - orderData.paidAmount}} TK</p>
+                <p>{{totalFullPayment}} TK</p>
               </div>
 
             </div>
+            <div>( Shipping Charge 120BDT Included )</div>
 
             <div class="payment-bottom">
               <a (click)="onSubmit()">Proceed to Payment</a>

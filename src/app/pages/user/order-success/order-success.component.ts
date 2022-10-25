@@ -14,6 +14,7 @@ import { PricePipe } from '../../../shared/pipes/price.pipe';
 import { CoinPipe } from '../../../shared/pipes/coin.pipe';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ThemePalette } from '@angular/material/core';
+import { PaymentStatus } from 'src/app/enum/payment-status';
 
 export interface Task {
   name: string;
@@ -49,7 +50,8 @@ export class OrderSuccessComponent implements OnInit {
   isPaidFull: boolean = false;
 
   totalAdvancePayment: number = 0;
-  totalFullPayment: number = 120;
+  totalFullPayment: number = 0;
+  shippingCharge: number = 120;
 
   constructor(
     private userService: UserService,
@@ -77,7 +79,6 @@ export class OrderSuccessComponent implements OnInit {
   private getOrderItems() {
     if (this.userService.getUserStatus()) {
       this.getOrderItemList();
-
     }
   }
 
@@ -121,19 +122,30 @@ export class OrderSuccessComponent implements OnInit {
       (res) => {
         console.log('this is from order-success, ', res.data[0]);
         this.orderData = res.data[0];
-        this.checkAllByDefault();
-        this.orderData.orderedItems.map((item) => {
-          this.totalFullPayment += (item.price + item.tax) * item.quantity;
-          if (item.advanceAmount > 0) {
-            this.isAdvancePayment = true;
-            this.totalAdvancePayment += item.advanceAmount;
-          }
-        });
+        this.checkAllByDefault(this.orderData);
+
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  checkAllByDefault(order) {
+    order.orderedItems.map((item) => {
+      if (item.paymentStatus === PaymentStatus.PENDING) {
+        this.selectedIds.push(item._id);
+        this.selectedSkus.push(item.sku);
+        if (item.advanceAmount > 0) {
+          this.isAdvancePayment = true;
+          this.totalAdvancePayment += item.advanceAmount;
+        }
+        this.totalFullPayment += (item.price + item.tax) * item.quantity;
+      } else if (item.paymentStatus === PaymentStatus.PARTIALPAID) {
+        this.isPaidFull = true;
+        this.totalFullPayment += ((item.price + item.tax) * item.quantity) - item.advanceAmount;
+      }
+    });
   }
 
   onSubmit() {
@@ -186,46 +198,32 @@ export class OrderSuccessComponent implements OnInit {
   }
 
   onAllSelectChange(event: MatCheckboxChange) {
-    const currentPageIds = this.orderData.orderedItems.map((m) => m._id);
+    this.selectedSkus = this.orderData.orderedItems.map((m) => m.sku);
     this.allComplete = !this.allComplete;
     if (event.checked) {
-      this.totalFullPayment = 120;
+      this.totalFullPayment = 0;
       this.totalAdvancePayment = 0;
-      this.selectedIds = this.utilsService.mergeArrayString(
-        this.selectedIds,
-        currentPageIds
-      );
       this.orderData?.orderedItems.forEach((item) => {
-        this.selectedSkus.push(item.sku);
-        this.totalFullPayment += (item.price + item.tax) * item.quantity;
-        this.totalAdvancePayment += item.advanceAmount;
+        if (item.paymentStatus === PaymentStatus.PENDING) {
+          if (item.advanceAmount > 0) {
+            this.totalAdvancePayment += item.advanceAmount;
+          }
+          this.totalFullPayment += (item.price + item.tax) * item.quantity;
+        } else if (item.paymentStatus === PaymentStatus.PARTIALPAID) {
+          this.totalFullPayment += (item.price + item.tax) * item.quantity - item.advanceAmount;
+        }
         item.select = true;
       });
     } else {
       this.totalFullPayment = 0;
       this.totalAdvancePayment = 0;
-      currentPageIds.forEach((m) => {
-        this.orderData.orderedItems.find((f) => f._id === m).select = false;
-        const i = this.selectedIds.findIndex((f) => f === m);
-        this.selectedIds.splice(i, 1);
-      });
       this.selectedSkus = [];
     }
-    console.log(this.selectedIds);
-
-  }
-
-  checkAllByDefault() {
-    console.log(this.orderData?.orderedItems?.length);
-
-    for (let i = 0; i < this.orderData.orderedItems.length; i++) {
-      this.selectedIds.push(this.orderData?.orderedItems[i]._id);
-      this.selectedSkus.push(this.orderData?.orderedItems[i].sku);
-    }
-    console.log(this.selectedIds);
     console.log(this.selectedSkus);
 
   }
+
+
 
   onCheckChange(event: any, index: number, id: string, sku: string) {
 
@@ -233,18 +231,28 @@ export class OrderSuccessComponent implements OnInit {
     if (event.checked) {
       this.selectedIds.push(id);
       this.selectedSkus.push(sku);
-      console.log(this.selectedIds);
-      this.totalFullPayment += (item.price + item.tax) * item.quantity;
-      this.totalAdvancePayment += item.advanceAmount;
+      if (item.paymentStatus === PaymentStatus.PENDING) {
+        this.totalAdvancePayment += item.advanceAmount;
+        this.totalFullPayment += (item.price + item.tax) * item.quantity;
+      } else if (item.paymentStatus === PaymentStatus.PARTIALPAID) {
+        this.totalFullPayment += (item.price + item.tax) * item.quantity - item.advanceAmount;
+      }
     } else {
-      this.totalFullPayment -= (item.price + item.tax) * item.quantity;
-      this.totalAdvancePayment -= item.advanceAmount;
-      const i = this.selectedIds.findIndex((f) => f === id);
-      this.selectedIds.splice(i, 1);
+      if (item.paymentStatus === PaymentStatus.PENDING) {
+        this.totalAdvancePayment -= item.advanceAmount;
+        this.totalFullPayment -= (item.price + item.tax) * item.quantity;
+      } else if (item.paymentStatus === PaymentStatus.PARTIALPAID) {
+        this.totalFullPayment -= (item.price + item.tax) * item.quantity - item.advanceAmount;
+      }
       const j = this.selectedSkus.findIndex((f) => f === sku);
       this.selectedSkus.splice(j, 1);
-      console.log(this.selectedSkus);
     }
+    console.log(this.selectedSkus);
 
   }
+
+  getTotalAdvance(items) {
+    this.totalAdvancePayment += items.advanceAmount;
+  }
+
 }
