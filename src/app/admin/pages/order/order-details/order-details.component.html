@@ -353,11 +353,11 @@
                           nz-image
                           width="50px"
                           [nzSrc]="
-                            data.productId
-                              ? setThumbnailImage(data.productId)
+                            data?.productId
+                              ? setThumbnailImage(data?.productId)
                               : '/assets/images/placeholder/test.png'
                           "
-                          [alt]="data.productId.name"
+                          [alt]="data?.productId?.name"
                         />
                       </td>
                       <td>

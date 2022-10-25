@@ -290,8 +290,10 @@ export class ProductService {
       if (images) {
         allMedias = [...allMedias, ...images];
       }
-    } else {
-      allMedias = images;
+    } else if(images){
+        allMedias = images;
+      }else{
+        allMedias.push('/assets/images/placeholder/test.png')
     }
     return allMedias;
   }
