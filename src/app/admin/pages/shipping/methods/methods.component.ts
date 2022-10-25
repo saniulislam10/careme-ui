@@ -8,6 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class MethodsComponent implements OnInit {
   tabs = ['All Invoice', 'Closed', 'Pending'];
   isMethodVisible = false;
+  instockValue = 'A';
+  preOrderValue = 'A';
+
+  // time picker
+  time: Date | null = null;
+  defaultOpenValue = new Date(0, 0, 0, 0, 0, 0);
+
   shipedTable = [
     {
       name: 'Standard Shipping',

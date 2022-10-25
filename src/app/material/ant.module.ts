@@ -32,6 +32,7 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 const materials = [
   NzModalModule,
@@ -67,6 +68,7 @@ const materials = [
   NzIconModule,
   NzDescriptionsModule,
   NzPopoverModule,
+  NzTimePickerModule,
 
   // SharedModule
 ];

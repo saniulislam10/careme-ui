@@ -85,7 +85,121 @@
   nzOkText="Save Method"
 >
   <ng-container *nzModalContent>
-    <p>Content one</p>
-    <p>Content two</p>
+    <div class="entry_method">
+      <div nz-form>
+        <div nz-row [nzGutter]="16">
+          <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24" nzFor="method">Name</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <input
+                  nz-input
+                  name="method"
+                  type="text"
+                  id="method"
+                  placeholder="Standard Shipping"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">Opening Time</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select name="openingtime" [ngModel]="'1'">
+                  <nz-option nzValue="1" nzLabel="All Day Open"></nz-option>
+                  <nz-option nzValue="2" nzLabel="Sometime Open"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">Product Type</nz-form-label>
+              <nz-divider></nz-divider>
+              <nz-form-control [nzSpan]="24">
+                <div class="py5">
+                  <label nz-checkbox formControlName="required">
+                    In Stock
+                  </label>
+                  <label nz-checkbox formControlName="required">
+                    Pre Order
+                  </label>
+                </div>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24"
+                >In Stock Delivery Options</nz-form-label
+              >
+              <nz-divider></nz-divider>
+              <nz-form-control [nzSpan]="24" class="delivery_time">
+                <nz-radio-group [(ngModel)]="instockValue">
+                  <label nz-radio nzValue="A">Same Day</label>
+                  <label nz-radio nzValue="B">Next Day</label>
+                  <label nz-radio nzValue="C">
+                    Custom
+                    <span class="custome_date" *ngIf="instockValue === 'C'">
+                      <input type="text" nz-input value="2" /> to
+                      <input type="text" nz-input value="5" />
+                      Days
+                    </span>
+                  </label>
+                </nz-radio-group>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24">
+                In Stock Delivery Time
+              </nz-form-label>
+              <nz-form-control [nzSpan]="24" class="delivery_time">
+                <span>
+                  <nz-time-picker
+                    [(ngModel)]="time"
+                    [nzDefaultOpenValue]="defaultOpenValue"
+                  ></nz-time-picker>
+                </span>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24"> Pre Order Time </nz-form-label>
+              <nz-divider></nz-divider>
+              <nz-form-control [nzSpan]="24" class="delivery_time">
+                <nz-radio-group [(ngModel)]="preOrderValue">
+                  <label nz-radio nzValue="A">
+                    Custom
+                    <span class="custome_date" *ngIf="preOrderValue === 'A'">
+                      <input type="text" nz-input value="2" /> to
+                      <input type="text" nz-input value="5" />
+                      Days
+                    </span>
+                  </label>
+                </nz-radio-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <!-- <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24" nzFor="buffertime">
+                Buffer Time
+              </nz-form-label>
+              <nz-form-control [nzSpan]="12">
+                <input
+                  nz-input
+                  name="buffertime"
+                  type="text"
+                  id="buffertime"
+                  placeholder="0"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div> -->
+        </div>
+      </div>
+    </div>
   </ng-container>
 </nz-modal>
