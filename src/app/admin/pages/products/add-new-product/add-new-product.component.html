@@ -100,7 +100,7 @@
               <div *ngIf="chooseImage && chooseImage.length > 0" class="img-container" cdkDropList
                 cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
                 <div class="preview" *ngFor="let data of chooseImage" cdkDrag>
-                  <img nz-image [nzSrc]="data" [alt]="data">
+                  <img class="inactiveImage" nz-image [nzSrc]="data" [alt]="data">
                   <button type="button" class="overlay-ac" mat-icon-button color="warn"
                     (click)="removeSelectImage(data)">
                     <mat-icon>delete</mat-icon>
@@ -157,7 +157,8 @@
                 <h3>Selling Price</h3>
                 <mat-form-field appearance="outline" class="form-field">
                   <!-- <mat-label>Selling Price</mat-label> -->
-                  <input type="number" formControlName="sellingPrice" matInput placeholder="BDT 0.00" digitOnly>
+                  <input type="number" formControlName="sellingPrice" matInput placeholder="BDT 0.00" digitOnly
+                    readonly>
                   <mat-error *ngIf="dataForm.invalid">This field is required</mat-error>
                 </mat-form-field>
               </div>
@@ -223,7 +224,7 @@
                 <mat-form-field appearance="outline" class="form-field">
                   <!-- <input *ngIf="this.trackQuantity === false " type="number" formControlName="quantity" digitOnly
                     matInput> -->
-                  <input type="number" formControlName="quantity" digitOnly matInput disabled>
+                  <input type="number" formControlName="quantity" digitOnly matInput disabled readonly>
                   <mat-error *ngIf="">This field is required</mat-error>
                 </mat-form-field>
               </div>
@@ -712,11 +713,12 @@
                       color="warn" type="button">
                       <mat-icon>delete</mat-icon>
                     </button>
-                    <img (click)="imagePicker.click()"
+                    <img (click)="selectImage()"
                       [src]="dataForm.value.variantFormArray[i].image ? dataForm.value.variantFormArray[i].image : '/assets/images/placeholder/test.png'"
                       [alt]="dataForm.value.variantFormArray[i].variantSku">
                   </div>
-                  <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*" />
+                  <!-- (click)="imagePicker.click()" -->
+                  <!-- <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*" /> -->
                 </div>
               </td>
               <td display="flex"><span *ngFor="let name of variantObject; let n=index">{{variant[name]}}<span
@@ -726,10 +728,10 @@
                   {{dataForm.value.variantFormArray[i].variantSku}}</p>
               </td>
               <td>
-                <input type="number" nz-input formControlName="variantPrice" placeholder="Price">
+                <input type="number" nz-input formControlName="variantPrice" placeholder="Price" readonly>
               </td>
               <td>
-                <input type="number" nz-input formControlName="variantQuantity" placeholder="qty">
+                <input type="number" nz-input formControlName="variantQuantity" placeholder="qty" readonly>
               </td>
               <td>
                 <mat-select appearance="outline" class="form-field" [disableOptionCentering]="true" #selectVendor
@@ -830,3 +832,19 @@
     </form>
   </div>
 </div>
+
+
+<nz-modal [(nzVisible)]="showImageList" nzTitle="All Images" (nzOnCancel)="handleCancel()">
+  <div *nzModalContent>
+    <mat-error></mat-error>
+    <div [class]="clickActive[i] ? 'activeImage imageListPopUp': 'inactiveImage imageListPopUp'" *ngFor="let data of chooseImage; let i = index">
+      <img  [src]="data" (click)="onSelectImage(data, i)"
+      >
+      <i *ngIf="clickActive[i]" class="las la-check-circle"></i>
+    </div>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+    <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Select Image</button>
+  </div>
+</nz-modal>

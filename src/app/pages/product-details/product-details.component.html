@@ -1,11 +1,3 @@
-<!---product-detals-area-start-->
-
-<!-- <div class="container">
-  <div class="A">A</div>
-  <div class="B">B</div>
-  <div class="C">C</div>
-</div> -->
-
 <div class="product-details">
   <div class="container">
     <!---product-details-main-->
@@ -14,32 +6,38 @@
       <div class="product-img-area">
         <!--product-big-img-->
         <div class="product-big-img">
-          <img nz-image *ngIf="image" [nzSrc]="image ? image : '/assets/images/placeholder/test.png'"
+          <img nz-image [nzSrc]="thumbnail ? thumbnail : '/assets/images/placeholder/test.png'"
             [alt]="product?.name" />
         </div>
         <!---product-img-slide-area-->
         <div class="product-img-slide-area carousel">
-          <swiper *ngIf="images" [slidesPerView]="4" [spaceBetween]="10" [breakpoints]="{
+          <swiper *ngIf="images" [slidesPerView]="4" [spaceBetween]="5" [breakpoints]="{
               '400': {
-                slidesPerView: 4.5
+                slidesPerView: 5.5
               },
               '500': {
                 slidesPerView: 6
               },
+              '600': {
+                slidesPerView: 6.5
+              },
               '700': {
                 slidesPerView: 7
               },
-              '800': {
+              '750': {
+                slidesPerView: 7.5
+              },
+              '850': {
                 slidesPerView: 4
               },
               '900': {
-                slidesPerView: 3.5
+                slidesPerView: 4.5
               },
               '1000': {
                 slidesPerView: 5
               }
             }" [autoplay]="true" [navigation]="true" class="mySwiper">
-            <ng-template swiperSlide *ngFor="let data of images">
+            <ng-template swiperSlide class="swiperImage" *ngFor="let data of images">
               <div class="slide-img" (click)="selectImage(data)">
                 <img [src]="data ? data : '/assets/images/placeholder/test.png'" alt="product" />
               </div>
@@ -200,7 +198,7 @@
                   +
                 </button>
               </li>
-              <span *ngIf="globalQuantity > 0 && globalQuantity <= 3">Only {{globalQuantity}} items left</span>
+              <span *ngIf="globalQuantity > 0 && globalQuantity <= 10">Only {{globalQuantity}} items left</span>
             </ul>
           </div>
         </div>
@@ -234,7 +232,7 @@
         <div class="product-btn">
           <button nz-button [disabled]="!globalDisplay"  *ngIf="globalQuantity > 0  && existInCart !== true"
             [class]="btnActive ? 'inactive-btn' : 'active-btn'" (click)="activeCartBtn()" type="button">
-            Add to Cart
+            {{globalDisplay ? 'Add to Cart': 'Out of Stock'}}
           </button>
           <button
             nz-button
@@ -242,7 +240,7 @@
             [class]="btnActive ? 'inactive-btn' : 'active-btn'"
             *ngIf="globalQuantity <= 0 && globalContinue === true && existInCart !== true"
             (click)="activeCartBtn()" type="button">
-            Add to Cart
+            {{globalDisplay ? 'Add to Cart': 'Out of Stock'}}
           </button>
           <button nz-button *ngIf="existInCart === true"
           [class]="btnActive ? 'active-btn' : 'inactive-btn'" routerLink="/cart"

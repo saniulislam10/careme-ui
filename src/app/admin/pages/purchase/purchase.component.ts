@@ -131,7 +131,6 @@ export class PurchaseComponent implements OnInit {
       (res) => {
         this.suppliers = res.data;
         this.filteredSupplierList = this.suppliers.slice();
-        console.log(this.suppliers);
       },
       (err) => {
         this.msg.error(err.message);
@@ -141,6 +140,7 @@ export class PurchaseComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.dataForm.value);
     if (this.dataForm.invalid) {
       this.msg.warning('Please complete all the required fields');
       return;
@@ -483,6 +483,13 @@ export class PurchaseComponent implements OnInit {
     }
     this.isFocused = true;
   }
+  handleFocus2(event: FocusEvent): void {
+    this.productSearchInput.nativeElement.focus();
+    if (this.isFocused) {
+      return;
+    }
+    this.isFocused = true;
+  }
 
   private setPanelState(event: FocusEvent): void {
     if (event) {
@@ -548,13 +555,10 @@ export class PurchaseComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    // this.searchAnim();
     const formValue = this.searchForm.valueChanges;
 
     formValue
       .pipe(
-        // map(t => t.searchTerm)
-        // filter(() => this.searchForm.valid),
         pluck('searchTerm'),
         debounceTime(200),
         distinctUntilChanged(),
@@ -586,18 +590,18 @@ export class PurchaseComponent implements OnInit {
         }
       );
 
-      const productFormValue = this.productSearchForm.valueChanges;
 
-      productFormValue
+      const newformValue = this.productSearchForm.valueChanges;
+
+      newformValue
         .pipe(
           // map(t => t.searchTerm)
           // filter(() => this.searchForm.valid),
-          pluck('searchTermProducts'),
+          pluck('productSearchTerm'),
           debounceTime(200),
           distinctUntilChanged(),
           switchMap((data) => {
             this.query = data.trim();
-            console.log(this.query);
 
             if (this.query === '' || this.query === null) {
               this.overlay = false;
@@ -610,9 +614,11 @@ export class PurchaseComponent implements OnInit {
               currentPage: '1',
               pageSize: '10',
             };
+            const filter = { productVisibility: true };
             return this.productService.getSearchProduct(
               this.query,
               pagination,
+              filter
             );
           })
         )
@@ -629,14 +635,16 @@ export class PurchaseComponent implements OnInit {
             this.isLoading = false;
           }
         );
+
+
+
+
+
   }
 
   // New PO Open by Mamun
   showNewPurchase(): void {
     this.ponewVisible = true;
-  }
-  purchaseOk(): void {
-    this.ponewVisible = false;
   }
   purchaseCancel(): void {
     this.ponewVisible = false;

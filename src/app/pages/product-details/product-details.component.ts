@@ -53,7 +53,7 @@ export class ProductDetailsComponent implements OnInit {
   variantOptions = [];
   slug: any;
   product: any = null;
-  public image: any;
+  thumbnail: any;
   sizeChart: SizeChart[] = [];
   images: any[] = [];
   stockMessage: any;
@@ -215,7 +215,7 @@ export class ProductDetailsComponent implements OnInit {
               this.product.medias,
               this.product.images
             );
-            this.image = this.images[0];
+            this.thumbnail = this.images[0];
             this.data = res.data;
             this.globalPrice = this.product.sellingPrice;
             // this.setVideos();
@@ -311,6 +311,8 @@ export class ProductDetailsComponent implements OnInit {
   setDataForProduct() {
     if (this.product) {
       if (this.product.hasVariant === true) {
+        console.log("Set variant image", this.product.variantFormArray[0].image)
+        this.thumbnail = this.product.variantFormArray[0].image;
         this.variantSplit();
         this.variantSku = this.product.sku;
         // console.log(this.variantSku);
@@ -337,9 +339,6 @@ export class ProductDetailsComponent implements OnInit {
             break
           }
         }
-      }
-      if (this.images.length > 0) {
-        this.image = this.images[0];
       }
     }
   }
@@ -431,7 +430,7 @@ export class ProductDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(AddToCartPopupComponent, {
       data: {
         name: this.product.name,
-        image: this.image,
+        image: this.thumbnail,
         selectedQty: this.selectedQty,
         price: this.selectedVariantData
           ? this.selectedVariantData.variantPrice
@@ -508,6 +507,7 @@ export class ProductDetailsComponent implements OnInit {
     } else {
       this.allTypeVariantSelected = true;
       this.clickVariant = true;
+      this.thumbnail = this.selectedVariantData.image;
       this.globalQuantity = this.selectedVariantData.variantQuantity;
       this.globalPrice = this.selectedVariantData.variantPrice;
       this.globalContinue = this.selectedVariantData.variantContinueSelling;
@@ -595,7 +595,7 @@ export class ProductDetailsComponent implements OnInit {
    */
 
   public selectImage(image: any) {
-    this.image = image;
+    this.thumbnail = image;
   }
 
   /**** toggle */
