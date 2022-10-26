@@ -74,9 +74,12 @@ export class OrderDetailsComponent implements OnInit {
     );
   }
 
-  getThumbnailImage(data) {
-    let images = this.productService.getImages(data.medias, data.images);
-    return images[0];
+  getThumbnailImage(data?) {
+    if(data){
+      let images = this.productService.getImages(data?.medias, data?.images);
+      return images[0];
+    }
+    return '/assets/images/placeholder/test.png';
   }
 
   getImages(medias, images) {

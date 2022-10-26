@@ -112,7 +112,7 @@
                 <div class="invoice_item">
                   <h3>Items</h3>
                   <p>
-                    <span>{{ data.products.length }}</span>
+                    <span>{{ data?.products?.length }}</span>
                     <!-- <span *ngIf="data.refundEligible">{{getRefundId(data?.returnId)}}</span> -->
                   </p>
                 </div>
@@ -130,17 +130,17 @@
                       '../../',
                       'return',
                       'details',
-                      data.returnId
+                      data?.returnId
                     ]"
                   >
-                    {{ data.returnId }}
+                    {{ data?.returnId }}
                   </a>
-                  <p>{{ data.createdAt | date: "short" }}</p>
+                  <p>{{ data?.createdAt | date: "short" }}</p>
                 </div>
                 <div class="invoice_item">
                   <h3>Amount</h3>
                   <p>
-                    <span>BDT {{ data.subTotal }}</span>
+                    <span>BDT {{ data?.subTotal }}</span>
                   </p>
                 </div>
 
@@ -185,7 +185,7 @@
                       <tr>
                         <td>Note</td>
                         <td>:</td>
-                        <td>{{ order.orderNotes }}</td>
+                        <td>{{ order?.orderNotes }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -353,11 +353,11 @@
                           nz-image
                           width="50px"
                           [nzSrc]="
-                            data.productId
-                              ? setThumbnailImage(data.productId)
+                            data?.productId
+                              ? setThumbnailImage(data?.productId)
                               : '/assets/images/placeholder/test.png'
                           "
-                          [alt]="data.productId.name"
+                          [alt]="data?.productId?.name"
                         />
                       </td>
                       <td>

@@ -1,3 +1,4 @@
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -33,6 +34,7 @@ import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 const materials = [
   NzModalModule,
@@ -69,6 +71,8 @@ const materials = [
   NzDescriptionsModule,
   NzPopoverModule,
   NzTimePickerModule,
+  NzSpinModule,
+  NzUploadModule
 
   // SharedModule
 ];

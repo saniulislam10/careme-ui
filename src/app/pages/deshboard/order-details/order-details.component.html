@@ -94,19 +94,19 @@
             <td>
               <div class="product-details">
                 <img nz-image style="width: 80px"
-                  [nzSrc]="getThumbnailImage(data.productId) ? getThumbnailImage(data.productId) : '/assets/image/placeholder/test.png'"
-                  [alt]="data.name" />
+                  [nzSrc]="data?.productId ? getThumbnailImage(data?.productId) : '/assets/images/placeholder/test.png'"
+                  [alt]="data?.name" />
                 <div class="producttitle">
-                  <h4>{{ data.name }}</h4>
-                  <span> SKU: {{ data.sku }} </span>
+                  <h4>{{ data?.name }}</h4>
+                  <span> SKU: {{ data?.sku }} </span>
                 </div>
               </div>
             </td>
             <td>
-              {{ data.quantity }} X {{ data.price + data.tax}}
-              = {{ data.quantity * (data.price + data.tax)}}
+              {{ data?.quantity }} X {{ data?.price + data?.tax}}
+              = {{ data?.quantity * (data?.price + data?.tax)}}
             </td>
-            <td>{{ data.advanceAmount }}TK</td>
+            <td>{{ data?.advanceAmount }}TK</td>
             <td>
               <span class="payment paid unpaid">
                 {{ data?.paymentStatus | paymentStatus}}
@@ -120,9 +120,9 @@
             <td class="order-status">
               <!-- <span>{{ data.status | orderStatus }}</span> -->
               <span>
-                {{data.deliveryStatus | orderStatus}}
+                {{data?.deliveryStatus | orderStatus}}
               </span>
-              <span *ngIf="data.deliveryStatus === 3">({{data.invoicedQuantity}})</span>
+              <span *ngIf="data?.deliveryStatus === 3">({{data?.invoicedQuantity}})</span>
             </td>
             <td>
               <div class="tooltip"><i class="las la-2x la-times-circle " style="color: red" (click)="onCancel(data, i)" *ngIf="data.deliveryStatus === 0"></i>

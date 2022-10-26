@@ -397,17 +397,32 @@ export class AddNewProductComponent implements OnInit {
   //Product Delete
   deleteProduct(){
     this.spinner.show();
-    this.productService.deleteProductById(this.product._id).subscribe(
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this task?',
+      nzContent: '<b style="color: red;">All the related datas will be deleted</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => {
+        this.onDelete(this.product._id);
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
+
+  onDelete(id){
+    this.productService.deleteProductById(id).subscribe(
       (res) => {
         this.msg.create('success', res.message);
         this.templateForm.resetForm();
         this.spinner.hide();
-        this.reloadService.needRefreshProduct$;
+        this.reloadService.needRefreshProduct$();
         this.router.navigate(['admin/products']);
       },
-      (error) => {
+      (err) => {
         this.spinner.hide();
-        this.uiService.warn('Error :');
+        this.msg.error(err.message);
       }
     );
   }
