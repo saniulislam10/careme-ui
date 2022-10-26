@@ -8,12 +8,19 @@ import { Component, OnInit } from '@angular/core';
 export class MethodsComponent implements OnInit {
   tabs = ['All Invoice', 'Closed', 'Pending'];
   isMethodVisible = false;
+  openingTime = '2';
   instockValue = 'A';
   preOrderValue = 'A';
+  typeChecked = [];
+  deliveryTime = 'A';
+
+  //  Day Schedule
+  disabledSchedule = true;
 
   // time picker
-  time: Date | null = null;
-  defaultOpenValue = new Date(0, 0, 0, 0, 0, 0);
+  startTime: Date;
+  endTime: Date;
+  defaultOpenValue = new Date();
 
   shipedTable = [
     {
@@ -30,9 +37,32 @@ export class MethodsComponent implements OnInit {
     },
   ];
 
+  dayName = [
+    {
+      day: 'Monday',
+    },
+    {
+      day: 'Tuesday',
+    },
+    {
+      day: 'Wednesday',
+    },
+    {
+      day: 'Thursday',
+    },
+    {
+      day: 'Friday',
+    },
+    {
+      day: 'Saturday',
+    },
+  ];
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.typeChecked.push('A');
+  }
 
   showMathod(): void {
     this.isMethodVisible = true;
@@ -44,5 +74,13 @@ export class MethodsComponent implements OnInit {
   mathodCancel(): void {
     console.log('Button cancel clicked!');
     this.isMethodVisible = false;
+  }
+
+  proType(value: string[]): void {
+    this.typeChecked = value;
+  }
+  tChecked(value: string) {
+    const checkFound = this.typeChecked.find((e) => e === value);
+    return checkFound;
   }
 }

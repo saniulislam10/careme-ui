@@ -1,5 +1,7 @@
 @import "./../../../../../theme/variables";
-
+.mb15 {
+  margin-bottom: 15px;
+}
 .page-header {
   display: flex;
   align-items: center;
@@ -62,7 +64,6 @@
   input,
   nz-select {
     width: 100%;
-    margin-bottom: 15px;
   }
 }
 
@@ -74,16 +75,64 @@
 .custome_date {
   margin-left: 5px;
   input {
-    display: inline-block;
     width: 40px;
+    display: inline-block;
     text-align: center;
+    margin: 0;
+    padding: 0;
   }
 }
 nz-divider {
   margin: 5px 0;
 }
-nz-form-item {
-  margin-bottom: 15px;
+
+.add_newtime {
+  margin-left: 15px;
+  i {
+    font-size: 25px;
+  }
+  i:hover {
+    color: red;
+  }
+}
+.single_date {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.addbutton {
+  width: 100%;
+  display: flex;
+  margin: 15px 0;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 14px;
+  i {
+    font-size: 20px;
+    line-height: 20px;
+    margin-right: 10px;
+  }
+}
+.schedule-container {
+  margin-bottom: 10px;
+  .day_name {
+    display: inline-flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    h3 {
+      margin-right: 10px !important;
+    }
+  }
+  .time_range {
+    display: inline-flex;
+    align-items: baseline;
+    justify-content: flex-start;
+  }
+  .single_time {
+    display: flex;
+    align-items: center;
+  }
 }
 @media (max-width: 768px) {
   .table-filter-area {
