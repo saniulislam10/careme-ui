@@ -67,6 +67,7 @@ export interface Data {
 export class AddNewProductComponent implements OnInit {
 
   // nz -table variant
+  showImageList = false;
   checked = false;
   loading = false;
   indeterminate = false;
@@ -74,6 +75,9 @@ export class AddNewProductComponent implements OnInit {
   listOfCurrentPageData: Data[] = [];
   setOfCheckedId = new Set<number>();
   pickedImage?: any;
+  selectedUrl : any;
+  clickActive:any[] = [];
+  selectedIndex : number;
 
   file: any = null;
 
@@ -182,6 +186,7 @@ export class AddNewProductComponent implements OnInit {
   url: string;
   uploadForVariants: Boolean = false;
   selectedFolder: any = 'products';
+  warning: boolean;
 
 
   constructor(
@@ -1080,11 +1085,14 @@ export class AddNewProductComponent implements OnInit {
       nzOkType: 'primary',
       nzOkDanger: true,
       nzOnOk: () => {
+        console.log("Before : ",s);
         const index = this.chooseImage.findIndex(x => x === s);
+
         this.chooseImage.splice(index, 1);
-        this.fileUploadService.removeSingleFile(this.chooseImage[index])
+        this.fileUploadService.removeSingleFile(s)
           .subscribe(res => {
             this.msg.success(res.message);
+            // console.log("After : ",this.chooseImage);
           }, err => {
             this.msg.error(err.message);
           })
@@ -1275,6 +1283,50 @@ export class AddNewProductComponent implements OnInit {
 
   onAllChecked($event) {
     console.log('all checked')
+  }
+
+  selectImage(){
+    if (this.checkedVariantImgIndex.length === 0) {
+      this.msg.warning("Please Select the variants first");
+      return
+    }
+    this.showImageList = true;
+  }
+
+
+
+  onSelectImage(url, i){
+    this.clickActive = [];
+    this.clickActive[i] = true;
+    this.selectedUrl = url;
+    this.selectedIndex = i;
+
+    console.log(this.selectedIndex);
+  }
+
+  handleOk(){
+    if(this.selectedIndex >= 0 && this.selectedUrl){
+      this.checkedVariantImgIndex.forEach(m => {
+        this.dataForm.value.variantFormArray[m].image = this.selectedUrl;
+      })
+      this.showImageList = false;
+      this.warning = false;
+    }else{
+      this.msg.warning('Please Select the images first');
+      this.warning = true;
+    }
+    this.selectedIndex = null;
+    this.clickActive = [];
+    this.selectedUrl = null;
+  }
+
+  handleCancel(){
+    this.selectedIndex = null;
+    this.selectedUrl = null;
+    this.showImageList = false;
+    this.warning = false;
+    this.clickActive = [];
+    console.log('Cancel');
   }
 
 

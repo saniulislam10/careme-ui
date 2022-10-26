@@ -55,6 +55,7 @@ export class FileUploadService {
   }
 
   removeSingleFile(url: string) {
+    console.log(url);
     return this.httpClient.post<{ message: string }>(API_UPLOAD + 'remove-file-single', {url});
   }
 

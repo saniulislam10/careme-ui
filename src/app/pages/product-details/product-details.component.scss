@@ -5,6 +5,11 @@
   display: none;
 }
 
+.swiperImage{
+  height: 60px;
+  width: 60px;
+}
+
 img {
   display: block;
   width: 100%;
@@ -66,9 +71,11 @@ img {
 
 .slide-img {
   border: 1px solid $color-primary;
-  margin-right: 0px;
+  height: 62px;
+  width: 62px;
   img {
     height: 60px;
+    width: 60px;
     cursor: pointer;
     object-fit: contain;
   }

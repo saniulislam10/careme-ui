@@ -44,6 +44,7 @@ export class CreateNewPurchaseComponent implements OnInit {
   searchProducts: Product[] = [];
   clickActive: any[] = [[]];
   today = new Date();
+  ponewVisible = true;
 
   private subRouteOne?: Subscription;
   // purchasedProducts: any[] = [];
@@ -283,6 +284,7 @@ export class CreateNewPurchaseComponent implements OnInit {
         debounceTime(200),
         distinctUntilChanged(),
         switchMap((data) => {
+          console.log(data);
           this.query = data.trim();
 
           if (this.query === '' || this.query === null) {
@@ -393,5 +395,14 @@ export class CreateNewPurchaseComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  // New PO Open by Mamun
+  showNewPurchase(): void {
+    this.ponewVisible = true;
+  }
+  purchaseCancel(): void {
+    this.ponewVisible = false;
+    
   }
 }

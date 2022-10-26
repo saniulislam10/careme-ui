@@ -1,5 +1,47 @@
 @import'./../../../../../theme/variables';
 
+.imageListPopUp{
+  position: relative;
+  cursor: pointer;
+  height: 100px;
+  width: 100px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  img{
+    max-height: 100%;
+    max-width: 100%;
+    position: relative;
+  }
+  i {
+    font-size: 20px;
+    position: absolute;
+    color: $color-primary;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+}
+
+.activeImage{
+  border: 1px solid $color-primary;
+  img{
+    opacity: 0.3;
+  }
+}
+.inactiveImage{
+  opacity: 1;
+  border: 1px solid $searchBorderColor;
+}
+
+
+
+
+
 .variant-image{
   width: 50px;
   cursor: pointer;

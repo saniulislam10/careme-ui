@@ -1,12 +1,10 @@
-<mat-dialog-content>
+<!-- <mat-dialog-content>
   <div
     class="main_create_invoice"
     [class]="createInvoice ? 'active-create-invoice-area' : 'in-active'"
   >
-    <!-- form-field -->
     <form [formGroup]="dataForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <div class="inside_create_invoice">
-        <!---header-area-->
         <div class="header-area">
           <div class="header-top">
             <div class="header-top-left">
@@ -23,12 +21,10 @@
           <div class="header-main">
             <div class="user-search">
               <div class="ship-title">
-                <!-- <h3  class="items">PO ID #</h3> -->
                 <h3 class="items">Reference #</h3>
                 <h3 class="items">Supplier Name</h3>
               </div>
               <div class="ship-title">
-                <!-- <h3 class="items">: 1234</h3> -->
                 <mat-form-field
                   class="items"
                   appearance="outline"
@@ -159,7 +155,7 @@
                   <div class="price">
                     <h5>৳{{ data.sellingPrice }}</h5>
                     <p class="discount">
-                      <!-- {{(data | price: 'discountPercentage') > 0 ? '(' + (data | price: 'discountPercentage') + '% OFF)' : ''}} -->
+
                     </p>
                   </div>
                 </li>
@@ -184,7 +180,6 @@
                     <div class="price">
                       <h5>{{ item.variantSku }}</h5>
                       <p class="discount">
-                        <!-- {{(data | price: 'discountPercentage') > 0 ? '(' + (data | price: 'discountPercentage') + '% OFF)' : ''}} -->
                       </p>
                     </div>
                   </li>
@@ -271,8 +266,6 @@
         <button type="button" mat-button class="addProductButton">
           + Add Product
         </button>
-
-        <!-- invoice custom notes -->
         <div class="custom_notes_field">
           <div class="total-area">
             <ul>
@@ -324,7 +317,6 @@
             </ul>
           </div>
         </div>
-        <!---total-->
 
         <div class="invoice_buttons">
           <button mat-stroked-button type="submit">Done</button>
@@ -332,4 +324,188 @@
       </div>
     </form>
   </div>
-</mat-dialog-content>
+</mat-dialog-content> -->
+
+<nz-modal
+  [(nzVisible)]="ponewVisible"
+  nzTitle="New Purchase Order"
+  (nzOnCancel)="purchaseCancel()"
+  (nzOnOk)="onSubmit()"
+  nzOkText="Save"
+  nzWidth="800px"
+>
+  <ng-container *nzModalContent>
+    <form [formGroup]="dataForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <div nz-row [nzGutter]="16" class="mb40">
+        <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 12 }">
+          <table class="purchase_info">
+            <tbody>
+              <tr>
+                <td>Reference #</td>
+                <td style="width: 15px; text-align: center">:</td>
+                <td>
+                  <input nz-input formControlName="reference" placeholder="PK-131 INDIA" />
+                </td>
+              </tr>
+              <tr>
+                <td>Manufacturer</td>
+                <td style="width: 15px; text-align: center">:</td>
+                <td>
+                  <input nz-input formControlName="manufacturer" placeholder="Bangladesh, China, India" />
+                </td>
+              </tr>
+              <tr>
+                <td>Shipping Charge</td>
+                <td style="width: 15px; text-align: center">:</td>
+                <td>
+                  <input nz-input type="number" digitOnly formControlName="purchaseShippingCharge" placeholder="0.00" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 12 }">
+          <table class="purchase_info">
+            <tbody>
+              <tr>
+                <td>Supplier</td>
+                <td style="width: 15px; text-align: center">:</td>
+                <td>
+                  <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Supplier" formControlName="supplier" [nzCustomTemplate]="defaultTemplate">
+                    <nz-option [nzLabel]="data.name" [nzValue]="data._id" *ngFor="let data of suppliers"></nz-option>
+                  </nz-select>
+                </td>
+              </tr>
+              <tr>
+                <td>Supplier Link</td>
+                <td style="width: 15px; text-align: center">:</td>
+                <td>
+                  <input nz-input type="link" formControlName="supplier_link" placeholder="https://" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div nz-row [nzGutter]="16">
+        <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 24 }">
+          <nz-table
+            #purchaseTable
+            [nzShowPagination]="false"
+            [nzData]="[1]"
+            nzSize="small"
+            class="purchase_product"
+            [nzScroll]="{ x: '750px' }"
+          >
+            <thead>
+              <tr>
+                <th style="width: 70px">Image</th>
+                <th>Details</th>
+                <th style="width: 80px">Unit Cost</th>
+                <th style="width: 80px">Price</th>
+                <th style="width: 80px">Qty</th>
+                <th style="width: 80px">Tax (%)</th>
+                <th style="width: 80px">Amount</th>
+                <th style="width: 50px"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of purchaseTable.data">
+                <td style="width: 70px">
+                  <img
+                    nz-image
+                    width="50px"
+                    nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    alt=""
+                  />
+                </td>
+                <td>
+                  <h4>Item Details Item Details Item</h4>
+                  <h5>IUIUHI</h5>
+                </td>
+                <td>
+                  <input nz-input placeholder="0" />
+                </td>
+                <td>
+                  <input nz-input placeholder="0" />
+                </td>
+                <td>
+                  <input nz-input placeholder="0" />
+                </td>
+                <td>
+                  <input nz-input placeholder="0" />
+                </td>
+                <td>
+                  <p>6565 TK</p>
+                </td>
+                <td style="text-align: center">
+                  <span><i class="las la-lg la-trash"></i></span>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+      <div nz-row [nzGutter]="16">
+        <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 12 }">
+          <div class="add_product">
+            <form #searchForm="ngForm">
+              <input
+                #searchInput
+                (focus)="handleFocus($event)"
+                name="searchTerm"
+                autocomplete="off"
+                ngModel
+                nz-input
+                placeholder="Add new product"
+                nz-dropdown
+                nzTrigger="click"
+                [nzDropdownMenu]="menu"
+              />
+            </form>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu nzSelectable class="search_items">
+                <li nz-menu-item *ngFor="let data of searchProducts">
+                  <div class="left">
+                    <img
+                      nz-image
+                      width="50px"
+                      height="50px"
+                      nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                      alt=""
+                    />
+                    <div class="left_details">
+                      <h4>{{data?.name}}</h4>
+                      <p>{{data?.sku}}</p>
+                    </div>
+                  </div>
+                  <div class="right">{{data?.sellingPrice}} TK</div>
+                </li>
+              </ul>
+            </nz-dropdown-menu>
+          </div>
+        </div>
+        <div nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 12 }">
+          <div class="order_summery">
+            <nz-card nzSize="small">
+              <nz-list>
+                <nz-list-item>
+                  <h4>Sub Total</h4>
+                  <h4>6565Tk</h4>
+                </nz-list-item>
+                <nz-list-item>
+                  <p>Tax (0%)</p>
+                  <p>565Tk</p>
+                </nz-list-item>
+                <nz-divider nzSize="small"></nz-divider>
+                <nz-list-item>
+                  <h2>Total = 6565 TK</h2>
+                </nz-list-item>
+              </nz-list>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</nz-modal>
