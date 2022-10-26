@@ -246,7 +246,7 @@ export const menuItemsSuperAdmin: MenuAdmin[] = [
     target: null,
   },
   {
-    id: '1212ll',
+    id: 'shipping',
     title: 'Shipping',
     icon: null,
     hasSubMenu: false,
@@ -256,7 +256,7 @@ export const menuItemsSuperAdmin: MenuAdmin[] = [
     target: null
   },
   {
-    id: '1212ll',
+    id: 'methods',
     title: 'Shipping Methods',
     icon: null,
     hasSubMenu: false,

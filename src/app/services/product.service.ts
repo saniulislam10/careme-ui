@@ -55,13 +55,20 @@ export class ProductService {
       message: string;
     }>(API_PRODUCT + 'get-all-products', { paginate, filter, sort });
   }
-  getAllArchivedProducts(paginate: Pagination, filter?: ProductFilter) {
+  getAllProductsByUser(paginate: Pagination, filter?: ProductFilter, sort?: any) {
     return this.http.post<{
       data: Product[];
       priceRange: any;
       count: number;
       message: string;
-    }>(API_PRODUCT + 'get-all-archived-products', { paginate, filter });
+    }>(API_PRODUCT + 'get-all-products-by-user', { paginate, filter, sort });
+  }
+  getAllArchivedProducts(paginate: Pagination) {
+    return this.http.post<{
+      data: Product[];
+      count: number;
+      message: string;
+    }>(API_PRODUCT + 'get-all-archived-products', { paginate });
   }
   // getAllArchivedProducts(paginate: Pagination, filter?: ProductFilter) {
   //   return this.http.get<{{data: Archived[], message?: string} }>(API_PRODUCT + 'get-all-products');
@@ -121,6 +128,12 @@ export class ProductService {
   deleteProductById(id: string) {
     return this.http.delete<{ message: string }>(
       API_PRODUCT + 'delete-product-by-id/' + id
+    );
+  }
+
+  deleteManyProducts(ids : string[]){
+    return this.http.post<{ message: string }>(
+      API_PRODUCT + 'delete-many-products', ids
     );
   }
 

@@ -49,7 +49,7 @@ export class ProductsByLinkComponent implements OnInit {
  productStatus: Select[] = [
    {value: ProductStatus.DRAFT, viewValue: 'Draft'},
    {value: ProductStatus.ACTIVE, viewValue: 'Active'},
-   {value: ProductStatus.INACTIVE, viewValue: 'Inactive'},
+   {value: ProductStatus.PREORDER, viewValue: 'Inactive'},
    {value: ProductStatus.ARCHIVED, viewValue: 'Archived'},
    {value: ProductStatus.STOCKOUT, viewValue: 'Stock Out'},
    {value: ProductStatus.REORDER, viewValue: 'Re-Order'}
@@ -201,8 +201,8 @@ export class ProductsByLinkComponent implements OnInit {
      case this.productEnum.ACTIVE : {
        return 'active';
      }
-     case this.productEnum.INACTIVE : {
-       return 'inactive';
+     case this.productEnum.PREORDER : {
+       return 'Pre-order';
      }
      case this.productEnum.ARCHIVED : {
        return 'archived';
@@ -506,30 +506,21 @@ onFilterSelectChange(data) {
      });
  }
 
- getAllArchivedProducts(data) {
+ getAllArchivedProducts() {
   this.spinner.show();
-  this.status = data;
-
   const pagination: Pagination = {
     currentPage: this.currentPage.toString(),
     pageSize: this.productsPerPage.toString(),
   };
-
-  const select = '';
-
-  if (this.query === '' || this.query === null || this.query === undefined) {
-    this.query = { hasLink: false };
-  }
   this.productService
-    .getAllArchivedProducts(pagination, this.sortQuery)
+    .getAllArchivedProducts(pagination)
     .subscribe(
       (res) => {
         this.products = res.data;
-        console.log('archived', this.products);
-      },
-      (error) => {
         this.spinner.hide();
-        console.log(error);
+      },
+      (err) => {
+        this.spinner.hide();
       }
     );
 }

@@ -269,7 +269,7 @@ export class StockComponent implements OnInit {
       this.query = { hasLink: false };
     }
     this.productService
-      .getAllArchivedProducts(pagination, this.sortQuery)
+      .getAllArchivedProducts(pagination)
       .subscribe(
         (res) => {
           this.products = res.data;

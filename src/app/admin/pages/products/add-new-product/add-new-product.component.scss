@@ -1,5 +1,14 @@
 @import'./../../../../../theme/variables';
 
+.variant-image{
+  width: 50px;
+  cursor: pointer;
+  img{
+    width: 100%;
+  }
+}
+
+
 nz-select {
   width: 100%;
 }

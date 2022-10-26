@@ -15,8 +15,8 @@ export class ProductStatusPipe implements PipeTransform {
       case ProductStatus.ACTIVE : {
         return 'Active';
       }
-      case ProductStatus.INACTIVE : {
-        return 'Inactive';
+      case ProductStatus.PREORDER : {
+        return 'Preorder';
       }
       case ProductStatus.ARCHIVED : {
         return 'Archived';

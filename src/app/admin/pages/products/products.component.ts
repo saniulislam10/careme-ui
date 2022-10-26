@@ -1,3 +1,4 @@
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
@@ -23,6 +24,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import * as XLSX from 'xlsx';
 import { ExportPopupComponent } from './export-popup/export-popup.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-products',
@@ -86,13 +88,13 @@ export class ProductsComponent implements OnInit {
   setOfCheckedId = new Set<number>();
   expandSet = new Set<number>();
   tabs = [
-    {value: 0, label: 'All'},
-    {value: 1, label: 'Draft'},
-    {value: 2, label: 'Active'},
-    {value: 3, label: 'Pre-Order'},
-    {value: 4, label: 'Archieved'},
-    {value: 5, label: 'Stock Out'},
-    {value: 6, label: 'Re Order'},
+    { value: 0, label: 'All' },
+    { value: ProductStatus.DRAFT, label: 'Draft' },
+    { value: ProductStatus.ACTIVE, label: 'Active' },
+    { value: ProductStatus.PREORDER, label: 'Pre-Order' },
+    { value: ProductStatus.STOCKOUT, label: 'Stock Out' },
+    { value: ProductStatus.REORDER, label: 'Re Order' },
+    { value: ProductStatus.ARCHIVED, label: 'Archieved' },
   ];
 
 
@@ -106,8 +108,10 @@ export class ProductsComponent implements OnInit {
     private router: Router,
     private utilsService: UtilsService,
     private uiService: UiService,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+    private modal: NzModalService,
+    private msg: NzMessageService
+  ) { }
 
   ngOnInit(): void {
     this.showVariant[0] = false;
@@ -132,7 +136,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  onRefresh(){
+  onRefresh() {
     this.isLoading = true;
     this.getAllProducts();
 
@@ -223,8 +227,8 @@ export class ProductsComponent implements OnInit {
       case this.productEnum.ACTIVE: {
         return 'active';
       }
-      case this.productEnum.INACTIVE: {
-        return 'inactive';
+      case this.productEnum.PREORDER: {
+        return 'preorder';
       }
       case this.productEnum.ARCHIVED: {
         return 'archived';
@@ -342,35 +346,40 @@ export class ProductsComponent implements OnInit {
   onFilterSelectChange(data) {
     this.status = data;
     switch (data) {
-      case 1:
+      case ProductStatus.DRAFT:
         this.query = { status: data };
         break;
-      case 2:
+      case ProductStatus.ACTIVE:
         this.query = { status: data };
         // code block
         break;
-      case 3:
+      case ProductStatus.PREORDER:
         this.query = { isPreOrder: true };
         // code block
         break;
-      case 5:
+      case ProductStatus.STOCKOUT:
         this.query = { isStockOut: true };
         // code block
         break;
-      case 6:
+      case ProductStatus.REORDER:
         this.query = { isReOrder: true };
         // code block
+        break;
+      case ProductStatus.ARCHIVED:
+        delete this.query;
         break;
       default:
       // code block
     }
 
-    if (data) {
+    if(data === ProductStatus.ARCHIVED){
+      this.getAllArchivedProducts();
+    }else if (data) {
       this.query = { ...this.query, ...{ hasLink: false } };
-      this.getAllProducts();
+      this.reloadService.needRefreshProduct$();
     } else {
       delete this.query;
-      this.getAllProducts();
+      this.reloadService.needRefreshProduct$();
     }
   }
 
@@ -516,30 +525,22 @@ export class ProductsComponent implements OnInit {
       );
   }
 
-  getAllArchivedProducts(data) {
+  getAllArchivedProducts() {
     this.spinner.show();
-    this.status = data;
-
     const pagination: Pagination = {
       currentPage: this.currentPage.toString(),
       pageSize: this.productsPerPage.toString(),
     };
-
-    const select = '';
-
-    if (this.query === '' || this.query === null || this.query === undefined) {
-      this.query = { hasLink: false };
-    }
     this.productService
-      .getAllArchivedProducts(pagination, this.sortQuery)
+      .getAllArchivedProducts(pagination)
       .subscribe(
         (res) => {
           this.products = res.data;
-          console.log('archived', this.products);
-        },
-        (error) => {
           this.spinner.hide();
-          console.log(error);
+        },
+        (err) => {
+          this.msg.error(err.message);
+          this.spinner.hide();
         }
       );
   }
@@ -552,7 +553,7 @@ export class ProductsComponent implements OnInit {
   }
 
   onExpandChange(id: number, checked: boolean): void {
-    console.log("For Variant :",id);
+    console.log("For Variant :", id);
     if (checked) {
       this.expandSet.add(id);
     } else {
@@ -618,47 +619,55 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteBulkProducts() {
-    let updatedList = [];
-    this.selectedIds.forEach((element) => {
-      let data = {
-        _id: element,
-      };
-      updatedList.push(data);
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this task?',
+      nzContent: '<b style="color: red;">All the related datas will be deleted</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => {
+        this.onDelete();
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
     });
-    for (let i = 0; i < updatedList.length; i++) {
-      this.spinner.show();
-      this.productService.deleteProductById(updatedList[i]._id).subscribe(
-        (res) => {
-          this.spinner.hide();
-          console.log(res.message);
-          this.getAllProducts();
-        },
-        (err) => {
-          console.log(err);
-          this.spinner.hide();
-        }
-      );
-    }
+
     this.spinner.hide();
   }
 
+  onDelete() {
+    console.log(this.selectedIds);
+    this.productService.deleteManyProducts(this.selectedIds).subscribe(
+      (res) => {
+        this.spinner.hide();
+        this.msg.success(res.message);
+        this.reloadService.needRefreshProduct$();
+      },
+      (err) => {
+        this.msg.error(err.message);
+        this.spinner.hide();
+        this.reloadService.needRefreshProduct$();
+      }
+    );
+  }
+
   //variant status
-  getVariantStatus(variant:any){
-    if(variant?.variantContinueSelling === true && variant?.variantQuantity === 0){
+  getVariantStatus(variant: any) {
+    if (variant?.variantContinueSelling === true && variant?.variantQuantity === 0) {
       return "Pre-Order"
     } else if (variant?.variantQuantity === 0) {
       return "Stock-Out"
-    } else{
+    } else {
       return "Active"
     }
   }
 
-  getVariantStatusColor(variant: any){
-    if(variant?.variantContinueSelling === true && variant?.variantQuantity === 0){
+  getVariantStatusColor(variant: any) {
+    if (variant?.variantContinueSelling === true && variant?.variantQuantity === 0) {
       return "orange status"
     } else if (variant?.variantQuantity === 0) {
       return "red status"
-    } else{
+    } else {
       return "green status"
     }
   }

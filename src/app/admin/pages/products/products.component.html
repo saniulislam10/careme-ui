@@ -17,7 +17,6 @@
 
     <nz-tabset nzCentered>
       <nz-tab nz-tab *ngFor="let tab of tabs" (nzSelect)="onFilterSelectChange(tab.value)" [nzTitle]="tab.label"></nz-tab>
-      <!-- <nz-tab nz-tab (nzSelect)="getAllArchivedProducts(4)" nzTitle="Archived"></nz-tab> -->
     </nz-tabset>
   <div class="products-search-area">
     <!---search-->
@@ -92,10 +91,10 @@
               </a>
             </td>
             <td>
-              <span><b>{{data.sku}}</b></span>
+              <span><b>{{data?.sku}}</b></span>
             </td>
-            <td>{{data.sellingPrice}}</td>
-            <td>{{data.quantity}}</td>
+            <td>{{data?.sellingPrice}}</td>
+            <td>{{data?.quantity}}</td>
             <!-- <td>{{data.variantFormArray.length}}</td> -->
             <td>
               <nz-select
@@ -115,11 +114,11 @@
               <span *ngIf="data.canRedeemPoints">{{data.redeemPoints}} {{data.redeemPointsType | amountType}}</span>
             </td>
             <td>
-              <span>{{data.vendor.name}}</span>
+              <span>{{data?.vendor?.name}}</span>
             </td>
           </tr>
-          <tr [nzExpand]="expandSet.has(data._id) && data.hasVariant" >
-                <nz-table [nzData]="nestedTable.data" nzSize="middle" [nzShowPagination]="false">
+          <tr [nzExpand]="expandSet.has(data?._id) && data?.hasVariant" >
+                <nz-table [nzData]="nestedTable?.data" nzSize="middle" [nzShowPagination]="false">
                   <thead>
                     <tr>
                       <th>SKU</th>

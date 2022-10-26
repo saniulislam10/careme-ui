@@ -1,6 +1,6 @@
+import { AntModule } from 'src/app/material/ant.module';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-
 import {ProductsRoutingModule} from './products-routing.module';
 import {ProductsComponent} from './products.component';
 import {MaterialModule} from '../../../material/material.module';
@@ -10,13 +10,7 @@ import {ProductCardAdminModule} from '../../../shared/lazy-component/product-car
 import {FormsModule} from '@angular/forms';
 import {PipesModule} from '../../../shared/pipes/pipes.module';
 import {NgxSpinnerModule} from 'ngx-spinner';
-import { AddNewProductComponent } from './add-new-product/add-new-product.component';
 import { ExportPopupComponent } from './export-popup/export-popup.component';
-import { NzImageModule } from 'ng-zorro-antd/image';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 
 
@@ -35,11 +29,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
     FormsModule,
     NgxSpinnerModule,
     PipesModule,
-    NzImageModule,
-    NzTableModule,
-    NzSelectModule,
-    NzCheckboxModule,
-    NzTabsModule
+    AntModule
   ],
   providers: []
 })

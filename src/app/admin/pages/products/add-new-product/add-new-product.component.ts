@@ -30,8 +30,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Category } from 'src/app/interfaces/category';
 import { SubCategory } from 'src/app/interfaces/sub-category';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Brand } from 'src/app/interfaces/brand';
 import { BrandService } from 'src/app/services/brand.service';
 import { Vendor } from 'src/app/interfaces/vendor';
@@ -73,6 +73,9 @@ export class AddNewProductComponent implements OnInit {
   listOfData: Data[] = [];
   listOfCurrentPageData: Data[] = [];
   setOfCheckedId = new Set<number>();
+  pickedImage?: any;
+
+  file: any = null;
 
 
   // Form Template Ref
@@ -90,7 +93,7 @@ export class AddNewProductComponent implements OnInit {
   product: Product = null;
 
   chooseImage?: string[] = [];
-  checkedVariantImgIndex:number[] = []
+  checkedVariantImgIndex: number[] = []
 
   dataForm?: FormGroup;
   modules = null;
@@ -125,7 +128,7 @@ export class AddNewProductComponent implements OnInit {
   //variants
   variantObject = [];
   variantDataArray: any;
-  variantDataFormArray: FormArray;
+  variantFormArray: FormArray;
   mediaArray: FormArray;
   variantArray: FormArray;
   optionsArray: FormArray;
@@ -177,6 +180,7 @@ export class AddNewProductComponent implements OnInit {
   newFileName: string;
   imageChangedEvent: any;
   url: string;
+  uploadForVariants: Boolean = false;
   selectedFolder: any = 'products';
 
 
@@ -241,7 +245,7 @@ export class AddNewProductComponent implements OnInit {
 
   }
 
-  onRefresh(){
+  onRefresh() {
     this.getAllProductTypes();
     this.getCountrys();
     this.getBrands();
@@ -287,7 +291,7 @@ export class AddNewProductComponent implements OnInit {
       barcode: [null],
       quantity: [0],
       committedQuantity: [0],
-      reOrder: [ 5, Validators.required],
+      reOrder: [5, Validators.required],
       trackQuantity: this.trackQuantity,
       continueSelling: [false],
       isPhysicalProduct: [false],
@@ -307,7 +311,7 @@ export class AddNewProductComponent implements OnInit {
 
     this.variantArray = this.dataForm.get('variants') as FormArray;
     this.optionsArray = this.dataForm.get('options') as FormArray;
-    this.variantDataFormArray = this.dataForm.get(
+    this.variantFormArray = this.dataForm.get(
       'variantFormArray'
     ) as FormArray;
     this.mediaArray = this.dataForm.get(
@@ -319,7 +323,7 @@ export class AddNewProductComponent implements OnInit {
    * INIT Quill
    */
 
-   private async initModule() {
+  private async initModule() {
     this.modules = {
       // 'emoji-shortname': true,
       // 'emoji-textarea': false,
@@ -395,7 +399,7 @@ export class AddNewProductComponent implements OnInit {
   }
 
   //Product Delete
-  deleteProduct(){
+  deleteProduct() {
     this.spinner.show();
     this.modal.confirm({
       nzTitle: 'Are you sure delete this task?',
@@ -411,7 +415,7 @@ export class AddNewProductComponent implements OnInit {
     });
   }
 
-  onDelete(id){
+  onDelete(id) {
     this.productService.deleteProductById(id).subscribe(
       (res) => {
         this.msg.create('success', res.message);
@@ -587,7 +591,7 @@ export class AddNewProductComponent implements OnInit {
   }
 
   //for variant add
-  variantFormArrayFunctionForAdd(options? : any) {
+  variantFormArrayFunctionForAdd(options?: any) {
     for (let i = 0; i < this.variantDataArray.length; i++) {
       const f = this.fb.group({
         variantVendorName: this.dataForm.value.vendor,
@@ -597,16 +601,16 @@ export class AddNewProductComponent implements OnInit {
         variantDisplay: [true],
         variantPrice: this.dataForm.value.sellingPrice,
         variantStatus: this.dataForm.value.status,
-        image:[null],
+        image: [null],
         variantSku: this.generateSubSku(
           this.dataForm.value.sku,
           this.dataForm.value.variants,
           options ? options : this.dataForm.value.options,
           this.variantDataArray[i]
-          ),
-        });
-        (this.dataForm?.get('variantFormArray') as FormArray).push(f);
-      }
+        ),
+      });
+      (this.dataForm?.get('variantFormArray') as FormArray).push(f);
+    }
   }
 
   // Auto generate Sku for varaints
@@ -663,7 +667,7 @@ export class AddNewProductComponent implements OnInit {
           const res = d
             ?.trim()
             .replace(/[^A-Z0-9]+/gi, ' ')
-            // .toLowerCase();
+          // .toLowerCase();
           this.dataForm.patchValue({
             searchPageTitle: res,
           });
@@ -678,25 +682,25 @@ export class AddNewProductComponent implements OnInit {
 
   // auto seo description
   autoGenerateSeoDescription() {
-      this.sub = this.dataForm
-        .get('description')
-        .valueChanges.pipe()
-        .subscribe((d) => {
-          const res = d
-            ?.trim()
-            .replace(/[^A-Z0-9]+/gi, ' ')
-            // .toLowerCase();
-          this.dataForm.patchValue({
-            searchPageDescription: res,
-          });
+    this.sub = this.dataForm
+      .get('description')
+      .valueChanges.pipe()
+      .subscribe((d) => {
+        const res = d
+          ?.trim()
+          .replace(/[^A-Z0-9]+/gi, ' ')
+        // .toLowerCase();
+        this.dataForm.patchValue({
+          searchPageDescription: res,
         });
+      });
   }
 
   //Auto Quantity
-  totalQuantityCalculation(){
+  totalQuantityCalculation() {
     this.totalQuantity = 0;
-    for(let i=0; i< this.product.variantFormArray.length; i++){
-      if(this.product){
+    for (let i = 0; i < this.product.variantFormArray.length; i++) {
+      if (this.product) {
         this.totalQuantity += this.product.variantFormArray[i].variantQuantity;
       }
     }
@@ -705,45 +709,45 @@ export class AddNewProductComponent implements OnInit {
   // Submit Variant Form by Done Button
 
   submitVariant() {
-    if (this.dataForm.value.sku === null ) {
+    if (this.dataForm.value.sku === null) {
       this.uiService.warn('Please input the product sku first');
       return
-    } else if (this.id){
+    } else if (this.id) {
       let length = this.dataForm.value.variantFormArray.length;
-      for(let i=0; i< length; i++){
+      for (let i = 0; i < length; i++) {
         this.removeVariantFormArray(0);
       }
       let options = this.separateOptions();
-      this.addVariants(options,this.dataForm.value.variants);
+      this.addVariants(options, this.dataForm.value.variants);
       this.variantFormArrayFunctionForAdd(options);
-    } else{
+    } else {
 
       let options = this.separateOptions();
-      this.addVariants(this.dataForm.value.options,this.dataForm.value.variants);
+      this.addVariants(this.dataForm.value.options, this.dataForm.value.variants);
       this.variantFormArrayFunctionForAdd(options);
 
     }
   }
   separateOptions() {
-    let options : string[] = [];
-      for(let i = 0; i< this.fruits.length; i++){
-        let optionName : string;
-        for(let j=0; j < this.fruits[i].length; j++){
-          if(j===0){
-            optionName = this.fruits[i][j];
-          }else{
-            optionName += ','+ this.fruits[i][j];
-          }
+    let options: string[] = [];
+    for (let i = 0; i < this.fruits.length; i++) {
+      let optionName: string;
+      for (let j = 0; j < this.fruits[i].length; j++) {
+        if (j === 0) {
+          optionName = this.fruits[i][j];
+        } else {
+          optionName += ',' + this.fruits[i][j];
         }
-        options.push(optionName);
-        this.dataForm.value.options[i]=optionName;
       }
-      return options;
+      options.push(optionName);
+      this.dataForm.value.options[i] = optionName;
+    }
+    return options;
   }
 
 
   //remove variant from variant form array
-  removeVariantFormArray(index){
+  removeVariantFormArray(index) {
     (this.dataForm.get('variantFormArray') as FormArray).removeAt(index);
   }
 
@@ -751,7 +755,7 @@ export class AddNewProductComponent implements OnInit {
 
   // Form Control Array
 
-   onAddNewFormControl() {
+  onAddNewFormControl() {
     const form = new FormControl('');
     const form2 = new FormControl('');
     (this.dataForm.controls['variants'] as FormArray).push(form);
@@ -792,45 +796,45 @@ export class AddNewProductComponent implements OnInit {
     }
 
     //for tax
-    if(this.product.tax > 0){
+    if (this.product.tax > 0) {
       this.hasTax = true;
     }
 
     //for variants
-    if(this.product.hasVariant === true){
+    if (this.product.hasVariant === true) {
 
       this.addVariants(this.product.options, this.product.variants);
       this.variantFormArrayFunctionForEdit();
       this.dataForm.value.variantDataArray = this.product.variantDataArray;
 
       for (let i = 0; i < this.product.options.length; i++) {
-        if((i+1) !== this.product.options.length){
+        if ((i + 1) !== this.product.options.length) {
           this.onAddNewFormControl();
         }
         this.dataForm.value.options[i] = null;
 
-        this.fruits[i]= this.product.options[i].split(',')
+        this.fruits[i] = this.product.options[i].split(',')
       }
-      console.log("For Patch",this.product)
+      console.log("For Patch", this.product)
       this.dataForm.patchValue(this.product);
     }
-    else{
+    else {
       this.dataForm.patchValue(this.product);
     }
   }
 
-  private patchByImport(data){
+  private patchByImport(data) {
     //for medias
     for (let i = 0; i < data.images?.length - 1; i++) {
       this.addMediaLinkButton();
     }
-    if(data.variants?.length > 0){
+    if (data.variants?.length > 0) {
       for (let i = 0; i < data.variants?.length - 1; i++) {
         this.onAddNewFormControl();
       }
     }
     // this.addVariants(data.options, data.variants);
-    if(data.images?.length > 0){
+    if (data.images?.length > 0) {
       this.hasLink = true;
     }
     this.dataForm.patchValue(
@@ -845,10 +849,10 @@ export class AddNewProductComponent implements OnInit {
       }
     )
   }
-  getProductDescription(url){
+  getProductDescription(url) {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, false ); // false for synchronous request
-    xmlHttp.send( null );
+    xmlHttp.open("GET", url, false); // false for synchronous request
+    xmlHttp.send(null);
     return xmlHttp.responseText
   }
 
@@ -869,37 +873,37 @@ export class AddNewProductComponent implements OnInit {
     this.dataForm.value.isStockOut = false;
     this.dataForm.value.hasLink = false;
     const rawData = this.dataForm.value;
-    if(this.dataForm.value.quantity === 0){
+    if (this.dataForm.value.quantity === 0) {
       this.dataForm.value.isStockOut = true;
     }
 
-    if(this.dataForm.value.hasVariant){
-      for(let i = 0; i< this.dataForm.value.variantFormArray.length; i++){
-        if(this.dataForm.value.variantFormArray[i].variantQuantity === 0){
+    if (this.dataForm.value.hasVariant) {
+      for (let i = 0; i < this.dataForm.value.variantFormArray.length; i++) {
+        if (this.dataForm.value.variantFormArray[i].variantQuantity === 0) {
           this.dataForm.value.isStockOut = true;
         }
       }
     }
 
     this.dataForm.value.isReOrder = false;
-    if(this.dataForm.value.reOrder >= this.dataForm.value.quantity){
+    if (this.dataForm.value.reOrder >= this.dataForm.value.quantity) {
       this.dataForm.value.isReOrder = true;
     }
-    if(this.dataForm.value.reOrder === 0){
+    if (this.dataForm.value.reOrder === 0) {
       this.dataForm.value.isReOrder = false;
     }
-    if(this.dataForm.value.hasVariant){
-      for(let i = 0; i< this.dataForm.value.variantFormArray.length; i++){
-        if(this.dataForm.value.variantFormArray[i].variantReOrder !==0 && this.dataForm.value.variantFormArray[i].variantReOrder >= this.dataForm.value.variantFormArray[i].variantQuantity){
+    if (this.dataForm.value.hasVariant) {
+      for (let i = 0; i < this.dataForm.value.variantFormArray.length; i++) {
+        if (this.dataForm.value.variantFormArray[i].variantReOrder !== 0 && this.dataForm.value.variantFormArray[i].variantReOrder >= this.dataForm.value.variantFormArray[i].variantQuantity) {
           this.dataForm.value.isReOrder = true;
         }
       }
     }
 
     this.dataForm.value.isPreOrder = this.dataForm.value.continueSelling;
-    if(this.dataForm.value.hasVariant){
-      for(let i = 0; i< this.dataForm.value.variantFormArray.length; i++){
-        if(this.dataForm.value.variantFormArray[i].variantContinueSelling){
+    if (this.dataForm.value.hasVariant) {
+      for (let i = 0; i < this.dataForm.value.variantFormArray.length; i++) {
+        if (this.dataForm.value.variantFormArray[i].variantContinueSelling) {
           this.dataForm.value.isPreOrder = true;
         }
       }
@@ -916,30 +920,6 @@ export class AddNewProductComponent implements OnInit {
     }
   }
 
-//   public findInvalidControls() {
-//     const invalid = [];
-//     const controls = this.dataForm.controls;
-//     for (const name in controls) {
-//         if (controls[name].invalid) {
-//             invalid.push(name);
-//         }
-//     }
-//     return invalid;
-// }
-
-  /**
-   * Image Functionalities
-   */
-
-  // // Drag and drop
-  // onSelect(event) {
-  //   this.files.push(...event.addedFiles);
-  //   this.onUploadImages();
-  // }
-
-  // onRemove(event) {
-  //   this.files.splice(this.files.indexOf(event), 1);
-  // }
 
   // Toggle add media link
   toggleLink() {
@@ -954,30 +934,17 @@ export class AddNewProductComponent implements OnInit {
     this.trackQuantity = !this.trackQuantity;
   }
 
-  /**
-   * selection change
-   */
-
 
   /**
    * Product Archive Button
    */
-  archive() {
-    this.product.status = 4;
-    this.editProductData(this.product);
-    this.reloadService.needRefreshProduct$;
-  }
-  // preview() {
-  //  this.router.navigate(['product-details/' + this.product.slug])
-  // }
   preview() {
-    window.open('product-details/' + this.product.slug)
-  //  this.router.navigate()
+    window.open('product-details/' + this.product.slug);
   }
 
-  onCheckVariantImage(event: MatCheckboxChange, i:number) {
+  onCheckVariantImage(event: MatCheckboxChange, i: number) {
     if (event.checked) {
-     this.checkedVariantImgIndex.push(i);
+      this.checkedVariantImgIndex.push(i);
     } else {
       const fIndex = this.checkedVariantImgIndex.findIndex(h => h === i);
       this.checkedVariantImgIndex.splice(fIndex, 1)
@@ -1006,17 +973,17 @@ export class AddNewProductComponent implements OnInit {
     this.editorData = event;
   }
 
-  onEditHtmlEditor(){
+  onEditHtmlEditor() {
     this.htmlData = this.dataForm.value.description;
     this.showHtmlEditor = !this.showHtmlEditor;
   }
 
-  onInput(event: Event){
+  onInput(event: Event) {
     const data = (event.target as HTMLInputElement).value;
     this.dataForm.patchValue(
       {
-        name : 'Saniul',
-        description : data
+        name: 'Saniul',
+        description: data
       }
     )
   }
@@ -1040,7 +1007,7 @@ export class AddNewProductComponent implements OnInit {
    * OPEN COMPONENT DIALOG
    */
 
-   public openComponentDialog(data?: any) {
+  public openComponentDialog(data?: any) {
     const dialogRef = this.dialog.open(ImageCropperComponent, {
       data,
       panelClass: ['theme-dialog'],
@@ -1057,8 +1024,7 @@ export class AddNewProductComponent implements OnInit {
           this.imgBlob = dialogResult.imgBlob;
         }
         if (dialogResult.croppedImage) {
-          // this.pickedImage = dialogResult.croppedImage;
-          // this.imgPlaceHolder = this.pickedImage;
+          this.pickedImage = dialogResult.croppedImage;
           this.imageUploadOnServer();
         }
       }
@@ -1075,43 +1041,38 @@ export class AddNewProductComponent implements OnInit {
     this.fileUploadService.uploadSingleImage(data)
       .subscribe(res => {
         this.url = res.downloadUrl;
+        this.msg.success(res.message);
+        this.chooseImage.push(this.url);
+        if (this.url) {
+          this.checkedVariantImgIndex.forEach(index => {
+            console.log(index);
+            this.dataForm.value.variantFormArray[index].image = this.url;
+          })
+        }
       }, error => {
         console.log(error);
       });
   }
 
-  removeVariationImage(i: number) {
-    this.variantDataFormArray.at(i).patchValue({image: null})
+  removeVariationImage(i: number, url) {
+    this.variantFormArray.at(i).patchValue({ image: null })
   }
 
 
-  /**
-   * GET IMAGE DATA FROM STATE
-   */
-  private getPickedImages(images: ImageGallery[]) {
-    if (this.chooseImage && this.chooseImage.length > 0) {
-      const nImages = images.map(m => m.url);
-      this.chooseImage = this.utilsService.mergeArrayString(nImages, this.chooseImage);
-    } else {
-      this.chooseImage = images.map(m => m.url);
-    }
-    this.dataForm.patchValue(
-      {images: this.chooseImage}
-    );
-  }
+
 
   /**
    * DUG & DROP IMAGE REARRANGE
    */
 
-   drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.chooseImage, event.previousIndex, event.currentIndex);
   }
 
   /**
    * REMOVE SELECTED IMAGE
    */
-   removeSelectImage(s: string) {
+  removeSelectImage(s: string) {
     this.modal.confirm({
       nzTitle: 'Are you sure delete this task?',
       nzContent: '<b style="color: red;">Click on the save button to update</b>',
@@ -1121,11 +1082,16 @@ export class AddNewProductComponent implements OnInit {
       nzOnOk: () => {
         const index = this.chooseImage.findIndex(x => x === s);
         this.chooseImage.splice(index, 1);
-        this.msg.create('success', 'image removed from list');
+        this.fileUploadService.removeSingleFile(this.chooseImage[index])
+          .subscribe(res => {
+            this.msg.success(res.message);
+          }, err => {
+            this.msg.error(err.message);
+          })
       },
       nzCancelText: 'No',
       nzOnCancel: () => {
-        this.msg.create('warning', 'image is not deleted');
+        this.msg.warning('image is not deleted');
       }
     });
 
@@ -1136,83 +1102,83 @@ export class AddNewProductComponent implements OnInit {
    * ON HOLD INPUT DATA
    */
 
-   onHoldInputData() {
+  onHoldInputData() {
     this.needSessionDestroy = false;
     this.storageService.storeInputData(this.dataForm?.value, 'BLOG_INPUT');
   }
 
-  importProductInfo(){
+  importProductInfo() {
 
     let baseurl = new URL(this.dataForm.value.link).hostname;
     this.spinner.show();
-      if (baseurl==="www.aliexpress.com"){
-        let link = this.dataForm.value.link.split('/');
-        let productCode = link[4].split('.html')[0];
-        this.productService.getAliexpressProductInfo(productCode)
+    if (baseurl === "www.aliexpress.com") {
+      let link = this.dataForm.value.link.split('/');
+      let productCode = link[4].split('.html')[0];
+      this.productService.getAliexpressProductInfo(productCode)
         .subscribe(
-          (res)=>{
+          (res) => {
             this.spinner.hide();
             let data = res.data;
             this.patchByImport(data);
 
-          },(err)=>{
+          }, (err) => {
             this.spinner.hide();
           }
         )
-      }
-      if (baseurl==="www.amazon.com"){
-        let link = this.dataForm.value.link.split('/');
-        let productCode = link[5];
-        this.productService.getAmazonProductInfo(productCode)
+    }
+    if (baseurl === "www.amazon.com") {
+      let link = this.dataForm.value.link.split('/');
+      let productCode = link[5];
+      this.productService.getAmazonProductInfo(productCode)
         .subscribe(
-          (res)=>{
+          (res) => {
             this.spinner.hide();
             let data = res.data;
             this.patchByImport(data);
 
-          },(err)=>{
+          }, (err) => {
             this.spinner.hide();
             console.log(err);
           }
         )
-      }
-      if (baseurl==="www.amazon.in"){
-        let link = this.dataForm.value.link.split('/');
-        let productCode = link[4];
-        this.productService.getAmazonIndiaProductInfo(productCode)
+    }
+    if (baseurl === "www.amazon.in") {
+      let link = this.dataForm.value.link.split('/');
+      let productCode = link[4];
+      this.productService.getAmazonIndiaProductInfo(productCode)
         .subscribe(
-          (res)=>{
+          (res) => {
             this.spinner.hide();
             let data = res.data;
             this.patchByImport(data);
 
-          },(err)=>{
+          }, (err) => {
             this.spinner.hide();
             console.log(err);
           }
         )
-      }
-      if (baseurl==="www.walmart.com"){
-        let link = this.dataForm.value.link.split('/');
-        let productCode = link[5];
-        this.productService.getWalmartProductInfo(productCode)
+    }
+    if (baseurl === "www.walmart.com") {
+      let link = this.dataForm.value.link.split('/');
+      let productCode = link[5];
+      this.productService.getWalmartProductInfo(productCode)
         .subscribe(
-          (res)=>{
+          (res) => {
             this.spinner.hide();
             let data = res.data;
             this.patchByImport(data);
 
-          },(err)=>{
+          }, (err) => {
             this.spinner.hide();
             console.log(err);
           }
         )
-      }
+    }
 
 
   }
 
-  add(event: MatChipInputEvent, index:number): void {
+  add(event: MatChipInputEvent, index: number): void {
     const value = (event.value || '').trim();
     // Add our fruit
     if (value) {
@@ -1236,8 +1202,8 @@ export class AddNewProductComponent implements OnInit {
 
     // Add our fruit
     if (value) {
-      this.tags.push({name: value});
-      this.dataForm.value.tags.push({name: value});
+      this.tags.push({ name: value });
+      this.dataForm.value.tags.push({ name: value });
     }
 
     // Clear the input value
@@ -1269,7 +1235,7 @@ export class AddNewProductComponent implements OnInit {
     this.fileUploadService.uploadMultiImageOriginal(this.files)
       .subscribe(res => {
         this.downloadUrls = res.downloadUrls;
-        this.downloadUrls.forEach( m => {
+        this.downloadUrls.forEach(m => {
           this.chooseImage.push(m)
         })
         this.files = [];
@@ -1277,6 +1243,38 @@ export class AddNewProductComponent implements OnInit {
       }, error => {
         console.log(error);
       });
+  }
+
+  async fileChangeEvent(event: any) {
+    if (this.checkedVariantImgIndex.length === 0) {
+      this.msg.warning("Please Select the variants first");
+      return
+    }
+    this.file = (event.target as HTMLInputElement).files[0];
+    // File Name Modify...
+    const originalNameWithoutExt = this.file.name.toLowerCase().split(' ').join('-').split('.').shift();
+    const fileExtension = this.file.name.split('.').pop();
+    // Generate new File Name..
+    this.newFileName = `${Date.now().toString()}_${originalNameWithoutExt}.${fileExtension}`;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(this.file);
+
+
+    reader.onload = () => {
+      // this.imgPlaceHolder = reader.result as string;
+    };
+
+    // Open Upload Dialog
+    if (event.target.files[0]) {
+      await this.openComponentDialog(event);
+    }
+    // NGX Image Cropper Event..
+    this.imageChangedEvent = event;
+  }
+
+  onAllChecked($event) {
+    console.log('all checked')
   }
 
 

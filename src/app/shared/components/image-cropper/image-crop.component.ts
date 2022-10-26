@@ -69,9 +69,8 @@ export class ImageCropperComponent implements OnInit {
   onSaveImage() {
     this.dialogRef.close(
       {
-      imgBlob: this.imgBlob ? this.imgBlob : null,
-      croppedImage: this.croppedImage ? this.croppedImage : null
-
+        imgBlob: this.imgBlob ? this.imgBlob : null,
+        croppedImage: this.croppedImage ? this.croppedImage : null
       }
     );
   }

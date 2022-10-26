@@ -226,7 +226,7 @@ export class AdjustmentComponent implements OnInit {
             // code block
           break;
           case 6:
-            this.getAllArchivedProducts(6);
+            this.getAllArchivedProducts();
             // code block
           break;
       default:
@@ -243,30 +243,21 @@ export class AdjustmentComponent implements OnInit {
   }
 
   // filtering
-  getAllArchivedProducts(data) {
+  getAllArchivedProducts() {
     this.spinner.show();
-    this.status = data;
-
     const pagination: Pagination = {
       currentPage: this.currentPage.toString(),
       pageSize: this.productsPerPage.toString(),
     };
-
-    const select = '';
-
-    if (this.query === '' || this.query === null || this.query === undefined) {
-      this.query = { hasLink: false };
-    }
     this.productService
-      .getAllArchivedProducts(pagination, this.sortQuery)
+      .getAllArchivedProducts(pagination)
       .subscribe(
         (res) => {
           this.products = res.data;
-          console.log('archived', this.products);
-        },
-        (error) => {
           this.spinner.hide();
-          console.log(error);
+        },
+        (err) => {
+          this.spinner.hide();
         }
       );
   }

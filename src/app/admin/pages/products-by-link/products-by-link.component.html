@@ -92,7 +92,7 @@
           <div class="main-table-row">
             <!-- <div class="down-arrow main-table-data"><i (click)="variantDropDown(i)" class="fa fa-caret-down"></i></div> -->
             <div class="down-arrow main-table-data">
-              <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data._id)"
+              <mat-checkbox class="mat-check" (ngModelChange)="onCheckChange($event, i, data?._id)"
               [(ngModel)]="data.select"></mat-checkbox>
             </div>
             <div class="check main-table-data">
@@ -101,7 +101,7 @@
             <div class="price main-table-data">
                <!---product-img-->
                <div class="product-img">
-                <img [src]="setThumbnailImage(data) ? setThumbnailImage(data) : '/assets/images/placeholder/test.png'" alt="">
+                <img [src]=" data ? setThumbnailImage(data) : '/assets/images/placeholder/test.png'" alt="">
               </div>
             </div>
             <div class="product main-table-data">
@@ -109,13 +109,10 @@
                 <!---product-text-info-->
                 <div class="product-text-info">
                   <!-- <a>{{data.link}}</a> -->
-                  <a target="_blank" rel="noopener noreferrer" [href]="data.link" >{{data.link}}</a>
-                  <a target="_blank" [routerLink]="['../../../', 'product-details-search', data.slug]">
+                  <a target="_blank" rel="noopener noreferrer" [href]="data?.link" >{{data?.link}}</a>
+                  <a target="_blank" [routerLink]="['../../../', 'product-details-search', data?.slug]">
                     <i class="eyeButton" class="fa fa-eye"></i>
                   </a>
-
-                  <i [routerLink]="['../../', 'add-by-link', data._id]" class="fas fa-edit"></i>
-                  <i (click)="deleteProduct(data)" class="fas fa-trash"></i>
                 </div>
               </div>
             </div>
