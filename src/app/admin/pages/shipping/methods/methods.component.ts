@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class MethodsComponent implements OnInit {
   tabs = ['All Invoice', 'Closed', 'Pending'];
   isMethodVisible = false;
-  openingTime = '2';
+  openingTime = '1';
   instockValue = 'A';
   preOrderValue = 'A';
   typeChecked = [];
@@ -24,16 +24,16 @@ export class MethodsComponent implements OnInit {
 
   shipedTable = [
     {
-      name: 'Standard Shipping',
+      name: 'General Method',
     },
     {
-      name: 'Express Shipping',
+      name: 'Sameday Method',
     },
     {
-      name: 'Pick by own',
+      name: 'Nextday Method',
     },
     {
-      name: 'Next day',
+      name: 'Own Pick Method',
     },
   ];
 

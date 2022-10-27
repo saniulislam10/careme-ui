@@ -12,140 +12,43 @@
       class="profile_left"
       nz-col
       [nzXs]="{ span: 24 }"
-      [nzLg]="{ span: 12 }"
+      [nzLg]="{ span: 24 }"
     >
       <div nz-row [nzGutter]="16">
-        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-          <label>Profile Name</label>
+        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 6 }">
+          <label> Profile Name </label>
           <input
             nz-input
             name="name"
             type="text"
             id="name"
+            value="General"
             placeholder="Ex: Standard Shipping"
           />
         </div>
       </div>
-      <div nz-row [nzGutter]="16">
-        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
-          <label>InStock</label>
-          <input
-            nz-input
-            name="instock"
-            type="text"
-            id="instock"
-            placeholder="Ex: Delivery within"
-          />
-        </div>
-        <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
-          <label>Minimum</label>
-          <nz-select ngModel="9">
-            <nz-option nzValue="1" nzLabel="1 hour"></nz-option>
-            <nz-option nzValue="2" nzLabel="2 hour"></nz-option>
-            <nz-option nzValue="3" nzLabel="3 hour"></nz-option>
-            <nz-option nzValue="4" nzLabel="4 hour"></nz-option>
-            <nz-option nzValue="5" nzLabel="5 hour"></nz-option>
-            <nz-option nzValue="6" nzLabel="6 hour"></nz-option>
-            <nz-option nzValue="7" nzLabel="12 hour"></nz-option>
-            <nz-option nzValue="8" nzLabel="1 day"></nz-option>
-            <nz-option nzValue="9" nzLabel="2 days"></nz-option>
-            <nz-option nzValue="10" nzLabel="3 days"></nz-option>
-            <nz-option nzValue="11" nzLabel="4 days"></nz-option>
-            <nz-option nzValue="12" nzLabel="5 days"></nz-option>
-            <nz-option nzValue="13" nzLabel="15 days"></nz-option>
-            <nz-option nzValue="14" nzLabel="25 days"></nz-option>
-            <nz-option nzValue="15" nzLabel="30 days"></nz-option>
-          </nz-select>
-        </div>
-        <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
-          <nz-form-label [nzSpan]="24">Maximum</nz-form-label>
-          <nz-select ngModel="12">
-            <nz-option nzValue="1" nzLabel="1 hour"></nz-option>
-            <nz-option nzValue="2" nzLabel="2 hour"></nz-option>
-            <nz-option nzValue="3" nzLabel="3 hour"></nz-option>
-            <nz-option nzValue="4" nzLabel="4 hour"></nz-option>
-            <nz-option nzValue="5" nzLabel="5 hour"></nz-option>
-            <nz-option nzValue="6" nzLabel="6 hour"></nz-option>
-            <nz-option nzValue="7" nzLabel="12 hour"></nz-option>
-            <nz-option nzValue="8" nzLabel="1 day"></nz-option>
-            <nz-option nzValue="9" nzLabel="2 days"></nz-option>
-            <nz-option nzValue="10" nzLabel="3 days"></nz-option>
-            <nz-option nzValue="11" nzLabel="4 days"></nz-option>
-            <nz-option nzValue="12" nzLabel="5 days"></nz-option>
-            <nz-option nzValue="13" nzLabel="15 days"></nz-option>
-            <nz-option nzValue="14" nzLabel="25 days"></nz-option>
-            <nz-option nzValue="15" nzLabel="30 days"></nz-option>
-          </nz-select>
-        </div>
-      </div>
-      <div nz-row [nzGutter]="16">
-        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
-          <label>Pre Order</label>
-          <input
-            nz-input
-            name="instock"
-            type="text"
-            id="instock"
-            placeholder="Ex: Delivery within"
-          />
-        </div>
-        <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
-          <label>Minimum</label>
-          <nz-select ngModel="13">
-            <nz-option nzValue="1" nzLabel="1 hour"></nz-option>
-            <nz-option nzValue="2" nzLabel="2 hour"></nz-option>
-            <nz-option nzValue="3" nzLabel="3 hour"></nz-option>
-            <nz-option nzValue="4" nzLabel="4 hour"></nz-option>
-            <nz-option nzValue="5" nzLabel="5 hour"></nz-option>
-            <nz-option nzValue="6" nzLabel="6 hour"></nz-option>
-            <nz-option nzValue="7" nzLabel="12 hour"></nz-option>
-            <nz-option nzValue="8" nzLabel="1 day"></nz-option>
-            <nz-option nzValue="9" nzLabel="2 days"></nz-option>
-            <nz-option nzValue="10" nzLabel="3 days"></nz-option>
-            <nz-option nzValue="11" nzLabel="4 days"></nz-option>
-            <nz-option nzValue="12" nzLabel="5 days"></nz-option>
-            <nz-option nzValue="13" nzLabel="15 days"></nz-option>
-            <nz-option nzValue="14" nzLabel="25 days"></nz-option>
-            <nz-option nzValue="15" nzLabel="30 days"></nz-option>
-          </nz-select>
-        </div>
-        <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
-          <nz-form-label [nzSpan]="24">Maximum</nz-form-label>
-          <nz-select ngModel="15">
-            <nz-option nzValue="1" nzLabel="1 hour"></nz-option>
-            <nz-option nzValue="2" nzLabel="2 hour"></nz-option>
-            <nz-option nzValue="3" nzLabel="3 hour"></nz-option>
-            <nz-option nzValue="4" nzLabel="4 hour"></nz-option>
-            <nz-option nzValue="5" nzLabel="5 hour"></nz-option>
-            <nz-option nzValue="6" nzLabel="6 hour"></nz-option>
-            <nz-option nzValue="7" nzLabel="12 hour"></nz-option>
-            <nz-option nzValue="8" nzLabel="1 day"></nz-option>
-            <nz-option nzValue="9" nzLabel="2 days"></nz-option>
-            <nz-option nzValue="10" nzLabel="3 days"></nz-option>
-            <nz-option nzValue="11" nzLabel="4 days"></nz-option>
-            <nz-option nzValue="12" nzLabel="5 days"></nz-option>
-            <nz-option nzValue="13" nzLabel="15 days"></nz-option>
-            <nz-option nzValue="14" nzLabel="25 days"></nz-option>
-            <nz-option nzValue="15" nzLabel="30 days"></nz-option>
-          </nz-select>
-        </div>
-      </div>
     </div>
-    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
-      <label>Choose Product</label>
+    <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+      <label> Choose Product </label>
       <div nz-row [nzGutter]="16">
         <div class="mb" nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
           <nz-radio-group [(ngModel)]="chooseProduct" nzName="radio-group">
-            <label nz-radio nzValue="all">All Product</label>
-            <label nz-radio nzValue="category">Category</label>
-            <label nz-radio nzValue="products">Products</label>
+            <label nz-radio nzValue="all"> All Product </label>
+            <label nz-radio nzValue="category"> Category </label>
+            <label nz-radio nzValue="products"> Products </label>
           </nz-radio-group>
         </div>
-        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
-          <label>Choose Category</label>
+        <div
+          nz-col
+          [nzXs]="{ span: 24 }"
+          [nzLg]="{ span: 24 }"
+          *ngIf="chooseProduct !== 'all'"
+        >
+          <label *ngIf="chooseProduct === 'category'"> Choose Category </label>
+          <label *ngIf="chooseProduct === 'products'"> Choose Product </label>
           <nz-select
             nzMode="tags"
-            nzPlaceHolder="Choose a category"
+            nzPlaceHolder="Type or choose ..."
             [(ngModel)]="listOfTagOptions"
           >
             <nz-option
@@ -166,29 +69,81 @@
       <i class="las la-globe-europe"></i>
     </div>
     <div class="zone_name">
-      <h3>Bangladesh</h3>
-      <ul>
-        <li>Dhaka,</li>
-        <li>Dhaka,</li>
-        <li>Dhaka,</li>
-        <li>Dhaka</li>
-      </ul>
+      <h4>Bangladesh</h4>
+      <p>
+        Dhaka, Gazipur, Narsingdi, Manikganj, Munshiganj, Narayanganj,
+        Mymensingh, Sherpur, Jamalpur, Netrokona, Kishoreganj, Tangail,
+        Faridpur, Maradipur, Shariatpur
+      </p>
     </div>
   </div>
+  <nz-card
+    class="shipping_rate"
+    nzSize="small"
+    [nzBodyStyle]="{ padding: '0px' }"
+  >
+    <nz-table
+      #rateData
+      nzSize="small"
+      [nzData]="dataSet"
+      [nzShowPagination]="false"
+    >
+      <thead>
+        <tr>
+          <th>Shipping Method</th>
+          <th>Condition</th>
+          <th>Rate</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of rateData.data">
+          <td>
+            <p>
+              {{ data.name }}
+            </p>
+          </td>
+          <td>
+            <p>---</p>
+          </td>
+          <td>
+            <p>{{ data.rate }}TK</p>
+          </td>
+          <td>
+            <label nz-checkbox [ngModel]="data.enable">Enable</label>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
 </nz-card>
 
 <ng-template #shipZone>
-  <button nz-button (click)="showZoneModal()">
+  <button nz-button nzType="dashed" (click)="showZoneModal()">
     <i class="las la-plus"></i> Add Zone
   </button>
   <nz-modal
     [(nzVisible)]="zoneVisible"
-    nzTitle="The first Modal"
+    nzTitle="Shipping Zone"
     (nzOnCancel)="zoneCancel()"
     (nzOnOk)="zoneOk()"
   >
     <ng-container *nzModalContent>
-      <div class="shipping_zone">ok</div>
+      <div class="zone_choose">
+        <form nz-form>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="zonename">
+              Zone Name
+            </nz-form-label>
+            <nz-form-control
+              [nzSpan]="24"
+              nzExtra="We must make sure that your are a human."
+            >
+              <input nz-input name="zonename" type="text" id="zonename" />
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </div>
     </ng-container>
   </nz-modal>
 </ng-template>

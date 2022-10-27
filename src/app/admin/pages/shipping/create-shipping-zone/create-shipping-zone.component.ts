@@ -9,6 +9,46 @@ export class CreateShippingZoneComponent implements OnInit {
   // For Details
   zoneVisible = false;
   chooseProduct = 'all';
+  shippingMethod = [
+    {
+      name: 'General Method',
+      value: 1,
+    },
+    {
+      name: 'Sameday Method',
+      value: 2,
+    },
+    {
+      name: 'Nextday Method',
+      value: 3,
+    },
+    {
+      name: 'Own Pick Method',
+      value: 4,
+    },
+  ];
+  dataSet = [
+    {
+      name: 'General Method',
+      rate: '120',
+      enable: 'true',
+    },
+    {
+      name: 'Sameday Method',
+      rate: '200',
+      enable: 'false',
+    },
+    {
+      name: 'Nextday Method',
+      rate: '150',
+      enable: 'false',
+    },
+    {
+      name: 'Own Pick Method',
+      rate: '15',
+      enable: 'false',
+    },
+  ];
 
   // Choose Category
   listOfOption: Array<{ label: string; value: string }> = [];

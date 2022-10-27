@@ -10,10 +10,13 @@ export class ShippingComponent implements OnInit {
   tabs = ['All Invoice', 'Closed', 'Pending'];
   shipedTable = [
     {
-      name: 'Standard Shipping',
+      name: 'General Shipping',
     },
     {
-      name: 'Express Shipping',
+      name: 'Sameday Shipping',
+    },
+    {
+      name: 'Nextday Shipping',
     },
     {
       name: 'Pick by own',
