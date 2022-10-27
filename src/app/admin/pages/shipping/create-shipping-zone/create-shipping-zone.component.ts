@@ -9,6 +9,7 @@ export class CreateShippingZoneComponent implements OnInit {
   // For Details
   zoneVisible = false;
   chooseProduct = 'all';
+  zoneChoose = true;
   shippingMethod = [
     {
       name: 'General Method',

@@ -139,7 +139,96 @@
               [nzSpan]="24"
               nzExtra="We must make sure that your are a human."
             >
-              <input nz-input name="zonename" type="text" id="zonename" />
+              <input
+                nz-input
+                name="zonename"
+                type="text"
+                value="Bangladesh"
+                id="zonename"
+                placeholder="Customers won't see this."
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control [nzSpan]="24">
+              <nz-card nzSize="small" class="zone_name_list">
+                <nz-input-group class="mb" [nzSuffix]="suffixIconSearch">
+                  <input
+                    type="text"
+                    nz-input
+                    placeholder="Search countries, regions and zone"
+                  />
+                </nz-input-group>
+                <ng-template #suffixIconSearch>
+                  <span nz-icon nzType="search"></span>
+                </ng-template>
+                <ul>
+                  <li>
+                    <div class="country_single">
+                      <input type="checkbox" id="restofworld" />
+                      <label for="restofworld"> Rest of world </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="country_single">
+                      <input type="checkbox" id="asia" />
+                      <label for="asia"> Asia </label>
+                    </div>
+                    <ul>
+                      <li>
+                        <div class="country_single">
+                          <input type="checkbox" id="bangladesh" checked />
+                          <label for="bangladesh">
+                            <img
+                              for="bangladesh"
+                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/1200px-Flag_of_Bangladesh.svg.png"
+                            />
+                            Bangladesh
+                          </label>
+                        </div>
+                        <ul>
+                          <li>
+                            <div class="country_single">
+                              <input type="checkbox" id="dhaka" checked />
+                              <label for="dhaka"> Dhaka </label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="country_single">
+                              <input type="checkbox" id="chittagong" checked />
+                              <label for="chittagong"> Chittagong </label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="country_single">
+                              <input type="checkbox" id="khulna" checked />
+                              <label for="khulna"> Khulna </label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="country_single">
+                              <input type="checkbox" id="barisal" checked />
+                              <label for="barisal"> Barisal </label>
+                            </div>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <div class="country_single">
+                          <input type="checkbox" id="india" />
+                          <label for="india">
+                            <img
+                              for="bangladesh"
+                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/1200px-Flag_of_Bangladesh.svg.png"
+                            />
+                            India
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nz-card>
             </nz-form-control>
           </nz-form-item>
         </form>

@@ -78,9 +78,38 @@ nz-radio-group {
   }
 }
 .zone_choose {
-  nz-form-control {
-    input {
-      width: 100%;
+  nz-form-item {
+    margin-bottom: 15px;
+  }
+}
+.zone_name_list {
+  ul {
+    li {
+      list-style: none;
+      margin-bottom: 5px;
+      .country_single {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        input {
+          margin-right: 10px;
+        }
+        label {
+          cursor: pointer;
+          img {
+            width: 25px;
+            height: 25px;
+          }
+        }
+      }
+      ul {
+        margin: 10px 0;
+        padding-left: 25px;
+        li {
+          list-style: none;
+          margin-bottom: 5px;
+        }
+      }
     }
   }
 }
