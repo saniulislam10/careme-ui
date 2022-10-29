@@ -32,3 +32,64 @@ input {
     margin: 0 !important;
   }
 }
+.coupon_code_value {
+  form {
+    width: 100%;
+  }
+  input {
+    width: 100%;
+    margin: 0 !important;
+  }
+}
+.product_requier {
+  margin-bottom: 25px;
+  h4 {
+    font-weight: 500;
+    margin: 0 0 -5px 0 !important;
+  }
+}
+.customer_requier {
+  h4 {
+    font-weight: 500;
+    margin: 0 0 -5px 0 !important;
+  }
+}
+.customer_search {
+  margin: 25px 0 0 0;
+  input {
+    width: 100%;
+  }
+}
+.code_use_limit {
+  margin-bottom: 15px !important;
+  h4 {
+    margin-bottom: 15px !important;
+  }
+  nz-checkbox {
+    display: block;
+    width: 100%;
+  }
+}
+.code_use_date {
+  nz-time-picker,
+  nz-date-picker {
+    width: 100%;
+  }
+}
+.set_endtime {
+  margin: 25px 0 15px 0;
+}
+.dcode {
+  margin-bottom: 15px !important;
+  span {
+    font-weight: 500;
+  }
+}
+.single_info {
+  h4 {
+    font-weight: 500;
+  }
+  ul {
+    margin-left: 15px;
+  }
+}

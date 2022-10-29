@@ -1,11 +1,11 @@
 <!---order-header-area-->
 <div class="page-header">
-  <h2><i class="las la-lg la-arrow-left"></i> Create product discount</h2>
+  <h2><i class="las la-lg la-arrow-left"></i> Create order discount</h2>
 </div>
 <div nz-row [nzGutter]="16">
   <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 15 }">
-    <nz-card class="mb" nzTitle="Amount off products" [nzExtra]="newcouponType">
-      <div class="method_choose">
+    <nz-card class="mb" nzTitle="Amount off order" [nzExtra]="newcouponType">
+      <div class="customer_requier">
         <h4>Select a Method</h4>
         <nz-radio-group [(ngModel)]="mathodValue">
           <label nz-radio nzValue="A">Discount code</label>
@@ -18,7 +18,7 @@
             <nz-form-label [nzSpan]="24" nzFor="couponcode">
               Discount code
             </nz-form-label>
-            <nz-form-control [nzSpan]="24">
+            <nz-form-control [nzSpan]="12">
               <input
                 nz-input
                 name="couponcode"
@@ -29,42 +29,174 @@
             </nz-form-control>
           </nz-form-item>
         </form>
+      </div>
+      <div class="coupon_code_value">
+        <div nz-form>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="24" nzFor="couponcodevalue">
+              Discount Value
+            </nz-form-label>
+            <nz-input-group nzCompact>
+              <input
+                type="text"
+                nz-input
+                placeholder="0.00"
+                style="width: 50%"
+              />
+              <nz-select [(ngModel)]="couponValue">
+                <nz-option
+                  nzValue="percentage"
+                  nzLabel="Percentage"
+                ></nz-option>
+                <nz-option
+                  nzValue="fixedamount"
+                  nzLabel="Fixed amount"
+                ></nz-option>
+              </nz-select>
+            </nz-input-group>
+          </nz-form-item>
+        </div>
       </div>
     </nz-card>
     <ng-template #newcouponType>
-      <p>Product discount</p>
+      <p>Order discount</p>
     </ng-template>
-    <nz-card class="mb" nzTitle="Amount off products">
-      <div class="method_choose">
-        <h4>Select a Method</h4>
-        <nz-radio-group [(ngModel)]="mathodValue">
-          <label nz-radio nzValue="A">Discount code</label>
-          <label nz-radio nzValue="B">Automatic discount</label>
+    <nz-card class="mb">
+      <div class="product_requier">
+        <h4>Minimum purchase requirements</h4>
+        <nz-radio-group [(ngModel)]="minRequie">
+          <label nz-radio nzValue="A">No minimum requirements</label>
+          <label nz-radio nzValue="B">
+            Minimum purchase amount
+            <input *ngIf="minRequie === 'B'" nz-input placeholder="0.00" />
+          </label>
+          <label nz-radio nzValue="C">
+            Minimum quantity of items
+            <input *ngIf="minRequie === 'C'" nz-input placeholder="1" />
+          </label>
         </nz-radio-group>
       </div>
-      <div class="coupon_code">
-        <form nz-form>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="24" nzFor="couponcode">
-              Discount code
-            </nz-form-label>
-            <nz-form-control [nzSpan]="24">
-              <input
-                nz-input
-                name="couponcode"
-                type="text"
-                id="couponcode"
-                placeholder="Coupon Code"
-              />
-            </nz-form-control>
-          </nz-form-item>
-        </form>
+      <div class="customer_requier">
+        <h4>Customer eligibility</h4>
+        <nz-radio-group [(ngModel)]="custoemrRequie">
+          <label nz-radio nzValue="A">All customers</label>
+          <label nz-radio nzValue="B"> Specific customers </label>
+        </nz-radio-group>
+        <div class="customer_search">
+          <nz-input-group
+            [nzSuffix]="suffixIconSearch"
+            *ngIf="custoemrRequie !== 'A'"
+          >
+            <input type="text" nz-input placeholder="Specific customers" />
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <span nz-icon nzType="search"></span>
+          </ng-template>
+        </div>
       </div>
     </nz-card>
+    <nz-card class="mb">
+      <div class="code_use_limit">
+        <h4>Maximum discount uses</h4>
+        <label nz-checkbox> Limit to one use per customer </label>
+        <br />
+        <label nz-checkbox [(ngModel)]="useLimit">
+          Limit number of times this discount can be used in total
+        </label>
+        <br />
+        <input type="text" nz-input placeholder="1" *ngIf="useLimit === true" />
+      </div>
+    </nz-card>
+    <nz-card nzTitle="Active dates">
+      <div class="code_use_date">
+        <div nz-form>
+          <nz-form-item nz-row>
+            <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 8 }">
+              <nz-form-label nzFor="couponcode"> Start date </nz-form-label>
+              <nz-form-control>
+                <nz-date-picker [nzFormat]="dateFormat"></nz-date-picker>
+              </nz-form-control>
+            </div>
+            <div nz-col [nzXs]="{ span: 12 }" [nzLg]="{ span: 6 }">
+              <nz-form-label nzFor="couponcode"> Start time </nz-form-label>
+              <nz-form-control>
+                <nz-time-picker
+                  [(ngModel)]="time"
+                  [nzDefaultOpenValue]="defaultOpenValue"
+                ></nz-time-picker>
+              </nz-form-control>
+            </div>
+
+            <div
+              nz-col
+              class="set_endtime"
+              [nzXs]="{ span: 24 }"
+              [nzLg]="{ span: 24 }"
+            >
+              <label nz-checkbox [(ngModel)]="enddateChecked">
+                Set end date
+              </label>
+            </div>
+
+            <div
+              nz-col
+              *ngIf="enddateChecked === true"
+              [nzXs]="{ span: 12 }"
+              [nzLg]="{ span: 8 }"
+            >
+              <nz-form-label [nzSpan]="24" nzFor="couponcode">
+                End date
+              </nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-date-picker [nzFormat]="dateFormat"></nz-date-picker>
+              </nz-form-control>
+            </div>
+            <div
+              nz-col
+              *ngIf="enddateChecked === true"
+              [nzXs]="{ span: 12 }"
+              [nzLg]="{ span: 6 }"
+            >
+              <nz-form-label [nzSpan]="24" nzFor="couponcode">
+                End time
+              </nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-time-picker
+                  [(ngModel)]="time"
+                  [nzDefaultOpenValue]="defaultOpenValue"
+                ></nz-time-picker>
+              </nz-form-control>
+            </div>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-card>
+    <br />
+    <br />
+    <br />
   </div>
   <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 9 }">
-    <nz-card>
-      <h3>Summary</h3>
+    <nz-card nzTitle="Summary">
+      <h4 class="dcode">Code: <span>CAREME15</span></h4>
+      <div class="single_info">
+        <h4>TYPE AND METHOD</h4>
+        <ul>
+          <li>Amount off order</li>
+          <li>Discount code</li>
+        </ul>
+      </div>
+      <div class="single_info">
+        <h4>DETAILS</h4>
+        <ul>
+          <li>Available on online sales channels</li>
+          <li>15% off entire order</li>
+          <li>Minimum purchase of 1 item</li>
+          <li>All customers</li>
+          <li>Limit of 1 use, one per customer</li>
+          <li>Can't combine with other discounts</li>
+          <li>Active from today</li>
+        </ul>
+      </div>
     </nz-card>
   </div>
 </div>
