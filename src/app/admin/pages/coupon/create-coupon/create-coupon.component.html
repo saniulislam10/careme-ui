@@ -102,14 +102,9 @@
         <br />
         <label nz-checkbox [(ngModel)]="useLimit">
           Limit number of times this discount can be used in total
-          <br />
-          <input
-            type="text"
-            nz-input
-            placeholder="1"
-            *ngIf="useLimit === true"
-          />
         </label>
+        <br />
+        <input type="text" nz-input placeholder="1" *ngIf="useLimit === true" />
       </div>
     </nz-card>
     <nz-card nzTitle="Active dates">
