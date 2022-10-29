@@ -13,20 +13,8 @@
       <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
         <div class="table-filter-area">
           <form>
-            <input
-              #searchInput
-              nz-input
-              id="searchInput"
-              class="tw"
-              type="text"
-              placeholder="Filter Refund"
-              (focus)="handleFocus($event)"
-              name="searchTerm"
-              nzSize="large"
-              autocomplete="off"
-              ngModel
-              required
-            />
+            <input #searchInput nz-input id="searchInput" class="tw" type="text" placeholder="Filter Refund"
+              (focus)="handleFocus($event)" name="searchTerm" nzSize="large" autocomplete="off" ngModel required />
           </form>
           <ul>
             <li>
@@ -38,14 +26,8 @@
           </ul>
         </div>
         <div class="table-data-area">
-          <nz-table
-            nzSize="small"
-            #rowSelectionTable
-            [nzShowPagination]="false"
-            [nzLoading]="loading"
-            [nzData]="shipedTable"
-            [nzScroll]="{ x: '800px' }"
-          >
+          <nz-table nzSize="small" #rowSelectionTable [nzShowPagination]="false" [nzLoading]="loading"
+            [nzData]="shipedTable" [nzScroll]="{ x: '800px' }">
             <thead>
               <tr>
                 <th style="width: 50px; text-align: center">
@@ -77,30 +59,18 @@
   </nz-card>
 </div>
 
-<nz-modal
-  [(nzVisible)]="isMethodVisible"
-  nzTitle="Create a Method"
-  (nzOnCancel)="mathodCancel()"
-  (nzOnOk)="mathodOk()"
-  nzOkText="Save Method"
-  nzWidth="800px"
->
+<nz-modal [(nzVisible)]="isMethodVisible" nzTitle="Create a Method" (nzOnCancel)="mathodCancel()" (nzOnOk)="mathodOk()"
+  nzOkText="Save Method" nzWidth="800px">
   <ng-container *nzModalContent>
     <div class="entry_method">
-      <div nz-form>
+      <form nz-form [formGroup]="dataForm">
         <div nz-row [nzGutter]="16">
           <div nz-col class="mb15" [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
             <nz-form-item>
               <nz-form-label [nzSpan]="24" nzFor="method"> Name </nz-form-label>
               <nz-form-control [nzSpan]="24">
-                <input
-                  nz-input
-                  name="method"
-                  type="text"
-                  id="method"
-                  placeholder="Standard Shipping"
-                  value="Standard Shipping"
-                />
+                <input nz-input name="method" type="text" id="method" placeholder="Standard Shipping"
+                  formControlName="name" />
               </nz-form-control>
             </nz-form-item>
           </div>
@@ -108,53 +78,31 @@
             <nz-form-item>
               <nz-form-label [nzSpan]="24">Opening Time</nz-form-label>
               <nz-form-control [nzSpan]="24">
-                <nz-select name="openingtime" [(ngModel)]="openingTime">
-                  <nz-option nzValue="1" nzLabel="All Day Open"></nz-option>
-                  <nz-option nzValue="2" nzLabel="Sometime Open"></nz-option>
+                <nz-select name="openingtime" formControlName="customOpeningTime">
+                  <nz-option [nzValue]="false" nzLabel="All Day Open"></nz-option>
+                  <nz-option [nzValue]="true" nzLabel="Sometime Open"></nz-option>
                 </nz-select>
               </nz-form-control>
             </nz-form-item>
           </div>
 
-          <div
-            nz-col
-            class="mb15"
-            [nzXs]="{ span: 24 }"
-            [nzLg]="{ span: 24 }"
-            *ngIf="openingTime === '2'"
-          >
-            <nz-card
-              nzSize="small"
-              class="schedule-container"
-              *ngFor="let data of dayName"
-            >
+          <div nz-col class="mb15" [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }" *ngIf="dataForm.value.customOpeningTime">
+            <nz-card nzSize="small" class="schedule-container" *ngFor="let data of openingTimes">
               <div class="time_range">
                 <div class="day_name">
                   <h3>{{ data?.day }}</h3>
-                  <nz-switch
-                    nzSize="small"
-                    [(ngModel)]="disabledSchedule"
-                  ></nz-switch>
+                  <nz-switch nzSize="small" [(ngModel)]="data.isClosed"></nz-switch>
                 </div>
-                <nz-form-control
-                  [nzSpan]="24"
-                  *ngIf="disabledSchedule === true"
-                >
+                <nz-form-control [nzSpan]="24" *ngIf="data.isClosed === true">
                   <div class="single_time">
                     <span>
-                      <nz-time-picker
-                        [(ngModel)]="startTime"
-                        [nzDefaultOpenValue]="defaultOpenValue"
-                        nzFormat="h:mm a"
-                      ></nz-time-picker>
+                      <nz-time-picker [(ngModel)]="startTime" [nzDefaultOpenValue]="defaultOpenValue" nzFormat="h:mm a">
+                      </nz-time-picker>
                     </span>
                     <span style="padding: 0 10px"> = </span>
                     <span>
-                      <nz-time-picker
-                        [(ngModel)]="endTime"
-                        [nzDefaultOpenValue]="defaultOpenValue"
-                        nzFormat="h:mm a"
-                      ></nz-time-picker>
+                      <nz-time-picker [(ngModel)]="endTime" [nzDefaultOpenValue]="defaultOpenValue" nzFormat="h:mm a">
+                      </nz-time-picker>
                     </span>
                     <span class="add_newtime">
                       <i class="las la-minus-circle"></i>
@@ -164,10 +112,7 @@
                     <i class="las la-plus"></i> Add Time
                   </button>
                 </nz-form-control>
-                <nz-form-control
-                  [nzSpan]="24"
-                  *ngIf="disabledSchedule !== true"
-                >
+                <nz-form-control [nzSpan]="24" *ngIf="data.isClosed !== true">
                   <p style="color: red">Close</p>
                 </nz-form-control>
               </div>
@@ -177,34 +122,29 @@
             <nz-form-item>
               <nz-form-label [nzSpan]="24">Product Type</nz-form-label>
               <nz-form-control [nzSpan]="24">
-                <nz-checkbox-wrapper (nzOnChange)="proType($event)" class="py5">
-                  <label nz-checkbox nzValue="A" [ngModel]="true">
+                <nz-checkbox-wrapper class="py5">
+                  <label nz-checkbox formControlName="productTypeInStock">
                     In Stock Product
                   </label>
-                  <label nz-checkbox nzValue="B"> Pre Order Product</label>
+                  <label nz-checkbox formControlName="productTypePreOrder"> Pre Order Product</label>
                 </nz-checkbox-wrapper>
               </nz-form-control>
             </nz-form-item>
           </div>
-          <div
-            nz-col
-            [nzXs]="{ span: 24 }"
-            [nzLg]="{ span: 12 }"
-            *ngIf="tChecked('A')"
-            class="mb15"
-          >
+          <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }" *ngIf="dataForm.value.productTypeInStock"
+            class="mb15">
             <nz-form-item class="mb15">
               <nz-form-label [nzSpan]="24">
                 In Stock Delivery Options
               </nz-form-label>
               <nz-divider></nz-divider>
               <nz-form-control [nzSpan]="24" class="delivery_time">
-                <nz-radio-group [(ngModel)]="instockValue">
+                <nz-radio-group formControlName="inStockDeliveryOption">
                   <label nz-radio nzValue="A"> Same Day </label>
                   <label nz-radio nzValue="B"> Next Day </label>
                   <label nz-radio nzValue="C">
                     Custom
-                    <span class="custome_date" *ngIf="instockValue === 'C'">
+                    <span class="custome_date" *ngIf="dataForm.value.inStockDeliveryOption === 'C'">
                       <input type="text" nz-input value="2" /> to
                       <input type="text" nz-input value="5" />
                       Days
@@ -218,59 +158,51 @@
               <nz-form-label [nzSpan]="24"> Delivery Time </nz-form-label>
               <nz-divider></nz-divider>
               <nz-form-control [nzSpan]="24">
-                <nz-radio-group [(ngModel)]="deliveryTime">
-                  <label nz-radio nzValue="A">Sometimes</label>
-                  <label nz-radio nzValue="B">Anytime</label>
+                <nz-radio-group formControlName="inStockDeliveryCustomRange">
+                  <label nz-radio [nzValue]="true">Sometimes</label>
+                  <label nz-radio [nzValue]="false">Anytime</label>
                 </nz-radio-group>
               </nz-form-control>
             </nz-form-item>
 
-            <nz-form-item *ngIf="deliveryTime === 'A'">
-              <nz-form-label [nzSpan]="24">
-                In Stock Delivery Time
-              </nz-form-label>
-              <nz-form-control [nzSpan]="24">
-                <div class="single_date">
-                  <span>
-                    <nz-time-picker
-                      [(ngModel)]="startTime"
-                      [nzDefaultOpenValue]="defaultOpenValue"
-                      nzFormat="h:mm a"
-                    ></nz-time-picker>
-                  </span>
-                  <span style="padding: 0 10px"> to </span>
-                  <span>
-                    <nz-time-picker
-                      [(ngModel)]="endTime"
-                      [nzDefaultOpenValue]="defaultOpenValue"
-                      nzFormat="h:mm a"
-                    ></nz-time-picker>
-                  </span>
-                  <span class="add_newtime">
-                    <i class="las la-minus-circle"></i>
-                  </span>
-                </div>
-                <button class="addbutton" nz-button nzType="dashed">
-                  <i class="las la-plus"></i> New Time
-                </button>
-              </nz-form-control>
-            </nz-form-item>
+
+            <div *ngIf="dataForm.value.inStockDeliveryCustomRange">
+              <div *ngFor="let data of inStockDeliveryTimesArray.controls; let i=index">
+                <nz-form-label [nzSpan]="24">
+                  In Stock Delivery Time
+                </nz-form-label>
+                <nz-form-control formArrayName="inStockDeliveryTimesArray" [nzSpan]="24">
+                  <div class="single_date" [formGroupName]="i">
+                    <span>
+                      <nz-time-picker [nzUse12Hours]="true" formControlName="startTime" [nzDefaultOpenValue]="defaultOpenValue"
+                          nzFormat="h:mm a"></nz-time-picker>
+                    </span>
+                    <span style="padding: 0 10px"> to </span>
+                    <span>
+                      <nz-time-picker [nzUse12Hours]="true" formControlName="endTime" [nzDefaultOpenValue]="defaultOpenValue"
+                          nzFormat="h:mm a"></nz-time-picker>
+                    </span>
+                    <span class="add_newtime">
+                      <i class="las la-minus-circle"></i>
+                    </span>
+                  </div>
+                </nz-form-control>
+              </div>
+              <button class="addbutton" nz-button nzType="dashed" (click)="addInStockDeliveryTime()">
+                <i class="las la-plus"></i> New Time
+              </button>
+            </div>
           </div>
-          <div
-            nz-col
-            [nzXs]="{ span: 24 }"
-            [nzLg]="{ span: 12 }"
-            *ngIf="tChecked('B')"
-            class="mb15"
-          >
+          <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }" *ngIf="dataForm.value.productTypePreOrder"
+            class="mb15">
             <nz-form-item>
               <nz-form-label [nzSpan]="24"> Pre Order Time </nz-form-label>
               <nz-divider></nz-divider>
               <nz-form-control [nzSpan]="24" class="delivery_time">
-                <nz-radio-group [(ngModel)]="preOrderValue">
-                  <label nz-radio nzValue="A">
+                <nz-radio-group formControlName="preOrderDeliveryOption">
+                  <label nz-radio>
                     Custom
-                    <span class="custome_date" *ngIf="preOrderValue === 'A'">
+                    <span class="custome_date">
                       <input type="text" nz-input value="2" /> to
                       <input type="text" nz-input value="5" />
                       Days
@@ -279,30 +211,57 @@
                 </nz-radio-group>
               </nz-form-control>
             </nz-form-item>
+            <nz-form-item class="mb15">
+              <nz-form-label [nzSpan]="24"> Delivery Time </nz-form-label>
+              <nz-divider></nz-divider>
+              <nz-form-control [nzSpan]="24">
+                <nz-radio-group formControlName="preOrderDeliveryCustomRange">
+                  <label nz-radio [nzValue]="true">Sometimes</label>
+                  <label nz-radio [nzValue]="false">Anytime</label>
+                </nz-radio-group>
+              </nz-form-control>
+            </nz-form-item>
+            <div *ngIf="dataForm.value.preOrderDeliveryCustomRange">
+              <div *ngFor="let data of preOrderDeliveryTimesArray.controls; let i=index">
+                <nz-form-label [nzSpan]="24">
+                  Pre Order Delivery Time
+                </nz-form-label>
+                <nz-form-control formArrayName="preOrderDeliveryTimesArray" [nzSpan]="24">
+                  <div class="single_date" [formGroupName]="i">
+                    <span>
+                      <nz-time-picker [nzUse12Hours]="true" formControlName="startTime" [nzDefaultOpenValue]="defaultOpenValue"
+                          nzFormat="h:mm a"></nz-time-picker>
+                    </span>
+                    <span style="padding: 0 10px"> to </span>
+                    <span>
+                      <nz-time-picker [nzUse12Hours]="true" formControlName="endTime" [nzDefaultOpenValue]="defaultOpenValue"
+                          nzFormat="h:mm a"></nz-time-picker>
+                    </span>
+                    <span class="add_newtime">
+                      <i class="las la-minus-circle"></i>
+                    </span>
+                  </div>
+                </nz-form-control>
+              </div>
+              <button class="addbutton" nz-button nzType="dashed" (click)="addPreOrderDeliveryTime()">
+                <i class="las la-plus"></i> New Time
+              </button>
+            </div>
           </div>
-          <div
-            nz-col
-            [nzXs]="{ span: 24 }"
-            [nzLg]="{ span: 24 }"
-            *ngIf="instockValue !== 'C'"
-          >
+          <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }"
+            *ngIf="dataForm.value.inStockDeliveryOption !== 'C' && dataForm.value.productTypeInStock">
             <nz-form-item>
               <nz-form-label [nzSpan]="24" nzFor="buffertime">
-                Buffer Time
+                Buffer Time (In Hours)
               </nz-form-label>
               <nz-form-control [nzSpan]="12">
-                <input
-                  nz-input
-                  name="buffertime"
-                  type="text"
-                  id="buffertime"
-                  placeholder="0"
-                />
+                <input nz-input name="buffertime" type="text" id="buffertime" formControlName="bufferTime"
+                  placeholder="0" />
               </nz-form-control>
             </nz-form-item>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </ng-container>
 </nz-modal>
