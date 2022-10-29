@@ -4,24 +4,10 @@ import { CommonModule } from '@angular/common';
 
 import { ReviewsRoutingModule } from './reviews-routing.module';
 import { ReviewsComponent } from './reviews.component';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
-
+import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
-  declarations: [
-    ReviewsComponent
-  ],
-  imports: [
-    CommonModule,
-    ReviewsRoutingModule,
-    MaterialModule,
-    NzTabsModule,
-    NzTableModule,
-    NzDropDownModule,
-    MatTooltipModule,
-  ]
+  declarations: [ReviewsComponent],
+  imports: [CommonModule, ReviewsRoutingModule, MaterialModule, AntModule],
 })
-export class ReviewsModule { }
+export class ReviewsModule {}
