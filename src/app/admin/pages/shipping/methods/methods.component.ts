@@ -43,31 +43,24 @@ export class MethodsComponent implements OnInit {
   openingTimes = [
     {
       day: 'Sunday',
-      isClosed: true,
     },
     {
       day: 'Monday',
-      isClosed: true,
     },
     {
       day: 'Tuesday',
-      isClosed: true,
     },
     {
       day: 'Wednesday',
-      isClosed: true,
     },
     {
       day: 'Thursday',
-      isClosed: true,
     },
     {
       day: 'Friday',
-      isClosed: true,
     },
     {
       day: 'Saturday',
-      isClosed: true,
     },
   ];
 
@@ -75,6 +68,7 @@ export class MethodsComponent implements OnInit {
   inStockDeliveryTimesArray: FormArray;
   preOrderDeliveryTimesArray: FormArray;
   openingTimesArray: FormArray;
+  timingArray: FormArray;
   showInStock: boolean = true;
   showPreOrder: boolean = false;
 
@@ -92,12 +86,12 @@ export class MethodsComponent implements OnInit {
       openingTimesArray: this.fb.array([]),
       productTypeInStock: [true, Validators.required],
       productTypePreOrder: [false, Validators.required],
-      inStockDeliveryOption: [null, Validators.required],
-      inStockDeliveryCustomRange: [null],
+      inStockDeliveryOption: ['C', Validators.required],
+      inStockDeliveryCustomRange: [false],
       inStockDeliveryTimesArray: this.fb.array([]),
       bufferTime: [null],
       preOrderDeliveryOption: [null, Validators.required],
-      preOrderDeliveryCustomRange: [null],
+      preOrderDeliveryCustomRange: [false],
       preOrderDeliveryTimesArray: this.fb.array([]),
     })
 
@@ -107,17 +101,27 @@ export class MethodsComponent implements OnInit {
     this.preOrderDeliveryTimesArray = this.dataForm.get(
       'preOrderDeliveryTimesArray'
     ) as FormArray;
+    this.openingTimesArray = this.dataForm.get(
+      'openingTimesArray'
+    ) as FormArray;
+    this.showOpeningTimesArray();
 
   }
+
+  // openingTimesArray(): FormArray {
+  //   return this.dataForm.get("openingTimesArray") as FormArray
+  // }
 
 
 
   showMathod(): void {
     this.initModule();
+
     this.showInStock = true;
     this.showPreOrder = false;
     this.isMethodVisible = true;
   }
+
   mathodOk(): void {
     console.log('Button ok clicked!');
     console.log(this.dataForm.value);
@@ -125,6 +129,7 @@ export class MethodsComponent implements OnInit {
       this.msg.warning('Please input all the required fields');
       return
     }
+
     this.isMethodVisible = false;
   }
   mathodCancel(): void {
@@ -135,8 +140,8 @@ export class MethodsComponent implements OnInit {
   addInStockDeliveryTime() {
     this.inStockDeliveryTimesArray.push(
       this.fb.group({
-        startTime: new FormControl (),
-        endTime: new FormControl (),
+        startTime: new FormControl(),
+        endTime: new FormControl(),
       })
     )
   }
@@ -144,10 +149,51 @@ export class MethodsComponent implements OnInit {
   addPreOrderDeliveryTime() {
     this.preOrderDeliveryTimesArray.push(
       this.fb.group({
-        startTime: new FormControl (),
-        endTime: new FormControl (),
+        startTime: new FormControl(),
+        endTime: new FormControl(),
       })
     )
+  }
+
+  showOpeningTimesArray() {
+    // for (let i = 0; i < this.openingTimes.length; i++) {
+    //   this.openingTimesArray.push(this.createNewOpeningTimesArray(this.openingTimes[i]));
+    // }
+    this.openingTimes.forEach(m => {
+      this.openingTimesArray.push(this.fb.group({
+        day: m.day,
+        isOpen: new FormControl(true),
+        timing: this.fb.array([])
+      }));
+    })
+  }
+
+  // createNewOpeningTimesArray(m): FormGroup {
+  //   return this.fb.group({
+  //     day: m.day,
+  //     isOpen: new FormControl(true),
+  //     timing: this.fb.array([])
+  //   })
+  // }
+
+  openingTiming(dayIndex: number) : FormArray {
+    return this.openingTimesArray.at(dayIndex).get("timing") as FormArray
+  }
+
+  newTiming(): FormGroup {
+    return this.fb.group({
+      startTime: new FormControl(),
+      endTime: new FormControl(),
+    })
+  }
+
+  addTiming(dayIndex:number) {
+    console.log(this.openingTiming(dayIndex))
+    this.openingTiming(dayIndex).push(this.newTiming());
+  }
+
+  removeTiming(dayIndex:number,timeIndex:number) {
+    this.openingTiming(dayIndex).removeAt(timeIndex);
   }
 
 
