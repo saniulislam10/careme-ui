@@ -1,13 +1,24 @@
 @import "./../../../theme/client-side-varriables";
 @import "./../../../theme/hover-menu";
 
+.user_dropdown {
+  min-width: 200px;
+  padding: 10px 0;
+  li {
+    padding: 10px 15px;
+    i {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+  }
+}
+
 .user_icon {
   font-size: 14px;
 }
 .full-header {
   background-color: #fff;
 }
-
 .header-top-area {
   display: block;
   margin: auto;
@@ -124,11 +135,13 @@
     border: none;
   }
   .image_search {
-    right: 60px;
-    width: 60px;
-    height: 90%;
-    background: #ffffff;
+    background: transparent;
     border: none;
+    right: 10%;
+    height: 100%;
+    width: 30px;
+    line-height: 52px;
+    color: #5c5c5c;
   }
 }
 
@@ -221,6 +234,9 @@
 .header-midle-menu ul li a span {
   color: #db5791;
   font-size: 32px;
+  i {
+    font-size: 25px;
+  }
 }
 @media (max-width: 354px) {
   .header-midle-menu ul li a span {
