@@ -5,6 +5,7 @@ import {Subject} from 'rxjs';
   providedIn: 'root',
 })
 export class ReloadService {
+  private refreshShipping = new Subject<void>();
   private refreshDistrict = new Subject<void>();
   private refreshCourse = new Subject<void>();
   private refreshService = new Subject<void>();
@@ -66,6 +67,15 @@ export class ReloadService {
   private refreshSuppliers = new Subject<void>();
   private refreshCountrys = new Subject<void>();
   private refreshProductTypes = new Subject<void>();
+  /**
+   * refresh refreshShipping
+   */
+   get refreshShipping$() {
+    return this.refreshShipping;
+  }
+  needRefreshShipping$() {
+    this.refreshShipping.next();
+  }
   /**
    * refresh details
    */
