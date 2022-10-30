@@ -1,49 +1,86 @@
-
-<div class="top-action">
-    <button mat-raised-button color="primary" [routerLink]="['add-zila']">
-      <mat-icon>add</mat-icon>
-      Add New Zila
+<!-- Collection-area-->
+<div class="page-header">
+  <h2>Bangladesh</h2>
+  <div class="header-action">
+    <button class="create_btn" [routerLink]="['add-zila']">
+      <i class="las la-plus"></i>
+      Add New City
     </button>
   </div>
-  
-  
-  
-  <div class="header">
-    <h2>Zila List</h2>
-  </div>
-  
-  <hr class="center-square">
-  
-  
-  <div class="table-container">
-    <table>
-      <thead>
-      <tr class="table-head">
-        <th scope="col">{{'Zila Name'}}</th>
-      
-        <th scope="col">{{'Actions'}}</th>
-      </tr>
-      </thead> <!-- End Table Head -->
-      <tr *ngFor="let data of zila; let i = index">
-        <td [attr.data-label]="'Zila Name'">{{data.name}}</td>
-      
-        <td [attr.data-label]="'Actions'">
-          <button style="margin-right: 5px;" mat-mini-fab color="warn" (click)="openConfirmDialog(data._id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button [routerLink]="['edit-zila', data._id]" mat-mini-fab>
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </tr><!-- End Table Body -->
-  
-    </table>
-  
-  </div>
-  
-  <!-- LOADING TEMPLATE -->
-  <ngx-spinner style="width: 100vw; height: 100vh" bdColor="rgba(0,0,0,0.25)" size="medium" color="#fff"
-               type="ball-clip-rotate" [fullScreen]="true"><p style="color: white"> Loading... </p></ngx-spinner>
-  
-  
+</div>
 
+<nz-card nzSize="small">
+  <nz-tabset>
+    <nz-tab *ngFor="let divishion of divisionName" [nzTitle]="divishion">
+      <div class="table_filter">
+        <div class="search_area">
+          <div class="filter_search">
+            <form nz-form>
+              <input
+                nz-input
+                name="search"
+                type="text"
+                id="search"
+                placeholder="Search here..."
+              />
+            </form>
+          </div>
+          <div class="filter_btn">
+            <nz-button-group>
+              <button
+                nz-button
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="filter"
+                nzPlacement="bottomRight"
+              >
+                <i class="las la-filter"></i> Filter
+              </button>
+              <button
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="sort"
+                nzPlacement="bottomRight"
+              >
+                <i class="las la-sort-amount-down-alt"></i> Sort
+              </button>
+            </nz-button-group>
+            <nz-dropdown-menu #sort="nzDropdownMenu">
+              <ul nz-menu nzSelectable>
+                <li nz-menu-item>1st menu item</li>
+                <li nz-menu-item>2nd menu item</li>
+                <li nz-menu-item>3rd menu item</li>
+              </ul>
+            </nz-dropdown-menu>
+            <nz-dropdown-menu #filter="nzDropdownMenu">
+              <ul nz-menu nzSelectable>
+                <li nz-menu-item>1st menu item</li>
+                <li nz-menu-item>2nd menu item</li>
+                <li nz-menu-item>3rd menu item</li>
+              </ul>
+            </nz-dropdown-menu>
+          </div>
+        </div>
+        <div class="multi_filter">
+          <span> Dhaka <i class="lar la-times-circle"></i> </span>
+        </div>
+      </div>
+      <div class="divishion_list">
+        <div nz-row [nzGutter]="16">
+          <div
+            *ngFor="let citylist of cityName"
+            nz-col
+            class="mb15"
+            [nzXs]="{ span: 12 }"
+            [nzLg]="{ span: 4 }"
+          >
+            <nz-card nzSize="small" nzHoverable>
+              <h4>{{ citylist }}</h4>
+              <p>130 Zone</p>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</nz-card>

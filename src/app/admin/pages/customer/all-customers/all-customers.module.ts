@@ -20,7 +20,6 @@ import { AntModule } from 'src/app/material/ant.module';
     MaterialModule,
     FormsModule,
     AntModule,
-    // RegularOrdersModule
   ],
 })
 export class AllCustomersModule {}

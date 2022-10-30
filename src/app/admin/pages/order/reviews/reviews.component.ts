@@ -1,18 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EMPTY } from 'rxjs';
-import { pluck, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import {
+  pluck,
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+} from 'rxjs/operators';
 import { Review } from 'src/app/interfaces/review';
 import { ReviewService } from 'src/app/services/review.service';
 
 @Component({
   selector: 'app-reviews',
   templateUrl: './reviews.component.html',
-  styleUrls: ['./reviews.component.scss']
+  styleUrls: ['./reviews.component.scss'],
 })
 export class ReviewsComponent implements OnInit {
-
-  tabs = ['All', 'To Reviews'];
+  tabs = ['All Reviews', 'To Reviews'];
   listOfParentData: Review[] = [];
   value = 3;
 
@@ -26,28 +30,26 @@ export class ReviewsComponent implements OnInit {
   overlay: boolean;
   searchQuery: any;
 
-  constructor(
-    private reviewService: ReviewService
-  ) { }
+  constructor(private reviewService: ReviewService) {}
 
   ngOnInit(): void {
     this.getAllReviews();
-
   }
 
-  getAllReviews(){
-    this.reviewService.getAll()
-    .subscribe( res => {
-      this.listOfParentData = res.data;
-      this.holdPrevData = this.listOfParentData;
-    }, err => {
-      console.log(err);
-
-    })
+  getAllReviews() {
+    this.reviewService.getAll().subscribe(
+      (res) => {
+        this.listOfParentData = res.data;
+        this.holdPrevData = this.listOfParentData;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
-  onTabSelect(tab){
-    console.log(tab)
+  onTabSelect(tab) {
+    console.log(tab);
   }
 
   onClickSearchArea(event: MouseEvent): void {
@@ -150,5 +152,4 @@ export class ReviewsComponent implements OnInit {
         }
       );
   }
-
 }

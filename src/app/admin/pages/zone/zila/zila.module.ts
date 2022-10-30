@@ -9,25 +9,21 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { AntModule } from 'src/app/material/ant.module';
 
 @NgModule({
-  declarations: [
-    ZilaComponent,
-    AddZilaComponent
-  ],
+  declarations: [ZilaComponent, AddZilaComponent],
   imports: [
     CommonModule,
     ZilaRoutingModule,
     CommonModule,
     ThanaRoutingModule,
-    
-   
     MaterialModule,
     SharedModule,
     MatProgressSpinnerModule,
     FormsModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    AntModule,
+  ],
 })
-export class ZilaModule { }
+export class ZilaModule {}

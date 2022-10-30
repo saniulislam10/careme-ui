@@ -19,14 +19,14 @@
         <div class="header-midle">
           <!---logo-area-->
           <div class="logo-area">
-            <a routerLink="/"
-              ><img src="./assets/images/logo/logo.svg" alt=""
-            /></a>
+            <a routerLink="/">
+              <img src="./assets/images/logo/logo.svg" alt="" />
+            </a>
           </div>
           <div class="sub-menu-bar">
-            <span (click)="categoryMenuShow()" *ngIf="categoryBar"
-              ><i class="fa fa-bars"></i
-            ></span>
+            <span (click)="categoryMenuShow()" *ngIf="categoryBar">
+              <i class="fa fa-bars"> </i>
+            </span>
           </div>
           <!---search-box-->
           <div class="search">
@@ -42,9 +42,10 @@
               <button class="text_search" type="submit">
                 <i class="las la-search"></i>
               </button>
-              <button class="image_search" type="submit">
-                <i class="las la-camera"></i>
-              </button>
+              <div class="image_search">
+                <input type="file" id="image_upload" hidden />
+                <label for="image_upload"> <i class="las la-camera"></i></label>
+              </div>
             </form>
           </div>
           <!--header-midle-menu-->

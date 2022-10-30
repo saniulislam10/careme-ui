@@ -1,4 +1,22 @@
-.vendor-search{
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 0 15px 0;
+  .header-action {
+    display: flex;
+    align-items: center;
+    button {
+      border: none;
+      background: transparent;
+      margin-left: 25px;
+    }
+  }
+}
+.table-samary {
+  margin-bottom: 30px;
+}
+.vendor-search {
   max-width: 400px;
   width: 100%;
   display: flex;

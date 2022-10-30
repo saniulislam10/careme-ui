@@ -1,10 +1,12 @@
-<div  id="sub-mega-menu">
+<div id="sub-mega-menu">
   <!--hover-menu-row-->
   <div class="hover-menu-main">
     <!--col-1-->
     <div class="hover-menu-colum" *ngFor="let d of data">
       <div class="hover-menu-details">
-        <a [routerLink]="['/products-list', parentCategory?.slug, d.slug]">{{d.name}}</a>
+        <a [routerLink]="['/products-list', parentCategory?.slug, d.slug]">{{
+          d.name
+        }}</a>
         <!-- <ul>
           <li><a [routerLink]="['/products-list', parentCategory?.slug, d.slug, t.slug]" *ngFor="let t of d.hasChild"> {{t.name}} <span><i class="fa fa-angle-right"></i></span></a></li>
         </ul> -->
@@ -15,12 +17,11 @@
     <!-- <div class="hover-menu-colum" *ngFor="let d of [1,2]">
       <div class="hover-menu-details">""""""
         <a >Sub Menu</a> -->
-        <!-- <ul>
+    <!-- <ul>
           <li><a> Sub Sub Menu <span><i class="fa fa-angle-right"></i></span></a></li>
         </ul> -->
-      <!-- </div>
+    <!-- </div>
     </div> -->
-
   </div>
-
-</div><!--hover-menu-end-->
+</div>
+<!--hover-menu-end-->

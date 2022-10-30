@@ -139,14 +139,18 @@
         <div class="single-product grid" *ngFor="let data of newProducts">
           <nz-ribbon nzText="Big Offer" nzColor="red">
             <div class="product-top">
-              <a [routerLink]="['product-details', data.slug]"><img [src]="setThumbnailImage(data)" /></a>
+              <a [routerLink]="['product-details', data.slug]"
+                ><img [src]="setThumbnailImage(data)"
+              /></a>
             </div>
           </nz-ribbon>
           <div class="product-bottom">
             <a [routerLink]="['product-details', data.slug]">{{ data.name }}</a>
             <div class="price_rating">
               <div class="price">
-                {{ data.sellingPrice }} TK<span>{{ data.discountAmount }} TK</span>
+                {{ data.sellingPrice }} TK<span
+                  >{{ data.discountAmount }} TK</span
+                >
               </div>
               <ul>
                 <li><i class="las la-star"></i></li>
@@ -178,12 +182,16 @@
       <div class="grid-section-product">
         <div class="single-product grid" *ngFor="let data of newProducts">
           <div class="product-top">
-            <a [routerLink]="['product-details', data.slug]"><img [src]="setThumbnailImage(data)" /></a>
+            <a [routerLink]="['product-details', data.slug]"
+              ><img [src]="setThumbnailImage(data)"
+            /></a>
           </div>
           <div class="product-bottom">
             <a [routerLink]="['product-details', data.slug]">{{ data.name }}</a>
             <div class="price">
-              {{ data.sellingPrice }} TK<span *ngIf="data.discountAmount">{{ data.discountAmount }} TK</span>
+              {{ data.sellingPrice }} TK<span *ngIf="data.discountAmount"
+                >{{ data.discountAmount }} TK</span
+              >
             </div>
           </div>
         </div>

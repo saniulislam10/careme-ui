@@ -5,50 +5,78 @@
     autocomplete="off" ngModel type="text" placeholder="Search">
   </form>
 </div> -->
-
-<nz-tabset [nzTabBarExtraContent]="extraTemplate">
-  <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab" (nzClick)="onTabSelect(tab)">
-    <nz-table #table [nzData]="listOfParentData" [nzPageSize]="10">
-      <thead >
-        <tr>
-          <th>Rating</th>
-          <th>Reviews</th>
-          <th>Date & Time</th>
-          <th>SKU</th>
-          <th>Order No</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let data of table.data">
-            <td>{{data.rating}}</td>
-            <td>
-              <span>
-                {{data.message}}
-              </span>
-              <div style="font-weight: 600">
-                - {{data.user.fullName ? data.user.fullName : data.user.phoneNo}}
-                | {{data.productType}}
-              </div>
-
-            </td>
-            <td>{{data.date | date : 'short'}}</td>
-            <td>{{data.sku}}</td>
-            <td>{{data.orderNo}}</td>
-            <td>ACTIVE</td>
-          </tr>
-      </tbody>
-    </nz-table>
-
-  </nz-tab>
-
-</nz-tabset>
-<ng-template #extraTemplate>
-  <div class="vendor-search" (click)="onClickSearchArea($event)">
-    <form #searchForm=ngForm  style="width: 100%;">
-      <input #searchInput id="searchInput" (focus)="handleFocus($event)" name="searchTerm"
-      autocomplete="off" ngModel type="text" placeholder="Search">
-    </form>
+<!---order-header-area-->
+<div class="page-header">
+  <h2>All Refund</h2>
+  <div class="header-action">
+    <button type="button">Export</button>
+    <button type="button">Import</button>
   </div>
-</ng-template>
-
+</div>
+<div class="table-samary">
+  <nz-card nzSize="small">
+    <nz-tabset [nzTabBarExtraContent]="extraTemplate">
+      <nz-tab
+        *ngFor="let tab of tabs"
+        [nzTitle]="tab"
+        (nzClick)="onTabSelect(tab)"
+      >
+        <nz-table
+          #table
+          [nzData]="listOfParentData"
+          [nzPageSize]="50"
+          nzSize="small"
+        >
+          <thead>
+            <tr>
+              <th>Rating</th>
+              <th>Reviews</th>
+              <th>Date & Time</th>
+              <th>SKU</th>
+              <th>Order No</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of table.data">
+              <td>{{ data.rating }}</td>
+              <td>
+                <span>
+                  {{ data.message }}
+                </span>
+                <div style="font-weight: 600">
+                  -
+                  {{
+                    data.user.fullName ? data.user.fullName : data.user.phoneNo
+                  }}
+                  | {{ data.productType }}
+                </div>
+              </td>
+              <td>{{ data.date | date: "short" }}</td>
+              <td>{{ data.sku }}</td>
+              <td>{{ data.orderNo }}</td>
+              <td>ACTIVE</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+    </nz-tabset>
+    <ng-template #extraTemplate>
+      <div class="vendor-search" (click)="onClickSearchArea($event)">
+        <form #searchForm="ngForm" style="width: 100%">
+          <input
+            #searchInput
+            nz-input
+            id="searchInput"
+            (focus)="handleFocus($event)"
+            name="searchTerm"
+            autocomplete="off"
+            ngModel
+            type="text"
+            placeholder="Search"
+          />
+        </form>
+      </div>
+    </ng-template>
+  </nz-card>
+</div>

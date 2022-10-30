@@ -110,8 +110,8 @@
   overflow: hidden;
   position: relative;
   border-radius: 3px;
-
-  button {
+  .text_search,
+  .image_search {
     position: absolute;
     font-size: 30px;
   }

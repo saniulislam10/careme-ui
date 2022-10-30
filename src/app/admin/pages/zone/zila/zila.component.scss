@@ -1,28 +1,131 @@
 @import "src/theme/exports/table-one";
-
-/*----------------
-TOP ACTION
-------------------*/
-.top-action {
-  text-align: right;
-  margin-top: 16px;
-  padding-right: 16px;
-
-  button {
-    ::ng-deep {
-      span {
-        color: #FFFFFF;
+.mb15 {
+  margin-bottom: 15px !important;
+}
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 0 15px 0;
+  .header-action {
+    display: flex;
+    align-items: center;
+    button {
+      border: none;
+      background: transparent;
+      margin-left: 25px;
+    }
+    .create_btn {
+      background: #1b75bb;
+      color: #fff;
+      border: 1px solid #1b75bb;
+      padding: 10px 20px;
+      transition: 0.3s;
+      border-radius: 5px;
+    }
+    .create_btn:hover {
+      background: #8bc53f;
+      border: 1px solid #8bc53f;
+    }
+  }
+}
+.status {
+  padding: 5px 10px;
+  background: #ddd;
+  color: #2d2d2d;
+  border-radius: 50px;
+}
+.active {
+  color: #fff;
+  background: green;
+}
+td {
+  cursor: pointer;
+}
+.multi_filter {
+  margin: 10px 0;
+  min-height: 22px;
+  display: block;
+  span {
+    padding: 0 5px 0 10px;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    background: #ebebeb;
+    border-radius: 50px;
+    line-height: 20px;
+    font-size: 14px;
+    i {
+      font-size: 18px;
+      margin-left: 5px;
+    }
+  }
+}
+.search_area {
+  display: flex;
+  .filter_search {
+    flex: 1;
+  }
+  div.filter_btn {
+    text-align: right;
+    button {
+      display: flex;
+      align-items: center;
+      i {
+        margin-right: 10px;
+        font-size: 20px;
       }
     }
   }
 }
-
-/*----------------
-HEADER TITLE
-------------------*/
-.header {
-  h2 {
-    text-align: center;
-    font-family: $font-en-primary;
+ng-container,
+.new_coupon {
+  padding: 0;
+}
+.choose_coupon {
+  margin: 0;
+  padding: 0;
+  li {
+    display: flex;
+    cursor: pointer;
+    transition: 0.3s;
+    list-style: none;
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  li:hover {
+    background: #f1f1f19e;
+  }
+}
+.divishion_list {
+  margin: 0 0 15px 0;
+}
+@media (min-width: 769px) {
+  .mobile_only {
+    display: none;
+  }
+  .desktop_only {
+    td {
+      font-size: 12px;
+      color: #585858;
+      h4 {
+        font-size: 14px;
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .desktop_only {
+    display: none;
+  }
+  .mobile_only {
+    td {
+      font-size: 12px;
+      color: #585858;
+      h4 {
+        font-size: 14px;
+      }
+    }
   }
 }
