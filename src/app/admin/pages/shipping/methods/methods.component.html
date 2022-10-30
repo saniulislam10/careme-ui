@@ -54,11 +54,18 @@
                     Next Day(Buffer : {{data?.bufferTime}})
                   </span>
                   <span *ngIf="data.inStockDeliveryOption === 'C'">
-                    Custom({{data?.inStockDeliveryFrom}} to {{data?.inStockDeliveryTo}})
+                    Custom({{data?.inStockDeliveryFrom}} to {{data?.inStockDeliveryTo}}) days
                   </span>
 
                 </td>
-                <td>Custom {{data?.preOrderDeliveryFrom}} to {{data?.preOrderDeliveryTo}}</td>
+                <td>
+                  <span *ngIf="data.productTypePreOrder === true" >
+                    Custom ({{data?.preOrderDeliveryFrom}} to {{data?.preOrderDeliveryTo}}) days
+                  </span>
+                  <span *ngIf="data.productTypePreOrder !== true" >
+                    N/A
+                  </span>
+                </td>
                 <td>
                   <span >
                     {{ data?.customOpeningTime === true ? 'Partial':'All Day' }}
