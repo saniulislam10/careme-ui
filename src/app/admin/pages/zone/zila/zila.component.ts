@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-
-import {MatDialog} from '@angular/material/dialog';
-import {NgxSpinnerService} from 'ngx-spinner';
+import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { UiService } from 'src/app/services/ui.service';
 import { ReloadService } from 'src/app/services/reload.service';
 import { ConfirmDialogComponent } from 'src/app/shared/components/ui/confirm-dialog/confirm-dialog.component';
@@ -10,29 +9,47 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/ui/confirm-dia
 import { Zila } from 'src/app/interfaces/zila';
 import { ZilaService } from 'src/app/services/zila.service';
 
-
 @Component({
   selector: 'app-zila',
   templateUrl: './zila.component.html',
-  styleUrls: ['./zila.component.scss']
+  styleUrls: ['./zila.component.scss'],
 })
 export class ZilaComponent implements OnInit {
+  // Tab Data
+  divisionName = [
+    'Dhaka',
+    'Khulna',
+    'Chattogram',
+    'Barishal',
+    'Rajshahi',
+    'Rangpur',
+    'Mymensingh',
+    'Sylhet',
+  ];
+  cityName = [
+    'Adabor',
+    'Badda',
+    'Bandar',
+    'Demra',
+    'Gazipur Sadar',
+    'Gendaria',
+    'Chawkbazar',
+    'Biman Bandar',
+  ];
 
   zila: Zila[] = [];
-
   constructor(
     private dialog: MatDialog,
     private zilaService: ZilaService,
     private uiService: UiService,
     private reloadService: ReloadService,
-    private spinner: NgxSpinnerService,
-  ) { }
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
-    this.reloadService.refreshZila$
-      .subscribe(() => {
-        this.getAllZila();
-      });
+    this.reloadService.refreshZila$.subscribe(() => {
+      this.getAllZila();
+    });
     this.getAllZila();
   }
 
@@ -44,12 +61,12 @@ export class ZilaComponent implements OnInit {
       maxWidth: '400px',
       data: {
         title: 'Confirm Delete',
-        message: 'Are you sure you want delete this category?'
-      }
+        message: 'Are you sure you want delete this category?',
+      },
     });
-    dialogRef.afterClosed().subscribe(dialogResult => {
+    dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult) {
-        this. deleteZilaByZilaId(data);
+        this.deleteZilaByZilaId(data);
       }
     });
   }
@@ -60,16 +77,17 @@ export class ZilaComponent implements OnInit {
 
   private getAllZila() {
     this.spinner.show();
-    this.zilaService.getAllZila()
-      .subscribe(res => {
+    this.zilaService.getAllZila().subscribe(
+      (res) => {
         console.log(res);
         this.spinner.hide();
         this.zila = res.data;
-
-      }, error => {
+      },
+      (error) => {
         this.spinner.hide();
         console.log(error);
-      });
+      }
+    );
   }
 
   /**
@@ -77,18 +95,16 @@ export class ZilaComponent implements OnInit {
    */
   private deleteZilaByZilaId(id: string) {
     this.spinner.show();
-    this.zilaService.deleteZilaByZilaId(id)
-      .subscribe(res => {
+    this.zilaService.deleteZilaByZilaId(id).subscribe(
+      (res) => {
         this.uiService.success(res.message);
         this.reloadService.needRefreshZila$();
         this.spinner.hide();
-      }, error => {
+      },
+      (error) => {
         console.log(error);
         this.spinner.hide();
-      });
+      }
+    );
   }
-
-
-
-
 }
