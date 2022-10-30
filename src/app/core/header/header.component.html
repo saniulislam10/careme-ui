@@ -51,44 +51,85 @@
           <!--header-midle-menu-->
           <div class="header-midle-menu">
             <ul>
-              <li>
-                <h4
-                  class="user_name"
-                  *ngIf="!isUserAuth"
-                  (click)="openRegistrationDialog()"
-                >
-                  Login
-                </h4>
-              </li>
               <li *ngIf="isUserAuth">
-                <a [mat-menu-trigger-for]="profile">
+                <a
+                  nz-dropdown
+                  [nzDropdownMenu]="menuNNotif"
+                  nzTrigger="click"
+                  nzPlacement="bottomRight"
+                >
                   <span>
-                    <i class="las la-user"></i>
+                    <i class="las la-bell"></i>
+                  </span>
+                </a>
+                <nz-dropdown-menu #menuNNotif="nzDropdownMenu">
+                  <ul class="user_dropdown" nz-menu nzSelectable>
+                    <li nz-menu-item [routerLink]="['dashboard/summary']">
+                      <i class="las la-tachometer-alt"></i> Dashboard
+                    </li>
+                    <li nz-menu-item>
+                      <i class="lar la-user"></i> Manage Account
+                    </li>
+                    <li nz-menu-item><i class="las la-box"></i> My Orders</li>
+                    <li nz-menu-item>
+                      <i class="lar la-heart"></i> My Wishlist
+                    </li>
+                    <li nz-menu-item>
+                      <i class="lar la-times-circle"></i> My Returns &
+                      Cancellations
+                    </li>
+                    <li nz-menu-item><i class="lar la-star"></i> My Reviews</li>
+                    <li nz-menu-item (click)="userLogOut()">
+                      <i class="las la-power-off"></i> Logout
+                    </li>
+                  </ul>
+                </nz-dropdown-menu>
+              </li>
+              <li *ngIf="!isUserAuth">
+                <a (click)="openRegistrationDialog()">
+                  <span>
+                    <i class="lar la-user"></i>
                   </span>
                 </a>
               </li>
-              <mat-menu #profile="matMenu">
-                <button mat-menu-item [routerLink]="['dashboard/summary']">
-                  <mat-icon>perm_identity</mat-icon>
-                  <span>View Profile</span>
-                </button>
-                <button (click)="userLogOut()" mat-menu-item>
-                  <mat-icon>exit_to_app</mat-icon>
-                  <span>Logout</span>
-                </button>
-                <button mat-menu-item>
-                  <mat-icon>stop</mat-icon>
-                  <span
-                    >(Login as
-                    {{
-                      user?.fullName ? user?.fullName : user?.username
-                    }})</span
-                  >
-                </button>
-              </mat-menu>
+              <li *ngIf="isUserAuth">
+                <a
+                  nz-dropdown
+                  [nzDropdownMenu]="menuUser"
+                  nzPlacement="bottomRight"
+                >
+                  <span> <i class="lar la-user"></i> </span>
+                </a>
+                <nz-dropdown-menu #menuUser="nzDropdownMenu">
+                  <ul class="user_dropdown" nz-menu nzSelectable>
+                    <li nz-menu-item>
+                      Hi,
+                      {{ user?.fullName ? user?.fullName : user?.username }}
+                    </li>
+                    <li nz-menu-item [routerLink]="['dashboard/summary']">
+                      <i class="las la-tachometer-alt"></i> Dashboard
+                    </li>
+                    <li nz-menu-item>
+                      <i class="lar la-user"></i> Manage Account
+                    </li>
+                    <li nz-menu-item><i class="las la-box"></i> My Orders</li>
+                    <li nz-menu-item>
+                      <i class="lar la-heart"></i> My Wishlist
+                    </li>
+                    <li nz-menu-item>
+                      <i class="lar la-times-circle"></i> My Returns &
+                      Cancellations
+                    </li>
+                    <li nz-menu-item><i class="lar la-star"></i> My Reviews</li>
+                    <li nz-menu-item (click)="userLogOut()">
+                      <i class="las la-power-off"></i> Logout
+                    </li>
+                  </ul>
+                </nz-dropdown-menu>
+              </li>
               <li>
-                <a routerLink="/cart"
-                  ><span><i class="las la-shopping-cart"></i></span>
+                <a routerLink="/cart">
+                  <span> <i class="las la-shopping-cart"></i> </span>
                 </a>
                 <small *ngIf="carts?.length" class="total-cart">{{
                   carts?.length
