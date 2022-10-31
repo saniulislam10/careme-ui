@@ -84,6 +84,7 @@
           </td>
           <td>
             <label nz-checkbox [ngModel]="data.enable">Enable</label>
+            <button nz-button (click)="editRate()">Edit</button>
             <button nz-button (click)="setRate()">Set Rate</button>
           </td>
         </tr>
@@ -94,7 +95,7 @@
 
 <ng-template #shipZone>
   <button nz-button nzType="dashed" (click)="showZoneModal()">
-    <i class="las la-plus"></i> Add Zone
+    Select Zone
   </button>
 
 </ng-template>
@@ -184,6 +185,15 @@
           </nz-form-label>
           <nz-form-control [nzSpan]="24" nzExtra="We must make sure that your are a human.">
             <input nz-input name="flatrate" type="number" digitOnly value="120" id="flatrate"
+              placeholder="Customers won't see this." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="24" nzFor="base">
+            Base Price (below 1kg)
+          </nz-form-label>
+          <nz-form-control [nzSpan]="24" nzExtra="We must make sure that your are a human.">
+            <input nz-input name="base" type="number" digitOnly value="60" id="base"
               placeholder="Customers won't see this." />
           </nz-form-control>
         </nz-form-item>
