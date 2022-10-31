@@ -178,15 +178,12 @@
 <nz-modal [(nzVisible)]="showRate" nzTitle="Set Rate" (nzOnCancel)="onCancel()" (nzOnOk)="onOk()">
   <ng-container *nzModalContent>
     <div class="zone_choose">
+      <nz-radio-group [(ngModel)]="chooseRateType" nzName="radio-group">
+        <label nz-radio nzValue="flat"> Flat Rate </label>
+        <label nz-radio nzValue="weight"> Weight Website </label>
+        <label nz-radio nzValue="products" [nzDisabled]="true"> Price Wise </label>
+      </nz-radio-group>
       <form nz-form>
-
-        <nz-form-item>
-          <nz-radio-group [(ngModel)]="chooseRateType" nzName="radio-group">
-            <label nz-radio nzValue="flat"> Flat Rate </label>
-            <label nz-radio nzValue="weight"> Weight Website </label>
-            <label nz-radio nzValue="products" disabled> Price Wise </label>
-          </nz-radio-group>
-        </nz-form-item>
         <nz-form-item *ngIf="chooseRateType === 'flat'">
           <nz-form-label [nzSpan]="24" nzFor="flatrate">
             Flat Rate
