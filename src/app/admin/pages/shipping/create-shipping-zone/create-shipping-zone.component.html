@@ -179,7 +179,15 @@
   <ng-container *nzModalContent>
     <div class="zone_choose">
       <form nz-form>
+
         <nz-form-item>
+          <nz-radio-group [(ngModel)]="chooseRateType" nzName="radio-group">
+            <label nz-radio nzValue="flat"> Flat Rate </label>
+            <label nz-radio nzValue="weight"> Weight Website </label>
+            <label nz-radio nzValue="products" disabled> Price Wise </label>
+          </nz-radio-group>
+        </nz-form-item>
+        <nz-form-item *ngIf="chooseRateType === 'flat'">
           <nz-form-label [nzSpan]="24" nzFor="flatrate">
             Flat Rate
           </nz-form-label>
@@ -188,7 +196,7 @@
               placeholder="Customers won't see this." />
           </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
+        <nz-form-item *ngIf="chooseRateType === 'weight'">
           <nz-form-label [nzSpan]="24" nzFor="base">
             Base Price (below 1kg)
           </nz-form-label>
@@ -197,7 +205,7 @@
               placeholder="Customers won't see this." />
           </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
+        <nz-form-item *ngIf="chooseRateType === 'weight'">
           <nz-form-label [nzSpan]="24" nzFor="weight">
             Per Kg
           </nz-form-label>

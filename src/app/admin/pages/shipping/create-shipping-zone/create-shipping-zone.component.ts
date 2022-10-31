@@ -16,6 +16,7 @@ export class CreateShippingZoneComponent implements OnInit {
   // For Details
   zoneVisible = false;
   chooseProduct = 'all';
+  chooseRateType = 'flat';
   zoneChoose = true;
   shippingMethod = [
     {
