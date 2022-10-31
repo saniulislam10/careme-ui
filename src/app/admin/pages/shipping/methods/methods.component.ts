@@ -153,9 +153,13 @@ export class MethodsComponent implements OnInit {
         timing: this.fb.array([])
       }));
     })
+    if (this.id) {
+      console.log(this.id);
+    }
+
   }
 
-  openingTiming(dayIndex: number) : FormArray {
+  openingTiming(dayIndex: number): FormArray {
     return this.openingTimesArray.at(dayIndex).get("timing") as FormArray
   }
 
@@ -166,19 +170,19 @@ export class MethodsComponent implements OnInit {
     })
   }
 
-  addTiming(dayIndex:number) {
+  addTiming(dayIndex: number) {
     console.log(this.openingTiming(dayIndex))
     this.openingTiming(dayIndex).push(this.newTiming());
   }
 
-  removeTiming(dayIndex:number,timeIndex:number) {
+  removeTiming(dayIndex: number, timeIndex: number) {
     this.openingTiming(dayIndex).removeAt(timeIndex);
   }
 
-  removeInStockDeliveryTimesArray(dayIndex){
+  removeInStockDeliveryTimesArray(dayIndex) {
     this.inStockDeliveryTimesArray.removeAt(dayIndex);
   }
-  removePreOrderDeliveryTimesArray(dayIndex){
+  removePreOrderDeliveryTimesArray(dayIndex) {
     this.preOrderDeliveryTimesArray.removeAt(dayIndex);
   }
 
@@ -192,6 +196,7 @@ export class MethodsComponent implements OnInit {
   mathodCancel(): void {
     console.log('Button cancel clicked!');
     this.isMethodVisible = false;
+    this.id = null;
   }
 
   /**
@@ -206,27 +211,43 @@ export class MethodsComponent implements OnInit {
     }
 
     let data = this.dataForm.value;
-    console.log(data);
-    this.shippingService.add(data)
-    .subscribe(res => {
-      this.msg.success(res.message);
-      this.reloadService.needRefreshShipping$();
-    }, err => {
-      this.msg.error(err.message);
-
-    })
-
+    if (this.id) {
+      let finaldata = { ...data, ...{ _id: this.id } };
+      this.editMethod(finaldata);
+    } else {
+      this.addMethod(data);
+    }
     this.isMethodVisible = false;
   }
 
-  getAll(){
+  addMethod(data: ShippingMethod) {
+    this.shippingService.add(data)
+      .subscribe(res => {
+        this.msg.success(res.message);
+        this.reloadService.needRefreshShipping$();
+      }, err => {
+        this.msg.error(err.message);
+      })
+  }
+
+  editMethod(data: ShippingMethod) {
+    this.shippingService.editData(data)
+      .subscribe(res => {
+        this.msg.success(res.message);
+        this.reloadService.needRefreshShipping$();
+      }, err => {
+        this.msg.error(err.message);
+      })
+  }
+
+  getAll() {
     this.shippingService.getAll()
-    .subscribe(res => {
-      console.log(res.data);
-      this.allMethods = res.data;
-    }, err => {
-      this.msg.error(err.message);
-    })
+      .subscribe(res => {
+        console.log(res.data);
+        this.allMethods = res.data;
+      }, err => {
+        this.msg.error(err.message);
+      })
   }
 
   showDeleteConfirm(id): void {
@@ -244,21 +265,38 @@ export class MethodsComponent implements OnInit {
     });
   }
 
-  delete(id){
+  delete(id) {
     this.shippingService.deleteById(id)
-    .subscribe(res => {
-      this.msg.create('success', res.message);
-      this.reloadService.needRefreshShipping$();
-    }, err=> {
-      this.msg.create('error', err.message)
-    })
+      .subscribe(res => {
+        this.msg.create('success', res.message);
+        this.reloadService.needRefreshShipping$();
+      }, err => {
+        this.msg.create('error', err.message)
+      })
   }
 
-  edit(data){
+  edit(data: ShippingMethod) {
     this.id = data._id;
     this.initModule();
-    this.isMethodVisible = true;
+    if (data.customOpeningTime) {
+      for (let i = 0; i < data.openingTimesArray.length; i++) {
+        for (let j = 0; j < data.openingTimesArray[i].timing.length; j++) {
+          this.addTiming(i);
+        }
+      }
+    }
+    if(data.inStockDeliveryCustomRange){
+      data.inStockDeliveryTimesArray.forEach(m => {
+        this.addInStockDeliveryTime();
+      })
+    }
+    if(data.preOrderDeliveryCustomRange){
+      data.preOrderDeliveryTimesArray.forEach(m => {
+        this.addPreOrderDeliveryTime();
+      })
+    }
     this.dataForm.patchValue(data);
+    this.isMethodVisible = true;
   }
 
 

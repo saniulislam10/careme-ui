@@ -1,4 +1,5 @@
 export interface ShippingMethod {
+  _id?: any,
   name: String,
   customOpeningTime: Boolean,
   openingTimesArray?: OpeningTime[],

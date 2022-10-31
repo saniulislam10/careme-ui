@@ -1,4 +1,11 @@
+import { ShippingService } from './../../../../services/shipping.service';
+import { ProductType } from './../../../../interfaces/product-type';
+import { Category } from './../../../../interfaces/category';
+import { ProductTypeService } from './../../../../services/product-type.service';
+import { Zila } from './../../../../interfaces/zila';
+import { ZilaService } from './../../../../services/zila.service';
 import { Component, OnInit } from '@angular/core';
+import { ShippingMethod } from 'src/app/interfaces/shipping-method';
 
 @Component({
   selector: 'app-create-shipping-zone',
@@ -28,42 +35,26 @@ export class CreateShippingZoneComponent implements OnInit {
       value: 4,
     },
   ];
-  dataSet = [
-    {
-      name: 'General Method',
-      rate: '120',
-      enable: 'true',
-    },
-    {
-      name: 'Sameday Method',
-      rate: '200',
-      enable: 'false',
-    },
-    {
-      name: 'Nextday Method',
-      rate: '150',
-      enable: 'false',
-    },
-    {
-      name: 'Own Pick Method',
-      rate: '15',
-      enable: 'false',
-    },
-  ];
 
   // Choose Category
-  listOfOption: Array<{ label: string; value: string }> = [];
-  listOfTagOptions = [];
+  listOfCatOption: ProductType[] = [];
+  listOfProOption: ProductType[] = [];
+  selectedCatOptions = [];
+  zila: Zila[];
+  methods: ShippingMethod[] = [];
+  showRate: boolean;
 
-  constructor() {}
+  constructor(
+    private zilaService: ZilaService,
+    private productTypeService: ProductTypeService,
+    private shippingService: ShippingService,
+  ) {}
 
   ngOnInit(): void {
     // Choose Category
-    const children: Array<{ label: string; value: string }> = [];
-    for (let i = 0; i < 100; i++) {
-      children.push({ label: 'Category' + i, value: 'value' + i });
-    }
-    this.listOfOption = children;
+    this.getAllCat();
+    this.getAllZila();
+    this.getAllShippingMethods();
   }
 
   // For Details
@@ -77,5 +68,45 @@ export class CreateShippingZoneComponent implements OnInit {
   zoneCancel(): void {
     console.log('Button cancel clicked!');
     this.zoneVisible = false;
+  }
+  onCancel(): void {
+    console.log('Button cancel clicked!');
+    this.showRate = false;
+  }
+  onOk(): void {
+    console.log('Button ok clicked!');
+    this.showRate = false;
+  }
+
+  getAllZila() {
+    this.zilaService.getAllZila()
+      .subscribe(res => {
+        console.log(res);
+        this.zila = res.data;
+      }, error => {
+        console.log(error);
+      });
+  }
+  getAllCat() {
+    this.productTypeService.getAll()
+      .subscribe(res => {
+        console.log(res);
+        this.listOfCatOption = res.data;
+      }, error => {
+        console.log(error);
+      });
+  }
+  getAllShippingMethods() {
+    this.shippingService.getAll()
+      .subscribe(res => {
+        console.log(res.data);
+        this.methods = res.data;
+      }, error => {
+        console.log(error);
+      });
+  }
+
+  setRate(){
+    this.showRate = true;
   }
 }

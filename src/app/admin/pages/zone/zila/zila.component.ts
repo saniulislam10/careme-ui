@@ -1,3 +1,8 @@
+import { ThanaService } from './../../../../services/thana.service';
+import { Thana } from 'src/app/interfaces/thana';
+import { City } from './../../../../interfaces/city';
+import { CityService } from './../../../../services/city.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Component, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -16,59 +21,34 @@ import { ZilaService } from 'src/app/services/zila.service';
 })
 export class ZilaComponent implements OnInit {
   // Tab Data
-  divisionName = [
-    'Dhaka',
-    'Khulna',
-    'Chattogram',
-    'Barishal',
-    'Rajshahi',
-    'Rangpur',
-    'Mymensingh',
-    'Sylhet',
-  ];
-  cityName = [
-    'Adabor',
-    'Badda',
-    'Bandar',
-    'Demra',
-    'Gazipur Sadar',
-    'Gendaria',
-    'Chawkbazar',
-    'Biman Bandar',
+  countryName = [
+    'Bangladesh',
+    'Others'
   ];
 
   zila: Zila[] = [];
+  // city: City[];
+  cityCount: number;
+  // thana: Thana[];
+  thanaCount: number;
+
+
   constructor(
     private dialog: MatDialog,
     private zilaService: ZilaService,
+    private cityService: CityService,
+    private thanaService: ThanaService,
     private uiService: UiService,
     private reloadService: ReloadService,
-    private spinner: NgxSpinnerService
-  ) {}
+    private spinner: NgxSpinnerService,
+    private modal: NzModalService
+  ) { }
 
   ngOnInit(): void {
     this.reloadService.refreshZila$.subscribe(() => {
       this.getAllZila();
     });
     this.getAllZila();
-  }
-
-  /**
-   * COMPONENT DIALOG VIEW
-   */
-  public openConfirmDialog(data?: string) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: '400px',
-      data: {
-        title: 'Confirm Delete',
-        message: 'Are you sure you want delete this category?',
-      },
-    });
-    dialogRef.afterClosed().subscribe((dialogResult) => {
-      if (dialogResult) {
-        this.deleteZilaByZilaId(data);
-      }
-    });
   }
 
   /**
@@ -82,6 +62,7 @@ export class ZilaComponent implements OnInit {
         console.log(res);
         this.spinner.hide();
         this.zila = res.data;
+
       },
       (error) => {
         this.spinner.hide();
@@ -90,10 +71,11 @@ export class ZilaComponent implements OnInit {
     );
   }
 
+
   /**
    * DELETE METHOD HERE
    */
-  private deleteZilaByZilaId(id: string) {
+  private delete(id: string) {
     this.spinner.show();
     this.zilaService.deleteZilaByZilaId(id).subscribe(
       (res) => {
@@ -106,5 +88,20 @@ export class ZilaComponent implements OnInit {
         this.spinner.hide();
       }
     );
+  }
+
+  showDeleteConfirm(id): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this task?',
+      nzContent: '<b style="color: red;">All the related datas will be deleted</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => {
+        this.delete(id);
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
   }
 }

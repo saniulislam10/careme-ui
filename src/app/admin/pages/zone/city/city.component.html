@@ -1,54 +1,33 @@
-<div class="top-action">
-  <button mat-raised-button color="primary" [routerLink]="['add-city']">
-    <mat-icon>add</mat-icon>
-    Add New City
-  </button>
+<div class="page-header">
+  <h2>All Zone</h2>
+  <div class="header-action">
+    <button class="create_btn" [routerLink]="['add-city']">
+      <i class="las la-plus"></i>
+      Add New Zone
+    </button>
+  </div>
 </div>
-
-<div class="header">
-  <h2>City List</h2>
-</div>
-
-<hr class="center-square" />
-
-<div class="table-container">
-  <table>
-    <thead>
-      <tr class="table-head">
-        <th scope="col">{{ "City Name" }}</th>
-
-        <th scope="col">{{ "Actions" }}</th>
-      </tr>
-    </thead>
-    <!-- End Table Head -->
-    <tr *ngFor="let data of city; let i = index">
-      <td [attr.data-label]="'City Name'">{{ data.name }}</td>
-
-      <td [attr.data-label]="'Actions'">
-        <button
-          style="margin-right: 5px"
-          mat-mini-fab
-          color="warn"
-          (click)="openConfirmDialog(data._id)"
+<div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+  <div nz-col nzXs="24" nzSm="12" nzMd="8" class="gutter-row"  *ngFor="let data of city; let thanaIndex=index">
+    <div class="inner-box" >
+      <nz-collapse>
+        <nz-collapse-panel
+        [nzExtra]="extraTpl"
+          [nzHeader]="data?.name"
+          [nzActive]="data?.active"
+          [nzDisabled]="data?.disabled"
         >
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button [routerLink]="['edit-city', data._id]" mat-mini-fab>
-          <mat-icon>edit</mat-icon>
-        </button>
-      </td>
-    </tr>
-    <!-- End Table Body -->
-  </table>
+          <ul class="list">
+            <li *ngFor="let thana of thanas[thanaIndex]">
+              {{thana?.name}} (H,C,P)
+            </li>
+          </ul>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <ng-template #extraTpl>
+        <span nz-icon nzType="edit" [routerLink]="['edit-city', data._id]"></span>
+        <span nz-icon nzType="delete" (click)="showDeleteConfirm(data._id)"></span>
+      </ng-template>
+    </div>
+  </div>
 </div>
-
-<!-- LOADING TEMPLATE -->
-<ngx-spinner
-  style="width: 100vw; height: 100vh"
-  bdColor="rgba(0,0,0,0.25)"
-  size="medium"
-  color="#fff"
-  type="ball-clip-rotate"
-  [fullScreen]="true"
-  ><p style="color: white">Loading...</p></ngx-spinner
->

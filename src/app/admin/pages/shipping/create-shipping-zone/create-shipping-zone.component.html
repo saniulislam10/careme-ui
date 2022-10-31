@@ -7,24 +7,11 @@
 </div>
 <nz-card class="mb" nzTitle="Profile">
   <div nz-row [nzGutter]="16">
-    <div
-      nz-form
-      class="profile_left"
-      nz-col
-      [nzXs]="{ span: 24 }"
-      [nzLg]="{ span: 24 }"
-    >
+    <div nz-form class="profile_left" nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
       <div nz-row [nzGutter]="16">
         <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 6 }">
           <label> Profile Name </label>
-          <input
-            nz-input
-            name="name"
-            type="text"
-            id="name"
-            value="General"
-            placeholder="Ex: Standard Shipping"
-          />
+          <input nz-input name="name" type="text" id="name" value="General" placeholder="Ex: Standard Shipping" />
         </div>
       </div>
     </div>
@@ -38,24 +25,19 @@
             <label nz-radio nzValue="products"> Products </label>
           </nz-radio-group>
         </div>
-        <div
-          nz-col
-          [nzXs]="{ span: 24 }"
-          [nzLg]="{ span: 24 }"
-          *ngIf="chooseProduct !== 'all'"
-        >
+        <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }" *ngIf="chooseProduct !== 'all'">
+
+
           <label *ngIf="chooseProduct === 'category'"> Choose Category </label>
+          <nz-select *ngIf="chooseProduct === 'category'" nzMode="tags" nzPlaceHolder="Type or choose ..."
+            [(ngModel)]="selectedCatOptions">
+            <nz-option *ngFor="let option of listOfCatOption" [nzLabel]="option.name" [nzValue]="option._id"></nz-option>
+          </nz-select>
+
+
           <label *ngIf="chooseProduct === 'products'"> Choose Product </label>
-          <nz-select
-            nzMode="tags"
-            nzPlaceHolder="Type or choose ..."
-            [(ngModel)]="listOfTagOptions"
-          >
-            <nz-option
-              *ngFor="let option of listOfOption"
-              [nzLabel]="option.label"
-              [nzValue]="option.value"
-            ></nz-option>
+          <nz-select *ngIf="chooseProduct === 'products'" nzMode="tags" nzPlaceHolder="Type or choose ..." [(ngModel)]="selectedProOptions">
+            <nz-option *ngFor="let option of listOfProOption" [nzLabel]="option.name" [nzValue]="option._id"></nz-option>
           </nz-select>
         </div>
       </div>
@@ -77,20 +59,11 @@
       </p>
     </div>
   </div>
-  <nz-card
-    class="shipping_rate"
-    nzSize="small"
-    [nzBodyStyle]="{ padding: '0px' }"
-  >
-    <nz-table
-      #rateData
-      nzSize="small"
-      [nzData]="dataSet"
-      [nzShowPagination]="false"
-    >
+  <nz-card class="shipping_rate" nzSize="small" [nzBodyStyle]="{ padding: '0px' }">
+    <nz-table #rateData nzSize="small" [nzData]="methods" [nzShowPagination]="false">
       <thead>
         <tr>
-          <th>Shipping Method</th>
+          <th >Shipping Method</th>
           <th>Condition</th>
           <th>Rate</th>
           <th>Action</th>
@@ -111,6 +84,7 @@
           </td>
           <td>
             <label nz-checkbox [ngModel]="data.enable">Enable</label>
+            <button nz-button (click)="setRate()">Set Rate</button>
           </td>
         </tr>
       </tbody>
@@ -122,117 +96,107 @@
   <button nz-button nzType="dashed" (click)="showZoneModal()">
     <i class="las la-plus"></i> Add Zone
   </button>
-  <nz-modal
-    [(nzVisible)]="zoneVisible"
-    nzTitle="Shipping Zone"
-    (nzOnCancel)="zoneCancel()"
-    (nzOnOk)="zoneOk()"
-  >
-    <ng-container *nzModalContent>
-      <div class="zone_choose">
-        <form nz-form>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="24" nzFor="zonename">
-              Zone Name
-            </nz-form-label>
-            <nz-form-control
-              [nzSpan]="24"
-              nzExtra="We must make sure that your are a human."
-            >
-              <input
-                nz-input
-                name="zonename"
-                type="text"
-                value="Bangladesh"
-                id="zonename"
-                placeholder="Customers won't see this."
-              />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-control [nzSpan]="24">
-              <nz-card nzSize="small" class="zone_name_list">
-                <nz-input-group class="mb" [nzSuffix]="suffixIconSearch">
-                  <input
-                    type="text"
-                    nz-input
-                    placeholder="Search countries, regions and zone"
-                  />
-                </nz-input-group>
-                <ng-template #suffixIconSearch>
-                  <span nz-icon nzType="search"></span>
-                </ng-template>
-                <ul>
-                  <li>
-                    <div class="country_single">
-                      <input type="checkbox" id="restofworld" />
-                      <label for="restofworld"> Rest of world </label>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="country_single">
-                      <input type="checkbox" id="asia" />
-                      <label for="asia"> Asia </label>
-                    </div>
-                    <ul>
-                      <li>
-                        <div class="country_single">
-                          <input type="checkbox" id="bangladesh" checked />
-                          <label for="bangladesh">
-                            <img
-                              for="bangladesh"
-                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/1200px-Flag_of_Bangladesh.svg.png"
-                            />
-                            Bangladesh
-                          </label>
-                        </div>
-                        <ul>
-                          <li>
-                            <div class="country_single">
-                              <input type="checkbox" id="dhaka" checked />
-                              <label for="dhaka"> Dhaka </label>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="country_single">
-                              <input type="checkbox" id="chittagong" checked />
-                              <label for="chittagong"> Chittagong </label>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="country_single">
-                              <input type="checkbox" id="khulna" checked />
-                              <label for="khulna"> Khulna </label>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="country_single">
-                              <input type="checkbox" id="barisal" checked />
-                              <label for="barisal"> Barisal </label>
-                            </div>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <div class="country_single">
-                          <input type="checkbox" id="india" />
-                          <label for="india">
-                            <img
-                              for="bangladesh"
-                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/1200px-Flag_of_Bangladesh.svg.png"
-                            />
-                            India
-                          </label>
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </nz-card>
-            </nz-form-control>
-          </nz-form-item>
-        </form>
-      </div>
-    </ng-container>
-  </nz-modal>
+
 </ng-template>
+
+
+<nz-modal [(nzVisible)]="zoneVisible" nzTitle="Shipping Zone" (nzOnCancel)="zoneCancel()" (nzOnOk)="zoneOk()">
+  <ng-container *nzModalContent>
+    <div class="zone_choose">
+      <form nz-form>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="24" nzFor="zonename">
+            Zone Name
+          </nz-form-label>
+          <nz-form-control [nzSpan]="24" nzExtra="We must make sure that your are a human.">
+            <input nz-input name="zonename" type="text" value="Bangladesh" id="zonename"
+              placeholder="Customers won't see this." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control [nzSpan]="24">
+            <nz-card nzSize="small" class="zone_name_list">
+              <nz-input-group class="mb" [nzSuffix]="suffixIconSearch">
+                <input type="text" nz-input placeholder="Search countries, regions and zone" />
+              </nz-input-group>
+              <ng-template #suffixIconSearch>
+                <span nz-icon nzType="search"></span>
+              </ng-template>
+              <ul>
+                <li>
+                  <div class="country_single">
+                    <input type="checkbox" id="restofworld" />
+                    <label for="restofworld"> Rest of world </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="country_single">
+                    <input type="checkbox" id="asia" />
+                    <label for="asia"> Asia </label>
+                  </div>
+                  <ul>
+                    <li>
+                      <div class="country_single">
+                        <input type="checkbox" id="bangladesh" checked />
+                        <label for="bangladesh">
+                          <img for="bangladesh"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/1200px-Flag_of_Bangladesh.svg.png" />
+                          Bangladesh
+                        </label>
+                      </div>
+                      <ul>
+                        <li *ngFor="let data of zila">
+                          <div class="country_single">
+                            <input type="checkbox" [id]="data._id" checked />
+                            <label for="dhaka"> {{data.name}} </label>
+                          </div>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <div class="country_single">
+                        <input type="checkbox" id="india" />
+                        <label for="india">
+                          <img for="bangladesh"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/1200px-Flag_of_Bangladesh.svg.png" />
+                          India
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nz-card>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="showRate" nzTitle="Set Rate" (nzOnCancel)="onCancel()" (nzOnOk)="onOk()">
+  <ng-container *nzModalContent>
+    <div class="zone_choose">
+      <form nz-form>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="24" nzFor="flatrate">
+            Flat Rate
+          </nz-form-label>
+          <nz-form-control [nzSpan]="24" nzExtra="We must make sure that your are a human.">
+            <input nz-input name="flatrate" type="number" digitOnly value="120" id="flatrate"
+              placeholder="Customers won't see this." />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="24" nzFor="weight">
+            Per Kg
+          </nz-form-label>
+          <nz-form-control [nzSpan]="24" nzExtra="We must make sure that your are a human.">
+            <input nz-input name="weight" type="number" digitOnly value="60" id="weight"
+              placeholder="Customers won't see this." />
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </ng-container>
+</nz-modal>
