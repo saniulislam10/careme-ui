@@ -36,7 +36,10 @@ export class CityService {
     return this.httpClient.get<{data: City, message?: string}>(API_CITY + 'get-city-by-city-id/' + id);
   }
   getAllCityByZilaId(zilaId: string) {
-    return this.httpClient.get<{data: City[], message?: string}>(API_CITY + 'get-city-by-zila-id/' + zilaId);
+    return this.httpClient.get<{data: City[], count:number, message?: string}>(API_CITY + 'get-city-by-zila-id/' + zilaId);
+  }
+  getCityCount(zilaId: string) {
+    return this.httpClient.get<{count:number, message?: string}>(API_CITY + 'get-city-count/' + zilaId);
   }
 
 

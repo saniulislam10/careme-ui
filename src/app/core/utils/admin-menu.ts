@@ -267,7 +267,7 @@ export const menuItemsSuperAdmin: MenuAdmin[] = [
   },
   {
     id: '1212ll',
-    title: 'Zila',
+    title: 'District/State',
     icon: null,
     hasSubMenu: false,
     parentId: '14',
@@ -277,7 +277,7 @@ export const menuItemsSuperAdmin: MenuAdmin[] = [
   },
   {
     id: 'll1121',
-    title: 'City',
+    title: 'Zone',
     icon: null,
     hasSubMenu: false,
     parentId: '14',
@@ -287,7 +287,7 @@ export const menuItemsSuperAdmin: MenuAdmin[] = [
   },
   {
     id: '1212ll',
-    title: 'Thana',
+    title: 'Area',
     icon: null,
     hasSubMenu: false,
     parentId: '14',

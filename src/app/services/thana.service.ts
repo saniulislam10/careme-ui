@@ -39,6 +39,12 @@ export class ThanaService {
   getAllThanasByCityId(id: string) {
     return this.httpClient.get<{data: Thana[], message?: string}>(API_THANA + 'get-all-thanas-by-city-id/' + id);
   }
+  getAllThanasByZilaId(id: string) {
+    return this.httpClient.get<{data: Thana[], count: number, message?: string}>(API_THANA + 'get-all-thanas-by-zila-id/' + id);
+  }
+  getThanaCount(id: string) {
+    return this.httpClient.get<{count: number, message?: string}>(API_THANA + 'get-thanas-count/' + id);
+  }
 
   editThanaData(data: Thana) {
     return this.httpClient.put<{message?: string}>(API_THANA + 'edit-thana-by-thana', data);

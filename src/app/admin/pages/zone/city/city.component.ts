@@ -1,14 +1,13 @@
+import { Thana } from './../../../../interfaces/thana';
 import { Component, OnInit } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {NgxSpinnerService} from 'ngx-spinner';
-
-
-// import {ConfirmDialogComponent} from '../../../shared/components/ui/confirm-dialog/confirm-dialog.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { CityService } from 'src/app/services/city.service';
 import { City } from 'src/app/interfaces/city';
 import { UiService } from 'src/app/services/ui.service';
 import { ReloadService } from 'src/app/services/reload.service';
-import { ConfirmDialogComponent } from 'src/app/shared/components/ui/confirm-dialog/confirm-dialog.component';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { ThanaService } from 'src/app/services/thana.service';
 
 
 @Component({
@@ -20,13 +19,17 @@ export class CityComponent implements OnInit {
 
 
   city: City[] = [];
+  thanas: any[]= [];
 
   constructor(
-    private dialog: MatDialog,
     private cityService: CityService,
+    private thanaService: ThanaService,
     private uiService: UiService,
     private reloadService: ReloadService,
     private spinner: NgxSpinnerService,
+    private modal: NzModalService,
+    private msg: NzMessageService
+
   ) { }
 
   ngOnInit(): void {
@@ -40,18 +43,19 @@ export class CityComponent implements OnInit {
   /**
    * COMPONENT DIALOG VIEW
    */
-  public openConfirmDialog(data?: string) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: '400px',
-      data: {
-        title: 'Confirm Delete',
-        message: 'Are you sure you want delete this category?'
-      }
-    });
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      if (dialogResult) {
-        this.deleteCityByCityId(data);
-      }
+
+  showDeleteConfirm(id): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this task?',
+      nzContent: '<b style="color: red;">All the related datas will be deleted</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => {
+        this.delete(id);
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
     });
   }
 
@@ -63,9 +67,10 @@ export class CityComponent implements OnInit {
     this.spinner.show();
     this.cityService.getAllCity()
       .subscribe(res => {
-        console.log(res);
-        this.spinner.hide();
         this.city = res.data;
+        this.city.forEach(m => {
+          this.getAllThanaByCityId(m._id);
+        })
 
       }, error => {
         this.spinner.hide();
@@ -76,17 +81,29 @@ export class CityComponent implements OnInit {
   /**
    * DELETE METHOD HERE
    */
-  private deleteCityByCityId(id: string) {
+  private delete(id: string) {
     this.spinner.show();
     this.cityService.deleteCityByCityId(id)
       .subscribe(res => {
-        this.uiService.success(res.message);
+        this.msg.success(res.message);
         this.reloadService.needRefreshCity$();
         this.spinner.hide();
       }, error => {
         console.log(error);
         this.spinner.hide();
       });
+  }
+
+  getAllThanaByCityId(cityId: string){
+    this.thanaService.getAllThanasByCityId(cityId)
+    .subscribe(res => {
+      this.thanas.push(res.data);
+    }, error => {
+      console.log(error);
+    });
+  }
+  getThanas(i){
+    return this.thanas[i];
   }
 
 

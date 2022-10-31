@@ -1,6 +1,6 @@
 <!-- Collection-area-->
 <div class="page-header">
-  <h2>Bangladesh</h2>
+  <h2>All Districts/States by Countries</h2>
   <div class="header-action">
     <button class="create_btn" [routerLink]="['add-zila']">
       <i class="las la-plus"></i>
@@ -11,73 +11,77 @@
 
 <nz-card nzSize="small">
   <nz-tabset>
-    <nz-tab *ngFor="let divishion of divisionName" [nzTitle]="divishion">
-      <div class="table_filter">
-        <div class="search_area">
-          <div class="filter_search">
-            <form nz-form>
-              <input
-                nz-input
-                name="search"
-                type="text"
-                id="search"
-                placeholder="Search here..."
-              />
-            </form>
+    <nz-tab *ngFor="let country of countryName" [nzTitle]="country">
+      <div>
+        <div class="table_filter">
+          <div class="search_area">
+            <div class="filter_search">
+              <form nz-form>
+                <input
+                  nz-input
+                  name="search"
+                  type="text"
+                  id="search"
+                  placeholder="Search here..."
+                />
+              </form>
+            </div>
+            <div class="filter_btn">
+              <nz-button-group>
+                <button
+                  nz-button
+                  nz-button
+                  nz-dropdown
+                  [nzDropdownMenu]="filter"
+                  nzPlacement="bottomRight"
+                >
+                  <i class="las la-filter"></i> Filter
+                </button>
+                <button
+                  nz-button
+                  nz-dropdown
+                  [nzDropdownMenu]="sort"
+                  nzPlacement="bottomRight"
+                >
+                  <i class="las la-sort-amount-down-alt"></i> Sort
+                </button>
+              </nz-button-group>
+              <nz-dropdown-menu #sort="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>1st menu item</li>
+                  <li nz-menu-item>2nd menu item</li>
+                  <li nz-menu-item>3rd menu item</li>
+                </ul>
+              </nz-dropdown-menu>
+              <nz-dropdown-menu #filter="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>1st menu item</li>
+                  <li nz-menu-item>2nd menu item</li>
+                  <li nz-menu-item>3rd menu item</li>
+                </ul>
+              </nz-dropdown-menu>
+            </div>
           </div>
-          <div class="filter_btn">
-            <nz-button-group>
-              <button
-                nz-button
-                nz-button
-                nz-dropdown
-                [nzDropdownMenu]="filter"
-                nzPlacement="bottomRight"
-              >
-                <i class="las la-filter"></i> Filter
-              </button>
-              <button
-                nz-button
-                nz-dropdown
-                [nzDropdownMenu]="sort"
-                nzPlacement="bottomRight"
-              >
-                <i class="las la-sort-amount-down-alt"></i> Sort
-              </button>
-            </nz-button-group>
-            <nz-dropdown-menu #sort="nzDropdownMenu">
-              <ul nz-menu nzSelectable>
-                <li nz-menu-item>1st menu item</li>
-                <li nz-menu-item>2nd menu item</li>
-                <li nz-menu-item>3rd menu item</li>
-              </ul>
-            </nz-dropdown-menu>
-            <nz-dropdown-menu #filter="nzDropdownMenu">
-              <ul nz-menu nzSelectable>
-                <li nz-menu-item>1st menu item</li>
-                <li nz-menu-item>2nd menu item</li>
-                <li nz-menu-item>3rd menu item</li>
-              </ul>
-            </nz-dropdown-menu>
+          <div class="multi_filter">
+            <span> Bangladesh <i class="lar la-times-circle"></i> </span>
           </div>
         </div>
-        <div class="multi_filter">
-          <span> Dhaka <i class="lar la-times-circle"></i> </span>
-        </div>
-      </div>
-      <div class="divishion_list">
-        <div nz-row [nzGutter]="16">
-          <div
-            *ngFor="let citylist of cityName"
-            nz-col
-            class="mb15"
-            [nzXs]="{ span: 12 }"
-            [nzLg]="{ span: 4 }"
-          >
-            <nz-card nzSize="small" nzHoverable>
-              <h4>{{ citylist }}</h4>
-              <p>130 Zone</p>
-            </nz-card>
+        <div *ngIf="country === 'Bangladesh'" class="divishion_list">
+          <div nz-row [nzGutter]="16">
+            <div
+              *ngFor="let data of zila"
+              nz-col
+              class="mb15"
+              [nzXs]="{ span: 12 }"
+              [nzLg]="{ span: 4 }"
+            >
+              <nz-card nzSize="small" nzHoverable>
+                <h4>{{ data.name }}</h4>
+                <!-- <p>{{getCityCount(data?._id)}} Zone</p> -->
+                <i class="lar la-edit" [routerLink]="['edit-zila', data._id]"></i>
+                <i class="las la-trash" (click)="showDeleteConfirm(data._id)"></i>
+              </nz-card>
+            </div>
           </div>
         </div>
       </div>
