@@ -66,8 +66,9 @@
         nzTrigger="click"
         nzPlacement="bottomRight"
       >
-        <i class="las la-bell"></i>
-        <span>99</span>
+        <nz-badge [nzCount]="5">
+          <i class="las la-bell"></i>
+        </nz-badge>
       </button>
       <button (click)="adminLogOut()" mat-icon-button matTooltip="Logout">
         <i class="las la-power-off"></i>

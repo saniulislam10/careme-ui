@@ -59,28 +59,21 @@
                   nzPlacement="bottomRight"
                 >
                   <span>
-                    <i class="las la-bell"></i>
+                    <nz-badge [nzCount]="1">
+                      <i class="las la-bell"></i>
+                    </nz-badge>
                   </span>
                 </a>
                 <nz-dropdown-menu #menuNNotif="nzDropdownMenu">
-                  <ul class="user_dropdown" nz-menu nzSelectable>
+                  <ul class="single_notify_main" nz-menu nzSelectable>
                     <li nz-menu-item [routerLink]="['dashboard/summary']">
-                      <i class="las la-tachometer-alt"></i> Dashboard
-                    </li>
-                    <li nz-menu-item>
-                      <i class="lar la-user"></i> Manage Account
-                    </li>
-                    <li nz-menu-item><i class="las la-box"></i> My Orders</li>
-                    <li nz-menu-item>
-                      <i class="lar la-heart"></i> My Wishlist
-                    </li>
-                    <li nz-menu-item>
-                      <i class="lar la-times-circle"></i> My Returns &
-                      Cancellations
-                    </li>
-                    <li nz-menu-item><i class="lar la-star"></i> My Reviews</li>
-                    <li nz-menu-item (click)="userLogOut()">
-                      <i class="las la-power-off"></i> Logout
+                      <div class="single_notify">
+                        <h4>Update</h4>
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit.
+                        </p>
+                      </div>
                     </li>
                   </ul>
                 </nz-dropdown-menu>
@@ -129,11 +122,12 @@
               </li>
               <li>
                 <a routerLink="/cart">
-                  <span> <i class="las la-shopping-cart"></i> </span>
+                  <span>
+                    <nz-badge [nzCount]="carts.length">
+                      <i class="las la-shopping-cart"></i>
+                    </nz-badge>
+                  </span>
                 </a>
-                <small *ngIf="carts?.length" class="total-cart">{{
-                  carts?.length
-                }}</small>
               </li>
               <li class="bar">
                 <button (click)="slideMenuActive()">
