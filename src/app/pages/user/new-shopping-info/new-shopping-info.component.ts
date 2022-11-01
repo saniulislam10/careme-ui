@@ -917,9 +917,25 @@ export class NewShoppingInfoComponent implements OnInit {
             let endHour = new Date(m.endTime).getHours();
             let endMin = new Date(m.endTime).getMinutes();
             if(currentHour >= startHour && currentHour <= endHour){
-              console.log(startHour,currentHour, endHour);
-              this.showMethod[index] = true;
+              if(currentHour === startHour ){
+                if(currentMin >= startMin){
+                  console.log(m);
+                  this.showMethod[index] = true;
+                }else{
+                  console.log(m);
+                  this.showMethod[index] = false;
+                }
+              }if (currentHour === endHour){
+                if(currentMin< endMin){
+                  console.log(m);
+                  this.showMethod[index] = true;
+                }else{
+                  console.log(m);
+                  this.showMethod[index] = false;
+                }
+              }
             }else{
+              console.log(m);
               this.showMethod[index] = false;
             }
           });
