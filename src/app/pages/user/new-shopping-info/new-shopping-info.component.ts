@@ -1,3 +1,4 @@
+import { Data } from './../../../admin/pages/products/add-new-product/add-new-product.component';
 import { ShippingMethod } from './../../../interfaces/shipping-method';
 import { ShippingService } from './../../../services/shipping.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -61,6 +62,8 @@ export class NewShoppingInfoComponent implements OnInit {
   dataForm?: FormGroup;
   methods: ShippingMethod[];
   subRouteOne: Subscription;
+  showMethod: Boolean[]= [];
+
   constructor(
     private fb: FormBuilder,
     private userDataService: UserDataService,
@@ -126,6 +129,7 @@ export class NewShoppingInfoComponent implements OnInit {
     this.getLoggedInUserInfo();
     this.initFormGroup();
     this.getAllShippingMethods();
+
   }
 
   private initFormGroup() {
@@ -888,12 +892,48 @@ export class NewShoppingInfoComponent implements OnInit {
     this.subRouteOne = this.shippingService.getAll()
     .subscribe(res => {
       this.methods = res.data;
+      for(let i=0; i<this.methods.length; i++){
+        let data = this.methods[i];
+        this.showMethods(data.customOpeningTime, data.openingTimesArray, i);
+      }
       console.log(this.methods);
     }, err => {
       this.msg.error(err.message);
     })
   }
 
+
+  showMethods(customOpen, data, index){
+    if(customOpen){
+      let date = new Date();
+      let day = date.getDay();
+      let currentHour = date.getHours();
+      let currentMin = date.getMinutes();
+      if(data[day].isOpen){
+        if(data[day].timing.length){
+          data[day].timing.forEach(m => {
+            let startHour = new Date(m.startTime).getHours();
+            let startMin = new Date(m.startTime).getMinutes();
+            let endHour = new Date(m.endTime).getHours();
+            let endMin = new Date(m.endTime).getMinutes();
+            if(currentHour >= startHour && currentHour <= endHour){
+              console.log(startHour,currentHour, endHour);
+              this.showMethod[index] = true;
+            }else{
+              this.showMethod[index] = false;
+            }
+          });
+        }else{
+          this.showMethod[index] = false;
+        }
+      }else{
+        this.showMethod[index] = false;
+      }
+    }else{
+      this.showMethod[index] = true;
+    }
+    console.log(this.showMethod);
+  }
 
 
 

@@ -46,22 +46,19 @@
           [nzExtra]="vendorName"
         >
           <div nz-row [nzGutter]="16">
-            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }" *ngFor="let data of methods">
-              <nz-card class="shipping_single" nzSize="small" >
+            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }" *ngFor="let data of methods; let i=index">
+              <nz-card class="shipping_single" nzSize="small" *ngIf="showMethod[i]">
                 <h3>- TK</h3>
                 <h4>{{data?.name}}</h4>
-                <h5 *ngIf="data.inStockDeliveryCustomRange">
-                  Delivery within
-                  <span style="color: #ff9100">{{data.inStockDeliveryFrom}} - {{data.inStockDeliveryTo}} days</span>
-                </h5>
-                <h5 *ngIf="data.preOrderDeliveryCustomRange">
-                  Delivery within
-                  <span style="color: #ff9100">{{data.preOrderDeliveryFrom}} - {{data.preOrderDeliveryTo}} days</span>
-                </h5>
-                <h5 *ngIf="!data.inStockDeliveryCustomRange">
-                  Delivery within
+                <h5>
+                  Delivery within (In-Stock)
                   <span style="color: #ff9100" *ngIf="data.inStockDeliveryOption === 'A'">Today</span>
                   <span style="color: #ff9100" *ngIf="data.inStockDeliveryOption === 'B'">Next Day</span>
+                  <span style="color: #ff9100" *ngIf=" data.inStockDeliveryOption === 'C' ">{{data.inStockDeliveryFrom}} - {{data.inStockDeliveryTo}} days</span>
+                </h5>
+                <h5 *ngIf=" data.preOrderDeliveryOption === 'C' ">
+                  Delivery within (Pre-Order)
+                  <span style="color: #ff9100">{{data.preOrderDeliveryFrom}} - {{data.preOrderDeliveryTo}} days</span>
                 </h5>
                 <i class="lar la-check-circle"></i>
               </nz-card>

@@ -133,6 +133,7 @@
                 <span formArrayName="timing">
                   <span class="single_time" *ngFor="let time of openingTiming(dayIndex).controls; let timeIndex = index">
                     <span [formGroupName]="timeIndex">
+                      <!-- <input formControlName="startTime" type="time" /> -->
                       <nz-time-picker formControlName="startTime" [nzDefaultOpenValue]="defaultOpenValue"
                         nzFormat="h:mm a">
                       </nz-time-picker>
@@ -242,8 +243,8 @@
               <nz-form-label [nzSpan]="24"> Pre Order Time </nz-form-label>
               <nz-divider></nz-divider>
               <nz-form-control [nzSpan]="24" class="delivery_time">
-                <nz-radio-group>
-                  <label nz-radio>
+                <nz-radio-group formControlName="preOrderDeliveryOption">
+                  <label nz-radio nz-radio nzValue="C">
                     Custom
                     <span class="custome_date">
                       <input type="number" digitOnly nz-input formControlName="preOrderDeliveryFrom" /> to
