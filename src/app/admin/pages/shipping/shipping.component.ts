@@ -1,3 +1,6 @@
+import { ShippingProfile } from './../../../interfaces/shipping-profile';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { ShippingService } from './../../../services/shipping.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,30 +11,24 @@ import { Component, OnInit } from '@angular/core';
 export class ShippingComponent implements OnInit {
   checkedAll = false;
   tabs = ['All Invoice', 'Closed', 'Pending'];
-  shipedTable = [
-    {
-      name: 'General Shipping',
-    },
-    {
-      name: 'Sameday Shipping',
-    },
-    {
-      name: 'Nextday Shipping',
-    },
-    {
-      name: 'Pick by own',
-    },
-  ];
   listOfOption: Array<{ label: string; value: string }> = [];
   listOfTagOptions = [];
-
-  constructor() {}
+  profiles: ShippingProfile[] = [];
+  constructor(
+    private shippingService : ShippingService,
+    private msg : NzMessageService
+  ) {}
 
   ngOnInit(): void {
-    const children: Array<{ label: string; value: string }> = [];
-    for (let i = 10; i < 36; i++) {
-      children.push({ label: i.toString(36) + i, value: i.toString(36) + i });
-    }
-    this.listOfOption = children;
+    this.getAllProfile();
+  }
+  getAllProfile(){
+    this.shippingService.getAllProfile()
+    .subscribe(res => {
+      console.log(res.data);
+      this.profiles = res.data;
+    }, err=> {
+      this.msg.error(err.message);
+    })
   }
 }

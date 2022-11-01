@@ -1,3 +1,5 @@
+import { ShippingMethod } from './../../../interfaces/shipping-method';
+import { ShippingService } from './../../../services/shipping.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -57,6 +59,8 @@ export class NewShoppingInfoComponent implements OnInit {
   couponCode: any;
   v: string;
   dataForm?: FormGroup;
+  methods: ShippingMethod[];
+  subRouteOne: Subscription;
   constructor(
     private fb: FormBuilder,
     private userDataService: UserDataService,
@@ -80,6 +84,8 @@ export class NewShoppingInfoComponent implements OnInit {
     private paymentSslService: PaymentSslService,
     private modal: NzModalService,
     private msg: NzMessageService,
+    private shippingService: ShippingService,
+
     @Inject(DOCUMENT) private document: Document
   ) { }
 
@@ -224,6 +230,7 @@ export class NewShoppingInfoComponent implements OnInit {
     if (this.subReload) {
       this.subReload.unsubscribe();
     }
+    this.subRouteOne.unsubscribe();
     // this.subAddress.unsubscribe();
   }
 
@@ -874,6 +881,15 @@ export class NewShoppingInfoComponent implements OnInit {
       });
     }
 
+  }
+
+  getAllShippingMethods(){
+    this.subRouteOne = this.shippingService.getAll()
+    .subscribe(res => {
+      this.methods = res.data;
+    }, err => {
+      this.msg.error(err.message);
+    })
   }
 
 

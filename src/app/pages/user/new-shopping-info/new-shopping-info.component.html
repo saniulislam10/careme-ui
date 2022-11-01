@@ -46,8 +46,8 @@
           [nzExtra]="vendorName"
         >
           <div nz-row [nzGutter]="16">
-            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
-              <nz-card class="shipping_single" nzSize="small">
+            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }" *ngFor="let data of methods">
+              <nz-card class="shipping_single" nzSize="small" >
                 <h3>60 TK</h3>
                 <h4>Standard Shipping</h4>
                 <h5>
@@ -57,18 +57,7 @@
                 <i class="lar la-check-circle"></i>
               </nz-card>
             </div>
-            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
-              <nz-card class="shipping_single active" nzSize="small">
-                <h3>150 TK</h3>
-                <h4>Express Shipping</h4>
-                <h5>
-                  Delivery within
-                  <span style="color: green">Fri 22 Jul - Sun 24 Jul</span>
-                </h5>
-                <i class="lar la-check-circle"></i>
-              </nz-card>
-            </div>
-            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
+            <!-- <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }">
               <nz-card class="shipping_single" nzSize="small">
                 <h3>10 TK</h3>
                 <h4>Pick by own</h4>
@@ -82,7 +71,7 @@
                 </nz-radio-group>
                 <i class="lar la-check-circle"></i>
               </nz-card>
-            </div>
+            </div> -->
           </div>
           <div nz-row [nzGutter]="16">
             <div

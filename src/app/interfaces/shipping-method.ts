@@ -15,6 +15,10 @@ export interface ShippingMethod {
   preOrderDeliveryTo?: number,
   preOrderDeliveryCustomRange: Boolean,
   preOrderDeliveryTimesArray?: timeRange[],
+  condition?: string;
+  flatRate?: number;
+  baseRate?: number;
+  perKgRate?: number;
 
 }
 
