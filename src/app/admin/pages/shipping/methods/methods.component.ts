@@ -24,8 +24,8 @@ export class MethodsComponent implements OnInit {
   disabledSchedule = true;
 
   // time picker
-  startTime: Date;
-  endTime: Date;
+  // startTime: any;
+  // endTime: any;
   defaultOpenValue = new Date();
   allMethods: ShippingMethod[] = []
 
@@ -108,6 +108,7 @@ export class MethodsComponent implements OnInit {
       bufferTime: [null],
       preOrderDeliveryFrom: [null],
       preOrderDeliveryTo: [null],
+      preOrderDeliveryOption: ['C', Validators.required],
       preOrderDeliveryCustomRange: [false],
       preOrderDeliveryTimesArray: this.fb.array([]),
     })

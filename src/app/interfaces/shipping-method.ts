@@ -28,6 +28,6 @@ export interface OpeningTime {
   timing: timeRange[],
 }
 export interface timeRange {
-  startTime: String,
-  endTime: String,
+  startTime: Date,
+  endTime: Date,
 }
