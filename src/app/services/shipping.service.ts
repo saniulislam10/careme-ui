@@ -3,6 +3,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import { ShippingMethod } from '../interfaces/shipping-method';
+import { ShippingProfile } from '../interfaces/shipping-profile';
 
 
 const API_SHIPPING = environment.apiBaseLink + '/api/shipping/';
@@ -27,9 +28,15 @@ export class ShippingService {
    add(data: ShippingMethod) {
     return this.httpClient.post<{message: string}>(API_SHIPPING + 'add', data);
   }
+   addProfile(data: ShippingProfile) {
+    return this.httpClient.post<{message: string}>(API_SHIPPING + 'add-profile', data);
+  }
 
   getAll() {
     return this.httpClient.get<{data: ShippingMethod[], message?: string}>(API_SHIPPING + 'get-all');
+  }
+  getAllProfile() {
+    return this.httpClient.get<{data: ShippingProfile[], message?: string}>(API_SHIPPING + 'get-all-profile');
   }
 
   getById(id: string) {
