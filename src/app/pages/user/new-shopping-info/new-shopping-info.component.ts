@@ -125,6 +125,7 @@ export class NewShoppingInfoComponent implements OnInit {
     this.getSelectedPointsType();
     this.getLoggedInUserInfo();
     this.initFormGroup();
+    this.getAllShippingMethods();
   }
 
   private initFormGroup() {
@@ -887,6 +888,7 @@ export class NewShoppingInfoComponent implements OnInit {
     this.subRouteOne = this.shippingService.getAll()
     .subscribe(res => {
       this.methods = res.data;
+      console.log(this.methods);
     }, err => {
       this.msg.error(err.message);
     })

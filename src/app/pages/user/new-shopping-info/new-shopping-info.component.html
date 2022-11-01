@@ -48,11 +48,20 @@
           <div nz-row [nzGutter]="16">
             <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }" *ngFor="let data of methods">
               <nz-card class="shipping_single" nzSize="small" >
-                <h3>60 TK</h3>
-                <h4>Standard Shipping</h4>
-                <h5>
+                <h3>- TK</h3>
+                <h4>{{data?.name}}</h4>
+                <h5 *ngIf="data.inStockDeliveryCustomRange">
                   Delivery within
-                  <span style="color: #ff9100">Fri 22 Jul - Sun 22 Aug</span>
+                  <span style="color: #ff9100">{{data.inStockDeliveryFrom}} - {{data.inStockDeliveryTo}} days</span>
+                </h5>
+                <h5 *ngIf="data.preOrderDeliveryCustomRange">
+                  Delivery within
+                  <span style="color: #ff9100">{{data.preOrderDeliveryFrom}} - {{data.preOrderDeliveryTo}} days</span>
+                </h5>
+                <h5 *ngIf="!data.inStockDeliveryCustomRange">
+                  Delivery within
+                  <span style="color: #ff9100" *ngIf="data.inStockDeliveryOption === 'A'">Today</span>
+                  <span style="color: #ff9100" *ngIf="data.inStockDeliveryOption === 'B'">Next Day</span>
                 </h5>
                 <i class="lar la-check-circle"></i>
               </nz-card>
