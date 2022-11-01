@@ -13,8 +13,20 @@
       <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
         <div class="table-filter-area">
           <form>
-            <input #searchInput nz-input id="searchInput" class="tw" type="text" placeholder="Filter Refund"
-              (focus)="handleFocus($event)" name="searchTerm" nzSize="large" autocomplete="off" ngModel required />
+            <input
+              #searchInput
+              nz-input
+              id="searchInput"
+              class="tw"
+              type="text"
+              placeholder="Filter Refund"
+              (focus)="handleFocus($event)"
+              name="searchTerm"
+              nzSize="large"
+              autocomplete="off"
+              ngModel
+              required
+            />
           </form>
           <ul>
             <li>
@@ -26,8 +38,14 @@
           </ul>
         </div>
         <div class="table-data-area">
-          <nz-table nzSize="small" #rowSelectionTable [nzShowPagination]="false" [nzLoading]="loading"
-            [nzData]="profiles" [nzScroll]="{ x: '800px' }">
+          <nz-table
+            nzSize="small"
+            #rowSelectionTable
+            [nzShowPagination]="false"
+            [nzLoading]="loading"
+            [nzData]="profiles"
+            [nzScroll]="{ x: '800px' }"
+          >
             <thead>
               <tr>
                 <th style="width: 50px; text-align: center">
@@ -49,7 +67,7 @@
                 <td>{{ data.chooseProduct }}</td>
                 <td>
                   <span *ngFor="let zone of data.selectedZones">
-                    {{ zone.name}}
+                    {{ zone.name }}
                   </span>
                 </td>
                 <td>-</td>
