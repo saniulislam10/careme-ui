@@ -39,7 +39,7 @@ export class RecievedComponent implements OnInit {
   }
 
   onSubmit(){
-    let totalRecieved = this.data.recieved?  this.data.recieved + this.dataForm.value.recieved: this.dataForm.value.recieved
+    let totalRecieved = this.data.recieved ?  this.data.recieved + this.dataForm.value.recieved: this.dataForm.value.recieved
     if(totalRecieved > this.data.purchaseQuantity){
       this.uiService.warn("Cannot recieve more than purchase quantity");
       return

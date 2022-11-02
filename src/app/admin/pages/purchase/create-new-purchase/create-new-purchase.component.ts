@@ -49,7 +49,6 @@ export class CreateNewPurchaseComponent implements OnInit {
   private subRouteOne?: Subscription;
   // purchasedProducts: any[] = [];
   public date = new Date();
-  createInvoice = false;
   id: any;
   order: Order;
   DateToday: Date = new Date();
@@ -232,11 +231,9 @@ export class CreateNewPurchaseComponent implements OnInit {
 
   calculateAmount(i) {
     let purchasePrice = this.products?.value[i]?.purchasePrice;
-    let tax = Math.round(
-      (purchasePrice * this.products?.value[i]?.purchaseTax) / 100
-    );
+    let tax = (purchasePrice * this.products?.value[i]?.purchaseTax) / 100;
     let quantity = this.products?.value[i]?.purchaseQuantity;
-    this.products.value[i].amount = (purchasePrice + tax) * quantity;
+    this.products.value[i].amount = Math.round((purchasePrice + tax) * quantity);
   }
 
   handleFocus(event: FocusEvent): void {
@@ -397,12 +394,4 @@ export class CreateNewPurchaseComponent implements OnInit {
     );
   }
 
-  // New PO Open by Mamun
-  showNewPurchase(): void {
-    this.ponewVisible = true;
-  }
-  purchaseCancel(): void {
-    this.ponewVisible = false;
-    
-  }
 }

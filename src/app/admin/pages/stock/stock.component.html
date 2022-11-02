@@ -96,8 +96,8 @@
           [nzLoading]="isLoading"
           #basicTable
           nzSize="small"
-          [nzScroll]="{ x: '1100px' }"
-        >
+          >
+          <!-- [nzScroll]="{ x: '1100px' }" -->
           <thead>
             <tr>
               <th style="width: 50px; text-align: center">
@@ -109,13 +109,13 @@
                 </mat-checkbox>
               </th>
               <th style="width: 70px; text-align: center">Image</th>
-              <th>Product Details</th>
-              <th style="width: 150px">SKU</th>
-              <th style="width: 100px">Instock</th>
-              <th style="width: 100px">Committed</th>
-              <th style="width: 100px">Available</th>
-              <th style="width: 100px">Unit Cost</th>
-              <th style="width: 100px">Pre-Order</th>
+              <th style="min-width: 200px">Product Details</th>
+              <th style="min-width: 150px">SKU</th>
+              <th >Instock</th>
+              <th >Committed</th>
+              <th >Available</th>
+              <th >Unit Cost</th>
+              <th >Pre-Order</th>
             </tr>
           </thead>
           <tbody *ngFor="let data of basicTable.data">
@@ -192,9 +192,8 @@
                 <span>{{ variant?.variantSku }}</span>
               </td>
               <td style="color: blue">
-                {{
-                  variant?.variantQuantity + variant?.variantCommittedQuantity
-                }}
+                {{variant?.variantQuantity + variant?.variantCommittedQuantity}}
+
               </td>
               <td style="color: orange">
                 {{ variant?.variantCommittedQuantity }}
