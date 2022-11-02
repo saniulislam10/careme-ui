@@ -471,6 +471,77 @@
             </nz-form-item>
           </div>
         </div>
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="mb15" [nzXs]="{ span: 24 }" [nzLg]="{ span: 24 }">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24"> Choose Product </nz-form-label>
+              <nz-divider></nz-divider>
+              <nz-form-control [nzSpan]="24">
+                <nz-checkbox-wrapper (nzOnChange)="productChoose($event)">
+                  <label nz-checkbox nzValue="A" [ngModel]="true">
+                    All Product
+                  </label>
+                  <label nz-checkbox nzValue="B">Category</label>
+                  <label nz-checkbox nzValue="C">Product</label>
+                </nz-checkbox-wrapper>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col class="mb15" [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24"> Shipping Profile </nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select ngModel="1">
+                  <nz-option nzValue="1" nzLabel="Select Profile"></nz-option>
+                  <nz-option nzValue="2" nzLabel="Standard"></nz-option>
+                  <nz-option nzValue="3" nzLabel="Express"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div
+            nz-col
+            class="mb15"
+            [nzXs]="{ span: 24 }"
+            *ngIf="checkedType === true"
+          >
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24"> Choose Category </nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select
+                  [(ngModel)]="listOfTagOptions"
+                  nzMode="tags"
+                  [nzTokenSeparators]="[',']"
+                  nzPlaceHolder="Choose one"
+                >
+                  <nz-option
+                    *ngFor="let option of listOfOption"
+                    [nzLabel]="option.label"
+                    [nzValue]="option.value"
+                  ></nz-option>
+                </nz-select>
+                <button nz-button nzType="default" style="margin: 5px 0">
+                  Done
+                </button>
+                <nz-card nzSize="small" class="category_list">
+                  <ul>
+                    <li>
+                      <span>Men Shoe</span>
+                      <span>
+                        <nz-select ngModel="1">
+                          <nz-option nzValue="1" nzLabel="Jack"></nz-option>
+                          <nz-option nzValue="2" nzLabel="Lucy"></nz-option>
+                        </nz-select>
+                      </span>
+                    </li>
+                  </ul>
+                </nz-card>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
       </form>
     </div>
   </ng-container>

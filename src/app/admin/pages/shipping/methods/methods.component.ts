@@ -3,7 +3,13 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { ShippingMethod } from './../../../../interfaces/shipping-method';
 import { ShippingService } from './../../../../services/shipping.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormArray,
+  FormControl,
+} from '@angular/forms';
 import { Component, OnInit, RendererFactory2 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 
@@ -23,11 +29,16 @@ export class MethodsComponent implements OnInit {
   //  Day Schedule
   disabledSchedule = true;
 
+  // Product choose
+  checkedType = true;
+  listOfOption: Array<{ label: string; value: string }> = [];
+  listOfTagOptions = [];
+
   // time picker
   // startTime: any;
   // endTime: any;
   defaultOpenValue = new Date();
-  allMethods: ShippingMethod[] = []
+  allMethods: ShippingMethod[] = [];
 
   shipedTable = [
     {
@@ -43,7 +54,6 @@ export class MethodsComponent implements OnInit {
       name: 'Own Pick Method',
     },
   ];
-
 
   openingTimes = [
     {
@@ -84,13 +94,18 @@ export class MethodsComponent implements OnInit {
     private shippingService: ShippingService,
     private modal: NzModalService,
     private reloadService: ReloadService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.reloadService.refreshShipping$
-      .subscribe(() => {
-        this.getAll();
-      });
+    const children: Array<{ label: string; value: string }> = [];
+    for (let i = 1; i < 50; i++) {
+      children.push({ label: 'Category' + i, value: 'Category' + i });
+    }
+    this.listOfOption = children;
+
+    this.reloadService.refreshShipping$.subscribe(() => {
+      this.getAll();
+    });
     this.getAll();
   }
   initModule() {
@@ -111,7 +126,7 @@ export class MethodsComponent implements OnInit {
       preOrderDeliveryOption: ['C', Validators.required],
       preOrderDeliveryCustomRange: [false],
       preOrderDeliveryTimesArray: this.fb.array([]),
-    })
+    });
 
     this.inStockDeliveryTimesArray = this.dataForm.get(
       'inStockDeliveryTimesArray'
@@ -123,10 +138,7 @@ export class MethodsComponent implements OnInit {
       'openingTimesArray'
     ) as FormArray;
     this.showOpeningTimesArray();
-
   }
-
-
 
   addInStockDeliveryTime() {
     this.inStockDeliveryTimesArray.push(
@@ -134,7 +146,7 @@ export class MethodsComponent implements OnInit {
         startTime: new FormControl(),
         endTime: new FormControl(),
       })
-    )
+    );
   }
 
   addPreOrderDeliveryTime() {
@@ -143,36 +155,37 @@ export class MethodsComponent implements OnInit {
         startTime: new FormControl(),
         endTime: new FormControl(),
       })
-    )
+    );
   }
 
   showOpeningTimesArray() {
-    this.openingTimes.forEach(m => {
-      this.openingTimesArray.push(this.fb.group({
-        day: m.day,
-        isOpen: new FormControl(true),
-        timing: this.fb.array([])
-      }));
-    })
+    this.openingTimes.forEach((m) => {
+      this.openingTimesArray.push(
+        this.fb.group({
+          day: m.day,
+          isOpen: new FormControl(true),
+          timing: this.fb.array([]),
+        })
+      );
+    });
     if (this.id) {
       console.log(this.id);
     }
-
   }
 
   openingTiming(dayIndex: number): FormArray {
-    return this.openingTimesArray.at(dayIndex).get("timing") as FormArray
+    return this.openingTimesArray.at(dayIndex).get('timing') as FormArray;
   }
 
   newTiming(): FormGroup {
     return this.fb.group({
       startTime: new FormControl(),
       endTime: new FormControl(),
-    })
+    });
   }
 
   addTiming(dayIndex: number) {
-    console.log(this.openingTiming(dayIndex))
+    console.log(this.openingTiming(dayIndex));
     this.openingTiming(dayIndex).push(this.newTiming());
   }
 
@@ -204,11 +217,10 @@ export class MethodsComponent implements OnInit {
    * API
    */
 
-
   onSubmit(): void {
     if (this.dataForm.invalid) {
       this.msg.warning('Please input all the required fields');
-      return
+      return;
     }
 
     let data = this.dataForm.value;
@@ -222,39 +234,46 @@ export class MethodsComponent implements OnInit {
   }
 
   addMethod(data: ShippingMethod) {
-    this.shippingService.add(data)
-      .subscribe(res => {
+    this.shippingService.add(data).subscribe(
+      (res) => {
         this.msg.success(res.message);
         this.reloadService.needRefreshShipping$();
-      }, err => {
+      },
+      (err) => {
         this.msg.error(err.message);
-      })
+      }
+    );
   }
 
   editMethod(data: ShippingMethod) {
-    this.shippingService.editData(data)
-      .subscribe(res => {
+    this.shippingService.editData(data).subscribe(
+      (res) => {
         this.msg.success(res.message);
         this.reloadService.needRefreshShipping$();
-      }, err => {
+      },
+      (err) => {
         this.msg.error(err.message);
-      })
+      }
+    );
   }
 
   getAll() {
-    this.shippingService.getAll()
-      .subscribe(res => {
+    this.shippingService.getAll().subscribe(
+      (res) => {
         console.log(res.data);
         this.allMethods = res.data;
-      }, err => {
+      },
+      (err) => {
         this.msg.error(err.message);
-      })
+      }
+    );
   }
 
   showDeleteConfirm(id): void {
     this.modal.confirm({
       nzTitle: 'Are you sure delete this task?',
-      nzContent: '<b style="color: red;">All the related datas will be deleted</b>',
+      nzContent:
+        '<b style="color: red;">All the related datas will be deleted</b>',
       nzOkText: 'Yes',
       nzOkType: 'primary',
       nzOkDanger: true,
@@ -262,18 +281,20 @@ export class MethodsComponent implements OnInit {
         this.delete(id);
       },
       nzCancelText: 'No',
-      nzOnCancel: () => console.log('Cancel')
+      nzOnCancel: () => console.log('Cancel'),
     });
   }
 
   delete(id) {
-    this.shippingService.deleteById(id)
-      .subscribe(res => {
+    this.shippingService.deleteById(id).subscribe(
+      (res) => {
         this.msg.create('success', res.message);
         this.reloadService.needRefreshShipping$();
-      }, err => {
-        this.msg.create('error', err.message)
-      })
+      },
+      (err) => {
+        this.msg.create('error', err.message);
+      }
+    );
   }
 
   edit(data: ShippingMethod) {
@@ -286,24 +307,20 @@ export class MethodsComponent implements OnInit {
         }
       }
     }
-    if(data.inStockDeliveryCustomRange){
-      data.inStockDeliveryTimesArray.forEach(m => {
+    if (data.inStockDeliveryCustomRange) {
+      data.inStockDeliveryTimesArray.forEach((m) => {
         this.addInStockDeliveryTime();
-      })
+      });
     }
-    if(data.preOrderDeliveryCustomRange){
-      data.preOrderDeliveryTimesArray.forEach(m => {
+    if (data.preOrderDeliveryCustomRange) {
+      data.preOrderDeliveryTimesArray.forEach((m) => {
         this.addPreOrderDeliveryTime();
-      })
+      });
     }
     this.dataForm.patchValue(data);
     this.isMethodVisible = true;
   }
-
-
-
-
-
-
-
+  productChoose(value: string[]): void {
+    console.log(value);
+  }
 }
