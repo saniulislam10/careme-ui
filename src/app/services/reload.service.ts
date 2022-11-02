@@ -52,7 +52,7 @@ export class ReloadService {
   private refreshAboutUs = new Subject<void>();
   private refreshCompareList = new Subject<void>();
   private refreshWarrantyList = new Subject<void>();
-  private refreshCareerEsquire = new Subject<void>();
+  private refreshShippingProfile = new Subject<void>();
   private refreshDiscussion = new Subject<void>();
   private refreshFaq = new Subject<void>();
   private refreshCookie = new Subject<void>();
@@ -135,10 +135,10 @@ export class ReloadService {
    * Puchase
    */
    get refreshPurchase$() {
-    return this.refreshDetails;
+    return this.refreshPurchase;
   }
   needRefreshPurchase$() {
-    this.refreshDetails.next();
+    this.refreshPurchase.next();
   }
   /**
    * refreshcity
@@ -212,11 +212,11 @@ export class ReloadService {
   /**
    * refreshCareerEsquire
    */
-  get refreshCareerEsquire$() {
-    return this.refreshCareerEsquire;
+  get refreshShippingProfile$() {
+    return this.refreshShippingProfile;
   }
-  needRefreshCareerEsquire$() {
-    this.refreshCareerEsquire.next();
+  needRefreshShippingProfile$() {
+    this.refreshShippingProfile.next();
   }
 
   get refreshWarrantyList$() {

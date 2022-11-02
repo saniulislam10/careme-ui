@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { ShippingService } from './../../../../services/shipping.service';
 import { ProductType } from './../../../../interfaces/product-type';
 import { Category } from './../../../../interfaces/category';
@@ -8,6 +9,8 @@ import { Zila } from './../../../../interfaces/zila';
 import { ZilaService } from './../../../../services/zila.service';
 import { Component, OnInit } from '@angular/core';
 import { ShippingMethod } from 'src/app/interfaces/shipping-method';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ShippingProfile } from 'src/app/interfaces/shipping-profile';
 
 @Component({
   selector: 'app-create-shipping-zone',
@@ -17,27 +20,9 @@ import { ShippingMethod } from 'src/app/interfaces/shipping-method';
 export class CreateShippingZoneComponent implements OnInit {
   // For Details
   zoneVisible = false;
-  chooseProduct = 'all';
   chooseRateType = 'flat';
   zoneChoose = true;
-  shippingMethod = [
-    {
-      name: 'General Method',
-      value: 1,
-    },
-    {
-      name: 'Sameday Method',
-      value: 2,
-    },
-    {
-      name: 'Nextday Method',
-      value: 3,
-    },
-    {
-      name: 'Own Pick Method',
-      value: 4,
-    },
-  ];
+  index: number;
 
   // Choose Category
   listOfCatOption: ProductType[] = [];
@@ -45,25 +30,30 @@ export class CreateShippingZoneComponent implements OnInit {
   selectedCatOptions = [];
   zila: Zila[];
   methods: ShippingMethod[] = [];
-  selectedZoneList: Zila[] =[]
+  selectedZoneList: Zila[] = []
   showRate: boolean;
   methodIndex: number;
   selectedAllZila: boolean = false;
+  zonename: string;
 
   /**
    * check
    */
-   allChecked = false;
-   indeterminate = true;
-   checkOptionsOne = [
-     { label: 'Apple', value: 'Apple', checked: true },
-     { label: 'Pear', value: 'Pear', checked: false },
-     { label: 'Orange', value: 'Orange', checked: false }
-   ];
-   dataForm: FormGroup;
-   flatRate: number = 150;
-   baseRate: number = 150;
-   perKgRate: number = 150;
+  allChecked = false;
+  indeterminate = true;
+  checkOptionsOne = [
+    { label: 'Apple', value: 'Apple', checked: true },
+    { label: 'Pear', value: 'Pear', checked: false },
+    { label: 'Orange', value: 'Orange', checked: false }
+  ];
+  dataForm: FormGroup;
+  flatRate: number = 150;
+  baseRate: number = 150;
+  perKgRate: number = 150;
+  id: string;
+  subRouteOne: Subscription;
+  shippingZonesArray: FormArray;
+  shippingProfile: ShippingProfile;
 
   constructor(
     private zilaService: ZilaService,
@@ -71,9 +61,17 @@ export class CreateShippingZoneComponent implements OnInit {
     private shippingService: ShippingService,
     private fb: FormBuilder,
     private msg: NzMessageService,
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
+      this.id = param.get('id');
+      if (this.id) {
+        this.getDataById(this.id);
+      }
+    });
     // Choose Category
     this.getAllCat();
     this.getAllZila();
@@ -81,22 +79,53 @@ export class CreateShippingZoneComponent implements OnInit {
     this.initModule();
   }
 
-  initModule(){
+  initModule() {
     this.dataForm = this.fb.group({
-      name: [null, Validators.required]
+      name: [null, Validators.required],
+      shippingZonesArray: this.fb.array([]),
     });
+    this.shippingZonesArray = this.dataForm.get(
+      'shippingZonesArray'
+    ) as FormArray;
+    if (!this.id) {
+      this.addShippingZonesArray();
+    }
+  }
+
+  addShippingZonesArray() {
+    this.shippingZonesArray.push(
+      this.fb.group({
+        zones: [],
+        name: new FormControl(),
+        chooseRateType: ['weight', Validators.required],
+        flatRate: [0],
+        baseRate: [0],
+        perKgRate: [0],
+      })
+    );
+  }
+  deleteShippingZonesArray(index) {
+    this.shippingZonesArray.removeAt(index);
   }
   // For Details
-  showZoneModal(): void {
+  showZoneModal(i): void {
+    this.index = i;
     this.zoneVisible = true;
   }
   zoneOk(): void {
     this.selectedZoneList = [];
     this.zila.forEach(m => {
-      if(m.checked === true){
+      if (m.checked === true) {
         this.selectedZoneList.push(m);
       }
     })
+    console.log(this.index);
+    console.log(this.zonename);
+    console.log(this.shippingZonesArray);
+    this.shippingZonesArray.value[this.index].name = this.zonename;
+    this.shippingZonesArray.value[this.index].zones = this.selectedZoneList;
+    console.log(this.shippingZonesArray.value[this.index].zones);
+    this.index = null;
     this.zoneVisible = false;
   }
   zoneCancel(): void {
@@ -109,11 +138,11 @@ export class CreateShippingZoneComponent implements OnInit {
   }
   onOk(): void {
     console.log('Button ok clicked!', this.methodIndex);
-    if(this.methodIndex >=0){
+    if (this.methodIndex >= 0) {
       this.methods[this.methodIndex].condition = this.chooseRateType;
-      if(this.chooseRateType === 'flat'){
+      if (this.chooseRateType === 'flat') {
         this.methods[this.methodIndex].flatRate = this.flatRate;
-      }else if(this.chooseRateType === 'weight'){
+      } else if (this.chooseRateType === 'weight') {
         this.methods[this.methodIndex].baseRate = this.baseRate;
         this.methods[this.methodIndex].perKgRate = this.perKgRate;
       }
@@ -154,7 +183,25 @@ export class CreateShippingZoneComponent implements OnInit {
       });
   }
 
-  setRate(i: number){
+  getDataById(id) {
+    this.shippingService.getProfileById(id)
+      .subscribe(res => {
+        this.shippingProfile = res.data;
+        if (this.shippingProfile?.shippingZonesArray.length) {
+          this.shippingProfile?.shippingZonesArray.forEach(async m => {
+            this.addShippingZonesArray();
+          })
+          this.dataForm.patchValue(this.shippingProfile);
+        } else {
+          this.dataForm.patchValue(this.shippingProfile);
+        }
+      }, err => {
+        this.msg.error(err.message);
+
+      })
+  }
+
+  setRate(i: number) {
     this.showRate = true;
     this.methodIndex = i;
   }
@@ -185,33 +232,44 @@ export class CreateShippingZoneComponent implements OnInit {
       this.indeterminate = true;
     }
   }
-  getSelectedShippingMethods(){
+  getSelectedShippingMethods() {
     let selectedMethods = this.methods.forEach(m => {
-        return m
+      return m
     })
     return selectedMethods;
   }
-  onSubmit(){
+  onSubmit() {
     console.log(this.dataForm.value)
-    if(this.dataForm.invalid){
+    if (this.dataForm.invalid) {
       this.msg.warning('Please input profile name');
       return
     }
-     let data = {
-        name: this.dataForm.value.name,
-        chooseProduct: this.chooseProduct,
-        selectedCategories: this.selectedCatOptions,
-        // selectedProducts: this.selectedProducts,
-        selectedZones: this.selectedZoneList,
-        shippingMethods : this.methods
-     }
+    let data = this.dataForm.value;
+    if (this.id) {
+      const finalData = {...data, ...{_id: this.id}}
+      this.editShipping(finalData);
+    }else{
+      this.addShipping(data);
+    }
 
-     this.shippingService.addProfile(data)
-     .subscribe(res => {
-       this.msg.success(res.message)
-     }, err => {
-        this.msg.error(err.message)
-     })
+  }
 
+  addShipping(data){
+    this.shippingService.addProfile(data)
+        .subscribe(res => {
+          this.msg.success(res.message);
+          this.router.navigate(['admin/shipping']);
+        }, err => {
+          this.msg.error(err.message)
+        })
+  }
+  editShipping(data){
+    this.shippingService.editProfile(data)
+        .subscribe(res => {
+          this.msg.success(res.message);
+          this.router.navigate(['admin/shipping']);
+        }, err => {
+          this.msg.error(err.message)
+        })
   }
 }
