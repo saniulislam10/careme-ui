@@ -29,6 +29,17 @@
     }
   }
 }
+.category_list {
+  ul {
+    margin: 0;
+    li {
+      list-style-type: decimal !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
 .table-samary {
   margin-bottom: 30px;
 }

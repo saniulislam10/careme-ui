@@ -27,7 +27,16 @@
     }
   }
 }
-
+.Add_shipping_zone {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  button {
+    i {
+      font-size: 25px;
+    }
+  }
+}
 .mb {
   margin-bottom: 15px !important;
 }
