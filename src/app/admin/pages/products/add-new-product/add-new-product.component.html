@@ -213,157 +213,88 @@
           <!---meadia-drag-drop-area-end-->
         </nz-card>
 
-        <nz-card class="mb15 pricing-area">
-          <div class="title">
-            <h2>Pricing</h2>
-          </div>
-
-          <div class="grid-main">
-            <div class="form-input">
-              <h3>Wholesale Price</h3>
-              <mat-form-field
-                appearance="outline"
-                class="form-field"
-                [floatLabel]="false"
-              >
-                <input
-                  type="number"
-                  formControlName="wholeSalePrice"
-                  matInput
-                  placeholder="BDT 0.00"
-                  digitOnly
-                />
-              </mat-form-field>
-            </div>
-
-            <div class="form-input">
-              <h3>Selling Price</h3>
-              <mat-form-field appearance="outline" class="form-field">
-                <input
-                  type="number"
-                  formControlName="sellingPrice"
-                  matInput
-                  placeholder="BDT 0.00"
-                  digitOnly
-                />
-                <mat-error *ngIf="dataForm.invalid">
-                  This field is required
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <!---check-box-->
-          <div class="check-box">
-            <mat-checkbox
-              [(ngModel)]="hasTax"
-              value="true"
-              formControlName="hasTax"
-              class="example-margin"
-              >Charge tax on this product</mat-checkbox
-            >
-            <mat-form-field
-              *ngIf="hasTax === true"
-              appearance="outline"
-              class="form-field"
-            >
-              <mat-label>Tax (%)</mat-label>
+        <nz-card class="mb15 pricing-area" nzTitle="Pricing">
+          <div nz-row [nzGutter]="16">
+            <div class="mb15" nz-col nzXs="12" nzMd="6">
+              <label for="seling">Selling Price</label>
               <input
-                type="number"
-                formControlName="tax"
-                matInput
-                placeholder="BDT 0.00 (in percentage)"
+                nz-input
+                id="seling"
+                formControlName="sellingPrice"
+                placeholder="0.00"
                 digitOnly
               />
-            </mat-form-field>
+            </div>
+            <div class="mb15" nz-col nzXs="12" nzMd="6">
+              <label for="tax">Tax (%)</label>
+              <input
+                nz-input
+                id="tax"
+                formControlName="tax"
+                placeholder="0.00"
+                digitOnly
+              />
+            </div>
+            <div nz-col nzXs="12" nzMd="6">
+              <label for="whprice">Wholesale Price</label>
+              <input
+                [disabled]="true"
+                nz-input
+                id="whprice"
+                formControlName="wholeSalePrice"
+                placeholder="0.00"
+                digitOnly
+              />
+            </div>
           </div>
         </nz-card>
-
-        <nz-card class="mb15 inventory-area">
-          <div class="title">
-            <h2>Inventory</h2>
-          </div>
-
-          <div class="grid-main">
-            <div class="form-input">
-              <h3>SKU(Stock Keeping Unit)</h3>
-              <mat-form-field appearance="outline" class="form-field">
-                <!-- <mat-label>SKU</mat-label> -->
-                <input
-                  type="text"
-                  formControlName="sku"
-                  matInput
-                  placeholder="Enter SKU Code.."
-                />
-                <mat-error *ngIf="dataForm.invalid"
-                  >This field is required</mat-error
-                >
-              </mat-form-field>
+        <nz-card class="mb15 inventory_area" nzTitle="Inventory">
+          <div nz-row [nzGutter]="16">
+            <div class="mb15" nz-col nzXs="12" nzMd="6">
+              <label for="sku">SKU</label>
+              <input
+                nz-input
+                id="sku"
+                formControlName="sku"
+                placeholder="Enter SKU code.."
+                digitOnly
+              />
             </div>
-            <!---form-input-->
-            <div class="form-input">
-              <h3>Barcode(ISBN,UPC,GTIN,etc.)</h3>
-              <mat-form-field appearance="outline" class="form-field">
-                <!-- <mat-label>Barcode</mat-label> -->
-                <input
-                  type="text"
-                  formControlName="barcode"
-                  matInput
-                  placeholder="Enter Barcode.."
-                />
-                <mat-error *ngIf="">This field is required</mat-error>
-              </mat-form-field>
+            <div class="mb15" nz-col nzXs="12" nzMd="6">
+              <label for="barcode">Barcode</label>
+              <input
+                nz-input
+                id="barcode"
+                formControlName="barcode"
+                placeholder="Enter barcode.."
+                digitOnly
+              />
             </div>
-          </div>
-          <!---check-box-->
-          <div class="check-box">
-            <!-- <mat-checkbox (change)="makeQuantityRequired()" formControlName="trackQuantity" class="example-margin">
-                  Track quantity</mat-checkbox> -->
-            <mat-checkbox
-              formControlName="continueSelling"
-              class="example-margin"
-              >Continue selling when out of stack
-            </mat-checkbox>
-          </div>
-        </nz-card>
-
-        <nz-card class="mb15 quantity-area">
-          <!--title-->
-          <div class="title">
-            <h2>QUANTITY</h2>
-          </div>
-          <!---grid-main-->
-          <div class="grid-main">
-            <!---form-input-->
-            <div class="form-input">
-              <h3>Available</h3>
-              <mat-form-field appearance="outline" class="form-field">
-                <!-- <input *ngIf="this.trackQuantity === false " type="number" formControlName="quantity" digitOnly
-                      matInput> -->
-                <input
-                  type="number"
-                  formControlName="quantity"
-                  digitOnly
-                  matInput
-                  disabled
-                  readonly
-                />
-                <mat-error *ngIf="">This field is required</mat-error>
-              </mat-form-field>
+            <div class="mb15" nz-col nzXs="12" nzMd="12">
+              <label for="reOrder">Re Order</label>
+              <input
+                nz-input
+                id="reOrder"
+                formControlName="reOrder"
+                placeholder="1"
+                digitOnly
+              />
             </div>
-            <div class="form-input">
-              <h3>Re Order</h3>
-              <mat-form-field appearance="outline" class="form-field">
-                <!-- <mat-label>Available</mat-label> -->
-                <input
-                  type="number"
-                  formControlName="reOrder"
-                  digitOnly
-                  matInput
-                />
-                <mat-error *ngIf="dataForm.invalid"
-                  >This field is required</mat-error
-                >
-              </mat-form-field>
+            <div nz-col nzXs="12" nzMd="6" class="quantity_area">
+              <label> Available : </label>
+              <input
+                type="number"
+                formControlName="quantity"
+                digitOnly
+                matInput
+                disabled
+                readonly
+              />
+            </div>
+            <div nz-col nzXs="24" nzMd="12">
+              <label nz-checkbox formControlName="continueSelling">
+                Continue selling when out of stack
+              </label>
             </div>
           </div>
         </nz-card>
@@ -716,7 +647,35 @@
           </nz-table>
         </nz-card>
 
-        <nz-card> Search </nz-card>
+        <nz-card nzSize="small" nzTitle="Search engine listing">
+          <div class="search_engine_text">
+            <h3>Product Title</h3>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid
+              est quidem, nulla omnis debitis velit rem facere dignissimos.
+              Quaerat, soluta.
+            </p>
+          </div>
+          <nz-collapse nzGhost class="search_engine_edit">
+            <nz-collapse-panel nzHeader="Edit" [nzExpandedIcon]="expandedIcon">
+              <label for="producttitle">Page title</label>
+              <input id="producttitle" nz-input placeholder="Product Title" />
+              <label for="productdes">Page title</label>
+              <textarea
+                nz-input
+                id="productdes"
+                placeholder="Product description"
+                [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+              ></textarea>
+              <label for="producturl">URL</label>
+              <input id="producturl" nz-input placeholder="/product-title" />
+              <button nz-button nzType="default">Save</button>
+            </nz-collapse-panel>
+          </nz-collapse>
+          <ng-template #expandedIcon>
+            <i style="margin-right: 10px" class="las la-cog"></i>
+          </ng-template>
+        </nz-card>
       </div>
       <div nz-col nzXs="24" nzLg="6">
         <div class="add-product-right">
