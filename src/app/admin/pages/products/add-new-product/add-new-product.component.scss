@@ -106,10 +106,14 @@
 }
 
 .variant-image {
-  width: 50px;
-  cursor: pointer;
+  position: relative;
   img {
-    width: 100%;
+    max-width: 100%;
+  }
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }
 
@@ -579,15 +583,6 @@ p {
     grid-template-columns: 3fr 1.5fr;
   }
 }
-.add-product-left {
-  display: block;
-}
-.product-description-area,
-.media-area {
-  display: block;
-  margin-bottom: 25px;
-}
-
 .product-description-area h3 {
   display: block;
   color: #5c5f62;
@@ -635,30 +630,6 @@ p {
   font-size: 17px;
   padding: 3px;
   box-sizing: border-box;
-}
-
-/**** pricing-area ****/
-.pricing-area {
-  display: block;
-  margin-bottom: 25px;
-}
-/*** inventory ****/
-.inventory-area {
-  display: block;
-  margin-bottom: 25px;
-}
-.quantity-area {
-  display: block;
-  margin-bottom: 25px;
-}
-.quantity-area .title {
-  margin-bottom: 15px;
-}
-.quantity-area .title h2 {
-  font-weight: 500;
-}
-.shipping-area {
-  display: block;
 }
 
 .weight-input-main {
@@ -728,20 +699,7 @@ p {
   line-height: 20px;
 }
 /**** varriant *****/
-.varriant-area {
-  display: block;
-  margin-bottom: 25px;
-}
-.varriant-top {
-  display: block;
-}
-.option-area {
-  display: block;
-}
-.option-title {
-  display: block;
-  margin-bottom: 25px;
-}
+
 .option-title h3 {
   display: block;
   color: #5c5f62;
@@ -757,10 +715,7 @@ p {
   display: grid;
   grid-template-columns: auto 1fr;
 }
-.option-main .form-input {
-  border-bottom: 1px solid #e8eaeb;
-  margin-bottom: 25px;
-}
+
 .option-input {
   margin-right: 15px;
   display: flex;
@@ -792,35 +747,6 @@ p {
   color: #fff;
   background-color: #5c5f62;
 }
-/**** search-engine-top ****/
-.search-engine {
-  display: block;
-  width: 100%;
-  height: auto;
-  box-sizing: border-box;
-  margin-bottom: 25px;
-}
-.search-engine-top {
-  display: block;
-}
-.search-engine-top .title {
-  margin: 0px;
-}
-.search-engine-top .title h2 {
-  margin-bottom: 15px;
-}
-.title p {
-  color: #808081;
-  font-family: "Poppins", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 15px;
-  line-height: 22px;
-  margin: 0px;
-}
-.search-engine-main {
-  display: block;
-}
 
 /*** add-product-right ****/
 .add-product-right {
@@ -828,9 +754,7 @@ p {
   width: 100%;
   box-sizing: border-box;
 }
-.product-status {
-  margin-bottom: 25px;
-}
+
 .product-status-top {
   border-bottom: 1px solid #e8eaeb;
 }
@@ -945,7 +869,6 @@ p {
   padding: 20px;
   box-sizing: border-box;
   border-radius: 10px;
-  margin-bottom: 25px;
   box-shadow: 0 -1px 2px 0 rgb(0 0 0 / 7%), 0 3px 5px 0 rgb(0 0 0 / 7%);
 }
 .insights h3 {
@@ -1517,11 +1440,7 @@ p {
 ::ng-deep.check-box .mat-checkbox-layout {
   white-space: pre-wrap;
 }
-.title {
-  display: block;
-  width: 100%;
-  margin-bottom: 25px;
-}
+
 .title h2 {
   color: #5c5f62;
   font-family: $font-en-primary-2;
