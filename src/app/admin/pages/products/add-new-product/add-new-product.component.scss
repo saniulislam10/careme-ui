@@ -41,7 +41,31 @@
     }
   }
 }
+.card_single {
+  h4 {
+    margin-bottom: 10px !important;
+    font-size: 16px;
+  }
+  input {
+    width: 50px;
+    text-align: center;
+  }
+  nz-select {
+    width: unset;
+  }
+}
+.cardsingle {
+  margin-bottom: 15px;
+}
 
+.single_align {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  nz-input-group {
+    flex: 1;
+  }
+}
 // Old Css
 .imageListPopUp {
   position: relative;
@@ -942,20 +966,7 @@ p {
   font-size: 16px;
   line-height: 23px;
 }
-.payment-status-other-info {
-  display: block;
-  margin-bottom: 25px;
-}
 
-.payment-status-other-info h3 {
-  color: #2d2d2d;
-  font-family: $font-en-primary-2;
-  font-weight: 400;
-  font-size: 16px;
-  font-style: normal;
-  display: block;
-  margin: 0px;
-}
 .other-check {
   display: block;
   margin-bottom: 15px;
