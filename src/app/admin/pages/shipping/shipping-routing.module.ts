@@ -14,6 +14,10 @@ const routes: Routes = [
     component: CreateShippingZoneComponent,
   },
   {
+    path: 'edit/:id',
+    component: CreateShippingZoneComponent,
+  },
+  {
     path: 'methods',
     component: MethodsComponent,
   },

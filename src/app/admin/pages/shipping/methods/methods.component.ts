@@ -1,3 +1,6 @@
+import { ProductTypeService } from 'src/app/services/product-type.service';
+import { ProductType } from 'src/app/interfaces/product-type';
+import { ShippingProfile } from './../../../../interfaces/shipping-profile';
 import { ReloadService } from './../../../../services/reload.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ShippingMethod } from './../../../../interfaces/shipping-method';
@@ -31,8 +34,7 @@ export class MethodsComponent implements OnInit {
 
   // Product choose
   checkedType = true;
-  listOfOption: Array<{ label: string; value: string }> = [];
-  listOfTagOptions = [];
+  listOfCatOptions = [];
 
   // time picker
   // startTime: any;
@@ -87,26 +89,27 @@ export class MethodsComponent implements OnInit {
   showInStock: boolean = true;
   showPreOrder: boolean = false;
   id: any;
+  profiles: ShippingProfile[]= [];
+  categories: ProductType[]= [];
 
   constructor(
     private fb: FormBuilder,
     private msg: NzMessageService,
     private shippingService: ShippingService,
     private modal: NzModalService,
-    private reloadService: ReloadService
+    private reloadService: ReloadService,
+    private productTypeService: ProductTypeService,
   ) {}
 
   ngOnInit(): void {
-    const children: Array<{ label: string; value: string }> = [];
-    for (let i = 1; i < 50; i++) {
-      children.push({ label: 'Category' + i, value: 'Category' + i });
-    }
-    this.listOfOption = children;
 
     this.reloadService.refreshShipping$.subscribe(() => {
       this.getAll();
+      this.getAllProfile();
     });
     this.getAll();
+    this.getAllProfile();
+    this.getAllCategories();
   }
   initModule() {
     this.dataForm = this.fb.group({
@@ -126,6 +129,9 @@ export class MethodsComponent implements OnInit {
       preOrderDeliveryOption: ['C', Validators.required],
       preOrderDeliveryCustomRange: [false],
       preOrderDeliveryTimesArray: this.fb.array([]),
+      allProductEnable: [true, Validators.required],
+      catEnable: [false, Validators.required],
+      productEnable: [false, Validators.required],
     });
 
     this.inStockDeliveryTimesArray = this.dataForm.get(
@@ -267,6 +273,31 @@ export class MethodsComponent implements OnInit {
         this.msg.error(err.message);
       }
     );
+  }
+  getAllProfile() {
+    this.shippingService.getAllProfile().subscribe(
+      (res) => {
+        console.log(res.data);
+        this.profiles = res.data;
+      },
+      (err) => {
+        this.msg.error(err.message);
+      }
+    );
+  }
+  getAllCategories() {
+    this.productTypeService.getAll().subscribe(
+      (res) => {
+        console.log(res.data);
+        this.categories = res.data;
+      },
+      (err) => {
+        this.msg.error(err.message);
+      }
+    );
+  }
+  generateCatForm() {
+
   }
 
   showDeleteConfirm(id): void {

@@ -1,3 +1,5 @@
+import { ReloadService } from 'src/app/services/reload.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { ShippingProfile } from './../../../interfaces/shipping-profile';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ShippingService } from './../../../services/shipping.service';
@@ -16,10 +18,16 @@ export class ShippingComponent implements OnInit {
   profiles: ShippingProfile[] = [];
   constructor(
     private shippingService : ShippingService,
-    private msg : NzMessageService
+    private msg : NzMessageService,
+    private modal : NzModalService,
+    private reloadService : ReloadService,
   ) {}
 
   ngOnInit(): void {
+    this.reloadService.refreshShippingProfile$
+      .subscribe(() => {
+        this.getAllProfile();
+      });
     this.getAllProfile();
   }
   getAllProfile(){
@@ -29,6 +37,33 @@ export class ShippingComponent implements OnInit {
       this.profiles = res.data;
     }, err=> {
       this.msg.error(err.message);
+    })
+  }
+
+  showDeleteConfirm(id): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this task?',
+      nzContent:
+        '<b style="color: red;">All the related datas will be deleted</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => {
+        this.delete(id);
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel'),
+    });
+  }
+
+  delete(id){
+    this.shippingService.deleteProfileById(id)
+    .subscribe(res => {
+      this.msg.success(res.message);
+      this.reloadService.needRefreshShippingProfile$();
+    }, err => {
+      this.msg.error(err.message);
+
     })
   }
 }

@@ -42,12 +42,21 @@ export class ShippingService {
   getById(id: string) {
     return this.httpClient.get<{data: ShippingMethod, message?: string}>(API_SHIPPING + 'get-by-id/' + id);
   }
+  getProfileById(id: string) {
+    return this.httpClient.get<{data: ShippingProfile, message?: string}>(API_SHIPPING + 'get-profile-by-id/' + id);
+  }
 
   editData(data: ShippingMethod) {
     return this.httpClient.put<{message?: string}>(API_SHIPPING + 'edit', data);
   }
+  editProfile(data: ShippingProfile) {
+    return this.httpClient.put<{message?: string}>(API_SHIPPING + 'edit-profile', data);
+  }
 
   deleteById(id: string) {
     return this.httpClient.delete<{message?: string}>(API_SHIPPING + 'delete-by-id/' + id);
+  }
+  deleteProfileById(id: string) {
+    return this.httpClient.delete<{message?: string}>(API_SHIPPING + 'delete-profile-by-id/' + id);
   }
 }

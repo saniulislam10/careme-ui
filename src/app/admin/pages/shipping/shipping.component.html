@@ -52,10 +52,8 @@
                   <label nz-checkbox [(ngModel)]="checkedAll"></label>
                 </th>
                 <th>Name</th>
-                <th>Products</th>
-                <th>Rates for</th>
-                <th>Condition</th>
-                <th>Price</th>
+                <th>Shipping To</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -64,14 +62,18 @@
                   <label nz-checkbox [(ngModel)]="checkedAll"></label>
                 </td>
                 <td>{{ data.name }}</td>
-                <td>{{ data.chooseProduct }}</td>
                 <td>
-                  <span *ngFor="let zone of data.selectedZones">
+                  <span *ngFor="let zone of data.shippingZonesArray; let zoneIndex = index">
+                    <span *ngIf="zoneIndex !== 0">
+                      |
+                    </span>
                     {{ zone.name }}
                   </span>
                 </td>
-                <td>-</td>
-                <td>-</td>
+                <td>
+                  <button nz-button [routerLink]="['edit', data._id]" ><i class="las la-edit"></i></button>
+                  <button nz-button (click)="showDeleteConfirm(data._id)" ><i class="las la-trash"></i></button>
+                </td>
               </tr>
             </tbody>
           </nz-table>
