@@ -42,6 +42,9 @@ export class ProductsComponent implements OnInit {
   query = null;
   searchQuery = null;
 
+  // Filter More
+  visibleMore = false;
+
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChild('searchForm') searchForm: NgForm;
   @ViewChild('export') exportOrder: ExportPopupComponent;
@@ -56,7 +59,7 @@ export class ProductsComponent implements OnInit {
   //Status
   productStatus: Select[] = [
     { label: 'Draft', value: ProductStatus.DRAFT },
-    { label: 'Active', value: ProductStatus.ACTIVE }
+    { label: 'Active', value: ProductStatus.ACTIVE },
   ];
   // Pagination
   currentPage: number = 1;
@@ -88,7 +91,7 @@ export class ProductsComponent implements OnInit {
   setOfCheckedId = new Set<number>();
   expandSet = new Set<number>();
   tabs = [
-    { value: 0, label: 'All' },
+    { value: 0, label: 'All Product' },
     { value: ProductStatus.DRAFT, label: 'Draft' },
     { value: ProductStatus.ACTIVE, label: 'Active' },
     { value: ProductStatus.PREORDER, label: 'Pre-Order' },
@@ -96,8 +99,6 @@ export class ProductsComponent implements OnInit {
     { value: ProductStatus.REORDER, label: 'Re Order' },
     { value: ProductStatus.ARCHIVED, label: 'Archieved' },
   ];
-
-
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -111,7 +112,7 @@ export class ProductsComponent implements OnInit {
     private fb: FormBuilder,
     private modal: NzModalService,
     private msg: NzMessageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.showVariant[0] = false;
@@ -139,7 +140,6 @@ export class ProductsComponent implements OnInit {
   onRefresh() {
     this.isLoading = true;
     this.getAllProducts();
-
   }
 
   /**
@@ -372,9 +372,9 @@ export class ProductsComponent implements OnInit {
       // code block
     }
 
-    if(data === ProductStatus.ARCHIVED){
+    if (data === ProductStatus.ARCHIVED) {
       this.getAllArchivedProducts();
-    }else if (data) {
+    } else if (data) {
       this.query = { ...this.query, ...{ hasLink: false } };
       this.reloadService.needRefreshProduct$();
     } else {
@@ -531,18 +531,16 @@ export class ProductsComponent implements OnInit {
       currentPage: this.currentPage.toString(),
       pageSize: this.productsPerPage.toString(),
     };
-    this.productService
-      .getAllArchivedProducts(pagination)
-      .subscribe(
-        (res) => {
-          this.products = res.data;
-          this.spinner.hide();
-        },
-        (err) => {
-          this.msg.error(err.message);
-          this.spinner.hide();
-        }
-      );
+    this.productService.getAllArchivedProducts(pagination).subscribe(
+      (res) => {
+        this.products = res.data;
+        this.spinner.hide();
+      },
+      (err) => {
+        this.msg.error(err.message);
+        this.spinner.hide();
+      }
+    );
   }
 
   /**
@@ -553,7 +551,7 @@ export class ProductsComponent implements OnInit {
   }
 
   onExpandChange(id: number, checked: boolean): void {
-    console.log("For Variant :", id);
+    console.log('For Variant :', id);
     if (checked) {
       this.expandSet.add(id);
     } else {
@@ -621,7 +619,8 @@ export class ProductsComponent implements OnInit {
   deleteBulkProducts() {
     this.modal.confirm({
       nzTitle: 'Are you sure delete this task?',
-      nzContent: '<b style="color: red;">All the related datas will be deleted</b>',
+      nzContent:
+        '<b style="color: red;">All the related datas will be deleted</b>',
       nzOkText: 'Yes',
       nzOkType: 'primary',
       nzOkDanger: true,
@@ -629,7 +628,7 @@ export class ProductsComponent implements OnInit {
         this.onDelete();
       },
       nzCancelText: 'No',
-      nzOnCancel: () => console.log('Cancel')
+      nzOnCancel: () => console.log('Cancel'),
     });
 
     this.spinner.hide();
@@ -653,23 +652,36 @@ export class ProductsComponent implements OnInit {
 
   //variant status
   getVariantStatus(variant: any) {
-    if (variant?.variantContinueSelling === true && variant?.variantQuantity === 0) {
-      return "Pre-Order"
+    if (
+      variant?.variantContinueSelling === true &&
+      variant?.variantQuantity === 0
+    ) {
+      return 'Pre-Order';
     } else if (variant?.variantQuantity === 0) {
-      return "Stock-Out"
+      return 'Stock-Out';
     } else {
-      return "Active"
+      return 'Active';
     }
   }
 
   getVariantStatusColor(variant: any) {
-    if (variant?.variantContinueSelling === true && variant?.variantQuantity === 0) {
-      return "orange status"
+    if (
+      variant?.variantContinueSelling === true &&
+      variant?.variantQuantity === 0
+    ) {
+      return 'orange status';
     } else if (variant?.variantQuantity === 0) {
-      return "red status"
+      return 'red status';
     } else {
-      return "green status"
+      return 'green status';
     }
   }
 
+  // Filter More
+  openMore(): void {
+    this.visibleMore = true;
+  }
+  closeMore(): void {
+    this.visibleMore = false;
+  }
 }

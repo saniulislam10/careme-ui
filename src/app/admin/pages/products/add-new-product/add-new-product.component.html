@@ -434,215 +434,96 @@
       </div>
 
       <div class="add-product-right">
-        <nz-card class="product-status">
-          <!---product-status-top-->
-          <div class="product-status-top">
-            <!---title-->
-            <div class="title">
-              <h2>Product Status</h2>
-            </div>
-            <div class="form-input">
-              <mat-form-field appearance="outline" class="form-field">
-                <mat-select
-                  [(ngModel)]="selectedOption"
-                  formControlName="status"
-                  placeholder="Please select product status"
-                >
-                  <mat-option
-                    *ngFor="let c of productStatus"
-                    [value]="c.value"
-                    >{{ c.viewValue }}</mat-option
-                  >
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="product-status-info">
-              <!-- <p >This product will be hidden from all sales channels.</p> -->
-            </div>
-          </div>
-          <!---product-status-top-end-->
-          <!---sales-manage-->
-          <div class="sales-manage">
-            <!---sales-manage-top-->
-            <div class="sales-manage-top">
-              <div>
-                <h3>Sales Channels And Apps</h3>
-              </div>
-            </div>
-            <!---sales-manage-content-->
-            <div class="sales-manage-content">
-              <ul>
-                <li>
-                  <mat-checkbox class="example-margin">Website</mat-checkbox>
-                </li>
-                <li>
-                  <mat-checkbox class="example-margin">Facebook</mat-checkbox>
-                </li>
-                <li>
-                  <mat-checkbox class="example-margin">Mobile App</mat-checkbox>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!---end-->
-          <!--show-more-btn-->
-          <!-- <div class="show-more-btn">
-                 <button>Show More <i class="fa fa-angle-down"></i></button>
-             </div> -->
+        <nz-card
+          class="card_single mb15"
+          nzTitle="Product Status"
+          nzSize="small"
+        >
+          <nz-select
+            [(ngModel)]="selectedOption"
+            formControlName="status"
+            style="width: 100%"
+          >
+            <nz-option
+              *ngFor="let c of productStatus"
+              [nzValue]="c.value"
+              nzLabel="{{ c.viewValue }}"
+            ></nz-option>
+          </nz-select>
         </nz-card>
 
-        <nz-card class="payment-status-other-info">
-          <!--other-status-title-->
-          <div class="other-status-title">
-            <h3>Return Period</h3>
-          </div>
-          <div class="other-status-body">
-            <!--other-check-->
-            <div class="other-check check-box">
-              <ul>
-                <li>
-                  <mat-checkbox
-                    class="example-margin"
-                    value="true"
-                    [(ngModel)]="canReturn"
-                    formControlName="canReturn"
-                    >Allow Return</mat-checkbox
-                  >
-                </li>
-              </ul>
-            </div>
-            <!--other-status--input-main-->
-            <div *ngIf="canReturn === true" class="other-status-input-main">
-              <h3>Return period (days)</h3>
-              <!--input-box-->
-              <div class="input-box">
-                <div style="width: 100%">
-                  <mat-form-field appearance="outline" class="form-field">
-                    <!-- <mat-label>Percent/Amount</mat-label> -->
-                    <input
-                      type="number"
-                      matInput
-                      formControlName="returnPeriod"
-                    />
-                    <mat-error *ngIf="">This field is required</mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
+        <nz-card
+          class="card_single mb15"
+          nzTitle="Product Status"
+          nzSize="small"
+        >
+          <div class="cardsingle return">
+            <div class="single_align">
+              <label
+                nz-checkbox
+                value="true"
+                [(ngModel)]="canReturn"
+                formControlName="canReturn"
+              >
+                Allow Return
+              </label>
+              <span *ngIf="canReturn === true">
+                <input
+                  nz-input
+                  formControlName="returnPeriod"
+                  placeholder="1"
+                />
+                Day
+              </span>
             </div>
           </div>
-        </nz-card>
-        <!---end-->
-        <!--Partial Payment-->
-        <nz-card class="payment-status-other-info">
-          <!--other-status-title-->
-          <div class="other-status-title">
-            <h3>Partial Payment</h3>
-          </div>
-          <div class="other-status-body">
-            <!--other-check-->
-            <div class="other-check check-box">
-              <ul>
-                <li>
-                  <mat-checkbox
-                    class="example-margin"
-                    value="true"
-                    [(ngModel)]="canPartialPayment"
-                    formControlName="canPartialPayment"
-                  >
-                    Allow Partial Payment
-                  </mat-checkbox>
-                </li>
-              </ul>
+          <div class="cardsingle payment">
+            <div class="single_align">
+              <label
+                nz-checkbox
+                value="true"
+                [(ngModel)]="canPartialPayment"
+                formControlName="canPartialPayment"
+              >
+                Allow Partial
+              </label>
+              <nz-input-group nzCompact *ngIf="canPartialPayment === true">
+                <input type="text" nz-input formControlName="partialPayment" />
+                <nz-select formControlName="partialPaymentType">
+                  <nz-option
+                    *ngFor="let c of amountType"
+                    [nzValue]="c.value"
+                    [nzLabel]="c.viewValue"
+                  ></nz-option>
+                </nz-select>
+              </nz-input-group>
             </div>
-            <!--other-status--input-main-->
-            <div
-              *ngIf="canPartialPayment === true"
-              class="other-status-input-main"
-            >
-              <h3>Percent/Amount</h3>
-              <!--input-box-->
-              <div class="input-box">
-                <div style="width: 100%">
-                  <mat-form-field appearance="outline" class="form-field">
-                    <input
-                      type="number"
-                      matInput
-                      formControlName="partialPayment"
-                    />
-                    <mat-error *ngIf="">This field is required</mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="select-btn">
-                  <mat-form-field appearance="outline" class="form-field">
-                    <mat-label>Select</mat-label>
-                    <mat-select formControlName="partialPaymentType">
-                      <mat-option
-                        *ngFor="let c of amountType"
-                        [value]="c.value"
-                        >{{ c.viewValue }}</mat-option
-                      >
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
+          </div>
+
+          <div class="cardsingle payment">
+            <div class="single_align">
+              <label
+                nz-checkbox
+                value="true"
+                [(ngModel)]="canEarnPoints"
+                formControlName="canEarnPoints"
+              >
+                Earn Points
+              </label>
+              <nz-input-group nzCompact *ngIf="canEarnPoints">
+                <input type="text" nz-input formControlName="earnPoints" />
+                <nz-select formControlName="earnPointsType">
+                  <nz-option
+                    *ngFor="let c of amountType"
+                    [nzValue]="c.value"
+                    [nzLabel]="c.viewValue"
+                  ></nz-option>
+                </nz-select>
+              </nz-input-group>
             </div>
           </div>
         </nz-card>
-        <!---end-->
-        <!--Earn Points-->
-        <nz-card class="payment-status-other-info" style="margin: 0 0 25px 0">
-          <!--other-status-title-->
-          <div class="other-status-title">
-            <h3>Earn Points</h3>
-          </div>
-          <div class="other-status-body" style="border-radius: 0px">
-            <!--other-check-->
-            <div class="other-check check-box">
-              <ul>
-                <li>
-                  <mat-checkbox
-                    class="example-margin"
-                    value="true"
-                    [(ngModel)]="canEarnPoints"
-                    formControlName="canEarnPoints"
-                    >Allow Earn points</mat-checkbox
-                  >
-                </li>
-              </ul>
-            </div>
-            <!--other-status--input-main-->
-            <div *ngIf="canEarnPoints" class="other-status-input-main">
-              <h3>Amount</h3>
-              <!--input-box-->
-              <div class="input-box">
-                <div style="width: 100%">
-                  <mat-form-field appearance="outline" class="form-field">
-                    <!-- <mat-label>Amount</mat-label> -->
-                    <input
-                      type="number"
-                      formControlName="earnPoints"
-                      matInput
-                    />
-                    <mat-error *ngIf="">This field is required</mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="select-btn">
-                  <mat-form-field appearance="outline" class="form-field">
-                    <mat-label>Select</mat-label>
-                    <mat-select formControlName="earnPointsType">
-                      <mat-option
-                        *ngFor="let c of amountType"
-                        [value]="c.value"
-                        >{{ c.viewValue }}</mat-option
-                      >
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nz-card>
-        <!---end-->
+
         <!--Redeem Rule-->
         <nz-card class="payment-status-other-info">
           <!--other-status-title-->
