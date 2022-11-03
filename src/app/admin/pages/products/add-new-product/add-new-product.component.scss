@@ -56,6 +56,11 @@
 }
 .cardsingle {
   margin-bottom: 15px;
+  p {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .single_align {
@@ -64,6 +69,38 @@
   justify-content: flex-start;
   nz-input-group {
     flex: 1;
+  }
+}
+.sell_chanel {
+  margin: 15px 0;
+  nz-divider {
+    margin: 5px 0;
+  }
+}
+.search_engine_text {
+  p {
+    color: #585858;
+  }
+}
+.search_engine_edit {
+  textarea,
+  input {
+    margin-bottom: 15px !important;
+  }
+}
+.pricing-area {
+  label {
+    cursor: pointer;
+  }
+}
+.quantity_area {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  input {
+    width: 80px;
+    margin-left: 10px;
+    font-weight: 600;
   }
 }
 // Old Css
@@ -132,19 +169,6 @@ tbody {
     width: 90px;
     max-width: 150px;
   }
-}
-
-.upload-button {
-  width: 100%;
-  margin-top: 10px;
-  background-color: #0058ff;
-  color: white;
-  border: none;
-}
-.upload-button:hover {
-  background-color: white;
-  color: #0058ff;
-  border: 2px solid #0058ff;
 }
 
 .shipping-block {
@@ -322,24 +346,6 @@ tbody {
   display: flex;
   align-items: start;
 }
-.button {
-  background-color: #0058ff;
-  color: white;
-  width: 30px;
-  height: 39px;
-  // padding: 15px 10px;
-  border: none;
-  margin-top: 4px;
-  margin-left: 6px;
-  border-radius: 4px;
-  font-size: 18px;
-}
-.button:hover {
-  background-color: #ffffff;
-  border: 1px solid #0058ff;
-  color: #0058ff;
-  cursor: pointer;
-}
 
 .deleteButton {
   // padding: 15px 10px;
@@ -427,14 +433,7 @@ tbody {
   font-style: normal;
   margin: 0px;
 }
-.category-table-data a,
-p {
-  color: #0058ff;
-  font-family: $font-en-primary-2;
-  font-weight: 500;
-  font-size: 18px;
-  display: block;
-}
+
 .check {
   width: 60px;
   min-width: 60px;
@@ -449,23 +448,6 @@ p {
 }
 .category-type {
   min-width: 150px;
-}
-.category-table-data button {
-  border: 2px solid #0058ff;
-  color: #0058ff;
-  background: none;
-  padding: 10px;
-  margin-right: 10px;
-}
-.category-table-data button:hover {
-  border: 2px solid #0058ff;
-  background: #0058ff;
-  color: white;
-}
-.select-vendor {
-  padding: 10px;
-  width: 100px;
-  border: 2px solid #0058ff;
 }
 
 // variant end

@@ -11,10 +11,15 @@
         Add Products
       </h3>
       <div class="header-action">
-        <button nz-button nzType="text" (click)="onRefresh()">
+        <button nz-button nzType="text" type="button" (click)="onRefresh()">
           <i class="las la-sync"></i>
         </button>
-        <button nz-button nzType="dashed" [routerLink]="['../../', 'products']">
+        <button
+          nz-button
+          nzType="dashed"
+          type="button"
+          [routerLink]="['../../', 'products']"
+        >
           Discard
         </button>
         <button nz-button nzType="primary" type="submit">Save</button>
@@ -33,6 +38,7 @@
           nz-button
           nzType="default"
           (click)="importProductInfo()"
+          type="button"
         >
           <i class="las la-cloud-download-alt"></i> Import
         </button>
@@ -207,157 +213,88 @@
           <!---meadia-drag-drop-area-end-->
         </nz-card>
 
-        <nz-card class="mb15 pricing-area">
-          <div class="title">
-            <h2>Pricing</h2>
-          </div>
-
-          <div class="grid-main">
-            <div class="form-input">
-              <h3>Wholesale Price</h3>
-              <mat-form-field
-                appearance="outline"
-                class="form-field"
-                [floatLabel]="false"
-              >
-                <input
-                  type="number"
-                  formControlName="wholeSalePrice"
-                  matInput
-                  placeholder="BDT 0.00"
-                  digitOnly
-                />
-              </mat-form-field>
-            </div>
-
-            <div class="form-input">
-              <h3>Selling Price</h3>
-              <mat-form-field appearance="outline" class="form-field">
-                <input
-                  type="number"
-                  formControlName="sellingPrice"
-                  matInput
-                  placeholder="BDT 0.00"
-                  digitOnly
-                />
-                <mat-error *ngIf="dataForm.invalid">
-                  This field is required
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <!---check-box-->
-          <div class="check-box">
-            <mat-checkbox
-              [(ngModel)]="hasTax"
-              value="true"
-              formControlName="hasTax"
-              class="example-margin"
-              >Charge tax on this product</mat-checkbox
-            >
-            <mat-form-field
-              *ngIf="hasTax === true"
-              appearance="outline"
-              class="form-field"
-            >
-              <mat-label>Tax (%)</mat-label>
+        <nz-card class="mb15 pricing-area" nzTitle="Pricing">
+          <div nz-row [nzGutter]="16">
+            <div class="mb15" nz-col nzXs="12" nzMd="6">
+              <label for="seling">Selling Price</label>
               <input
-                type="number"
-                formControlName="tax"
-                matInput
-                placeholder="BDT 0.00 (in percentage)"
+                nz-input
+                id="seling"
+                formControlName="sellingPrice"
+                placeholder="0.00"
                 digitOnly
               />
-            </mat-form-field>
+            </div>
+            <div class="mb15" nz-col nzXs="12" nzMd="6">
+              <label for="tax">Tax (%)</label>
+              <input
+                nz-input
+                id="tax"
+                formControlName="tax"
+                placeholder="0.00"
+                digitOnly
+              />
+            </div>
+            <div nz-col nzXs="12" nzMd="6">
+              <label for="whprice">Wholesale Price</label>
+              <input
+                [disabled]="true"
+                nz-input
+                id="whprice"
+                formControlName="wholeSalePrice"
+                placeholder="0.00"
+                digitOnly
+              />
+            </div>
           </div>
         </nz-card>
-
-        <nz-card class="mb15 inventory-area">
-          <div class="title">
-            <h2>Inventory</h2>
-          </div>
-
-          <div class="grid-main">
-            <div class="form-input">
-              <h3>SKU(Stock Keeping Unit)</h3>
-              <mat-form-field appearance="outline" class="form-field">
-                <!-- <mat-label>SKU</mat-label> -->
-                <input
-                  type="text"
-                  formControlName="sku"
-                  matInput
-                  placeholder="Enter SKU Code.."
-                />
-                <mat-error *ngIf="dataForm.invalid"
-                  >This field is required</mat-error
-                >
-              </mat-form-field>
+        <nz-card class="mb15 inventory_area" nzTitle="Inventory">
+          <div nz-row [nzGutter]="16">
+            <div class="mb15" nz-col nzXs="12" nzMd="6">
+              <label for="sku">SKU</label>
+              <input
+                nz-input
+                id="sku"
+                formControlName="sku"
+                placeholder="Enter SKU code.."
+                digitOnly
+              />
             </div>
-            <!---form-input-->
-            <div class="form-input">
-              <h3>Barcode(ISBN,UPC,GTIN,etc.)</h3>
-              <mat-form-field appearance="outline" class="form-field">
-                <!-- <mat-label>Barcode</mat-label> -->
-                <input
-                  type="text"
-                  formControlName="barcode"
-                  matInput
-                  placeholder="Enter Barcode.."
-                />
-                <mat-error *ngIf="">This field is required</mat-error>
-              </mat-form-field>
+            <div class="mb15" nz-col nzXs="12" nzMd="6">
+              <label for="barcode">Barcode</label>
+              <input
+                nz-input
+                id="barcode"
+                formControlName="barcode"
+                placeholder="Enter barcode.."
+                digitOnly
+              />
             </div>
-          </div>
-          <!---check-box-->
-          <div class="check-box">
-            <!-- <mat-checkbox (change)="makeQuantityRequired()" formControlName="trackQuantity" class="example-margin">
-                  Track quantity</mat-checkbox> -->
-            <mat-checkbox
-              formControlName="continueSelling"
-              class="example-margin"
-              >Continue selling when out of stack
-            </mat-checkbox>
-          </div>
-        </nz-card>
-
-        <nz-card class="mb15 quantity-area">
-          <!--title-->
-          <div class="title">
-            <h2>QUANTITY</h2>
-          </div>
-          <!---grid-main-->
-          <div class="grid-main">
-            <!---form-input-->
-            <div class="form-input">
-              <h3>Available</h3>
-              <mat-form-field appearance="outline" class="form-field">
-                <!-- <input *ngIf="this.trackQuantity === false " type="number" formControlName="quantity" digitOnly
-                      matInput> -->
-                <input
-                  type="number"
-                  formControlName="quantity"
-                  digitOnly
-                  matInput
-                  disabled
-                  readonly
-                />
-                <mat-error *ngIf="">This field is required</mat-error>
-              </mat-form-field>
+            <div class="mb15" nz-col nzXs="12" nzMd="12">
+              <label for="reOrder">Re Order</label>
+              <input
+                nz-input
+                id="reOrder"
+                formControlName="reOrder"
+                placeholder="1"
+                digitOnly
+              />
             </div>
-            <div class="form-input">
-              <h3>Re Order</h3>
-              <mat-form-field appearance="outline" class="form-field">
-                <!-- <mat-label>Available</mat-label> -->
-                <input
-                  type="number"
-                  formControlName="reOrder"
-                  digitOnly
-                  matInput
-                />
-                <mat-error *ngIf="dataForm.invalid"
-                  >This field is required</mat-error
-                >
-              </mat-form-field>
+            <div nz-col nzXs="12" nzMd="6" class="quantity_area">
+              <label> Available : </label>
+              <input
+                type="number"
+                formControlName="quantity"
+                digitOnly
+                matInput
+                disabled
+                readonly
+              />
+            </div>
+            <div nz-col nzXs="24" nzMd="12">
+              <label nz-checkbox formControlName="continueSelling">
+                Continue selling when out of stack
+              </label>
             </div>
           </div>
         </nz-card>
@@ -710,7 +647,35 @@
           </nz-table>
         </nz-card>
 
-        <nz-card> Search </nz-card>
+        <nz-card nzSize="small" nzTitle="Search engine listing">
+          <div class="search_engine_text">
+            <h3>Product Title</h3>
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid
+              est quidem, nulla omnis debitis velit rem facere dignissimos.
+              Quaerat, soluta.
+            </p>
+          </div>
+          <nz-collapse nzGhost class="search_engine_edit">
+            <nz-collapse-panel nzHeader="Edit" [nzExpandedIcon]="expandedIcon">
+              <label for="producttitle">Page title</label>
+              <input id="producttitle" nz-input placeholder="Product Title" />
+              <label for="productdes">Page title</label>
+              <textarea
+                nz-input
+                id="productdes"
+                placeholder="Product description"
+                [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+              ></textarea>
+              <label for="producturl">URL</label>
+              <input id="producturl" nz-input placeholder="/product-title" />
+              <button nz-button nzType="default">Save</button>
+            </nz-collapse-panel>
+          </nz-collapse>
+          <ng-template #expandedIcon>
+            <i style="margin-right: 10px" class="las la-cog"></i>
+          </ng-template>
+        </nz-card>
       </div>
       <div nz-col nzXs="24" nzLg="6">
         <div class="add-product-right">
@@ -719,17 +684,26 @@
             nzTitle="Product Status"
             nzSize="small"
           >
-            <nz-select
-              [(ngModel)]="selectedOption"
-              formControlName="status"
-              style="width: 100%"
-            >
-              <nz-option
-                *ngFor="let c of productStatus"
-                [nzValue]="c.value"
-                nzLabel="{{ c.viewValue }}"
-              ></nz-option>
-            </nz-select>
+            <div class="cardsingle">
+              <nz-select
+                [(ngModel)]="selectedOption"
+                formControlName="status"
+                style="width: 100%"
+              >
+                <nz-option
+                  *ngFor="let c of productStatus"
+                  [nzValue]="c.value"
+                  nzLabel="{{ c.viewValue }}"
+                ></nz-option>
+              </nz-select>
+              <div class="sell_chanel">
+                <p>Sales Channels</p>
+                <nz-divider></nz-divider>
+                <label nz-checkbox [ngModel]="true">Website</label>
+                <label nz-checkbox [ngModel]="true">Mobile App</label>
+                <label nz-checkbox [ngModel]="true">Facebook</label>
+              </div>
+            </div>
           </nz-card>
 
           <nz-card
@@ -737,7 +711,7 @@
             nzTitle="Product Status"
             nzSize="small"
           >
-            <div class="cardsingle return">
+            <div class="cardsingle">
               <div class="single_align">
                 <label
                   nz-checkbox
@@ -757,7 +731,7 @@
                 </span>
               </div>
             </div>
-            <div class="cardsingle payment">
+            <div class="cardsingle">
               <div class="single_align">
                 <label
                   nz-checkbox
@@ -784,7 +758,7 @@
               </div>
             </div>
 
-            <div class="cardsingle payment">
+            <div class="cardsingle">
               <div class="single_align">
                 <label
                   nz-checkbox
@@ -807,7 +781,7 @@
               </div>
             </div>
 
-            <div class="cardsingle payment">
+            <div class="cardsingle">
               <div class="single_align">
                 <label
                   nz-checkbox
@@ -831,120 +805,57 @@
             </div>
           </nz-card>
 
-          <!----organization-area-->
-          <nz-card class="organization-area">
-            <!---vendor-->
-            <div class="vendor">
-              <!--title-->
-              <div class="title">
-                <h2>Organization</h2>
-              </div>
-              <!---form-input-->
-              <div class="form-input">
-                <h3>Vendor</h3>
-                <!--form-input-main-->
-                <div class="form-input-main">
-                  <div style="width: 100%">
-                    <mat-form-field appearance="outline" class="form-field">
-                      <!-- <mat-label>Vendor</mat-label> -->
-                      <mat-select
-                        [disableOptionCentering]="true"
-                        #selectVendor
-                        placeholder="Select Vendor"
-                        formControlName="vendor"
-                      >
-                        <mat-select-filter
-                          [placeholder]="'Filter Vendor List'"
-                          *ngIf="selectVendor.focused"
-                          [array]="vendors"
-                          [displayMember]="'name'"
-                          (filteredReturn)="filteredVendorList = $event"
-                        >
-                        </mat-select-filter>
-                        <mat-option
-                          *ngFor="let item of filteredVendorList"
-                          [value]="item._id"
-                        >
-                          {{ item.name }}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="">This field is required</mat-error>
-                    </mat-form-field>
-                  </div>
-                </div>
-              </div>
+          <nz-card nzTitle="Organization" nzSize="small" [nzExtra]="dataLoad">
+            <div class="cardsingle">
+              <p>Vendor</p>
+              <nz-select formControlName="vendor" nzShowSearch>
+                <nz-option
+                  *ngFor="let option of filteredVendorList"
+                  [nzLabel]="option.name"
+                  [nzValue]="option._id"
+                ></nz-option>
+              </nz-select>
             </div>
-            <div class="form-input-main">
-              <h3>Brand</h3>
-              <mat-form-field appearance="outline" class="form-field">
-                <mat-select
-                  [disableOptionCentering]="true"
-                  #selectBrand
-                  placeholder="Select Brand"
-                  formControlName="brand"
-                >
-                  <mat-select-filter
-                    [placeholder]="'Filter Brand List'"
-                    *ngIf="selectBrand.focused"
-                    [array]="brands"
-                    [displayMember]="'name'"
-                    (filteredReturn)="filteredBrandList = $event"
-                  ></mat-select-filter>
-                  <mat-option
-                    *ngFor="let item of filteredBrandList"
-                    [value]="item._id"
-                  >
-                    {{ item.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+            <div class="cardsingle">
+              <p>Brand</p>
+              <nz-select formControlName="brand" nzShowSearch>
+                <nz-option
+                  *ngFor="let option of filteredBrandList"
+                  [nzLabel]="option.name"
+                  [nzValue]="option._id"
+                ></nz-option>
+              </nz-select>
             </div>
-            <!---product-type-->
-            <div class="product-type">
-              <!--title-->
-              <div class="product-type-title">
-                <h2>product type</h2>
-              </div>
-              <div class="standard-form-input">
-                <nz-select
-                  [compareWith]="compareFn"
-                  formControlName="productType"
-                  [nzMaxTagCount]="3"
-                  nzMode="multiple"
-                  nzPlaceHolder="Please select"
-                >
-                  <nz-option
-                    *ngFor="let item of listOfTypes"
-                    [nzLabel]="item.name"
-                    [nzValue]="item"
-                  ></nz-option>
-                </nz-select>
-                <!-- <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template> -->
-              </div>
+            <div class="cardsingle">
+              <p>Product Type</p>
+              <nz-select
+                [compareWith]="compareFn"
+                formControlName="productType"
+                nzMode="multiple"
+                nzPlaceHolder="Select product type"
+              >
+                <nz-option
+                  *ngFor="let item of listOfTypes"
+                  [nzLabel]="item.name"
+                  [nzValue]="item"
+                ></nz-option>
+              </nz-select>
             </div>
-            <!---product-type-end-->
-
-            <!---tags-->
-            <div class="tags-area">
-              <div class="tags-top">
-                <h3>Tags</h3>
-                <a href="#">View all tags</a>
-              </div>
-              <div class="form -input">
-                <nz-select
-                  formControlName="tags"
-                  nzMode="tags"
-                  nzPlaceHolder="Tag Mode"
-                  [(ngModel)]="listOfTagOptions"
+            <div class="cardsingle">
+              <p>Tags</p>
+              <nz-select
+                formControlName="tags"
+                nzMode="tags"
+                nzPlaceHolder="Tag Mode"
+                [(ngModel)]="listOfTagOptions"
+              >
+                <nz-option
+                  *ngFor="let option of listOfOption"
+                  [nzLabel]="option.label"
+                  [nzValue]="option.value"
                 >
-                  <nz-option
-                    *ngFor="let option of listOfOption"
-                    [nzLabel]="option.label"
-                    [nzValue]="option.value"
-                  >
-                  </nz-option>
-                </nz-select>
-              </div>
+                </nz-option>
+              </nz-select>
             </div>
           </nz-card>
         </div>
@@ -984,6 +895,10 @@
     </div>
   </form>
 </div>
+
+<ng-template #dataLoad>
+  <i (click)="onRefresh()" class="las la-sync"></i>
+</ng-template>
 
 <nz-modal
   [(nzVisible)]="showImageList"
