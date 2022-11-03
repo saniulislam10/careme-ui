@@ -101,6 +101,8 @@
     width: 80px;
     margin-left: 10px;
     font-weight: 600;
+    border: none;
+    background: transparent;
   }
 }
 .varriant_area{
@@ -121,6 +123,14 @@
 .form_btn{
   button{
     margin-left: 10px;
+  }
+}
+.input_group{
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px 0;
+  input{
+    flex: 1;
   }
 }
 // Old Css

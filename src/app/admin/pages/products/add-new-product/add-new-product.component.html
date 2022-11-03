@@ -60,7 +60,6 @@
               (change)="autoGenerateSlug()"
             />
           </div>
-
           <div class="description">
             <h3>
               Description
@@ -99,55 +98,21 @@
           </div>
         </nz-card>
 
-        <nz-card class="mb15 media-area">
-          <!---media-top-->
-          <div class="media-top-area">
-            <div>
-              <h3>Media</h3>
-            </div>
-            <div>
-              <div>
-                <a (click)="toggleLink()"
-                  >Add media form URL <i class="fa fa-caret-down"></i
-                ></a>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="hasLink === true">
-            <div
-              class="media-link-array"
-              *ngFor="let f of mediaArray?.controls; let i = index"
-            >
-              <mat-form-field
-                formArrayName="medias"
-                appearance="outline"
-                class="form-field"
-              >
-                <mat-label>Link</mat-label>
-                <input
-                  type="text"
-                  [formControlName]="i"
-                  matInput
-                  placeholder="paste image/video link"
-                />
-                <mat-error *ngIf="">This field is required</mat-error>
-              </mat-form-field>
-              <button
-                class="button"
-                type="button"
-                (click)="addMediaLinkButton()"
-              >
-                <mat-icon style="align-items: center">add</mat-icon>
-              </button>
-              <button
-                class="button deleteButton"
-                type="button"
-                (click)="deleteMediaFormControl(i)"
-              >
-                <mat-icon style="align-items: center">remove</mat-icon>
-              </button>
+        <nz-card nzTitle="Media" [nzExtra]="mediaUrl" class="mb15 media_area">
+          <div nz-row [nzGutter]="16" *ngIf="hasLink === true" style="margin: 0 0 25px 0">
+            <div nz-col nzXs="24" nzLg="24" *ngFor="let f of mediaArray?.controls; let i = index">
+              <nz-input-group nzCompact class="input_group">
+                <input type="text" nz-input [formControlName]="i" placeholder="paste image/video link" />
+                <button nz-button nzType="default" type="button" (click)="addMediaLinkButton()" >
+                  <i class="las la-plus"></i>
+                </button>
+                <button nz-button nzType="default" type="button" (click)="deleteMediaFormControl(i)" >
+                  <i class="las la-minus"></i>
+                </button>
+              </nz-input-group>
             </div>
           </div>
+
           <!---meadia-drag-drop-area-->
           <div class="meadia-drag-drap-area">
             <div
@@ -213,8 +178,9 @@
               >
             </button>
           </div>
-          <!---meadia-drag-drop-area-end-->
         </nz-card>
+
+
 
         <nz-card class="mb15 pricing-area" nzTitle="Pricing">
           <div nz-row [nzGutter]="16">
@@ -299,7 +265,6 @@
                 type="number"
                 formControlName="quantity"
                 digitOnly
-                matInput
                 disabled
                 readonly
               />
@@ -311,7 +276,6 @@
             </div>
           </div>
         </nz-card>
-
         <nz-card class="mb15 shipping_area" nzTitle="Shipping">
           <div nz-row [nzGutter]="16">
             <div class="mb15" nz-col nzXs="24" nzMd="24" >
@@ -346,7 +310,6 @@
             </div>
           </div>
         </nz-card>
-
         <nz-card nzTitle="Variants" class="mb15 variants_area">
           <div nz-row [nzGutter]="16">
             <div class="mb15" nz-col nzXs="24">
@@ -615,7 +578,6 @@
             </div>
           </div>
         </nz-card>
-
         <nz-card nzTitle="Search engine listing">
           <div class="search_engine_text">
             <h3>Product Title</h3>
@@ -647,134 +609,131 @@
         </nz-card>
       </div>
       <div nz-col nzXs="24" nzLg="6">
-        <div class="add-product-right">
-          <nz-card
-            class="card_single mb15"
-            nzTitle="Product Status"
-            nzSize="small"
-          >
-            <div class="cardsingle">
-              <nz-select
-                [(ngModel)]="selectedOption"
-                formControlName="status"
-                style="width: 100%"
+        <nz-card
+          class="card_single mb15"
+          nzTitle="Product Status"
+          nzSize="small"
+        >
+          <div class="cardsingle">
+            <nz-select
+              [(ngModel)]="selectedOption"
+              formControlName="status"
+              style="width: 100%"
+            >
+              <nz-option
+                *ngFor="let c of productStatus"
+                [nzValue]="c.value"
+                nzLabel="{{ c.viewValue }}"
+              ></nz-option>
+            </nz-select>
+            <div class="sell_chanel">
+              <p>Sales Channels</p>
+              <nz-divider></nz-divider>
+              <label nz-checkbox [ngModel]="true">Website</label>
+              <label nz-checkbox [ngModel]="true">Mobile App</label>
+              <label nz-checkbox [ngModel]="true">Facebook</label>
+            </div>
+          </div>
+        </nz-card>
+        <nz-card
+          class="card_single mb15"
+          nzTitle="Product Status"
+          nzSize="small"
+        >
+          <div class="cardsingle">
+            <div class="single_align">
+              <label
+                nz-checkbox
+                value="true"
+                [(ngModel)]="canReturn"
+                formControlName="canReturn"
               >
-                <nz-option
-                  *ngFor="let c of productStatus"
-                  [nzValue]="c.value"
-                  nzLabel="{{ c.viewValue }}"
-                ></nz-option>
-              </nz-select>
-              <div class="sell_chanel">
-                <p>Sales Channels</p>
-                <nz-divider></nz-divider>
-                <label nz-checkbox [ngModel]="true">Website</label>
-                <label nz-checkbox [ngModel]="true">Mobile App</label>
-                <label nz-checkbox [ngModel]="true">Facebook</label>
-              </div>
+                Allow Return
+              </label>
+              <span *ngIf="canReturn === true">
+                <input
+                  nz-input
+                  formControlName="returnPeriod"
+                  placeholder="1"
+                />
+                Day
+              </span>
             </div>
-          </nz-card>
+          </div>
+          <div class="cardsingle">
+            <div class="single_align">
+              <label
+                nz-checkbox
+                value="true"
+                [(ngModel)]="canPartialPayment"
+                formControlName="canPartialPayment"
+              >
+                Allow Partial
+              </label>
+              <nz-input-group nzCompact *ngIf="canPartialPayment === true">
+                <input
+                  type="text"
+                  nz-input
+                  formControlName="partialPayment"
+                />
+                <nz-select formControlName="partialPaymentType">
+                  <nz-option
+                    *ngFor="let c of amountType"
+                    [nzValue]="c.value"
+                    [nzLabel]="c.viewValue"
+                  ></nz-option>
+                </nz-select>
+              </nz-input-group>
+            </div>
+          </div>
 
-          <nz-card
-            class="card_single mb15"
-            nzTitle="Product Status"
-            nzSize="small"
-          >
-            <div class="cardsingle">
-              <div class="single_align">
-                <label
-                  nz-checkbox
-                  value="true"
-                  [(ngModel)]="canReturn"
-                  formControlName="canReturn"
-                >
-                  Allow Return
-                </label>
-                <span *ngIf="canReturn === true">
-                  <input
-                    nz-input
-                    formControlName="returnPeriod"
-                    placeholder="1"
-                  />
-                  Day
-                </span>
-              </div>
+          <div class="cardsingle">
+            <div class="single_align">
+              <label
+                nz-checkbox
+                value="true"
+                [(ngModel)]="canEarnPoints"
+                formControlName="canEarnPoints"
+              >
+                Earn Points
+              </label>
+              <nz-input-group nzCompact *ngIf="canEarnPoints">
+                <input type="text" nz-input formControlName="earnPoints" />
+                <nz-select formControlName="earnPointsType">
+                  <nz-option
+                    *ngFor="let c of amountType"
+                    [nzValue]="c.value"
+                    [nzLabel]="c.viewValue"
+                  ></nz-option>
+                </nz-select>
+              </nz-input-group>
             </div>
-            <div class="cardsingle">
-              <div class="single_align">
-                <label
-                  nz-checkbox
-                  value="true"
-                  [(ngModel)]="canPartialPayment"
-                  formControlName="canPartialPayment"
-                >
-                  Allow Partial
-                </label>
-                <nz-input-group nzCompact *ngIf="canPartialPayment === true">
-                  <input
-                    type="text"
-                    nz-input
-                    formControlName="partialPayment"
-                  />
-                  <nz-select formControlName="partialPaymentType">
-                    <nz-option
-                      *ngFor="let c of amountType"
-                      [nzValue]="c.value"
-                      [nzLabel]="c.viewValue"
-                    ></nz-option>
-                  </nz-select>
-                </nz-input-group>
-              </div>
-            </div>
+          </div>
 
-            <div class="cardsingle">
-              <div class="single_align">
-                <label
-                  nz-checkbox
-                  value="true"
-                  [(ngModel)]="canEarnPoints"
-                  formControlName="canEarnPoints"
-                >
-                  Earn Points
-                </label>
-                <nz-input-group nzCompact *ngIf="canEarnPoints">
-                  <input type="text" nz-input formControlName="earnPoints" />
-                  <nz-select formControlName="earnPointsType">
-                    <nz-option
-                      *ngFor="let c of amountType"
-                      [nzValue]="c.value"
-                      [nzLabel]="c.viewValue"
-                    ></nz-option>
-                  </nz-select>
-                </nz-input-group>
-              </div>
+          <div class="cardsingle">
+            <div class="single_align">
+              <label
+                nz-checkbox
+                value="true"
+                [(ngModel)]="canRedeemPoints"
+                formControlName="canRedeemPoints"
+              >
+                Redeem Points
+              </label>
+              <nz-input-group nzCompact *ngIf="canRedeemPoints">
+                <input type="text" nz-input formControlName="redeemPoints" />
+                <nz-select formControlName="redeemPointsType">
+                  <nz-option
+                    *ngFor="let c of amountType"
+                    [nzValue]="c.value"
+                    [nzLabel]="c.viewValue"
+                  ></nz-option>
+                </nz-select>
+              </nz-input-group>
             </div>
-
-            <div class="cardsingle">
-              <div class="single_align">
-                <label
-                  nz-checkbox
-                  value="true"
-                  [(ngModel)]="canRedeemPoints"
-                  formControlName="canRedeemPoints"
-                >
-                  Redeem Points
-                </label>
-                <nz-input-group nzCompact *ngIf="canRedeemPoints">
-                  <input type="text" nz-input formControlName="redeemPoints" />
-                  <nz-select formControlName="redeemPointsType">
-                    <nz-option
-                      *ngFor="let c of amountType"
-                      [nzValue]="c.value"
-                      [nzLabel]="c.viewValue"
-                    ></nz-option>
-                  </nz-select>
-                </nz-input-group>
-              </div>
-            </div>
-          </nz-card>
-
-          <nz-card nzTitle="Organization" nzSize="small" [nzExtra]="dataLoad">
+          </div>
+        </nz-card>
+        <nz-card nzTitle="Organization" nzSize="small" [nzExtra]="dataLoad">
             <div class="cardsingle">
               <p>Vendor</p>
               <nz-select formControlName="vendor" nzShowSearch>
@@ -827,7 +786,6 @@
               </nz-select>
             </div>
           </nz-card>
-        </div>
       </div>
       <div nz-col nzXs="24">
         <div class="varriant_area">
@@ -848,6 +806,13 @@
 <ng-template #dataLoad>
   <i (click)="onRefresh()" class="las la-sync"></i>
 </ng-template>
+
+<ng-template #mediaUrl>
+  <button nz-button nzType="dashed" type="button" (click)="toggleLink()">
+    <i class="las la-lg la-plus"></i> Add form URL
+  </button>
+</ng-template>
+
 
 <nz-modal
   [(nzVisible)]="showImageList"
