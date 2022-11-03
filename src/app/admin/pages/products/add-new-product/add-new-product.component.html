@@ -5,26 +5,17 @@
     #templateForm="ngForm"
     autocomplete="off"
   >
-    <div class="page-header">
+    <div class="page_header">
       <h3>
         <i routerLink="../../products" class="las la-long-arrow-alt-left"></i>
         Add Products
       </h3>
-      <div class="header-action">
-        <button nz-button nzType="text" type="button" (click)="onRefresh()">
+      <div class="header_action">
+        <a type="button" (click)="onRefresh()">
           <i class="las la-sync"></i>
-        </button>
-        <button nz-button nzType="text" type="button" *ngIf="product" (click)="preview()">
-            Preview
-        </button>
-        <button
-          nz-button
-          nzType="dashed"
-          type="button"
-          [routerLink]="['../../', 'products']"
-        >
-          Discard
-        </button>
+        </a>
+        <a type="button" *ngIf="product" (click)="preview()"> Preview </a>
+        <a type="button" [routerLink]="['../../', 'products']"> Discard </a>
         <button nz-button nzType="primary" type="submit">Save</button>
       </div>
     </div>
@@ -99,14 +90,39 @@
         </nz-card>
 
         <nz-card nzTitle="Media" [nzExtra]="mediaUrl" class="mb15 media_area">
-          <div nz-row [nzGutter]="16" *ngIf="hasLink === true" style="margin: 0 0 25px 0">
-            <div nz-col nzXs="24" nzLg="24" *ngFor="let f of mediaArray?.controls; let i = index">
+          <div
+            nz-row
+            [nzGutter]="16"
+            *ngIf="hasLink === true"
+            style="margin: 0 0 25px 0"
+          >
+            <div
+              nz-col
+              nzXs="24"
+              nzLg="24"
+              *ngFor="let f of mediaArray?.controls; let i = index"
+            >
               <nz-input-group nzCompact class="input_group">
-                <input type="text" nz-input [formControlName]="i" placeholder="paste image/video link" />
-                <button nz-button nzType="default" type="button" (click)="addMediaLinkButton()" >
+                <input
+                  type="text"
+                  nz-input
+                  [formControlName]="i"
+                  placeholder="Paste image/video url..."
+                />
+                <button
+                  nz-button
+                  nzType="default"
+                  type="button"
+                  (click)="addMediaLinkButton()"
+                >
                   <i class="las la-plus"></i>
                 </button>
-                <button nz-button nzType="default" type="button" (click)="deleteMediaFormControl(i)" >
+                <button
+                  nz-button
+                  nzType="default"
+                  type="button"
+                  (click)="deleteMediaFormControl(i)"
+                >
                   <i class="las la-minus"></i>
                 </button>
               </nz-input-group>
@@ -180,8 +196,6 @@
           </div>
         </nz-card>
 
-
-
         <nz-card class="mb15 pricing-area" nzTitle="Pricing">
           <div nz-row [nzGutter]="16">
             <div class="mb15" nz-col nzXs="12" nzMd="6">
@@ -195,15 +209,15 @@
               />
             </div>
             <div class="mb15" nz-col nzXs="12" nzMd="6">
-            <label for="aprice">App Price</label>
-            <input
-              nz-input
-              id="aprice"
-              formControlName="sellingPrice"
-              placeholder="0.00"
-              digitOnly
-            />
-          </div>
+              <label for="aprice">App Price</label>
+              <input
+                nz-input
+                id="aprice"
+                formControlName="sellingPrice"
+                placeholder="0.00"
+                digitOnly
+              />
+            </div>
             <div class="mb15" nz-col nzXs="12" nzMd="6">
               <label for="tax">Tax (%)</label>
               <input
@@ -227,7 +241,7 @@
             </div>
           </div>
         </nz-card>
-        <nz-card class="mb15 inventory_area" nzTitle="Inventory" >
+        <nz-card class="mb15 inventory_area" nzTitle="Inventory">
           <div nz-row [nzGutter]="16">
             <div class="mb15" nz-col nzXs="12" nzMd="12">
               <label for="sku">SKU</label>
@@ -278,7 +292,7 @@
         </nz-card>
         <nz-card class="mb15 shipping_area" nzTitle="Shipping">
           <div nz-row [nzGutter]="16">
-            <div class="mb15" nz-col nzXs="24" nzMd="24" >
+            <div class="mb15" nz-col nzXs="24" nzMd="24">
               <label nz-checkbox formControlName="isPhysicalProduct">
                 This a physical product
               </label>
@@ -313,23 +327,26 @@
         <nz-card nzTitle="Variants" class="mb15 variants_area">
           <div nz-row [nzGutter]="16">
             <div class="mb15" nz-col nzXs="24">
-              <label nz-checkbox formControlName="hasVariant" [(ngModel)]="hasVariant">
+              <label
+                nz-checkbox
+                formControlName="hasVariant"
+                [(ngModel)]="hasVariant"
+              >
                 This product has multiple options.
               </label>
             </div>
-
+            <!-- Mamun -->
             <div class="mb15" nz-col nzXs="24" *ngIf="hasVariant === true">
-              <div class="option-main">
-                <div class="form-input">
+              <div nz-row [nzGutter]="0">
+                <div class="mb15" nz-col nzXs="24" nzMd="4">
                   <div *ngFor="let f of variantArray?.controls; let i = index">
-                    <h3 style="margin-bottom: 10px">Option-{{ i + 1 }}</h3>
                     <div class="option-input">
                       <mat-form-field
                         formArrayName="variants"
                         class="example-full-width"
                         appearance="fill"
                       >
-                        <mat-label>Variant Name</mat-label>
+                        <mat-label>Variant Name {{ i + 1 }}</mat-label>
                         <input
                           type="text"
                           placeholder="Pick one"
@@ -338,7 +355,10 @@
                           [formControlName]="i"
                           [matAutocomplete]="auto"
                         />
-                        <mat-autocomplete #auto="matAutocomplete" [selected]="i">
+                        <mat-autocomplete
+                          #auto="matAutocomplete"
+                          [selected]="i"
+                        >
                           <mat-option value="size">size</mat-option>
                           <mat-option value="color">color</mat-option>
                           <mat-option value="material">material</mat-option>
@@ -347,14 +367,14 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-input">
+                <div class="mb15" nz-col nzXs="24" nzMd="20">
                   <div *ngFor="let f of optionsArray?.controls; let i = index">
-                    <h3 style="margin-bottom: 10px">
-                      Values for options {{ i + 1 }}
-                    </h3>
                     <div class="option-input">
-                      <mat-form-field class="example-chip-list" appearance="fill">
-                        <mat-label>Separate options with a comma</mat-label>
+                      <mat-form-field
+                        class="example-chip-list"
+                        appearance="fill"
+                      >
+                        <mat-label>Variant value {{ i + 1 }} </mat-label>
                         <mat-chip-list
                           formArrayName="options"
                           #chipList
@@ -369,15 +389,19 @@
                               *ngIf="this.dataForm.value?.status === 1"
                               matChipRemove
                             >
-                              <mat-icon (click)="remove(fruit, i)"
-                              >cancel</mat-icon
-                              >
+                              <i
+                                (click)="remove(fruit, i)"
+                                class="lar la-times-circle"
+                              ></i>
                             </button>
                             <button
                               *ngIf="this.dataForm.value?.status === 2"
                               matChipRemove
                             >
-                              <mat-icon (click)="edit(fruit, i)">edit</mat-icon>
+                              <i
+                                (click)="edit(fruit, i)"
+                                class="las la-pen"
+                              ></i>
                             </button>
                           </mat-chip>
                           <input
@@ -401,19 +425,21 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  nz-button
-                  style="margin-right: 10px"
-                  (click)="onAddNewFormControl()"
-                >
-                  Add another option
-                </button>
-                <button nz-button type="button" (click)="submitVariant()">
-                  DONE
-                </button>
+                <div class="mb15" nz-col nzXs="24" nzMd="20">
+                  <div>
+                    <button
+                      type="button"
+                      nz-button
+                      style="margin-right: 10px"
+                      (click)="onAddNewFormControl()"
+                    >
+                      Add another option
+                    </button>
+                    <button nz-button type="button" (click)="submitVariant()">
+                      DONE
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -422,157 +448,137 @@
                 [nzData]="variantFormArray.controls"
                 *ngIf="hasVariant === true"
                 nzSize="small"
-                [nzScroll]="{ x: '600px'}"
+                [nzScroll]="{ x: '900px' }"
               >
                 <thead>
-                <tr>
-                  <th
-                    [nzChecked]="false"
-                    [nzIndeterminate]="true"
-                    (nzCheckedChange)="onAllChecked($event)"
-                    nzWidth="50px"
-                  ></th>
-                  <th nzWidth="60px">Image</th>
-                  <th>Variants</th>
-                  <th>Sku</th>
-                  <th>Price</th>
-                  <th  nzWidth="50px">Qty</th>
-                  <th>Vendor</th>
-                  <th>Low Stock</th>
-                  <th>Pre Order</th>
-                  <th>Display</th>
-                </tr>
+                  <tr>
+                    <th
+                      [nzChecked]="false"
+                      [nzIndeterminate]="true"
+                      (nzCheckedChange)="onAllChecked($event)"
+                      nzWidth="50px"
+                    ></th>
+                    <th nzWidth="60px">Image</th>
+                    <th>Variants</th>
+                    <th>Sku</th>
+                    <th nzWidth="80px">Price</th>
+                    <th nzWidth="80px">Qty</th>
+                    <th>Vendor</th>
+                    <th nzWidth="80px">Low Stock</th>
+                    <th nzWidth="80px">Pre Order</th>
+                    <th nzWidth="80px">Display</th>
+                  </tr>
                 </thead>
                 <tbody formArrayName="variantFormArray">
-                <!-- <td
-                    [nzChecked]="setOfCheckedId.has(data.id)"
-                    [nzDisabled]="data.disabled"
-                    (nzCheckedChange)="onItemChecked(data.id, $event)"
-                  ></td> -->
-                <tr
-                  *ngFor="
-                  let data of variantFormArray.controls;
-                  let variant;
-                  of: variantDataArray;
-                  let i = index
-                "
-                  [formGroupName]="i"
-                >
-                  <td>
-                    <h3>
-                      <mat-checkbox
-                        [checked]="checkSelectionVariantImg(i)"
-                        (change)="onCheckVariantImage($event, i)"
-                      >
-                      </mat-checkbox>
-                    </h3>
-                  </td>
-                  <td>
-                    <div>
-                      <div class="variant-image">
-                        <button
-                          *ngIf="dataForm.value.variantFormArray[i].image"
-                          (click)="
-                          removeVariationImage(
-                            i,
-                            dataForm.value.variantFormArray[i].image
-                          )
-                        "
-                          type="button"
-                          nz-button
-                          nzType="text"
-                        >
-                          <i class="las la-trash"></i>
-                        </button>
-                        <img
-                          (click)="selectImage()"
-                          [src]="
-                          dataForm.value.variantFormArray[i].image
-                            ? dataForm.value.variantFormArray[i].image
-                            : '/assets/images/placeholder/test.png'
-                        "
-                          [alt]="dataForm.value.variantFormArray[i].variantSku"
-                        />
-                      </div>
-                      <!-- (click)="imagePicker.click()" -->
-                      <!-- <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/*" /> -->
-                    </div>
-                  </td>
-                  <td display="flex">
-                  <span *ngFor="let name of variantObject; let n = index"
-                  >{{ variant[name]
-                    }}<span *ngIf="n !== variantObject.length - 1"
-                    >/</span
-                    ></span
+                  <tr
+                    *ngFor="
+                      let data of variantFormArray.controls;
+                      let variant;
+                      of: variantDataArray;
+                      let i = index
+                    "
+                    [formGroupName]="i"
                   >
-                  </td>
-                  <td>
-                    {{ dataForm.value.variantFormArray[i].variantSku }}
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      nz-input
-                      formControlName="variantPrice"
-                      placeholder="Price"
-                      readonly
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      nz-input
-                      formControlName="variantQuantity"
-                      placeholder="qty"
-                      readonly
-                    />
-                  </td>
-                  <td>
-                    <mat-select
-                      appearance="outline"
-                      class="form-field"
-                      [disableOptionCentering]="true"
-                      #selectVendor
-                      placeholder="Select Vendor"
-                      formControlName="variantVendorName"
-                    >
-                      <mat-select-filter
-                        [placeholder]="'Filter Vendor List'"
-                        *ngIf="selectVendor.focused"
-                        [array]="vendors"
-                        [displayMember]="'name'"
-                        (filteredReturn)="filteredVendorList = $event"
+                    <td>
+                      <h3>
+                        <mat-checkbox
+                          [checked]="checkSelectionVariantImg(i)"
+                          (change)="onCheckVariantImage($event, i)"
+                        >
+                        </mat-checkbox>
+                      </h3>
+                    </td>
+                    <td>
+                      <div>
+                        <div class="variant-image">
+                          <button
+                            *ngIf="dataForm.value.variantFormArray[i].image"
+                            (click)="
+                              removeVariationImage(
+                                i,
+                                dataForm.value.variantFormArray[i].image
+                              )
+                            "
+                            type="button"
+                            nz-button
+                            nzType="text"
+                          >
+                            <i class="las la-trash"></i>
+                          </button>
+                          <img
+                            (click)="selectImage()"
+                            [src]="
+                              dataForm.value.variantFormArray[i].image
+                                ? dataForm.value.variantFormArray[i].image
+                                : '/assets/images/placeholder/test.png'
+                            "
+                            [alt]="
+                              dataForm.value.variantFormArray[i].variantSku
+                            "
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td display="flex">
+                      <span *ngFor="let name of variantObject; let n = index">
+                        {{ variant[name] }}
+                        <span *ngIf="n !== variantObject.length - 1"> / </span>
+                      </span>
+                    </td>
+                    <td>
+                      {{ dataForm.value.variantFormArray[i].variantSku }}
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        nz-input
+                        formControlName="variantPrice"
+                        placeholder="Price"
+                        readonly
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        nz-input
+                        formControlName="variantQuantity"
+                        placeholder="qty"
+                        readonly
+                      />
+                    </td>
+                    <td>
+                      <nz-select
+                        formControlName="variantVendorName"
+                        nzShowSearch
                       >
-                      </mat-select-filter>
-                      <mat-option
-                        *ngFor="let item of filteredVendorList"
-                        [value]="item._id"
-                      >
-                        {{ item.name }}
-                      </mat-option>
-                    </mat-select>
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      nz-input
-                      formControlName="variantReOrder"
-                      placeholder="re order"
-                    />
-                  </td>
-                  <td>
-                    <mat-checkbox
-                      formControlName="variantContinueSelling"
-                      class="example-margin"
-                    ></mat-checkbox>
-                  </td>
-                  <td>
-                    <mat-checkbox
-                      formControlName="variantDisplay"
-                      class="example-margin"
-                    ></mat-checkbox>
-                  </td>
-                </tr>
+                        <nz-option
+                          *ngFor="let option of filteredVendorList"
+                          [nzLabel]="option.name"
+                          [nzValue]="option._id"
+                        ></nz-option>
+                      </nz-select>
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        nz-input
+                        formControlName="variantReOrder"
+                        placeholder="re order"
+                      />
+                    </td>
+                    <td>
+                      <mat-checkbox
+                        formControlName="variantContinueSelling"
+                        class="example-margin"
+                      ></mat-checkbox>
+                    </td>
+                    <td>
+                      <mat-checkbox
+                        formControlName="variantDisplay"
+                        class="example-margin"
+                      ></mat-checkbox>
+                    </td>
+                  </tr>
                 </tbody>
               </nz-table>
             </div>
@@ -629,9 +635,9 @@
             <div class="sell_chanel">
               <p>Sales Channels</p>
               <nz-divider></nz-divider>
-              <label nz-checkbox [ngModel]="true">Website</label>
-              <label nz-checkbox [ngModel]="true">Mobile App</label>
-              <label nz-checkbox [ngModel]="true">Facebook</label>
+              <label nz-checkbox [ngModel]="true">Website</label> <br />
+              <label nz-checkbox>Mobile App</label> <br />
+              <label nz-checkbox>Facebook</label>
             </div>
           </div>
         </nz-card>
@@ -671,11 +677,7 @@
                 Allow Partial
               </label>
               <nz-input-group nzCompact *ngIf="canPartialPayment === true">
-                <input
-                  type="text"
-                  nz-input
-                  formControlName="partialPayment"
-                />
+                <input type="text" nz-input formControlName="partialPayment" />
                 <nz-select formControlName="partialPaymentType">
                   <nz-option
                     *ngFor="let c of amountType"
@@ -734,67 +736,90 @@
           </div>
         </nz-card>
         <nz-card nzTitle="Organization" nzSize="small" [nzExtra]="dataLoad">
-            <div class="cardsingle">
-              <p>Vendor</p>
-              <nz-select formControlName="vendor" nzShowSearch>
-                <nz-option
-                  *ngFor="let option of filteredVendorList"
-                  [nzLabel]="option.name"
-                  [nzValue]="option._id"
-                ></nz-option>
-              </nz-select>
-            </div>
-            <div class="cardsingle">
-              <p>Brand</p>
-              <nz-select formControlName="brand" nzShowSearch>
-                <nz-option
-                  *ngFor="let option of filteredBrandList"
-                  [nzLabel]="option.name"
-                  [nzValue]="option._id"
-                ></nz-option>
-              </nz-select>
-            </div>
-            <div class="cardsingle">
-              <p>Product Type</p>
-              <nz-select
-                [compareWith]="compareFn"
-                formControlName="productType"
-                nzMode="multiple"
-                nzPlaceHolder="Select product type"
+          <div class="cardsingle">
+            <p>Vendor</p>
+            <nz-select formControlName="vendor" nzShowSearch>
+              <nz-option
+                *ngFor="let option of filteredVendorList"
+                [nzLabel]="option.name"
+                [nzValue]="option._id"
+              ></nz-option>
+            </nz-select>
+          </div>
+          <div class="cardsingle">
+            <p>Brand</p>
+            <nz-select formControlName="brand" nzShowSearch>
+              <nz-option
+                *ngFor="let option of filteredBrandList"
+                [nzLabel]="option.name"
+                [nzValue]="option._id"
+              ></nz-option>
+            </nz-select>
+          </div>
+          <div class="cardsingle">
+            <p>Product Type</p>
+            <nz-select
+              [compareWith]="compareFn"
+              formControlName="productType"
+              nzMode="multiple"
+              nzPlaceHolder="Select product type"
+            >
+              <nz-option
+                *ngFor="let item of listOfTypes"
+                [nzLabel]="item.name"
+                [nzValue]="item"
+              ></nz-option>
+            </nz-select>
+          </div>
+          <div class="cardsingle">
+            <p>Tags</p>
+            <nz-select
+              formControlName="tags"
+              nzMode="tags"
+              nzPlaceHolder="Tag Mode"
+              [(ngModel)]="listOfTagOptions"
+            >
+              <nz-option
+                *ngFor="let option of listOfOption"
+                [nzLabel]="option.label"
+                [nzValue]="option.value"
               >
-                <nz-option
-                  *ngFor="let item of listOfTypes"
-                  [nzLabel]="item.name"
-                  [nzValue]="item"
-                ></nz-option>
-              </nz-select>
-            </div>
-            <div class="cardsingle">
-              <p>Tags</p>
-              <nz-select
-                formControlName="tags"
-                nzMode="tags"
-                nzPlaceHolder="Tag Mode"
-                [(ngModel)]="listOfTagOptions"
-              >
-                <nz-option
-                  *ngFor="let option of listOfOption"
-                  [nzLabel]="option.label"
-                  [nzValue]="option.value"
-                >
-                </nz-option>
-              </nz-select>
-            </div>
-          </nz-card>
+              </nz-option>
+            </nz-select>
+          </div>
+        </nz-card>
       </div>
       <div nz-col nzXs="24">
         <div class="varriant_area">
           <div class="archive_area">
-            <button class="archive" nz-button type="button" *ngIf="product" (click)="archive()">Archive</button>
-            <button class="delete" nz-button type="button" (click)="deleteProduct()" *ngIf="product">Delete</button>
+            <button
+              class="archive"
+              nz-button
+              type="button"
+              *ngIf="product"
+              (click)="archive()"
+            >
+              Archive
+            </button>
+            <button
+              class="delete"
+              nz-button
+              type="button"
+              (click)="deleteProduct()"
+              *ngIf="product"
+            >
+              Delete
+            </button>
           </div>
           <div class="form_btn">
-            <button nz-button nzType="dashed" type="button" [routerLink]="['../../', 'products']" > Discard </button>
+            <button
+              nz-button
+              nzType="dashed"
+              type="button"
+              [routerLink]="['../../', 'products']"
+            >
+              Discard
+            </button>
             <button nz-button nzType="primary" type="submit">Save</button>
           </div>
         </div>
@@ -812,7 +837,6 @@
     <i class="las la-lg la-plus"></i> Add form URL
   </button>
 </ng-template>
-
 
 <nz-modal
   [(nzVisible)]="showImageList"

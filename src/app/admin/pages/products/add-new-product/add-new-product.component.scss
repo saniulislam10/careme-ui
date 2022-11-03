@@ -3,7 +3,7 @@
 .mb15 {
   margin-bottom: 15px;
 }
-.page-header {
+.page_header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -18,13 +18,17 @@
       margin-right: 10px;
     }
   }
-  .header-action {
+  .header_action {
     display: flex;
     align-items: center;
     button {
       border: none;
       background: transparent;
       margin-left: 25px;
+    }
+    a{
+      margin: 0 10px;
+      color: #585858;
     }
   }
 }
