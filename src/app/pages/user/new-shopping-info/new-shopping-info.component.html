@@ -9,12 +9,20 @@
           nzTitle="Delivery Address"
           [nzExtra]="addressAction"
         >
-          <div [class]="clickActive[i] ? 'active-address' : 'inactive-address'" (click)="onSelectAddress(data, i)" *ngFor="let data of addressInfo; let i = index">
+          <div
+            [class]="clickActive[i] ? 'active-address' : 'inactive-address'"
+            (click)="onSelectAddress(data, i)"
+            *ngFor="let data of addressInfo; let i = index"
+          >
             <div class="address_header">
               <h3><i class="las la-suitcase"></i> Home</h3>
               <ul class="icons">
-                <li class="trash" (click)="deleteAddress(i)" ><i class="las la-trash"></i></li>
-                <li class="edit" (click)="editAddressButton(data)" ><i class="lar la-edit"></i></li>
+                <li class="trash" (click)="deleteAddress(i)">
+                  <i class="las la-trash"></i>
+                </li>
+                <li class="edit" (click)="editAddressButton(data)">
+                  <i class="lar la-edit"></i>
+                </li>
                 <li class="select"><i class="lar la-check-circle"></i></li>
               </ul>
             </div>
@@ -22,17 +30,17 @@
               <ul>
                 <li>
                   <span><i class="lar la-user"></i></span>
-                  <p>{{data?.name}}</p>
+                  <p>{{ data?.name }}</p>
                 </li>
                 <li>
                   <span><i class="las la-phone"></i></span>
-                  <p>{{data?.phone}}</p>
+                  <p>{{ data?.phone }}</p>
                 </li>
                 <li>
                   <span><i class="las la-map-marked"></i></span>
                   <p>
-                    {{data.address}}, {{data?.thana.name}}, {{data?.city.name}},
-                    {{data?.zila.name}}, Bangladesh
+                    {{ data.address }}, {{ data?.thana.name }},
+                    {{ data?.city.name }}, {{ data?.zila.name }}, Bangladesh
                   </p>
                 </li>
               </ul>
@@ -46,19 +54,63 @@
           [nzExtra]="vendorName"
         >
           <div nz-row [nzGutter]="16">
-            <div nz-col class="mb" [nzXs]="{ span: 24 }" [nzLg]="{ span: 8 }" *ngFor="let data of methods; let i=index">
-              <nz-card class="shipping_single" nzSize="small" *ngIf="showMethod[i]">
-                <h3>- TK</h3>
-                <h4>{{data?.name}}</h4>
+            <div
+              nz-col
+              class="mb"
+              [nzXs]="{ span: 24 }"
+              [nzLg]="{ span: 8 }"
+              *ngFor="let data of methods; let i = index"
+            >
+              <nz-card
+                class="shipping_single"
+                nzSize="small"
+                *ngIf="showMethod[i]"
+              >
+                <h3
+                  *ngIf="
+                    data.allProductProfile.shippingZonesArray[0]
+                      .chooseRateType === 'flat'
+                  "
+                >
+                  {{data.allProductProfile.shippingZonesArray[0].flatRate * totalQuantity}} TK
+                </h3>
+                <h3
+                  *ngIf="
+                    data.allProductProfile.shippingZonesArray[0]
+                      .chooseRateType === 'weight'
+                  "
+                >
+                  {{
+                    data.allProductProfile.shippingZonesArray[0].baseRate +
+                    (data.allProductProfile.shippingZonesArray[0].perKgRate * totalWeight)
+                  }} TK
+                </h3>
+                <h4>{{ data?.name }}</h4>
                 <h5>
                   Delivery within (In-Stock)
-                  <span style="color: #ff9100" *ngIf="data.inStockDeliveryOption === 'A'">Today</span>
-                  <span style="color: #ff9100" *ngIf="data.inStockDeliveryOption === 'B'">Next Day</span>
-                  <span style="color: #ff9100" *ngIf=" data.inStockDeliveryOption === 'C' ">{{data.inStockDeliveryFrom}} - {{data.inStockDeliveryTo}} days</span>
+                  <span
+                    style="color: #ff9100"
+                    *ngIf="data.inStockDeliveryOption === 'A'"
+                    >Today</span
+                  >
+                  <span
+                    style="color: #ff9100"
+                    *ngIf="data.inStockDeliveryOption === 'B'"
+                    >Next Day</span
+                  >
+                  <span
+                    style="color: #ff9100"
+                    *ngIf="data.inStockDeliveryOption === 'C'"
+                    >{{ data.inStockDeliveryFrom }} -
+                    {{ data.inStockDeliveryTo }} days</span
+                  >
                 </h5>
-                <h5 *ngIf=" data.preOrderDeliveryOption === 'C' ">
+                <h5 *ngIf="data.preOrderDeliveryOption === 'C'">
                   Delivery within (Pre-Order)
-                  <span style="color: #ff9100">{{data.preOrderDeliveryFrom}} - {{data.preOrderDeliveryTo}} days</span>
+                  <span style="color: #ff9100"
+                    >{{ data.preOrderDeliveryFrom }} -
+                    {{ data.preOrderDeliveryTo }} days</span
+                  >
                 </h5>
                 <i class="lar la-check-circle"></i>
               </nz-card>
@@ -139,7 +191,12 @@
                           TK
                         </span>
                       </h4>
-                      <h4 style="color:#016d01" *ngIf="!data?.product.canPartialPayment">Cash on Delivery</h4>
+                      <h4
+                        style="color: #016d01"
+                        *ngIf="!data?.product.canPartialPayment"
+                      >
+                        Cash on Delivery
+                      </h4>
                       <h3>Total: {{ cartSubTotalProduct(data) }} TK</h3>
                     </div>
                   </div>
@@ -250,26 +307,46 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="24" nzFor="locate">Address</nz-form-label>
         <nz-form-control [nzSpan]="12">
-          <nz-select  formControlName="country">
-            <nz-option nzValue="bangladesh" nzLabel="Bangladesh" ></nz-option>
+          <nz-select formControlName="country">
+            <nz-option nzValue="bangladesh" nzLabel="Bangladesh"></nz-option>
           </nz-select>
         </nz-form-control>
         <nz-form-control [nzSpan]="12">
-          <nz-select formControlName="zila" ngModel (ngModelChange)="getAllCityByZilaId()" >
+          <nz-select
+            formControlName="zila"
+            ngModel
+            (ngModelChange)="getAllCityByZilaId()"
+          >
             <!-- <nz-option  on nzValue="disabled" nzLabel="Select Zila" nzDisabled selected></nz-option> -->
-            <nz-option [nzValue]="data._id" [nzLabel]="data.name" *ngFor="let data of zilla"></nz-option>
+            <nz-option
+              [nzValue]="data._id"
+              [nzLabel]="data.name"
+              *ngFor="let data of zilla"
+            ></nz-option>
           </nz-select>
         </nz-form-control>
         <nz-form-control [nzSpan]="12">
-          <nz-select formControlName="city" ngModel (ngModelChange)="getAllThanaByCityId()">
+          <nz-select
+            formControlName="city"
+            ngModel
+            (ngModelChange)="getAllThanaByCityId()"
+          >
             <!-- <nz-option nzValue="disabled" nzLabel="Select city" nzDisabled selected></nz-option> -->
-            <nz-option [nzValue]="data._id" [nzLabel]="data.name" *ngFor="let data of city"></nz-option>
+            <nz-option
+              [nzValue]="data._id"
+              [nzLabel]="data.name"
+              *ngFor="let data of city"
+            ></nz-option>
           </nz-select>
         </nz-form-control>
         <nz-form-control [nzSpan]="12">
           <nz-select formControlName="thana" ngModel nzPlaceholder="Select">
             <!-- <nz-option nzValue="disabled" nzLabel="Select thana" nzDisabled selected></nz-option> -->
-            <nz-option [nzValue]="data._id" [nzLabel]="data.name" *ngFor="let data of thana"></nz-option>
+            <nz-option
+              [nzValue]="data._id"
+              [nzLabel]="data.name"
+              *ngFor="let data of thana"
+            ></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>

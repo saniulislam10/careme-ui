@@ -32,7 +32,6 @@ export class CreateShippingZoneComponent implements OnInit {
   methods: ShippingMethod[] = [];
   selectedZoneList: Zila[] = []
   showRate: boolean;
-  methodIndex: number;
   selectedAllZila: boolean = false;
   zonename: string;
 
@@ -137,16 +136,7 @@ export class CreateShippingZoneComponent implements OnInit {
     this.showRate = false;
   }
   onOk(): void {
-    console.log('Button ok clicked!', this.methodIndex);
-    if (this.methodIndex >= 0) {
-      this.methods[this.methodIndex].condition = this.chooseRateType;
-      if (this.chooseRateType === 'flat') {
-        this.methods[this.methodIndex].flatRate = this.flatRate;
-      } else if (this.chooseRateType === 'weight') {
-        this.methods[this.methodIndex].baseRate = this.baseRate;
-        this.methods[this.methodIndex].perKgRate = this.perKgRate;
-      }
-    }
+    console.log('Button ok clicked!');
     this.showRate = false;
   }
 
@@ -199,11 +189,6 @@ export class CreateShippingZoneComponent implements OnInit {
         this.msg.error(err.message);
 
       })
-  }
-
-  setRate(i: number) {
-    this.showRate = true;
-    this.methodIndex = i;
   }
 
   updateAllChecked(): void {

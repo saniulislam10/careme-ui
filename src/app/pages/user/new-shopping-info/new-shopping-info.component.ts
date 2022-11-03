@@ -63,6 +63,8 @@ export class NewShoppingInfoComponent implements OnInit {
   methods: ShippingMethod[];
   subRouteOne: Subscription;
   showMethod: Boolean[]= [];
+  totalWeight = 3;
+  totalQuantity = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -247,6 +249,7 @@ export class NewShoppingInfoComponent implements OnInit {
     this.cartService.getCartItemList().subscribe(
       (res) => {
         this.carts = res.data.filter((f) => f.isSelected);
+        this.totalQuantity = this.carts.length;
       },
       (error) => {
         console.log(error);

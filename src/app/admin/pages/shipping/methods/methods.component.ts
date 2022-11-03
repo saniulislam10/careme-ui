@@ -28,6 +28,7 @@ export class MethodsComponent implements OnInit {
   instockValue = 'A';
   preOrderValue = 'A';
   deliveryTime = 'A';
+  compareFn = (o1: any, o2: any) => (o1 && o2 ? o1._id === o2._id : o1 === o2);
 
   //  Day Schedule
   disabledSchedule = true;
@@ -130,6 +131,10 @@ export class MethodsComponent implements OnInit {
       preOrderDeliveryCustomRange: [false],
       preOrderDeliveryTimesArray: this.fb.array([]),
       allProductEnable: [true, Validators.required],
+      allProductProfile: [null],
+      categoryArray: [null],
+      catProfile: [null],
+      productProfile: [null],
       catEnable: [false, Validators.required],
       productEnable: [false, Validators.required],
     });
