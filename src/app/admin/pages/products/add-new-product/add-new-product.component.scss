@@ -103,6 +103,26 @@
     font-weight: 600;
   }
 }
+.varriant_area{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 50px 0;
+}
+.archive_area{
+  button{
+    margin-right: 10px;
+  }
+  .delete{
+    border: 1px solid red;
+
+  }
+}
+.form_btn{
+  button{
+    margin-left: 10px;
+  }
+}
 // Old Css
 .imageListPopUp {
   position: relative;
