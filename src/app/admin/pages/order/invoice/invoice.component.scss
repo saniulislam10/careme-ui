@@ -1,43 +1,229 @@
-@import '../../../../../theme/variables';
+@import "../../../../../theme/variables";
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 0 10px 0;
+  .header-action {
+    display: flex;
+    align-items: center;
+    button {
+      border: none;
+      background: transparent;
+      margin-left: 25px;
+    }
+  }
+}
+.refunt-tab {
+  min-height: 80vh;
+  margin-bottom: 30px;
+}
+.tab-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  min-width: 200px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  margin-left: -22px;
+  padding: 0 0 10px 0;
+  .title {
+    font-size: 14px;
+  }
+  .status-details {
+    text-align: right;
+    font-size: 14px;
+    .details {
+      font-size: 12px;
+      span {
+        margin-left: 15px;
+      }
+    }
+  }
+}
+.ant-tabs-nav-list {
+  padding: 0;
+}
+.header_action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.left_navbar {
+  background: #fff;
+  border-right: 1px solid #ddd;
+  min-width: 230px !important;
+}
+.inner_nav_header {
+  margin-right: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 5px;
+  .header_action {
+    margin-bottom: 15px;
+  }
+}
+.refund_list {
+  padding: 0;
+  margin: 0;
+  li {
+    display: flex;
+    padding: 5px 10px 5px 0 !important;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+    height: unset;
+    .right {
+      text-align: right;
+    }
+  }
+  li:hover {
+    .left {
+      h4 {
+        color: #1b75bb;
+      }
+    }
+  }
+}
+.refund_body_main {
+  padding: 0 15px;
+}
+.refund_details_header {
+  border-bottom: 1px solid #ddd;
+  padding: 0 0 10px 0;
+  h4 {
+    font-size: 14px;
+  }
+  h5 {
+    font-size: 12px;
+  }
+}
+.refund_details_body {
+  padding: 15px;
+  table {
+    margin: 20px 0;
+  }
+  tr > td {
+    line-height: 30px;
+    span {
+      border: 1px solid #ff8800;
+      color: #ff8800;
+      padding: 2px 10px;
+    }
+  }
+  tr > td:first-child {
+    width: 110px;
+  }
+  tr > td:last-child {
+    padding-left: 15px;
+  }
+}
+.refund_details_body-product {
+  margin: 30px 0;
+}
+.ammount_summary {
+  margin: 15px 0;
+  width: 400px;
+  float: right;
+}
+.ammount_summary_single {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  input {
+    width: 70px;
+    border: none;
+    text-align: right;
+    border-bottom: 1px solid #e4e4e4;
+  }
+  input:focus {
+    background: none;
+    box-shadow: none;
+  }
+}
+.mt15 {
+  margin-top: 15px;
+}
+.action_btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  button {
+    margin-left: 15px;
+  }
+}
+.table-samary {
+  nz-layout {
+    max-height: 100vh;
+  }
+}
+@media (max-width: 768px) {
+  .table-samary {
+    nz-layout {
+      max-height: unset;
+      flex-direction: column;
+    }
+  }
+  .main-layout {
+    flex-direction: column !important;
+  }
+  .left_navbar {
+    min-width: 100% !important;
+    width: 100% !important;
+    border: none;
+  }
+  .thumb_img {
+    width: 80px;
+  }
+  .ammount_summary {
+    margin: 10px 0;
+    width: 300px;
+  }
+  .refund_body_main {
+    width: 100% !important;
+    padding: 20px 0;
+    padding: 0;
+  }
+  .refund_details_body {
+    padding: 0;
+  }
+}
 
 
+
+//Old CSS
 .return {
   display: flex;
-
   .box {
     padding-left: 5px;
   }
-
   input {
     width: 150px;
   }
 }
-
 .reason {
   display: block;
 }
-
 nz-select {
   margin: 0 8px 10px 0;
   width: 150px;
 }
-
 .invoice {
   padding: 0;
   margin-bottom: 50px;
 }
-
 .invoice_header {
   display: flex;
   align-items: flex-start;
   column-gap: 20px;
   padding-bottom: 30px;
 }
-
-::ng-deep .invoice_header mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
+::ng-deep
+  .invoice_header
+  mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
   font-size: 30px;
 }
-
 .invoice_header_content h1 {
   color: #131523;
   font-family: $font-en-primary-2;
@@ -46,7 +232,6 @@ nz-select {
   line-height: 18px;
   display: block;
 }
-
 .invoice_header_content P {
   color: #131523;
   font-family: $font-en-primary-2;
@@ -60,7 +245,7 @@ nz-select {
 
 //ivoice body
 .inovice_body {
-  background-color: #F9FBFD;
+  background-color: #f9fbfd;
   box-shadow: 0 4px 5px rgb(0 0 0/10%);
 }
 
@@ -149,7 +334,7 @@ nz-select {
 }
 
 .IVN_code_content {
-  color: #0058FF;
+  color: #0058ff;
 }
 
 .invoice_dropdown p span {
@@ -169,7 +354,7 @@ nz-select {
 
 //main invoice checkout table
 .main_invoice_checkout_table {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 20px;
   box-sizing: border-box;
   margin-top: 20px;
@@ -348,13 +533,13 @@ sup {
 }
 
 .shipped_table table thead {
-  background-color: #3B3B39;
+  background-color: #3b3b39;
   color: #ffffff;
   font-size: 14px;
 }
 
 .shipped_table table thead tr th {
-  background-color: #3B3B39;
+  background-color: #3b3b39;
   color: #ffffff;
   font-size: 14px;
   font-weight: 400;
@@ -433,7 +618,7 @@ sup {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #F4F3F1;
+  background-color: #f4f3f1;
   color: #131523;
   padding: 20px 10px 20px 0;
   box-sizing: border-box;
@@ -472,7 +657,6 @@ sup {
   font-family: $font-en-primary-2;
   color: #131523;
 }
-
 
 // INVOICE NOTES
 .invoice_notes {
@@ -533,13 +717,13 @@ sup {
 .sales_order_horizontal_line {
   width: 300px;
   height: 2px;
-  background-color: #D6472F;
+  background-color: #d6472f;
 }
 
 .sales_order_line {
   width: 100%;
   height: 2px;
-  background-color: #E4E7EB;
+  background-color: #e4e7eb;
 }
 
 .sales_oreders_header h2 {
@@ -561,7 +745,7 @@ sup {
 .sales_table table th {
   padding: 8px;
   text-align: left;
-  border-bottom: 2px solid #E4E7EB;
+  border-bottom: 2px solid #e4e7eb;
   font-weight: 500;
 }
 
@@ -570,7 +754,7 @@ sup {
 }
 
 .table_content {
-  color: #2585E8;
+  color: #2585e8;
 }
 
 @media (max-width: 869px) {

@@ -1,3 +1,152 @@
+<div class="page-header">
+  <h2><i class="las la-arrow-left"></i> All Invoice </h2>
+  <div class="header-action">
+    <button type="button">Export</button>
+    <button type="button">Import</button>
+  </div>
+</div>
+<div class="table-samary">
+  <nz-card nzSize="small">
+    <nz-layout>
+      <nz-sider class="left_navbar">
+        <div class="inner_nav_header">
+          <div class="header_action">
+            <a nz-dropdown [nzDropdownMenu]="statusMenu">
+              All Invoice <i class="las la-angle-down"></i>
+              <nz-dropdown-menu #statusMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Close</li>
+                  <li nz-menu-item>Pending</li>
+                  <li nz-menu-item>Reject</li>
+                </ul>
+              </nz-dropdown-menu>
+            </a>
+            <nz-button-group>
+              <button
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="actionMenu"
+                nzPlacement="bottomRight"
+              >
+                <span nz-icon nzType="ellipsis"></span>
+              </button>
+              <nz-dropdown-menu #actionMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Delete</li>
+                  <li nz-menu-item>Pending</li>
+                  <li nz-menu-item>Reject</li>
+                </ul>
+              </nz-dropdown-menu>
+            </nz-button-group>
+          </div>
+          <input nz-input placeholder="Basic usage" />
+        </div>
+        <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
+          <li nz-menu-item>
+            <div class="left">
+              <h4>{{ invoice?.invoiceId }}</h4>
+              <h5>{{ invoice?.invoiceDate | date: 'short' }}</h5>
+            </div>
+            <div class="right">
+              <h4>Pending</h4>
+              <h5>
+                <span>1 / 0</span>
+                <span>846 TK</span>
+              </h5>
+            </div>
+          </li>
+        </ul>
+      </nz-sider>
+      <nz-content class="refund_body_main" style="background: #fff">
+        <div class="refund_details_header">
+          <h4>{{ invoice?.invoiceId }}</h4>
+          <h5>{{ invoice?.invoiceDate | date: 'short' }}</h5>
+        </div>
+        <div class="invoice_action_btn">
+          <nz-button-group>
+            <button nz-button>Record Payment</button>
+            <button nz-button>Write Off</button>
+            <button nz-button>Print / PDF</button>
+            <button nz-button>Return</button>
+            <button nz-button nz-dropdown nzTrigger="click" nzPlacement="bottomRight" [nzDropdownMenu]="invAction"><i class="las la-ellipsis-v"></i></button>
+            <nz-dropdown-menu #invAction="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item>Edit</li>
+                <li nz-menu-item>Delete</li>
+              </ul>
+            </nz-dropdown-menu>
+          </nz-button-group>
+        </div>
+        <div class="refund_details_body">
+          <div nz-row [nzGutter]="16">
+            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+              <h2>Invoice Details</h2>
+              <table>
+                <tbody>
+                <tr>
+                  <td>Invoice Status</td>
+                  <td>:</td>
+                  <td>
+                    <span> Pending </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Refund</td>
+                  <td>:</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>Amount</td>
+                  <td>:</td>
+                  <td><b>120 TK</b></td>
+                </tr>
+                <tr>
+                  <td>Refund Way</td>
+                  <td>:</td>
+                  <td>bKash ( 01934548454 )</td>
+                </tr>
+                <tr>
+                  <td>Customer</td>
+                  <td>:</td>
+                  <td>01917635242</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+              <table>
+                <tbody>
+                <tr>
+                  <td>Sales Order</td>
+                  <td>:</td>
+                  <td><a>SO-195212</a></td>
+                </tr>
+                <tr>
+                  <td>Crated By</td>
+                  <td>:</td>
+                  <td>Customer</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <nz-card class="refund_details_body-product" nzSize="small">
+            ok
+          </nz-card>
+        </div>
+      </nz-content>
+    </nz-layout>
+  </nz-card>
+</div>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<!-- Old Code -->
 <div class="invoice">
   <div class="invoice_header">
     <mat-icon [routerLink]="['../../', 'all-invoice']">
@@ -16,7 +165,9 @@
         <li><button (click)="generatePDF()">Pdf/Print</button></li>
         <li><button>Record Payment</button></li>
         <li><button nzButton (click)="createReturnButton()">Return</button></li>
-        <li><button nzButton (click)="markDelivered()">Mark As Delivered</button></li>
+        <li>
+          <button nzButton (click)="markDelivered()">Mark As Delivered</button>
+        </li>
       </ul>
     </div>
 
@@ -25,17 +176,24 @@
     <div class="invoice_chackout_table">
       <div class="invoice_dropdown" *ngFor="let data of returns">
         <div class="invoice_item">
-          <a class="IVN_code_content" [routerLink]="['../../', 'return', 'details', data.returnId]">{{ data?.returnId }}</a>
-          <p>{{data.createdAt | date : 'short'}}</p>
+          <a
+            class="IVN_code_content"
+            [routerLink]="['../../', 'return', 'details', data.returnId]"
+            >{{ data?.returnId }}</a
+          >
+          <p>{{ data.createdAt | date: "short" }}</p>
         </div>
         <div class="invoice_item">
           <h3>Amount</h3>
-          <p><span>BDT {{data.subTotal}}</span>
+          <p>
+            <span>BDT {{ data.subTotal }}</span>
+          </p>
         </div>
+
         <div class="invoice_item">
           <h3>Refund Created</h3>
           <p>
-            <span>{{data.refundEligible ? 'Yes':'No' }}</span>
+            <span>{{ data.refundEligible ? "Yes" : "No" }}</span>
             <!-- <span *ngIf="data.refundEligible">{{getRefundId(data?.returnId)}}</span> -->
           </p>
         </div>
@@ -48,7 +206,10 @@
         <div class="invoice_logo_header">
           <div class="invoice_logo_header_left">
             <div class="invoice_careme_logo">
-              <img src="../../../../../assets/images/logo/logo.png" alt="Care Me Logo" />
+              <img
+                src="../../../../../assets/images/logo/logo.png"
+                alt="Care Me Logo"
+              />
             </div>
             <div class="invoice_careme_logo_content">
               <h4>Care Me Global</h4>
@@ -176,21 +337,32 @@
   </div>
 </div>
 
-
 <!---create-return-->
-<nz-modal [nzWidth]="600" [(nzVisible)]="isVisible" nzTitle="Create Return" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkDisabled]="saveButtonDisable || !products?.length">
+<nz-modal
+  [nzWidth]="600"
+  [(nzVisible)]="isVisible"
+  nzTitle="Create Return"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkDisabled]="saveButtonDisable || !products?.length"
+>
   <ng-container *nzModalContent>
     <div class="return">
       <div class="box">
         <h4>Refund Eligibility</h4>
-        <label nz-checkbox [(ngModel)]="checked" (click)="changeEligibility()">Yes</label>
+        <label nz-checkbox [(ngModel)]="checked" (click)="changeEligibility()"
+          >Yes</label
+        >
       </div>
       <div class="box">
         <h4>Reason</h4>
         <nz-select [(ngModel)]="reason" placeholder="Select option">
           <nz-option nzValue="damage" nzLabel="Product Damage "></nz-option>
           <nz-option nzValue="mismatch" nzLabel="Quantity Mismatch"></nz-option>
-          <nz-option nzValue="quality" nzLabel="Product Quality Issue"></nz-option>
+          <nz-option
+            nzValue="quality"
+            nzLabel="Product Quality Issue"
+          ></nz-option>
           <nz-option nzValue="late" nzLabel="Late delivery"></nz-option>
           <nz-option nzValue="mind_change" nzLabel="Change of mind"></nz-option>
         </nz-select>
@@ -202,18 +374,27 @@
             <span nz-icon nzType="upload"></span>
             Click to Upload
           </button>
-          <p *ngIf="this.url" class="upload-text">{{this.file.name}}</p>
-          <input [hidden]="true" #imagePicker type="file" (change)="fileChangeEvent($event)" accept="image/* | video/*"
-            multiple />
+          <p *ngIf="this.url" class="upload-text">{{ this.file.name }}</p>
+          <input
+            [hidden]="true"
+            #imagePicker
+            type="file"
+            (change)="fileChangeEvent($event)"
+            accept="image/* | video/*"
+            multiple
+          />
         </div>
       </div>
-
     </div>
     <div *ngIf="checked" class="return">
       <div class="box">
         <h4>Payment By</h4>
         <nz-select [(ngModel)]="paymentBy">
-          <nz-option nzValue="damage" nzLabel="Same as Payment" selected></nz-option>
+          <nz-option
+            nzValue="damage"
+            nzLabel="Same as Payment"
+            selected
+          ></nz-option>
           <nz-option nzValue="mismatch" nzLabel="Others"></nz-option>
         </nz-select>
       </div>
@@ -227,15 +408,29 @@
       </div>
       <div class="box">
         <h4>Phone</h4>
-        <input nz-input [(ngModel)]="phone" type="text" placeholder="01X-XXX-XXXX">
+        <input
+          nz-input
+          [(ngModel)]="phone"
+          type="text"
+          placeholder="01X-XXX-XXXX"
+        />
       </div>
     </div>
     <div class="box">
       <h4>Notes</h4>
-      <textarea nz-input [(ngModel)]="notes" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+      <textarea
+        nz-input
+        [(ngModel)]="notes"
+        placeholder="Controlled autosize"
+        [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+      ></textarea>
     </div>
     <form [formGroup]="dataForm">
-      <nz-table [nzData]="returnProducts" style="width: fit-content; margin-top: 10px" [nzShowPagination]="false">
+      <nz-table
+        [nzData]="returnProducts"
+        style="width: fit-content; margin-top: 10px"
+        [nzShowPagination]="false"
+      >
         <thead>
           <tr>
             <th>Name</th>
@@ -248,16 +443,39 @@
           </tr>
         </thead>
         <tbody formArrayName="products">
-          <tr *ngFor="let data of products?.controls; let i=index" [formGroupName]="i">
-            <td>{{data?.value.name}}</td>
-            <td>{{data?.value.variant}}</td>
-            <td>{{data?.value.sku}}</td>
+          <tr
+            *ngFor="let data of products?.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <td>{{ data?.value.name }}</td>
+            <td>{{ data?.value.variant }}</td>
+            <td>{{ data?.value.sku }}</td>
             <td>
-              <input nz-input type="number" max="{{data.value.totalInvoiceQty-data.value.returnedQty}}" formControlName="quantity" (change)="onChangeQty(i, data?.value.quantity, data.value.totalInvoicedQty, data.value.returnedQty)">
+              <input
+                nz-input
+                type="number"
+                max="{{ data.value.totalInvoiceQty - data.value.returnedQty }}"
+                formControlName="quantity"
+                (change)="
+                  onChangeQty(
+                    i,
+                    data?.value.quantity,
+                    data.value.totalInvoicedQty,
+                    data.value.returnedQty
+                  )
+                "
+              />
             </td>
-            <td>{{data?.value.price}}</td>
-            <td>{{data?.value.tax}}</td>
-            <td><button nz-icon nzType="delete" nzTheme="outline" (click)="deleteFromReturn(i)"></button></td>
+            <td>{{ data?.value.price }}</td>
+            <td>{{ data?.value.tax }}</td>
+            <td>
+              <button
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                (click)="deleteFromReturn(i)"
+              ></button>
+            </td>
           </tr>
         </tbody>
       </nz-table>

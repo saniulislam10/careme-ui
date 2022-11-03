@@ -10,15 +10,13 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
-  declarations: [
-    InvoiceComponent
-  ],
+  declarations: [InvoiceComponent],
   imports: [
     CommonModule,
     InvoiceRoutingModule,
     MaterialModule,
     AntModule,
-    NgxSpinnerModule
-  ]
+    NgxSpinnerModule,
+  ],
 })
-export class InvoiceModule { }
+export class InvoiceModule {}

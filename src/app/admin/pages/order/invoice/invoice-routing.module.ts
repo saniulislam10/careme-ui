@@ -4,13 +4,13 @@ import { InvoiceComponent } from './invoice.component';
 
 const routes: Routes = [
   {
-    path:":id",
-    component:InvoiceComponent
-  }
+    path: ':id',
+    component: InvoiceComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class InvoiceRoutingModule { }
+export class InvoiceRoutingModule {}
