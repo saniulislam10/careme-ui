@@ -23,6 +23,7 @@ import { RequestPricePipe } from './requestPrice.pipe';
 import { RequestCoinPipe } from './requestCoin.pipe';
 import { VariantQuantityPipe } from './variantQuantity.pipe';
 import { MenuPipe } from './menu.pipe';
+import { PurchaseStatusPipe } from './purchase-status.pipe';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { MenuPipe } from './menu.pipe';
         PaymentStatusPipe,
         RequestPricePipe,
         RequestCoinPipe,
+        PurchaseStatusPipe,
         VariantQuantityPipe
     ],
   imports: [
@@ -74,6 +76,7 @@ import { MenuPipe } from './menu.pipe';
         AmountTypePipe,
         ProductOrderStatusPipe,
         PaymentStatusPipe,
+        PurchaseStatusPipe,
         RequestPricePipe,
         RequestCoinPipe,
         VariantQuantityPipe

@@ -56,6 +56,8 @@
                 <th>Status</th>
                 <th>Reference</th>
                 <th>Supplier Name</th>
+                <th>Items</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -70,19 +72,24 @@
                   </p>
                 </td>
                 <td>
-                  <span>
-                    {{ data?.status ? data.status : "Draft" }}
-                  </span>
+                    {{ data?.status | purchaseStatus}}
                 </td>
                 <td>
-                  <p>
                     {{ data?.reference }}
-                  </p>
                 </td>
                 <td>
-                  <p>
-                    {{ data?.supplier?.name }}
-                  </p>
+                  {{ data?.supplier?.name }}
+                </td>
+                <td>
+                  {{ data?.products?.length }}
+                </td>
+                <td>
+                  <button nz-button *ngIf="data?.status === 0" (click)="showDeleteConfirm(data?._id)">
+                    <i class="las la-trash"></i>
+                  </button>
+                  <button nz-button>
+                    <i class="las la-edit"></i>
+                  </button>
                 </td>
               </tr>
             </tbody>

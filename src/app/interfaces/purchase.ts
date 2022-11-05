@@ -1,3 +1,5 @@
+import { Admin } from './admin';
+import { AdminRole } from './admin-role';
 import { purchaseTimeline } from "./purchase-timeline";
 
 
@@ -20,4 +22,5 @@ export interface Purchase {
   select?:boolean,
   comments?: string[] | any;
   timeline?: purchaseTimeline[] | any;
+  admin: Admin;
 }

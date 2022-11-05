@@ -1,3 +1,6 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Admin } from './../../../../interfaces/admin';
+import { AdminService } from 'src/app/services/admin.service';
 import { products } from 'src/app/core/utils/dashboard.data';
 import { Purchase } from 'src/app/interfaces/purchase';
 import { Pagination } from './../../../../interfaces/pagination';
@@ -22,9 +25,10 @@ import { ProductService } from 'src/app/services/product.service';
 import { PurchaseService } from 'src/app/services/purchase.service';
 import { UiService } from 'src/app/services/ui.service';
 import { ReloadService } from 'src/app/services/reload.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SupplierService } from 'src/app/services/supplier.service';
 import { Supplier } from 'src/app/interfaces/supplier';
+import { PurchaseStatus } from 'src/app/enum/purchase-status';
 
 @Component({
   selector: 'app-create-new-purchase',
@@ -57,6 +61,10 @@ export class CreateNewPurchaseComponent implements OnInit {
   selectedIds: any[] = [];
   suppliers: Supplier[];
   filteredSupplierList: Supplier[];
+  subTotal = 0;
+  total = 0;
+  products: FormArray;
+  admin: Admin;
 
   constructor(
     private fb: FormBuilder,
@@ -65,7 +73,10 @@ export class CreateNewPurchaseComponent implements OnInit {
     private uiService: UiService,
     private reloadService: ReloadService,
     private activatedRoute: ActivatedRoute,
-    private supplierService: SupplierService
+    private supplierService: SupplierService,
+    private router : Router,
+    private adminService: AdminService,
+    private msg : NzMessageService
   ) {}
 
   ngOnInit(): void {
@@ -77,6 +88,7 @@ export class CreateNewPurchaseComponent implements OnInit {
         this.getPurchaseInfo(this.id);
       }
     });
+    this.getAdminInfo();
   }
   initFormValue() {
     this.dataForm = this.fb.group({
@@ -90,6 +102,7 @@ export class CreateNewPurchaseComponent implements OnInit {
       adjustmentPrice: [0],
       purchaseShippingCharge: [0],
     });
+    this.products = this.dataForm.get("products") as FormArray
   }
 
   getPurchaseInfo(id: any) {
@@ -107,9 +120,6 @@ export class CreateNewPurchaseComponent implements OnInit {
     );
   }
 
-  get products(): FormArray {
-    return this.dataForm.get('products') as FormArray;
-  }
 
   newProduct(data, index?: number, purchaseData?: any): FormGroup {
     if (purchaseData) {
@@ -160,8 +170,10 @@ export class CreateNewPurchaseComponent implements OnInit {
 
   // submit form
   onSubmit() {
+
     if (this.dataForm.invalid) {
       this.uiService.wrong('Please complete all the required fields');
+
       return;
     }
     if (this.dataForm.value.products.length === 0) {
@@ -178,12 +190,13 @@ export class CreateNewPurchaseComponent implements OnInit {
       supplier_reference: this.dataForm.value.supplier_reference,
       products: this.dataForm.value.products,
       purchaseShippingCharge: this.dataForm.value.purchaseShippingCharge,
-      status: 0,
+      status: PurchaseStatus.DRAFT,
       recieved: 0,
       adjustmentPrice: this.dataForm.value.adjustmentPrice,
       comments: null,
-      subTotal: this.calculateSubTotal() ? this.calculateSubTotal() : 0,
+      subTotal: this.total,
       totalAmount: this.calculateTotal() ? this.calculateTotal() : 0,
+      admin: this.admin,
     };
 
     if (this.id) {
@@ -202,8 +215,10 @@ export class CreateNewPurchaseComponent implements OnInit {
       (res) => {
         this.uiService.success(res.message);
         this.reloadService.needRefreshPurchase$();
+        this.router.navigate(['admin/purchase']);
       },
       (err) => {
+
         this.uiService.wrong(err.message);
       }
     );
@@ -213,27 +228,22 @@ export class CreateNewPurchaseComponent implements OnInit {
       (res) => {
         this.uiService.success(res.message);
         this.reloadService.needRefreshPurchase$();
+        this.router.navigate(['admin/purchase']);
       },
       (err) => {
         this.uiService.wrong(err.message);
       }
     );
   }
-
-  //close dialog box
-  close() {
-    // console.log("close");
-  }
   delete(i) {
-    // console.log("delete");
     this.products.removeAt(i);
   }
-
   calculateAmount(i) {
     let purchasePrice = this.products?.value[i]?.purchasePrice;
     let tax = (purchasePrice * this.products?.value[i]?.purchaseTax) / 100;
     let quantity = this.products?.value[i]?.purchaseQuantity;
     this.products.value[i].amount = Math.round((purchasePrice + tax) * quantity);
+    return this.products.value[i].amount;
   }
 
   handleFocus(event: FocusEvent): void {
@@ -365,20 +375,21 @@ export class CreateNewPurchaseComponent implements OnInit {
     // console.log(data);
   }
 
-  calculateSubTotal() {
-    let total = 0;
+  get calculateSubTotal() {
+    let subTotal = 0;
     this.products.value.forEach(function (element) {
-      total += element.amount;
+      subTotal += element.amount;
     });
-    return total;
+    this.subTotal = subTotal;
+    return this.subTotal;
   }
 
   calculateTotal() {
-    let subTotal = this.calculateSubTotal();
+    let subTotal = this.subTotal;
     let shipping = this.dataForm.value.purchaseShippingCharge;
     let adjustment = this.dataForm.value.adjustmentPrice;
-    let total = subTotal + shipping + adjustment;
-    return total;
+    this.total = subTotal + shipping + adjustment;
+    return this.total;
   }
 
   // get vendors
@@ -392,6 +403,15 @@ export class CreateNewPurchaseComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  getAdminInfo(){
+    this.adminService.getAdminShortData()
+    .subscribe(res => {
+      this.admin = res.data;
+    }, err => {
+      this.msg.error(err.message);
+    })
   }
 
 }

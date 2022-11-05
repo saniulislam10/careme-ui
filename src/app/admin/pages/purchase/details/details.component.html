@@ -1,6 +1,6 @@
 <!-- New Code -->
 <div class="page-header">
-  <h2><i class="las la-arrow-left"></i> Purchase Order</h2>
+  <h2><i class="las la-arrow-left" routerLink="../../"></i> Purchase Order</h2>
   <div class="header-action">
     <button type="button">Export</button>
     <button type="button">Import</button>
@@ -24,13 +24,8 @@
               </nz-dropdown-menu>
             </a>
             <nz-button-group>
-              <span
-                nz-dropdown
-                nzTrigger="click"
-                [nzDropdownMenu]="actionMenu"
-                nzPlacement="bottomRight"
-                class="action_btn"
-              >
+              <span nz-dropdown nzTrigger="click" [nzDropdownMenu]="actionMenu" nzPlacement="bottomRight"
+                class="action_btn">
                 <i class="las la-ellipsis-v"></i>
               </span>
               <nz-dropdown-menu #actionMenu="nzDropdownMenu">
@@ -45,17 +40,13 @@
           <input nz-input placeholder="Use Purchase Order id" />
         </div>
         <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
-          <li
-            nz-menu-item
-            *ngFor="let data of purchases"
-            [routerLink]="['../../', 'details', data._id]"
-          >
+          <li nz-menu-item *ngFor="let data of purchases" [routerLink]="['../../', 'details', data._id]">
             <div class="left">
               <h4>{{ data?.purchaseId }}</h4>
               <h5>{{ data?.dateTime | date }}</h5>
             </div>
             <div class="right">
-              <h4 style="color: #ff8800">Draft</h4>
+              <h4 style="color: #ff8800">{{ data?.status | purchaseStatus }}</h4>
               <h5>
                 <span>{{ data?.totalAmount }} TK</span>
               </h5>
@@ -63,11 +54,7 @@
           </li>
         </ul>
       </nz-sider>
-      <nz-content
-        [formGroup]="dataForm"
-        class="refund_body_main"
-        style="background: #fff"
-      >
+      <nz-content [formGroup]="dataForm" class="refund_body_main" style="background: #fff">
         <div class="refund_details_header">
           <h4>{{ purchase?.purchaseId }}</h4>
           <h5>{{ purchase?.dateTime | date: "short" }}</h5>
@@ -89,7 +76,7 @@
                     <td>Purchase Status</td>
                     <td>:</td>
                     <td>
-                      <span> DRAFT </span>
+                      <span> {{ purchase?.status | purchaseStatus}} </span>
                     </td>
                   </tr>
                   <tr>
@@ -106,9 +93,9 @@
                     <td>{{ purchase?.totalAmount }} TK</td>
                   </tr>
                   <tr>
-                    <td>Inishete By</td>
+                    <td>Created By</td>
                     <td>:</td>
-                    <td>Omee</td>
+                    <td>{{purchase?.admin?.name}} ({{purchase?.admin?.role}})</td>
                   </tr>
                 </tbody>
               </table>
@@ -116,6 +103,11 @@
             <div nz-col [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
               <table>
                 <tbody>
+                  <tr>
+                    <td>Refrence</td>
+                    <td>:</td>
+                    <td>{{ purchase?.reference }}</td>
+                  </tr>
                   <tr>
                     <td>Manufacturer</td>
                     <td>:</td>
@@ -125,9 +117,24 @@
                     <td>Supplier Link</td>
                     <td>:</td>
                     <td>
-                      <a [href]="purchase?.supplier_link" target="_blank">
+                      <a [href]="purchase?.supplier?.link" target="_blank">
                         <i class="las la-lg la-external-link-alt"></i>
                       </a>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Supplier Name</td>
+                    <td>:</td>
+                    <td>
+                      <p>{{purchase?.supplier?.name}}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Supplier Phone</td>
+                    <td>:</td>
+                    <td>
+                      <p>{{purchase?.supplier?.phoneNo}}</p>
                     </td>
                   </tr>
                 </tbody>
@@ -135,79 +142,53 @@
             </div>
           </div>
           <nz-card class="refund_details_body-product" nzSize="small">
-            <nz-table
-              nzSize="small"
-              nzShowPagination="false"
-              [nzData]="[1, 2, 3]"
-              [nzScroll]="{ x: '1000px' }"
-            >
+            <nz-table nzSize="small" nzShowPagination="false" [nzData]="products" #tableData
+              [nzScroll]="{ x: '700px' }">
               <thead>
                 <tr>
-                  <th style="width: 100px">Image</th>
-                  <th>Item</th>
-                  <th class="w100">Unit Price</th>
-                  <th class="w100">Tax</th>
-                  <th class="w100">Quantity</th>
-                  <th class="w100">Amount</th>
-                  <th class="w100">Recieved Qty</th>
-                  <th class="w100">Recieved Amount</th>
+                  <th>Image</th>
+                  <th nzWidth="160px">Item</th>
+                  <th>Unit Price</th>
+                  <th>Tax</th>
+                  <th>Quantity</th>
+                  <th>Amount</th>
+                  <th>Recieved Qty</th>
+                  <th nzWidth="100px">Recieved Amount</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of products; let i = index">
-                  <td style="width: 100px">
-                    <img
-                      style="max-width: 100%"
-                      nz-image
-                      [nzSrc]="
+                <tr *ngFor="let item of tableData.data; let i = index">
+                  <td>
+                    <img style="max-width: 50px" nz-image [nzSrc]="
                         item.image
                           ? item.image
                           : '/assets/images/placeholder/test.png'
-                      "
-                      alt="item.product.name"
-                    />
+                      " [alt]="item.productData.name" />
                   </td>
                   <td>
-                    <h3>{{ item?.productData?.name }}</h3>
-                    <h5>SKU: {{ item?.sku }}</h5>
+                    <a class="text">{{ item?.productData?.name }}</a>
+                    <p>sku: {{ item?.sku }}</p>
                   </td>
                   <td>
-                    <input
-                      nz-input
-                      placeholder="0"
-                      value="{{ item?.purchasePrice }}"
-                    />
+                    <input nz-input placeholder="0" value="{{ item?.purchasePrice }}" />
                   </td>
                   <td>
-                    <input
-                      nz-input
-                      placeholder="0"
-                      value="{{ item.purchaseTax }}"
-                    />
+                    <input nz-input placeholder="0" value="{{ item.purchaseTax }}" />
                   </td>
                   <td>
-                    <input
-                      nz-input
-                      placeholder="0"
-                      value="{{ item?.purchaseQuantity }}"
-                    />
+                    <input nz-input placeholder="0" value="{{ item?.purchaseQuantity }}" />
                   </td>
-                  <td>{{ getAmount(item) }} TK</td>
+                  <td>{{getAmount(item)}} ৳</td>
                   <td>
                     <div class="recived_qt">
                       <p>{{ item.recieved ? item.recieved : 0 }}</p>
-                      <i (click)="
-                      openRecieved(
-                        item.productData._id,
-                        item?.recieved,
-                        i,
-                        item?.purchaseQuantity
-                      )
-                    " class="lar la-plus-square"></i>
+                      <i (click)="showModal(item, i)" class="lar la-plus-square"></i>
+                      <!-- Recived Modal -->
+
                     </div>
                   </td>
                   <td>
-                    <b>{{ getRecievedAmount(item) }} TK</b>
+                    <b>{{getRecievedAmount(item)}}৳</b>
                   </td>
                 </tr>
               </tbody>
@@ -227,10 +208,7 @@
                     <span>Shipping Cost</span>
                     <span>{{ purchase?.purchaseShippingCharge }} TK</span>
                   </div>
-                  <nz-divider
-                    style="margin: 5px 0"
-                    nzType="horizontal"
-                  ></nz-divider>
+                  <nz-divider style="margin: 5px 0" nzType="horizontal"></nz-divider>
                   <div class="summary_total">
                     <h2>Total = {{ purchase?.totalAmount }} TK</h2>
                   </div>
@@ -253,295 +231,25 @@
   </nz-card>
 </div>
 
-<!-- Recived Modal -->
-<nz-modal
-  [(nzVisible)]="recivedQty"
-  nzTitle="Recived Quantity"
-  (nzOnCancel)="recivedCancel()"
-  (nzOnOk)="recivedOk()"
-  nzWidth="300px"
-  nzSize="small"
->
+
+<nz-modal [(nzVisible)]="recivedQty" nzTitle="Recived Quantity" (nzOnCancel)="recivedCancel()" (nzOnOk)="onSubmit()"
+  nzWidth="300px" nzSize="small">
   <ng-container *nzModalContent>
-    <form nz-form>
+    <form nz-form [formGroup]="dataForm2">
       <nz-form-item class="mb">
         <nz-form-label [nzSpan]="24" nzFor="proqty">
           Product Quantity
         </nz-form-label>
         <nz-form-control [nzSpan]="24">
-          <input nz-input name="proqty" type="text" id="proqty" />
+          <input nz-input name="proqty" type="number" formControlName="recieved" id="proqty" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="24" nzFor="comment">Comment</nz-form-label>
         <nz-form-control [nzSpan]="24">
-          <textarea
-            formControlName="comment"
-            nz-input
-            rows="2"
-            placeholder="write any thing"
-          ></textarea>
+          <textarea formControlName="message" nz-input rows="2" placeholder="write any thing"></textarea>
         </nz-form-control>
       </nz-form-item>
     </form>
   </ng-container>
 </nz-modal>
-
-<!-- Old Code -->
-<!-- <div>
-  <div class="order-header-top">
-    <div class="order-title">
-      <h3>Purchase Order Details</h3>
-    </div>
-
-    <div class="order-btn-area">
-      <ul>
-        <li><button>Import</button></li>
-        <li><button>Export</button></li>
-        <li>
-          <button class="active-btn" (click)="openDialog2()">+ New</button>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="order_details">
-    <div class="order_details_left-sidebar">
-      <div class="order-details-left-sidebar-top">
-        <div class="order-details-left-top-dotted">
-          <div>
-            <button routerLink="/admin/regular-orders">
-              All Purchase <i class="fa fa-angle-down"></i>
-            </button>
-          </div>
-          <div class="dotted">
-            <span><i class="fa-solid fa-ellipsis"></i></span>
-          </div>
-        </div>
-
-        <div class="top-search-area">
-          <div>
-            <button><i class="fa fa-search"></i></button>
-          </div>
-          <div class="search-input">
-            <input type="text" value="" placeholder="Search purchase" />
-          </div>
-        </div>
-      </div>
-
-      <div class="order-details-left-side-bar-main">
-        <div class="order-details-sidebar-info">
-          <ul>
-            <li
-              *ngFor="
-                let data of purchases
-                  | paginate
-                    : {
-                        itemsPerPage: ordersPerPage,
-                        currentPage: currentPage,
-                        totalItems: totalOrders
-                      };
-                let i = index
-              "
-              [class.active]="data?._id === id"
-              [routerLink]="['../../', 'details', data._id]"
-            >
-              <div class="sidebar-info-left">
-                <span [routerLink]="['../../', 'details', data._id]"
-                  >{{ data?.purchaseId }} |
-                  <small>{{ data?.dateTime | date }}</small></span
-                >
-              </div>
-              <div class="sidebar-info-right">
-                <h4>{{ data?.totalAmount }} TK</h4>
-                <span>{{ data?.reference }}</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <form [formGroup]="dataForm">
-      <div class="order-details-container">
-        <div class="order-id-area">
-          <div class="req-id-title">
-            <h4>{{ purchase?.purchaseId }}</h4>
-            <span>
-              {{ purchase?.timeline?.purchasePlacedDate | date }}
-              {{ purchase?.timeline?.purchasePlacedDate | date: "mediumTime" }}
-            </span>
-          </div>
-        </div>
-
-        <div class="order-details-main">
-          <div class="order-details-left">
-            <div class="table-head">
-              <div class="table-head-left">
-                <ul>
-                  <li>
-                    <span
-                      [class]="clickActive[0] ? 'menu-active' : ''"
-                      (click)="getPurchaseDetails()"
-                      >Overview</span
-                    >
-                  </li>
-                  <li>
-                    <span
-                      [class]="clickActive[1] ? 'menu-active' : ''"
-                      [routerLink]="['../../', 'edit', purchase?._id]"
-                    >
-                      <button class="edit-button" mat-button>
-                        Edit <i class="fa fa-edit"></i>
-                      </button>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="info">
-              <div class="title">
-                <h3>Product Information</h3>
-              </div>
-              <div class="details">
-                <div class="items">
-                  Vendor : <span>{{ purchase?.supplier?.name }}</span>
-                </div>
-                <div class="items">
-                  Manufacturer : <span>{{ purchase?.manufacturer }}</span>
-                </div>
-                <div class="items">
-                  Supplier Link : <span>{{ purchase?.supplier_link }}</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="order-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th class="check">
-                      <mat-checkbox></mat-checkbox>
-                    </th>
-                    <th class="si">SI</th>
-                    <th class="item">Item Details</th>
-                    <th class="quantity">PO Quantity</th>
-                    <th class="quantity">Unit Price</th>
-                    <th class="quantity">Tax</th>
-                    <th class="quantity">Amount</th>
-                    <th class="price">Recieved Quantity</th>
-                    <th class="quantity">Recieved Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of products; let i = index">
-                    <td class="check">
-                      <mat-checkbox
-                        (change)="onCheckChange($event, i)"
-                      ></mat-checkbox>
-                    </td>
-                    <td class="si">
-                      <span>{{ i + 1 }}</span>
-                    </td>
-                    <td class="item">
-                      <div class="product">
-                        <div class="product-img">
-                          <img
-                            [src]="
-                              item.image
-                                ? item.image
-                                : '/assets/images/placeholder/test.png'
-                            "
-                            alt="item.product.name"
-                          />
-                        </div>
-                        <div class="product-info">
-                          <h3>{{ item?.productData?.name }}</h3>
-                          <p>SKU: {{ item?.sku }}</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td class="quantity">
-                      <span>{{ item?.purchaseQuantity }}</span>
-                    </td>
-                    <td class="quantity">
-                      <a href="#">{{ item?.purchasePrice }}</a>
-                    </td>
-                    <td class="tax">
-                      <span>{{ item.purchaseTax }}%</span>
-                    </td>
-                    <td class="amount">
-                      <span>{{ getAmount(item) }}</span>
-                    </td>
-                    <td class="price">
-                      <span>
-                        {{ item.recieved ? item.recieved : 0 }}
-                        <a
-                          (click)="
-                            openRecieved(
-                              item.productData._id,
-                              item?.recieved,
-                              i,
-                              item?.purchaseQuantity
-                            )
-                          "
-                        >
-                          +
-                        </a>
-                      </span>
-                    </td>
-                    <td class="quantity">
-                      <span>{{ getRecievedAmount(item) }} TK</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="order-pay-details">
-              <div class="payment-summery-area">
-                <div class="total-area">
-                  <ul>
-                    <li>
-                      <div class="total-title">
-                        <h3>Sub Total</h3>
-                      </div>
-                      <div class="total-price">
-                        <h4>{{ purchase?.subTotal }} TK</h4>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="total-title">
-                        <h3>Shipping Charge</h3>
-                      </div>
-                      <div class="total-price">
-                        <h4>{{ purchase?.purchaseShippingCharge }} TK</h4>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="total-title">
-                        <h3>Adjustment</h3>
-                      </div>
-                      <div class="total-price">
-                        <h4>{{ purchase?.adjustmentPrice }} TK</h4>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="total-title">
-                        <h3>Total</h3>
-                      </div>
-                      <div class="total-price">
-                        <h4>{{ purchase?.totalAmount }} TK</h4>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-</div> -->

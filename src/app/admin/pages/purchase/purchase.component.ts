@@ -1,3 +1,4 @@
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { SupplierService } from './../../../services/supplier.service';
 import { PurchaseService } from './../../../services/purchase.service';
@@ -80,8 +81,8 @@ export class PurchaseComponent implements OnInit {
   productSearchQuery: any;
 
 
-  suppliers : Supplier[] = [];
-  filteredSupplierList : Supplier[] = [];
+  suppliers: Supplier[] = [];
+  filteredSupplierList: Supplier[] = [];
 
   today = new Date();
   dataForm: FormGroup;
@@ -89,6 +90,7 @@ export class PurchaseComponent implements OnInit {
   id: any;
   constructor(
     private activatedRoute: ActivatedRoute,
+    private modal: NzModalService,
     private spinner: NgxSpinnerService,
     private reloadService: ReloadService,
     private supplierService: SupplierService,
@@ -97,9 +99,9 @@ export class PurchaseComponent implements OnInit {
     private router: Router,
     private utilsService: UtilsService,
     private dialog: MatDialog,
-    private msg : NzMessageService,
+    private msg: NzMessageService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.reloadService.refreshPurchase$.subscribe(() => {
@@ -137,45 +139,6 @@ export class PurchaseComponent implements OnInit {
 
       }
     );
-  }
-
-  onSubmit() {
-    console.log(this.dataForm.value);
-    if (this.dataForm.invalid) {
-      this.msg.warning('Please complete all the required fields');
-      return;
-    }
-    if (this.dataForm.value.products.length === 0) {
-      this.msg.warning('Please add products');
-      return;
-    }
-
-    let data: Purchase = {
-      reference: this.dataForm.value.reference,
-      dateTime: this.dataForm.value.dateTime,
-      supplier: this.dataForm.value.supplier,
-      supplier_link: this.dataForm.value.supplier_link,
-      manufacturer: this.dataForm.value.manufacturer,
-      supplier_reference: this.dataForm.value.supplier_reference,
-      products: this.dataForm.value.products,
-      purchaseShippingCharge: this.dataForm.value.purchaseShippingCharge,
-      status: 0,
-      recieved: 0,
-      adjustmentPrice: this.dataForm.value.adjustmentPrice,
-      comments: null,
-      subTotal: this.calculateSubTotal() ? this.calculateSubTotal() : 0,
-      totalAmount: this.calculateTotal() ? this.calculateTotal() : 0,
-    };
-
-    if (this.id) {
-      const finalData = {
-        ...data,
-        ...{ _id: this.id },
-      };
-      this.editPurchase(finalData);
-    } else {
-      this.addPurchase(data);
-    }
   }
 
   get products(): FormArray {
@@ -589,57 +552,6 @@ export class PurchaseComponent implements OnInit {
           this.isLoading = false;
         }
       );
-
-
-      const newformValue = this.productSearchForm.valueChanges;
-
-      newformValue
-        .pipe(
-          // map(t => t.searchTerm)
-          // filter(() => this.searchForm.valid),
-          pluck('productSearchTerm'),
-          debounceTime(200),
-          distinctUntilChanged(),
-          switchMap((data) => {
-            this.query = data.trim();
-
-            if (this.query === '' || this.query === null) {
-              this.overlay = false;
-              this.searchProducts = [];
-              this.query = null;
-              return EMPTY;
-            }
-            // this.isLoading = true;
-            const pagination: Pagination = {
-              currentPage: '1',
-              pageSize: '10',
-            };
-            const filter = { productVisibility: true };
-            return this.productService.getSearchProduct(
-              this.query,
-              pagination,
-              filter
-            );
-          })
-        )
-        .subscribe(
-          (res) => {
-            this.isLoading = false;
-            this.searchProducts = res.data;
-            if (this.searchProducts.length > 0) {
-              this.isOpen = true;
-              this.overlay = true;
-            }
-          },
-          () => {
-            this.isLoading = false;
-          }
-        );
-
-
-
-
-
   }
 
   // New PO Open by Mamun
@@ -648,5 +560,30 @@ export class PurchaseComponent implements OnInit {
   }
   purchaseCancel(): void {
     this.ponewVisible = false;
+  }
+
+  showDeleteConfirm(id): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this task?',
+      nzContent: '<b style="color: red;">All the related datas will be deleted</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => {
+        this.delete(id);
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
+
+  delete(id){
+    this.purchaseService.delete(id)
+    .subscribe( res => {
+      this.msg.success(res.message);
+    }, err => {
+      this.msg.error(err);
+
+    })
   }
 }

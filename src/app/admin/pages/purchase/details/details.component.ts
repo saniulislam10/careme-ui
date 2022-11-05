@@ -1,3 +1,4 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -32,8 +33,11 @@ export class DetailsComponent implements OnInit {
 
   // Qty Recived
   recivedQty = false;
+  data: any = null;
+  index: any = null;
 
   dataForm: FormGroup;
+  dataForm2: FormGroup;
   id: any;
   products: any[] = [];
   clickActive: any[] = [];
@@ -97,7 +101,8 @@ export class DetailsComponent implements OnInit {
     private productService: ProductService,
     private reloadService: ReloadService,
     public router: Router,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private msg: NzMessageService
   ) {}
 
   ngOnInit(): void {
@@ -122,34 +127,6 @@ export class DetailsComponent implements OnInit {
       comment: [null],
       statusNote: [null],
     });
-  }
-
-  openDialog2() {
-    const dialogRef = this.dialog.open(CreateNewPurchaseComponent, {
-      restoreFocus: false,
-      data: {
-        order: {},
-        canceledOrderSku: 'sku001',
-        canceledOrderAmount: '100tk',
-        selectedIds: this.selectedIds,
-      },
-    });
-    dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
-  }
-
-  openRecieved(id, recieved, index, poQty) {
-    const dialogRef = this.dialog.open(RecievedComponent, {
-      restoreFocus: false,
-      data: {
-        id: this.id,
-        productId: id,
-        index: index,
-        purchaseQuantity: poQty,
-        recieved: recieved,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
   }
 
   // view child create invoice
@@ -377,13 +354,53 @@ export class DetailsComponent implements OnInit {
   }
 
   // Quantity Recived
-  showModal(): void {
+  showModal(data, index): void {
     this.recivedQty = true;
-  }
-  recivedOk(): void {
-    this.recivedQty = false;
+    this.data = data;
+    this.index = index;
+    this.initRecieved();
   }
   recivedCancel(): void {
     this.recivedQty = false;
+    this.data = null;
+    this.index = null;
+  }
+
+
+
+  initRecieved() {
+    this.dataForm2 = this.fb.group({
+      recieved: [0],
+      message: [null],
+    });
+  }
+
+  onSubmit(){
+    let totalRecieved = this.data.recieved ?  this.data.recieved + this.dataForm2.value.recieved: this.dataForm2.value.recieved;
+    if(totalRecieved > this.data.purchaseQuantity){
+      this.msg.warning("Cannot recieve more than purchase quantity");
+      return
+    }
+    console.log("Product Info : ", this.data)
+    let finalData = {
+      _id: this.id,
+      productId: this.data.productData._id,
+      index: this.index,
+      recieved: this.dataForm2.value.recieved,
+      message: this.dataForm2.value.message,
+    }
+    this.editPurchaseRecieved(finalData);
+
+  }
+  editPurchaseRecieved(data){
+    console.log(data);
+    this.purchaseService.editRecieved(data)
+    .subscribe( res =>{
+      this.msg.success(res.message);
+      this.reloadService.needRefreshPurchase$();
+      this.recivedQty = false;
+    },err=>{
+      this.uiService.wrong(err.message);
+    })
   }
 }
