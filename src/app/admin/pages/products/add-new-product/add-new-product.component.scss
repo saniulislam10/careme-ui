@@ -3,7 +3,7 @@
 .mb15 {
   margin-bottom: 15px;
 }
-.page-header {
+.page_header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -18,13 +18,17 @@
       margin-right: 10px;
     }
   }
-  .header-action {
+  .header_action {
     display: flex;
     align-items: center;
     button {
       border: none;
       background: transparent;
       margin-left: 25px;
+    }
+    a{
+      margin: 0 10px;
+      color: #585858;
     }
   }
 }
@@ -101,6 +105,36 @@
     width: 80px;
     margin-left: 10px;
     font-weight: 600;
+    border: none;
+    background: transparent;
+  }
+}
+.varriant_area{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 50px 0;
+}
+.archive_area{
+  button{
+    margin-right: 10px;
+  }
+  .delete{
+    border: 1px solid red;
+
+  }
+}
+.form_btn{
+  button{
+    margin-left: 10px;
+  }
+}
+.input_group{
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px 0;
+  input{
+    flex: 1;
   }
 }
 // Old Css

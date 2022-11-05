@@ -24,6 +24,7 @@ import { OrderStatus } from 'src/app/enum/order-status';
   styleUrls: ['./invoice.component.scss'],
 })
 export class InvoiceComponent implements OnInit {
+
   // @ViewChild('invoice') invoiceElement!: ElementRef;
   @ViewChild('createReturn') createReturn: CreateReturnComponent;
   invoice: Invoice;
@@ -51,8 +52,6 @@ export class InvoiceComponent implements OnInit {
 
   returns: Return[] = [];
 
-
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private invoiceService: InvoiceService,
@@ -62,7 +61,7 @@ export class InvoiceComponent implements OnInit {
     private msg: NzMessageService,
     private fileUploadService: FileUploadService,
     private fb: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.subRouteOne = this.activatedRoute.paramMap.subscribe((param) => {
@@ -71,25 +70,23 @@ export class InvoiceComponent implements OnInit {
         this.getInvoice();
       }
     });
-
   }
 
-  onRefresh(){
+  onRefresh() {
     this.invoice = null;
     this.getInvoice();
   }
 
   initReturnForm() {
     this.dataForm = this.fb.group({
-      products: this.fb.array([])
+      products: this.fb.array([]),
     });
 
     this.products = this.dataForm.get('products') as FormArray;
   }
 
   newProduct(data) {
-
-    console.log("For return",data)
+    console.log('For return', data);
 
     let newProduct = this.fb.group({
       name: [data.name],
@@ -97,12 +94,12 @@ export class InvoiceComponent implements OnInit {
       sku: [data.sku],
       totalInvoicedQty: [data.quantity, Validators.required],
       returnedQty: [data.returnedQuantity],
-      quantity: [data.quantity-data.returnedQuantity, Validators.required],
+      quantity: [data.quantity - data.returnedQuantity, Validators.required],
       recievedQty: [0],
       recieved: [false],
       price: [data.price],
       tax: [data.tax],
-    })
+    });
     this.products.push(newProduct);
     this.checkValue();
     console.log(this.products);
@@ -116,7 +113,6 @@ export class InvoiceComponent implements OnInit {
   // get products() {
   //   return this.dataForm.get('products') as FormArray;
   // }
-
 
   public generatePDF(): void {
     this.spinner.show();
@@ -138,7 +134,7 @@ export class InvoiceComponent implements OnInit {
     this.invoiceService.getInvoiceById(this.id).subscribe(
       (res) => {
         this.invoice = res.data;
-        if(this.invoice.deliveryStatus === OrderStatus.DELIVERED){
+        if (this.invoice.deliveryStatus === OrderStatus.DELIVERED) {
           this.markDisabled = true;
         }
         this.getAllReturns(this.invoice.invoiceId);
@@ -151,19 +147,20 @@ export class InvoiceComponent implements OnInit {
     );
   }
 
-  getAllReturns(id){
-    this.returnService.getReturnByInvoiceId(id)
-    .subscribe(res => {
-      this.returns = res.data;
-    }, err=> {
-      this.msg.create('error', err.message)
-    })
+  getAllReturns(id) {
+    this.returnService.getReturnByInvoiceId(id).subscribe(
+      (res) => {
+        this.returns = res.data;
+      },
+      (err) => {
+        this.msg.create('error', err.message);
+      }
+    );
   }
   createReturnButton() {
     this.isVisible = true;
     this.invoice.products;
     this.setReturnProducts(this.invoice.products);
-
   }
 
   handleCancel(): void {
@@ -174,18 +171,19 @@ export class InvoiceComponent implements OnInit {
     console.log('Button ok clicked!');
     this.loading = true;
     this.placeReturn();
-
   }
 
   async fileChangeEvent(event: any) {
     this.file = (event.target as HTMLInputElement).files;
-    this.fileUploadService.uploadMultiImageOriginal(this.file)
-      .subscribe(res => {
+    this.fileUploadService.uploadMultiImageOriginal(this.file).subscribe(
+      (res) => {
         console.log(res.downloadUrls);
         this.msg.create('success', res.message);
-      }, error => {
+      },
+      (error) => {
         console.log(error);
-      });
+      }
+    );
   }
 
   changeEligibility() {
@@ -193,7 +191,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   placeReturn() {
-
     let returnId;
     let data = {
       invoiceId: this.invoice.invoiceId,
@@ -211,15 +208,14 @@ export class InvoiceComponent implements OnInit {
       refundEligible: this.checked,
       reason: this.reason,
       notes: this.notes,
-      images: this.images
-
-    }
-    this.returnService.placeReturn(data)
-      .subscribe(res => {
-        returnId = res.returnId
-        let message = res.message + ". Return Id: " + res.returnId;
+      images: this.images,
+    };
+    this.returnService.placeReturn(data).subscribe(
+      (res) => {
+        returnId = res.returnId;
+        let message = res.message + '. Return Id: ' + res.returnId;
         this.msg.success(message, {
-          nzDuration: 10000
+          nzDuration: 10000,
         });
         if (this.checked) {
           this.createRefund(returnId);
@@ -228,14 +224,15 @@ export class InvoiceComponent implements OnInit {
           this.loading = false;
           this.isVisible = false;
         }
-      }, err => {
+      },
+      (err) => {
         this.msg.create('error', err.message);
-      })
+      }
+    );
     return returnId;
   }
 
   createRefund(returnId) {
-
     let data: Refund = {
       invoiceId: this.invoice._id,
       returnId: returnId,
@@ -244,25 +241,26 @@ export class InvoiceComponent implements OnInit {
       products: this.returnProducts,
       paymentBy: this.paymentBy,
       paymentOptions: this.paymentOption,
-      phoneNo: this.phone
-    }
-    this.refundService.add(data)
-      .subscribe(res => {
-        console.log(res.message)
-        let message = res.message + ". Refund Id: " + res.refundId;
+      phoneNo: this.phone,
+    };
+    this.refundService.add(data).subscribe(
+      (res) => {
+        console.log(res.message);
+        let message = res.message + '. Refund Id: ' + res.refundId;
         this.msg.success(message, {
-          nzDuration: 10000
+          nzDuration: 10000,
         });
         this.onRefresh();
         this.loading = false;
         this.isVisible = false;
-      }, err => {
+      },
+      (err) => {
         this.msg.create('error', err.message, {
-          nzDuration: 5000
+          nzDuration: 5000,
         });
         this.loading = false;
-      })
-
+      }
+    );
   }
 
   setReturnProducts(products) {
@@ -277,57 +275,58 @@ export class InvoiceComponent implements OnInit {
   }
 
   getReturnProducts() {
-    return this.returnProducts
+    return this.returnProducts;
   }
 
-  onChangeQty(i, value, max, returnQty){
-    if(returnQty){
+  onChangeQty(i, value, max, returnQty) {
+    if (returnQty) {
       max = max - returnQty;
     }
 
-    if(value > max){
-      this.msg.create('warning','return quantity cannot be more than invoiced quantity');
-      this.products.controls[i].patchValue(
-        { quantity : max}
-      )
-    }else if (value < 0){
-      this.msg.create('warning','value cannot be less than 1');
-      this.products.controls[i].patchValue(
-        { quantity : 0}
-      )
+    if (value > max) {
+      this.msg.create(
+        'warning',
+        'return quantity cannot be more than invoiced quantity'
+      );
+      this.products.controls[i].patchValue({ quantity: max });
+    } else if (value < 0) {
+      this.msg.create('warning', 'value cannot be less than 1');
+      this.products.controls[i].patchValue({ quantity: 0 });
     }
     this.checkValue();
   }
 
-  checkValue(){
+  checkValue() {
     this.saveButtonDisable = false;
-    this.products.value.forEach(element => {
-      if(element.quantity === 0){
+    this.products.value.forEach((element) => {
+      if (element.quantity === 0) {
         this.saveButtonDisable = true;
       }
     });
   }
 
-  getRefundId(returnId){
-    this.refundService.getByReturnId(returnId)
-    .subscribe(res=>{
-      console.log(res.data);
-      return res.data.refundId;
-    }, err=> {
-      console.log(err);
-    })
+  getRefundId(returnId) {
+    this.refundService.getByReturnId(returnId).subscribe(
+      (res) => {
+        console.log(res.data);
+        return res.data.refundId;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
-  markDelivered(){
+  markDelivered() {
     this.invoice.deliveryStatus = OrderStatus.DELIVERED;
-    this.invoiceService.updateInvoiceById(this.invoice)
-    .subscribe(res => {
-      this.msg.success(res.message)
-      this.markDisabled = true;
-    }, err => {
-      this.msg.error(err.message)
-    }
-  )}
-
-
+    this.invoiceService.updateInvoiceById(this.invoice).subscribe(
+      (res) => {
+        this.msg.success(res.message);
+        this.markDisabled = true;
+      },
+      (err) => {
+        this.msg.error(err.message);
+      }
+    );
+  }
 }
