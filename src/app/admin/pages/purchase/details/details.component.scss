@@ -1,5 +1,13 @@
 @import "src/theme/variables";
 
+.text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 // New Css
 .w100 {
   width: 100px;
@@ -178,9 +186,9 @@
   }
 }
 .table-samary {
-  nz-layout {
-    max-height: 100vh;
-  }
+  height: auto;
+  border: 1px solid #1b75bb;
+  margin-bottom: 20px;
 }
 .action_btn {
   i {

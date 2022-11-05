@@ -26,14 +26,6 @@
                       <input nz-input formControlName="manufacturer" placeholder="Bangladesh, China, India" />
                     </td>
                   </tr>
-                  <tr>
-                    <td>Shipping Charge</td>
-                    <td style="width: 15px; text-align: center">:</td>
-                    <td>
-                      <input nz-input type="number" digitOnly formControlName="purchaseShippingCharge"
-                        placeholder="0.00" />
-                    </td>
-                  </tr>
                 </tbody>
               </table>
             </div>
@@ -50,13 +42,6 @@
                       </nz-select>
                     </td>
                   </tr>
-                  <tr>
-                    <td>Supplier Link</td>
-                    <td style="width: 15px; text-align: center">:</td>
-                    <td>
-                      <input nz-input type="link" formControlName="supplier_link" placeholder="https://" />
-                    </td>
-                  </tr>
                 </tbody>
               </table>
             </div>
@@ -68,9 +53,8 @@
         <div class="serarch_left">
           <nz-affix (click)="onClickSearchArea($event)">
             <form class="form-field" #searchForm="ngForm">
-              <input #searchInput nz-input id="searchInput"  type="text"
-                placeholder="Search in caremebd..." (focus)="handleFocus($event)" name="searchTerm" autocomplete="off"
-                ngModel required />
+              <input #searchInput nz-input id="searchInput" type="text" placeholder="Search in caremebd..."
+                (focus)="handleFocus($event)" name="searchTerm" autocomplete="off" ngModel required />
               <div *ngIf="isLoading" class="sk-fading-circle">
                 <div class="sk-circle1 sk-circle"></div>
                 <div class="sk-circle2 sk-circle"></div>
@@ -81,29 +65,10 @@
                 <div class="sk-circle7 sk-circle"></div>
               </div>
             </form>
-          </nz-affix>
-          <ul style="width: 400px" id="auto-suggestion" class="auto-complete-box"
-            [ngClass]="searchProducts.length > 0 && isOpen ? 'active' : ''">
-            <div *ngFor="let data of searchProducts; let i = index" style="display: flex">
-              <li *ngIf="!data.hasVariant" class="list-view" (click)="onSelectItem(data)">
-                <img class="img-thumb" [src]="
-                      data.images && data.images.length > 0
-                        ? data.images[0]
-                        : '/assets/images/placeholder/test.png'
-                    " [alt]="data?.productName" />
-                <div class="desc">
-                  <h3>{{ data?.name }}</h3>
-                </div>
-                <div class="price">
-                  <h5>৳{{ data.sellingPrice }}</h5>
-                  <p class="discount">
-
-                  </p>
-                </div>
-              </li>
-              <div *ngIf="data.hasVariant">
-                <li *ngFor="let item of data.variantFormArray; let i = index" class="list-view"
-                  (click)="onSelectItem(data, i)">
+            <ul style="width: 400px" id="auto-suggestion" class="auto-complete-box"
+              [ngClass]="searchProducts.length > 0 && isOpen ? 'active' : ''">
+              <div *ngFor="let data of searchProducts; let i = index" style="display: flex">
+                <li *ngIf="!data.hasVariant" class="list-view" (click)="onSelectItem(data)">
                   <img class="img-thumb" [src]="
                         data.images && data.images.length > 0
                           ? data.images[0]
@@ -113,62 +78,79 @@
                     <h3>{{ data?.name }}</h3>
                   </div>
                   <div class="price">
-                    <h5>{{ item.variantSku }}</h5>
+                    <h5>৳{{ data.sellingPrice }}</h5>
                     <p class="discount">
+
                     </p>
                   </div>
                 </li>
+                <div *ngIf="data.hasVariant">
+                  <li *ngFor="let item of data.variantFormArray; let i = index" class="list-view"
+                    (click)="onSelectItem(data, i)">
+                    <img class="img-thumb" [src]="
+                          data.images && data.images.length > 0
+                            ? data.images[0]
+                            : '/assets/images/placeholder/test.png'
+                        " [alt]="data?.productName" />
+                    <div class="desc">
+                      <h3>{{ data?.name }}</h3>
+                    </div>
+                    <div class="price">
+                      <h5>{{ item.variantSku }}</h5>
+                      <p class="discount">
+                      </p>
+                    </div>
+                  </li>
+                </div>
               </div>
-            </div>
-          </ul>
+            </ul>
+          </nz-affix>
         </div>
       </div>
 
       <div class="order-table">
-        <nz-table [nzData]="products">
+        <nz-table [nzData]="[products ? products : [] ]">
           <thead>
             <tr>
-              <th >Image</th>
-              <th >Item Details</th>
-              <th >Unit Cost Price</th>
-              <th >PO Quantity</th>
-              <th >Tax(%)</th>
-              <th >Amount</th>
-              <th >Remove</th>
+              <th>Image</th>
+              <th>Item Details</th>
+              <th>Unit Cost Price</th>
+              <th>PO Quantity</th>
+              <th>Tax(%)</th>
+              <th>Amount</th>
+              <th>Remove</th>
             </tr>
           </thead>
-          <tbody formArrayName="products">
-            <tr *ngFor="let data of products.controls; let a = index" [formGroupName]="a">
-              <td>
-                <img [src]="'/assets/images/placeholder/test.png'" [alt]="data.value.productData.name" />
+          <tbody>
+            <tr formArrayName="products" *ngFor="let data of products.controls; let a = index">
+              <td [formGroupName]="a">
+                <img [src]="'/assets/images/placeholder/test.png'" [alt]="data?.value?.productData.name" />
               </td>
-              <td>
-                <h3>{{ data.value.productData.name }}</h3>
-                <p>SKU: {{ data.value.sku }}</p>
+              <td [formGroupName]="a">
+                <h3>{{ data?.value?.productData.name }}</h3>
+                <p>SKU: {{ data?.value.sku }}</p>
               </td>
-              <td>
+              <td [formGroupName]="a">
                 <mat-form-field appearance="outline" class="form-field">
-                  <input matInput type="number" (change)="calculateAmount(a)" formControlName="purchasePrice" />
+                  <input matInput type="number" formControlName="purchasePrice" />
                 </mat-form-field>
               </td>
-              <td>
+              <td [formGroupName]="a">
                 <mat-form-field appearance="outline" class="form-field">
-                  <input matInput type="number" (change)="calculateAmount(a)" formControlName="purchaseQuantity" />
+                  <input matInput type="number" formControlName="purchaseQuantity" />
                 </mat-form-field>
               </td>
-              <td>
+              <td [formGroupName]="a">
                 <mat-form-field appearance="outline" class="form-field">
-                  <input matInput type="number" (change)="calculateAmount(a)" formControlName="purchaseTax"
-                    placeholder="percent(%)" />
+                  <input matInput type="number" formControlName="purchaseTax" placeholder="percent(%)" />
                 </mat-form-field>
               </td>
-              <td>
-                <span>{{ data?.value?.amount }} Tk</span>
+              <td [formGroupName]="a">
+                <span>{{ calculateAmount(a) }} Tk</span>
               </td>
-              <td>
-                <mat-icon (click)="delete(i)"><i class="fa-solid fa-circle-minus"></i></mat-icon>
+              <td [formGroupName]="a">
+                <mat-icon (click)="delete(a)"><i class="fa-solid fa-circle-minus"></i></mat-icon>
               </td>
-
             </tr>
           </tbody>
         </nz-table>
@@ -181,7 +163,7 @@
                 <h3>Sub Total</h3>
               </div>
               <div class="total-price">
-                <h4>{{ calculateSubTotal() }} TK</h4>
+                <h4>{{ calculateSubTotal }} TK</h4>
               </div>
             </li>
             <li>
