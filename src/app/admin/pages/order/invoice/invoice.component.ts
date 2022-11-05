@@ -24,7 +24,9 @@ import { OrderStatus } from 'src/app/enum/order-status';
   styleUrls: ['./invoice.component.scss'],
 })
 export class InvoiceComponent implements OnInit {
-
+  shippingCost= 120;
+  invPaymentRecord= 1;
+  invWriteOff= 0;
   // @ViewChild('invoice') invoiceElement!: ElementRef;
   @ViewChild('createReturn') createReturn: CreateReturnComponent;
   invoice: Invoice;

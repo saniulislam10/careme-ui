@@ -127,7 +127,7 @@
   }
 }
 .invoice_action_btn{
-  background: #f7f7f7;
+  background: #565656;
   display: flex;
   ul{
     margin: 0;
@@ -139,14 +139,16 @@
       float: left;
     }
     button{
+      color: #e8e8e8;
       i{
         font-size: 20px;
         margin-right: 5px;
+        color: #e8e8e8;
       }
     }
     li:hover{
       button{
-        background: #dfdffd;
+        background: #319f21;
       }
     }
     li:last-child{

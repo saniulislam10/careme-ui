@@ -159,7 +159,7 @@
                       <tr>
                         <td>BALANCE DUE</td>
                         <td>:</td>
-                        <td>{{ invoice?.subTotal + 120 }} TK</td>
+                        <td>{{ invoice?.subTotal }} TK</td>
                       </tr>
                     </tbody>
                   </table>
@@ -211,11 +211,11 @@
                       <ul>
                         <li>
                           <h3>Subtotal</h3>
-                          <h3>4555.00 TK</h3>
+                          <h3>{{ invoice?.subTotal - shippingCost }} TK</h3>
                         </li>
                         <li>
                           <span>Shipping</span>
-                          <span>120.00 TK</span>
+                          <span>{{shippingCost  }} TK</span>
                         </li>
                         <li>
                           <span>Adjustment</span>
@@ -225,7 +225,7 @@
                           <nz-divider style="margin: 5px 0"></nz-divider>
                         </li>
                         <li>
-                          <h2>Total: 4555 TK</h2>
+                          <h2>Total: {{ invoice?.subTotal }} TK</h2>
                         </li>
                         <li>
                           <span>Payment Record Amount</span>
@@ -239,7 +239,7 @@
                           <nz-divider style="margin: 5px 0"></nz-divider>
                         </li>
                         <li>
-                          <h2>Balance Due: 4555 TK</h2>
+                          <h2>Balance Due: {{ invoice?.subTotal }} TK</h2>
                         </li>
                       </ul>
                     </nz-card>
@@ -342,7 +342,7 @@
           <div class="invoice_logo_header_right">
             <h1>{{ invoice?.invoiceId }}</h1>
             <p class="invoice_balance">Balance Due</p>
-            <p class="invoie_bdt">BDT{{ invoice?.subTotal + 120 }}</p>
+            <p class="invoie_bdt">BDT{{ invoice?.subTotal + shippingCost }}</p>
           </div>
         </div>
 
