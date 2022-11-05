@@ -24,7 +24,7 @@ export interface Product {
   totalRatings?: number;
   totalAnsweredQuestions?: number;
   brand: string | any;
-  vendor?: string;
+  vendor?: string | any;
   canPartialPayment?: boolean;
   partialPaymentType?: number;
   partialPayment?: number;
@@ -54,4 +54,9 @@ export interface Product {
   expand?: boolean;
   canReturn: boolean;
   returnPeriod?: number;
+  continueSelling?: boolean;
+  searchPageTitle?: string;
+  searchPageDescription?: string;
+  searchPageUrl?: string;
+  tags?: string | any;
 }

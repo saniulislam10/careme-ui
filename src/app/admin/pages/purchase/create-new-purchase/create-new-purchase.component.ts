@@ -1,3 +1,4 @@
+import { RecievedComponent } from './../recieved/recieved.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Admin } from './../../../../interfaces/admin';
 import { AdminService } from 'src/app/services/admin.service';
@@ -49,6 +50,8 @@ export class CreateNewPurchaseComponent implements OnInit {
   clickActive: any[] = [[]];
   today = new Date();
   ponewVisible = true;
+  notAllowed = false;
+  status : number = 0;
 
   private subRouteOne?: Subscription;
   // purchasedProducts: any[] = [];
@@ -109,6 +112,7 @@ export class CreateNewPurchaseComponent implements OnInit {
     this.purchaseService.getById(id).subscribe(
       (res) => {
         this.dataForm.patchValue(res.data);
+        this.status = res.data.status;
         let products = res.data.products;
         for (let i = 0; i < products.length; i++) {
           this.onSelectItem(products[i].productData, null, products[i]);
@@ -122,6 +126,7 @@ export class CreateNewPurchaseComponent implements OnInit {
 
 
   newProduct(data, index?: number, purchaseData?: any): FormGroup {
+    console.log(data);
     if (purchaseData) {
       return this.fb.group({
         productData: data,
@@ -133,6 +138,7 @@ export class CreateNewPurchaseComponent implements OnInit {
         amount: [purchaseData.amount],
       });
     } else if (index >= 0) {
+
       return this.fb.group({
         productData: data,
         sku: data.variantFormArray[index].variantSku,
@@ -173,7 +179,6 @@ export class CreateNewPurchaseComponent implements OnInit {
 
     if (this.dataForm.invalid) {
       this.uiService.wrong('Please complete all the required fields');
-
       return;
     }
     if (this.dataForm.value.products.length === 0) {
@@ -181,6 +186,19 @@ export class CreateNewPurchaseComponent implements OnInit {
       return;
     }
 
+    if(this.id){
+      this.dataForm.value.products.forEach(element => {
+        if(element.recieved > element.purchaseQuantity){
+          this.msg.warning("Purchase Quantity can not be less than recieved quantity");
+          this.notAllowed = true;
+        }
+      });
+    }
+    if(this.notAllowed){
+      this.notAllowed = false;
+      return
+    }
+    console.log("Purchase Status", this.dataForm.value);
     let data: Purchase = {
       reference: this.dataForm.value.reference,
       dateTime: this.dataForm.value.dateTime,
@@ -190,7 +208,7 @@ export class CreateNewPurchaseComponent implements OnInit {
       supplier_reference: this.dataForm.value.supplier_reference,
       products: this.dataForm.value.products,
       purchaseShippingCharge: this.dataForm.value.purchaseShippingCharge,
-      status: PurchaseStatus.DRAFT,
+      status: this.status ? this.status : PurchaseStatus.DRAFT,
       recieved: 0,
       adjustmentPrice: this.dataForm.value.adjustmentPrice,
       comments: null,

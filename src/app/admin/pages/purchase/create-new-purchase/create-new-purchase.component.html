@@ -116,6 +116,7 @@
               <th>Item Details</th>
               <th>Unit Cost Price</th>
               <th>PO Quantity</th>
+              <th>PO Recieved</th>
               <th>Tax(%)</th>
               <th>Amount</th>
               <th>Remove</th>
@@ -124,31 +125,28 @@
           <tbody>
             <tr formArrayName="products" *ngFor="let data of products.controls; let a = index">
               <td [formGroupName]="a">
-                <img [src]="'/assets/images/placeholder/test.png'" [alt]="data?.value?.productData.name" />
+                <img [src]="data?.value?.productData.images[0]" [alt]="data?.value?.productData.name" />
               </td>
               <td [formGroupName]="a">
                 <h3>{{ data?.value?.productData.name }}</h3>
                 <p>SKU: {{ data?.value.sku }}</p>
               </td>
               <td [formGroupName]="a">
-                <mat-form-field appearance="outline" class="form-field">
-                  <input matInput type="number" formControlName="purchasePrice" />
-                </mat-form-field>
+                  <input nz-input type="number" formControlName="purchasePrice" />
               </td>
               <td [formGroupName]="a">
-                <mat-form-field appearance="outline" class="form-field">
-                  <input matInput type="number" formControlName="purchaseQuantity" />
-                </mat-form-field>
+                  <input nz-input type="number" formControlName="purchaseQuantity" />
               </td>
               <td [formGroupName]="a">
-                <mat-form-field appearance="outline" class="form-field">
+                  <input nz-input type="number" formControlName="recieved" readonly/>
+              </td>
+              <td [formGroupName]="a">
                   <input matInput type="number" formControlName="purchaseTax" placeholder="percent(%)" />
-                </mat-form-field>
               </td>
               <td [formGroupName]="a">
                 <span>{{ calculateAmount(a) }} Tk</span>
               </td>
-              <td [formGroupName]="a">
+              <td [formGroupName]="a" *ngIf="data.value.recieved === 0">
                 <mat-icon (click)="delete(a)"><i class="fa-solid fa-circle-minus"></i></mat-icon>
               </td>
             </tr>

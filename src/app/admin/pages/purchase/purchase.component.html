@@ -87,8 +87,8 @@
                   <button nz-button *ngIf="data?.status === 0" (click)="showDeleteConfirm(data?._id)">
                     <i class="las la-trash"></i>
                   </button>
-                  <button nz-button>
-                    <i class="las la-edit"></i>
+                  <button nz-button [routerLink]="['edit', data._id]">
+                    <i class="las la-edit" ></i>
                   </button>
                 </td>
               </tr>

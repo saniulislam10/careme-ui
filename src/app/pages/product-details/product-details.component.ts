@@ -1,3 +1,4 @@
+import { Title, Meta } from '@angular/platform-browser';
 import { Cart } from './../../interfaces/cart';
 import { BuyNowForNewUserComponent } from './buy-now-for-new-user/buy-now-for-new-user.component';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -23,12 +24,13 @@ import { User } from 'src/app/interfaces/user';
 import { RegistrationDialogComponent } from '../../shared/dialog-view/registration-dialog/registration-dialog.component';
 import { UtilsService } from '../../services/utils.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Product } from 'src/app/interfaces/product';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
-  providers: [ProductStatusPipe]
+  providers: [ProductStatusPipe],
 })
 export class ProductDetailsComponent implements OnInit {
   @ViewChild('addToCartPup') addToCart: AddToCartPopupComponent;
@@ -39,7 +41,7 @@ export class ProductDetailsComponent implements OnInit {
   defaultVariantSku: string;
   variantSelected = false;
   allTypeVariantSelected = false;
-  displaySku : string;
+  displaySku: string;
 
   clickActive: boolean[][] = [[]];
   star = 4.3;
@@ -52,7 +54,7 @@ export class ProductDetailsComponent implements OnInit {
   private subDataOne?: Subscription;
   variantOptions = [];
   slug: any;
-  product: any = null;
+  product: Product = null;
   thumbnail: any;
   sizeChart: SizeChart[] = [];
   images: any[] = [];
@@ -80,14 +82,12 @@ export class ProductDetailsComponent implements OnInit {
 
   selectedRow: number;
   selectedColumn: number;
-  selectedVarientName: string
+  selectedVarientName: string;
   isUserAuth: boolean;
   globalDisplay = true;
   defaultVariantSelected: boolean;
   display: boolean = true;
   selectedOptions: Number[] = [];
-
-
 
   constructor(
     // private carouselCntrService: CarouselCntrlService,
@@ -104,8 +104,10 @@ export class ProductDetailsComponent implements OnInit {
     private productStatusPipe: ProductStatusPipe,
     private dialog: MatDialog,
     private searchService: SearchService,
-    // private utilsService: UtilsService
-  ) { }
+    private title: Title,
+    private meta: Meta
+  ) // private utilsService: UtilsService
+  {}
 
   ngOnInit(): void {
     // GET ID FORM PARAM
@@ -118,41 +120,34 @@ export class ProductDetailsComponent implements OnInit {
         this.data = this.searchService.getSearchProduct();
         this.product = this.data;
         // console.log("product", this.product);
-
       }
     });
 
     // this.getStockControl();
-    this.reloadService.refreshUser$
-      .subscribe(() => {
-        this.isUserAuth = this.userService.getUserStatus();
-        // this.checkCartItems();
-        this.getUser();
-        this.getCartItemList();
-      })
-    this.reloadService.refreshCart$
-      .subscribe(() => {
-        this.getCartItemList();
-      })
+    this.reloadService.refreshUser$.subscribe(() => {
+      this.isUserAuth = this.userService.getUserStatus();
+      // this.checkCartItems();
+      this.getUser();
+      this.getCartItemList();
+    });
+    this.reloadService.refreshCart$.subscribe(() => {
+      this.getCartItemList();
+    });
     this.isUserAuth = this.userService.getUserStatus();
     this.getUser();
     this.getCartItemList();
-
   }
 
   dateCalculationFrom(data: any) {
     const d = new Date();
     this.deliveryDateFrom = new Date(d.setDate(d.getDate() + data));
-    return this.deliveryDateFrom
+    return this.deliveryDateFrom;
   }
   dateCalculationTo(data: any) {
     const d = new Date();
     this.deliveryDateTo = new Date(d.setDate(d.getDate() + data));
-    return this.deliveryDateTo
+    return this.deliveryDateTo;
   }
-
-
-
 
   private getUser() {
     this.userDataService.getLoggedInUserInfo().subscribe(
@@ -196,8 +191,6 @@ export class ProductDetailsComponent implements OnInit {
       .getSingleProductBySlug(this.slug)
       .subscribe(
         (res) => {
-          console.log(res);
-
           if (
             res.data.status === ProductStatus.ACTIVE ||
             res.data.status === ProductStatus.STOCKOUT ||
@@ -205,6 +198,16 @@ export class ProductDetailsComponent implements OnInit {
           ) {
             this.spinner.hide();
             this.product = res.data;
+            this.title.setTitle(this.product.searchPageTitle);
+            this.meta.addTag({
+              name: 'description',
+              content: this.product.searchPageDescription,
+            });
+            this.meta.addTag({ name: 'keywords', content: this.product.tags });
+            this.meta.addTag({ name: 'keywords', content: this.product.brand });
+            this.product.productType.forEach((m) => {
+              this.meta.addTag({ name: 'keywords', content: m.name });
+            });
             this.globalContinue = this.product.continueSelling;
             this.globalQuantity = this.product.quantity;
 
@@ -251,7 +254,7 @@ export class ProductDetailsComponent implements OnInit {
 
   // get size chart for the product
   getSizeChart() {
-    let parent = this.product.parentCategory;
+    let parent = this.product.productType;
     this.sizeChartService
       .getSizeChartByParentCategoryId(parent)
       .subscribe((res) => {
@@ -262,7 +265,6 @@ export class ProductDetailsComponent implements OnInit {
   checkCartItems(selectedvarient?) {
     if (this.isUserAuth) {
       for (const data of this.carts) {
-
         if (this.product._id === data.product?._id) {
           if (this.product.hasVariant === true) {
             if (selectedvarient.variantSku === data.variant[0]?.variantSku) {
@@ -288,7 +290,6 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
 
-
   //cart length
   private getCartItemList() {
     this.cartService.getCartItemList().subscribe(
@@ -311,45 +312,53 @@ export class ProductDetailsComponent implements OnInit {
   setDataForProduct() {
     if (this.product) {
       if (this.product.hasVariant === true) {
-        console.log("Set variant image", this.product.variantFormArray[0].image)
+        console.log(
+          'Set variant image',
+          this.product.variantFormArray[0].image
+        );
         this.thumbnail = this.product.variantFormArray[0].image;
         this.variantSplit();
         this.variantSku = this.product.sku;
         // console.log(this.variantSku);
         let variantInfo = this.product.variantFormArray;
-        for (let i=0; i< variantInfo.length; i++){
-          if(variantInfo[i].variantQuantity > 0 || variantInfo[i].variantContinueSelling){
-            console.log("loop", i);
+        for (let i = 0; i < variantInfo.length; i++) {
+          if (
+            variantInfo[i].variantQuantity > 0 ||
+            variantInfo[i].variantContinueSelling
+          ) {
+            console.log('loop', i);
 
-            break
+            break;
           }
         }
         // console.log(this.product.variantFormArray[0]);
-
       }
       this.getSizeChart();
       this.initializeArrays();
-      if(this.product.hasVariant){
+      if (this.product.hasVariant) {
         let variantInfo = this.product.variantFormArray;
-        for (let i=0; i< variantInfo.length; i++){
-          if(variantInfo[i].variantQuantity > 0 || variantInfo[i].variantContinueSelling){
-            console.log("loop", i);
+        for (let i = 0; i < variantInfo.length; i++) {
+          if (
+            variantInfo[i].variantQuantity > 0 ||
+            variantInfo[i].variantContinueSelling
+          ) {
+            console.log('loop', i);
             this.selectDefaultVariant(variantInfo[i].variantSku);
 
-            break
+            break;
           }
         }
       }
     }
   }
 
-  selectDefaultVariant(variantSku){
-    console.log("partial sku : ",variantSku);
+  selectDefaultVariant(variantSku) {
+    console.log('partial sku : ', variantSku);
     let sku = variantSku.split('-')[1];
-    for(let i=0; i< sku.length; i++){
-      console.log(i,Number(sku[i]))
+    for (let i = 0; i < sku.length; i++) {
+      console.log(i, Number(sku[i]));
       this.defaultVariantSelected = true;
-      this.selectedVariant(i,Number(sku[i]));
+      this.selectedVariant(i, Number(sku[i]));
     }
   }
 
@@ -358,17 +367,18 @@ export class ProductDetailsComponent implements OnInit {
    */
 
   addToCarts() {
-
     const data: Cart = {
       product: this.product?._id,
       selectedQty: this.selectedQty,
       variant: this.selectedVariantData,
-      vendor: this.product.hasVariant ? this.selectedVariantData.variantVendorName.name : this.product.vendor.name,
+      vendor: this.product.hasVariant
+        ? this.selectedVariantData.variantVendorName.name
+        : this.product.vendor.name,
       selectedGlobalVariants: this.globalQuantity ? this.globalQuantity : null,
       deliveryDateFrom: this.deliveryDateFrom,
       deliveryDateTo: this.deliveryDateTo,
     };
-    console.log("add to cart----------", data);
+    console.log('add to cart----------', data);
 
     if (this.userService.getUserStatus()) {
       this.addItemToCartDB(data);
@@ -394,34 +404,34 @@ export class ProductDetailsComponent implements OnInit {
   activeCartBtn() {
     if (!this.isUserAuth) {
       this.openRegistrationDialog();
-      return
+      return;
     }
-    this.cartService.getCartItemType()
-      .subscribe(res => {
-        let type = res.data;
-        if (type === 'request') {
-          this.msg.warning("Cannot add both regular and request product together in cart");
-          return
-        } else {
-          if (this.product?.hasVariant === true) {
-            if (this.clickVariant === true) {
-              this.addToCarts();
-              this.openCartDialog();
-            } else {
-              this.msg.warning('Please choose a variant first');
-            }
+    this.cartService.getCartItemType().subscribe((res) => {
+      let type = res.data;
+      if (type === 'request') {
+        this.msg.warning(
+          'Cannot add both regular and request product together in cart'
+        );
+        return;
+      } else {
+        if (this.product?.hasVariant === true) {
+          if (this.clickVariant === true) {
+            this.addToCarts();
+            this.openCartDialog();
           } else {
-            if (this.isUserAuth) {
-              // this.btnActive = true;
-              this.addToCarts();
-              this.openCartDialog();
-            } else {
-              this.openRegistrationDialog();
-            }
+            this.msg.warning('Please choose a variant first');
+          }
+        } else {
+          if (this.isUserAuth) {
+            // this.btnActive = true;
+            this.addToCarts();
+            this.openCartDialog();
+          } else {
+            this.openRegistrationDialog();
           }
         }
       }
-      )
+    });
 
     // this.addToCart.showPopUp();
   }
@@ -434,20 +444,18 @@ export class ProductDetailsComponent implements OnInit {
         selectedQty: this.selectedQty,
         price: this.selectedVariantData
           ? this.selectedVariantData.variantPrice
-          : this.product.sellingPrice
+          : this.product.sellingPrice,
       },
       // width: '100%',
       // height: '100%',
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      this.selectedVariant(this.selectedRow, this.selectedColumn)
+      this.selectedVariant(this.selectedRow, this.selectedColumn);
 
       // console.clear()
       // console.log("relaoadd")
-
     });
-
   }
 
   /**
@@ -461,8 +469,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   selectedVariant(row: number, col: number) {
-
-    this.selectedOptions[row]=col;
+    this.selectedOptions[row] = col;
     this.selectedRow = row;
     this.selectedColumn = col;
     this.variantSelected = true;
@@ -513,10 +520,7 @@ export class ProductDetailsComponent implements OnInit {
       this.globalContinue = this.selectedVariantData.variantContinueSelling;
       this.globalDisplay = this.selectedVariantData.variantDisplay;
     }
-
   }
-
-
 
   initializeArrays() {
     //  for making buttons clickable
@@ -533,18 +537,21 @@ export class ProductDetailsComponent implements OnInit {
     if (this.globalQuantity) {
       // If you have global quantity depends on product variants have or not
       if (this.globalContinue) {
-        if (this.globalQuantity > 0 && this.globalQuantity <= this.selectedQty) {
+        if (
+          this.globalQuantity > 0 &&
+          this.globalQuantity <= this.selectedQty
+        ) {
           this.msg.warning('Cannot add more than stock quantity');
-          return
+          return;
         } else {
           this.selectedQty += 1;
         }
       } else if (this.globalQuantity > this.selectedQty) {
         this.selectedQty += 1;
-        return
+        return;
       } else {
         this.msg.warning('Cannot add more than stock quantity');
-        return
+        return;
       }
     } else {
       // If you have no global quantity
@@ -617,13 +624,13 @@ export class ProductDetailsComponent implements OnInit {
 
   get canCOD() {
     if (this.product?.canPartialPayment !== true) {
-      return "Yes";
+      return 'Yes';
     } else if (this.globalQuantity !== 0) {
-      return "Yes";
+      return 'Yes';
     } else if (this.globalContinue !== true) {
-      return "Yes";
+      return 'Yes';
     } else {
-      return "No";
+      return 'No';
     }
   }
 
@@ -634,20 +641,19 @@ export class ProductDetailsComponent implements OnInit {
     console.log(this.allTypeVariantSelected);
 
     if (length === 1) {
-      this.displaySku = this.product.sku + "-" + col;
+      this.displaySku = this.product.sku + '-' + col;
     } else {
       if (this.allTypeVariantSelected) {
         this.displaySku = this.product.sku + '-';
 
         for (let i = 0; i < this.sku.length; i++) {
-          if(i !== row){
+          if (i !== row) {
             this.displaySku += this.sku[i];
-          }else{
+          } else {
             this.displaySku += col;
           }
         }
-      }
-      else if (this.variantSelected) {
+      } else if (this.variantSelected) {
         if (this.sku[row] !== undefined) {
         } else {
           this.displaySku = this.product.sku + '-';
@@ -659,11 +665,8 @@ export class ProductDetailsComponent implements OnInit {
             }
           }
         }
-
-      }
-      else {
+      } else {
         // console.log("variant is not selected");
-
       }
     }
     let selectedVariantData;
@@ -675,32 +678,35 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     if (selectedVariantData && selectedVariantData.variantDisplay) {
-      if (selectedVariantData?.variantQuantity === 0 && selectedVariantData?.variantContinueSelling !== true ) {
+      if (
+        selectedVariantData?.variantQuantity === 0 &&
+        selectedVariantData?.variantContinueSelling !== true
+      ) {
         this.display = false;
-        return false
+        return false;
       } else {
         this.display = true;
         return true;
       }
     } else {
       this.display = false;
-      return false
-    }
-  }
-
-  getButtonStatus(row,col){
-    if(this.clickActive[row][col]){
-      return true
-    }else{
-      return false
-    }
-  }
-
-  getStockStatus(qty){
-    if(qty <= 0 && this.display !== true){
       return false;
-    }else{
-      return true
+    }
+  }
+
+  getButtonStatus(row, col) {
+    if (this.clickActive[row][col]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getStockStatus(qty) {
+    if (qty <= 0 && this.display !== true) {
+      return false;
+    } else {
+      return true;
     }
   }
 
