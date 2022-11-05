@@ -68,13 +68,13 @@
               <div class="invoice_action_btn">
                 <ul>
                   <li>
-                    <button nz-button nzType="text">
+                    <button nz-button nzType="text" (click)="showPayment()">
                       <i class="las la-file-invoice-dollar"></i>
                       Payment
                     </button>
                   </li>
                   <li>
-                    <button nz-button nzType="text">
+                    <button nz-button nzType="text" (click)="showWriteOff()">
                       <i class="las la-hand-holding-usd"></i>
                       Write Off
                     </button>
@@ -188,7 +188,7 @@
                             nz-image
                             style="max-width: 100%"
                             nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                            alt=""
+                            alt="{{data.name}}"
                           />
                         </td>
                         <td>
@@ -252,6 +252,20 @@
     </nz-layout>
   </nz-card>
 </div>
+
+<!--Payment-->
+<nz-modal [(nzVisible)]="paymentVisible" nzTitle="The first Modal" (nzOnCancel)="paymentCancel()" (nzOnOk)="paymentOk()">
+  <ng-container *nzModalContent>
+    <p>Payment</p>
+  </ng-container>
+</nz-modal>
+
+<!--Write Off-->
+<nz-modal [(nzVisible)]="writeOff" nzTitle="The first Modal" (nzOnCancel)="writeoffCancel()" (nzOnOk)="writeoffOk()">
+  <ng-container *nzModalContent>
+    <p>Write Off</p>
+  </ng-container>
+</nz-modal>
 
 <ng-template #invRightExtra>
   <nz-button-group class="inv_print">

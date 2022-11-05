@@ -331,4 +331,33 @@ export class InvoiceComponent implements OnInit {
       }
     );
   }
+
+  // Payment
+  paymentVisible = false;
+  showPayment(): void {
+    this.paymentVisible = true;
+  }
+  paymentOk(): void {
+    console.log('Button ok clicked!');
+    this.paymentVisible = false;
+  }
+  paymentCancel(): void {
+    console.log('Button cancel clicked!');
+    this.paymentVisible = false;
+  }
+
+
+  // Payment
+  writeOff = false;
+  showWriteOff(): void {
+    this.writeOff = true;
+  }
+  writeoffOk(): void {
+    console.log('Button ok clicked!');
+    this.writeOff = false;
+  }
+  writeoffCancel(): void {
+    console.log('Button cancel clicked!');
+    this.writeOff = false;
+  }
 }
