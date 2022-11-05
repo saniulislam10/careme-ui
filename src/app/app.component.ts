@@ -54,11 +54,10 @@ export class AppComponent implements OnInit {
 
   private updateMetaData() {
     // Title
-    this.title.setTitle('Careme Global');
+    this.title.setTitle('Careme');
 
     // Meta
-    this.meta.addTag({name: 'author', content: 'Careme Global'});
-    this.meta.addTag({name: 'author', content: 'Careme Global'});
+    this.meta.addTag({name: 'author', content: 'Careme'});
     this.meta.addTag({name: 'copyright', content: 'Careme Global'});
     this.meta.addTag({name: 'og:locale', content: 'en_US'});
     // Open Graph

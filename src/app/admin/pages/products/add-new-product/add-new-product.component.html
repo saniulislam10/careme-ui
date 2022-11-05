@@ -596,16 +596,18 @@
           <nz-collapse nzGhost class="search_engine_edit">
             <nz-collapse-panel nzHeader="Edit" [nzExpandedIcon]="expandedIcon">
               <label for="producttitle">Page title</label>
-              <input id="producttitle" nz-input placeholder="Product Title" />
+              <input id="producttitle" nz-input formControlName="searchPageTitle" placeholder="Product Title" />
               <label for="productdes">Page title</label>
               <textarea
                 nz-input
                 id="productdes"
+                formControlName="searchPageDescription"
                 placeholder="Product description"
                 [nzAutosize]="{ minRows: 3, maxRows: 5 }"
               ></textarea>
               <label for="producturl">URL</label>
-              <input id="producturl" nz-input placeholder="/product-title" />
+              <input id="producturl" nz-input placeholder="/product-title"
+              formControlName="searchPageUrl" />
               <button nz-button nzType="default">Save</button>
             </nz-collapse-panel>
           </nz-collapse>
