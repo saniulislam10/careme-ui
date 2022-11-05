@@ -91,16 +91,19 @@
 }
 .invoice_details_body {
   padding: 15px;
-  h3{
+  h3 {
     font-weight: 500;
     margin: 0 0 10px 0 !important;
   }
+}
+.invoice_details_info {
   table {
     margin: 0 0 20px 0;
   }
   tr > td {
     line-height: 25px;
   }
+
   tr > td:first-child {
     width: 110px;
   }
@@ -108,7 +111,9 @@
     padding-left: 15px;
   }
 }
-
+.invoice_details_pro{
+  margin: 25px 0 0 0;
+}
 .table-samary {
   nz-layout {
     min-height: 100vh;
@@ -123,13 +128,15 @@
 }
 .invoice_action_btn{
   background: #f7f7f7;
+  display: flex;
   ul{
     margin: 0;
     padding: 0;
-    display: inline-flex;
+    display: inline-block;
     li{
       list-style: none;
       border-right: 1px solid #ddd;
+      float: left;
     }
     button{
       i{
@@ -164,6 +171,28 @@
     i{
       font-size: 16px;
       margin-right: 5px;
+    }
+  }
+}
+.invoice_summery{
+  margin: 15px 0 0 0;
+  ul{
+    margin: 0;
+    padding: 0;
+    li{
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #585858;
+      h3{
+        font-size: 14px;
+      }
+      h2{
+        width: 100%;
+        text-align: right;
+        font-size: 14px;
+      }
     }
   }
 }
