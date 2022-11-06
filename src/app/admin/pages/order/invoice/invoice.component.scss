@@ -1,4 +1,8 @@
 @import "../../../../../theme/variables";
+
+.mb15{
+  margin-bottom: 15px;
+}
 .page-header {
   display: flex;
   align-items: center;
@@ -195,6 +199,56 @@
         text-align: right;
         font-size: 14px;
       }
+    }
+  }
+}
+
+nz-form-item{
+  display: flex;
+  align-items: center;
+}
+.payment_recorde{
+  nz-form-label{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    span{
+      padding-right: 5px;
+    }
+  }
+  nz-select,
+  input{
+    width: 100%;
+  }
+  nz-date-picker{
+    border: none;
+  }
+  nz-select{
+    margin: 0;
+  }
+}
+#inv_print{
+  display: none;
+}
+.invoice_content{
+  width: 400px;
+  height: 600px;
+  background: #fff;
+  color: #2d2d2d;
+  table{
+    width: 100%;
+  }
+  td{
+    padding: 10px;
+    vertical-align: top;
+    border: 1px solid #000;
+    h3{
+      font-size: 14px;
+      line-height: 14px;
+    }
+    p{
+      font-size: 12px;
+      line-height: 16px;
     }
   }
 }

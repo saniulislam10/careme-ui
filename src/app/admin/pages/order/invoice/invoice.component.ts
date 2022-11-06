@@ -25,8 +25,9 @@ import { OrderStatus } from 'src/app/enum/order-status';
 })
 export class InvoiceComponent implements OnInit {
   shippingCost= 120;
-  invPaymentRecord= 1;
-  invWriteOff= 0;
+  date = new Date();
+
+
   // @ViewChild('invoice') invoiceElement!: ElementRef;
   @ViewChild('createReturn') createReturn: CreateReturnComponent;
   invoice: Invoice;
@@ -62,7 +63,8 @@ export class InvoiceComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private msg: NzMessageService,
     private fileUploadService: FileUploadService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modal: NzModalService
   ) {}
 
   ngOnInit(): void {
@@ -118,7 +120,7 @@ export class InvoiceComponent implements OnInit {
 
   public generatePDF(): void {
     this.spinner.show();
-    let DATA: any = document.getElementById('invoice');
+    let DATA: any = document.getElementById('inv_print_section');
     html2canvas(DATA).then((canvas) => {
       let fileWidth = 208;
       let fileHeight = (canvas.height * fileWidth) / canvas.width;
@@ -345,9 +347,17 @@ export class InvoiceComponent implements OnInit {
     console.log('Button cancel clicked!');
     this.paymentVisible = false;
   }
+  allDelivered(): void {
+    this.modal.info({
+      nzTitle: 'Delivered Invoice ? ',
+      nzContent: '<p>Change your invoice status as delivered.</p>',
+      nzOkText: 'Yes',
+      nzOnOk: () => this.markDelivered()
+    });
+  }
 
 
-  // Payment
+  // Write Off
   writeOff = false;
   showWriteOff(): void {
     this.writeOff = true;
@@ -360,4 +370,20 @@ export class InvoiceComponent implements OnInit {
     console.log('Button cancel clicked!');
     this.writeOff = false;
   }
+
+  //  Delete Worning
+  allDelete(): void {
+    this.modal.warning({
+      nzTitle: 'Want to Delete ? ',
+      nzContent: '<p>Change your invoice status as delivered.</p>',
+      nzOkText: 'Yes',
+      nzOnOk: () => alert('Please Create a delete Function and replace this Alert Message')
+    });
+  }
+
+//  Print Invoice
+  invoicePrint(): void{
+    window.print();
+  }
+
 }

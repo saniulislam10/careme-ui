@@ -48,7 +48,7 @@
               <h5>{{ invoice?.invoiceDate | date: "short" }}</h5>
             </div>
             <div class="right">
-              <h4>Pending</h4>
+              <h4>Shipped</h4>
               <h5>
                 <span>1 / 0</span>
                 <span>846 TK</span>
@@ -86,7 +86,7 @@
                     </button>
                   </li>
                   <li>
-                    <button nz-button nzType="text" (click)="markDelivered()">
+                    <button nz-button nzType="text" (click)="allDelivered()">
                       <i class="las la-truck"></i>
                       Delivered
                     </button>
@@ -105,7 +105,7 @@
                     <nz-dropdown-menu #moreBtn="nzDropdownMenu">
                       <ul class="more_btn" nz-menu>
                         <li nz-menu-item><i class="lar la-edit"></i> Edit </li>
-                        <li nz-menu-item> <i class="las la-trash"></i> Delete </li>
+                        <li nz-menu-item (click)="allDelete()"> <i class="las la-trash"></i> Delete </li>
                       </ul>
                     </nz-dropdown-menu>
                   </li>
@@ -254,25 +254,143 @@
 </div>
 
 <!--Payment-->
-<nz-modal [(nzVisible)]="paymentVisible" nzTitle="The first Modal" (nzOnCancel)="paymentCancel()" (nzOnOk)="paymentOk()">
+<nz-modal
+  nzWidth="300px"
+  nzOkText="Save"
+  [(nzVisible)]="paymentVisible"
+  nzTitle="Record Payment"
+  (nzOnCancel)="paymentCancel()"
+  (nzOnOk)="paymentOk()"
+>
   <ng-container *nzModalContent>
-    <p>Payment</p>
+    <div nz-form class="payment_recorde">
+      <nz-form-item class="mb15">
+        <nz-form-label [nzSpan]="8">Date <span>:</span></nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-date-picker [(ngModel)]="date"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="mb15">
+        <nz-form-label [nzSpan]="8" nzFor="amount">Amount <span>:</span></nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input name="amount" type="text" id="amount" placeholder="0.00">
+        </nz-form-control>
+      </nz-form-item >
+      <nz-form-item class="mb15">
+        <nz-form-label [nzSpan]="8" nzFor="mode">Mode <span>:</span></nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-select ngModel="1" nzShowSearch nzAllowClear>
+            <nz-option nzValue="1" nzLabel="Bank"></nz-option>
+            <nz-option nzValue="2" nzLabel="bKash"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+      <nz-form-item class="mb15">
+        <nz-form-label [nzSpan]="8" nzFor="mode">Deposit to <span>:</span></nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-select ngModel="1" nzShowSearch nzAllowClear>
+            <nz-option nzValue="1" nzLabel="City Bank"></nz-option>
+            <nz-option nzValue="2" nzLabel="01917632421"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
   </ng-container>
 </nz-modal>
 
 <!--Write Off-->
-<nz-modal [(nzVisible)]="writeOff" nzTitle="The first Modal" (nzOnCancel)="writeoffCancel()" (nzOnOk)="writeoffOk()">
+<nz-modal
+  nzWidth="300px"
+  nzOkText="Save"
+  [(nzVisible)]="writeOff"
+  nzTitle="Payment write off"
+  (nzOnCancel)="writeoffCancel()"
+  (nzOnOk)="writeoffOk()"
+>
   <ng-container *nzModalContent>
-    <p>Write Off</p>
+    <div nz-form class="payment_recorde">
+      <nz-form-item class="mb15">
+        <nz-form-label [nzSpan]="8">Date <span>:</span></nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <nz-date-picker [(ngModel)]="date"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="mb15">
+        <nz-form-label [nzSpan]="8" nzFor="amount">Amount <span>:</span></nz-form-label>
+        <nz-form-control [nzSpan]="16">
+          <input nz-input name="amount" type="text" id="amount" placeholder="0.00">
+        </nz-form-control>
+      </nz-form-item >
+      <nz-form-item class="mb15">
+        <nz-form-label [nzSpan]="24" nzFor="reason">Reason</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <textarea
+            id="reason"
+            nz-input
+            placeholder="Ex: Pathao cost"
+            [nzAutosize]="{ minRows: 2, maxRows: 5 }"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
   </ng-container>
 </nz-modal>
 
 <ng-template #invRightExtra>
   <nz-button-group class="inv_print">
     <button nz-button (click)="generatePDF()"><i class="lar la-file-pdf"></i></button>
-    <button nz-button ><i class="las la-print"></i></button>
+    <button
+      nz-button
+      printTitle="Fortunetech"
+      [useExistingCss]="true"
+      printSectionId="inv_print"
+      ngxPrint
+    >
+      <i class="las la-print"></i>
+    </button>
   </nz-button-group>
 </ng-template>
+
+
+<div id="inv_print">
+  <div class="invoice_content">
+   <table>
+     <tbody>
+       <tr>
+         <td> MERCHANT </td>
+         <td>
+          <h3> Care Me </h3>
+          <p> 01857380680 </p>
+          <p> 263 Free School Street, Kathal Bagan, Dhaka </p>
+         </td>
+       </tr>
+       <tr>
+         <td> CUSTOMER </td>
+         <td>
+           <p> Mobassher Bashar </p>
+           <p> 01720536529 </p>
+           <p> 263 Free School Street, Kathal Bagan, Dhaka </p>
+         </td>
+       </tr>
+       <tr>
+         <td> INVOICE#: #0000231 </td>
+         <td>
+           <h2> Price: 800.00 TK </h2>
+         </td>
+       </tr>
+       <tr>
+         <td>
+          <img src="data:image/gif;base64,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" alt="" />
+          </td>
+         <td>
+           PARCEL ID: 221012WENVD0N
+         </td>
+       </tr>
+     </tbody>
+   </table>
+  </div>
+</div>
+
 
 <br />
 <br />
@@ -336,7 +454,7 @@
         </div>
       </div>
 
-      <div class="main_invoice_checkout_table" id="invoice">
+      <div class="main_invoice_checkout_table" id="inv_print_section">
         <div class="invoice_logo_header">
           <div class="invoice_logo_header_left">
             <div class="invoice_careme_logo">
@@ -356,7 +474,7 @@
           <div class="invoice_logo_header_right">
             <h1>{{ invoice?.invoiceId }}</h1>
             <p class="invoice_balance">Balance Due</p>
-            <p class="invoie_bdt">BDT{{ invoice?.subTotal + shippingCost }}</p>
+            <p class="invoie_bdt">BDT{{ invoice?.subTotal + 120 }}</p>
           </div>
         </div>
 

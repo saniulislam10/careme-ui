@@ -7,7 +7,7 @@ import { InvoiceComponent } from './invoice.component';
 
 import { MaterialModule } from 'src/app/material/material.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import {NgxPrintModule} from 'ngx-print';
 
 @NgModule({
   declarations: [InvoiceComponent],
@@ -17,6 +17,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     MaterialModule,
     AntModule,
     NgxSpinnerModule,
+    NgxPrintModule
   ],
 })
 export class InvoiceModule {}
