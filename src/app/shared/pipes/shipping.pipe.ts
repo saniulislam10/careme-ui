@@ -30,7 +30,7 @@ export class ShippingPipe implements PipeTransform {
                             console.log("Shipping Price ==== ", shippingPrice)
                           } else if (x.chooseRateType === 'weight') {
                             found = true;
-                            shippingPrice += (x.baseRate + (x.perKgRate * Math.floor(m.product.weight) * m.selectedQty ));
+                            shippingPrice += (x.baseRate + (x.perKgRate * Math.floor(m.product.weight * m.selectedQty)  ));
                             console.log("Shipping Price ==== ", shippingPrice)
 
                           }
@@ -52,10 +52,10 @@ export class ShippingPipe implements PipeTransform {
               x.zones.forEach(y => {
                 if (y.name === selectedZoneName) {
                   if (x.chooseRateType === 'flat') {
-                    shippingPrice += x.flatRate;
+                    shippingPrice += x.flatRate * m.selectedQty;
                     console.log("Shipping Price ==== ", shippingPrice)
                   } else if (x.chooseRateType === 'weight') {
-                    shippingPrice += (x.baseRate + (x.perKgRate * (Math.floor(m.product.weight)-1) * m.selectedQty ));
+                    shippingPrice += (x.baseRate + (x.perKgRate * (Math.floor(m.product.weight * m.selectedQty))));
                     console.log("Shipping Price ==== ", shippingPrice)
                   }
                 }
