@@ -8,6 +8,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 15px 0 10px 0;
+  h2{
+    cursor: pointer;
+  }
   .header-action {
     display: flex;
     align-items: center;
@@ -252,7 +255,41 @@ nz-form-item{
     }
   }
 }
+.return_list{
+  margin-bottom: 15px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #d7d7d7;
+  .return_list_info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+  }
+  .return_list_info > div{
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .rto_id{
+    span {
+      color: blue;
+      cursor: pointer;
+    }
+  }
+  .rto_id span:hover{
+    text-decoration: underline;
+  }
+}
 @media (max-width: 768px) {
+  .return_list{
+    .return_list_info{
+      flex-direction: column;
+    }
+    .return_list_info > div{
+      width: 100%;
+    }
+  }
   .table-samary {
     nz-layout {
       max-height: unset;
