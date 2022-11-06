@@ -112,6 +112,22 @@
                 </ul>
               </div>
             </div>
+            <div nz-col nzXs="24" nzMd="24" *ngFor="let data of returns">
+              <nz-card nzSize="small" class="return_list">
+                <div class="return_list_info">
+                  <div class="rto_id">
+                    <span [routerLink]="['../../', 'return', 'details', data.returnId]">
+                      <i class="las la-lg la-undo"></i> {{ data?.returnId }}
+                    </span>
+                    {{ data.createdAt | date: "short" }}
+                  </div>
+                  <div>
+                    <span>Total: {{ data.subTotal }} TK</span>
+                    <span>Refund eligible: {{ data.refundEligible ? "Yes" : "No" }}</span>
+                  </div>
+                </div>
+              </nz-card>
+            </div>
             <div nz-col nzXs="24">
               <div nz-row [nzGutter]="16" class="invoice_details_body">
                 <div nz-col nzXs="24" nzMd="24">
@@ -170,15 +186,16 @@
                     nzData="invoice"
                     nzShowPagination="false"
                     class="invoice_details_pro"
+                    [nzScroll]="{ x: '700px'}"
                   >
                     <thead>
                       <tr>
                         <th nzWidth="80px">Image</th>
                         <th>Item & Description</th>
-                        <th>Qty</th>
-                        <th>Rate</th>
-                        <th>Tax</th>
-                        <th>Amount</th>
+                        <th nzWidth="50px" >Qty</th>
+                        <th nzWidth="80px" >Rate</th>
+                        <th nzWidth="80px" >Tax</th>
+                        <th nzWidth="100px" >Amount</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -225,7 +242,7 @@
                           <nz-divider style="margin: 5px 0"></nz-divider>
                         </li>
                         <li>
-                          <h2>Total: {{ invoice?.subTotal }} TK</h2>
+                          <h2>Due: {{ invoice?.subTotal }} TK</h2>
                         </li>
                         <li>
                           <span>Payment Record Amount</span>
@@ -239,7 +256,7 @@
                           <nz-divider style="margin: 5px 0"></nz-divider>
                         </li>
                         <li>
-                          <h2>Balance Due: {{ invoice?.subTotal }} TK</h2>
+                          <h2>Total Due: {{ invoice?.subTotal }} TK</h2>
                         </li>
                       </ul>
                     </nz-card>
@@ -336,6 +353,7 @@
   </ng-container>
 </nz-modal>
 
+<!-- Invoice Print Design -->
 <ng-template #invRightExtra>
   <nz-button-group class="inv_print">
     <button nz-button (click)="generatePDF()"><i class="lar la-file-pdf"></i></button>
@@ -350,8 +368,6 @@
     </button>
   </nz-button-group>
 </ng-template>
-
-<!-- Invoice Print Design -->
 <div id="inv_print">
   <div class="invoice_content">
    <table>
@@ -445,7 +461,7 @@
         <div class="invoice_item">
           <h3>Refund Created</h3>
           <p>
-            <span>{{ data.refundEligible ? "Yes" : "No" }}</span>
+            <span> {{ data.refundEligible ? "Yes" : "No" }}</span>
             <!-- <span *ngIf="data.refundEligible">{{getRefundId(data?.returnId)}}</span> -->
           </p>
         </div>
