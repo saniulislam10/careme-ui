@@ -65,6 +65,7 @@ export class NewShoppingInfoComponent implements OnInit {
   showMethod: Boolean[]= [];
   totalWeight = 3;
   totalQuantity = 0;
+  selectedZoneName : string;
 
   constructor(
     private fb: FormBuilder,
@@ -264,6 +265,11 @@ export class NewShoppingInfoComponent implements OnInit {
     this.selectedAddress = this.storageService.getDataFromSessionStorage(
       DATABASE_KEY.selectedShippingAddress
     );
+    if(this.selectedAddress.zila){
+      this.selectedZoneName = this.selectedAddress.zila.name;
+    }
+    console.log(this.selectedZoneName)
+
   }
 
   getSelectedPointsType() {
