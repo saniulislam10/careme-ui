@@ -66,25 +66,7 @@
                 nzSize="small"
                 *ngIf="showMethod[i]"
               >
-                <h3
-                  *ngIf="
-                    data.allProductProfile.shippingZonesArray[0]
-                      .chooseRateType === 'flat'
-                  "
-                >
-                  {{data.allProductProfile.shippingZonesArray[0].flatRate * totalQuantity}} TK
-                </h3>
-                <h3
-                  *ngIf="
-                    data.allProductProfile.shippingZonesArray[0]
-                      .chooseRateType === 'weight'
-                  "
-                >
-                  {{
-                    data.allProductProfile.shippingZonesArray[0].baseRate +
-                    (data.allProductProfile.shippingZonesArray[0].perKgRate * totalWeight)
-                  }} TK
-                </h3>
+                <h3>{{ data | shipping : selectedZoneName: carts}}TK</h3>
                 <h4>{{ data?.name }}</h4>
                 <h5>
                   Delivery within (In-Stock)

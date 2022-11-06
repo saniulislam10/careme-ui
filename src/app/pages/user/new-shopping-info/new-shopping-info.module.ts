@@ -1,3 +1,4 @@
+import { PipesModule } from './../../../shared/pipes/pipes.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -18,6 +19,7 @@ import { AntModule } from 'src/app/material/ant.module';
     MaterialModule,
     FormsModule,
     AntModule,
+    PipesModule
   ],
 })
 export class NewShoppingInfoModule {}

@@ -86,6 +86,7 @@ export class MethodsComponent implements OnInit {
   inStockDeliveryTimesArray: FormArray;
   preOrderDeliveryTimesArray: FormArray;
   openingTimesArray: FormArray;
+  catFormArray: FormArray;
   timingArray: FormArray;
   showInStock: boolean = true;
   showPreOrder: boolean = false;
@@ -133,10 +134,10 @@ export class MethodsComponent implements OnInit {
       allProductEnable: [true, Validators.required],
       allProductProfile: [null],
       categoryArray: [null],
-      catProfile: [null],
       productProfile: [null],
       catEnable: [false, Validators.required],
       productEnable: [false, Validators.required],
+      catFormArray: this.fb.array([]),
     });
 
     this.inStockDeliveryTimesArray = this.dataForm.get(
@@ -147,6 +148,9 @@ export class MethodsComponent implements OnInit {
     ) as FormArray;
     this.openingTimesArray = this.dataForm.get(
       'openingTimesArray'
+    ) as FormArray;
+    this.catFormArray = this.dataForm.get(
+      'catFormArray'
     ) as FormArray;
     this.showOpeningTimesArray();
   }
@@ -179,9 +183,6 @@ export class MethodsComponent implements OnInit {
         })
       );
     });
-    if (this.id) {
-      console.log(this.id);
-    }
   }
 
   openingTiming(dayIndex: number): FormArray {
@@ -213,7 +214,7 @@ export class MethodsComponent implements OnInit {
 
   showMathod(): void {
     this.initModule();
-
+    this.addCategoryForm()
     this.showInStock = true;
     this.showPreOrder = false;
     this.isMethodVisible = true;
@@ -301,8 +302,19 @@ export class MethodsComponent implements OnInit {
       }
     );
   }
-  generateCatForm() {
+  generateCatForm(data) {
+    console.log(this.dataForm.value.categoryArray);
+    this.addCategoryForm();
+  }
 
+  addCategoryForm(){
+    this.catFormArray.push(this.newCat())
+  }
+  newCat(): FormGroup {
+    return this.fb.group({
+      category: new FormControl(),
+      catShipProfile: new FormControl(),
+    });
   }
 
   showDeleteConfirm(id): void {
@@ -351,6 +363,11 @@ export class MethodsComponent implements OnInit {
     if (data.preOrderDeliveryCustomRange) {
       data.preOrderDeliveryTimesArray.forEach((m) => {
         this.addPreOrderDeliveryTime();
+      });
+    }
+    if (data.catEnable) {
+      data.catFormArray.forEach((m) => {
+        this.addCategoryForm();
       });
     }
     this.dataForm.patchValue(data);

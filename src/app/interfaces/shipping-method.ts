@@ -18,6 +18,8 @@ export interface ShippingMethod {
   allProductEnable?: Boolean;
   catEnable?: Boolean;
   productEnable?: Boolean;
+  allProductProfile?: any;
+  catFormArray?: any;
 
 }
 

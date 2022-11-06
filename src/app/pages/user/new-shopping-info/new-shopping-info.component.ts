@@ -268,8 +268,7 @@ export class NewShoppingInfoComponent implements OnInit {
     if(this.selectedAddress.zila){
       this.selectedZoneName = this.selectedAddress.zila.name;
     }
-    console.log(this.selectedZoneName)
-
+    console.log(this.selectedZoneName);
   }
 
   getSelectedPointsType() {
