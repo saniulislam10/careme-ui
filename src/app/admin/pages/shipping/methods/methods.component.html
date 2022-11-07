@@ -325,13 +325,14 @@
                     All Product
                   </label>
                   <label nz-checkbox nzValue="B" formControlName="catEnable">Category</label>
-                  <label nz-checkbox nzValue="C" formControlName="productEnable">Product</label>
+                  <label nz-checkbox nzValue="C" formControlName="productEnable" nzDisabled  >Product</label>
                 </nz-checkbox-wrapper>
               </nz-form-control>
             </nz-form-item>
           </div>
 
           <div *ngIf="dataForm.value.allProductEnable" nz-col class="mb15" [nzXs]="{ span: 24 }" [nzLg]="{ span: 12 }">
+            <h3 >{{allProductProfile}}</h3>
             <nz-form-item>
               <nz-form-label [nzSpan]="24"> Shipping Profile </nz-form-label>
               <nz-form-control [nzSpan]="24">
@@ -344,38 +345,31 @@
 
           <div nz-col class="mb15" [nzXs]="{ span: 24 }" *ngIf="dataForm.value.catEnable">
             <nz-form-item>
-              <nz-form-label [nzSpan]="24"> Choose Category </nz-form-label>
-              <nz-form-control [nzSpan]="24">
-                <nz-select
-                [compareWith]="compareFn"
-                formControlName="categoryArray"
-                nzMode="multiple"
-                nzPlaceHolder="Select product type"
-              >
-                <nz-option
-                  *ngFor="let item of categories"
-                  [nzLabel]="item.name"
-                  [nzValue]="item"
-                ></nz-option>
-              </nz-select>
-                <button nz-button nzType="default" style="margin: 5px 0" (onClick)="generateCatForm()">
-                  Done
-                </button>
-                <nz-card nzSize="small" class="category_list">
-                  List of Categories
-                  <ul>
-                    <li *ngFor="let cat of listOfCatOptions">
-                      <span>{{data.name}}</span>
-                      <span>
-                        <nz-select placeholder="Select Profile" formControlName="catProfile" nzShowSearch>
-                          <nz-option *ngFor="let option of profiles" [nzValue]="option._id" [nzLabel]="option.name">
-                          </nz-option>
-                        </nz-select>
-                      </span>
-                    </li>
-                  </ul>
-                </nz-card>
-              </nz-form-control>
+              <button nz-button nzType="default" style="margin: 5px 0"
+                (click)="generateCatForm(dataForm.value.categoryArray)">
+                Add Category
+              </button>
+              <nz-card nzSize="small" class="category_list">
+                List of Categories
+                <ul formArrayName="catFormArray">
+                  <li *ngFor="let cat of catFormArray.controls; let i = index" [formGroupName]="i">
+                    <!-- <span>{{cat.name}}</span> -->
+                    <span>
+                      <nz-select placeholder="Select Category" formControlName="category" nzShowSearch>
+                        <nz-option *ngFor="let option of categories" [nzValue]="option._id" [nzLabel]="option.name">
+                        </nz-option>
+                      </nz-select>
+                    </span>
+                    <span>
+                      <h3>{{catShipProfile}}</h3>
+                      <nz-select placeholder="Select Profile" formControlName="catShipProfile" nzShowSearch>
+                        <nz-option *ngFor="let option of profiles" [nzValue]="option._id" [nzLabel]="option.name">
+                        </nz-option>
+                      </nz-select>
+                    </span>
+                  </li>
+                </ul>
+              </nz-card>
             </nz-form-item>
           </div>
           <div nz-col class="mb15" [nzXs]="{ span: 24 }" *ngIf="dataForm.value.productEnable">
