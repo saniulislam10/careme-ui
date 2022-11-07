@@ -850,13 +850,14 @@ export class NewShoppingInfoComponent implements OnInit {
   }
 
   getAllCityByZilaId() {
-    let zilaId;
+    let zilaId = this.selectedAddress.zila._id;
     if(this.id){
       zilaId = this.selectedAddress.zila._id;
-      console.log(zilaId);
     }else{
       zilaId = this.dataForm.value.zila;
     }
+    console.log(zilaId);
+
     if (zilaId) {
       this.cityService.getAllCityByZilaId(zilaId)
         .subscribe(res => {

@@ -9,6 +9,8 @@ export class ShippingPipe implements PipeTransform {
   transform(method: ShippingMethod, selectedZoneName: string, carts: Cart[]): number {
     if (method) {
       let shippingPrice = 0;
+      let flatPrice = 0;
+      let weightPrice = 0;
       let found = false;
       carts.forEach(m => {
         if (method.productEnable) {
@@ -26,7 +28,7 @@ export class ShippingPipe implements PipeTransform {
                         if (y.name === selectedZoneName) {
                           if (x.chooseRateType === 'flat') {
                             found = true;
-                            shippingPrice += (x.flatRate * m.selectedQty);
+                            shippingPrice += x.flatRate ;
                             console.log("Shipping Price ==== ", shippingPrice)
                           } else if (x.chooseRateType === 'weight') {
                             found = true;
@@ -51,8 +53,10 @@ export class ShippingPipe implements PipeTransform {
             method.allProductProfile.shippingZonesArray.forEach(x => {
               x.zones.forEach(y => {
                 if (y.name === selectedZoneName) {
+                  console.log(y.name);
+                  console.log(selectedZoneName);
                   if (x.chooseRateType === 'flat') {
-                    shippingPrice += x.flatRate * m.selectedQty;
+                    shippingPrice += x.flatRate ;
                     console.log("Shipping Price ==== ", shippingPrice)
                   } else if (x.chooseRateType === 'weight') {
                     shippingPrice += (x.baseRate + (x.perKgRate * (Math.floor(m.product.weight * m.selectedQty))));
