@@ -8,16 +8,15 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
+  stockTabs = ['Overview', 'History'];
 
   tabs: any[];
   nzTabPosition: NzTabPosition = 'left';
   selectedIndex = 27;
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   log(args: any[]): void {
     console.log(args);
   }
-
   constructor(
     private productService: ProductService
   ) { }

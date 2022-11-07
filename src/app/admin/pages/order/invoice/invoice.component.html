@@ -1,5 +1,7 @@
 <div class="page-header">
-  <h2 [routerLink]="['../../', 'all-invoice']"><i class="las la-arrow-left"></i> All Invoice</h2>
+  <h2 [routerLink]="['../../', 'all-invoice']">
+    <i class="las la-arrow-left"></i> All Invoice
+  </h2>
   <div class="header-action">
     <button type="button">Export</button>
     <button type="button">Import</button>
@@ -80,7 +82,11 @@
                     </button>
                   </li>
                   <li>
-                    <button nz-button nzType="text" (click)="createReturnButton()">
+                    <button
+                      nz-button
+                      nzType="text"
+                      (click)="createReturnButton()"
+                    >
                       <i class="las la-undo"></i>
                       Return
                     </button>
@@ -104,8 +110,10 @@
                     </button>
                     <nz-dropdown-menu #moreBtn="nzDropdownMenu">
                       <ul class="more_btn" nz-menu>
-                        <li nz-menu-item><i class="lar la-edit"></i> Edit </li>
-                        <li nz-menu-item (click)="allDelete()"> <i class="las la-trash"></i> Delete </li>
+                        <li nz-menu-item><i class="lar la-edit"></i> Edit</li>
+                        <li nz-menu-item (click)="allDelete()">
+                          <i class="las la-trash"></i> Delete
+                        </li>
                       </ul>
                     </nz-dropdown-menu>
                   </li>
@@ -116,14 +124,24 @@
               <nz-card nzSize="small" class="return_list">
                 <div class="return_list_info">
                   <div class="rto_id">
-                    <span [routerLink]="['../../', 'return', 'details', data.returnId]">
+                    <span
+                      [routerLink]="[
+                        '../../',
+                        'return',
+                        'details',
+                        data.returnId
+                      ]"
+                    >
                       <i class="las la-lg la-undo"></i> {{ data?.returnId }}
                     </span>
                     {{ data.createdAt | date: "short" }}
                   </div>
                   <div>
                     <span>Total: {{ data.subTotal }} TK</span>
-                    <span>Refund eligible: {{ data.refundEligible ? "Yes" : "No" }}</span>
+                    <span
+                      >Refund eligible:
+                      {{ data.refundEligible ? "Yes" : "No" }}</span
+                    >
                   </div>
                 </div>
               </nz-card>
@@ -139,14 +157,18 @@
                       <tr>
                         <td>Name</td>
                         <td>:</td>
-                        <td>{{ invoice.customerName}}</td>
+                        <td>{{ invoice.customerName }}</td>
                       </tr>
-                      <tr style="display:{{invoice.email ? 'block' : 'none'}}">
+                      <tr
+                        style="display:{{ invoice.email ? 'block' : 'none' }}"
+                      >
                         <td>Email</td>
                         <td>:</td>
                         <td>{{ invoice.email }}</td>
                       </tr>
-                      <tr style="display:{{invoice.phoneNo ? 'block' : 'none'}}">
+                      <tr
+                        style="display:{{ invoice.phoneNo ? 'block' : 'none' }}"
+                      >
                         <td>Phone</td>
                         <td>:</td>
                         <td>{{ invoice.phoneNo }}</td>
@@ -186,16 +208,16 @@
                     nzData="invoice"
                     nzShowPagination="false"
                     class="invoice_details_pro"
-                    [nzScroll]="{ x: '700px'}"
+                    [nzScroll]="{ x: '700px' }"
                   >
                     <thead>
                       <tr>
                         <th nzWidth="80px">Image</th>
                         <th>Item & Description</th>
-                        <th nzWidth="50px" >Qty</th>
-                        <th nzWidth="80px" >Rate</th>
-                        <th nzWidth="80px" >Tax</th>
-                        <th nzWidth="100px" >Amount</th>
+                        <th nzWidth="50px">Qty</th>
+                        <th nzWidth="80px">Rate</th>
+                        <th nzWidth="80px">Tax</th>
+                        <th nzWidth="100px">Amount</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -205,7 +227,7 @@
                             nz-image
                             style="max-width: 100%"
                             nzSrc="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                            alt="{{data.name}}"
+                            alt="{{ data.name }}"
                           />
                         </td>
                         <td>
@@ -224,42 +246,42 @@
                   </nz-table>
                 </div>
                 <div nz-col nzXs="24" [nzMd]="{ span: 10, offset: 14 }">
-                    <nz-card class="invoice_summery">
-                      <ul>
-                        <li>
-                          <h3>Subtotal</h3>
-                          <h3>{{ invoice?.subTotal - shippingCost }} TK</h3>
-                        </li>
-                        <li>
-                          <span>Shipping</span>
-                          <span>{{shippingCost  }} TK</span>
-                        </li>
-                        <li>
-                          <span>Adjustment</span>
-                          <span>0.00 TK</span>
-                        </li>
-                        <li>
-                          <nz-divider style="margin: 5px 0"></nz-divider>
-                        </li>
-                        <li>
-                          <h2>Due: {{ invoice?.subTotal }} TK</h2>
-                        </li>
-                        <li>
-                          <span>Payment Record Amount</span>
-                          <p style="color:#ff4343">(-) 0.00 TK</p>
-                        </li>
-                        <li>
-                          <span>Write Off Amount</span>
-                          <p style="color:#ff4343">(-) 0.00 TK</p>
-                        </li>
-                        <li>
-                          <nz-divider style="margin: 5px 0"></nz-divider>
-                        </li>
-                        <li>
-                          <h2>Total Due: {{ invoice?.subTotal }} TK</h2>
-                        </li>
-                      </ul>
-                    </nz-card>
+                  <nz-card class="invoice_summery">
+                    <ul>
+                      <li>
+                        <h3>Subtotal</h3>
+                        <h3>{{ invoice?.subTotal - shippingCost }} TK</h3>
+                      </li>
+                      <li>
+                        <span>Shipping</span>
+                        <span>{{ shippingCost }} TK</span>
+                      </li>
+                      <li>
+                        <span>Adjustment</span>
+                        <span>0.00 TK</span>
+                      </li>
+                      <li>
+                        <nz-divider style="margin: 5px 0"></nz-divider>
+                      </li>
+                      <li>
+                        <h2>Due: {{ invoice?.subTotal }} TK</h2>
+                      </li>
+                      <li>
+                        <span>Payment Record Amount</span>
+                        <p style="color: #ff4343">(-) 0.00 TK</p>
+                      </li>
+                      <li>
+                        <span>Write Off Amount</span>
+                        <p style="color: #ff4343">(-) 0.00 TK</p>
+                      </li>
+                      <li>
+                        <nz-divider style="margin: 5px 0"></nz-divider>
+                      </li>
+                      <li>
+                        <h2>Total Due: {{ invoice?.subTotal }} TK</h2>
+                      </li>
+                    </ul>
+                  </nz-card>
                 </div>
               </div>
             </div>
@@ -288,29 +310,41 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item class="mb15">
-        <nz-form-label [nzSpan]="8" nzFor="amount">Amount <span>:</span></nz-form-label>
+        <nz-form-label [nzSpan]="8" nzFor="amount"
+          >Amount <span>:</span></nz-form-label
+        >
         <nz-form-control [nzSpan]="16">
-          <input nz-input name="amount" type="text" id="amount" placeholder="0.00">
+          <input
+            nz-input
+            name="amount"
+            type="text"
+            id="amount"
+            placeholder="0.00"
+          />
         </nz-form-control>
-      </nz-form-item >
+      </nz-form-item>
       <nz-form-item class="mb15">
-        <nz-form-label [nzSpan]="8" nzFor="mode">Mode <span>:</span></nz-form-label>
+        <nz-form-label [nzSpan]="8" nzFor="mode"
+          >Mode <span>:</span></nz-form-label
+        >
         <nz-form-control [nzSpan]="16">
           <nz-select ngModel="1" nzShowSearch nzAllowClear>
             <nz-option nzValue="1" nzLabel="Bank"></nz-option>
             <nz-option nzValue="2" nzLabel="bKash"></nz-option>
           </nz-select>
         </nz-form-control>
-      </nz-form-item >
+      </nz-form-item>
       <nz-form-item class="mb15">
-        <nz-form-label [nzSpan]="8" nzFor="mode">Deposit to <span>:</span></nz-form-label>
+        <nz-form-label [nzSpan]="8" nzFor="mode"
+          >Deposit to <span>:</span></nz-form-label
+        >
         <nz-form-control [nzSpan]="16">
           <nz-select ngModel="1" nzShowSearch nzAllowClear>
             <nz-option nzValue="1" nzLabel="City Bank"></nz-option>
             <nz-option nzValue="2" nzLabel="01917632421"></nz-option>
           </nz-select>
         </nz-form-control>
-      </nz-form-item >
+      </nz-form-item>
     </div>
   </ng-container>
 </nz-modal>
@@ -333,11 +367,19 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item class="mb15">
-        <nz-form-label [nzSpan]="8" nzFor="amount">Amount <span>:</span></nz-form-label>
+        <nz-form-label [nzSpan]="8" nzFor="amount"
+          >Amount <span>:</span></nz-form-label
+        >
         <nz-form-control [nzSpan]="16">
-          <input nz-input name="amount" type="text" id="amount" placeholder="0.00">
+          <input
+            nz-input
+            name="amount"
+            type="text"
+            id="amount"
+            placeholder="0.00"
+          />
         </nz-form-control>
-      </nz-form-item >
+      </nz-form-item>
       <nz-form-item class="mb15">
         <nz-form-label [nzSpan]="24" nzFor="reason">Reason</nz-form-label>
         <nz-form-control [nzSpan]="24">
@@ -348,7 +390,7 @@
             [nzAutosize]="{ minRows: 2, maxRows: 5 }"
           ></textarea>
         </nz-form-control>
-      </nz-form-item >
+      </nz-form-item>
     </div>
   </ng-container>
 </nz-modal>
@@ -356,7 +398,9 @@
 <!-- Invoice Print Design -->
 <ng-template #invRightExtra>
   <nz-button-group class="inv_print">
-    <button nz-button (click)="generatePDF()"><i class="lar la-file-pdf"></i></button>
+    <button nz-button (click)="generatePDF()">
+      <i class="lar la-file-pdf"></i>
+    </button>
     <button
       nz-button
       printTitle="Fortunetech"
@@ -370,43 +414,45 @@
 </ng-template>
 <div id="inv_print">
   <div class="invoice_content">
-   <table>
-     <tbody>
-       <tr>
-         <td> MERCHANT </td>
-         <td>
-          <h3> Care Me </h3>
-          <p> 01857380680 </p>
-          <p> 263 Free School Street, Kathal Bagan, Dhaka </p>
-         </td>
-       </tr>
-       <tr>
-         <td> CUSTOMER </td>
-         <td>
-           <p> Mobassher Bashar </p>
-           <p> 01720536529 </p>
-           <p> 263 Free School Street, Kathal Bagan, Dhaka </p>
-         </td>
-       </tr>
-       <tr>
-         <td> INVOICE#: #0000231 </td>
-         <td>
-           <h2> Price: 800.00 TK </h2>
-         </td>
-       </tr>
-       <tr>
-         <td>
-            <img src="data:image/gif;base64,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" alt="" />
+    <table>
+      <tbody>
+        <tr>
+          <td>MERCHANT</td>
+          <td>
+            <h3>Care Me</h3>
+            <p>01857380680</p>
+            <p>263 Free School Street, Kathal Bagan, Dhaka</p>
           </td>
-         <td>
+        </tr>
+        <tr>
+          <td>CUSTOMER</td>
+          <td>
+            <p>Mobassher Bashar</p>
+            <p>01720536529</p>
+            <p>263 Free School Street, Kathal Bagan, Dhaka</p>
+          </td>
+        </tr>
+        <tr>
+          <td>INVOICE#: #0000231</td>
+          <td>
+            <h2>Price: 800.00 TK</h2>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img
+              src="data:image/gif;base64,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"
+              alt=""
+            />
+          </td>
+          <td>
             <p>INVOICE CREATED: 2022-10-12 16:57</p>
-         </td>
-       </tr>
-     </tbody>
-   </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
-
 
 <br />
 <br />

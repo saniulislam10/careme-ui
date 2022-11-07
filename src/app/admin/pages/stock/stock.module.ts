@@ -14,6 +14,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import {AntModule} from "../../../material/ant.module";
 
 @NgModule({
   declarations: [StockComponent, ExportPopupComponent, DetailsComponent],
@@ -24,11 +25,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     FormsModule,
     NgxPaginationModule,
     PipesModule,
-    NzTabsModule,
-    NzRadioModule,
-    NzCardModule,
-    NzTableModule,
-    NzInputModule,
+    AntModule
   ],
 })
 export class StockModule {}
