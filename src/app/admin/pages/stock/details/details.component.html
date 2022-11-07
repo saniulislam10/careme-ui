@@ -1,8 +1,118 @@
+<div class="page-header">
+  <h2><i class="las la-arrow-left"></i> All Stock</h2>
+  <div class="header-action">
+    <button type="button">Export</button>
+    <button type="button">Import</button>
+  </div>
+</div>
+<div class="table-samary">
+  <nz-card nzSize="small">
+    <nz-layout>
+      <nz-sider class="left_navbar">
+        <div class="inner_nav_header">
+          <div class="header_action">
+            <a nz-dropdown [nzDropdownMenu]="statusMenu">
+              All Stock <i class="las la-angle-down"></i>
+              <nz-dropdown-menu #statusMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Close</li>
+                  <li nz-menu-item>Pending</li>
+                  <li nz-menu-item>Reject</li>
+                </ul>
+              </nz-dropdown-menu>
+            </a>
+            <nz-button-group>
+              <button
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="actionMenu"
+                nzPlacement="bottomRight"
+              >
+                <span nz-icon nzType="ellipsis"></span>
+              </button>
+              <nz-dropdown-menu #actionMenu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>Delete</li>
+                  <li nz-menu-item>Pending</li>
+                  <li nz-menu-item>Reject</li>
+                </ul>
+              </nz-dropdown-menu>
+            </nz-button-group>
+          </div>
+          <input nz-input placeholder="Basic usage" />
+        </div>
+        <ul class="refund_list" nz-menu nzTheme="light" nzMode="inline">
+          <li nz-menu-item *ngFor="let tab of tabs">
+            <div class="left">
+              <h4>{{ tab.sku }}</h4>
+              <h5>05 Jul 2022 | 11:30 PM</h5>
+            </div>
+            <div class="right">
+              <h4>ACTIVE</h4>
+              <h5>Qty: {{tab.quantity}}</h5>
+            </div>
+          </li>
+        </ul>
+      </nz-sider>
+      <nz-content class="refund_body_main" style="background: #fff">
+        <nz-card nzSize="small" [nzExtra]="extraAction" nzTitle="RFD-16767">
+          <nz-tabset>
+            <nz-tab *ngFor="let tab of stockTabs" [nzTitle]="tab">
+              <div nz-row [nzGutter]="16">
+                <div nz-col nzXs="24" nzMd="24">
+                  <table class="stock_details">
+                    <tbody>
+                    <tr>
+                      <td>Product Status</td>
+                      <td>:</td>
+                      <td><span>ACTIVE</span></td>
+                    </tr>
+                    <tr>
+                      <td>Refund</td>
+                      <td>:</td>
+                      <td>Yes</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div nz-col nzXs="24" nzMd="24">
+                  ok
+                </div>
+              </div>
+            </nz-tab>
+          </nz-tabset>
+        </nz-card>
+      </nz-content>
+    </nz-layout>
+  </nz-card>
+</div>
+
+
+
+<!-- Action Area  -->
+<ng-template #extraAction>
+  <nz-button-group nzSize="small">
+    <button nz-button><i class="las la-lg la-adjust"></i></button>
+    <button nz-button><i class="las la-lg la-globe-europe"></i></button>
+    <button nz-button><i class="lar la-lg la-eye"></i></button>
+  </nz-button-group>
+</ng-template>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+<!-- Old Code -->
 <nz-tabset
 style="height: 150vh;"
-
 nzTabPosition="left"
-(nzSelectChange)="log([$event])">
+(nzSelectChange)="log([$event])"
+class="old_style"
+>
   <nz-tab  *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
     <ng-template #titleTemplate>
       <div style="padding-right: 10px;">{{ tab.sku }} </div>
